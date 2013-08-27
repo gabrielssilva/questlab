@@ -74,7 +74,7 @@
 		 */
 		private static function getClassName($modelName)
 		{
-			$className = \nre\core\ClassLoader::concatClassNames($modelName, \nre\core\ClassLoader::stripNamespace(get_class()));
+			$className = ClassLoader::concatClassNames($modelName, ClassLoader::stripNamespace(get_class()));
 			
 			
 			return \nre\configs\AppConfig::$app['namespace']."models\\$className";
@@ -131,7 +131,8 @@
 				Model::load($model);
 				
 				// Construct Model
-				$this->$model = Model::factory($model);
+				$modelName = ucfirst(strtolower($model));
+				$this->$modelName = Model::factory($model);
 			}
 		}
 		

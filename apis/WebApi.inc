@@ -60,7 +60,7 @@
 				$this->errorService($e);
 			}
 			catch(\nre\exceptions\ActionNotFoundException $e) {
-				$this->error($e, WebUtils::HTTP_NOT_FOUND);
+				$this->error($e, \nre\core\WebUtils::HTTP_NOT_FOUND);
 			}
 			catch(\nre\exceptions\FatalDatamodelException $e) {
 				$this->errorService($e);

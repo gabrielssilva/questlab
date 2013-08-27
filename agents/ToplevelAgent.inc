@@ -116,17 +116,20 @@
 			try {
 				return $this->_run($request, $response);
 			}
-			catch(ParamsNotValidException $e) {
-				$this->error($e, WebUtils::HTTP_NOT_FOUND, self::STAGE_RUN);
+			catch(\nre\exceptions\AccessDeniedException $e) {
+				$this->error($e, \nre\core\WebUtils::HTTP_FORBIDDEN, self::STAGE_RUN);
 			}
-			catch(IdNotFoundException $e) {
-				$this->error($e, WebUtils::HTTP_NOT_FOUND, self::STAGE_RUN);
+			catch(\nre\exceptions\ParamsNotValidException $e) {
+				$this->error($e, \nre\core\WebUtils::HTTP_NOT_FOUND, self::STAGE_RUN);
 			}
-			catch(DatamodelException $e) {
-				$this->error($e, WebUtils::HTTP_SERVICE_UNAVAILABLE, self::STAGE_RUN);
+			catch(\nre\exceptions\IdNotFoundException $e) {
+				$this->error($e, \nre\core\WebUtils::HTTP_NOT_FOUND, self::STAGE_RUN);
 			}
-			catch(ActionNotFoundException $e) {
-				$this->error($e, WebUtils::HTTP_NOT_FOUND, self::STAGE_RUN);
+			catch(\nre\exceptions\DatamodelException $e) {
+				$this->error($e, \nre\core\WebUtils::HTTP_SERVICE_UNAVAILABLE, self::STAGE_RUN);
+			}
+			catch(\nre\exceptions\ActionNotFoundException $e) {
+				$this->error($e, \nre\core\WebUtils::HTTP_NOT_FOUND, self::STAGE_RUN);
 			}
 		}
 		
@@ -173,8 +176,8 @@
 					func_get_args()
 				);
 			}
-			catch(DatamodelException $e) {
-				throw new FatalDatamodelException($e->getDatamodelMessage(), $e->getDatamodelErrorNumber());
+			catch(\nre\exceptions\DatamodelException $e) {
+				throw new \nre\exceptions\FatalDatamodelException($e->getDatamodelMessage(), $e->getDatamodelErrorNumber());
 			}
 		}
 		
