@@ -20,6 +20,12 @@
 	class WebUtils
 	{
 		/**
+		 * HTTP-statuscode 403: Forbidden
+		 * 
+		 * @var int
+		 */
+		const HTTP_FORBIDDEN = 403;
+		/**
 		 * HTTP-statuscode 404: Not Found
 		 * 
 		 * @var int
@@ -40,6 +46,7 @@
 		public static $httpStrings = array(
 			200	=>	'OK',
 			304	=>	'Not Modified',
+			403	=>	'Forbidden',
 			404	=>	'Not Found',
 			503	=>	'Service Unavailable'
 		);
