@@ -138,6 +138,9 @@
 			// Store values
 			$this->agent = $agent;
 			
+			// Load Components
+			$this->loadComponents();
+			
 			// Load Models
 			$this->loadModels();
 			
@@ -304,6 +307,36 @@
 		}
 		
 		
+		
+		
+		/**
+		 * Load the Components of this Controller.
+		 * 
+		 * @throws	ComponentNotValidException
+		 * @throws	ComponentNotFoundException
+		 */
+		private function loadComponents()
+		{
+			// Determine components
+			$components = array();
+			if(property_exists($this, 'components')) {
+				$components = $this->components;
+			}
+			if(!is_array($components)) {
+				$components = array($components);
+			}
+			
+			// Load components
+			foreach($components as &$component)
+			{
+				// Load class
+				Component::load($component);
+					
+				// Construct component
+				$componentName = ucfirst(strtolower($component));
+				$this->$componentName = Component::factory($component);
+			}
+		}
 		
 		
 		/**
