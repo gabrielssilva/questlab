@@ -42,7 +42,6 @@
 		 */
 		function __construct($controllerName)
 		{
-			// Elternkonstruktor aufrufen
 			parent::__construct(
 				$controllerName,
 				self::MESSAGE,

@@ -20,34 +20,6 @@
 	 */
 	abstract class BottomlevelAgent extends \nre\core\Agent
 	{
-		
-		
-		
-		
-		/**
-		 * Load a BottomlevelAgent.
-		 * 
-		 * @throws	AgentNotFoundException
-		 * @throws	AgentNotValidException
-		 * @param	string	$agentName	BottomlevelAgent name
-		 */
-		public static function load($agentName)
-		{
-			// Load class
-			parent::load_agent($agentName, Autoloader::getClassName(get_class()));
-			
-			// Determine full classname
-			$className = Autoloader::concatClassNames($agentName, Autoloader::getClassType(get_class()));
-			
-			// Validate class
-			try {
-				ClassLoader::check($className, get_class());
-			}
-			catch(ClassNotValidException $e) {
-				throw new AgentNotValidException($e->getClassName());
-			}
-		}
-		
 	}
 
 ?>

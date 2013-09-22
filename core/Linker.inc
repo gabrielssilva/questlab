@@ -299,7 +299,7 @@
 			
 			// Determine prefix
 			$ppos = array(strlen($uri));
-			if(($p = strpos($uri, '/'.$request->getParam(1, \nre\configs\AppConfig::$defaults['intermediate']))) !== false) {
+			if(($p = strpos($uri, '/'.$request->getParam(1, 'intermediate'))) !== false) {
 				$ppos[] = $p;
 			}
 			$prefix = substr($uri, 0, min($ppos));
