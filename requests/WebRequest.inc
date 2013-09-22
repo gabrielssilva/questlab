@@ -129,7 +129,7 @@
 		
 		
 		/**
-		 * Get all GET-parameters
+		 * Get all GET-parameters.
 		 * 
 		 * @return	array	GET-Parameters
 		 */
@@ -158,6 +158,28 @@
 			
 			// Return default value
 			return $defaultValue;
+		}
+		
+		
+		/**
+		 * Get all POST-parameters.
+		 * 
+		 * @return	array	POST-parameters
+		 */
+		public function getPostParams()
+		{
+			return $this->postParams;
+		}
+		
+		
+		/**
+		 * Get the method of the current request.
+		 * 
+		 * @return	string	Current request method
+		 */
+		public function getRequestMethod()
+		{
+			return $_SERVER['REQUEST_METHOD'];
 		}
 		
 		
