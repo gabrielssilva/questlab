@@ -42,11 +42,11 @@
 				// Validate class
 				ClassLoader::check($className, get_class());
 			}
-			catch(ClassNotValidException $e) {
-				throw new DriverNotValidException($e->getClassName());
+			catch(\nre\exceptions\ClassNotValidException $e) {
+				throw new \nre\exceptions\DriverNotValidException($e->getClassName());
 			}
-			catch(ClassNotFoundException $e) {
-				throw new DriverNotFoundException($e->getClassName());
+			catch(\nre\exceptions\ClassNotFoundException $e) {
+				throw new \nre\exceptions\DriverNotFoundException($e->getClassName());
 			}
 		}
 		
@@ -75,7 +75,7 @@
 		 */
 		private static function getClassName($driverName)
 		{
-			$className = \nre\core\ClassLoader::concatClassNames($driverName, \nre\core\ClassLoader::stripNamespace(get_class()));
+			$className = ClassLoader::concatClassNames($driverName, ClassLoader::stripNamespace(get_class()));
 			
 			
 			return "\\nre\\drivers\\$className";

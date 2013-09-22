@@ -398,7 +398,7 @@
 		{
 			try {
 				// Load Agent
-				BottomlevelAgent::load($agentName);
+				\nre\agents\BottomlevelAgent::load($agentName);
 				
 				// Construct Agent
 				$this->subAgents[] = call_user_func_array(
@@ -468,7 +468,7 @@
 			return array(
 				'name'		=>	strtolower($agentName),
 				'response'	=>	$response,
-				'object'	=>	BottomlevelAgent::factory(
+				'object'	=>	\nre\agents\BottomlevelAgent::factory(
 					$agentName,
 					$this->request,
 					$response,
@@ -548,7 +548,7 @@
 			
 			try {
 				// Load Agenten
-				BottomlevelAgent::load($agentName);
+				\nre\agents\BottomlevelAgent::load($agentName);
 			
 				// Construct Agent
 				$subAgent = $this->newSubAgent($agentName);
