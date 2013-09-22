@@ -19,14 +19,13 @@
 	 */
 	class DatabaseModel extends \nre\core\Model
 	{
-		
 		/**
 		 * Database connection
 		 * 
 		 * @static
-		 * @var object
+		 * @var DatabaseDriver
 		 */
-		private static $db = NULL;
+		protected $db = NULL;
 		
 		
 		
@@ -34,64 +33,21 @@
 		/**
 		 * Construct a new datamase model.
 		 * 
+		 * @throws	DatamodelException
 		 * @throws	DriverNotFoundException
 		 * @throws	DriverNotValidException
-		 * @throws	DatamodelException
-		 * @param	string	$databaseType	Database type
-		 * @param	array	$config		Connection settings
+		 * @param	string	$type	Database type
+		 * @param	array	$config	Connection settings
 		 */
-		function __construct($databaseType, $config)
+		function __construct($type, $config)
 		{
 			parent::__construct();
 			
 			// Load database driver
-			$this->loadDriver($databaseType);
+			$this->loadDriver($type);
 			
 			// Establish database connection
-			$this->connect($databaseType, $config);
-		}
-		
-		
-		
-		
-		/**
-		 * Execute a SQL-query.
-		 * 
-		 * @param	string	$query	Query to run
-		 * @param	mixed	…	Query parameters
-		 * @return	array		Result
-		 */
-		protected function query($query)
-		{
-			// Mask parameters
-			$args = array($query);
-			foreach(array_slice(func_get_args(), 1) as $arg) {
-				$args[] = self::$db->mask($arg);
-			}
-			
-			// Format query
-			$query = call_user_func_array(
-				'sprintf',
-				$args
-			);
-			
-			// Execute query
-			$data = self::$db->query($query);
-			
-			
-			// Return data
-			return $data;
-		}
-		
-		
-		/**
-		 * Return the last insert id (of the last insert-query).
-		 * 
-		 * @return	int	Last insert id
-		 */
-		protected function getInsertId()
-		{
-			return self::$db->getInsertId();
+			$this->connect($type, $config);
 		}
 		
 		
@@ -104,10 +60,9 @@
 		 * @throws	DriverNotValidException
 		 * @param	string	$driverName	Name of the database driver
 		 */
-		private static function loadDriver($driverName)
+		private function loadDriver($driverName)
 		{
 			\nre\core\Driver::load($driverName);
-			
 		}
 		
 		
@@ -116,12 +71,11 @@
 		 * 
 		 * @throws	DatamodelException
 		 * @param	string	$driverName	Name of the database driver
+		 * @param	array	$config		Connection settings
 		 */
-		private static function connect($driverName, $config)
+		private function connect($driverName, $config)
 		{
-			if(self::$db === NULL) {
-				self::$db = \nre\core\Driver::factory($driverName, $config);
-			}
+			$this->db = \nre\core\Driver::factory($driverName, $config);
 		}
 		
 	}

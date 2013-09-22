@@ -20,11 +20,12 @@
 	abstract class DatabaseDriver extends \nre\core\Driver
 	{
 		/**
-		 * Connection and login settings
+		 * Driver class instance
 		 * 
-		 * @var array
+		 * @static
+		 * @var DatabaseDriver
 		 */
-		protected $config;
+		protected static $driver = null;
 		/**
 		 * Connection resource
 		 * 
@@ -36,31 +37,25 @@
 		
 		
 		/**
-		 * Execute a SQL-query.
+		 * Singleton-pattern.
 		 * 
-		 * @param	string	$query	Query to run
-		 * @return	array		Result
+		 * @param	array		$config	Database driver configuration
+		 * @return	DatabaseDriver		Singleton-instance of database driver class
 		 */
-		public abstract function query($query);
-		
-				
-		/**
-		 * Return the last insert id (of the last insert-query).
-		 * 
-		 * @return	int	Last insert id
-		 */
-		public abstract function getInsertId();
-		
-		
-		/**
-		 * Mask an input for using it in a SQL-query.
-		 * 
-		 * @param	mixed	$input	Input to mask
-		 * @return	mixed		Masked input
-		 */
-		public abstract function mask($input);
-		
-		
+		public static function singleton($config)
+		{
+			// Singleton
+			if(self::$driver !== null) {
+				return self::$driver;
+			}
+			
+			// Construct
+			$className = get_called_class();
+			self::$driver = new $className($config);
+			
+			
+			return self::$driver;
+		}
 		
 		
 		/**
@@ -72,9 +67,20 @@
 		{
 			parent::__construct();
 			
-			// Save values
-			$this->config = $config;
+			// Establish connection
+			$this->connect($config);
 		}
+		
+		
+		
+		
+		/**
+		 * Establish a connect to a MqSQL-database.
+		 * 
+		 * @throws	DatamodelException
+		 * @param	array	$config	Connection and login settings
+		 */
+		protected abstract function connect($config);
 		
 	}
 

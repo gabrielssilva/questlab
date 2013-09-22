@@ -63,7 +63,7 @@
 			
 			
 			// Construct and return Driver
-			return new $className($config);
+			return $className::singleton($config);
 		}
 		
 		
