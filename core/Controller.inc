@@ -328,6 +328,15 @@
 			if(!is_array($models)) {
 				$models = array($models);
 			}
+			// Models of parent classes
+			$parent = $this;
+			while($parent = get_parent_class($parent))
+			{
+				$properties = get_class_vars($parent);
+				if(array_key_exists('models', $properties)) {
+					$models = array_merge($models, $properties['models']);
+				}
+			}
 			
 			// Load Models
 			foreach($models as &$model)
@@ -337,7 +346,8 @@
 					Model::load($model);
 					
 					// Construct Model
-					$this->$model = Model::factory($model);
+					$modelName = ucfirst(strtolower($model));
+					$this->$modelName = Model::factory($model);
 				}
 				catch(\nre\exceptions\ModelNotValidException $e) {
 					if($explicit) {
