@@ -45,7 +45,7 @@
 		 * 
 		 * @var Logger
 		 */
-		private $log;
+		protected $log;
 		
 		
 		

@@ -37,6 +37,11 @@
 			
 			// Add routes
 			$this->addRoutes();
+			
+			// Disable screen logging for AJAX requests
+			if($this->request->getParam(0, 'toplevel') == 'ajax') {
+				$this->log->disableAutoLogToScreen();
+			}
 		}
 		
 		

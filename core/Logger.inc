@@ -38,6 +38,13 @@
 		 */
 		const LOGMODE_PHP = 2;
 		
+		/**
+		 * Do not auto-log to screen
+		 * 
+		 * @var boolean
+		 */
+		private $autoLogToScreenDisabled = false;
+		
 		
 		
 		
@@ -76,6 +83,15 @@
 		}
 		
 		
+		/**
+		 * Disable logging to screen when the log mode is automatically
+		 * detected.
+		 */
+		public function disableAutoLogToScreen()
+		{
+			$this->autoLogToScreenDisabled = true;
+		}
+		
 		
 		
 		/**
@@ -108,7 +124,7 @@
 		 */
 		private function getAutoLogMode()
 		{
-			return ($_SERVER['SERVER_ADDR'] == '127.0.0.1') ? self::LOGMODE_SCREEN : self::LOGMODE_PHP;
+			return ($_SERVER['SERVER_ADDR'] == '127.0.0.1' && !$this->autoLogToScreenDisabled) ? self::LOGMODE_SCREEN : self::LOGMODE_PHP;
 		}
 		
 	}
