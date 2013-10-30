@@ -60,6 +60,9 @@
 			
 			// Load POST-parameters
 			$this->loadPostParams();
+			
+			// Detect AJAX
+			$this->detectAJAX();
 		}
 		
 		
@@ -293,6 +296,24 @@
 		{
 			if(isset($_POST)) {
 				$this->postParams = $_POST;
+			}
+		}
+		
+		
+		/**
+		 * Detect an AJAX-request by checking the X-Requested-With
+		 * header and set the layout to 'ajax' in this case.
+		 */
+		private function detectAjax()
+		{
+			// Get request headers
+			$headers = apache_request_headers();
+			
+			// Check X-Requested-With header and set layout
+			if(array_key_exists('X-Requested-With', $headers) && $headers['X-Requested-With'] == 'XMLHttpRequest') {
+				if(!array_key_exists('layout', $this->getParams)) {
+					$this->getParams['layout'] = 'ajax';
+				}
 			}
 		}
 		
