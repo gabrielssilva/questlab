@@ -1,0 +1,1 @@
+Fehler: <?=$code?> <?=$string?>

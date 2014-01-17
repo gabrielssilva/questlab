@@ -56,7 +56,7 @@
 		 * @var array
 		 */
 		public static $routes = array(
-			//array('<pattern>', '<replace>', '<is_last>')
+			array('css/?(.*)',	'css/$1?layout=stylesheet',	false)
 		);
 
 
