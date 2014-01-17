@@ -11,9 +11,12 @@
 <body>
 	<header>
 		<h1>The Legend of Z</h1>
-		<?=$menu?>
+		<nav>
+			<?=$menu?>
+		</nav>
 	</header>
 	<article>
+		<h1><?=$title?></h1>
 		<?=$intermediate?>
 	</article>
 </body>

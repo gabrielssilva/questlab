@@ -56,7 +56,9 @@
 		 * @var array
 		 */
 		public static $routes = array(
-			array('css/?(.*)',	'css/$1?layout=stylesheet',	false)
+			array('css/?(.*)',		'css/$1?layout=stylesheet',	false),
+			array('users/(.+)',		'users/user/$1',		false),
+			array('seminaries/(.+)',	'seminaries/seminary/$1',	false)
 		);
 
 
@@ -67,7 +69,22 @@
 		 * @var array
 		 */
 		public static $reverseRoutes = array(
-			//array('<pattern>', '<replace>', '<is_last>')
+			array('users/user/(.*)',		'users/$1',		false),
+			array('seminaries/seminary/(.*)',	'seminaries/$1',	false)
+		);
+		
+		
+		/**
+		 * Database connection settings
+		 * 
+		 * @static
+		 * @var array
+		 */
+		public static $database = array(
+			'user'		=> 'z',
+			'host'		=> 'localhost',
+			'password'	=> 'legendofZ',
+			'db'		=> 'z'
 		);
 		
 	}
