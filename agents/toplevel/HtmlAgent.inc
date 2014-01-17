@@ -26,7 +26,7 @@
 		/**
 		 * Action: index.
 		 */
-		public function index()
+		public function index(\nre\core\Request $request, \nre\core\Response $response)
 		{
 			// Add menu
 			$this->addSubAgent('Menu');
