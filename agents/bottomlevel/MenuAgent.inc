@@ -9,15 +9,15 @@
 	 * @link	https://bitbucket.org/coderkun/the-legend-of-z
 	 */
 	
-	namespace hhu\z\agents\toplevel;
+	namespace hhu\z\agents\bottomlevel;
 	
 	
 	/**
-	 * Agent to display a HTML-page.
+	 * Agent to display a menu.
 	 * 
 	 * @author	Oliver Hanraths <oliver.hanraths@uni-duesseldorf.de>
 	 */
-	class HtmlAgent extends \nre\agents\ToplevelAgent
+	class MenuAgent extends \nre\agents\BottomlevelAgent
 	{
 		
 		
@@ -28,8 +28,6 @@
 		 */
 		public function index()
 		{
-			// Add menu
-			$this->addSubAgent('Menu');
 		}
 		
 	}

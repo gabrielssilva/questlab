@@ -9,7 +9,10 @@
 </head>
 
 <body>
-	<h1>The Legend of Z</h1>
+	<header>
+		<h1>The Legend of Z</h1>
+		<?=$menu?>
+	</header>
 	<article>
 		<?=$intermediate?>
 	</article>
