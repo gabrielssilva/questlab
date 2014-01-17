@@ -103,7 +103,7 @@
 		public static $classes = array(
 			'linker'	=> array(
 				'url'		=> array(
-					'length'	=>	50,
+					'length'	=>	128,
 					'delimiter'	=>	'-'
 				)
 			)

@@ -43,72 +43,61 @@
 		
 		
 		/**
-		 * Process a title and optional a date to create link parameters.
+		 * Mask parameters to be used in an URL.
 		 * 
-		 * @param	string	$title	Titel
-		 * @param	string	$date	Date
-		 * @return	string		Created link parameters
+		 * @param	string	$param1	First parameter
+		 * @return	string		Masked parameters as string
 		 */
-		public static function getLinkParams($title, $date=null)
+		public static function createLinkParam($param1)
 		{
-			// Parameters
-			$param = '';
-			
-			// Mask special sign seperately
-			$specials = array('/', '?', '&');
-			foreach($specials as &$special) {
-				$title = str_replace($special, rawurlencode(rawurlencode($special)), $title);
-			}
-			
-			// Process title
-			$param .= str_replace(
-				' ',
-				'-',
-				substr(
-					$title,
-					0,
-					\nre\configs\CoreConfig::$classes['linker']['url']['length']
+			return implode(
+				\nre\configs\CoreConfig::$classes['linker']['url']['delimiter'],
+				call_user_func_array(
+					Utils::createLinkParams,
+					func_get_args()
 				)
 			);
-			
-			// Process date
-			if(!empty($date)) {
-				$param = substr($date, 0, 10).\nre\configs\CoreConfig::$classes['linker']['url']['delimiter'].$param;
-			}
-			
-			
-			// Mask and return parameters
-			return array(rawurlencode($param));
 		}
 		
 		
 		/**
-		 * Extract date and title from a parameter string.
+		 * Mask parameters to be used in an URL.
 		 * 
-		 * @param	string	$dateTitle	Parameter string with date and title
-		 * @return	array			Extracted date and title as associative array
+		 * @param	string	$param1	First parameter
+		 * @return	string		Masked parameters as array
 		 */
-		public static function extractDateTitle($dateTitle)
+		public static function createLinkParams($param1)
 		{
-			// Get delimiter
-			$delimiter = \nre\configs\CoreConfig::$classes[strtolower(get_class())]['url']['delimiter'];
+			// Parameters
+			$linkParams = array();
+			$params = func_get_args();
 			
-			// Split
-			$dateTitle = explode($delimiter, $dateTitle);
-			if(count($dateTitle) < 4) {
-				throw new IdNotFoundException(implode($delimiter, $dateTitle));
+			foreach($params as $param)
+			{
+				// Mask special signs seperately
+				$specials = array('/', '?', '&');
+				foreach($specials as &$special) {
+					$param = str_replace($special, rawurlencode(rawurlencode($special)), $param);
+				}
+				
+				// Process parameter
+				$param = str_replace(
+					' ',
+					\nre\configs\CoreConfig::$classes['linker']['url']['delimiter'],
+					substr(
+						$title,
+						0,
+						\nre\configs\CoreConfig::$classes['linker']['url']['length']
+					)
+				);
+				
+				// Encode parameter
+				$linkParams[] = rawurlencode($param);
 			}
-						
-			// Get parts
-			$date = urldecode(implode($delimiter, array_slice($dateTitle, 0, 3)));
-			$title = urldecode(implode($delimiter, array_slice($dateTitle, 3)));
 			
 			
-			// Return date and title
-			return array(
-				'date'	=>	$date,
-				'title'	=>	$title
-			);
+			// Return link parameters
+			return $linkParams;
 		}
 		
 		
