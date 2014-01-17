@@ -17,7 +17,7 @@
 	 * 
 	 * @author	Oliver Hanraths <oliver.hanraths@uni-duesseldorf.de>
 	 */
-	class ErrorController extends \nre\core\Controller
+	class ErrorController extends \hhu\z\Controller
 	{
 		
 		
