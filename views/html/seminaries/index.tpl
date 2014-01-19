@@ -1,9 +1,10 @@
+<h1><?=_('Seminaries')?></h1>
 <ul>
 	<?php foreach($seminaries as &$seminary) : ?>
 	<li>
 		<h2><a href="<?=$linker->link(array('seminary', $seminary['url']), 1)?>"><?=$seminary['title']?></a></h2>
 		<details>
-			<summary>erstellt von <?=$seminary['creator']['username']?></summary>
+			<summary><?=sprintf(_('created by %s on %s'), $seminary['creator']['username'], date(\hhu\z\Utils::DATEFORMAT, strtotime($seminary['created'])))?></summary>
 		</details>
 	</li>
 	<?php endforeach ?>

@@ -1,0 +1,45 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: The Legend of Z\n"
+"POT-Creation-Date: 2014-01-19 22:56+0100\n"
+"PO-Revision-Date: 2014-01-19 22:58+0100\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: de_DE\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.6.3\n"
+"X-Poedit-Basepath: .\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Poedit-SearchPath-0: ../../../views\n"
+
+#: ../../../views/html/menu/index.tpl:2 ../../../views/html/users/user.tpl:1
+#: ../../../views/html/users/index.tpl:1
+msgid "Users"
+msgstr "Benutzer"
+
+#: ../../../views/html/menu/index.tpl:3
+#: ../../../views/html/seminaries/seminary.tpl:1
+#: ../../../views/html/seminaries/index.tpl:1
+msgid "Seminaries"
+msgstr "Kurse"
+
+#: ../../../views/html/users/user.tpl:4 ../../../views/html/users/index.tpl:7
+msgid "registered on"
+msgstr "registriert seit"
+
+#: ../../../views/html/error/index.tpl:1
+msgid "Error"
+msgstr "Fehler"
+
+#: ../../../views/html/seminaries/seminary.tpl:4
+#: ../../../views/html/seminaries/index.tpl:7
+#, php-format
+msgid "created by %s on %s"
+msgstr "erstellt von %s am %s"
+
+#: ../../../views/html/introduction/index.tpl:1
+msgid "Introduction"
+msgstr "Einführung"

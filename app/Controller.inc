@@ -44,9 +44,6 @@
 		public function __construct($layoutName, $action, $agent)
 		{
 			parent::__construct($layoutName, $action, $agent);
-			
-			// Set timezone
-			date_default_timezone_set(\nre\configs\AppConfig::$app['timeZone']);
 		}
 		
 		

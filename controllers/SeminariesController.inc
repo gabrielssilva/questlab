@@ -65,6 +65,9 @@
 			// Get seminary
 			$seminary = $this->Seminaries->getSeminaryByUrl($seminaryUrl);
 			
+			// Created user
+			$seminary['creator'] = $this->Users->getUserById($seminary['created_user_id']);
+			
 			
 			// Pass data to view
 			$this->set('seminary', $seminary);

@@ -16,7 +16,6 @@
 		</nav>
 	</header>
 	<article>
-		<h1><?=$title?></h1>
 		<?=$intermediate?>
 	</article>
 </body>

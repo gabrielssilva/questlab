@@ -1,2 +1,2 @@
-<h1>Fehler</h1>
+<h1><?=_('Error')?></h1>
 <p class="error"><?=$code?>: <?=$string?></p>

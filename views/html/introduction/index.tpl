@@ -1,3 +1,4 @@
+<h1><?=_('Introduction')?></h1>
 <p>Ein Projekt zum Thema „Gamification im Lehrumfeld“ – basierend auf <a href="http://legende-von-zyren.de">Die Legende von Zyren</a>.</p>
 <p>Entwickler:</p>
 <ul>

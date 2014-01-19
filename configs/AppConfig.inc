@@ -30,6 +30,7 @@
 		 * @var array
 		 */
 		public static $app = array(
+			'name'			=>	'The Legend of Z',
 			'namespace'		=>	'hhu\\z\\',
 			'timeZone'		=>	'Europe/Berlin'
 		);
@@ -45,7 +46,19 @@
 			'toplevel'		=>	'html',
 			'toplevel-error'	=>	'fault',
 			'intermediate'		=>	'introduction',
-			'intermediate-error'	=>	'error'
+			'intermediate-error'	=>	'error',
+			'language'		=>	'de_DE.utf8'
+		);
+		
+		
+		/**
+		 * Directories
+		 * 
+		 * @static
+		 * @var array
+		 */
+		public static $dirs = array(
+			'locale'	=>	'locale'
 		);
 		
 		
