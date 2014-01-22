@@ -53,7 +53,7 @@
 			return implode(
 				\nre\configs\CoreConfig::$classes['linker']['url']['delimiter'],
 				call_user_func_array(
-					Utils::createLinkParams,
+					'\nre\core\Linker::createLinkParams',
 					func_get_args()
 				)
 			);
@@ -85,7 +85,7 @@
 					' ',
 					\nre\configs\CoreConfig::$classes['linker']['url']['delimiter'],
 					substr(
-						$title,
+						$param,
 						0,
 						\nre\configs\CoreConfig::$classes['linker']['url']['length']
 					)
