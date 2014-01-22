@@ -25,6 +25,15 @@
 		 * @var array
 		 */
 		public $models = array('seminaries', 'users');
+		/**
+		 * User permissions
+		 * 
+		 * @var array
+		 */
+		public $permissions = array(
+			'index' => array(),
+			'seminary' => array()
+		);
 		
 		
 		

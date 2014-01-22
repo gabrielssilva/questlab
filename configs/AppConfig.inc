@@ -69,9 +69,10 @@
 		 * @var array
 		 */
 		public static $routes = array(
-			array('css/?(.*)',		'css/$1?layout=stylesheet',	false),
-			array('users/(.+)',		'users/user/$1',		false),
-			array('seminaries/(.+)',	'seminaries/seminary/$1',	false)
+			array('css/?(.*)',						'css/$1?layout=stylesheet',	false),
+			array('users/([^/]+)/(edit|delete)',				'users/$2/$1',			true),
+			array('users/(?!(index|login|logout|create|edit|delete))',	'users/user/$1',		true),
+			array('seminaries/(.+)',					'seminaries/seminary/$1',	false)
 		);
 
 
@@ -82,7 +83,8 @@
 		 * @var array
 		 */
 		public static $reverseRoutes = array(
-			array('users/user/(.*)',		'users/$1',		false),
+			array('users/user/(.*)',		'users/$1',		true),
+			array('users/([^/]+)/(.*)',		'users/$2/$1',		true),
 			array('seminaries/seminary/(.*)',	'seminaries/$1',	false)
 		);
 		

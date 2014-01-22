@@ -265,6 +265,7 @@
 		/**
 		 * Run the Controller of this Agent and its SubAgents.
 		 * 
+		 * @throws	AccessDeniedException
 		 * @throws	IdNotFoundException
 		 * @throws	ServiceUnavailableException
 		 * @throws	DatamodelException
@@ -292,6 +293,7 @@
 		/**
 		 * Run IntermediateAgent.
 		 * 
+		 * @throws	AccessDeniedException
 		 * @throws	ParamsNotValidException
 		 * @throws	IdNotFoundException
 		 * @throws	ServiceUnavailableException

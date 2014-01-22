@@ -17,7 +17,7 @@
 	 * 
 	 * @author	Oliver Hanraths <oliver.hanraths@uni-duesseldorf.de>
 	 */
-	class HtmlController extends \nre\core\Controller
+	class HtmlController extends \hhu\z\Controller
 	{
 		
 		
@@ -36,9 +36,6 @@
 			
 			// Set content-type
 			$this->response->addHeader("Content-type: text/html; charset=utf-8");
-			
-			// Start session
-			session_start();
 		}
 		
 		
@@ -51,6 +48,9 @@
 		{
 			// Set the name of the current IntermediateAgent as page title
 			$this->set('title', $this->request->getParam(1, 'intermediate'));
+			
+			// Set userdata
+			$this->set('loggedUser', static::$user);
 		}
 		
 	}

@@ -1,4 +1,7 @@
 <h1><?=_('Users')?></h1>
+<nav>
+	<li><a href="<?=$linker->link('create', 1)?>"><?=_('Create new user')?></a></li>
+</nav>
 <ul>
 	<?php foreach($users as &$user) : ?>
 	<li>

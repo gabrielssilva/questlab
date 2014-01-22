@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: The Legend of Z\n"
-"POT-Creation-Date: 2014-01-19 22:56+0100\n"
-"PO-Revision-Date: 2014-01-19 22:58+0100\n"
+"POT-Creation-Date: 2014-01-22 16:28+0100\n"
+"PO-Revision-Date: 2014-01-22 16:29+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de_DE\n"
@@ -15,8 +15,10 @@ msgstr ""
 "X-Poedit-SourceCharset: UTF-8\n"
 "X-Poedit-SearchPath-0: ../../../views\n"
 
-#: ../../../views/html/menu/index.tpl:2 ../../../views/html/users/user.tpl:1
-#: ../../../views/html/users/index.tpl:1
+#: ../../../views/html/menu/index.tpl:2 ../../../views/html/users/login.tpl:1
+#: ../../../views/html/users/user.tpl:1 ../../../views/html/users/index.tpl:1
+#: ../../../views/html/users/edit.tpl:1 ../../../views/html/users/delete.tpl:1
+#: ../../../views/html/users/create.tpl:1
 msgid "Users"
 msgstr "Benutzer"
 
@@ -26,9 +28,72 @@ msgstr "Benutzer"
 msgid "Seminaries"
 msgstr "Kurse"
 
-#: ../../../views/html/users/user.tpl:4 ../../../views/html/users/index.tpl:7
+#: ../../../views/html/menu/index.tpl:5 ../../../views/html/users/login.tpl:2
+#: ../../../views/html/users/login.tpl:11
+msgid "Login"
+msgstr "Login"
+
+#: ../../../views/html/menu/index.tpl:7
+msgid "Logout"
+msgstr "Logout"
+
+#: ../../../views/html/users/login.tpl:6 ../../../views/html/users/login.tpl:7
+#: ../../../views/html/users/edit.tpl:6 ../../../views/html/users/edit.tpl:7
+#: ../../../views/html/users/create.tpl:6
+#: ../../../views/html/users/create.tpl:7
+msgid "Username"
+msgstr "Benutzername"
+
+#: ../../../views/html/users/login.tpl:8 ../../../views/html/users/login.tpl:9
+#: ../../../views/html/users/edit.tpl:10 ../../../views/html/users/edit.tpl:11
+#: ../../../views/html/users/create.tpl:10
+#: ../../../views/html/users/create.tpl:11
+msgid "Password"
+msgstr "Passwort"
+
+#: ../../../views/html/users/user.tpl:4 ../../../views/html/users/delete.tpl:2
+msgid "Delete user"
+msgstr "Benutzer löschen"
+
+#: ../../../views/html/users/user.tpl:7 ../../../views/html/users/index.tpl:10
 msgid "registered on"
 msgstr "registriert seit"
+
+#: ../../../views/html/users/index.tpl:3
+msgid "Create new user"
+msgstr "Neuen Benutzer erstellen"
+
+#: ../../../views/html/users/edit.tpl:2
+msgid "Edit user"
+msgstr "Benutzer bearbeiten"
+
+#: ../../../views/html/users/edit.tpl:8 ../../../views/html/users/edit.tpl:9
+#: ../../../views/html/users/create.tpl:8
+#: ../../../views/html/users/create.tpl:9
+msgid "E‑Mail-Address"
+msgstr "E‑Mail-Adresse"
+
+#: ../../../views/html/users/edit.tpl:13
+#: ../../../views/html/users/create.tpl:13
+msgid "create"
+msgstr "erstellen"
+
+#: ../../../views/html/users/delete.tpl:4
+#, php-format
+msgid "Should the user “%s” (%s) really be deleted?"
+msgstr "Soll der Benutzer „%s“ (%s) wirklich gelöscht werden?"
+
+#: ../../../views/html/users/delete.tpl:6
+msgid "delete"
+msgstr "löschen"
+
+#: ../../../views/html/users/delete.tpl:7
+msgid "cancel"
+msgstr "abbrechen"
+
+#: ../../../views/html/users/create.tpl:2
+msgid "New user"
+msgstr "Neuer Benutzer"
 
 #: ../../../views/html/error/index.tpl:1
 msgid "Error"

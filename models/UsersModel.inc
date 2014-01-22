@@ -100,6 +100,138 @@
 			return $user[0];
 		}
 		
+		
+		/**
+		 * Log a user in if its credentials are valid.
+		 * 
+		 * @throws	DatamodelException
+		 * @param	string	$username	The name of the user to log in
+		 * @param	string	$password	Plaintext password of the user to log in
+		 */
+		public function login($username, $password)
+		{
+			$data = $this->db->query('SELECT id, password FROM users WHERE username = ?', 's', $username);
+			if(!empty($data))
+			{
+				$data = $data[0];
+				if($this->verify($password, $data['password'])) {
+					return $data['id'];
+				}
+			}
+			
+			
+			return null;
+		}
+		
+		
+		/**
+		 * Create a new user.
+		 * 
+		 * @param	string	$username	Username of the user to create
+		 * @param	string	$email		E‑Mail-Address of the user to create
+		 * @param	string	$password	Password of the user to create
+		 * @return	int			ID of the newly created user
+		 */
+		public function createUser($username, $email, $password)
+		{
+			$this->db->query(
+				'INSERT INTO users '.
+				'(username, url, email, password) '.
+				'VALUES '.
+				'(?, ?, ?, ?)',
+				'ssss',
+				$username,
+				\nre\core\Linker::createLinkParam($username),
+				$email,
+				$this->hash($password)
+			);
+			
+			
+			return $this->db->getInsertId();
+		}
+		
+		
+		/**
+		 * Edit a user.
+		 * 
+		 * @throws	DatamodelException
+		 * @param	string	$username	New name of user
+		 * @param	string	$email		Changed e‑mail-address of user
+		 * @param	string	$password	Changed plaintext password of user
+		 */
+		public function editUser($userId, $username, $email, $password)
+		{
+			try {
+				// Update user data
+				$this->db->query(
+					'UPDATE users '.
+					'SET username = ?, email = ? '.
+					'WHERE id = ?',
+					'ssi',
+					$sername, $email,
+					$userId
+				);
+				
+				// Set new password
+				if(!empty($password))
+				{
+					$this->db->query(
+						'UPDATE users '.
+						'SET password = ? '.
+						'WHERE id = ?',
+						'si',
+						$this->hash($password),
+						$userId
+					);
+				}
+			}
+			catch(Exception $e) {
+				$this->db->rollback();
+				throw $e;
+			}
+			finally {
+				$this->db->setAutocommit(true);
+			}
+		}
+		
+		
+		/**
+		 * Delete a user.
+		 * 
+		 * @param	int	$userId	ID of the user to delete
+		 */
+		public function deleteUser($userId)
+		{
+			$this->db->query('DELETE FROM users WHERE id = ?', 'i', $userId);
+		}
+		
+		
+		
+		
+		/**
+		 * Hash a password.
+		 * 
+		 * @param	string	$password	Plaintext password
+		 * @return	string			Hashed password
+		 */
+		private function hash($password)
+		{
+			return password_hash($password, PASSWORD_DEFAULT);
+		}
+		
+		
+		/**
+		 * Verify a password.
+		 * 
+		 * @param	string	$password	Plaintext password to verify
+		 * @param	string	$hash		Hashed password to match with
+		 * @return	boolean			Verified
+		 */
+		private function verify($password, $hash)
+		{
+			return password_verify($password, $hash);
+		}
+		
 	}
 
 ?>

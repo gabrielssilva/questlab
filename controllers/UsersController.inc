@@ -19,6 +19,19 @@
 	 */
 	class UsersController extends \hhu\z\Controller
 	{
+		/**
+		 * User permissions
+		 * 
+		 * @var array
+		 */
+		public $permissions = array(
+			'index' => array(),
+			'user' => array(),
+			'create' => array(),
+			'edit' => array(),
+			'delete' => array()
+		);
+		
 		
 		
 		
@@ -52,6 +65,153 @@
 			
 			
 			// Pass data to view
+			$this->set('user', $user);
+		}
+		
+		
+		/**
+		 * Action: login.
+		 * 
+		 * Log in a user.
+		 */
+		public function login()
+		{
+			$username = '';
+			
+			// Log the user in
+			if($this->request->getRequestMethod() == 'POST' && !empty($this->request->getPostParam('login')))
+			{
+				$username = $this->request->getPostParam('username');
+				$userId = $this->Users->login(
+					$username,
+					$this->request->getPostParam('password')
+				);
+				
+				if(!is_null($userId))
+				{
+					$this->Auth->setUserId($userId);
+					$user = $this->Users->getUserById($userId);
+					
+					$this->redirect($this->linker->link(array($user['url']), 1));
+				}
+			}
+			
+			
+			// Pass data to view
+			$this->set('username', $username);
+			$this->set('failed', ($this->request->getRequestMethod() == 'POST'));
+		}
+		
+		
+		/**
+		 * Action: logout.
+		 *
+		 * Log out a user.
+		 */
+		public function logout()
+		{
+			// Unset the currently logged in user
+			$this->Auth->setUserId(null);
+			
+			// Redirect
+			$this->redirect($this->linker->link(array()));
+		}
+		
+		
+		/**
+		 * Action: create.
+		 * 
+		 * Create a new user.
+		 */
+		public function create()
+		{
+			if($this->request->getRequestMethod() == 'POST' && !is_null($this->request->getPostParam('create')))
+			{
+				// Create new user
+				$userId = $this->Users->createUser(
+					$this->request->getPostParam('username'),
+					$this->request->getPostParam('email'),
+					$this->request->getPostParam('password')
+				);
+				
+				// Redirect to user
+				$user = $this->Users->getUserById($userId);
+				$this->redirect($this->linker->link(array($user['url']), 1));
+			}
+		}
+		
+		
+		/**
+		 * Action: edit.
+		 * 
+		 * Edit a user.
+		 * 
+		 * @throws	IdNotFoundException
+		 * @param	string	$userUrl	URL-Username of an user
+		 */
+		public function edit($userUrl)
+		{
+			// User
+			$user = $this->Users->getUserByUrl($userUrl);
+			
+			// Check request method
+			if($this->request->getRequestMethod() == 'POST')
+			{
+				// Save changes
+				if(!empty($this->request->getPostParam('save')))
+				{
+					// Edit user
+					$this->Users->editUser(
+						$user['id'],
+						$this->request->getPostParam('username'),
+						$this->request->getPostParam('email'),
+						$this->request->getPostParam('password')
+					);
+				}
+				
+				
+				// Redirect to user
+				$this->redirect($this->linker->link(array($user['url']), 1));
+			}
+			
+			
+			// Pass data to view
+			$this->set('user', $user);
+		}
+		
+		
+		/**
+		 * Action: delete.
+		 * 
+		 * Delete a user.
+		 * 
+		 * @throws	IdNotFoundException
+		 * @param	string	$userUrl	URL-Username of an user
+		 */
+		public function delete($userUrl)
+		{
+			// User
+			$user = $this->Users->getUserByUrl($userUrl);
+			
+			// Check request method
+			if($this->request->getRequestMethod() == 'POST')
+			{
+				// Check confirmation
+				if($this->request->getPostParam('delete') == 'delete')
+				{
+					// Delete user
+					$this->Users->deleteUser($user['id']);
+					
+					// Redirect to overview
+					$this->redirect($this->linker->link(null, 1));
+				}
+				
+				// Redirect to entry
+				$this->redirect($this->linker->link(array('user', $user['url']), 1));
+			}
+			
+			
+			// Show confirmation
 			$this->set('user', $user);
 		}
 		

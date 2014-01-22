@@ -14,6 +14,11 @@
 		<nav>
 			<?=$menu?>
 		</nav>
+		<?php if(!is_null($loggedUser)) : ?>
+		<div id="user">
+			<a href="<?=$linker->link(array('users',$loggedUser['url']))?>"><?=$loggedUser['username']?></a>
+		</div>
+		<?php endif ?>
 	</header>
 	<article>
 		<?=$intermediate?>
