@@ -82,6 +82,103 @@
 			$this->set('seminary', $seminary);
 		}
 		
+		
+		/**
+		 * Action: create.
+		 * 
+		 * Create a new seminary.
+		 */
+		public function create()
+		{
+			if($this->request->getRequestMethod() == 'POST' && !is_null($this->request->getPostParam('create')))
+			{
+				// Create new seminary
+				var_dump($this->Auth->getUserId());
+				$seminaryId = $this->Seminaries->createSeminary(
+					$this->request->getPostParam('title'),
+					$this->Auth->getUserId()
+				);
+				
+				// Redirect to seminary
+				$user = $this->Seminaries->getSeminaryById($seminaryId);
+				$this->redirect($this->linker->link(array($seminary['url']), 1));
+			}
+		}
+		
+		
+		/**
+		 * Action: edit.
+		 * 
+		 * Edit a seminary.
+		 * 
+		 * @throws	IdNotFoundException
+		 * @param	string	$seminaryUrl	URL-Title of a seminary
+		 */
+		public function edit($seminaryUrl)
+		{
+			// Get seminary
+			$seminary = $this->Seminaries->getSeminaryByUrl($seminaryUrl);
+			
+			// Check request method
+			if($this->request->getRequestMethod() == 'POST')
+			{
+				// Save changes
+				if(!empty($this->request->getPostParam('save')))
+				{
+					// Edit seminary
+					$this->Seminaries->editSeminary(
+						$seminary['id'],
+						$this->request->getPostParam('title')
+					);
+					$seminary = $this->Seminaries->getSeminaryById($seminary['id']);
+				}
+				
+				
+				// Redirect to entry
+				$this->redirect($this->linker->link(array($seminary['url']), 1));
+			}
+			
+			
+			// Pass data to view
+			$this->set('seminary', $seminary);
+		}
+		
+		
+		/**
+		 * Action: delete.
+		 * 
+		 * Delete a seminary.
+		 * 
+		 * @throws	IdNotFoundException
+		 * @param	string	$seminaryUrl	URL-Title of a seminary
+		 */
+		public function delete($seminaryUrl)
+		{
+			// Get seminary
+			$seminary = $this->Seminaries->getSeminaryByUrl($seminaryUrl);
+			
+			// Check request method
+			if($this->request->getRequestMethod() == 'POST')
+			{
+				// Check confirmation
+				if(!empty($this->request->getPostParam('delete')))
+				{
+					// Delete seminary
+					$this->Seminaries->deleteSeminary($seminary['id']);
+					
+					// Redirect to overview
+					$this->redirect($this->linker->link(null, 1));
+				}
+				
+				// Redirect to entry
+				$this->redirect($this->linker->link(array('seminary', $seminary['url']), 1));
+			}
+			
+			
+			// Show confirmation
+			$this->set('seminary', $seminary);
+		}
+		
 	}
 
 ?>

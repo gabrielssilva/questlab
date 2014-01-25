@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: The Legend of Z\n"
-"POT-Creation-Date: 2014-01-25 20:20+0100\n"
-"PO-Revision-Date: 2014-01-25 20:20+0100\n"
+"POT-Creation-Date: 2014-01-25 20:52+0100\n"
+"PO-Revision-Date: 2014-01-25 20:52+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de_DE\n"
@@ -25,6 +25,8 @@ msgstr "Benutzer"
 #: ../../../views/html/menu/index.tpl:3
 #: ../../../views/html/seminaries/seminary.tpl:1
 #: ../../../views/html/seminaries/index.tpl:1
+#: ../../../views/html/seminaries/edit.tpl:1
+#: ../../../views/html/seminaries/delete.tpl:1
 #: ../../../views/html/seminaries/create.tpl:1
 msgid "Seminaries"
 msgstr "Kurse"
@@ -52,11 +54,15 @@ msgstr "Benutzername"
 msgid "Password"
 msgstr "Passwort"
 
-#: ../../../views/html/users/user.tpl:4 ../../../views/html/users/delete.tpl:2
+#: ../../../views/html/users/user.tpl:4 ../../../views/html/users/edit.tpl:2
+msgid "Edit user"
+msgstr "Benutzer bearbeiten"
+
+#: ../../../views/html/users/user.tpl:5 ../../../views/html/users/delete.tpl:2
 msgid "Delete user"
 msgstr "Benutzer löschen"
 
-#: ../../../views/html/users/user.tpl:7 ../../../views/html/users/index.tpl:10
+#: ../../../views/html/users/user.tpl:8 ../../../views/html/users/index.tpl:10
 #, php-format
 msgid "registered on %s"
 msgstr "registriert am %s"
@@ -65,10 +71,6 @@ msgstr "registriert am %s"
 msgid "Create new user"
 msgstr "Neuen Benutzer erstellen"
 
-#: ../../../views/html/users/edit.tpl:2
-msgid "Edit user"
-msgstr "Benutzer bearbeiten"
-
 #: ../../../views/html/users/edit.tpl:8 ../../../views/html/users/edit.tpl:9
 #: ../../../views/html/users/create.tpl:8
 #: ../../../views/html/users/create.tpl:9
@@ -76,10 +78,9 @@ msgid "E‑Mail-Address"
 msgstr "E‑Mail-Adresse"
 
 #: ../../../views/html/users/edit.tpl:13
-#: ../../../views/html/users/create.tpl:13
-#: ../../../views/html/seminaries/create.tpl:9
-msgid "create"
-msgstr "erstellen"
+#: ../../../views/html/seminaries/edit.tpl:9
+msgid "save"
+msgstr "speichern"
 
 #: ../../../views/html/users/delete.tpl:4
 #, php-format
@@ -87,10 +88,12 @@ msgid "Should the user “%s” (%s) really be deleted?"
 msgstr "Soll der Benutzer „%s“ (%s) wirklich gelöscht werden?"
 
 #: ../../../views/html/users/delete.tpl:6
+#: ../../../views/html/seminaries/delete.tpl:6
 msgid "delete"
 msgstr "löschen"
 
 #: ../../../views/html/users/delete.tpl:7
+#: ../../../views/html/seminaries/delete.tpl:7
 msgid "cancel"
 msgstr "abbrechen"
 
@@ -98,11 +101,26 @@ msgstr "abbrechen"
 msgid "New user"
 msgstr "Neuer Benutzer"
 
+#: ../../../views/html/users/create.tpl:13
+#: ../../../views/html/seminaries/create.tpl:9
+msgid "create"
+msgstr "erstellen"
+
 #: ../../../views/html/error/index.tpl:1
 msgid "Error"
 msgstr "Fehler"
 
 #: ../../../views/html/seminaries/seminary.tpl:4
+#: ../../../views/html/seminaries/edit.tpl:2
+msgid "Edit seminary"
+msgstr "Kurs bearbeiten"
+
+#: ../../../views/html/seminaries/seminary.tpl:5
+#: ../../../views/html/seminaries/delete.tpl:2
+msgid "Delete seminary"
+msgstr "Kurs löschen"
+
+#: ../../../views/html/seminaries/seminary.tpl:8
 #: ../../../views/html/seminaries/index.tpl:10
 #, php-format
 msgid "created by %s on %s"
@@ -112,14 +130,21 @@ msgstr "erstellt von %s am %s"
 msgid "Create new seminary"
 msgstr "Neuen Kurs erstellen"
 
-#: ../../../views/html/seminaries/create.tpl:2
-msgid "New seminary"
-msgstr "Neuer Kurs"
-
+#: ../../../views/html/seminaries/edit.tpl:6
+#: ../../../views/html/seminaries/edit.tpl:7
 #: ../../../views/html/seminaries/create.tpl:6
 #: ../../../views/html/seminaries/create.tpl:7
 msgid "Title"
 msgstr "Titel"
+
+#: ../../../views/html/seminaries/delete.tpl:4
+#, php-format
+msgid "Should the seminary “%s” really be deleted?"
+msgstr "Soll der Kurs „%s“ wirklich gelöscht werden?"
+
+#: ../../../views/html/seminaries/create.tpl:2
+msgid "New seminary"
+msgstr "Neuer Kurs"
 
 #: ../../../views/html/introduction/index.tpl:1
 msgid "Introduction"

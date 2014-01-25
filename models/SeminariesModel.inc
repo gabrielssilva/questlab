@@ -99,6 +99,63 @@
 			return $seminary[0];
 		}
 		
+		
+		/**
+		 * Create a new seminary.
+		 * 
+		 * @param	string	$title		Title of seminary to create
+		 * @param	int	$userId		ID of creating user
+		 * @return	int			ID of the newly created seminary
+		 */
+		public function createSeminary($title, $userId)
+		{
+			$this->db->query(
+				'INSERT INTO seminaries '.
+				'(created_user_id, title, url) '.
+				'VALUES '.
+				'(?, ?, ?)',
+				'iss',
+				$userId,
+				$title,
+				\nre\core\Linker::createLinkParam($title)
+			);
+			
+			
+			return $this->db->getInsertId();
+		}
+		
+		
+		/**
+		 * Edit a seminary.
+		 * 
+		 * @throws	DatamodelException
+		 * @param	int	$seminaryId	ID of the seminary to delete
+		 * @param	string	$title		New title of seminary
+		 */
+		public function editSeminary($seminaryId, $title)
+		{
+			$this->db->query(
+				'UPDATE seminaries '.
+				'SET title = ?, url = ? '.
+				'WHERE id = ?',
+				'ssi',
+				$title,
+				\nre\core\Linker::createLinkParam($title),
+				$seminaryId
+			);
+		}
+		
+		
+		/**
+		 * Delete a seminary.
+		 * 
+		 * @param	int	$seminaryId	ID of the seminary to delete
+		 */
+		public function deleteSeminary($seminaryId)
+		{
+			$this->db->query('DELETE FROM seminaries WHERE id = ?', 'i', $seminaryId);
+		}
+		
 	}
 
 ?>

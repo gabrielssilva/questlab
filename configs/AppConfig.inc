@@ -73,7 +73,8 @@
 			array('css/?(.*)',						'css/$1?layout=stylesheet',	false),
 			array('users/([^/]+)/(edit|delete)',				'users/$2/$1',			true),
 			array('users/(?!(index|login|logout|create|edit|delete))',	'users/user/$1',		true),
-			array('seminaries/(.+)',					'seminaries/seminary/$1',	false)
+			array('seminaries/([^/]+)/(edit|delete)',			'seminaries/$2/$1',		true),
+			array('seminaries/(?!(index|create|edit|delete))',		'seminaries/seminary/$1',	true)
 		);
 
 

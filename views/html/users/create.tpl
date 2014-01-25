@@ -2,7 +2,7 @@
 <h2><?=_('New user')?></h2>
 
 <form method="post" action="<?=$linker->link('create', 1)?>">
-	<filedset>
+	<fieldset>
 		<label for="username"><?=_('Username')?>:</label>
 		<input type="text" name="username" placeholder="<?=_('Username')?>" /><br />
 		<label for="email"><?=_('E‑Mail-Address')?>:</label>

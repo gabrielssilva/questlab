@@ -155,6 +155,7 @@
 		 * Edit a user.
 		 * 
 		 * @throws	DatamodelException
+		 * @param	int	$userId		ID of the user to delete
 		 * @param	string	$username	New name of user
 		 * @param	string	$email		Changed e‑mail-address of user
 		 * @param	string	$password	Changed plaintext password of user
@@ -165,10 +166,12 @@
 				// Update user data
 				$this->db->query(
 					'UPDATE users '.
-					'SET username = ?, email = ? '.
+					'SET username = ?, url = ?, email = ? '.
 					'WHERE id = ?',
-					'ssi',
-					$sername, $email,
+					'sssi',
+					$username,
+					\nre\core\Linker::createLinkParam($username),
+					$email,
 					$userId
 				);
 				
@@ -214,7 +217,7 @@
 		 * @param	string	$password	Plaintext password
 		 * @return	string			Hashed password
 		 */
-		private function hash($password)
+		public function hash($password)
 		{
 			return password_hash($password, PASSWORD_DEFAULT);
 		}

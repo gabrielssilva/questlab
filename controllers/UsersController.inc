@@ -167,10 +167,11 @@
 						$this->request->getPostParam('email'),
 						$this->request->getPostParam('password')
 					);
+					$user = $this->Users->getUserById($user['id']);
 				}
 				
 				
-				// Redirect to user
+				// Redirect to entry
 				$this->redirect($this->linker->link(array($user['url']), 1));
 			}
 			
@@ -197,7 +198,7 @@
 			if($this->request->getRequestMethod() == 'POST')
 			{
 				// Check confirmation
-				if($this->request->getPostParam('delete') == 'delete')
+				if(!empty($this->request->getPostParam('delete')))
 				{
 					// Delete user
 					$this->Users->deleteUser($user['id']);
