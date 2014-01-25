@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: The Legend of Z\n"
-"POT-Creation-Date: 2014-01-22 16:28+0100\n"
-"PO-Revision-Date: 2014-01-22 16:29+0100\n"
+"POT-Creation-Date: 2014-01-25 20:20+0100\n"
+"PO-Revision-Date: 2014-01-25 20:20+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de_DE\n"
@@ -25,6 +25,7 @@ msgstr "Benutzer"
 #: ../../../views/html/menu/index.tpl:3
 #: ../../../views/html/seminaries/seminary.tpl:1
 #: ../../../views/html/seminaries/index.tpl:1
+#: ../../../views/html/seminaries/create.tpl:1
 msgid "Seminaries"
 msgstr "Kurse"
 
@@ -56,8 +57,9 @@ msgid "Delete user"
 msgstr "Benutzer löschen"
 
 #: ../../../views/html/users/user.tpl:7 ../../../views/html/users/index.tpl:10
-msgid "registered on"
-msgstr "registriert seit"
+#, php-format
+msgid "registered on %s"
+msgstr "registriert am %s"
 
 #: ../../../views/html/users/index.tpl:3
 msgid "Create new user"
@@ -75,6 +77,7 @@ msgstr "E‑Mail-Adresse"
 
 #: ../../../views/html/users/edit.tpl:13
 #: ../../../views/html/users/create.tpl:13
+#: ../../../views/html/seminaries/create.tpl:9
 msgid "create"
 msgstr "erstellen"
 
@@ -100,11 +103,30 @@ msgid "Error"
 msgstr "Fehler"
 
 #: ../../../views/html/seminaries/seminary.tpl:4
-#: ../../../views/html/seminaries/index.tpl:7
+#: ../../../views/html/seminaries/index.tpl:10
 #, php-format
 msgid "created by %s on %s"
 msgstr "erstellt von %s am %s"
 
+#: ../../../views/html/seminaries/index.tpl:3
+msgid "Create new seminary"
+msgstr "Neuen Kurs erstellen"
+
+#: ../../../views/html/seminaries/create.tpl:2
+msgid "New seminary"
+msgstr "Neuer Kurs"
+
+#: ../../../views/html/seminaries/create.tpl:6
+#: ../../../views/html/seminaries/create.tpl:7
+msgid "Title"
+msgstr "Titel"
+
 #: ../../../views/html/introduction/index.tpl:1
 msgid "Introduction"
 msgstr "Einführung"
+
+#~ msgid "created by %s on %s at %s"
+#~ msgstr "erstellt von %s am %s um %s Uhr"
+
+#~ msgid "registered on"
+#~ msgstr "registriert seit"

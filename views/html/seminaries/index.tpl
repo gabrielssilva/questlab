@@ -4,7 +4,7 @@
 	<li>
 		<h2><a href="<?=$linker->link(array('seminary', $seminary['url']), 1)?>"><?=$seminary['title']?></a></h2>
 		<details>
-			<summary><?=sprintf(_('created by %s on %s'), $seminary['creator']['username'], date(\hhu\z\Utils::DATEFORMAT, strtotime($seminary['created'])))?></summary>
+			<summary><?=sprintf(_('created by %s on %s'), $seminary['creator']['username'], $dateFormatter->format(new \DateTime($seminary['created'])))?></summary>
 		</details>
 	</li>
 	<?php endforeach ?>

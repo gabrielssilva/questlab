@@ -4,5 +4,5 @@
 	<li><a href="<?=$linker->link('delete', 3)?>"><?=_('Delete user')?></a></li>
 </nav>
 <p>
-	<?=_('registered on')?> <?=date(\hhu\z\Utils::DATEFORMAT, strtotime($user['created']))?>
+	<?=sprintf(_('registered on %s'), $dateFormatter->format(new \DateTime($user['created'])))?>
 </p>

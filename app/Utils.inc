@@ -19,14 +19,6 @@
 	 */
 	class Utils
 	{
-		
-		/**
-		 * Format for printing the date
-		 * 
-		 * @var string
-		 */
-		const DATEFORMAT = 'm.d.Y';
-		
 	}
 
 ?>

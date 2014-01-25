@@ -82,6 +82,20 @@
 			// Create linker
 			$this->linker = new \nre\core\Linker($this->request);
 			
+			// Create date and time formatter
+			$this->set('dateFormatter', new \IntlDateFormatter(
+				\nre\core\Config::getDefault('locale'),
+				\IntlDateFormatter::MEDIUM,
+				\IntlDateFormatter::NONE,
+				NULL
+			));
+			$this->set('timeFormatter', new \IntlDateFormatter(
+				\nre\core\Config::getDefault('locale'),
+				\IntlDateFormatter::NONE,
+				\IntlDateFormatter::SHORT,
+				NULL
+			));
+			
 			// Set userdata
 			$this->set('loggedUser', static::$user);
 		}

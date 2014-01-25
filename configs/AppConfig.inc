@@ -47,7 +47,8 @@
 			'toplevel-error'	=>	'fault',
 			'intermediate'		=>	'introduction',
 			'intermediate-error'	=>	'error',
-			'language'		=>	'de_DE.utf8'
+			'language'		=>	'de_DE.utf8',
+			'locale'		=>	'de-DE'
 		);
 		
 		
