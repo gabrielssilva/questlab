@@ -26,23 +26,11 @@
 		 */
 		public $components = array('auth');
 		/**
-		 * Required models
-		 * 
-		 * @var array
-		 */
-		public $models = array('users');
-		/**
 		 * Linker instance
 		 * 
 		 * @var Linker
 		 */
 		protected $linker = null;
-		/**
-		 * Data of currently logged in user if any
-		 * 
-		 * @var array
-		 */
-		protected static $user = null;
 		
 		
 		
@@ -76,9 +64,6 @@
 		{
 			parent::preFilter($request, $response);
 			
-			// Check rights
-			$this->checkPermission();
-			
 			// Create linker
 			$this->linker = new \nre\core\Linker($this->request);
 			
@@ -95,9 +80,6 @@
 				\IntlDateFormatter::SHORT,
 				NULL
 			));
-			
-			// Set userdata
-			$this->set('loggedUser', static::$user);
 		}
 		
 		
@@ -110,44 +92,6 @@
 		public function postFilter(\nre\core\Request $request, \nre\core\Response $response)
 		{
 			parent::postFilter($request, $response);
-		}
-		
-		
-		
-		
-		/**
-		 * Check user permissions.
-		 * 
-		 * @throws AccessDeniedException
-		 */
-		private function checkPermission()
-		{
-			// Determine user
-			try {
-				$userId = $this->Auth->getUserId();
-				if(!is_null($userId)) {
-					static::$user = $this->Users->getUserById($this->Auth->getUserId());
-				}
-			}
-			catch(\nre\exceptions\IdNotFoundException $e) {
-			}
-			
-			
-			// Determine permissions
-			$action = $this->request->getParam(2, 'action');
-			if(!property_exists($this, 'permissions')) {
-				return;	// Allow if nothing is specified
-			}
-			if(!array_key_exists($action, $this->permissions)) {
-				return;	// Allow if Action is not specified
-			}
-			$permissions = $this->permissions[$action];
-			
-			
-			// Check permissions
-			if(is_null(static::$user)) {
-				throw new \nre\exceptions\AccessDeniedException();
-			}
 		}
 		
 	}

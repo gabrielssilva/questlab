@@ -17,7 +17,7 @@
 	 * 
 	 * @author	Oliver Hanraths <oliver.hanraths@uni-duesseldorf.de>
 	 */
-	class SeminariesController extends \hhu\z\Controller
+	class SeminariesController extends \hhu\z\controllers\SeminaryRoleController
 	{
 		/**
 		 * Required models
@@ -31,8 +31,21 @@
 		 * @var array
 		 */
 		public $permissions = array(
-			'index' => array(),
-			'seminary' => array()
+			'index' => array('admin', 'moderator', 'user'),
+			'seminary' => array('admin', 'moderator', 'user'),
+			'create' => array('admin', 'moderator'),
+			'edit' => array('admin', 'moderator', 'user'),
+			'delete' => array('admin', 'moderator', 'user')
+		);
+		/**
+		 * User seminary permissions
+		 * 
+		 * @var array
+		 */
+		public $seminaryPermissions = array(
+			'seminary' => array('admin', 'moderator', 'user', 'guest'),
+			'edit' => array('admin', 'moderator'),
+			'delete' => array('admin', 'moderator')
 		);
 		
 		

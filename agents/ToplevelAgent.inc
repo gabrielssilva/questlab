@@ -153,6 +153,17 @@
 		}
 		
 		
+		/**
+		 * Return the IntermediateAgent.
+		 * 
+		 * @return	IntermediateAgent	IntermediateAgent
+		 */
+		public function getIntermediateAgent()
+		{
+			return $this->intermediateAgent;
+		}
+		
+		
 		
 		
 		/**

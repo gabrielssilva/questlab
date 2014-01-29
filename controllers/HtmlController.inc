@@ -17,7 +17,7 @@
 	 * 
 	 * @author	Oliver Hanraths <oliver.hanraths@uni-duesseldorf.de>
 	 */
-	class HtmlController extends \hhu\z\Controller
+	class HtmlController extends \hhu\z\controllers\ToplevelController
 	{
 		
 		
@@ -32,7 +32,6 @@
 		public function preFilter(\nre\core\Request $request, \nre\core\Response $response)
 		{
 			parent::preFilter($request, $response);
-			
 			
 			// Set content-type
 			$this->response->addHeader("Content-type: text/html; charset=utf-8");

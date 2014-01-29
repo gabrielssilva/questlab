@@ -24,6 +24,21 @@
 		
 		
 		/**
+		 * Prefilter.
+		 * 
+		 * @param	Request		$request	Current request
+		 * @param	Response	$response	Current response
+		 */
+		public function preFilter(\nre\core\Request $request, \nre\core\Response $response)
+		{
+			parent::preFilter($request, $response);
+			
+			// Set userdata
+			$this->set('loggedUser', HtmlController::$user);
+		}
+		
+		
+		/**
 		 * Action: index.
 		 */
 		public function index()

@@ -25,13 +25,12 @@
 		 * @var array
 		 */
 		public $permissions = array(
-			'index' => array(),
-			'user' => array(),
-			'create' => array(),
-			'edit' => array(),
-			'delete' => array()
+			'index' => array('admin', 'moderator'),
+			'user' => array('admin', 'moderator', 'user'),
+			'create' => array('admin', 'moderator'),
+			'edit' => array('admin', 'moderator'),
+			'delete' => array('admin')
 		);
-		
 		
 		
 		
