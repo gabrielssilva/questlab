@@ -218,6 +218,11 @@
 		 */
 		public function hash($password)
 		{
+			if(!function_exists('password_hash')) {
+				\hhu\z\lib\Password::load();
+			}
+			
+			
 			return password_hash($password, PASSWORD_DEFAULT);
 		}
 		
@@ -231,6 +236,11 @@
 		 */
 		private function verify($password, $hash)
 		{
+			if(!function_exists('password_verify')) {
+				\hhu\z\lib\Password::load();
+			}
+			
+			
 			return password_verify($password, $hash);
 		}
 		
