@@ -82,10 +82,12 @@
 				}
 				
 				
+				$stmt->close();
 				return $data;
 			}
-			finally {
-				$stmt->close();
+			catch(Exception $e) {
+				$stmt->close(); 
+				throw $e;
 			}
 		}
 		

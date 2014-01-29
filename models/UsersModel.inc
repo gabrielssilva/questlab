@@ -190,11 +190,10 @@
 			}
 			catch(Exception $e) {
 				$this->db->rollback();
+				$this->db->setAutocommit(true);
 				throw $e;
 			}
-			finally {
-				$this->db->setAutocommit(true);
-			}
+			$this->db->setAutocommit(true);
 		}
 		
 		
