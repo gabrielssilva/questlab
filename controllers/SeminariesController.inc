@@ -123,7 +123,7 @@
 			if($this->request->getRequestMethod() == 'POST')
 			{
 				// Save changes
-				if(!empty($this->request->getPostParam('save')))
+				if(!is_null($this->request->getPostParam('save')))
 				{
 					// Edit seminary
 					$this->Seminaries->editSeminary(
@@ -161,7 +161,7 @@
 			if($this->request->getRequestMethod() == 'POST')
 			{
 				// Check confirmation
-				if(!empty($this->request->getPostParam('delete')))
+				if(!is_null($this->request->getPostParam('delete')))
 				{
 					// Delete seminary
 					$this->Seminaries->deleteSeminary($seminary['id']);

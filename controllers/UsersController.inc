@@ -79,7 +79,7 @@
 			$username = '';
 			
 			// Log the user in
-			if($this->request->getRequestMethod() == 'POST' && !empty($this->request->getPostParam('login')))
+			if($this->request->getRequestMethod() == 'POST' && !is_null($this->request->getPostParam('login')))
 			{
 				$username = $this->request->getPostParam('username');
 				$userId = $this->Users->login(
@@ -158,7 +158,7 @@
 			if($this->request->getRequestMethod() == 'POST')
 			{
 				// Save changes
-				if(!empty($this->request->getPostParam('save')))
+				if(!is_null($this->request->getPostParam('save')))
 				{
 					// Edit user
 					$this->Users->editUser(
@@ -198,7 +198,7 @@
 			if($this->request->getRequestMethod() == 'POST')
 			{
 				// Check confirmation
-				if(!empty($this->request->getPostParam('delete')))
+				if(!is_null($this->request->getPostParam('delete')))
 				{
 					// Delete user
 					$this->Users->deleteUser($user['id']);
