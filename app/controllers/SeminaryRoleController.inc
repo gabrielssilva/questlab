@@ -17,7 +17,7 @@
 	 * 
 	 * @author	Oliver Hanraths <oliver.hanraths@uni-duesseldorf.de>
 	 */
-	abstract class SeminaryroleController extends \hhu\z\Controller
+	abstract class SeminaryRoleController extends \hhu\z\Controller
 	{
 		/**
 		 * Required models
