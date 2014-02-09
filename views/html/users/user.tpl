@@ -7,3 +7,13 @@
 <p>
 	<?=sprintf(_('registered on %s'), $dateFormatter->format(new \DateTime($user['created'])))?>
 </p>
+
+<h3><?=_('Characters')?></h3>
+<ul>
+	<?php foreach($characters as &$character) : ?>
+	<li><?=$character['name']?> (<a href="<?=$linker->link(array('seminaries',$character['seminary_url']))?>"><?=$character['seminary_title']?></a>)</li>
+	<?php endforeach ?>
+</ul>
+
+<h3><?=_('Roles')?></h3>
+<?=$userroles?>

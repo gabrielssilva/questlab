@@ -31,6 +31,12 @@
 			'edit' => array('admin', 'moderator'),
 			'delete' => array('admin')
 		);
+		/**
+		 * Required models
+		 * 
+		 * @var array
+		 */
+		public $models = array('users', 'characters');
 		
 		
 		
@@ -62,9 +68,13 @@
 			// Get user
 			$user = $this->Users->getUserByUrl($userUrl);
 			
+			// Get Characters
+			$characters = $this->Characters->getCharactersForUser($user['id']);
+			
 			
 			// Pass data to view
 			$this->set('user', $user);
+			$this->set('characters', $characters);
 		}
 		
 		

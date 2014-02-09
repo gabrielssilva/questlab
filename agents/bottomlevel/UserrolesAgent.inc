@@ -9,26 +9,18 @@
 	 * @link	https://bitbucket.org/coderkun/the-legend-of-z
 	 */
 	
-	namespace hhu\z\agents\intermediate;
+	namespace hhu\z\agents\bottomlevel;
 	
-
+	
 	/**
-	 * Agent to list registered users and their data.
+	 * Agent to display and manage userroles.
 	 * 
 	 * @author	Oliver Hanraths <oliver.hanraths@uni-duesseldorf.de>
 	 */
-	class UsersAgent extends \nre\agents\IntermediateAgent
+	class UserrolesAgent extends \nre\agents\BottomlevelAgent
 	{
 		
 		
-		
-		
-		/**
-		 * Action: index.
-		 */
-		public function index(\nre\core\Request $request, \nre\core\Response $response)
-		{
-		}
 		
 		
 		/**
@@ -36,7 +28,6 @@
 		 */
 		public function user(\nre\core\Request $request, \nre\core\Response $response)
 		{
-			$this->addSubAgent('Userroles', 'user');
 		}
 		
 	}
