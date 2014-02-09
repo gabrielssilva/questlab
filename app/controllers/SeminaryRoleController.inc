@@ -13,18 +13,25 @@
 	
 	
 	/**
-	 * Abstract class for implementing a Controller of a ToplevelAgent.
+	 * Abstract class for implementing a Controller for a Seminary and its
+	 * concepts.
 	 * 
 	 * @author	Oliver Hanraths <oliver.hanraths@uni-duesseldorf.de>
 	 */
 	abstract class SeminaryRoleController extends \hhu\z\Controller
 	{
 		/**
+		 * Required components
+		 * 
+		 * @var array
+		 */
+		public $components = array('achievement', 'auth');
+		/**
 		 * Required models
 		 * 
 		 * @var array
 		 */
-		public $models = array('userseminaryroles');
+		public $models = array('seminaries', 'userseminaryroles', 'characters', 'achievements');
 		/**
 		 * Data of currently logged in user if any
 		 * 
