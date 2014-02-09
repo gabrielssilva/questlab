@@ -43,7 +43,7 @@
 		{			
 			// Get seminaries
 			return $this->db->query(
-				'SELECT id, created, created_user_id, title, url '.
+				'SELECT id, created, created_user_id, title, url, description '.
 				'FROM seminaries '.
 				'ORDER BY created DESC'
 			);
@@ -60,7 +60,7 @@
 		public function getSeminaryById($seminaryId)
 		{
 			$seminary = $this->db->query(
-				'SELECT id, created, created_user_id, title, url '.
+				'SELECT id, created, created_user_id, title, url, description '.
 				'FROM seminaries '.
 				'WHERE id = ?',
 				'i',
@@ -85,7 +85,7 @@
 		public function getSeminaryByUrl($seminaryUrl)
 		{
 			$seminary = $this->db->query(
-				'SELECT id, created, created_user_id, title, url '.
+				'SELECT id, created, created_user_id, title, url, description '.
 				'FROM seminaries '.
 				'WHERE url = ?',
 				's',

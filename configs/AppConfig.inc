@@ -70,11 +70,17 @@
 		 * @var array
 		 */
 		public static $routes = array(
-			array('css/?(.*)',						'css/$1?layout=stylesheet',	false),
+			array('css/?(.*)',						'css/$1?layout=stylesheet',	true),
 			array('users/([^/]+)/(edit|delete)',				'users/$2/$1',			true),
 			array('users/(?!(index|login|logout|create|edit|delete))',	'users/user/$1',		true),
 			array('seminaries/([^/]+)/(edit|delete)',			'seminaries/$2/$1',		true),
-			array('seminaries/(?!(index|create|edit|delete))',		'seminaries/seminary/$1',	true)
+			array('seminaries/(?!(index|create|edit|delete))',		'seminaries/seminary/$1',	true),
+			/*// z/<Seminary>					⇒ z/seminaries/seminary/<Seminary>
+			array('^([^/]+)/*$',						'seminaries/seminary/$1',	true),
+			// z/<Seminary>/<Questgroup>			⇒ z/questgroups/questgroup/<Seminary>/<Questgroup>
+			array('^([^/]+)/([^/]+)/?$',					'questgropus/questgroup/$1/$2',	true),
+			// z/<Seminary>/<Questgroup>/<Quest>		⇒ z/quests/quest/<Seminary>/<Questgroup>/<Quest>
+			array('^([^/]+)/([^/]+)/([^/]+)/?$',				'quests/quest/$1/$2/3',		true)*/
 		);
 
 
@@ -88,6 +94,7 @@
 			array('users/user/(.*)',		'users/$1',		true),
 			array('users/([^/]+)/(.*)',		'users/$2/$1',		true),
 			array('seminaries/seminary/(.*)',	'seminaries/$1',	false)
+			//array('seminaries/seminary/(.*)',	'$1',			false)
 		);
 		
 		

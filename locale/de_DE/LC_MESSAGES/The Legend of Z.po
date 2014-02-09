@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: The Legend of Z\n"
-"POT-Creation-Date: 2014-01-25 20:52+0100\n"
-"PO-Revision-Date: 2014-01-25 20:52+0100\n"
+"POT-Creation-Date: 2014-02-09 12:48+0100\n"
+"PO-Revision-Date: 2014-02-09 12:48+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de_DE\n"
@@ -28,6 +28,8 @@ msgstr "Benutzer"
 #: ../../../views/html/seminaries/edit.tpl:1
 #: ../../../views/html/seminaries/delete.tpl:1
 #: ../../../views/html/seminaries/create.tpl:1
+#: ../../../views/html/questgroups/questgroup.tpl:1
+#: ../../../views/html/quests/quest.tpl:1
 msgid "Seminaries"
 msgstr "Kurse"
 
@@ -66,6 +68,14 @@ msgstr "Benutzer löschen"
 #, php-format
 msgid "registered on %s"
 msgstr "registriert am %s"
+
+#: ../../../views/html/users/user.tpl:11
+msgid "Characters"
+msgstr "Charaktere"
+
+#: ../../../views/html/users/user.tpl:18
+msgid "Roles"
+msgstr "Rollen"
 
 #: ../../../views/html/users/index.tpl:3
 msgid "Create new user"

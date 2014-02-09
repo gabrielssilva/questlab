@@ -24,7 +24,7 @@
 		 * 
 		 * @var array
 		 */
-		public $models = array('seminaries', 'users');
+		public $models = array('seminaries', 'users', 'questgroupshierarchy', 'questgroups');
 		/**
 		 * User permissions
 		 * 
@@ -90,9 +90,16 @@
 			// Created user
 			$seminary['creator'] = $this->Users->getUserById($seminary['created_user_id']);
 			
+			// Questgrouphierarchy and Questgroups
+			$questgroupshierarchy = $this->Questgroupshierarchy->getHierarchyForSeminary($seminary['id']);
+			foreach($questgroupshierarchy as &$hierarchy) {
+				$hierarchy['questgroups'] = $this->Questgroups->getQuestgroupsForHierarchy($hierarchy['id']);
+			}
+			
 			
 			// Pass data to view
 			$this->set('seminary', $seminary);
+			$this->set('questgroupshierarchy', $questgroupshierarchy);
 		}
 		
 		
