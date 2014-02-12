@@ -24,7 +24,7 @@
 		 * 
 		 * @var array
 		 */
-		public $models = array('seminaries', 'questgroups', 'quests');
+		public $models = array('seminaries', 'questgroups', 'quests', 'questtexts');
 		/**
 		 * User permissions
 		 * 
@@ -55,7 +55,7 @@
 		 * @param	string	$questgroupUrl	URL-Title of a Questgroup
 		 * @param	string	$questUrl	URL-Title of a Quest
 		 */
-		public function quest($seminaryUrl, $questgroupUrl, $questUrl)
+		public function quest($seminaryUrl, $questgroupUrl, $questUrl, $questtexttypeUrl=null, $questtextPos=1)
 		{
 			// Get seminary
 			$seminary = $this->Seminaries->getSeminaryByUrl($seminaryUrl);
@@ -66,11 +66,32 @@
 			// Get Quest
 			$quest = $this->Quests->getQuestByUrl($seminary['id'], $questgroup['id'], $questUrl);
 			
+			// Get Questtext
+			$questtext = null;
+			$questtexttypes = $this->Questtexts->getQuesttexttypes();
+			$questtexttypes = array_map(function($t) { return $t['url']; }, $questtexttypes);
+			if(is_null($questtexttypeUrl)) {
+				$questtexttypeUrl = 'Prolog';
+			}
+			if(in_array($questtexttypeUrl, $questtexttypes))
+			{
+				$questtextPos = max(intval($questtextPos), 1);
+				$questtext = $this->Questtexts->getQuesttextByUrl($quest['id'], $questtexttypeUrl, $questtextPos);
+			}
+			
+			// Show task only for Prologes
+			$showTask = false;
+			if($questtext['type'] == 'Prolog') {
+				$showTask = true;
+			}
+			
 			
 			// Pass data to view
 			$this->set('seminary', $seminary);
 			$this->set('questgroup', $questgroup);
+			$this->set('questtext', $questtext);
 			$this->set('quest', $quest);
+			$this->set('showtask', $showTask);
 		}
 		
 	}

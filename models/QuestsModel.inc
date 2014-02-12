@@ -43,7 +43,7 @@
 		public function getQuestsForQuestgroup($questgroupId)
 		{
 			return $this->db->query(
-				'SELECT id, questtype_id, title, url, xps, text '.
+				'SELECT id, questtype_id, title, url, xps, task '.
 				'FROM quests '.
 				'WHERE questgroup_id = ?',
 				'i',
@@ -64,7 +64,7 @@
 		public function getQuestByUrl($seminaryId, $questgroupId, $questUrl)
 		{
 			$data = $this->db->query(
-				'SELECT quests.id, quests.questtype_id, quests.title, quests.url, quests.xps, quests.text '.
+				'SELECT quests.id, quests.questtype_id, quests.title, quests.url, quests.xps, quests.task '.
 				'FROM quests '.
 				'LEFT JOIN questgroups ON questgroups.id = quests.questgroup_id '.
 				'LEFT JOIN questgroupshierarchy ON questgroupshierarchy.id = questgroups.questgroupshierarchy_id '.

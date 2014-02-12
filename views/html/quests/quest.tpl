@@ -4,4 +4,15 @@
 <?=$questgroupshierarchypath?>
 
 <h3><?=$quest['title']?></h3>
-<p><?=$quest['text']?></p>
+<section>
+	<p><?=$questtext['text']?></p>
+	<?php if(!empty($questtext['out_text'])) : ?>
+	<a href=""><?=$questtext['out_text']?></a>
+	<?php endif ?>
+</section>
+
+<?php if($showtask) : ?>
+<section>
+	<p><?=$quest['task']?></p>
+</section>
+<?php endif ?>
