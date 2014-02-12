@@ -20,10 +20,21 @@
 <?php endforeach ?>
 
 <?php if(isset($quests) && !is_null($quests)) : ?>
-<h3>Quests</h3>
+<h3><?=_('Quests')?></h3>
 <ul>
 	<?php foreach($quests as &$quest) : ?>
-	<li><a href="<?=$linker->link(array('quests','quest',$seminary['url'],$questgroup['url'],$quest['url']))?>"><?=$quest['title']?></a></li>
+	<li>
+		<a href="<?=$linker->link(array('quests','quest',$seminary['url'],$questgroup['url'],$quest['url']))?>"><?=$quest['title']?></a>
+		<br />
+		<?=_('containing optional Quests')?>:
+		<?php if(count($quest['sidequests']) > 0) : ?>
+		<ul>
+			<?php foreach($quest['sidequests'] as &$sidequest) : ?>
+			<li><?=$sidequest['title']?></li>
+			<?php endforeach ?>
+		</ul>
+		<?php endif ?>
+	</li>
 	<?php endforeach ?>
 </ul>
 <?php endif ?>

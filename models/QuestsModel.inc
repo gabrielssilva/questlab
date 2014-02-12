@@ -80,6 +80,79 @@
 			return $data[0];
 		}
 		
+		
+		/**
+		 * Get a Sidequest and its data by its URL.
+		 * 
+		 * @throws	IdNotFoundException
+		 * @param	int	$seminaryId	ID of the corresponding Seminary
+		 * @param	int	$questgroupId	ID of the corresponding Questgroup
+		 * @param	int	$questId	ID of the Quest
+		 * @param	string	$sidequestUrl	URL-title of a Sidequest
+		 * @return	array			Sidequest data
+		 */
+		public function getSidequestByUrl($seminaryId, $questgroupId, $questId, $sidequestUrl)
+		{
+			$data = $this->db->query(
+				'SELECT sidequests.id, sidequests.questtype_id, sidequests.title, sidequests.url, sidequests.xps, sidequests.task '.
+				'FROM sidequests '.
+				'LEFT JOIN questtexts ON questtexts.id = sidequests.questtext_id '.
+				'LEFT JOIN quests ON quests.id = questtexts.quest_id '.
+				'LEFT JOIN questgroups ON questgroups.id = quests.questgroup_id '.
+				'LEFT JOIN questgroupshierarchy ON questgroupshierarchy.id = questgroups.questgroupshierarchy_id '.
+				'LEFT JOIN seminaries ON seminaries.id = questgroupshierarchy.seminary_id '.
+				'WHERE sidequests.url = ? AND quests.id = ? AND questgroups.id = ? AND seminaries.id = ?',
+				'siii',
+				$sidequestUrl,
+				$questId,
+				$questgroupId,
+				$seminaryId
+			);
+			if(empty($data)) {
+				throw new \nre\exceptions\IdNotFoundException();
+			}
+			
+			
+			return $data[0];
+		}
+		
+		
+		/**
+		 * Get all sidequests for a Quest.
+		 * 
+		 * @param	int	$questId	ID of the quest
+		 * @return	array			Sidequests for the quest
+		 */
+		public function getSidequestsForQuest($questId)
+		{
+			return $this->db->query(
+				'SELECT sidequests.id, sidequests.questtext_id, sidequests.title, sidequests.url, sidequests.entry_text '.
+				'FROM sidequests '.
+				'LEFT JOIN questtexts ON questtexts.id = sidequests.questtext_id '.
+				'WHERE questtexts.quest_id = ?',
+				'i',
+				$questId
+			);
+		}
+		
+		
+		/**
+		 * Get all sidequests for a Questtext.
+		 * 
+		 * @param	int	$questtextId	ID of the questtext
+		 * @return	array			Sidequests for the questtext
+		 */
+		public function getSidequestsForQuesttext($questtextId)
+		{
+			return $this->db->query(
+				'SELECT id, questtext_id, title, url, entry_text '.
+				'FROM sidequests '.
+				'WHERE questtext_id = ?',
+				'i',
+				$questtextId
+			);
+		}
+		
 	}
 
 ?>

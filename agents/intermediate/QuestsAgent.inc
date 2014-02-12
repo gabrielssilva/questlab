@@ -31,6 +31,15 @@
 			$this->addSubAgent('Questgroupshierarchypath', 'index', $request->getParam(3), $request->getParam(4), true);
 		}
 		
+		
+		/**
+		 * Action: quest.
+		 */
+		public function sidequest(\nre\core\Request $request, \nre\core\Response $response)
+		{
+			$this->addSubAgent('Questgroupshierarchypath', 'index', $request->getParam(3), $request->getParam(4), true);
+		}
+		
 	}
 
 ?>

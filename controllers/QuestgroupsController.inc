@@ -76,8 +76,14 @@
 			
 			// Get Quests
 			$quests = null;
-			if(count($childQuestgroupshierarchy) == 0) {
+			if(count($childQuestgroupshierarchy) == 0)
+			{
 				$quests = $this->Quests->getQuestsForQuestgroup($questgroup['id']);
+				
+				// Attach sidequests
+				foreach($quests as &$quest) {
+					$quest['sidequests'] = $this->Quests->getSidequestsForQuest($quest['id']);
+				}
 			}
 			
 			

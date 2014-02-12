@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: The Legend of Z\n"
-"POT-Creation-Date: 2014-02-09 12:48+0100\n"
-"PO-Revision-Date: 2014-02-09 12:48+0100\n"
+"POT-Creation-Date: 2014-02-12 23:09+0100\n"
+"PO-Revision-Date: 2014-02-12 23:10+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de_DE\n"
@@ -30,6 +30,7 @@ msgstr "Benutzer"
 #: ../../../views/html/seminaries/create.tpl:1
 #: ../../../views/html/questgroups/questgroup.tpl:1
 #: ../../../views/html/quests/quest.tpl:1
+#: ../../../views/html/quests/sidequest.tpl:1
 msgid "Seminaries"
 msgstr "Kurse"
 
@@ -156,9 +157,26 @@ msgstr "Soll der Kurs „%s“ wirklich gelöscht werden?"
 msgid "New seminary"
 msgstr "Neuer Kurs"
 
+#: ../../../views/html/questgroups/questgroup.tpl:23
+msgid "Quests"
+msgstr "Quests"
+
+#: ../../../views/html/questgroups/questgroup.tpl:29
+msgid "containing optional Quests"
+msgstr "Enthaltene optionale Quests"
+
 #: ../../../views/html/introduction/index.tpl:1
 msgid "Introduction"
 msgstr "Einführung"
+
+#: ../../../views/html/quests/quest.tpl:33
+#: ../../../views/html/quests/sidequest.tpl:20
+msgid "Task"
+msgstr "Aufgabe"
+
+#: ../../../views/html/quests/sidequest.tpl:8
+msgid "This Quest is optional"
+msgstr "Diese Quest ist optional"
 
 #~ msgid "created by %s on %s at %s"
 #~ msgstr "erstellt von %s am %s um %s Uhr"
