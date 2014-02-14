@@ -59,7 +59,8 @@
 		 * @var array
 		 */
 		public static $dirs = array(
-			'locale'	=>	'locale'
+			'locale'	=>	'locale',
+			'media'		=>	'media'
 		);
 		
 		

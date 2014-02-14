@@ -46,7 +46,13 @@
 		
 		
 		/**
-		 * TODO Action: index.
+		 * Action: index.
+		 * 
+		 * Display a medium without processing.
+		 * 
+		 * @throws	IdNotFoundException
+		 * @param	string	$seminaryUrl	URL-title of the Seminary
+		 * @param	string	$mediaUrl	URL-name of the medium
 		 */
 		public function index($seminaryUrl, $mediaUrl)
 		{
@@ -60,7 +66,10 @@
 			$this->response->addHeader("Content-type: ".$media['mimetype']."");
 			
 			// Set filename
-			$media['filename'] = ROOT.DS.'media'.DS.$media['id'];
+			$media['filename'] = ROOT.DS.\nre\configs\AppConfig::$dirs['media'].DS.$media['id'];
+			if(!file_exists($media['filename'])) {
+				throw new \nre\exceptions\IdNotFoundException($mediaUrl);
+			}
 			
 			
 			// Pass data to view
