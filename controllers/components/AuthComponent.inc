@@ -13,7 +13,7 @@
 	
 	
 	/**
-	 * Component to handle authentication and authorization
+	 * Component to handle authentication and authorization.
 	 * 
 	 * @author	Oliver Hanraths <oliver.hanraths@uni-duesseldorf.de>
 	 */
@@ -37,7 +37,6 @@
 			// Start session
 			if(session_id() === '') {
 				session_start();
-				session_regenerate_id(true);
 			}
 		}
 		
