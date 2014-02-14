@@ -25,7 +25,7 @@
 		 * @var array
 		 */
 		public $permissions = array(
-			'quest' => array('admin', 'moderator', 'user')
+			'index' => array('admin', 'moderator', 'user')
 		);
 		/**
 		 * User seminary permissions
@@ -33,7 +33,7 @@
 		 * @var array
 		 */
 		public $seminaryPermissions = array(
-			'quest' => array('admin', 'moderator', 'user')
+			'index' => array('admin', 'moderator', 'user')
 		);
 		/**
 		 * Required models
