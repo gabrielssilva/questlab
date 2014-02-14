@@ -95,7 +95,7 @@
 		public static $reverseRoutes = array(
 			array('users/user/(.*)',		'users/$1',		true),
 			array('users/([^/]+)/(.*)',		'users/$2/$1',		true),
-			array('seminaries/seminary/(.*)',	'seminaries/$1',	false)
+			array('seminaries/seminary/(.*)',	'seminaries/$1',	false),
 			//array('seminaries/seminary/(.*)',	'$1',			false)
 			array('media/index/(.*)',		'media/$1',		true)
 		);
