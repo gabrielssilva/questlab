@@ -2,8 +2,12 @@
 <h2><?=$seminary['title']?></h2>
 
 <?=$questgroupshierarchypath?>
+<?=$questgroupspicture?>
 
 <h3><?=$quest['title']?></h3>
+<?php if(!is_null($media)) : ?>
+<img src="<?=$linker->link(array('media','index',$seminary['url'],$media['url']))?>" />
+<?php endif ?>
 <section>
 	<h1><?=$questtext['type']?></h1>
 	<p><?=$questtext['text']?></p>

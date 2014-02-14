@@ -64,7 +64,7 @@
 		public function getQuestByUrl($seminaryId, $questgroupId, $questUrl)
 		{
 			$data = $this->db->query(
-				'SELECT quests.id, quests.questtype_id, quests.title, quests.url, quests.xps, quests.task '.
+				'SELECT quests.id, quests.questtype_id, quests.title, quests.url, quests.xps, quests.task, quests.questsmedia_id '.
 				'FROM quests '.
 				'LEFT JOIN questgroups ON questgroups.id = quests.questgroup_id '.
 				'LEFT JOIN questgroupshierarchy ON questgroupshierarchy.id = questgroups.questgroupshierarchy_id '.
@@ -94,7 +94,7 @@
 		public function getSidequestByUrl($seminaryId, $questgroupId, $questId, $sidequestUrl)
 		{
 			$data = $this->db->query(
-				'SELECT sidequests.id, sidequests.questtype_id, sidequests.title, sidequests.url, sidequests.xps, sidequests.task '.
+				'SELECT sidequests.id, sidequests.questtype_id, sidequests.title, sidequests.url, sidequests.xps, sidequests.task, sidequests.questsmedia_id '.
 				'FROM sidequests '.
 				'LEFT JOIN questtexts ON questtexts.id = sidequests.questtext_id '.
 				'LEFT JOIN quests ON quests.id = questtexts.quest_id '.

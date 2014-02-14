@@ -2,6 +2,7 @@
 <h2><?=$seminary['title']?></h3>
 
 <?=$questgroupshierarchypath?>
+<?=$questgroupspicture?>
 
 <h3><?=$questgroupshierarchy['title_singular']?> <?=$questgroup['pos']?>: <?=$questgroup['title']?></h3>
 <?php foreach($texts as &$text) : ?>

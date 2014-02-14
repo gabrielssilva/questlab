@@ -78,7 +78,7 @@
 		public function getQuestgroupById($questgroupId)
 		{
 			$data = $this->db->query(
-				'SELECT id, questgroupshierarchy_id, parent_questgroup_id, pos, title, url '.
+				'SELECT id, questgroupshierarchy_id, parent_questgroup_id, pos, title, url, questgroupspicture_id '.
 				'FROM questgroups '.
 				'WHERE questgroups.id = ?',
 				'i',
@@ -104,7 +104,7 @@
 		public function getQuestgroupByUrl($seminaryId, $questgroupUrl)
 		{
 			$data = $this->db->query(
-				'SELECT questgroups.id, questgroups.questgroupshierarchy_id, questgroups.parent_questgroup_id, questgroups.pos, questgroups.title, questgroups.url '.
+				'SELECT questgroups.id, questgroups.questgroupshierarchy_id, questgroups.parent_questgroup_id, questgroups.pos, questgroups.title, questgroups.url, questgroups.questgroupspicture_id '.
 				'FROM questgroups '.
 				'LEFT JOIN questgroupshierarchy ON questgroupshierarchy.id = questgroups.questgroupshierarchy_id '.
 				'WHERE questgroupshierarchy.seminary_id = ? AND questgroups.url = ?',

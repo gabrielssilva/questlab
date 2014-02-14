@@ -24,7 +24,7 @@
 		 * 
 		 * @var array
 		 */
-		public $models = array('seminaries', 'questgroups', 'quests', 'questtexts');
+		public $models = array('seminaries', 'questgroups', 'quests', 'questtexts', 'media');
 		/**
 		 * User permissions
 		 * 
@@ -93,6 +93,13 @@
 				$showTask = true;
 			}
 			
+			// Media
+			$questmedia = null;
+			if(!is_null($quest['questsmedia_id'])) {
+				$questmedia = $this->Media->getMediaById($quest['questsmedia_id']);
+			}
+					
+			
 			
 			// Pass data to view
 			$this->set('seminary', $seminary);
@@ -100,6 +107,7 @@
 			$this->set('questtext', $questtext);
 			$this->set('quest', $quest);
 			$this->set('showtask', $showTask);
+			$this->set('media', $questmedia);
 		}
 		
 		/**
@@ -156,6 +164,12 @@
 				$showTask = true;
 			}
 			
+			// Media
+			$sidequestmedia = null;
+			if(!is_null($sidequest['questsmedia_id'])) {
+				$sidequestmedia = $this->Media->getMediaById($sidequest['questsmedia_id']);
+			}
+			
 			
 			// Pass data to view
 			$this->set('seminary', $seminary);
@@ -165,6 +179,7 @@
 			$this->set('questtext', $questtext);
 			$this->set('sidequest', $sidequest);
 			$this->set('showtask', $showTask);
+			$this->set('media', $sidequestmedia);
 		}
 		
 	}
