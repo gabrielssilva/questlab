@@ -3,15 +3,15 @@
 <p>Entwickler:</p>
 <ul>
 	<li itemscope itemtype="http://schema.org/Person">
-		<span itemprop="name">Oliver Hanraths</span> &lt;<span itemprop="email">oliver(DOT)hanraths(AT)uni-duesseldorf(DOT)de</span>&gt;<br />
+		<span itemprop="name">Oliver Hanraths</span><br />
 		Programmierung und Datenbank
 	</li>
 	<li itemscope itemtype="http://schema.org/Person">
-		<span itemprop="name">Daniel Miskovic</span> &lt;<span itemprop="email">daniel(DOT)miskovic(AT)uni-duesseldorf(DOT)de</span>&gt;<br />
+		<span itemprop="name">Daniel</span><br />
 		GUI und Webdesign
 	</li>
 	<li itemscope itemtype="http://schema.org/Person">
-		<span itemprop="name">Kathrin Knautz</span>, <span itemprop="honorificSuffix">B.A., M.A.</span> &lt;<span itemprop="email">kathrin(DOT)knautz(AT)uni-duesseldorf(DOT)de</span>&gt;<br />
+		<span itemprop="name">Kathrin Knautz</span>, <span itemprop="honorificSuffix">B.A., M.A.</span><br />
 		Leitung
 	</li>
 </ul>
