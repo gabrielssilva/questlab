@@ -5,7 +5,7 @@
 	<meta charset="utf-8" />
 	<title>The Legend of Z</title>
 	
-	<link rel="stylesheet" type="text/css" href="<?=$linker->link(array('css','desktop'))?>" media="all" />
+	<link rel="stylesheet" type="text/css" href="<?=$linker->link(array('css','desktop.css'))?>" media="all" />
 </head>
 
 <body>
