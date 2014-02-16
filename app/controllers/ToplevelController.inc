@@ -80,7 +80,7 @@
 				
 				// Character
 				$controller = $this->agent->getIntermediateAgent()->controller;
-				if(in_array(\hhu\z\controllers\SeminaryRoleController::class, class_parents($controller)))
+				if(is_subclass_of($controller, '\hhu\z\controllers\SeminaryRoleController'))
 				{
 					$seminaryUrl = $this->request->getParam(3);
 					static::$seminary = $this->Seminaries->getSeminaryByUrl($seminaryUrl);
