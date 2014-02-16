@@ -82,6 +82,7 @@
 			array('^([^/]+)/([^/]+)/?$',					'questgropus/questgroup/$1/$2',	true),
 			// z/<Seminary>/<Questgroup>/<Quest>		⇒ z/quests/quest/<Seminary>/<Questgroup>/<Quest>
 			array('^([^/]+)/([^/]+)/([^/]+)/?$',				'quests/quest/$1/$2/3',		true)*/
+			array('charactergroups/(?!(index|groupsgroup|group))',		'charactergroups/index/$1',	true),
 			array('media/(.*)',						'media/$1?layout=binary',	false),
 			array('media/(.*)',						'media/index/$1',		true)
 		);
@@ -98,6 +99,7 @@
 			array('users/([^/]+)/(.*)',		'users/$2/$1',		true),
 			array('seminaries/seminary/(.*)',	'seminaries/$1',	false),
 			//array('seminaries/seminary/(.*)',	'$1',			false)
+			array('charactergroup/index/(.*)',	'charactergroup/$1',	true),
 			array('media/index/(.*)',		'media/$1',		true)
 		);
 		
