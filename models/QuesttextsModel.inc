@@ -74,7 +74,7 @@
 		public function getSidequesttextByUrl($sidequestId, $questtexttypeUrl, $pos)
 		{
 			$data = $this->db->query(
-				'SELECT sidequesttexts.id, sidequesttexts.text, sidequesttexts.pos, questtexttypes.id AS type_id, questtexttypes.type, questtexttypes.url AS type_url '.
+				'SELECT sidequesttexts.id, sidequesttexts.text, sidequesttexts.pos, sidequesttexts.out_text, sidequesttexts.abort_text, questtexttypes.id AS type_id, questtexttypes.type, questtexttypes.url AS type_url '.
 				'FROM sidequesttexts '.
 				'LEFT JOIN questtexttypes ON questtexttypes.id = sidequesttexts.questtexttype_id '.
 				'WHERE sidequesttexts.sidequest_id = ? AND questtexttypes.url = ? AND sidequesttexts.pos = ?',

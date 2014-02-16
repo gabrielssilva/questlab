@@ -14,6 +14,17 @@
 	<h1><?=$sidequesttext['type']?></h1>
 	<p><?=$sidequesttext['text']?></p>
 	
+	<?php if(!empty($sidequesttext['out_text'])) : ?>
+	<?php if(!empty($sidequesttext['abort_text'])) : ?>
+	<ul>
+		<li><a href="<?=$linker->link(array('quest',$seminary['url'],$questgroup['url'],$quest['url'],$questtext['type_url'],$questtext['pos']),1)?>"><?=$sidequesttext['abort_text']?></a></li>
+		<li><a href="<?=$linker->link(array($sidequesttext['type_url'],$sidequesttext['pos']+1),6)?>"><?=$sidequesttext['out_text']?></a></li>
+	</ul>
+	<?php else : ?>
+	<a href="<?=$linker->link($sidequesttext['pos']+1, 7)?>"><?=$sidequesttext['out_text']?></a><br />
+	<?php endif ?>
+	<?php endif ?>
+	
 	<?php if($sidequesttext['pos'] > 1) : ?><a href="<?=$linker->link(array($sidequesttext['type_url'],$sidequesttext['pos']-1),6)?>">&lt;</a><?php endif ?>
 	<?=$sidequesttext['pos']?>/<?=$sidequesttext['count']?>
 	<?php if($sidequesttext['pos'] < $sidequesttext['count'] && empty($sidequesttext['out_text'])) : ?><a href="<?=$linker->link(array($sidequesttext['type_url'],$sidequesttext['pos']+1),6)?>">&gt;</a><?php endif ?>
