@@ -19,6 +19,33 @@
 	 */
 	class Utils
 	{
+		
+		
+		/**
+		 * Mask HTML-chars for save output.
+		 * 
+		 * @static
+		 * @param	string	$string	String to be masked
+		 * @return	string		Masked string
+		 */
+		static function t($string)
+		{
+			return nl2br(htmlspecialchars($string));
+		}
+		
+		
+		/**
+		 * ‚htmlspecialchars‘ with support for UTF-8.
+		 * 
+		 * @static
+		 * @param	string	$string	String to be masked
+		 * @return	string		Masked string
+		 */
+		public static function htmlspecialchars_utf8($string)
+		{
+			return htmlspecialchars($string, ENT_COMPAT, 'UTF-8');
+		}
+		
 	}
 
 ?>

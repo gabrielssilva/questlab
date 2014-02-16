@@ -6,7 +6,7 @@
 
 <h3><?=$questgroupshierarchy['title_singular']?> <?=$questgroup['pos']?>: <?=$questgroup['title']?></h3>
 <?php foreach($texts as &$text) : ?>
-<p><?=$text['text']?></p>
+<p><?=\hhu\z\Utils::t($text['text'])?></p>
 <?php endforeach ?>
 
 <?php foreach($childquestgroupshierarchy as &$hierarchy) : ?>

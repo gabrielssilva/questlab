@@ -10,7 +10,7 @@
 <?php endif ?>
 <section>
 	<h1><?=$questtext['type']?></h1>
-	<p><?=$questtext['text']?></p>
+	<p><?=\hhu\z\Utils::t($questtext['text'])?></p>
 	
 	<?php if(!empty($questtext['sidequests'])) : ?>
 	<ul>
@@ -35,6 +35,6 @@
 <?php if($showtask) : ?>
 <section>
 	<h1><?=_('Task')?></h1>
-	<p><?=$quest['task']?></p>
+	<p><?=\hhu\z\Utils::t($quest['task'])?></p>
 </section>
 <?php endif ?>

@@ -12,7 +12,7 @@
 <?php endif ?>
 <section>
 	<h1><?=$sidequesttext['type']?></h1>
-	<p><?=$sidequesttext['text']?></p>
+	<p><?=\hhu\z\Utils::t($sidequesttext['text'])?></p>
 	
 	<?php if(!empty($sidequesttext['out_text'])) : ?>
 	<?php if(!empty($sidequesttext['abort_text'])) : ?>
@@ -33,6 +33,6 @@
 <?php if($showtask) : ?>
 <section>
 	<h1><?=_('Task')?></h1>
-	<p><?=$sidequest['task']?></p>
+	<p><?=\hhu\z\Utils::t(($sidequest['task'])?></p>
 </section>
 <?php endif ?>

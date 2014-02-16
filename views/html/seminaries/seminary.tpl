@@ -11,7 +11,7 @@
 	<?=sprintf(_('created by %s on %s'), $seminary['creator']['username'],  $dateFormatter->format(new \DateTime($seminary['created'])))?>
 </p>
 <h3>Beschreibung</h3>
-<p><?=$seminary['description']?></p>
+<p><?=\hhu\z\Utils::t($seminary['description'])?></p>
 
 <?php foreach($questgroupshierarchy as &$hierarchy) : ?>
 <h3><?=$hierarchy['title_plural']?></h3>
