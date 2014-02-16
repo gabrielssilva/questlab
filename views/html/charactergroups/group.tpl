@@ -5,6 +5,19 @@
 <h5><?=$group['name']?></h5>
 
 <section>
+	XPs: <?=$group['xps']?>
+</section>
+
+<section>
+	<h1><?=_('Characters')?></h1>
+	<ul>
+		<?php foreach($characters as &$character) : ?>
+		<li><a href="<?=$linker->link(array('characters','character',$seminary['url'],$character['url']))?>"><?=$character['name']?></a> (<?=$character['xps']?> XPs)</li>
+		<?php endforeach ?>
+	</ul>
+</section>
+
+<section>
 	<h1><?=_('Quests')?></h1>
 	<table>
 		<tbody>

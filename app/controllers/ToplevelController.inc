@@ -24,13 +24,23 @@
 		 * 
 		 * @var array
 		 */
-		public $models = array('users', 'userroles');
+		public $models = array('users', 'userroles', 'seminaries', 'characters');
 		/**
 		 * Current user
 		 * 
 		 * @var array
 		 */
 		public static $user = null;
+		/**
+		 * 
+		 */
+		public static $seminary = null;
+		/**
+		 * Character of current user and Seminary
+		 * 
+		 * @var array
+		 */
+		public static $character = null;
 		
 		
 		
@@ -67,6 +77,15 @@
 			// Get userdata
 			try {
 				static::$user = $this->Users->getUserById($this->Auth->getUserId());
+				
+				// Character
+				$controller = $this->agent->getIntermediateAgent()->controller;
+				if(in_array(\hhu\z\controllers\SeminaryRoleController::class, class_parents($controller)))
+				{
+					$seminaryUrl = $this->request->getParam(3);
+					static::$seminary = $this->Seminaries->getSeminaryByUrl($seminaryUrl);
+					static::$character = $this->Characters->getCharacterForUserAndSeminary(static::$user['id'], static::$seminary['id']);
+				}
 			}
 			catch(\nre\exceptions\IdNotFoundException $e) {
 			}
@@ -76,6 +95,8 @@
 			
 			// Set userdata
 			$this->set('loggedUser', static::$user);
+			$this->set('loggedSeminary', static::$seminary);
+			$this->set('loggedCharacter', static::$character);
 		}
 		
 		

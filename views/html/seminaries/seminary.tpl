@@ -5,6 +5,7 @@
 	<li><a href="<?=$linker->link('delete', 3)?>"><?=_('Delete seminary')?></a></li>
 </nav>
 <nav>
+	<li><a href="<?=$linker->link(array('characters',$seminary['url']))?>"><?=_('Characters')?></a></li>
 	<li><a href="<?=$linker->link(array('charactergroups',$seminary['url']))?>"><?=_('Character Groups')?></a></li>
 </nav>
 <p>

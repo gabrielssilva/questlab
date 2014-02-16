@@ -5,7 +5,7 @@
 
 <ul>
 	<?php foreach($groups as &$group) : ?>
-	<li><a href="<?=$linker->link(array('group',$seminary['url'],$groupsgroup['url'],$group['url']),1)?>"><?=$group['name']?></a></li>
+	<li><a href="<?=$linker->link(array('group',$seminary['url'],$groupsgroup['url'],$group['url']),1)?>"><?=$group['name']?> (<?=$group['xps']?> XPs)</a></li>
 	<?php endforeach ?>
 </ul>
 

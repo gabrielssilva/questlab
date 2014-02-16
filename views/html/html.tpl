@@ -17,6 +17,9 @@
 		<?php if(!is_null($loggedUser)) : ?>
 		<div id="user">
 			<a href="<?=$linker->link(array('users',$loggedUser['url']))?>"><?=$loggedUser['username']?></a>
+			<?php if(!is_null($loggedCharacter)) : ?>
+			<?=_('as')?> <a href="<?=$linker->link(array('characters','character',$loggedSeminary['url'],$loggedCharacter['url']))?>"><?=$loggedCharacter['name']?></a> (<?=$loggedCharacter['xps']?> XPs)
+			<?php endif ?>
 		</div>
 		<?php endif ?>
 	</header>

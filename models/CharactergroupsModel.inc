@@ -88,11 +88,31 @@
 		public function getGroupsForGroupsgroup($groupsgroupId)
 		{
 			return $this->db->query(
-				'SELECT id, name, url '.
-				'FROM charactergroups '.
+				'SELECT id, name, url, xps '.
+				'FROM v_charactergroups '.
 				'WHERE charactergroupsgroup_id = ?',
 				'i',
 				$groupsgroupId
+			);
+		}
+		
+		
+		/**
+		 * Get Character groups for a Character.
+		 * 
+		 * @param	int	$characterId	ID of the Character
+		 * @return	array			Character groups
+		 */
+		public function getGroupsForCharacter($characterId)
+		{
+			return $this->db->query(
+				'SELECT charactergroups.id, charactergroups.charactergroupsgroup_id, charactergroups.name, charactergroups.url, charactergroups.xps, charactergroupsgroups.id AS charactergroupsgroup_id, charactergroupsgroups.name AS charactergroupsgroup_name, charactergroupsgroups.url AS charactergroupsgroup_url '.
+				'FROM characters_charactergroups '.
+				'LEFT JOIN v_charactergroups AS charactergroups ON charactergroups.id = characters_charactergroups.charactergroup_id '.
+				'LEFT JOIN charactergroupsgroups ON charactergroupsgroups.id = charactergroups.charactergroupsgroup_id '.
+				'WHERE characters_charactergroups.character_id = ?',
+				'i',
+				$characterId
 			);
 		}
 		
@@ -108,8 +128,8 @@
 		public function getGroupByUrl($groupsgroupId, $groupUrl)
 		{
 			$data = $this->db->query(
-				'SELECT id, name, url '.
-				'FROM charactergroups '.
+				'SELECT id, name, url, xps '.
+				'FROM v_charactergroups '.
 				'WHERE charactergroupsgroup_id = ? AND url = ?',
 				'is',
 				$groupsgroupId, $groupUrl

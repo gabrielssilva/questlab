@@ -50,6 +50,8 @@
 			
 			// Set userdata
 			$this->set('loggedUser', static::$user);
+			$this->set('loggedSeminary', static::$seminary);
+			$this->set('loggedCharacter', static::$character);
 		}
 		
 	}

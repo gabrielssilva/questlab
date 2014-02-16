@@ -123,6 +123,9 @@
 			// Get Character group
 			$group = $this->Charactergroups->getGroupByUrl($groupsgroup['id'], $groupUrl);
 			
+			// Get Characters
+			$characters = $this->Characters->getCharactersForGroup($group['id']);
+			
 			// Get Character groups Quests
 			$quests = $this->Charactergroupsquests->getQuestsForGroup($group['id']);
 			
@@ -131,6 +134,7 @@
 			$this->set('seminary', $seminary);
 			$this->set('groupsgroup', $groupsgroup);
 			$this->set('group', $group);
+			$this->set('characters', $characters);
 			$this->set('quests', $quests);
 		}
 		
