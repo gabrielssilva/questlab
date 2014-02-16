@@ -24,7 +24,7 @@
 		 * 
 		 * @var array
 		 */
-		public $models = array('seminaries', 'charactergroups');
+		public $models = array('seminaries', 'charactergroups', 'charactergroupsquests');
 		/**
 		 * User permissions
 		 * 
@@ -89,11 +89,15 @@
 			// Get Character groups
 			$groups = $this->Charactergroups->getGroupsForGroupsgroup($groupsgroup['id']);
 			
+			// Get Character groups-group Quests
+			$quests = $this->Charactergroupsquests->getQuestsForCharactergroupsgroup($groupsgroup['id']);
+			
 			
 			// Pass data to view
 			$this->set('seminary', $seminary);
 			$this->set('groupsgroup', $groupsgroup);
 			$this->set('groups', $groups);
+			$this->set('quests', $quests);
 		}
 		
 		
@@ -119,11 +123,15 @@
 			// Get Character group
 			$group = $this->Charactergroups->getGroupByUrl($groupsgroup['id'], $groupUrl);
 			
+			// Get Character groups Quests
+			$quests = $this->Charactergroupsquests->getQuestsForGroup($group['id']);
+			
 			
 			// Pass data to view
 			$this->set('seminary', $seminary);
 			$this->set('groupsgroup', $groupsgroup);
 			$this->set('group', $group);
+			$this->set('quests', $quests);
 		}
 		
 	}
