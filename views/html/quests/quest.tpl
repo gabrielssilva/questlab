@@ -18,7 +18,7 @@
 		<li><a href="<?=$linker->link(array('sidequest',$seminary['url'],$questgroup['url'],$quest['url'],$sidequest['url']),1)?>"><?=$sidequest['entry_text']?></a></li>
 		<?php endforeach ?>
 		<?php if(!empty($questtext['out_text'])) : ?>
-		<li><a href="<?=$linker->link($questtext['pos']+1, 6)?>"><?=$questtext['out_text']?></a>
+		<li><a href="<?=$linker->link($questtext['pos']+1, 6)?>"><?=$questtext['out_text']?></a></li>
 		<?php endif ?>
 	</ul>	
 	<?php endif ?>
