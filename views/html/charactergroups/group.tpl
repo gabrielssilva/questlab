@@ -12,7 +12,7 @@
 	<h1><?=_('Characters')?></h1>
 	<ul>
 		<?php foreach($characters as &$character) : ?>
-		<li><a href="<?=$linker->link(array('characters','character',$seminary['url'],$character['url']))?>"><?=$character['name']?></a> (<?=$character['xps']?> XPs)</li>
+		<li><a href="<?=$linker->link(array('characters','character',$seminary['url'],$character['url']))?>"><?=$character['name']?></a> (<?=$character['xps']?> XPs) <?php if($character['is_leader'] > 0) : ?>(<?=_('Group Leader')?>)<?php endif ?></li>
 		<?php endforeach ?>
 	</ul>
 </section>
