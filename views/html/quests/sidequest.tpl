@@ -33,6 +33,6 @@
 <?php if($showtask) : ?>
 <section>
 	<h1><?=_('Task')?></h1>
-	<p><?=\hhu\z\Utils::t(($sidequest['task'])?></p>
+	<p><?=\hhu\z\Utils::t($sidequest['task'])?></p>
 </section>
 <?php endif ?>
