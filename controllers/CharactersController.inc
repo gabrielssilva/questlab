@@ -33,7 +33,7 @@
 		 * 
 		 * @var array
 		 */
-		public $models = array('seminaries', 'characters', 'users', 'charactergroups');
+		public $models = array('seminaries', 'characters', 'users', 'charactergroups', 'seminarycharacterfields');
 		
 		
 		
@@ -78,6 +78,9 @@
 			// Get Character
 			$character = $this->Characters->getCharacterByUrl($seminary['id'], $characterUrl);
 			
+			// Get Seminarycharacterfields
+			$characterfields = $this->Seminarycharacterfields->getFieldsForCharacter($character['id']);
+			
 			// Get User
 			$user = $this->Users->getUserById($character['user_id']);
 			
@@ -88,6 +91,7 @@
 			// Pass data to view
 			$this->set('seminary', $seminary);
 			$this->set('character', $character);
+			$this->set('characterfields', $characterfields);
 			$this->set('user', $user);
 			$this->set('groups', $groups);
 		}

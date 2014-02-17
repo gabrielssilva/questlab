@@ -6,6 +6,9 @@
 	<p>
 		XPs: <?=$character['xps']?><br />
 		<?=_('User')?>: <a href="<?=$linker->link(array('users','user',$user['url']))?>"><?=$user['username']?></a><br />
+		<?php foreach($characterfields as &$field) : ?>
+		<?=$field['title']?>: <?=$field['value']?><br />
+		<?php endforeach ?>
 	</p>
 </section>
 
