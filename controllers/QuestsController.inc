@@ -95,11 +95,13 @@
 			
 			// Media
 			$questmedia = null;
-			if(!is_null($quest['questsmedia_id'])) {
+			if(!is_null($questtext) && !empty($questtext['questsmedia_id'])) {
+				$questmedia = $this->Media->getMediaById($questtext['questsmedia_id']);
+			}
+			elseif(!is_null($quest['questsmedia_id'])) {
 				$questmedia = $this->Media->getMediaById($quest['questsmedia_id']);
 			}
 					
-			
 			
 			// Pass data to view
 			$this->set('seminary', $seminary);
@@ -166,7 +168,10 @@
 			
 			// Media
 			$sidequestmedia = null;
-			if(!is_null($sidequest['questsmedia_id'])) {
+			if(!is_null($sidequesttext) && !empty($sidequesttext['questsmedia_id'])) {
+				$sidequestmedia = $this->Media->getMediaById($sidequesttext['questsmedia_id']);
+			}
+			elseif(!is_null($sidequest['questsmedia_id'])) {
 				$sidequestmedia = $this->Media->getMediaById($sidequest['questsmedia_id']);
 			}
 			

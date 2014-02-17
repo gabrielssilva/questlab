@@ -46,7 +46,7 @@
 		public function getQuesttextByUrl($questId, $questtexttypeUrl, $pos)
 		{
 			$data = $this->db->query(
-				'SELECT questtexts.id, questtexts.text, questtexts.pos, questtexts.out_text, questtexttypes.id AS type_id, questtexttypes.type, questtexttypes.url AS type_url '.
+				'SELECT questtexts.id, questtexts.text, questtexts.pos, questtexts.out_text, questtexts.questsmedia_id, questtexttypes.id AS type_id, questtexttypes.type, questtexttypes.url AS type_url '.
 				'FROM questtexts '.
 				'LEFT JOIN questtexttypes ON questtexttypes.id = questtexts.questtexttype_id '.
 				'WHERE questtexts.quest_id = ? AND questtexttypes.url = ? AND questtexts.pos = ?',
@@ -74,7 +74,7 @@
 		public function getSidequesttextByUrl($sidequestId, $questtexttypeUrl, $pos)
 		{
 			$data = $this->db->query(
-				'SELECT sidequesttexts.id, sidequesttexts.text, sidequesttexts.pos, sidequesttexts.out_text, sidequesttexts.abort_text, questtexttypes.id AS type_id, questtexttypes.type, questtexttypes.url AS type_url '.
+				'SELECT sidequesttexts.id, sidequesttexts.text, sidequesttexts.pos, sidequesttexts.out_text, sidequesttexts.abort_text, sidequesttexts.questsmedia_id, questtexttypes.id AS type_id, questtexttypes.type, questtexttypes.url AS type_url '.
 				'FROM sidequesttexts '.
 				'LEFT JOIN questtexttypes ON questtexttypes.id = sidequesttexts.questtexttype_id '.
 				'WHERE sidequesttexts.sidequest_id = ? AND questtexttypes.url = ? AND sidequesttexts.pos = ?',
