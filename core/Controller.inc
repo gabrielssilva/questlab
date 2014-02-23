@@ -30,7 +30,7 @@
 		 * 
 		 * @var View
 		 */
-		private $view = null;
+		protected $view = null;
 		/**
 		 * Data to pass to the View
 		 * 
@@ -348,7 +348,7 @@
 		 * @throws	ModelNotValidException
 		 * @throws	ModelNotFoundException
 		 */
-		private function loadModels()
+		protected function loadModels()
 		{
 			// Determine Models
 			$explicit = false;
@@ -403,7 +403,7 @@
 		 * @param	string	$layoutName	Name of the current Layout
 		 * @param	string	$action		Current Action
 		 */
-		private function loadView($layoutName, $action)
+		protected function loadView($layoutName, $action)
 		{
 			// Check Layout name
 			if(is_null($layoutName)) {

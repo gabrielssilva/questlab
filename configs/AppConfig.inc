@@ -60,7 +60,8 @@
 		 */
 		public static $dirs = array(
 			'locale'	=>	'locale',
-			'media'		=>	'media'
+			'media'		=>	'media',
+			'questtypes'	=>	'questtypes'
 		);
 		
 		
