@@ -233,6 +233,7 @@
 			// Pass data to view
 			$this->set('seminary', $seminary);
 			$this->set('questgroup', $questgroup);
+			$this->set('questtext', $questtext);
 			$this->set('sidequesttext', $sidequesttext);
 			$this->set('quest', $quest);
 			$this->set('sidequest', $sidequest);
