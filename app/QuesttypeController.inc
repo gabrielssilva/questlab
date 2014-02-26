@@ -17,8 +17,14 @@
 	 * 
 	 * @author	Oliver Hanraths <oliver.hanraths@uni-duesseldorf.de>
 	 */
-	abstract class QuesttypeController extends \nre\core\Controller
+	abstract class QuesttypeController extends \hhu\z\Controller
 	{
+		/**
+		 * Required models
+		 * 
+		 * @var array
+		 */
+		public $models = array('seminaries', 'questgroups', 'quests', 'characters');
 		
 		
 		
@@ -228,6 +234,71 @@
 			
 			// Load view
 			$this->view = QuesttypeView::loadAndFactory($layoutName, $controllerName, $action);
+		}
+		
+		
+		/**
+		 * Mark the current Quest as solved and redirect to solved page.
+		 */
+		protected function setQuestSolved()
+		{
+			// Get seminary
+			$seminary = $this->Seminaries->getSeminaryByUrl($this->request->getParam(3));
+			
+			// Get Questgroup
+			$questgroup = $this->Questgroups->getQuestgroupByUrl($seminary['id'], $this->request->getParam(4));
+			
+			// Get Quest
+			$quest = $this->Quests->getQuestByUrl($seminary['id'], $questgroup['id'], $this->request->getParam(5));
+			
+			// Sidequest
+			$sidequest = null;
+			if($this->request->getParam(2) == 'sidequest') {
+				$sidequest = $this->Quests->getSidequestByUrl($seminary['id'], $questgroup['id'], $quest['id'], $this->request->getParam(6));
+			}
+			
+			// Character
+			$character = $this->Characters->getCharacterForUserAndSeminary($this->Auth->getUserId(), $seminary['id']);
+			
+			// Set solved
+			$this->Quests->setQuestSolved($quest['id'], $character['id']);
+			
+			
+			// Redirect
+			$this->redirect($this->linker->link('solved', $sidequest != null ? 6 : 5));
+		}
+		
+		
+		/**
+		 * Mark the current Quest as unsolved and redirect to unsolved
+		 * page.
+		 */
+		protected function setQuestUnsolved()
+		{
+			// Get seminary
+			$seminary = $this->Seminaries->getSeminaryByUrl($this->request->getParam(3));
+			
+			// Get Questgroup
+			$questgroup = $this->Questgroups->getQuestgroupByUrl($seminary['id'], $this->request->getParam(4));
+			
+			// Get Quest
+			$quest = $this->Quests->getQuestByUrl($seminary['id'], $questgroup['id'], $this->request->getParam(5));
+			
+			// Sidequest
+			$sidequest = null;
+			if($this->request->getParam(2) == 'sidequest') {
+				$sidequest = $this->Quests->getSidequestByUrl($seminary['id'], $questgroup['id'], $quest['id'], $this->request->getParam(6));
+			}
+			
+			// Character
+			$character = $this->Characters->getCharacterForUserAndSeminary($this->Auth->getUserId(), $seminary['id']);
+			
+			// Set solved
+			$this->Quests->setQuestSolved($quest['id'], $character['id']);
+			
+			
+			// Redirect
+			$this->redirect($this->linker->link('unsolved', $sidequest != null ? 6 : 5));
 		}
 		
 	}
