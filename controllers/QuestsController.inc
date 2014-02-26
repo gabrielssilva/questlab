@@ -24,7 +24,7 @@
 		 * 
 		 * @var array
 		 */
-		public $models = array('seminaries', 'questgroups', 'quests', 'questtexts', 'media');
+		public $models = array('seminaries', 'questgroups', 'quests', 'questtexts', 'media', 'questtypes');
 		/**
 		 * User permissions
 		 * 
@@ -51,10 +51,10 @@
 		 * Show a quest and its task.
 		 * 
 		 * @throws	IdNotFoundException
-		 * @param	string	$seminaryUrl		URL-Title of a Seminary
-		 * @param	string	$questgroupUrl		URL-Title of a Questgroup
-		 * @param	string	$questUrl		URL-Title of a Quest
-		 * @param	string	$questtexttypeUrl	URL-Title of a Questtexttype
+		 * @param	string	$seminaryUrl		URL-Title of Seminary
+		 * @param	string	$questgroupUrl		URL-Title of Questgroup
+		 * @param	string	$questUrl		URL-Title of Quest
+		 * @param	string	$questtexttypeUrl	URL-Title of Questtexttype
 		 * @param	int	$questtextPos		Position of Questtext
 		 */
 		public function quest($seminaryUrl, $questgroupUrl, $questUrl, $questtexttypeUrl=null, $questtextPos=1)
@@ -70,15 +70,35 @@
 			
 			// Get Questtext
 			$questtext = null;
-			$questtexttypes = $this->Questtexts->getQuesttexttypes();
-			$questtexttypes = array_map(function($t) { return $t['url']; }, $questtexttypes);
 			if(is_null($questtexttypeUrl)) {
 				$questtexttypeUrl = 'Prolog';
 			}
-			$questtextCount = $this->Questtexts->getQuesttextsCountForQuest($quest['id'], $questtexttypeUrl);
-			if($questtextCount > 0)
+			// Quest solved
+			if($questtexttypeUrl == 'solved')
 			{
-				if(in_array($questtexttypeUrl, $questtexttypes))
+				$questtext = array(
+					'type' => 'solved',
+					'text' => $quest['right_text']
+				);
+			}
+			// Quest unsolved
+			elseif($questtexttypeUrl == 'unsolved')
+			{
+				$questtext = array(
+					'type' => 'unsolved',
+					'text' => $quest['wrong_text']
+				);
+			}
+			// Text
+			else
+			{
+				// Text type
+				$questtexttypes = $this->Questtexts->getQuesttexttypes();
+				$questtexttypes = array_map(function($t) { return $t['url']; }, $questtexttypes);
+				// Text count
+				$questtextCount = $this->Questtexts->getQuesttextsCountForQuest($quest['id'], $questtexttypeUrl);
+				// Get text
+				if($questtextCount > 0 && in_array($questtexttypeUrl, $questtexttypes))
 				{
 					$questtextPos = max(intval($questtextPos), 1);
 					$questtext = $this->Questtexts->getQuesttextByUrl($quest['id'], $questtexttypeUrl, $questtextPos);
@@ -87,30 +107,36 @@
 				}
 			}
 			
-			// Show task only for Prologes
-			$showTask = false;
-			if($questtext['type'] == 'Prolog') {
-				$showTask = true;
-			}
-			
 			// Media
 			$questmedia = null;
-			if(!is_null($questtext) && !empty($questtext['questsmedia_id'])) {
+			if(!is_null($questtext) && array_key_exists('questmedia_id', $questtext) && !empty($questtext['questsmedia_id'])) {
 				$questmedia = $this->Media->getMediaById($questtext['questsmedia_id']);
 			}
 			elseif(!is_null($quest['questsmedia_id'])) {
 				$questmedia = $this->Media->getMediaById($quest['questsmedia_id']);
 			}
-					
+			
+			// Task
+			$task = null;
+			if($questtext['type'] == 'Prolog')
+			{
+				// Questtype
+				$questtype = $this->Questtypes->getQuesttypeById($quest['questtype_id']);
+				
+				// Task
+				$task = $this->runAndRenderTask($questtype['classname']);
+			}
+			
 			
 			// Pass data to view
 			$this->set('seminary', $seminary);
 			$this->set('questgroup', $questgroup);
 			$this->set('questtext', $questtext);
 			$this->set('quest', $quest);
-			$this->set('showtask', $showTask);
+			$this->set('task', $task);
 			$this->set('media', $questmedia);
 		}
+		
 		
 		/**
 		 * Action: sidequest.
@@ -118,12 +144,12 @@
 		 * Show a sidequest and its task.
 		 * 
 		 * @throws	IdNotFoundException
-		 * @param	string	$seminaryUrl		URL-Title of a Seminary
-		 * @param	string	$questgroupUrl		URL-Title of a Questgroup
-		 * @param	string	$questUrl		URL-Title of a Quest
-		 * @param	string	$sidequestUrl		URL-Title of a Sidequest
-		 * @param	string	$questtexttypeUrl	URL-Title of a Questtexttype
-		 * @param	int	$questtextPos		Position of Questtext
+		 * @param	string	$seminaryUrl		URL-Title of Seminary
+		 * @param	string	$questgroupUrl		URL-Title of Questgroup
+		 * @param	string	$questUrl		URL-Title of Quest
+		 * @param	string	$sidequestUrl		URL-Title of Sidequest
+		 * @param	string	$sidequesttexttypeUrl	URL-Title of Sidequesttexttype
+		 * @param	int	$sidequesttextPos	Position of Sidequesttext
 		 */
 		public function sidequest($seminaryUrl, $questgroupUrl, $questUrl, $sidequestUrl, $sidequesttexttypeUrl=null, $sidequesttextPos=1)
 		{
@@ -144,26 +170,43 @@
 			
 			// Get Sidequesttext
 			$sidequesttext = null;
-			$questtexttypes = $this->Questtexts->getQuesttexttypes();
-			$questtexttypes = array_map(function($t) { return $t['url']; }, $questtexttypes);
 			if(is_null($sidequesttexttypeUrl)) {
 				$sidequesttexttypeUrl = 'Prolog';
 			}
-			$sidequesttextCount = $this->Questtexts->getQuesttextsCountForSidequest($sidequest['id'], $sidequesttexttypeUrl);
-			if($sidequesttextCount > 0)
+			// Quest solved
+			if($sidequesttexttypeUrl == 'solved')
 			{
-				if(in_array($sidequesttexttypeUrl, $questtexttypes))
-				{
-					$sidequesttextPos = max(intval($sidequesttextPos), 1);
-					$sidequesttext = $this->Questtexts->getSidequesttextByUrl($sidequest['id'], $sidequesttexttypeUrl, $sidequesttextPos);
-					$sidequesttext['count'] = $sidequesttextCount;
-				}
+				$sidequesttext = array(
+					'type' => 'solved',
+					'text' => $quest['right_text']
+				);
 			}
-			
-			// Show task only for Prologes
-			$showTask = false;
-			if($sidequesttext['type'] == 'Prolog') {
-				$showTask = true;
+			// Quest unsolved
+			elseif($sidequesttexttypeUrl == 'unsolved')
+			{
+				$sidequesttext = array(
+					'type' => 'unsolved',
+					'text' => $quest['wrong_text']
+				);
+			}
+			// Text
+			else
+			{
+				// Text type
+				$questtexttypes = $this->Questtexts->getQuesttexttypes();
+				$questtexttypes = array_map(function($t) { return $t['url']; }, $questtexttypes);
+				// Text count
+				$sidequesttextCount = $this->Questtexts->getQuesttextsCountForSidequest($sidequest['id'], $sidequesttexttypeUrl);
+				// Get text
+				if($sidequesttextCount > 0 && in_array($sidequesttexttypeUrl, $questtexttypes))
+				{
+					if(in_array($sidequesttexttypeUrl, $questtexttypes))
+					{
+						$sidequesttextPos = max(intval($sidequesttextPos), 1);
+						$sidequesttext = $this->Questtexts->getSidequesttextByUrl($sidequest['id'], $sidequesttexttypeUrl, $sidequesttextPos);
+						$sidequesttext['count'] = $sidequesttextCount;
+					}
+				}
 			}
 			
 			// Media
@@ -175,16 +218,90 @@
 				$sidequestmedia = $this->Media->getMediaById($sidequest['questsmedia_id']);
 			}
 			
+			// Task
+			$task = null;
+			if($sidequesttext['type'] == 'Prolog')
+			{
+				// Questtype
+				$questtype = $this->Questtypes->getQuesttypeById($sidequest['questtype_id']);
+				
+				// Task
+				$task = $this->runAndRenderTask($questtype['classname']);
+			}
+			
 			
 			// Pass data to view
 			$this->set('seminary', $seminary);
 			$this->set('questgroup', $questgroup);
 			$this->set('sidequesttext', $sidequesttext);
 			$this->set('quest', $quest);
-			$this->set('questtext', $questtext);
 			$this->set('sidequest', $sidequest);
-			$this->set('showtask', $showTask);
+			$this->set('task', $task);
 			$this->set('media', $sidequestmedia);
+		}
+		
+		
+		
+		
+		/**
+		 * Load, construct, run and render the Agent for the given
+		 * classname of a Questtype and return ist output.
+		 * 
+		 * @param	string	$questtypeClassname	Classname of Questtype to run and render
+		 * @return	string				Rendered output of Questtype-Agent
+		 */
+		private function runAndRenderTask($questtypeClassname)
+		{
+			$task = null;
+			$questtypeAgent = null;
+			try {
+				// Load Agent
+				\hhu\z\QuesttypeAgent::load($questtypeClassname);
+				// Construct Agent
+				$questtypeAgent = \hhu\z\QuesttypeAgent::factory($questtypeClassname, $this->request, $this->response);
+				
+				// Generate response
+				$response = clone $this->response;
+				$response->clearParams(1);
+				$response->addParams(
+					null,
+					\nre\configs\CoreConfig::$defaults['action']
+				);
+				// Run Agent
+				$questtypeAgent->run($this->request, $response);
+			
+				// Render output
+				$task = $questtypeAgent->render();
+			
+			}
+			catch(\nre\exceptions\ViewNotFoundException $e) {
+				$task = $e->getMessage();
+			}
+			catch(\nre\exceptions\ActionNotFoundException $e) {
+				$task = $e->getMessage();
+			}
+			catch(\hhu\z\exceptions\QuesttypeModelNotValidException $e) {
+				$task = $e->getMessage();
+			}
+			catch(\hhu\z\exceptions\QuesttypeModelNotFoundException $e) {
+				$task = $e->getMessage();
+			}
+			catch(\hhu\z\exceptions\QuesttypeControllerNotValidException $e) {
+				$task = $e->getMessage();
+			}
+			catch(\hhu\z\exceptions\QuesttypeControllerNotFoundException $e) {
+				$task = $e->getMessage();
+			}
+			catch(\hhu\z\exceptions\QuesttypeAgentNotValidException $e) {
+				$task = $e->getMessage();
+			}
+			catch(\hhu\z\exceptions\QuesttypeAgentNotFoundException $e) {
+				$task = $e->getMessage();
+			}
+			
+			
+			// Return rendered output
+			return $task;
 		}
 		
 	}
