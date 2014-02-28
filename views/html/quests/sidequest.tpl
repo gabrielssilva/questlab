@@ -10,14 +10,21 @@
 <?php if(!is_null($media)) : ?>
 <img src="<?=$linker->link(array('media','index',$seminary['url'],$media['url']))?>" />
 <?php endif ?>
+
+<?php if(!is_null($sidequeststatustext)) : ?>
 <section>
-	<?php if($sidequesttext['type'] == 'solved') : ?>
+	<?php if($sidequeststatus == 'solved') : ?>
 	<h1><?=_('solved')?></h1>
-	<?php elseif($sidequesttext['type'] == 'unsolved') : ?>
+	<?php elseif($sidequeststatus == 'unsolved') : ?>
 	<h1><?=_('unsolved')?></h1>
-	<?php else : ?>
-	<h1><?=$sidequesttext['type']?></h1>
 	<?php endif ?>
+	<p><?=\hhu\z\Utils::t($sidequeststatustext)?></p>
+</section>
+<?php endif ?>
+
+<?php if(!is_null($sidequesttext)) : ?>
+<section>
+	<h1><?=$sidequesttext['type']?></h1>
 	<p><?=\hhu\z\Utils::t($sidequesttext['text'])?></p>
 	
 	<?php if(array_key_exists('out_text', $sidequesttext) && !empty($sidequesttext['out_text'])) : ?>
@@ -37,6 +44,7 @@
 	<?php if($sidequesttext['pos'] < $sidequesttext['count'] && empty($sidequesttext['out_text'])) : ?><a href="<?=$linker->link(array($sidequesttext['type_url'],$sidequesttext['pos']+1),6)?>">&gt;</a><?php endif ?>
 	<?php endif ?>
 </section>
+<?php endif ?>
 
 <?php if(!is_null($task)) : ?>
 <section>

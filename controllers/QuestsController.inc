@@ -73,37 +73,30 @@
 			if(is_null($questtexttypeUrl)) {
 				$questtexttypeUrl = 'Prolog';
 			}
-			// Quest solved
-			if($questtexttypeUrl == 'solved')
+			$questtexttypes = $this->Questtexts->getQuesttexttypes();
+			$questtexttypes = array_map(function($t) { return $t['url']; }, $questtexttypes);
+			$questtextCount = $this->Questtexts->getQuesttextsCountForQuest($quest['id'], $questtexttypeUrl);
+			if($questtextCount > 0 && in_array($questtexttypeUrl, $questtexttypes))
 			{
-				$questtext = array(
-					'type' => 'solved',
-					'text' => $quest['right_text']
-				);
+				$questtextPos = max(intval($questtextPos), 1);
+				$questtext = $this->Questtexts->getQuesttextByUrl($quest['id'], $questtexttypeUrl, $questtextPos);
+				$questtext['count'] = $questtextCount;
+				$questtext['sidequests'] = $this->Quests->getSidequestsForQuesttext($questtext['id']);
 			}
-			// Quest unsolved
-			elseif($questtexttypeUrl == 'unsolved')
+			
+			// Quest status
+			$questStatus = $this->request->getGetParam('status');
+			$questStatusText = null;
+			if(!is_null($questStatus))
 			{
-				$questtext = array(
-					'type' => 'unsolved',
-					'text' => $quest['wrong_text']
-				);
-			}
-			// Text
-			else
-			{
-				// Text type
-				$questtexttypes = $this->Questtexts->getQuesttexttypes();
-				$questtexttypes = array_map(function($t) { return $t['url']; }, $questtexttypes);
-				// Text count
-				$questtextCount = $this->Questtexts->getQuesttextsCountForQuest($quest['id'], $questtexttypeUrl);
-				// Get text
-				if($questtextCount > 0 && in_array($questtexttypeUrl, $questtexttypes))
+				switch($questStatus)
 				{
-					$questtextPos = max(intval($questtextPos), 1);
-					$questtext = $this->Questtexts->getQuesttextByUrl($quest['id'], $questtexttypeUrl, $questtextPos);
-					$questtext['count'] = $questtextCount;
-					$questtext['sidequests'] = $this->Quests->getSidequestsForQuesttext($questtext['id']);
+					case 'solved':
+						$questStatusText = $quest['right_text'];
+					break;
+					case 'unsolved':
+						$questStatusText = $quest['wrong_text'];
+					break;
 				}
 			}
 			
@@ -127,12 +120,21 @@
 				$task = $this->runAndRenderTask($questtype['classname']);
 			}
 			
+			// Next Quest
+			$nextQuests = null;
+			if($questtexttypeUrl == 'Epilog') {
+				$nextQuests = $this->Quests->getNextQuests($quest['id']);
+			}
+			
 			
 			// Pass data to view
 			$this->set('seminary', $seminary);
 			$this->set('questgroup', $questgroup);
 			$this->set('questtext', $questtext);
 			$this->set('quest', $quest);
+			$this->set('queststatus', $questStatus);
+			$this->set('queststatustext', $questStatusText);
+			$this->set('nextquests', $nextQuests);
 			$this->set('task', $task);
 			$this->set('media', $questmedia);
 		}
@@ -173,39 +175,32 @@
 			if(is_null($sidequesttexttypeUrl)) {
 				$sidequesttexttypeUrl = 'Prolog';
 			}
-			// Quest solved
-			if($sidequesttexttypeUrl == 'solved')
+			$questtexttypes = $this->Questtexts->getQuesttexttypes();
+			$questtexttypes = array_map(function($t) { return $t['url']; }, $questtexttypes);
+			$sidequesttextCount = $this->Questtexts->getQuesttextsCountForSidequest($sidequest['id'], $sidequesttexttypeUrl);
+			if($sidequesttextCount > 0 && in_array($sidequesttexttypeUrl, $questtexttypes))
 			{
-				$sidequesttext = array(
-					'type' => 'solved',
-					'text' => $quest['right_text']
-				);
-			}
-			// Quest unsolved
-			elseif($sidequesttexttypeUrl == 'unsolved')
-			{
-				$sidequesttext = array(
-					'type' => 'unsolved',
-					'text' => $quest['wrong_text']
-				);
-			}
-			// Text
-			else
-			{
-				// Text type
-				$questtexttypes = $this->Questtexts->getQuesttexttypes();
-				$questtexttypes = array_map(function($t) { return $t['url']; }, $questtexttypes);
-				// Text count
-				$sidequesttextCount = $this->Questtexts->getQuesttextsCountForSidequest($sidequest['id'], $sidequesttexttypeUrl);
-				// Get text
-				if($sidequesttextCount > 0 && in_array($sidequesttexttypeUrl, $questtexttypes))
+				if(in_array($sidequesttexttypeUrl, $questtexttypes))
 				{
-					if(in_array($sidequesttexttypeUrl, $questtexttypes))
-					{
-						$sidequesttextPos = max(intval($sidequesttextPos), 1);
-						$sidequesttext = $this->Questtexts->getSidequesttextByUrl($sidequest['id'], $sidequesttexttypeUrl, $sidequesttextPos);
-						$sidequesttext['count'] = $sidequesttextCount;
-					}
+					$sidequesttextPos = max(intval($sidequesttextPos), 1);
+					$sidequesttext = $this->Questtexts->getSidequesttextByUrl($sidequest['id'], $sidequesttexttypeUrl, $sidequesttextPos);
+					$sidequesttext['count'] = $sidequesttextCount;
+				}
+			}
+			
+			// Sidequest status
+			$sidequestStatus = $this->request->getGetParam('status');
+			$sidequestStatusText = null;
+			if(!is_null($sidequestStatus))
+			{
+				switch($sidequestStatus)
+				{
+					case 'solved':
+						$sidequestStatusText = $sidequest['right_text'];
+					break;
+					case 'unsolved':
+						$sidequestStatusText = $sidequest['wrong_text'];
+					break;
 				}
 			}
 			
@@ -220,7 +215,7 @@
 			
 			// Task
 			$task = null;
-			if($sidequesttext['type'] == 'Prolog')
+			if(!is_null($sidequesttext) && $sidequesttext['type'] == 'Prolog')
 			{
 				// Questtype
 				$questtype = $this->Questtypes->getQuesttypeById($sidequest['questtype_id']);
@@ -237,6 +232,8 @@
 			$this->set('sidequesttext', $sidequesttext);
 			$this->set('quest', $quest);
 			$this->set('sidequest', $sidequest);
+			$this->set('sidequeststatus', $sidequestStatus);
+			$this->set('sidequeststatustext', $sidequestStatusText);
 			$this->set('task', $task);
 			$this->set('media', $sidequestmedia);
 		}

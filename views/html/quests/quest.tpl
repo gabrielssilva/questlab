@@ -8,14 +8,21 @@
 <?php if(!is_null($media)) : ?>
 <img src="<?=$linker->link(array('media','index',$seminary['url'],$media['url']))?>" />
 <?php endif ?>
+
+<?php if(!is_null($queststatustext)) : ?>
 <section>
-	<?php if($questtext['type'] == 'solved') : ?>
+	<?php if($queststatus == 'solved') : ?>
 	<h1><?=_('solved')?></h1>
-	<?php elseif($questtext['type'] == 'unsolved') : ?>
+	<?php elseif($queststatus == 'unsolved') : ?>
 	<h1><?=_('unsolved')?></h1>
-	<?php else : ?>
-	<h1><?=$questtext['type']?></h1>
 	<?php endif ?>
+	<p><?=\hhu\z\Utils::t($queststatustext)?></p>
+</section>
+<?php endif ?>
+
+<?php if(!is_null($questtext)) : ?>
+<section>
+	<h1><?=$questtext['type']?></h1>
 	<p><?=\hhu\z\Utils::t($questtext['text'])?></p>
 	
 	<?php if(array_key_exists('sidequests', $questtext) && !empty($questtext['sidequests'])) : ?>
@@ -39,6 +46,18 @@
 	<?php if($questtext['pos'] < $questtext['count'] && empty($questtext['out_text'])) : ?><a href="<?=$linker->link(array($questtext['type_url'],$questtext['pos']+1),5)?>">&gt;</a><?php endif ?>
 	<?php endif ?>
 </section>
+<?php endif ?>
+
+<?php if(!is_null($nextquests)) : ?>
+<section>
+	<h1><?=_('Next Quests')?></h1>
+	<ul>
+		<?php foreach($nextquests as &$nextquest) : ?>
+		<li><a href="<?=$linker->link(array($nextquest['questgroup_url'],$nextquest['url']),3)?>"><?=$nextquest['title']?></a></li>
+		<?php endforeach ?>
+	</ul>
+</section>
+<?php endif ?>
 
 <?php if(!is_null($task)) : ?>
 <section>

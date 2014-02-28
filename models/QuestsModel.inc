@@ -154,6 +154,33 @@
 		}
 		
 		
+		/**
+		 * Get Quests that follow-up a Quest.
+		 * 
+		 * @param	int	$questId	ID of Quest to get next Quests of
+		 * @return	array			Quests data
+		 */
+		public function getNextQuests($questId)
+		{
+			return $this->db->query(
+				'SELECT quests.id, quests.title, quests.url, questgroups.title AS questgroup_title, questgroups.url AS questgroup_url '.
+				'FROM quests_previousquests '.
+				'LEFT JOIN quests ON quests.id = quests_previousquests.quest_id '.
+				'LEFT JOIN questgroups ON questgroups.id = quests.questgroup_id '.
+				'LEFT JOIN questgroupshierarchy ON questgroupshierarchy.id = questgroups.questgroupshierarchy_id '.
+				'WHERE quests_previousquests.previous_quest_id = ?',
+				'i',
+				$questId
+			);
+		}
+		
+		
+		/**
+		 * Mark a Quest as solved for a Character.
+		 * 
+		 * @param	int	$questId	ID of Quest to mark as solved
+		 * @param	int	$characterId	ID of Character that solved the Quest
+		 */
 		public function setQuestSolved($questId, $characterId)
 		{
 			$this->db->query(
@@ -169,6 +196,12 @@
 		}
 		
 		
+		/**
+		 * Mark a Quest as unsolved for a Character.
+		 * 
+		 * @param	int	$questId	ID of Quest to mark as unsolved
+		 * @param	int	$characterId	ID of Character that unsolved the Quest
+		 */
 		public function setQuestUnsolved($questId, $characterId)
 		{
 			$this->db->query(

@@ -265,7 +265,7 @@
 			
 			
 			// Redirect
-			$this->redirect($this->linker->link('solved', $sidequest != null ? 6 : 5));
+			$this->redirect($this->linker->link('Epilog', $sidequest != null ? 6 : 5, true, array('status'=>'solved')));
 		}
 		
 		
@@ -298,7 +298,7 @@
 			
 			
 			// Redirect
-			$this->redirect($this->linker->link('unsolved', $sidequest != null ? 6 : 5));
+			$this->redirect($this->linker->link('Prolog', $sidequest != null ? 6 : 5, true, array('status'=>'unsolved')));
 		}
 		
 	}
