@@ -18,7 +18,7 @@
 		<div id="user">
 			<a href="<?=$linker->link(array('users',$loggedUser['url']))?>"><?=$loggedUser['username']?></a>
 			<?php if(!is_null($loggedCharacter)) : ?>
-			<?=_('as')?> <a href="<?=$linker->link(array('characters','character',$loggedSeminary['url'],$loggedCharacter['url']))?>"><?=$loggedCharacter['name']?></a> (<?=$loggedCharacter['xps']?> XPs)
+			<?=_('as')?> <a href="<?=$linker->link(array('characters','character',$loggedSeminary['url'],$loggedCharacter['url']))?>"><?=$loggedCharacter['name']?></a> (<?=$loggedCharacter['xps']?> XPs, <?=$loggedCharacter['xplevel']?>)
 			<?php endif ?>
 		</div>
 		<?php endif ?>
