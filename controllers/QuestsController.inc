@@ -77,7 +77,7 @@
 			{
 				// Previous Questgroup
 				$previousQuestgroup = $this->Questgroups->getPreviousQuestgroup($questgroup['id']);
-				if(!$this->Questgroups->hasCharacterSolvedQuestgroup($previousQuestgroup['id'], $character['id'])) {
+				if(!is_null($previousQuestgroup) && !$this->Questgroups->hasCharacterSolvedQuestgroup($previousQuestgroup['id'], $character['id'])) {
 					throw new \nre\exceptions\AccessDeniedException();
 				}
 			}
@@ -216,7 +216,7 @@
 			{
 				// Previous Questgroup
 				$previousQuestgroup = $this->Questgroups->getPreviousQuestgroup($questgroup['id']);
-				if(!$this->Questgroups->hasCharacterSolvedQuestgroup($previousQuestgroup['id'], $character['id'])) {
+				if(!is_null($previousQuestgroup) && !$this->Questgroups->hasCharacterSolvedQuestgroup($previousQuestgroup['id'], $character['id'])) {
 					throw new \nre\exceptions\AccessDeniedException();
 				}
 			}
