@@ -294,7 +294,7 @@
 			$character = $this->Characters->getCharacterForUserAndSeminary($this->Auth->getUserId(), $seminary['id']);
 			
 			// Set solved
-			$this->Quests->setQuestSolved($quest['id'], $character['id']);
+			$this->Quests->setQuestUnsolved($quest['id'], $character['id']);
 			
 			
 			// Redirect
