@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: The Legend of Z\n"
-"POT-Creation-Date: 2014-02-26 20:45+0100\n"
-"PO-Revision-Date: 2014-02-26 20:45+0100\n"
+"POT-Creation-Date: 2014-03-04 11:59+0100\n"
+"PO-Revision-Date: 2014-03-04 12:00+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de_DE\n"
@@ -57,7 +57,7 @@ msgid "Group Leader"
 msgstr "Gruppenleiter"
 
 #: ../../../views/html/charactergroups/group.tpl:21
-#: ../../../views/html/questgroups/questgroup.tpl:24
+#: ../../../views/html/questgroups/questgroup.tpl:31
 msgid "Quests"
 msgstr "Quests"
 
@@ -110,22 +110,36 @@ msgstr "Login"
 msgid "Logout"
 msgstr "Logout"
 
-#: ../../../views/html/questgroups/questgroup.tpl:30
+#: ../../../views/html/questgroups/questgroup.tpl:22
+#: ../../../views/html/questgroups/questgroup.tpl:47
+#: ../../../views/html/seminaries/seminary.tpl:26
+msgid "locked"
+msgstr "gesperrt"
+
+#: ../../../views/html/questgroups/questgroup.tpl:38
 msgid "containing optional Quests"
 msgstr "Enthaltene optionale Quests"
 
-#: ../../../views/html/quests/quest.tpl:13
-#: ../../../views/html/quests/sidequest.tpl:15
+#: ../../../views/html/quests/quest.tpl:15
+#: ../../../views/html/quests/sidequest.tpl:17
 msgid "solved"
 msgstr "gelöst"
 
-#: ../../../views/html/quests/quest.tpl:15
-#: ../../../views/html/quests/sidequest.tpl:17
+#: ../../../views/html/quests/quest.tpl:17
+#: ../../../views/html/quests/sidequest.tpl:19
 msgid "unsolved"
 msgstr "ungelöst"
 
-#: ../../../views/html/quests/quest.tpl:45
-#: ../../../views/html/quests/sidequest.tpl:43
+#: ../../../views/html/quests/quest.tpl:53
+msgid "Go on"
+msgstr "Hier geht es weiter"
+
+#: ../../../views/html/quests/quest.tpl:57
+msgid "Quest"
+msgstr "Quest"
+
+#: ../../../views/html/quests/quest.tpl:70
+#: ../../../views/html/quests/sidequest.tpl:51
 msgid "Task"
 msgstr "Aufgabe"
 

@@ -44,7 +44,7 @@
 		</ul>
 		<?php endif ?>
 		<?php else : ?>
-		<?=_('Locked')?>
+		<?=_('locked')?>
 		<?php endif ?>
 	</li>
 	<?php endforeach ?>
