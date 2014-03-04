@@ -90,10 +90,20 @@
 			// Created user
 			$seminary['creator'] = $this->Users->getUserById($seminary['created_user_id']);
 			
+			// Get Character
+			$character = $this->Characters->getCharacterForUserAndSeminary($this->Auth->getUserId(), $seminary['id']);
+			
 			// Questgrouphierarchy and Questgroups
 			$questgroupshierarchy = $this->Questgroupshierarchy->getHierarchyForSeminary($seminary['id']);
-			foreach($questgroupshierarchy as &$hierarchy) {
+			foreach($questgroupshierarchy as &$hierarchy)
+			{
+				// Get Questgroups
 				$hierarchy['questgroups'] = $this->Questgroups->getQuestgroupsForHierarchy($hierarchy['id']);
+				
+				// Check permission of Questgroups
+				for($i=1; $i<count($hierarchy['questgroups']); $i++) {
+					$hierarchy['questgroups'][$i]['access'] =  $this->Questgroups->hasCharacterSolvedQuestgroup($hierarchy['questgroups'][$i-1]['id'], $character['id']);
+				}
 			}
 			
 			

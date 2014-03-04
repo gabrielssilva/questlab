@@ -19,6 +19,12 @@
 	 */
 	class QuestgroupsModel extends \hhu\z\Model
 	{
+		/**
+		 * Required models
+		 * 
+		 * @var array
+		 */
+		public $models = array('questgroupshierarchy', 'quests');
 		
 		
 		
@@ -136,6 +142,164 @@
 				'i',
 				$questgroupId
 			);
+		}
+		
+		
+		/**
+		 * Get the next Questgroup.
+		 * 
+		 * Determine the next Questgroup. If there is no next Questgroup
+		 * on the same level as the given Quest then the followed-up
+		 * Questgroup from a higher hierarchy level is returned.
+		 * 
+		 * @param	int	$questgroupId	ID of Questgroup to get next Questgroup of
+		 * @return	array			Questgroup data
+		 */
+		public function getNextQuestgroup($questgroupId)
+		{
+			$currentQuestgroup = $this->getQuestgroupById($questgroupId);
+			$nextQuestgroup = $this->_getNextQuestgroup($currentQuestgroup['parent_questgroup_id'], $currentQuestgroup['pos']);
+			while(is_null($nextQuestgroup) && !is_null($currentQuestgroup['parent_questgroup_id']))
+			{
+				$currentQuestgroup = $this->getQuestgroupById($currentQuestgroup['parent_questgroup_id']);
+				$nextQuestgroup = $this->_getNextQuestgroup($currentQuestgroup['parent_questgroup_id'], $currentQuestgroup['pos']);
+			}
+			
+			
+			return $nextQuestgroup;
+		}
+		
+		
+		/**
+		 * Get the previous Questgroup.
+		 * 
+		 * Determine the previous Questgroup. If there is no previous
+		 * Questgroup on the same level as the given Quest then the
+		 * followed-up Questgroup from a higher hierarchy level is
+		 * returned.
+		 * 
+		 * @param	int	$questgroupId	ID of Questgroup to get previous Questgroup of
+		 * @return	array			Questgroup data
+		 */
+		public function getPreviousQuestgroup($questgroupId)
+		{
+			$currentQuestgroup = $this->getQuestgroupById($questgroupId);
+			$previousQuestgroup = $this->_getPreviousQuestgroup($currentQuestgroup['parent_questgroup_id'], $currentQuestgroup['pos']);
+			while(is_null($previousQuestgroup) && !is_null($currentQuestgroup['parent_questgroup_id']))
+			{
+				$currentQuestgroup = $this->getQuestgroupById($currentQuestgroup['parent_questgroup_id']);
+				$previousQuestgroup = $this->_getPreviousQuestgroup($currentQuestgroup['parent_questgroup_id'], $currentQuestgroup['pos']);
+			}
+			
+			
+			return $previousQuestgroup;
+		}
+		
+		
+		/**
+		 * Determine if the given Character has solved the Quests form
+		 * this Questgroup.
+		 * 
+		 * @param	int	$questgroupId	ID of Questgroup to check
+		 * @param	int	$characterId	ID of Character to check
+		 * @result	boolean			Whether Character has solved the Questgroup or not
+		 */
+		public function hasCharacterSolvedQuestgroup($questgroupId, $characterId)
+		{
+			$currentQuestgroup = $this->getQuestgroupById($questgroupId);
+			$childQuestgroupshierarchy = $this->Questgroupshierarchy->getChildQuestgroupshierarchy($currentQuestgroup['questgroupshierarchy_id']);
+			$lastChildQuestgroupshierarchy = array_pop($childQuestgroupshierarchy);
+			while(!is_null($lastChildQuestgroupshierarchy))
+			{
+				$questgroups = $this->getQuestgroupsForHierarchy($lastChildQuestgroupshierarchy['id'], $currentQuestgroup['id']);
+				$currentQuestgroup = array_pop($questgroups);
+				$childQuestgroupshierarchy = $this->Questgroupshierarchy->getChildQuestgroupshierarchy($currentQuestgroup['questgroupshierarchy_id']);
+				$lastChildQuestgroupshierarchy = array_pop($childQuestgroupshierarchy);
+			}
+			
+			$quests = $this->Quests->getQuestsForQuestgroup($currentQuestgroup['id']);
+			$lastQuest = array_pop($quests);
+			
+			
+			return $this->Quests->hasCharacterSolvedQuest($lastQuest['id'], $characterId);
+		}
+		
+		
+		
+		
+		/**
+		 * Get the next (direct) Questgroup.
+		 * 
+		 * @param	int	$parentQuestgroupId	ID of parent Questgroup to get next Questgroup of
+		 * @param	int	$questgroupPos		Position of Questgroup to get next Questgroup of
+		 * @return	array				Data of next Questgroup or NULL
+		 */
+		private function _getNextQuestgroup($parentQuestgroupId, $questgroupPos)
+		{
+			if(!is_null($parentQuestgroupId))
+			{
+				$data = $this->db->query(
+					'SELECT * '.
+					'FROM questgroups '.
+					'WHERE parent_questgroup_id = ? AND pos = ? + 1',
+					'ii',
+					$parentQuestgroupId, $questgroupPos
+				);
+			}
+			else
+			{
+				$data = $this->db->query(
+					'SELECT * '.
+					'FROM questgroups '.
+					'WHERE parent_questgroup_id IS NULL AND pos = ? + 1',
+					'i',
+					$questgroupPos
+				);
+			}
+			if(empty($data)) {
+				return null;
+			}
+			
+			
+			return $data[0];
+		}
+		
+		
+		/**
+		 * Get the previous (direct) Questgroup.
+		 * 
+		 * @param	int	$parentQuestgroupId	ID of parent Questgroup to get previous Questgroup of
+		 * @param	int	$questgroupPos		Position of Questgroup to get previous Questgroup of
+		 * @return	array				Data of previous Questgroup or NULL
+		 */
+		private function _getPreviousQuestgroup($parentQuestgroupId, $questgroupPos)
+		{
+			if(!is_null($parentQuestgroupId))
+			{
+				$data = $this->db->query(
+					'SELECT * '.
+					'FROM questgroups '.
+					'WHERE parent_questgroup_id = ? AND pos = ? - 1',
+					'ii',
+					$parentQuestgroupId, $questgroupPos
+				);
+			}
+			else
+			{
+				$data = $this->db->query(
+					'SELECT * '.
+					'FROM questgroups '.
+					'WHERE parent_questgroup_id IS NULL AND pos = ? - 1',
+					'i',
+					$questgroupPos
+				);
+			}
+			if(empty($data)) {
+				return null;
+			}
+			
+			
+			return $data[0];
 		}
 		
 	}

@@ -109,7 +109,7 @@
 				$seminaryId
 			);
 			if(empty($data)) {
-				throw new \nre\exceptions\IdNotFoundException();
+				throw new \nre\exceptions\IdNotFoundException($sidequestUrl);
 			}
 			
 			
@@ -176,6 +176,27 @@
 		
 		
 		/**
+		 * Get Quests that the given Quests follows-up to.
+		 * 
+		 * @param	int	$questId	ID of Quest to get previous Quests of
+		 * @return	array			Quests data
+		 */
+		public function getPreviousQuests($questId)
+		{
+			return $this->db->query(
+				'SELECT quests.id, quests.title, quests.url, questgroups.title AS questgroup_title, questgroups.url AS questgroup_url '.
+				'FROM quests_previousquests '.
+				'LEFT JOIN quests ON quests.id = quests_previousquests.previous_quest_id '.
+				'LEFT JOIN questgroups ON questgroups.id = quests.questgroup_id '.
+				'LEFT JOIN questgroupshierarchy ON questgroupshierarchy.id = questgroups.questgroupshierarchy_id '.
+				'WHERE quests_previousquests.quest_id = ?',
+				'i',
+				$questId
+			);
+		}
+		
+		
+		/**
 		 * Mark a Quest as solved for a Character.
 		 * 
 		 * @param	int	$questId	ID of Quest to mark as solved
@@ -214,6 +235,29 @@
 				$characterId,
 				-1
 			);
+		}
+		
+		
+		/**
+		 * Determine if the given Character has solved the given Quest.
+		 * 
+		 * @param	int	$questId	ID of Quest to check
+		 * @param	int	$characterId	ID of Character to check
+		 * @result	boolean			Whether Character has solved the Quest or not
+		 */
+		public function hasCharacterSolvedQuest($questId, $characterId)
+		{
+			$count = $this->db->query(
+				'SELECT count(id) AS c '.
+				'FROM quests_characters '.
+				'WHERE quest_id = ? AND character_id = ? AND status = 0',
+				'ii',
+				$questId,
+				$characterId
+			);
+			
+			
+			return (!empty($count) && intval($count[0]['c']) > 0);
 		}
 		
 	}

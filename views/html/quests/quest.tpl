@@ -48,14 +48,20 @@
 </section>
 <?php endif ?>
 
-<?php if(!is_null($nextquests)) : ?>
+<?php if(!is_null($nextquests) || !is_null($nextquestgroup)) : ?>
 <section>
-	<h1><?=_('Next Quests')?></h1>
+	<h1><?=_('Go on') ?></h1>
+	<?php if(count($nextquests) > 0) : ?>
 	<ul>
 		<?php foreach($nextquests as &$nextquest) : ?>
-		<li><a href="<?=$linker->link(array($nextquest['questgroup_url'],$nextquest['url']),3)?>"><?=$nextquest['title']?></a></li>
+		<li><?=_('Quest')?>: <a href="<?=$linker->link(array($nextquest['questgroup_url'],$nextquest['url']),3)?>"><?=$nextquest['title']?></a></li>
 		<?php endforeach ?>
 	</ul>
+	<?php elseif(!is_null($nextquestgroup)) : ?>
+	<a href="<?=$linker->link(array('questgroups','questgroup',$seminary['url'],$nextquestgroup['url']))?>"><?=$nextquestgroup['hierarchy']['title_singular']?> <?=$nextquestgroup['pos']?>: <?=$nextquestgroup['title']?></a>
+	<?php else : ?>
+	Spiel vorbei
+	<?php endif ?>
 </section>
 <?php endif ?>
 

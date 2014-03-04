@@ -18,7 +18,13 @@
 <h3><?=$hierarchy['title_plural']?></h3>
 <ul>
 	<?php foreach($hierarchy['questgroups'] as &$group) : ?>
-	<li><?=$hierarchy['title_singular']?> <?=$group['pos']?>: <a href="<?=$linker->link(array('questgroups','questgroup',$seminary['url'],$group['url']))?>"><?=$group['title']?></a></li>
+	<li>
+		<?=$hierarchy['title_singular']?> <?=$group['pos']?>:
+		<?php if(!array_key_exists('access', $group) || $group['access']) : ?>
+		<a href="<?=$linker->link(array('questgroups','questgroup',$seminary['url'],$group['url']))?>"><?=$group['title']?></a></li>
+		<?php else : ?>
+		<?=_('locked')?>
+		<?php endif ?>
 	<?php endforeach?>
 </ul>
 <?php endforeach ?>

@@ -24,7 +24,7 @@
 		 * 
 		 * @var array
 		 */
-		public $models = array('seminaries', 'questgroups', 'quests', 'questtexts', 'media', 'questtypes');
+		public $models = array('seminaries', 'questgroups', 'quests', 'questtexts', 'media', 'questtypes', 'questgroupshierarchy');
 		/**
 		 * User permissions
 		 * 
@@ -67,6 +67,35 @@
 			
 			// Get Quest
 			$quest = $this->Quests->getQuestByUrl($seminary['id'], $questgroup['id'], $questUrl);
+			
+			// Get Character
+			$character = $this->Characters->getCharacterForUserAndSeminary($this->Auth->getUserId(), $seminary['id']);
+			
+			// Check permissions
+			$previousQuests = $this->Quests->getPreviousQuests($quest['id']);
+			if(count($previousQuests) == 0)
+			{
+				// Previous Questgroup
+				$previousQuestgroup = $this->Questgroups->getPreviousQuestgroup($questgroup['id']);
+				if(!$this->Questgroups->hasCharacterSolvedQuestgroup($previousQuestgroup['id'], $character['id'])) {
+					throw new \nre\exceptions\AccessDeniedException();
+				}
+			}
+			else
+			{
+				// Previous Quests
+				$solved = false;
+				foreach($previousQuests as &$previousQuest)
+				{
+					if($this->Quests->hasCharacterSolvedQuest($previousQuest['id'], $character['id'])) {
+						$solved = true;
+						break;
+					}
+				}
+				if(!$solved) {
+					throw new \nre\exceptions\AccessDeniedException();
+				}
+			}
 			
 			// Get Questtext
 			$questtext = null;
@@ -111,7 +140,7 @@
 			
 			// Task
 			$task = null;
-			if($questtext['type'] == 'Prolog')
+			if($questtexttypeUrl == 'Prolog')
 			{
 				// Questtype
 				$questtype = $this->Questtypes->getQuesttypeById($quest['questtype_id']);
@@ -120,10 +149,20 @@
 				$task = $this->runAndRenderTask($questtype['classname']);
 			}
 			
-			// Next Quest
+			// Next Quest/Questgroup
 			$nextQuests = null;
-			if($questtexttypeUrl == 'Epilog') {
+			$nextQuestgroup = null;
+			if($questtexttypeUrl == 'Epilog')
+			{
+				// Next Quest
 				$nextQuests = $this->Quests->getNextQuests($quest['id']);
+				
+				// Next Questgroup
+				if(empty($nextQuests))
+				{
+					$nextQuestgroup = $this->Questgroups->getNextQuestgroup($questgroup['id']);
+					$nextQuestgroup['hierarchy'] = $this->Questgroupshierarchy->getHierarchyById($nextQuestgroup['questgroupshierarchy_id']);
+				}
 			}
 			
 			
@@ -135,6 +174,7 @@
 			$this->set('queststatus', $questStatus);
 			$this->set('queststatustext', $questStatusText);
 			$this->set('nextquests', $nextQuests);
+			$this->set('nextquestgroup', $nextQuestgroup);
 			$this->set('task', $task);
 			$this->set('media', $questmedia);
 		}
@@ -166,6 +206,38 @@
 			
 			// Get Sidequest
 			$sidequest = $this->Quests->getSidequestByUrl($seminary['id'], $questgroup['id'], $quest['id'], $sidequestUrl);
+			
+			// Get Character
+			$character = $this->Characters->getCharacterForUserAndSeminary($this->Auth->getUserId(), $seminary['id']);
+			
+			// Check permission
+			$previousQuests = $this->Quests->getPreviousQuests($quest['id']);
+			if(count($previousQuests) == 0)
+			{
+				// Previous Questgroup
+				$previousQuestgroup = $this->Questgroups->getPreviousQuestgroup($questgroup['id']);
+				if(!$this->Questgroups->hasCharacterSolvedQuestgroup($previousQuestgroup['id'], $character['id'])) {
+					throw new \nre\exceptions\AccessDeniedException();
+				}
+			}
+			else
+			{
+				// Previous Quests
+				if(count($previousQuests) > 0)
+				{
+					$solved = false;
+					foreach($previousQuests as &$previousQuest)
+					{
+						if($this->Quests->hasCharacterSolvedQuest($previousQuest['id'], $character['id'])) {
+							$solved = true;
+							break;
+						}
+					}
+					if(!$solved) {
+						throw new \nre\exceptions\AccessDeniedException();
+					}
+				}
+			}
 			
 			// Get Questtext
 			$questtext = $this->Questtexts->getQuesttextForSidequest($sidequest['id']);
@@ -215,7 +287,7 @@
 			
 			// Task
 			$task = null;
-			if(!is_null($sidequesttext) && $sidequesttext['type'] == 'Prolog')
+			if($sidequesttexttypeUrl == 'Prolog')
 			{
 				// Questtype
 				$questtype = $this->Questtypes->getQuesttypeById($sidequest['questtype_id']);

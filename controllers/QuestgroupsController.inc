@@ -65,10 +65,28 @@
 			// Get Questgrouphierarchy
 			$questgroupshierarchy = $this->Questgroupshierarchy->getHierarchyById($questgroup['questgroupshierarchy_id']);
 			
+			// Get Character
+			$character = $this->Characters->getCharacterForUserAndSeminary($this->Auth->getUserId(), $seminary['id']);
+			
+			// Check permission
+			$previousQuestgroup = $this->Questgroups->getPreviousQuestgroup($questgroup['id']);
+			if(!is_null($previousQuestgroup)) {
+				if(!$this->Questgroups->hasCharacterSolvedQuestgroup($previousQuestgroup['id'], $character['id'])) {
+					throw new \nre\exceptions\AccessDeniedException();
+				}
+			}
+			
 			// Get child Questgroupshierarchy
 			$childQuestgroupshierarchy = $this->Questgroupshierarchy->getChildQuestgroupshierarchy($questgroupshierarchy['id']);
-			foreach($childQuestgroupshierarchy as &$hierarchy) {
+			foreach($childQuestgroupshierarchy as &$hierarchy)
+			{
+				// Get Questgroups
 				$hierarchy['questgroups'] = $this->Questgroups->getQuestgroupsForHierarchy($hierarchy['id'], $questgroup['id']);
+				
+				// Check permission of Questgroups
+				for($i=1; $i<count($hierarchy['questgroups']); $i++) {
+					$hierarchy['questgroups'][$i]['access'] =  $this->Questgroups->hasCharacterSolvedQuestgroup($hierarchy['questgroups'][$i-1]['id'], $character['id']);
+				}
 			}
 			
 			// Get texts
@@ -79,10 +97,15 @@
 			if(count($childQuestgroupshierarchy) == 0)
 			{
 				$quests = $this->Quests->getQuestsForQuestgroup($questgroup['id']);
-				
-				// Attach sidequests
-				foreach($quests as &$quest) {
-					$quest['sidequests'] = $this->Quests->getSidequestsForQuest($quest['id']);
+				for($i=0; $i<count($quests); $i++)
+				{
+					// Check permission
+					if($i > 0) {
+						$quests[$i]['access'] = $this->Quests->hasCharacterSolvedQuest($quests[$i-1]['id'], $character['id']);
+					}
+					
+					// Attach sidequests
+					$quests[$i]['sidequests'] = $this->Quests->getSidequestsForQuest($quests[$i]['id']);
 				}
 			}
 			
