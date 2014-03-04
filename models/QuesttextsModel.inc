@@ -163,7 +163,7 @@
 				$sidequestId
 			);
 			if(empty($data)) {
-				throw new \nre\exceptions\IdNotFoundException();
+				throw new \nre\exceptions\IdNotFoundException($sidequestId);
 			}
 			
 			

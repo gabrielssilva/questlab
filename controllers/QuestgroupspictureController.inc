@@ -47,7 +47,12 @@
 			$questgroup = $this->Questgroups->getQuestgroupByUrl($seminary['id'], $questgroupUrl);
 			
 			// Get Picture
-			$picture = $this->Media->getMediaById($questgroup['questgroupspicture_id']);
+			$picture = null;
+			try {
+				$picture = $this->Media->getMediaById($questgroup['questgroupspicture_id']);
+			}
+			catch(\nre\exceptions\IdNotFoundException $e) {
+			}
 			
 			
 			// Pass data to view
