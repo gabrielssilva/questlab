@@ -261,7 +261,12 @@
 			$character = $this->Characters->getCharacterForUserAndSeminary($this->Auth->getUserId(), $seminary['id']);
 			
 			// Set solved
-			$this->Quests->setQuestSolved($quest['id'], $character['id']);
+			if(is_null($sidequest)) {
+				$this->Quests->setQuestSolved($quest['id'], $character['id']);
+			}
+			else {
+				$this->Quests->setSidequestSolved($sidequest['id'], $character['id']);
+			}
 			
 			
 			// Redirect
@@ -294,7 +299,13 @@
 			$character = $this->Characters->getCharacterForUserAndSeminary($this->Auth->getUserId(), $seminary['id']);
 			
 			// Set solved
-			$this->Quests->setQuestUnsolved($quest['id'], $character['id']);
+			if(is_null($sidequest)) {
+				$this->Quests->setQuestUnsolved($quest['id'], $character['id']);
+			}
+			else {
+				$this->Quests->setSidequestUnsolved($sidequest['id'], $character['id']);
+			}
+			
 			
 			
 			// Redirect

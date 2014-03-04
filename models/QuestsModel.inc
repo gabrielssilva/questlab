@@ -218,6 +218,27 @@
 		
 		
 		/**
+		 * Mark a Sidequest as solved for a Character.
+		 * 
+		 * @param	int	$sidequestId	ID of Sidequest to mark as solved
+		 * @param	int	$characterId	ID of Character that solved the Sidequest
+		 */
+		public function setSidequestSolved($sidequestId, $characterId)
+		{
+			$this->db->query(
+				'INSERT INTO sidequests_characters '.
+				'(sidequest_id, character_id, status) '.
+				'VALUES '.
+				'(?, ?, ?)',
+				'iii',
+				$sidequestId,
+				$characterId,
+				0
+			);
+		}
+		
+		
+		/**
 		 * Mark a Quest as unsolved for a Character.
 		 * 
 		 * @param	int	$questId	ID of Quest to mark as unsolved
@@ -232,6 +253,27 @@
 				'(?, ?, ?)',
 				'iii',
 				$questId,
+				$characterId,
+				-1
+			);
+		}
+		
+		
+		/**
+		 * Mark a Sidequest as unsolved for a Character.
+		 * 
+		 * @param	int	$sidequestId	ID of Sidequest to mark as unsolved
+		 * @param	int	$characterId	ID of Character that unsolved the Sidequest
+		 */
+		public function setSidequestUnsolved($sidequestId, $characterId)
+		{
+			$this->db->query(
+				'INSERT INTO sidequests_characters '.
+				'(sidequest_id, character_id, status) '.
+				'VALUES '.
+				'(?, ?, ?)',
+				'iii',
+				$sidequestId,
 				$characterId,
 				-1
 			);
