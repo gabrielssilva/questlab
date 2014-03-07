@@ -132,9 +132,12 @@
 		public function getCharacterByUrl($seminaryId, $characterUrl)
 		{
 			$data = $this->db->query(
-				'SELECT characters.id, characters.created, characters.charactertype_id, characters.name, characters.url, characters.user_id, characters.xps, characters.xplevel, charactertypes.name AS charactertype_name, charactertypes.url AS charactertypes_url '.
+				'SELECT characters.id, characters.created, characters.charactertype_id, characters.name, characters.url, characters.user_id, characters.xps, characters.xplevel, charactertypes.name AS charactertype_name, charactertypes.url AS charactertypes_url, media.url AS avatar_url, media.description AS avatar_description '.
 				'FROM v_characters AS characters '.
 				'LEFT JOIN charactertypes ON charactertypes.id = characters.charactertype_id '.
+				'LEFT JOIN avatars ON avatars.id = characters.avatar_id '.
+				'LEFT JOIN avatarpictures ON avatarpictures.media_id = avatars.avatarpicture_id '.
+				'LEFT JOIN media ON media.id = avatarpictures.media_id '.
 				'WHERE charactertypes.seminary_id = ? AND characters.url = ?',
 				'is',
 				$seminaryId, $characterUrl

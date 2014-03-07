@@ -17,7 +17,7 @@
 	 * 
 	 * @author	Oliver Hanraths <oliver.hanraths@uni-duesseldorf.de>
 	 */
-	class CharactersController extends \hhu\z\Controller
+	class CharactersController extends \hhu\z\controllers\SeminaryRoleController
 	{
 		/**
 		 * User permissions

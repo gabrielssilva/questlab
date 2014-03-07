@@ -10,6 +10,9 @@
 		<?=$field['title']?>: <?=$field['value']?><br />
 		<?php endforeach ?>
 	</p>
+	<?php if(!is_null($character['avatar_url'])) : ?>
+	<img src="<?=$linker->link(array('media','index',$seminary['url'],$character['avatar_url']))?>" alt="<?=$character['avatar_description']?>" />
+	<?php endif ?>
 </section>
 
 <section>
