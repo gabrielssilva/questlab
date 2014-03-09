@@ -159,7 +159,7 @@
 				$questtype = $this->Questtypes->getQuesttypeById($quest['questtype_id']);
 				
 				// Task
-				$task = $this->runAndRenderTask($questtype['classname']);
+				$task = $this->runAndRenderTask($quest['id'], $questtype['classname']);
 			}
 			
 			// Next Quest/Questgroup
@@ -209,10 +209,11 @@
 		 * Load, construct, run and render the Agent for the given
 		 * classname of a Questtype and return ist output.
 		 * 
+		 * @param	int	$questId		ID of Quest
 		 * @param	string	$questtypeClassname	Classname of Questtype to run and render
 		 * @return	string				Rendered output of Questtype-Agent
 		 */
-		private function runAndRenderTask($questtypeClassname)
+		private function runAndRenderTask($questId, $questtypeClassname)
 		{
 			$task = null;
 			$questtypeAgent = null;
@@ -222,15 +223,18 @@
 				// Construct Agent
 				$questtypeAgent = \hhu\z\QuesttypeAgent::factory($questtypeClassname, $this->request, $this->response);
 				
+				// Generate request
+				$request = clone $this->request;
 				// Generate response
 				$response = clone $this->response;
 				$response->clearParams(1);
 				$response->addParams(
 					null,
-					\nre\configs\CoreConfig::$defaults['action']
+					\nre\configs\CoreConfig::$defaults['action'],
+					$questId
 				);
 				// Run Agent
-				$questtypeAgent->run($this->request, $response);
+				$questtypeAgent->run($request, $response);
 			
 				// Render output
 				$task = $questtypeAgent->render();
