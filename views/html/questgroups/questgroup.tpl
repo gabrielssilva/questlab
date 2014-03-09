@@ -34,9 +34,9 @@
 	<li>
 		<?php if(!array_key_exists('access', $quest) || $quest['access']) : ?>
 		<a href="<?=$linker->link(array('quests','quest',$seminary['url'],$questgroup['url'],$quest['url']))?>"><?=$quest['title']?></a>
+		<?php if(count($quest['sidequests']) > 0) : ?>
 		<br />
 		<?=_('containing optional Quests')?>:
-		<?php if(count($quest['sidequests']) > 0) : ?>
 		<ul>
 			<?php foreach($quest['sidequests'] as &$sidequest) : ?>
 			<li><?=$sidequest['title']?></li>

@@ -217,7 +217,7 @@
 				$lastChildQuestgroupshierarchy = array_pop($childQuestgroupshierarchy);
 			}
 			
-			$quests = $this->Quests->getQuestsForQuestgroup($currentQuestgroup['id']);
+			$quests = $this->Quests->getMainquestsForQuestgroup($currentQuestgroup['id']);
 			$lastQuest = array_pop($quests);
 			
 			

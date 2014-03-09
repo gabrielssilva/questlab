@@ -84,16 +84,29 @@
 			else
 			{
 				// Previous Quests
-				$solved = false;
-				foreach($previousQuests as &$previousQuest)
+				if(count($previousQuests) > 0)
 				{
-					if($this->Quests->hasCharacterSolvedQuest($previousQuest['id'], $character['id'])) {
-						$solved = true;
-						break;
+					$solved = false;
+					foreach($previousQuests as &$previousQuest)
+					{
+						if($this->Quests->hasCharacterSolvedQuest($previousQuest['id'], $character['id'])) {
+							$solved = true;
+							break;
+						}
+					}
+					if(!$solved) {
+						throw new \nre\exceptions\AccessDeniedException();
 					}
 				}
-				if(!$solved) {
-					throw new \nre\exceptions\AccessDeniedException();
+			}
+			
+			// Get (related) Questtext (for Sidequests)
+			$relatedQuesttext = null;
+			if(!$quest['is_mainquest'])
+			{
+				$relatedQuesttext = $this->Questtexts->getQuesttextForSidequest($quest['id']);
+				if(!empty($relatedQuesttext)) {
+					$relatedQuesttext['quest'] = $this->Quests->getQuestById($relatedQuesttext['quest_id']);
 				}
 			}
 			
@@ -154,14 +167,23 @@
 			$nextQuestgroup = null;
 			if($questtexttypeUrl == 'Epilog')
 			{
-				// Next Quest
-				$nextQuests = $this->Quests->getNextQuests($quest['id']);
-				
-				// Next Questgroup
-				if(empty($nextQuests))
+				if($quest['is_mainquest'])
 				{
-					$nextQuestgroup = $this->Questgroups->getNextQuestgroup($questgroup['id']);
-					$nextQuestgroup['hierarchy'] = $this->Questgroupshierarchy->getHierarchyById($nextQuestgroup['questgroupshierarchy_id']);
+					// Next Quest
+					$nextQuests = $this->Quests->getNextQuests($quest['id']);
+				
+					// Next Questgroup
+					if(empty($nextQuests))
+					{
+						$nextQuestgroup = $this->Questgroups->getNextQuestgroup($questgroup['id']);
+						$nextQuestgroup['hierarchy'] = $this->Questgroupshierarchy->getHierarchyById($nextQuestgroup['questgroupshierarchy_id']);
+					}
+				}
+				else {
+					// Related (Main-) Quest
+					$nextQuest = $relatedQuesttext['quest'];
+					$nextQuest['questgroup_url'] = $questgroup['url'];
+					$nextQuests = array($nextQuest);
 				}
 			}
 			
@@ -173,141 +195,11 @@
 			$this->set('quest', $quest);
 			$this->set('queststatus', $questStatus);
 			$this->set('queststatustext', $questStatusText);
+			$this->set('relatedquesttext', $relatedQuesttext);
 			$this->set('nextquests', $nextQuests);
 			$this->set('nextquestgroup', $nextQuestgroup);
 			$this->set('task', $task);
 			$this->set('media', $questmedia);
-		}
-		
-		
-		/**
-		 * Action: sidequest.
-		 * 
-		 * Show a sidequest and its task.
-		 * 
-		 * @throws	IdNotFoundException
-		 * @param	string	$seminaryUrl		URL-Title of Seminary
-		 * @param	string	$questgroupUrl		URL-Title of Questgroup
-		 * @param	string	$questUrl		URL-Title of Quest
-		 * @param	string	$sidequestUrl		URL-Title of Sidequest
-		 * @param	string	$sidequesttexttypeUrl	URL-Title of Sidequesttexttype
-		 * @param	int	$sidequesttextPos	Position of Sidequesttext
-		 */
-		public function sidequest($seminaryUrl, $questgroupUrl, $questUrl, $sidequestUrl, $sidequesttexttypeUrl=null, $sidequesttextPos=1)
-		{
-			// Get seminary
-			$seminary = $this->Seminaries->getSeminaryByUrl($seminaryUrl);
-			
-			// Get Questgroup
-			$questgroup = $this->Questgroups->getQuestgroupByUrl($seminary['id'], $questgroupUrl);
-			
-			// Get Quest
-			$quest = $this->Quests->getQuestByUrl($seminary['id'], $questgroup['id'], $questUrl);
-			
-			// Get Sidequest
-			$sidequest = $this->Quests->getSidequestByUrl($seminary['id'], $questgroup['id'], $quest['id'], $sidequestUrl);
-			
-			// Get Character
-			$character = $this->Characters->getCharacterForUserAndSeminary($this->Auth->getUserId(), $seminary['id']);
-			
-			// Check permission
-			$previousQuests = $this->Quests->getPreviousQuests($quest['id']);
-			if(count($previousQuests) == 0)
-			{
-				// Previous Questgroup
-				$previousQuestgroup = $this->Questgroups->getPreviousQuestgroup($questgroup['id']);
-				if(!is_null($previousQuestgroup) && !$this->Questgroups->hasCharacterSolvedQuestgroup($previousQuestgroup['id'], $character['id'])) {
-					throw new \nre\exceptions\AccessDeniedException();
-				}
-			}
-			else
-			{
-				// Previous Quests
-				if(count($previousQuests) > 0)
-				{
-					$solved = false;
-					foreach($previousQuests as &$previousQuest)
-					{
-						if($this->Quests->hasCharacterSolvedQuest($previousQuest['id'], $character['id'])) {
-							$solved = true;
-							break;
-						}
-					}
-					if(!$solved) {
-						throw new \nre\exceptions\AccessDeniedException();
-					}
-				}
-			}
-			
-			// Get Questtext
-			$questtext = $this->Questtexts->getQuesttextForSidequest($sidequest['id']);
-			
-			// Get Sidequesttext
-			$sidequesttext = null;
-			if(is_null($sidequesttexttypeUrl)) {
-				$sidequesttexttypeUrl = 'Prolog';
-			}
-			$questtexttypes = $this->Questtexts->getQuesttexttypes();
-			$questtexttypes = array_map(function($t) { return $t['url']; }, $questtexttypes);
-			$sidequesttextCount = $this->Questtexts->getQuesttextsCountForSidequest($sidequest['id'], $sidequesttexttypeUrl);
-			if($sidequesttextCount > 0 && in_array($sidequesttexttypeUrl, $questtexttypes))
-			{
-				if(in_array($sidequesttexttypeUrl, $questtexttypes))
-				{
-					$sidequesttextPos = max(intval($sidequesttextPos), 1);
-					$sidequesttext = $this->Questtexts->getSidequesttextByUrl($sidequest['id'], $sidequesttexttypeUrl, $sidequesttextPos);
-					$sidequesttext['count'] = $sidequesttextCount;
-				}
-			}
-			
-			// Sidequest status
-			$sidequestStatus = $this->request->getGetParam('status');
-			$sidequestStatusText = null;
-			if(!is_null($sidequestStatus))
-			{
-				switch($sidequestStatus)
-				{
-					case 'solved':
-						$sidequestStatusText = $sidequest['right_text'];
-					break;
-					case 'unsolved':
-						$sidequestStatusText = $sidequest['wrong_text'];
-					break;
-				}
-			}
-			
-			// Media
-			$sidequestmedia = null;
-			if(!is_null($sidequesttext) && !empty($sidequesttext['questsmedia_id'])) {
-				$sidequestmedia = $this->Media->getMediaById($sidequesttext['questsmedia_id']);
-			}
-			elseif(!is_null($sidequest['questsmedia_id'])) {
-				$sidequestmedia = $this->Media->getMediaById($sidequest['questsmedia_id']);
-			}
-			
-			// Task
-			$task = null;
-			if($sidequesttexttypeUrl == 'Prolog')
-			{
-				// Questtype
-				$questtype = $this->Questtypes->getQuesttypeById($sidequest['questtype_id']);
-				
-				// Task
-				$task = $this->runAndRenderTask($questtype['classname']);
-			}
-			
-			
-			// Pass data to view
-			$this->set('seminary', $seminary);
-			$this->set('questgroup', $questgroup);
-			$this->set('questtext', $questtext);
-			$this->set('sidequesttext', $sidequesttext);
-			$this->set('quest', $quest);
-			$this->set('sidequest', $sidequest);
-			$this->set('sidequeststatus', $sidequestStatus);
-			$this->set('sidequeststatustext', $sidequestStatusText);
-			$this->set('task', $task);
-			$this->set('media', $sidequestmedia);
 		}
 		
 		

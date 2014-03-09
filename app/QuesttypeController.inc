@@ -251,22 +251,11 @@
 			// Get Quest
 			$quest = $this->Quests->getQuestByUrl($seminary['id'], $questgroup['id'], $this->request->getParam(5));
 			
-			// Sidequest
-			$sidequest = null;
-			if($this->request->getParam(2) == 'sidequest') {
-				$sidequest = $this->Quests->getSidequestByUrl($seminary['id'], $questgroup['id'], $quest['id'], $this->request->getParam(6));
-			}
-			
 			// Character
 			$character = $this->Characters->getCharacterForUserAndSeminary($this->Auth->getUserId(), $seminary['id']);
 			
 			// Set solved
-			if(is_null($sidequest)) {
-				$this->Quests->setQuestSolved($quest['id'], $character['id']);
-			}
-			else {
-				$this->Quests->setSidequestSolved($sidequest['id'], $character['id']);
-			}
+			$this->Quests->setQuestSolved($quest['id'], $character['id']);			
 			
 			
 			// Redirect
@@ -289,23 +278,11 @@
 			// Get Quest
 			$quest = $this->Quests->getQuestByUrl($seminary['id'], $questgroup['id'], $this->request->getParam(5));
 			
-			// Sidequest
-			$sidequest = null;
-			if($this->request->getParam(2) == 'sidequest') {
-				$sidequest = $this->Quests->getSidequestByUrl($seminary['id'], $questgroup['id'], $quest['id'], $this->request->getParam(6));
-			}
-			
 			// Character
 			$character = $this->Characters->getCharacterForUserAndSeminary($this->Auth->getUserId(), $seminary['id']);
 			
 			// Set solved
-			if(is_null($sidequest)) {
-				$this->Quests->setQuestUnsolved($quest['id'], $character['id']);
-			}
-			else {
-				$this->Quests->setSidequestUnsolved($sidequest['id'], $character['id']);
-			}
-			
+			$this->Quests->setQuestUnsolved($quest['id'], $character['id']);
 			
 			
 			// Redirect

@@ -40,11 +40,12 @@
 		 * @param	int	$questgroupId	ID of a Questgroup
 		 * @return	array			Quests of the given Questgroup
 		 */
-		public function getQuestsForQuestgroup($questgroupId)
+		public function getMainquestsForQuestgroup($questgroupId)
 		{
 			return $this->db->query(
 				'SELECT id, questtype_id, title, url, xps, task '.
 				'FROM quests '.
+				'INNER JOIN mainquests ON mainquests.quest_id = quests.id '.
 				'WHERE questgroup_id = ?',
 				'i',
 				$questgroupId
@@ -64,7 +65,8 @@
 		public function getQuestByUrl($seminaryId, $questgroupId, $questUrl)
 		{
 			$data = $this->db->query(
-				'SELECT quests.id, quests.questtype_id, quests.title, quests.url, quests.xps, quests.task, quests.right_text, quests.wrong_text, quests.questsmedia_id '.
+				'SELECT quests.id, quests.questtype_id, quests.title, quests.url, quests.xps, quests.task, quests.right_text, quests.wrong_text, quests.questsmedia_id, ('.
+					'SELECT count(mainquests.quest_id) FROM mainquests WHERE mainquests.quest_id = quests.id) AS is_mainquest '.
 				'FROM quests '.
 				'LEFT JOIN questgroups ON questgroups.id = quests.questgroup_id '.
 				'LEFT JOIN questgroupshierarchy ON questgroupshierarchy.id = questgroups.questgroupshierarchy_id '.
@@ -75,6 +77,38 @@
 			if(empty($data)) {
 				throw new \nre\exceptions\IdNotFoundException($questUrl);
 			}
+			
+			$data[0]['is_mainquest'] = ($data[0]['is_mainquest'] == 1);
+			
+			
+			return $data[0];
+		}
+		
+		
+		/**
+		 * Get a Quest and its data by its ID.
+		 * 
+		 * @throws	IdNotFoundException
+		 * @param	string	$questId	ID of a Quest
+		 * @return	array			Quest data
+		 */
+		public function getQuestById($questId)
+		{
+			$data = $this->db->query(
+				'SELECT quests.id, quests.questtype_id, quests.title, quests.url, quests.xps, quests.task, quests.right_text, quests.wrong_text, quests.questsmedia_id, ('.
+					'SELECT count(mainquests.quest_id) FROM mainquests WHERE mainquests.quest_id = quests.id) AS is_mainquest '.
+				'FROM quests '.
+				'LEFT JOIN questgroups ON questgroups.id = quests.questgroup_id '.
+				'LEFT JOIN questgroupshierarchy ON questgroupshierarchy.id = questgroups.questgroupshierarchy_id '.
+				'WHERE quests.id = ?',
+				'i',
+				$questId
+			);
+			if(empty($data)) {
+				throw new \nre\exceptions\IdNotFoundException($questId);
+			}
+			
+			$data[0]['is_mainquest'] = ($data[0]['is_mainquest'] == 1);
 			
 			
 			return $data[0];
@@ -94,14 +128,15 @@
 		public function getSidequestByUrl($seminaryId, $questgroupId, $questId, $sidequestUrl)
 		{
 			$data = $this->db->query(
-				'SELECT sidequests.id, sidequests.questtype_id, sidequests.title, sidequests.url, sidequests.xps, sidequests.task, quests.right_text, quests.wrong_text, sidequests.questsmedia_id '.
-				'FROM sidequests '.
+				'SELECT quests.id, quests.questtype_id, quests.title, quests.url, quests.xps, quests.task, quests.right_text, quests.wrong_text, quests.questsmedia_id '.
+				'FROM quests '.
+				'INNER JOIN sidequests ON sidequests.quest_id = quests.id '.
 				'LEFT JOIN questtexts ON questtexts.id = sidequests.questtext_id '.
-				'LEFT JOIN quests ON quests.id = questtexts.quest_id '.
+				'LEFT JOIN mainquests ON mainquests.quest_id = questtexts.mainquest_id '.
 				'LEFT JOIN questgroups ON questgroups.id = quests.questgroup_id '.
 				'LEFT JOIN questgroupshierarchy ON questgroupshierarchy.id = questgroups.questgroupshierarchy_id '.
 				'LEFT JOIN seminaries ON seminaries.id = questgroupshierarchy.seminary_id '.
-				'WHERE sidequests.url = ? AND quests.id = ? AND questgroups.id = ? AND seminaries.id = ?',
+				'WHERE quests.url = ? AND mainquests.id = ? AND questgroups.id = ? AND seminaries.id = ?',
 				'siii',
 				$sidequestUrl,
 				$questId,
@@ -126,8 +161,9 @@
 		public function getSidequestsForQuest($questId)
 		{
 			return $this->db->query(
-				'SELECT sidequests.id, sidequests.questtext_id, sidequests.title, sidequests.url, sidequests.entry_text '.
-				'FROM sidequests '.
+				'SELECT quests.id, sidequests.questtext_id, quests.title, quests.url, sidequests.entry_text '.
+				'FROM quests '.
+				'INNER JOIN sidequests ON sidequests.quest_id = quests.id '.
 				'LEFT JOIN questtexts ON questtexts.id = sidequests.questtext_id '.
 				'WHERE questtexts.quest_id = ?',
 				'i',
@@ -146,7 +182,8 @@
 		{
 			return $this->db->query(
 				'SELECT id, questtext_id, title, url, entry_text '.
-				'FROM sidequests '.
+				'FROM quests '.
+				'INNER JOIN sidequests ON sidequests.quest_id = quests.id '.
 				'WHERE questtext_id = ?',
 				'i',
 				$questtextId
@@ -164,11 +201,12 @@
 		{
 			return $this->db->query(
 				'SELECT quests.id, quests.title, quests.url, questgroups.title AS questgroup_title, questgroups.url AS questgroup_url '.
-				'FROM quests_previousquests '.
-				'LEFT JOIN quests ON quests.id = quests_previousquests.quest_id '.
+				'FROM mainquests_previousmainquests '.
+				'LEFT JOIN mainquests ON mainquests.quest_id = mainquests_previousmainquests.mainquest_id '.
+				'INNER JOIN quests ON quests.id = mainquests.quest_id '.
 				'LEFT JOIN questgroups ON questgroups.id = quests.questgroup_id '.
 				'LEFT JOIN questgroupshierarchy ON questgroupshierarchy.id = questgroups.questgroupshierarchy_id '.
-				'WHERE quests_previousquests.previous_quest_id = ?',
+				'WHERE mainquests_previousmainquests.previous_mainquest_id = ?',
 				'i',
 				$questId
 			);
@@ -185,11 +223,12 @@
 		{
 			return $this->db->query(
 				'SELECT quests.id, quests.title, quests.url, questgroups.title AS questgroup_title, questgroups.url AS questgroup_url '.
-				'FROM quests_previousquests '.
-				'LEFT JOIN quests ON quests.id = quests_previousquests.previous_quest_id '.
+				'FROM mainquests_previousmainquests '.
+				'LEFT JOIN mainquests ON mainquests.quest_id = mainquests_previousmainquests.previous_mainquest_id '.
+				'INNER JOIN quests ON quests.id = mainquests.quest_id '.
 				'LEFT JOIN questgroups ON questgroups.id = quests.questgroup_id '.
 				'LEFT JOIN questgroupshierarchy ON questgroupshierarchy.id = questgroups.questgroupshierarchy_id '.
-				'WHERE quests_previousquests.quest_id = ?',
+				'WHERE mainquests_previousmainquests.mainquest_id = ?',
 				'i',
 				$questId
 			);
@@ -218,27 +257,6 @@
 		
 		
 		/**
-		 * Mark a Sidequest as solved for a Character.
-		 * 
-		 * @param	int	$sidequestId	ID of Sidequest to mark as solved
-		 * @param	int	$characterId	ID of Character that solved the Sidequest
-		 */
-		public function setSidequestSolved($sidequestId, $characterId)
-		{
-			$this->db->query(
-				'INSERT INTO sidequests_characters '.
-				'(sidequest_id, character_id, status) '.
-				'VALUES '.
-				'(?, ?, ?)',
-				'iii',
-				$sidequestId,
-				$characterId,
-				0
-			);
-		}
-		
-		
-		/**
 		 * Mark a Quest as unsolved for a Character.
 		 * 
 		 * @param	int	$questId	ID of Quest to mark as unsolved
@@ -253,27 +271,6 @@
 				'(?, ?, ?)',
 				'iii',
 				$questId,
-				$characterId,
-				-1
-			);
-		}
-		
-		
-		/**
-		 * Mark a Sidequest as unsolved for a Character.
-		 * 
-		 * @param	int	$sidequestId	ID of Sidequest to mark as unsolved
-		 * @param	int	$characterId	ID of Character that unsolved the Sidequest
-		 */
-		public function setSidequestUnsolved($sidequestId, $characterId)
-		{
-			$this->db->query(
-				'INSERT INTO sidequests_characters '.
-				'(sidequest_id, character_id, status) '.
-				'VALUES '.
-				'(?, ?, ?)',
-				'iii',
-				$sidequestId,
 				$characterId,
 				-1
 			);

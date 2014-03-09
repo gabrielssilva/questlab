@@ -96,7 +96,7 @@
 			$quests = null;
 			if(count($childQuestgroupshierarchy) == 0)
 			{
-				$quests = $this->Quests->getQuestsForQuestgroup($questgroup['id']);
+				$quests = $this->Quests->getMainquestsForQuestgroup($questgroup['id']);
 				for($i=0; $i<count($quests); $i++)
 				{
 					// Check permission
