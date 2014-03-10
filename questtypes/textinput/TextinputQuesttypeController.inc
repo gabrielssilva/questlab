@@ -31,10 +31,17 @@
 		 */
 		public function index($questId)
 		{
+			// Answers
+			if(!array_key_exists('answers', $_SESSION)) {
+				$_SESSION['answers'] = array();
+			}
+			$answers = array_key_exists($questId, $_SESSION['answers']) ? $_SESSION['answers'][$questId] : array();
+			
 			// Check for submission
 			if($this->request->getRequestMethod() == 'POST' && !is_null($this->request->getPostParam('submit')))
 			{
 				// Get right answers
+				$answers = array();
 				$regexs = $this->Textinput->getTextinputRegexs($questId);
 				
 				// Match regexs with user answers
@@ -42,11 +49,15 @@
 				for($i=0; $i<count($regexs); $i++)
 				{
 					$answer = $this->request->getPostParam('answer-'.strval($i+1));
+					$answers[] = $answer;
 					$score = preg_match($regexs[$i]['regex'], $answer);
 					if($score === 0 || $score === false) {
 						$allSolved = false;
 					}
 				}
+				
+				// Store answers in session
+				$_SESSION['answers'][$questId] = $answers;
 				
 				// Set status
 				if($allSolved) {
@@ -67,6 +78,7 @@
 			
 			// Pass data to view
 			$this->set('text', $textParts);
+			$this->set('answers', $answers);
 		}
 		
 	}
