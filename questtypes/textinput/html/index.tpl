@@ -1,10 +1,10 @@
 <form method="post">
-	<?php for($i=0; $i<count($text); $i++) : ?>
+	<?php foreach($texts as $i => &$text) : ?>
 	<?php if($i > 0) : ?>
-	<input type="text" name="answer-<?=$i?>" value="<?=(count($answers) > $i-1) ? $answers[$i-1] : '' ?>" />
+	<input type="text" name="answers[<?=$i-1?>]" value="<?=(array_key_exists($i-1, $answers)) ? $answers[$i-1] : '' ?>" />
 	<?php endif ?>
-	<?=\hhu\z\Utils::t($text[$i])?>
-	<?php endfor ?>
+	<?=\hhu\z\Utils::t($text)?>
+	<?php endforeach ?>
 	
 	<br /><br />
 	<input type="submit" name="submit" value="<?=_('solve')?>" />

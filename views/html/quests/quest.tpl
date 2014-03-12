@@ -76,6 +76,6 @@
 <section>
 	<h1><?=_('Task')?></h1>
 	<p><?=\hhu\z\Utils::t($quest['task'])?></p>
-	<p><?=$task?></p>
+	<?=$task?>
 </section>
 <?php endif ?>

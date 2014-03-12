@@ -40,24 +40,32 @@
 			// Check for submission
 			if($this->request->getRequestMethod() == 'POST' && !is_null($this->request->getPostParam('submit')))
 			{
+				// Get answers
+				$answers = $this->request->getPostParam('answers');
+				
+				// Store answers in session
+				$_SESSION['answers'][$questId] = $answers;
+				
 				// Get right answers
-				$answers = array();
 				$regexs = $this->Textinput->getTextinputRegexs($questId);
 				
 				// Match regexs with user answers
 				$allSolved = true;
-				for($i=0; $i<count($regexs); $i++)
+				foreach($regexs as $i => &$regex)
 				{
-					$answer = $this->request->getPostParam('answer-'.strval($i+1));
-					$answers[] = $answer;
-					$score = preg_match($regexs[$i]['regex'], $answer);
-					if($score === 0 || $score === false) {
+					if(!array_key_exists($i, $answers))
+					{
 						$allSolved = false;
+						break;
+					}
+					
+					$score = preg_match($regex['regex'], $answers[$i]);
+					if($score === 0 || $score === false)
+					{
+						$allSolved = false;
+						break;
 					}
 				}
-				
-				// Store answers in session
-				$_SESSION['answers'][$questId] = $answers;
 				
 				// Set status
 				if($allSolved) {
@@ -77,7 +85,7 @@
 			
 			
 			// Pass data to view
-			$this->set('text', $textParts);
+			$this->set('texts', $textParts);
 			$this->set('answers', $answers);
 		}
 		
