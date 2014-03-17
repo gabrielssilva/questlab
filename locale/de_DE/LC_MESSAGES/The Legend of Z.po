@@ -1,0 +1,260 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: The Legend of Z\n"
+"POT-Creation-Date: 2014-03-04 11:59+0100\n"
+"PO-Revision-Date: 2014-03-04 12:00+0100\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: de_DE\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.6.4\n"
+"X-Poedit-Basepath: .\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Poedit-SearchPath-0: ../../../views\n"
+
+#: ../../../views/binary/error/index.tpl:1
+#: ../../../views/html/error/index.tpl:1
+msgid "Error"
+msgstr "Fehler"
+
+#: ../../../views/html/charactergroups/group.tpl:1
+#: ../../../views/html/charactergroups/groupsgroup.tpl:1
+#: ../../../views/html/charactergroups/index.tpl:1
+#: ../../../views/html/charactergroupsquests/quest.tpl:1
+#: ../../../views/html/menu/index.tpl:3
+#: ../../../views/html/questgroups/questgroup.tpl:1
+#: ../../../views/html/quests/quest.tpl:1
+#: ../../../views/html/quests/sidequest.tpl:1
+#: ../../../views/html/seminaries/create.tpl:1
+#: ../../../views/html/seminaries/delete.tpl:1
+#: ../../../views/html/seminaries/edit.tpl:1
+#: ../../../views/html/seminaries/index.tpl:1
+#: ../../../views/html/seminaries/seminary.tpl:1
+msgid "Seminaries"
+msgstr "Kurse"
+
+#: ../../../views/html/charactergroups/group.tpl:3
+#: ../../../views/html/charactergroups/groupsgroup.tpl:3
+#: ../../../views/html/charactergroups/index.tpl:3
+#: ../../../views/html/characters/character.tpl:16
+#: ../../../views/html/seminaries/seminary.tpl:9
+msgid "Character Groups"
+msgstr "Charaktergruppen"
+
+#: ../../../views/html/charactergroups/group.tpl:12
+#: ../../../views/html/characters/character.tpl:2
+#: ../../../views/html/characters/index.tpl:2
+#: ../../../views/html/seminaries/seminary.tpl:8
+#: ../../../views/html/users/user.tpl:11
+msgid "Characters"
+msgstr "Charaktere"
+
+#: ../../../views/html/charactergroups/group.tpl:15
+msgid "Group Leader"
+msgstr "Gruppenleiter"
+
+#: ../../../views/html/charactergroups/group.tpl:21
+#: ../../../views/html/questgroups/questgroup.tpl:31
+msgid "Quests"
+msgstr "Quests"
+
+#: ../../../views/html/charactergroups/groupsgroup.tpl:13
+#: ../../../views/html/charactergroupsquests/quest.tpl:3
+msgid "Character Groups Quests"
+msgstr "Charactergruppen-Quests"
+
+#: ../../../views/html/charactergroupsquests/quest.tpl:12
+msgid "Description"
+msgstr "Beschreibung"
+
+#: ../../../views/html/charactergroupsquests/quest.tpl:15
+msgid "Rules"
+msgstr "Regeln"
+
+#: ../../../views/html/charactergroupsquests/quest.tpl:22
+msgid "Won Quest"
+msgstr "Gewonnene Quest"
+
+#: ../../../views/html/charactergroupsquests/quest.tpl:28
+msgid "Lost Quest"
+msgstr "Verlorene Quest"
+
+#: ../../../views/html/characters/character.tpl:8
+msgid "User"
+msgstr "Benutzer"
+
+#: ../../../views/html/html.tpl:21
+msgid "as"
+msgstr "als"
+
+#: ../../../views/html/introduction/index.tpl:1
+msgid "Introduction"
+msgstr "Einführung"
+
+#: ../../../views/html/menu/index.tpl:2 ../../../views/html/users/create.tpl:1
+#: ../../../views/html/users/delete.tpl:1 ../../../views/html/users/edit.tpl:1
+#: ../../../views/html/users/index.tpl:1 ../../../views/html/users/login.tpl:1
+#: ../../../views/html/users/user.tpl:1
+msgid "Users"
+msgstr "Benutzer"
+
+#: ../../../views/html/menu/index.tpl:5 ../../../views/html/users/login.tpl:2
+#: ../../../views/html/users/login.tpl:11
+msgid "Login"
+msgstr "Login"
+
+#: ../../../views/html/menu/index.tpl:7
+msgid "Logout"
+msgstr "Logout"
+
+#: ../../../views/html/questgroups/questgroup.tpl:22
+#: ../../../views/html/questgroups/questgroup.tpl:47
+#: ../../../views/html/seminaries/seminary.tpl:26
+msgid "locked"
+msgstr "gesperrt"
+
+#: ../../../views/html/questgroups/questgroup.tpl:38
+msgid "containing optional Quests"
+msgstr "Enthaltene optionale Quests"
+
+#: ../../../views/html/quests/quest.tpl:15
+#: ../../../views/html/quests/sidequest.tpl:17
+msgid "solved"
+msgstr "gelöst"
+
+#: ../../../views/html/quests/quest.tpl:17
+#: ../../../views/html/quests/sidequest.tpl:19
+msgid "unsolved"
+msgstr "ungelöst"
+
+#: ../../../views/html/quests/quest.tpl:53
+msgid "Go on"
+msgstr "Hier geht es weiter"
+
+#: ../../../views/html/quests/quest.tpl:57
+msgid "Quest"
+msgstr "Quest"
+
+#: ../../../views/html/quests/quest.tpl:70
+#: ../../../views/html/quests/sidequest.tpl:51
+msgid "Task"
+msgstr "Aufgabe"
+
+#: ../../../views/html/quests/sidequest.tpl:9
+msgid "This Quest is optional"
+msgstr "Diese Quest ist optional"
+
+#: ../../../views/html/seminaries/create.tpl:2
+msgid "New seminary"
+msgstr "Neuer Kurs"
+
+#: ../../../views/html/seminaries/create.tpl:6
+#: ../../../views/html/seminaries/create.tpl:7
+#: ../../../views/html/seminaries/edit.tpl:6
+#: ../../../views/html/seminaries/edit.tpl:7
+msgid "Title"
+msgstr "Titel"
+
+#: ../../../views/html/seminaries/create.tpl:9
+#: ../../../views/html/users/create.tpl:13
+msgid "create"
+msgstr "erstellen"
+
+#: ../../../views/html/seminaries/delete.tpl:2
+#: ../../../views/html/seminaries/seminary.tpl:5
+msgid "Delete seminary"
+msgstr "Kurs löschen"
+
+#: ../../../views/html/seminaries/delete.tpl:4
+#, php-format
+msgid "Should the seminary “%s” really be deleted?"
+msgstr "Soll der Kurs „%s“ wirklich gelöscht werden?"
+
+#: ../../../views/html/seminaries/delete.tpl:6
+#: ../../../views/html/users/delete.tpl:6
+msgid "delete"
+msgstr "löschen"
+
+#: ../../../views/html/seminaries/delete.tpl:7
+#: ../../../views/html/users/delete.tpl:7
+msgid "cancel"
+msgstr "abbrechen"
+
+#: ../../../views/html/seminaries/edit.tpl:2
+#: ../../../views/html/seminaries/seminary.tpl:4
+msgid "Edit seminary"
+msgstr "Kurs bearbeiten"
+
+#: ../../../views/html/seminaries/edit.tpl:9
+#: ../../../views/html/users/edit.tpl:13
+msgid "save"
+msgstr "speichern"
+
+#: ../../../views/html/seminaries/index.tpl:3
+msgid "Create new seminary"
+msgstr "Neuen Kurs erstellen"
+
+#: ../../../views/html/seminaries/index.tpl:10
+#: ../../../views/html/seminaries/seminary.tpl:12
+#, php-format
+msgid "created by %s on %s"
+msgstr "erstellt von %s am %s"
+
+#: ../../../views/html/users/create.tpl:2
+msgid "New user"
+msgstr "Neuer Benutzer"
+
+#: ../../../views/html/users/create.tpl:6
+#: ../../../views/html/users/create.tpl:7 ../../../views/html/users/edit.tpl:6
+#: ../../../views/html/users/edit.tpl:7 ../../../views/html/users/login.tpl:6
+#: ../../../views/html/users/login.tpl:7
+msgid "Username"
+msgstr "Benutzername"
+
+#: ../../../views/html/users/create.tpl:8
+#: ../../../views/html/users/create.tpl:9 ../../../views/html/users/edit.tpl:8
+#: ../../../views/html/users/edit.tpl:9
+msgid "E‑Mail-Address"
+msgstr "E‑Mail-Adresse"
+
+#: ../../../views/html/users/create.tpl:10
+#: ../../../views/html/users/create.tpl:11
+#: ../../../views/html/users/edit.tpl:10 ../../../views/html/users/edit.tpl:11
+#: ../../../views/html/users/login.tpl:8 ../../../views/html/users/login.tpl:9
+msgid "Password"
+msgstr "Passwort"
+
+#: ../../../views/html/users/delete.tpl:2 ../../../views/html/users/user.tpl:5
+msgid "Delete user"
+msgstr "Benutzer löschen"
+
+#: ../../../views/html/users/delete.tpl:4
+#, php-format
+msgid "Should the user “%s” (%s) really be deleted?"
+msgstr "Soll der Benutzer „%s“ (%s) wirklich gelöscht werden?"
+
+#: ../../../views/html/users/edit.tpl:2 ../../../views/html/users/user.tpl:4
+msgid "Edit user"
+msgstr "Benutzer bearbeiten"
+
+#: ../../../views/html/users/index.tpl:3
+msgid "Create new user"
+msgstr "Neuen Benutzer erstellen"
+
+#: ../../../views/html/users/index.tpl:10 ../../../views/html/users/user.tpl:8
+#, php-format
+msgid "registered on %s"
+msgstr "registriert am %s"
+
+#: ../../../views/html/users/user.tpl:18
+msgid "Roles"
+msgstr "Rollen"
+
+#~ msgid "created by %s on %s at %s"
+#~ msgstr "erstellt von %s am %s um %s Uhr"
+
+#~ msgid "registered on"
+#~ msgstr "registriert seit"

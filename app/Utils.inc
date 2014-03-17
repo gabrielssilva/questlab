@@ -1,0 +1,51 @@
+<?php
+
+	/**
+	 * The Legend of Z
+	 *
+	 * @author	Oliver Hanraths <oliver.hanraths@uni-duesseldorf.de>
+	 * @copyright	2014 Heinrich-Heine-Universität Düsseldorf
+	 * @license	http://www.gnu.org/licenses/gpl.html
+	 * @link	https://bitbucket.org/coderkun/the-legend-of-z
+	 */
+	
+	namespace hhu\z;
+	
+	
+	/**
+	 * Class for implementing utility methods.
+	 * 
+	 * @author	Oliver Hanraths <oliver.hanraths@uni-duesseldorf.de>
+	 */
+	class Utils
+	{
+		
+		
+		/**
+		 * Mask HTML-chars for save output.
+		 * 
+		 * @static
+		 * @param	string	$string	String to be masked
+		 * @return	string		Masked string
+		 */
+		static function t($string)
+		{
+			return nl2br(htmlspecialchars($string));
+		}
+		
+		
+		/**
+		 * ‚htmlspecialchars‘ with support for UTF-8.
+		 * 
+		 * @static
+		 * @param	string	$string	String to be masked
+		 * @return	string		Masked string
+		 */
+		public static function htmlspecialchars_utf8($string)
+		{
+			return htmlspecialchars($string, ENT_COMPAT, 'UTF-8');
+		}
+		
+	}
+
+?>
