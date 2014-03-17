@@ -1,9 +1,9 @@
 <menu>
-	<li><a href="<?=$linker->link("users")?>"><?=_('Users')?></a></li>
-	<li><a href="<?=$linker->link("seminaries")?>"><?=_('Seminaries')?></a></li>
+	<li><a href="<?=$linker->link("users")?>"><i class="fa fa-users fa-fw"></i><?=_('Users')?></a></li>
+	<li><a href="<?=$linker->link("seminaries")?>"><i class="fa fa-users fa-fw"></i><?=_('Seminaries')?></a></li>
 	<?php if(is_null($loggedUser)) : ?>
-	<li><a href="<?=$linker->link(array('users','login'))?>"><?=_('Login')?></a></li>
+	<li><a href="<?=$linker->link(array('users','login'))?>"><i class="fa fa-sign-in fa-fw"></i><?=_('Login')?></a></li>
 	<?php else : ?>
-	<li><a href="<?=$linker->link(array('users','logout'))?>"><?=_('Logout')?></a></li>
+	<li><a href="<?=$linker->link(array('users','logout'))?>"><i class="fa fa-sign-out fa-fw"></i><?=_('Logout')?></a></li>
 	<?php endif ?>
 </menu>

@@ -18,10 +18,17 @@
 
 <body>
 	<header>
-		<h1><a href="<?=$linker->link(array(), 0, true, array(), true)?>">The Legend of Z</a></h1>
-		<nav>
+		<nav class="wrap">
+			<input type="checkbox" id="toggle">
+			<label for="toggle" class="toggle" onclick><a id="navicon"><i class="fa fa-bars"></i>Menü</a></label>
+			<?php if(!is_null($loggedUser)) : ?>
+			<a href="<?=$linker->link(array('users',$loggedUser['url']))?>" id="profile"><i class="fa fa-user fa-fw"></i><?=$loggedUser['username']?></a>
+			<?php endif ?>
 			<?=$menu?>
 		</nav>
+	</header>
+	<article class="wrap">
+		<h1><a href="<?=$linker->link(array(), 0, true, array(), true)?>">The Legend of Z</a></h1>
 		<?php if(!is_null($loggedUser)) : ?>
 		<div id="user">
 			<a href="<?=$linker->link(array('users',$loggedUser['url']))?>"><?=$loggedUser['username']?></a>
@@ -30,8 +37,6 @@
 			<?php endif ?>
 		</div>
 		<?php endif ?>
-	</header>
-	<article>
 		<?=$intermediate?>
 	</article>
 </body>
