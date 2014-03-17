@@ -4,8 +4,16 @@
 <head>
 	<meta charset="utf-8" />
 	<title>The Legend of Z</title>
-	
+	<meta name="viewport" content="width=device-width,initial-scale=1.0">
+	<link href="http://fonts.googleapis.com/css?family=Open+Sans:400,700" rel="stylesheet" type="text/css">
+	<link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
 	<link rel="stylesheet" type="text/css" href="<?=$linker->link(array('css','desktop.css'))?>" media="all" />
+	<!--[if lt IE 9]>
+	<script type="text/javascript" src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+	<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/respond.js/1.4.2/respond.js"></script>
+	<![endif]-->
+	<meta name="description" content="">
+	<meta name="robots" content="noindex,follow">
 </head>
 
 <body>
