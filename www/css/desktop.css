@@ -54,11 +54,13 @@ table{border-collapse:collapse;border-spacing:0}
 .cb{clear:both}
 
 .wrap{margin:0 5%;max-height:999999px;min-height:1px}
-a{color:#347894;text-decoration:none}
+
+a{color:#50a4ab;text-decoration:none}
+.fa{padding:0 10px 0 0}
 .fwb{font-weight:700}
 
 header{background:#0f373c;margin-bottom:1.1875em;position:fixed;width:100%;z-index:99}
-header .fa{padding:0 10px 0 0;color:#5e9499}
+header .fa{color:#5e9499}
 
 header nav{z-index:99}
 menu{display:none;opacity:0;position:absolute;margin:0;padding:0 0 16px;background:#0f373c;right:0;left:0}
@@ -79,25 +81,34 @@ article{padding-top:5.375em;margin-bottom:30px}
 .questgroup1{background:url('http://s14.directupload.net/images/140318/35229m97.png') no-repeat}
 .questgroup2{background:url('http://s14.directupload.net/images/140318/hwon92ew.png') no-repeat}
 
+.qg li{margin:0 0 25px 0}
+.qgtitle{background:#5cb6bd;border-radius:3px 3px 0 0}
+.qgtitle a{display:block;padding:20px;color:#fff;font-weight:700}
+.qgprogress,.qghidden{margin-bottom:4px;padding:20px 20px 4px 20px;background:#fff;border-radius:0 0 3px 3px}
+
+
 .xpbar{
+width:60%;
+float:left;
 height:10px;
 position:relative;
 background:#eee;
 border-radius:25px;
-margin-bottom:16px
+margin:8px 0 16px
 }
 
 .xpbar span{
 display:block;
 height:100%;
-border-top-left-radius:20px;
-border-bottom-left-radius:20px;
+border-radius:20px;
 background:#bcd75e;
 position:relative;
 overflow:hidden
 }
 
-.xpnumeric{color:#869845}
+.xpnumeric{float:right;color:#869845}
+
+
 
 .cta{display:inline-block;margin-top:10px;color:#fff;font-weight:700;padding:7px 20px;border-radius:4px}
 .orange{text-shadow:1px 2px #d4701a;background:#f5821f;border:solid #d4701a;border-width:0 0 3px 0}

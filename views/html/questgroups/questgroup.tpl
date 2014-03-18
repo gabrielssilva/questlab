@@ -12,15 +12,25 @@
 <?php foreach($childquestgroupshierarchy as &$hierarchy) : ?>
 <?php if(count($hierarchy['questgroups']) > 0) : ?>
 <h3><?=$hierarchy['title_plural']?></h3>
-<ul>
+<ul class="qg">
 	<?php foreach($hierarchy['questgroups'] as &$group) : ?>
 	<li>
-		<?=$hierarchy['title_singular']?> <?=$group['pos']?>:
-		<?php if(!array_key_exists('access', $group) || $group['access']) : ?>
-		<a href="<?=$linker->link(array('questgroups','questgroup',$seminary['url'],$group['url']))?>"><?=$group['title']?></a>
-		<?php else : ?>
-		<?=_('locked')?>
-		<?php endif ?>
+		<div class="qgtitle">
+			<?php if(!array_key_exists('access', $group) || $group['access']) : ?>
+			<a href="<?=$linker->link(array('questgroups','questgroup',$seminary['url'],$group['url']))?>"><i class="fa fa-square-o fa-fw"></i><?=$group['title']?></a></div>
+			<div class="qgprogress cf">
+				<div class="xpbar">
+					<span style="width:25%"></span>
+				</div>
+				<p class="xpnumeric">50 / 200 XP</p>
+			</div>
+			<div class="qghidden">
+				<p>Versteckte Questline gefunden:</p>
+				<p><a href="#"><i class="fa fa-star-o fa-fw"></i>Hier der Titel der entsprechenden Side-Questline</a></p>
+			<?php else : ?>
+			<?=$hierarchy['title_singular']?> <?=_('locked')?>
+			<?php endif ?>
+		</div>
 	</li>
 	<?php endforeach?>
 </ul>
