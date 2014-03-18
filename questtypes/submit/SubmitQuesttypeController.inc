@@ -13,19 +13,24 @@
 	
 	
 	/**
-	 * Controller of the MultiplechoiceQuesttypeAgent multiple choice.
+	 * Controller of the SubmitQuesttypeAgent for a submit task.
 	 * 
 	 * @author	Oliver Hanraths <oliver.hanraths@uni-duesseldorf.de>
 	 */
-	class MultiplechoiceQuesttypeController extends \hhu\z\QuesttypeController
+	class SubmitQuesttypeController extends \hhu\z\QuesttypeController
 	{
+		/**
+		 * Required models
+		 * 
+		 * @var array
+		 */
+		public $models = array('quests');
 		
 		
 		
 		
 		/**
 		 * Save the answers of a Character for a Quest.
-		 * TODO saveAnswersOfCharacter()
 		 * 
 		 * @param	int	$questId	ID of Quest to save answers for
 		 * @param	int	$characterId	ID of Character to save answers of
@@ -33,6 +38,13 @@
 		 */
 		public function saveAnswersOfCharacter($questId, $characterId, $answers)
 		{
+			// Get already submitted answer
+			$characterSubmission = $this->Submit->getCharacterSubmission($questId, $characterId);
+			
+			// Save answer
+			if(is_null($characterSubmission) && array_key_exists(0, $answers)) {
+				$this->Submit->setCharacterSubmission($questId, $characterId, $answers[0]);
+			}
 		}
 		
 		
@@ -41,64 +53,45 @@
 		 * 
 		 * @param	int	$questId	ID of Quest to match answers for
 		 * @param	int	$characterId	ID of Character to match answers of
+		 * @param	array	$answers	Character answers for the Quest
 		 * @return	boolean			True/false for a right/wrong answer or null for moderator evaluation
 		 */
 		public function matchAnswersOfCharacter($questId, $characterId, $answers)
 		{
-			// Get right answers
-			$tickQuestions = $this->Multiplechoice->getTickQuestionsOfQuest($questId);
-			
-			// Match tick questions with user answers
-			$allSolved = true;
-			foreach($tickQuestions as &$tickQuestion)
-			{
-				$pos = intval($tickQuestion['pos'])-1;
-				if(!array_key_exists($pos, $answers) || $answers[$pos] != 'true')
-				{
-					$allSolved = false;
-					break;
-				}
-				else {
-					unset($answers[$pos]);
-				}
-			}
-			
-			
-			// Return status
-			return ($allSolved && count($answers) == 0);
+			// A moderator has to evaluate the answer
+			return null;
 		}
 		
 		
 		/**
 		 * Action: quest.
 		 * 
-		 * Display questions with a checkbox to let the user choose the
-		 * right ones.
+		 * Display a big textbox to let the user enter a text that has
+		 * to be evaluated by a moderator.
 		 * 
 		 * @param	int	$questId	ID of Quest to show
 		 * @param	int	$characterId	ID of Character
 		 */
 		public function quest($questId, $characterId)
 		{
-			// Answers
-			if(!array_key_exists('answers', $_SESSION)) {
-				$_SESSION['answers'] = array();
-			}
-			$answers = array_key_exists($questId, $_SESSION['answers']) ? $_SESSION['answers'][$questId] : array();
+			// Answer (Submission)
+			$characterSubmission = $this->Submit->getCharacterSubmission($questId, $characterId);
 			
-			// Get questions
-			$questions = $this->Multiplechoice->getQuestionsOfQuest($questId);
+			// Wordcount
+			$wordcount = 0;
+			if(!is_null($characterSubmission)) {
+				$wordcount = count(preg_split('/\s+/', $characterSubmission['text']));
+			}
 			
 			
 			// Pass data to view
-			$this->set('questions', $questions);
-			$this->set('answers', $answers);
+			$this->set('submission', $characterSubmission);
+			$this->set('wordcount', $wordcount);
 		}
 		
 		
 		/**
 		 * Action: submission.
-		 * @TODO submission()
 		 * 
 		 * Show the submission of a Character for a Quest.
 		 * 
@@ -107,6 +100,16 @@
 		 */
 		public function submission($questId, $characterId)
 		{
+			// Get Character submission
+			$submission = $this->Submit->getCharacterSubmission($questId, $characterId);
+			
+			// Status
+			$solved = $this->Quests->hasCharacterSolvedQuest($questId, $characterId);
+			
+			
+			// Pass data to view
+			$this->set('submission', $submission);
+			$this->set('solved', $solved);
 		}
 		
 	}

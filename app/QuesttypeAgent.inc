@@ -190,6 +190,34 @@
 		
 		
 		/**
+		 * Save the answers of a Character for a Quest.
+		 * 
+		 * @param	int	$questId	ID of Quest to save answers for
+		 * @param	int	$characterId	ID of Character to save answers of
+		 * @param	array	$answers	Character answers for the Quest
+		 */
+		public function saveAnswersOfCharacter($questId, $characterId, $answers)
+		{
+			$this->controller->saveAnswersOfCharacter($questId, $characterId, $answers);
+		}
+		
+		
+		/**
+		 * Check if answers of a Character for a Quest match the correct ones.
+		 * 
+		 * @param	int	$questId	ID of Quest to match answers for
+		 * @param	int	$characterId	ID of Character to match answers of
+		 * @param	array	$answers	Character answers for the Quest
+		 */
+		public function matchAnswersOfCharacter($questId, $characterId, $answers)
+		{
+			return $this->controller->matchAnswersOfCharacter($questId, $characterId, $answers);
+		}
+		
+		
+		
+		
+		/**
 		 * Load the Controller of this Agent.
 		 * 
 		 * @throws	DatamodelException
@@ -216,7 +244,11 @@
 			}
 			
 			// Determine Action
-			$action = \nre\configs\CoreConfig::$defaults['action'];
+			$action = $this->response->getParam(2);
+			if(is_null($action)) {
+				$action = $this->request->getParam(2, 'action');
+				$this->response->addParam($action);
+			}
 			
 			
 			// Load Controller

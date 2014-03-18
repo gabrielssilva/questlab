@@ -25,22 +25,58 @@
 		
 		
 		/**
-		 * Action: index.
+		 * Save the answers of a Character for a Quest.
+		 * 
+		 * @param	int	$questId	ID of Quest to save answers for
+		 * @param	int	$characterId	ID of Character to save answers of
+		 * @param	array	$answers	Character answers for the Quest
 		 */
-		public function index()
+		public function saveAnswersOfCharacter($questId, $characterId, $answers)
 		{
-			// Check for submission
-			if($this->request->getRequestMethod() == 'POST')
-			{
-				// Right answer (dummy)
-				if(!is_null($this->request->getPostParam('submit'))) {
-					$this->setQuestSolved();
-				}
-				// Wrong answer (dummy)
-				else {
-					$this->setQuestUnsolved();
-				}
-			}
+			// Do nothing
+		}
+		
+		
+		/**
+		 * Check if answers of a Character for a Quest match the correct ones.
+		 * 
+		 * @param	int	$questId	ID of Quest to match answers for
+		 * @param	int	$characterId	ID of Character to match answers of
+		 * @param	array	$answers	Character answers for the Quest
+		 * @return	boolean			True/false for a right/wrong answer or null for moderator evaluation
+		 */
+		public function matchAnswersOfCharacter($questId, $characterId, $answers)
+		{
+			// Set status
+			return true;
+		}
+		
+		
+		/**
+		 * Action: quest.
+		 * 
+		 * Show the task of a Quest.
+		 * 
+		 * @param	int	$questId	ID of Quest to show
+		 * @param	int	$characterId	ID of Character
+		 */
+		public function quest($questId, $characterId)
+		{
+			// Nothing to do
+		}
+		
+		
+		/**
+		 * Action: submission.
+		 * 
+		 * Show the submission of a Character for a Quest.
+		 * 
+		 * @param	int	$questId	ID of Quest to show submission for
+		 * @param	int	$characterId	ID of Character to show submission of
+		 */
+		public function submission($questId, $characterId)
+		{
+			// Nothing to do
 		}
 		
 	}

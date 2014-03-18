@@ -24,57 +24,70 @@
 		
 		
 		/**
-		 * Action: index.
+		 * Save the answers of a Character for a Quest.
+		 * TODO saveAnswersOfCharacter()
+		 * 
+		 * @param	int	$questId	ID of Quest to save answers for
+		 * @param	int	$characterId	ID of Character to save answers of
+		 * @param	array	$answers	Character answers for the Quest
+		 */
+		public function saveAnswersOfCharacter($questId, $characterId, $answers)
+		{
+		}
+		
+		
+		/**
+		 * Check if answers of a Character for a Quest match the correct ones.
+		 * 
+		 * @param	int	$questId	ID of Quest to match answers for
+		 * @param	int	$characterId	ID of Character to match answers of
+		 * @return	boolean			True/false for a right/wrong answer or null for moderator evaluation
+		 */
+		public function matchAnswersOfCharacter($questId, $characterId, $answers)
+		{
+			// Get right answers
+			$regexs = $this->Textinput->getTextinputRegexs($questId);
+			
+			// Match regexs with user answers
+			$allSolved = true;
+			foreach($regexs as $i => &$regex)
+			{
+				if(!array_key_exists($i, $answers))
+				{
+					$allSolved = false;
+					break;
+				}
+				
+				$score = preg_match($regex['regex'], $answers[$i]);
+				if($score === 0 || $score === false)
+				{
+					$allSolved = false;
+					break;
+				}
+			}
+			
+			
+			// Set status
+			return $allSolved;
+		}
+		
+		
+		/**
+		 * Action: quest.
 		 * 
 		 * Display a text with input fields and evaluate if user input
 		 * matches with stored regular expressions.
+		 * 
+		 * @param	int	$questId	ID of Quest to show
+		 * @param	int	$characterId	ID of Character
 		 */
-		public function index($questId)
+		public function quest($questId, $characterId)
 		{
 			// Answers
 			if(!array_key_exists('answers', $_SESSION)) {
 				$_SESSION['answers'] = array();
 			}
 			$answers = array_key_exists($questId, $_SESSION['answers']) ? $_SESSION['answers'][$questId] : array();
-			
-			// Check for submission
-			if($this->request->getRequestMethod() == 'POST' && !is_null($this->request->getPostParam('submit')))
-			{
-				// Get answers
-				$answers = $this->request->getPostParam('answers');
-				
-				// Store answers in session
-				$_SESSION['answers'][$questId] = $answers;
-				
-				// Get right answers
-				$regexs = $this->Textinput->getTextinputRegexs($questId);
-				
-				// Match regexs with user answers
-				$allSolved = true;
-				foreach($regexs as $i => &$regex)
-				{
-					if(!array_key_exists($i, $answers))
-					{
-						$allSolved = false;
-						break;
-					}
-					
-					$score = preg_match($regex['regex'], $answers[$i]);
-					if($score === 0 || $score === false)
-					{
-						$allSolved = false;
-						break;
-					}
-				}
-				
-				// Set status
-				if($allSolved) {
-					$this->setQuestSolved();
-				}
-				else {
-					$this->setQuestUnsolved();
-				}
-			}
 			
 			
 			// Get Task
@@ -87,6 +100,20 @@
 			// Pass data to view
 			$this->set('texts', $textParts);
 			$this->set('answers', $answers);
+		}
+		
+		
+		/**
+		 * Action: submission.
+		 * @TODO submission()
+		 * 
+		 * Show the submission of a Character for a Quest.
+		 * 
+		 * @param	int	$questId	ID of Quest to show submission for
+		 * @param	int	$characterId	ID of Character to show submission of
+		 */
+		public function submission($questId, $characterId)
+		{
 		}
 		
 	}
