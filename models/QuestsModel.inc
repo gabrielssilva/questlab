@@ -299,6 +299,46 @@
 			return (!empty($count) && intval($count[0]['c']) > 0);
 		}
 		
+		
+		/**
+		 * Get Characters that solved a Quest.
+		 * 
+		 * @param	int	$questId	ID of Quest to get Characters for
+		 * @return	array			Characters data
+		 */
+		public function getCharactersSolvedQuest($questId)
+		{
+			return $data = $this->db->query(
+				'SELECT character_id, created, text '.
+				'FROM questtypes_submit_characters '.
+				'WHERE quest_id = ? AND EXISTS ('.
+					'SELECT character_id FROM quests_characters WHERE quest_id = questtypes_submit_characters.quest_id AND status = 0'.
+				')',
+				'i',
+				$questId
+			);
+		}
+		
+		
+		/**
+		 * Get Characters that did not solved a Quest.
+		 * 
+		 * @param	int	$questId	ID of Quest to get Characters for
+		 * @return	array			Characters data
+		 */
+		public function getCharactersUnsolvedQuest($questId)
+		{
+			return $data = $this->db->query(
+				'SELECT character_id, created, text '.
+				'FROM questtypes_submit_characters '.
+				'WHERE quest_id = ? AND NOT EXISTS ('.
+					'SELECT character_id FROM quests_characters WHERE quest_id = questtypes_submit_characters.quest_id AND status = 0'.
+				')',
+				'i',
+				$questId
+			);
+		}
+		
 	}
 
 ?>
