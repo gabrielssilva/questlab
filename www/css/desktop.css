@@ -82,33 +82,18 @@ article{padding-top:5.375em;margin-bottom:30px}
 .questgroup2{background:url('http://s14.directupload.net/images/140318/hwon92ew.png') no-repeat}
 
 .qg li{margin:0 0 25px 0}
-.qgtitle{background:#5cb6bd;border-radius:3px 3px 0 0}
-.qgtitle a{display:block;padding:20px;color:#fff;font-weight:700}
+.qgtitle a{background:#5cb6bd;border-radius:3px 3px 0 0;display:block;padding:20px;color:#fff;font-weight:700}
 .qgprogress,.qghidden{margin-bottom:4px;padding:20px 20px 4px 20px;background:#fff;border-radius:0 0 3px 3px}
 
+.qglist li{margin: 0 0 5px 0}
+.qglist .qgtitle a{padding:14px;border-radius:3px}
+.qglist .qgtitle .solved{background:#fff;color:#50a4ab}
+.qglist .qgtitle .solved .fa{color:#bcd75e}
+.qglist .qgtitle .bonus{background:#f5821f}
 
-.xpbar{
-width:60%;
-float:left;
-height:10px;
-position:relative;
-background:#eee;
-border-radius:25px;
-margin:8px 0 16px
-}
-
-.xpbar span{
-display:block;
-height:100%;
-border-radius:20px;
-background:#bcd75e;
-position:relative;
-overflow:hidden
-}
-
+.xpbar{width:60%;float:left;height:10px;position:relative;background:#eee;border-radius:25px;margin:8px 0 16px}
+.xpbar span{display:block;height:100%;border-radius:20px;background:#bcd75e;position:relative;overflow:hidden}
 .xpnumeric{float:right;color:#869845}
-
-
 
 .cta{display:inline-block;margin-top:10px;color:#fff;font-weight:700;padding:7px 20px;border-radius:4px}
 .orange{text-shadow:1px 2px #d4701a;background:#f5821f;border:solid #d4701a;border-width:0 0 3px 0}

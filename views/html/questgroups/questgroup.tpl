@@ -39,11 +39,23 @@
 
 <?php if(isset($quests) && !is_null($quests)) : ?>
 <h3><?=_('Quests')?></h3>
-<ul>
+<ul class="qglist">
+	<li>
+		<div class="qgtitle">
+			<a href="#" class="solved"><i class="fa fa-check-square-o fa-fw"></i>Beispiel für eine gelöste Quest</a>
+		</div>
+	</li>
+	<li>
+		<div class="qgtitle">
+			<a href="#" class="bonus"><i class="fa fa-share-square-o fa-fw"></i>Beispiel für eine gefunde Side-Questline</a>
+		</div>
+	</li>
 	<?php foreach($quests as &$quest) : ?>
 	<li>
 		<?php if(!array_key_exists('access', $quest) || $quest['access']) : ?>
-		<a href="<?=$linker->link(array('quests','quest',$seminary['url'],$questgroup['url'],$quest['url']))?>"><?=$quest['title']?></a>
+		<div class="qgtitle">
+			<a href="<?=$linker->link(array('quests','quest',$seminary['url'],$questgroup['url'],$quest['url']))?>"><i class="fa fa-square-o fa-fw"></i><?=$quest['title']?></a>
+		</div>
 		<?php if(count($quest['sidequests']) > 0) : ?>
 		<br />
 		<?=_('containing optional Quests')?>:
