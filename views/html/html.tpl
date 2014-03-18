@@ -22,21 +22,17 @@
 			<input type="checkbox" id="toggle">
 			<label for="toggle" class="toggle" onclick><a id="navicon"><i class="fa fa-bars"></i>Menü</a></label>
 			<?php if(!is_null($loggedUser)) : ?>
+			<?php if(!is_null($loggedCharacter)) : ?>
+			<a href="<?=$linker->link(array('characters','character',$loggedSeminary['url'],$loggedCharacter['url']))?>" id="profile"><i class="fa fa-user fa-fw"></i><?=$loggedCharacter['name']?> (<?=$loggedCharacter['xps']?> XPs, <?=$loggedCharacter['xplevel']?>)</a>
+			<?php else : ?>
 			<a href="<?=$linker->link(array('users',$loggedUser['url']))?>" id="profile"><i class="fa fa-user fa-fw"></i><?=$loggedUser['username']?></a>
+			<?php endif ?>
 			<?php endif ?>
 			<?=$menu?>
 		</nav>
 	</header>
 	<article class="wrap">
 		<h1><a href="<?=$linker->link(array(), 0, true, array(), true)?>">The Legend of Z</a></h1>
-		<?php if(!is_null($loggedUser)) : ?>
-		<div id="user">
-			<a href="<?=$linker->link(array('users',$loggedUser['url']))?>"><?=$loggedUser['username']?></a>
-			<?php if(!is_null($loggedCharacter)) : ?>
-			<?=_('as')?> <a href="<?=$linker->link(array('characters','character',$loggedSeminary['url'],$loggedCharacter['url']))?>"><?=$loggedCharacter['name']?></a> (<?=$loggedCharacter['xps']?> XPs, <?=$loggedCharacter['xplevel']?>)
-			<?php endif ?>
-		</div>
-		<?php endif ?>
 		<?=$intermediate?>
 	</article>
 </body>
