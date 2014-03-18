@@ -5,9 +5,9 @@
 
 <?php foreach($questgroupshierarchy as &$hierarchy) : ?>
 <h3><?=$hierarchy['title_plural']?></h3>
-<ul>
+<ul class="questgroups">
 	<?php foreach($hierarchy['questgroups'] as &$group) : ?>
-	<li class="questgroup">
+	<li class="questgroup<?=$group['pos']?>">
 		<section>
 			<p class="fwb"><?=$hierarchy['title_singular']?> <?=$group['pos']?>:
 			<?php if(!array_key_exists('access', $group) || $group['access']) : ?>
