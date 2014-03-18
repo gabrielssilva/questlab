@@ -46,6 +46,38 @@
 			return htmlspecialchars($string, ENT_COMPAT, 'UTF-8');
 		}
 		
+		
+		/**
+		 * Cut a string to the given length but only word boundaries.
+		 * 
+		 * @static
+		 * @param	string	$string	String to cut
+		 * @param	int	$length	Length to cut string
+		 * @param	int	$scope	Maximum length to cut string regardless word boundaries
+		 * @return	string		Cutted string
+		 */
+		public static function shortenString($string, $length, $scope)
+		{
+			// Determine length
+			$length = min($length, strlen($string));
+			
+			// Look for word boundary
+			if(($pos = strpos($string, ' ', $length)) !== false)
+			{
+				// Check if boundary is outside of scope
+				if($pos > $length + $scope) {
+					$pos = strrpos(substr($string, 0, $pos), ' ');
+				}
+			}
+			else {
+				$pos = strlen($string);
+			}
+			
+			
+			// Cut string and return it
+			return substr($string, 0, $pos);
+		}
+		
 	}
 
 ?>

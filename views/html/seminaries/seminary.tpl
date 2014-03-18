@@ -1,6 +1,6 @@
 <h1><?=_('Seminaries')?></h1>
 <h2><?=$seminary['title']?></h2>
-<h3>Beschreibung</h3>
+<h3><?=_('Description')?></h3>
 <p><?=\hhu\z\Utils::t($seminary['description'])?></p>
 
 <?php foreach($questgroupshierarchy as &$hierarchy) : ?>
@@ -18,7 +18,9 @@
 				</div>
 				<p class="xpnumeric">350 / 450 XP</p>
 			</div>
-			<p>Einleitungstext: Mit völlig verseuchtem Tagewerk machst du dich an die Arbeit und stellst schnell fest...</p>
+			<?php if(array_key_exists('text', $group)) : ?>
+			<p><?=$group['text']?></p>
+			<?php endif ?>
 			<a href="<?=$linker->link(array('questgroups','questgroup',$seminary['url'],$group['url']))?>" class="cta orange">Auf ins Abenteuer!</a>
 			<?php else : ?>
 			<?=_('locked')?></p>

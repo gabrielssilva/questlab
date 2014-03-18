@@ -100,9 +100,21 @@
 				// Get Questgroups
 				$hierarchy['questgroups'] = $this->Questgroups->getQuestgroupsForHierarchy($hierarchy['id']);
 				
-				// Check permission of Questgroups
-				for($i=1; $i<count($hierarchy['questgroups']); $i++) {
-					$hierarchy['questgroups'][$i]['access'] =  $this->Questgroups->hasCharacterSolvedQuestgroup($hierarchy['questgroups'][$i-1]['id'], $character['id']);
+				// Get additional data
+				for($i=0; $i<count($hierarchy['questgroups']); $i++)
+				{
+					// Get first Questgroup text
+					$text = $this->Questgroups->getFirstQuestgroupText($hierarchy['questgroups'][$i]['id']);
+					if(!empty($text))
+					{
+						$text = \hhu\z\Utils::shortenString($text['text'], 100, 120).' …';
+						$hierarchy['questgroups'][$i]['text'] = $text;
+					}
+					
+					// Check permission of Questgroups
+					if($i >= 1) {
+						$hierarchy['questgroups'][$i]['access'] =  $this->Questgroups->hasCharacterSolvedQuestgroup($hierarchy['questgroups'][$i-1]['id'], $character['id']);
+					}
 				}
 			}
 			

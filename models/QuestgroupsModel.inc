@@ -146,6 +146,32 @@
 		
 		
 		/**
+		 * Get first texts of a Questgroup.
+		 * 
+		 * @param	int	$questgroupId	ID of a Questgroup
+		 * @return	array			First Text of this Questgroup
+		 */
+		public function getFirstQuestgroupText($questgroupId)
+		{
+			$data = $this->db->query(
+				'SELECT id, pos, text '.
+				'FROM questgrouptexts '.
+				'WHERE questgroup_id = ? '.
+				'ORDER BY pos ASC '.
+				'LIMIT 1',
+				'i',
+				$questgroupId
+			);
+			if(!empty($data)) {
+				return $data[0];
+			}
+			
+			
+			return null;
+		}
+		
+		
+		/**
 		 * Get the next Questgroup.
 		 * 
 		 * Determine the next Questgroup. If there is no next Questgroup
