@@ -111,6 +111,9 @@
 						$hierarchy['questgroups'][$i]['text'] = $text;
 					}
 					
+					// Get Character XPs
+					$hierarchy['questgroups'][$i]['character_xps'] = $this->Questgroups->getAchievedXPsForQuestgroup($hierarchy['questgroups'][$i]['id'], $character['id']);
+					
 					// Check permission of Questgroups
 					if($i >= 1) {
 						$hierarchy['questgroups'][$i]['access'] =  $this->Questgroups->hasCharacterSolvedQuestgroup($hierarchy['questgroups'][$i-1]['id'], $character['id']);

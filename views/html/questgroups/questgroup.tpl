@@ -22,7 +22,7 @@
 				<div class="xpbar">
 					<span style="width:25%"></span>
 				</div>
-				<p class="xpnumeric">50 / 200 XP</p>
+				<p class="xpnumeric"><?=$group['character_xps']?> / <?=$group['xps']?> XP</p>
 			</div>
 			<div class="qghidden">
 				<p>Versteckte Questline gefunden:</p>

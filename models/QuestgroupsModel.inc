@@ -49,9 +49,11 @@
 		 */
 		public function getQuestgroupsForHierarchy($hierarchyId, $parentQuestgroupId=null)
 		{
+			// Get Questgroups
+			$questgroups = array();
 			if(is_null($parentQuestgroupId))
 			{
-				return $this->db->query(
+				$questgroups = $this->db->query(
 					'SELECT id, questgroupshierarchy_id, pos, title, url '.
 					'FROM questgroups '.
 					'WHERE questgroups.questgroupshierarchy_id = ? AND parent_questgroup_id IS NULL '.
@@ -62,7 +64,7 @@
 			}
 			else
 			{
-				return $this->db->query(
+				$questgroups = $this->db->query(
 					'SELECT id, questgroupshierarchy_id, pos, title, url '.
 					'FROM questgroups '.
 					'WHERE questgroups.questgroupshierarchy_id = ? AND parent_questgroup_id = ? '.
@@ -71,6 +73,17 @@
 					$hierarchyId, $parentQuestgroupId
 				);
 			}
+			
+			// Add additional data
+			foreach($questgroups as &$questgroup)
+			{
+				// Total XPs
+				$questgroup['xps'] = $this->getAchievableXPsForQuestgroup($questgroup['id']);
+			}
+			
+			
+			// Return Questgroups
+			return $questgroups;
 		}
 		
 		
@@ -248,6 +261,84 @@
 			
 			
 			return $this->Quests->hasCharacterSolvedQuest($lastQuest['id'], $characterId);
+		}
+		
+		
+		/**
+		 * Summarize XPs of all Quests for a Questgroup and its
+		 * sub-Questgroups.
+		 * 
+		 * @param	int	$questgroupId	ID of Questgroup
+		 * @return				Sum of XPs
+		 */
+		public function getAchievableXPsForQuestgroup($questgroupId)
+		{
+			// Sum of XPs
+			$xps = 0;
+			
+			// Current Questgroup
+			$questgroup = $this->getQuestgroupById($questgroupId);
+			
+			// Quests of current Questgroup
+			$quests = $this->Quests->getMainquestsForQuestgroup($questgroup['id']);
+			foreach($quests as &$quest) {
+				$xps += $quest['xps'];
+			}
+			
+			// XPs of child Questgroups
+			$childQuestgroupshierarchy = $this->Questgroupshierarchy->getChildQuestgroupshierarchy($questgroup['questgroupshierarchy_id']);
+			foreach($childQuestgroupshierarchy as &$hierarchy)
+			{
+				$questgroups = $this->getQuestgroupsForHierarchy($hierarchy['id'], $questgroup['id']);
+				foreach($questgroups as &$questgroup) {
+					$xps += $this->getAchievableXPsForQuestgroup($questgroup['id']);
+				}
+			}
+			
+			
+			// Return summarized XPs
+			return $xps;
+		}
+		
+		
+		/**
+		 * Summarize XPs of all Quests for a Questgroup and its
+		 * sub-Questgroups solved by a Character.
+		 * 
+		 * @param	int	$questgroupId	ID of Questgroup
+		 * @param	int	$characterId	ID of Character
+		 * @return				Sum of XPs
+		 */
+		public function getAchievedXPsForQuestgroup($questgroupId, $characterId)
+		{
+			// Sum of XPs
+			$xps = 0;
+			
+			// Current Questgroup
+			$questgroup = $this->getQuestgroupById($questgroupId);
+			
+			// Quests of current Questgroup
+			$quests = $this->Quests->getMainquestsForQuestgroup($questgroup['id']);
+			foreach($quests as &$quest)
+			{
+				if($this->Quests->hasCharacterSolvedQuest($quest['id'], $characterId)) {
+					$xps += $quest['xps'];
+				}
+			}
+			
+			// XPs of child Questgroups
+			$childQuestgroupshierarchy = $this->Questgroupshierarchy->getChildQuestgroupshierarchy($questgroup['questgroupshierarchy_id']);
+			foreach($childQuestgroupshierarchy as &$hierarchy)
+			{
+				$questgroups = $this->getQuestgroupsForHierarchy($hierarchy['id'], $questgroup['id']);
+				foreach($questgroups as &$questgroup) {
+					$xps += $this->getAchievedXPsForQuestgroup($questgroup['id'], $characterId);
+				}
+			}
+			
+			
+			// Return summarized XPs
+			return $xps;
 		}
 		
 		

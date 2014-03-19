@@ -16,7 +16,7 @@
 				<div class="xpbar">
 					<span style="width:25%"></span>
 				</div>
-				<p class="xpnumeric">350 / 450 XP</p>
+				<p class="xpnumeric"><?=$group['character_xps']?> / <?=$group['xps']?> XP</p>
 			</div>
 			<?php if(array_key_exists('text', $group)) : ?>
 			<p><?=$group['text']?></p>

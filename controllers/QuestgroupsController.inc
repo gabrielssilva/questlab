@@ -83,14 +83,25 @@
 				// Get Questgroups
 				$hierarchy['questgroups'] = $this->Questgroups->getQuestgroupsForHierarchy($hierarchy['id'], $questgroup['id']);
 				
-				// Check permission of Questgroups
-				for($i=1; $i<count($hierarchy['questgroups']); $i++) {
-					$hierarchy['questgroups'][$i]['access'] =  $this->Questgroups->hasCharacterSolvedQuestgroup($hierarchy['questgroups'][$i-1]['id'], $character['id']);
+				// Get additional data
+				for($i=0; $i<count($hierarchy['questgroups']); $i++)
+				{
+					// Get Character XPs
+					$hierarchy['questgroups'][$i]['character_xps'] = $this->Questgroups->getAchievedXPsForQuestgroup($hierarchy['questgroups'][$i]['id'], $character['id']);
+				
+					// Check permission of Questgroups
+					if($i >= 1) {
+						$hierarchy['questgroups'][$i]['access'] =  $this->Questgroups->hasCharacterSolvedQuestgroup($hierarchy['questgroups'][$i-1]['id'], $character['id']);
+					}
 				}
 			}
 			
 			// Get texts
 			$questgroupTexts = $this->Questgroups->getQuestgroupTexts($questgroup['id']);
+			
+			// Get Character XPs
+			$questgroup['character_xps'] = $this->Questgroups->getAchievedXPsForQuestgroup($questgroup['id'], $character['id']);
+					
 			
 			// Get Quests
 			$quests = null;
