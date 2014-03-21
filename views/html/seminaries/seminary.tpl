@@ -1,5 +1,4 @@
-<h1><?=_('Seminaries')?></h1>
-<h2><?=$seminary['title']?></h2>
+<h2><a href="<?=$linker->link(array('seminaries',$seminary['url']))?>"><?=$seminary['title']?></a></h2>
 <h3><?=_('Description')?></h3>
 <p><?=\hhu\z\Utils::t($seminary['description'])?></p>
 
@@ -14,7 +13,7 @@
 			<a href="<?=$linker->link(array('questgroups','questgroup',$seminary['url'],$group['url']))?>"><?=$group['title']?></a></p>
 			<div class="cf">
 				<div class="xpbar">
-					<span style="width:25%"></span>
+					<span style="width:<?=round($group['character_xps']*100/$group['xps'])?>%"></span>
 				</div>
 				<p class="xpnumeric"><?=$group['character_xps']?> / <?=$group['xps']?> XP</p>
 			</div>
