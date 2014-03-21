@@ -1,8 +1,7 @@
 <?php if(count($parentquestgroupshierarchy) > 0) : ?>
-Pfad:
-<ul>
+<ul class="breadcrumbs">
 	<?php foreach($parentquestgroupshierarchy as &$hierarchy) : ?>
-	<li><a href="<?=$linker->link(array('questgroups','questgroup',$seminary['url'],$hierarchy['url']))?>"><?=$hierarchy['hierarchy']['title_singular']?> <?=$hierarchy['pos']?>: <?=$hierarchy['title']?></a></li>
+	<li><i class="fa fa-chevron-right fa-fw"></i><a href="<?=$linker->link(array('questgroups','questgroup',$seminary['url'],$hierarchy['url']))?>"><?=$hierarchy['hierarchy']['title_singular']?> <?=$hierarchy['pos']?>: <?=$hierarchy['title']?></a></li>
 	<?php endforeach ?>
 </ul>
 <?php endif ?>
