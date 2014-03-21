@@ -72,13 +72,17 @@
 		 * @param	string	$seminaryUrl	URL-title of the Seminary
 		 * @param	string	$mediaUrl	URL-name of the medium
 		 */
-		public function index($seminaryUrl, $mediaUrl)
+		public function index($seminaryUrl, $mediaUrl, $action=null)
 		{
 			// Get Seminary
 			$seminary = $this->Seminaries->getSeminaryByUrl($seminaryUrl);
 			
 			// Get Media
 			$media = $this->Media->getMediaByUrl($seminary['id'], $mediaUrl);
+			
+			// Get format
+			$format = explode('/', $media['mimetype']);
+			$format = $format[1];
 			
 			// Set content-type
 			$this->response->addHeader("Content-type: ".$media['mimetype']."");
@@ -94,9 +98,38 @@
 				return;
 			}
 			
+			// Load and process file
+			$file = null;
+			switch($action)
+			{
+				// No action
+				case null:
+					// Do not process the file
+					$file = file_get_contents($media['filename']);
+				break;
+				case 'questgroup':
+					if(!in_array(strtoupper($format), static::getImageTypes())) {
+						$file = file_get_contents($media['filename']);
+					}
+					else
+					{
+						$file = static::resizeImage(
+							$media['filename'],
+							$format,
+							480
+						);
+					}
+				break;
+				default:
+					throw new ParamsNotValidException($action);
+				break;
+			}
+			
+			
 			
 			// Pass data to view
 			$this->set('media', $media);
+			$this->set('file', $file);
 		}
 		
 		
@@ -136,6 +169,70 @@
 			
 			
 			return false;
+		}
+		
+		
+		
+		
+		/**
+		 * Get supported image types.
+		 * 
+		 * @return	array	List of supported image types
+		 */
+		private static function getImageTypes()
+		{
+			$im = new \Imagick();
+			
+			
+			return $im->queryFormats();
+		}
+		
+		
+		/**
+		 * Resize an image.
+		 * 
+		 * @param	string	$fileName	Absolute pathname of image to resize
+		 * @param	string	$mimeType	Mimetype of target image
+		 * @param	int	$size		New size to resize to
+		 */
+		private static function resizeImage($fileName, $mimeType, $size)
+		{
+			// Read image from cache
+			$tempFileName = ROOT.DS.\nre\configs\AppConfig::$dirs['temporary'].DS.'media-'.basename($fileName).'-'.$size;
+			if(file_exists($tempFileName))
+			{
+				// Check age of file
+				if(date('r', filemtime($tempFileName)+(60*60*24)) > date('r', time())) {
+					// Too old, delete
+					unlink($tempFileName);
+				}
+				else {
+					// Valid, read and return
+					return file_get_contents($tempFileName);
+				}
+			}
+			
+			
+			// ImageMagick
+			$im = new \Imagick($fileName);
+			
+			// Calculate new size
+			$geometry = $im->getImageGeometry();
+			if($geometry['width'] < $size) {
+				$size = $geometry['width'];
+			}
+			
+			// Process 
+			$im->thumbnailImage($size, 5000, true);
+			$im->contrastImage(1);
+			$im->setImageFormat($mimeType);
+			
+			// Save temporary file
+			$im->writeImage($tempFileName);
+			
+			
+			// Return resized image
+			return $im;
 		}
 		
 	}
