@@ -18,7 +18,7 @@
 
 <body>
 	<header>
-		<nav class="wrap">
+		<nav>
 			<input type="checkbox" id="toggle">
 			<label for="toggle" class="toggle" onclick><a id="navicon"><i class="fa fa-bars"></i>Menü</a></label>
 			<?php if(!is_null($loggedUser)) : ?>

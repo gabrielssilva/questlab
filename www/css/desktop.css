@@ -62,15 +62,15 @@ a{color:#50a4ab;text-decoration:none}
 header{background:#0f373c;margin-bottom:1.1875em;position:fixed;width:100%;z-index:99}
 header .fa{color:#5e9499}
 
-header nav{z-index:99}
-menu{display:none;opacity:0;position:absolute;margin:0;padding:0 0 16px;background:#0f373c;right:0;left:0}
+header nav{z-index:99;margin:0 5%}
+menu{display:none;opacity:0;position:absolute;margin:0;padding:0 0 15px;background:#0f373c;right:0;left:0}
 menu li{display:block;margin:0 5%}
-menu a{display:block;padding:15px 0;color:#fff}
+menu a,#profile{display:block;padding:15px 0;color:#fff}
 
-#profile{float:right;padding:18px;color:#fff}
+#profile{float:right}
 
 #toggle,.toggle{display:none}
-.toggle{display:inline-block;padding:18px 18px 18px 0;position:relative;cursor:pointer;-webkit-touch-callout:none;-moz-user-select:none;-ms-user-select:none;-webkit-user-select:none;user-select:none}
+.toggle{display:inline-block;padding:15px 15px 15px 0;position:relative;cursor:pointer;-webkit-touch-callout:none;-moz-user-select:none;-ms-user-select:none;-webkit-user-select:none;user-select:none}
 #toggle:checked ~ menu{display:block;opacity:1}
 #navicon{display:block;color:#fff}
 
@@ -102,4 +102,13 @@ article{padding-top:5.375em;margin-bottom:30px}
 @media only screen and (min-width:480px){
 .questgroups li{width:48%;float:left}
 .questgroups li:nth-child(even){float:right}
+}
+
+@media only screen and (min-width:1024px){
+header{position:fixed;left:0;top:0;bottom:0;width:300px;margin:0}
+menu{display:block;opacity:1;position:relative}
+#profile{float:none;margin:15px 15px 0 15px}
+#toggle,.toggle{display:none}
+.wrap{margin:0 20px 0 340px}
+article{padding-top:0}
 }
