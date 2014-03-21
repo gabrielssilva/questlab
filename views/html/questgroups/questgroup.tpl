@@ -1,5 +1,4 @@
-<h1><?=_('Seminaries')?></h1>
-<h2><?=$seminary['title']?></h2>
+<h2><a href="<?=$linker->link(array('seminaries',$seminary['url']))?>"><?=$seminary['title']?></a></h2>
 
 <?=$questgroupshierarchypath?>
 <?=$questgroupspicture?>
@@ -19,12 +18,12 @@
 		<div class="qgtitle"><a href="<?=$linker->link(array('questgroups','questgroup',$seminary['url'],$group['url']))?>"><i class="fa fa-square-o fa-fw"></i><?=$group['title']?></a></div>
 		<div class="qgprogress cf">
 			<div class="xpbar">
-				<span style="width:25%"></span>
+				<span style="width:<?=round($group['character_xps']/$group['xps']*100)?>%"></span>
 			</div>
 			<p class="xpnumeric"><?=$group['character_xps']?> / <?=$group['xps']?> XP</p>
 		</div>
 		<?php else : ?>
-		<?=$hierarchy['title_singular']?> <?=_('locked')?>
+		<div class="qgtitle"><i class="fa fa-square-o fa-fw"></i><?=$hierarchy['title_singular']?> <?=_('locked')?></div>
 		<?php endif ?>
 	</li>
 	<?php endforeach?>
@@ -35,33 +34,21 @@
 <?php if(isset($quests) && !is_null($quests)) : ?>
 <h3><?=_('Quests')?></h3>
 <ul class="qglist">
-	<li>
-		<div class="qgtitle">
-			<a href="#" class="solved"><i class="fa fa-check-square-o fa-fw"></i>Beispiel für eine gelöste Quest</a>
-		</div>
-	</li>
-	<li>
-		<div class="qgtitle">
-			<a href="#" class="bonus"><i class="fa fa-share-square-o fa-fw"></i>Beispiel für eine gefunde Side-Questline</a>
-		</div>
-	</li>
 	<?php foreach($quests as &$quest) : ?>
-	<li>
+	<li class="qgtitle">
 		<?php if(!array_key_exists('access', $quest) || $quest['access']) : ?>
-		<div class="qgtitle">
-			<a href="<?=$linker->link(array('quests','quest',$seminary['url'],$questgroup['url'],$quest['url']))?>"><i class="fa fa-square-o fa-fw"></i><?=$quest['title']?></a>
-		</div>
+		<a href="<?=$linker->link(array('quests','quest',$seminary['url'],$questgroup['url'],$quest['url']))?>" <?php if($quest['solved']) : ?>class="solved"<?php endif ?>><i class="fa <?=($quest['solved']) ? 'fa-check-square-o' : 'fa-share-square-o'?> fa-fw"></i><?=$quest['title']?></a>
 		<?php if(count($quest['sidequests']) > 0) : ?>
-		<br />
-		<?=_('containing optional Quests')?>:
-		<ul>
+		<ul class="gplist">
 			<?php foreach($quest['sidequests'] as &$sidequest) : ?>
-			<li><?=$sidequest['title']?></li>
+			<li class="qgtitle">
+				<a href="<?=$linker->link(array('quests','quest',$seminary['url'],$questgroup['url'],$sidequest['url']))?>" class="bonus"><i class="fa fa-share-square-o fa-fw"><?=$sidequest['title']?></i></a>
+			</li>
 			<?php endforeach ?>
 		</ul>
 		<?php endif ?>
 		<?php else : ?>
-		<?=_('locked')?>
+		<i class="fa fa-share-square-o fa-fw"><?=_('locked')?></i>
 		<?php endif ?>
 	</li>
 	<?php endforeach ?>

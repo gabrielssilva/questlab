@@ -108,15 +108,18 @@
 			if(count($childQuestgroupshierarchy) == 0)
 			{
 				$quests = $this->Quests->getMainquestsForQuestgroup($questgroup['id']);
-				for($i=0; $i<count($quests); $i++)
+				foreach($quests as $i => &$quest)
 				{
+					// Set status
+					$quest['solved'] = $this->Quests->hasCharacterSolvedQuest($quest['id'], $character['id']);
+					
 					// Check permission
 					if($i > 0) {
-						$quests[$i]['access'] = $this->Quests->hasCharacterSolvedQuest($quests[$i-1]['id'], $character['id']);
+						$quest['access'] = $this->Quests->hasCharacterSolvedQuest($quests[$i-1]['id'], $character['id']);
 					}
 					
 					// Attach sidequests
-					$quests[$i]['sidequests'] = $this->Quests->getSidequestsForQuest($quests[$i]['id']);
+					$quests[$i]['sidequests'] = $this->Quests->getSidequestsForQuest($quest['id']);
 				}
 			}
 			

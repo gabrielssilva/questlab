@@ -61,7 +61,8 @@
 		public static $dirs = array(
 			'locale'	=>	'locale',
 			'media'		=>	'media',
-			'questtypes'	=>	'questtypes'
+			'questtypes'	=>	'questtypes',
+			'temporary'	=>	'tmp'
 		);
 		
 		
@@ -86,8 +87,7 @@
 			array('characters/(?!(index|character))',			'characters/index/$1',			true),
 			array('charactergroups/(?!(index|groupsgroup|group))',		'charactergroups/index/$1',		true),
 			array('charactergroupsquests/(?!(quest))',			'charactergroupsquests/quest/$1',	true),
-			array('media/(.*)',						'media/$1?layout=binary',		false),
-			array('media/(.*)',						'media/index/$1',			true)
+			array('media/(.*)',						'media/$1?layout=binary',		false)
 		);
 
 
@@ -104,8 +104,7 @@
 			//array('seminaries/seminary/(.*)',		'$1',				false)
 			array('characters/index/(.*)',			'characters/$1',		true),
 			array('charactergroup/index/(.*)',		'charactergroup/$1',		true),
-			array('charactergroupsquests/quest/(.*)',	'charactergroupsquests/$1',	true),
-			array('media/index/(.*)',			'media/$1',			true)
+			array('charactergroupsquests/quest/(.*)',	'charactergroupsquests/$1',	true)
 		);
 		
 		
