@@ -83,10 +83,14 @@
 				$wordcount = count(preg_split('/\s+/', $characterSubmission['text']));
 			}
 			
+			// Has Character already solved Quest?
+			$solved = $this->Quests->hasCharacterSolvedQuest($questId, $characterId);
+			
 			
 			// Pass data to view
 			$this->set('submission', $characterSubmission);
 			$this->set('wordcount', $wordcount);
+			$this->set('solved', $solved);
 		}
 		
 		

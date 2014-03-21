@@ -53,13 +53,60 @@
 		public function getTextinputRegexs($questId)
 		{
 			return $this->db->query(
-				'SELECT number, regex '.
+				'SELECT id, number, regex '.
 				'FROM questtypes_textinput_regexs '.
 				'WHERE questtypes_textinput_quest_id = ? '.
 				'ORDER BY number ASC',
 				'i',
 				$questId
 			);
+		}
+		
+		
+		/**
+		 * Save Character’s submitted answer for one textinput field.
+		 * 
+		 * @param	int	$regexId	ID of regex
+		 * @param	int	$characterId	ID of Character
+		 * @param	string	$answer		Submitted answer for this field
+		 */
+		public function setCharacterSubmission($regexId, $characterId, $answer)
+		{
+			$this->db->query(
+				'INSERT INTO questtypes_textinput_regexs_characters '.
+				'(questtypes_textinput_regex_id, character_id, value) '.
+				'VALUES '.
+				'(?, ?, ?) '.
+				'ON DUPLICATE KEY UPDATE '.
+				'value = ?',
+				'iiss',
+				$regexId, $characterId, $answer, $answer
+			);
+		}
+		
+		
+		/**
+		 * Get answer of one regex input field submitted by Character.
+		 * 
+		 * @param	int	$regexId	ID of regex
+		 * @param	int	$characterId	ID of Character
+		 * @return	string			Submitted answer for this field or empty string
+		 */
+		public function getCharacterSubmission($regexId, $characterId)
+		{
+			$data = $this->db->query(
+				'SELECT value '.
+				'FROM questtypes_textinput_regexs_characters '.
+				'WHERE questtypes_textinput_regex_id = ? AND character_id = ? ',
+				'ii',
+				$regexId, $characterId
+			);
+			if(!empty($data)) {
+				return $data[0]['value'];
+			}
+			
+			
+			return '';
 		}
 		
 	}

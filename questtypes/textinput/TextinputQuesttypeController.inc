@@ -25,7 +25,6 @@
 		
 		/**
 		 * Save the answers of a Character for a Quest.
-		 * TODO saveAnswersOfCharacter()
 		 * 
 		 * @param	int	$questId	ID of Quest to save answers for
 		 * @param	int	$characterId	ID of Character to save answers of
@@ -33,6 +32,16 @@
 		 */
 		public function saveAnswersOfCharacter($questId, $characterId, $answers)
 		{
+			// Get regexs
+			$regexs = $this->Textinput->getTextinputRegexs($questId);
+			
+			// Save answers
+			foreach($regexs as &$regex)
+			{
+				$pos = intval($regex['number']) - 1;
+				$answer = (array_key_exists($pos, $answers)) ? $answers[$pos] : '';
+				$this->Textinput->setCharacterSubmission($regex['id'], $characterId, $answer);
+			}
 		}
 		
 		
@@ -58,8 +67,7 @@
 					break;
 				}
 				
-				$score = preg_match($regex['regex'], $answers[$i]);
-				if($score === 0 || $score === false)
+				if(!$this->isMatching($regex['regex'], $answers[$i]))
 				{
 					$allSolved = false;
 					break;
@@ -83,29 +91,31 @@
 		 */
 		public function quest($questId, $characterId)
 		{
-			// Answers
-			if(!array_key_exists('answers', $_SESSION)) {
-				$_SESSION['answers'] = array();
-			}
-			$answers = array_key_exists($questId, $_SESSION['answers']) ? $_SESSION['answers'][$questId] : array();
-			
-			
 			// Get Task
 			$task = $this->Textinput->getTextinputQuest($questId);
 			
 			// Process text
 			$textParts = preg_split('/(\$\$)/', $task['text'], -1, PREG_SPLIT_NO_EMPTY);
 			
+			// Get Character answers
+			$regexs = $this->Textinput->getTextinputRegexs($questId);
+			foreach($regexs as &$regex) {
+				$regex['answer'] = $this->Textinput->getCharacterSubmission($regex['id'], $characterId);
+			}
+			
+			// Has Character already solved Quest?
+			$solved = $this->Quests->hasCharacterSolvedQuest($questId, $characterId);
+			
 			
 			// Pass data to view
 			$this->set('texts', $textParts);
-			$this->set('answers', $answers);
+			$this->set('regexs', $regexs);
+			$this->set('solved', $solved);
 		}
 		
 		
 		/**
 		 * Action: submission.
-		 * @TODO submission()
 		 * 
 		 * Show the submission of a Character for a Quest.
 		 * 
@@ -114,6 +124,34 @@
 		 */
 		public function submission($questId, $characterId)
 		{
+			// Get Task
+			$task = $this->Textinput->getTextinputQuest($questId);
+			
+			// Process text
+			$textParts = preg_split('/(\$\$)/', $task['text'], -1, PREG_SPLIT_NO_EMPTY);
+			
+			// Get Character answers
+			$regexs = $this->Textinput->getTextinputRegexs($questId);
+			foreach($regexs as &$regex) {
+				$regex['answer'] = $this->Textinput->getCharacterSubmission($regex['id'], $characterId);
+				$regex['right'] = $this->isMatching($regex['regex'], $regex['answer']);
+			}
+			
+			
+			// Pass data to view
+			$this->set('texts', $textParts);
+			$this->set('regexs', $regexs);
+		}
+		
+		
+		
+		
+		private function isMatching($regex, $answer)
+		{
+			$score = preg_match($regex, $answer);
+			
+			
+			return ($score !== false && $score > 0);
 		}
 		
 	}

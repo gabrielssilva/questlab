@@ -25,7 +25,6 @@
 		
 		/**
 		 * Save the answers of a Character for a Quest.
-		 * TODO saveAnswersOfCharacter()
 		 * 
 		 * @param	int	$questId	ID of Quest to save answers for
 		 * @param	int	$characterId	ID of Character to save answers of
@@ -33,6 +32,15 @@
 		 */
 		public function saveAnswersOfCharacter($questId, $characterId, $answers)
 		{
+			// Get questions
+			$questions = $this->Multiplechoice->getQuestionsOfQuest($questId);
+			
+			// Save answers
+			foreach($questions as &$question)
+			{
+				$answer = (array_key_exists(intval($question['pos'])-1, $answers)) ? true : false;
+				$this->Multiplechoice->setCharacterSubmission($question['id'], $characterId, $answer);
+			}
 		}
 		
 		
@@ -80,25 +88,24 @@
 		 */
 		public function quest($questId, $characterId)
 		{
-			// Answers
-			if(!array_key_exists('answers', $_SESSION)) {
-				$_SESSION['answers'] = array();
-			}
-			$answers = array_key_exists($questId, $_SESSION['answers']) ? $_SESSION['answers'][$questId] : array();
-			
 			// Get questions
 			$questions = $this->Multiplechoice->getQuestionsOfQuest($questId);
+			foreach($questions as &$question) {
+				$question['answer'] = $this->Multiplechoice->getCharacterSubmission($question['id'], $characterId);
+			}
+			
+			// Has Character already solved Quest?
+			$solved = $this->Quests->hasCharacterSolvedQuest($questId, $characterId);
 			
 			
 			// Pass data to view
 			$this->set('questions', $questions);
-			$this->set('answers', $answers);
+			$this->set('solved', $solved);
 		}
 		
 		
 		/**
 		 * Action: submission.
-		 * @TODO submission()
 		 * 
 		 * Show the submission of a Character for a Quest.
 		 * 
@@ -107,6 +114,15 @@
 		 */
 		public function submission($questId, $characterId)
 		{
+			// Get questions
+			$questions = $this->Multiplechoice->getQuestionsOfQuest($questId);
+			foreach($questions as &$question) {
+				$question['answer'] = $this->Multiplechoice->getCharacterSubmission($question['id'], $characterId);
+			}
+			
+			
+			// Pass data to view
+			$this->set('questions', $questions);
 		}
 		
 	}

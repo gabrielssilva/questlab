@@ -191,6 +191,9 @@
 				}
 			}
 			
+			// Has Character solved quest?
+			$solved = $this->Quests->hasCharacterSolvedQuest($quest['id'], $character['id']);
+			
 			
 			// Pass data to view
 			$this->set('seminary', $seminary);
@@ -204,6 +207,7 @@
 			$this->set('nextquestgroup', $nextQuestgroup);
 			$this->set('task', $task);
 			$this->set('media', $questmedia);
+			$this->set('solved', $solved);
 		}
 		
 		
@@ -336,13 +340,10 @@
 				$questtypeAgent = $this->loadQuesttypeAgent($questtypeClassname, $request, $response);
 				
 				// Solve Quest
-				if($this->request->getRequestMethod() == 'POST' && !is_null($this->request->getPostParam('submit')))
+				if($this->request->getRequestMethod() == 'POST' && !is_null($this->request->getPostParam('submit')) && !$this->Quests->hasCharacterSolvedQuest($quest['id'], $character['id']))
 				{
 					// Get user answers
 					$answers = $this->request->getPostParam('answers');
-					
-					// Store answers in session
-					$_SESSION['answers'][$quest['id']] = $answers;
 					
 					// Save answers in database
 					$questtypeAgent->saveAnswersOfCharacter($quest['id'], $character['id'], $answers);
