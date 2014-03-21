@@ -54,7 +54,7 @@
 			if(is_null($parentQuestgroupId))
 			{
 				$questgroups = $this->db->query(
-					'SELECT id, questgroupshierarchy_id, pos, title, url '.
+					'SELECT id, questgroupshierarchy_id, pos, title, url, questgroupspicture_id '.
 					'FROM questgroups '.
 					'WHERE questgroups.questgroupshierarchy_id = ? AND parent_questgroup_id IS NULL '.
 					'ORDER BY questgroups.pos ASC',
@@ -65,7 +65,7 @@
 			else
 			{
 				$questgroups = $this->db->query(
-					'SELECT id, questgroupshierarchy_id, pos, title, url '.
+					'SELECT id, questgroupshierarchy_id, pos, title, url, questgroupspicture_id '.
 					'FROM questgroups '.
 					'WHERE questgroups.questgroupshierarchy_id = ? AND parent_questgroup_id = ? '.
 					'ORDER BY questgroups.pos ASC',

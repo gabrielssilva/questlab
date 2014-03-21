@@ -24,7 +24,7 @@
 		 * 
 		 * @var array
 		 */
-		public $models = array('seminaries', 'users', 'questgroupshierarchy', 'questgroups');
+		public $models = array('seminaries', 'users', 'questgroupshierarchy', 'questgroups', 'media');
 		/**
 		 * User permissions
 		 * 
@@ -101,22 +101,31 @@
 				$hierarchy['questgroups'] = $this->Questgroups->getQuestgroupsForHierarchy($hierarchy['id']);
 				
 				// Get additional data
-				for($i=0; $i<count($hierarchy['questgroups']); $i++)
+				//for($i=0; $i<count($hierarchy['questgroups']); $i++)
+				foreach($hierarchy['questgroups'] as $i => &$questgroup)
 				{
 					// Get first Questgroup text
-					$text = $this->Questgroups->getFirstQuestgroupText($hierarchy['questgroups'][$i]['id']);
+					$text = $this->Questgroups->getFirstQuestgroupText($questgroup['id']);
 					if(!empty($text))
 					{
 						$text = \hhu\z\Utils::shortenString($text['text'], 100, 120).' …';
-						$hierarchy['questgroups'][$i]['text'] = $text;
+						$questgroup['text'] = $text;
 					}
 					
 					// Get Character XPs
-					$hierarchy['questgroups'][$i]['character_xps'] = $this->Questgroups->getAchievedXPsForQuestgroup($hierarchy['questgroups'][$i]['id'], $character['id']);
+					$hierarchy['questgroups'][$i]['character_xps'] = $this->Questgroups->getAchievedXPsForQuestgroup($questgroup['id'], $character['id']);
 					
 					// Check permission of Questgroups
 					if($i >= 1) {
-						$hierarchy['questgroups'][$i]['access'] =  $this->Questgroups->hasCharacterSolvedQuestgroup($hierarchy['questgroups'][$i-1]['id'], $character['id']);
+						$questgroup['access'] =  $this->Questgroups->hasCharacterSolvedQuestgroup($hierarchy['questgroups'][$i-1]['id'], $character['id']);
+					}
+					
+					// Get Media
+					$questgroup['picture'] = null;
+					try {
+						$questgroup['picture'] = $this->Media->getMediaById($questgroup['questgroupspicture_id']);
+					}
+					catch(\nre\exceptions\IdNotFoundException $e) {
 					}
 				}
 			}
