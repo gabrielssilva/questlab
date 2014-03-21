@@ -7,7 +7,9 @@
 <ul class="questgroups cf">
 	<?php foreach($hierarchy['questgroups'] as &$group) : ?>
 	<li>
-		<img src="http://s14.directupload.net/images/140318/35229m97.png">
+		<?php if(!is_null($group['picture'])) : ?>
+		<img src="<?=$linker->link(array('media','index',$seminary['url'],$group['picture']['url'],'questgroup'))?>">
+		<?php endif ?>
 		<section>
 			<p class="fwb"><?=$hierarchy['title_singular']?> <?=$group['pos']?>:
 			<?php if(!array_key_exists('access', $group) || $group['access']) : ?>
