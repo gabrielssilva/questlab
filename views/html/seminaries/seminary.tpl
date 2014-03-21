@@ -1,0 +1,45 @@
+<h1><?=_('Seminaries')?></h1>
+<h2><?=$seminary['title']?></h2>
+<h3><?=_('Description')?></h3>
+<p><?=\hhu\z\Utils::t($seminary['description'])?></p>
+
+<?php foreach($questgroupshierarchy as &$hierarchy) : ?>
+<h3><?=$hierarchy['title_plural']?></h3>
+<ul class="questgroups">
+	<?php foreach($hierarchy['questgroups'] as &$group) : ?>
+	<li>
+		<img src="http://s14.directupload.net/images/140318/35229m97.png">
+		<section>
+			<p class="fwb"><?=$hierarchy['title_singular']?> <?=$group['pos']?>:
+			<?php if(!array_key_exists('access', $group) || $group['access']) : ?>
+			<a href="<?=$linker->link(array('questgroups','questgroup',$seminary['url'],$group['url']))?>"><?=$group['title']?></a></p>
+			<div class="cf">
+				<div class="xpbar">
+					<span style="width:25%"></span>
+				</div>
+				<p class="xpnumeric"><?=$group['character_xps']?> / <?=$group['xps']?> XP</p>
+			</div>
+			<?php if(array_key_exists('text', $group)) : ?>
+			<p><?=$group['text']?></p>
+			<?php endif ?>
+			<a href="<?=$linker->link(array('questgroups','questgroup',$seminary['url'],$group['url']))?>" class="cta orange">Auf ins Abenteuer!</a>
+			<?php else : ?>
+			<?=_('locked')?></p>
+			<?php endif ?>
+		</section>
+	</li>
+	<?php endforeach?>
+</ul>
+<?php endforeach ?>
+
+<nav>
+	<li><a href="<?=$linker->link('edit', 3)?>"><?=_('Edit seminary')?></a></li>
+	<li><a href="<?=$linker->link('delete', 3)?>"><?=_('Delete seminary')?></a></li>
+</nav>
+<nav>
+	<li><a href="<?=$linker->link(array('characters',$seminary['url']))?>"><?=_('Characters')?></a></li>
+	<li><a href="<?=$linker->link(array('charactergroups',$seminary['url']))?>"><?=_('Character Groups')?></a></li>
+</nav>
+<p>
+	<?=sprintf(_('created by %s on %s'), $seminary['creator']['username'],  $dateFormatter->format(new \DateTime($seminary['created'])))?>
+</p>

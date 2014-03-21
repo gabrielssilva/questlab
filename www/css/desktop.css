@@ -1,0 +1,101 @@
+@charset "UTF-8";
+
+/** CSS-Reset **/
+
+html{font-family:'Open Sans',sans-serif;-webkit-text-size-adjust:100%;-ms-text-size-adjust:100%}
+body{margin:0;background:#f7f5f2;color:#5e5c58;font:100%/1.6 'Open Sans',sans-serif;-webkit-animation:bugfix infinite 1s}
+a:focus{outline:thin dotted}
+a:active,a:hover{outline:0}
+b,strong,.fwb{font-weight:bold}
+dfn,.fsi{font-style:italic}
+img{border:0}
+h1,h2,h3{color:#103a3e}
+h2{font-size:120%}
+h3{font-size:100%}
+ul,ol,nav{padding:0;list-style-type:none}
+p{margin:0 0 16px;padding:0}
+audio,canvas,video{display:inline-block}
+audio:not([controls]){display:none;height:0}
+[hidden]{display:none}
+abbr[title]{border-bottom:.0625em dotted}
+hr{-moz-box-sizing:content-box;box-sizing:content-box;height:0}
+mark{background:#ff0;color:#000}
+code,kbd,pre,samp{font-family:monospace,serif;font-size:1em}
+pre{white-space:pre-wrap}
+q{quotes:"\201C" "\201D" "\2018" "\2019"}
+small{font-size:80%}
+sub,sup{font-size:75%;line-height:0;position:relative;vertical-align:baseline}
+sup{top:-.5em}
+sub{bottom:-.25em}
+svg:not(:root){overflow:hidden}
+figure{margin:0}
+fieldset{border:.0625em solid #c0c0c0;margin:0 .125em;padding:.35em .625em .75em}
+legend{border:0;padding:0}
+button,input,select,textarea{font-family:inherit;font-size:100%;margin:0}
+button,input{line-height:normal}
+button,select{text-transform:none}
+button,html input[type="button"],input[type="reset"],input[type="submit"]{-webkit-appearance:button;cursor:pointer}
+button[disabled],html input[disabled]{cursor:default}
+input[type="checkbox"],input[type="radio"]{box-sizing:border-box;padding:0}
+input[type="search"]{-webkit-appearance:textfield;-moz-box-sizing:content-box;-webkit-box-sizing:content-box;box-sizing:content-box}
+input[type="search"]::-webkit-search-cancel-button,input[type="search"]::-webkit-search-decoration{-webkit-appearance:none}
+button::-moz-focus-inner,input::-moz-focus-inner{border:0;padding:0}
+textarea{overflow:auto;vertical-align:top}
+table{border-collapse:collapse;border-spacing:0}
+
+
+/** Initial **/
+
+@-webkit-keyframes bugfix{from{padding:0}to{padding:0}}
+
+.cf:before,.cf:after{display:table;content:""}
+.cf:after{clear:both}
+.cf{zoom:1}
+.cb{clear:both}
+
+.wrap{margin:0 5%;max-height:999999px;min-height:1px}
+
+a{color:#50a4ab;text-decoration:none}
+.fa{padding:0 10px 0 0}
+.fwb{font-weight:700}
+
+header{background:#0f373c;margin-bottom:1.1875em;position:fixed;width:100%;z-index:99}
+header .fa{color:#5e9499}
+
+header nav{z-index:99}
+menu{display:none;opacity:0;position:absolute;margin:0;padding:0 0 16px;background:#0f373c;right:0;left:0}
+menu li{display:block;margin:0 5%}
+menu a{display:block;padding:15px 0;color:#fff}
+
+#profile{float:right;padding:18px;color:#fff}
+
+#toggle,.toggle{display:none}
+.toggle{display:inline-block;padding:18px 18px 18px 0;position:relative;cursor:pointer;-webkit-touch-callout:none;-moz-user-select:none;-ms-user-select:none;-webkit-user-select:none;user-select:none}
+#toggle:checked ~ menu{display:block;opacity:1}
+#navicon{display:block;color:#fff}
+
+article{padding-top:5.375em;margin-bottom:30px}
+
+.questgroups li{margin:0 0 25px 0;border-radius:3px;overflow:hidden}
+.questgroups img{display:block}
+.questgroups section{padding:20px;background:#fff}
+
+.qg li{margin:0 0 25px 0}
+.qgtitle a{background:#5cb6bd;border-radius:3px 3px 0 0;display:block;padding:20px;color:#fff;font-weight:700}
+.qgprogress,.qghidden{margin-bottom:4px;padding:20px 20px 4px 20px;background:#fff;border-radius:0 0 3px 3px}
+
+.qglist li{margin: 0 0 5px 0}
+.qglist .qgtitle a{padding:14px;border-radius:3px}
+.qglist .qgtitle .solved{background:#fff;color:#50a4ab}
+.qglist .qgtitle .solved .fa{color:#bcd75e}
+.qglist .qgtitle .bonus{background:#f5821f}
+
+.xpbar{width:60%;float:left;height:10px;position:relative;background:#eee;border-radius:25px;margin:8px 0 16px}
+.xpbar span{display:block;height:100%;border-radius:20px;background:#bcd75e;position:relative;overflow:hidden}
+.xpnumeric{float:right;color:#869845}
+
+.cta{display:inline-block;margin-top:10px;color:#fff;font-weight:700;padding:7px 20px;border-radius:4px}
+.orange{text-shadow:1px 2px #d4701a;background:#f5821f;border:solid #d4701a;border-width:0 0 3px 0}
+
+/** Media Queries **/
+
