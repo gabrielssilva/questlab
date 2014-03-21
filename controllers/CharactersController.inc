@@ -54,6 +54,13 @@
 			// Get registered Characters
 			$characters = $this->Characters->getCharactersForSeminary($seminary['id']);
 			
+			// Additional Character information
+			foreach($characters as &$character)
+			{
+				// Level
+				$character['xplevel'] = $this->Characters->getXPLevelOfCharacters($character['id']);
+			}
+			
 			
 			// Pass data to view
 			$this->set('seminary', $seminary);
@@ -77,6 +84,9 @@
 			
 			// Get Character
 			$character = $this->Characters->getCharacterByUrl($seminary['id'], $characterUrl);
+			
+			// Character Level
+			$character['xplevel'] = $this->Characters->getXPLevelOfCharacters($character['id']);
 			
 			// Get Seminarycharacterfields
 			$characterfields = $this->Seminarycharacterfields->getFieldsForCharacter($character['id']);

@@ -179,6 +179,31 @@
 			return $data[0];
 		}
 		
+		
+		/**
+		 * Get the XP-level of a Character.
+		 * 
+		 * @param	string	$characterId	ID of the Character
+		 * @return	array			XP-level of Character
+		 */
+		public function getXPLevelOfCharacters($characterId)
+		{
+			$data = $this->db->query(
+				'SELECT xplevels.xps, xplevels.level, xplevels.name '.
+				'FROM v_charactersxplevels '.
+				'INNER JOIN xplevels ON xplevels.id = v_charactersxplevels.xplevel_id '.
+				'WHERE v_charactersxplevels.character_id = ?',
+				'i',
+				$characterId
+			);
+			if(!empty($data)) {
+				return $data[0];
+			}
+			
+			
+			return null;
+		}
+		
 	}
 
 ?>

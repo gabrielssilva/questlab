@@ -71,6 +71,13 @@
 			// Get Characters
 			$characters = $this->Characters->getCharactersForUser($user['id']);
 			
+			// Additional Character information
+			foreach($characters as &$character)
+			{
+				// Level
+				$character['xplevel'] = $this->Characters->getXPLevelOfCharacters($character['id']);
+			}
+			
 			
 			// Pass data to view
 			$this->set('user', $user);

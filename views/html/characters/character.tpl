@@ -4,7 +4,7 @@
 
 <section>
 	<p>
-		XPs: <?=$character['xps']?> (<?=$character['xplevel']?>)<br />
+		XPs: <?=$character['xps']?> (<?=_('Level')?> <?=$character['xplevel']['level']?><?php if(!is_null($character['xplevel']['name'])) : ?>: <?=$character['xplevel']['name']?><?php endif ?>)<br />
 		<?=_('User')?>: <a href="<?=$linker->link(array('users','user',$user['url']))?>"><?=$user['username']?></a><br />
 		<?php foreach($characterfields as &$field) : ?>
 		<?=$field['title']?>: <?=$field['value']?><br />
