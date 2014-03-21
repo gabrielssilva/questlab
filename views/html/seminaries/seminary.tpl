@@ -5,7 +5,7 @@
 
 <?php foreach($questgroupshierarchy as &$hierarchy) : ?>
 <h3><?=$hierarchy['title_plural']?></h3>
-<ul class="questgroups">
+<ul class="questgroups cf">
 	<?php foreach($hierarchy['questgroups'] as &$group) : ?>
 	<li>
 		<img src="http://s14.directupload.net/images/140318/35229m97.png">
