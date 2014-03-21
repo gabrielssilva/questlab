@@ -108,6 +108,7 @@ article{padding-top:5.375em;margin-bottom:30px}
 @media only screen and (min-width:1024px){
 header{position:fixed;left:0;top:0;bottom:0;width:300px;margin:0}
 menu{display:block;opacity:1;position:relative}
+menu a{padding:10px 0}
 #profile{float:none;margin:15px 15px 0 15px}
 #toggle,.toggle{display:none}
 .wrap{margin:0 20px 0 340px}
