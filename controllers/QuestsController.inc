@@ -122,12 +122,19 @@
 			$questtexttypes = $this->Questtexts->getQuesttexttypes();
 			$questtexttypes = array_map(function($t) { return $t['url']; }, $questtexttypes);
 			$questtextCount = $this->Questtexts->getQuesttextsCountForQuest($quest['id'], $questtexttypeUrl);
-			if($questtextCount > 0 && in_array($questtexttypeUrl, $questtexttypes))
+			if(/*$questtextCount > 0 && */in_array($questtexttypeUrl, $questtexttypes))
 			{
 				$questtextPos = max(intval($questtextPos), 1);
-				$questtext = $this->Questtexts->getQuesttextByUrl($quest['id'], $questtexttypeUrl, $questtextPos);
-				$questtext['count'] = $questtextCount;
-				$questtext['sidequests'] = $this->Quests->getSidequestsForQuesttext($questtext['id']);
+				try {
+					$questtext = $this->Questtexts->getQuesttextByUrl($quest['id'], $questtexttypeUrl, $questtextPos);
+					$questtext['count'] = $questtextCount;
+					$questtext['sidequests'] = $this->Quests->getSidequestsForQuesttext($questtext['id']);
+				}
+				catch(\nre\exceptions\IdNotFoundException $e) {
+					if(!($questtexttypeUrl == 'Prolog' || $questtexttypeUrl == 'Epilog' && $questtextPos == 1)) {
+						throw $e;
+					}
+				}
 			}
 			
 			// Quest status
@@ -166,10 +173,13 @@
 				$task = $this->renderTask($questtype['classname'], $seminary, $questgroup, $quest, $character);
 			}
 			
+			// Has Character solved quest?
+			$solved = $this->Quests->hasCharacterSolvedQuest($quest['id'], $character['id']);
+			
 			// Next Quest/Questgroup
 			$nextQuests = null;
 			$nextQuestgroup = null;
-			if($questtexttypeUrl == 'Epilog')
+			if($questtexttypeUrl == 'Epilog' || $solved)
 			{
 				if($quest['is_mainquest'])
 				{
@@ -190,9 +200,6 @@
 					$nextQuests = array($nextQuest);
 				}
 			}
-			
-			// Has Character solved quest?
-			$solved = $this->Quests->hasCharacterSolvedQuest($quest['id'], $character['id']);
 			
 			
 			// Pass data to view

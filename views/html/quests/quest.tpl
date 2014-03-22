@@ -55,8 +55,17 @@
 </section>
 <?php endif ?>
 
+<?php if(!is_null($task)) : ?>
+<section>
+	<h1><?=_('Task')?></h1>
+	<p><?=\hhu\z\Utils::t($quest['task'])?></p>
+	<?=$task?>
+</section>
+<?php endif ?>
+
 <?php if(!is_null($nextquests) || !is_null($nextquestgroup)) : ?>
 <section>
+	<p><?=_('Task successfully solved')?></p>
 	<h1><?=_('Go on') ?></h1>
 	<?php if(count($nextquests) > 0) : ?>
 	<ul>
@@ -73,13 +82,5 @@
 	<?php else : ?>
 	Spiel vorbei
 	<?php endif ?>
-</section>
-<?php endif ?>
-
-<?php if(!is_null($task)) : ?>
-<section>
-	<h1><?=_('Task')?></h1>
-	<p><?=\hhu\z\Utils::t($quest['task'])?></p>
-	<?=$task?>
 </section>
 <?php endif ?>

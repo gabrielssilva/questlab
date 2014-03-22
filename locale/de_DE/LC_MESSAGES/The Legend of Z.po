@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: The Legend of Z\n"
-"POT-Creation-Date: 2014-03-21 23:55+0100\n"
-"PO-Revision-Date: 2014-03-21 23:55+0100\n"
+"POT-Creation-Date: 2014-03-22 14:37+0100\n"
+"PO-Revision-Date: 2014-03-22 14:37+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de_DE\n"
@@ -129,17 +129,21 @@ msgid "unsolved"
 msgstr "ungelöst"
 
 #: ../../../views/html/quests/quest.tpl:60
+msgid "Task"
+msgstr "Aufgabe"
+
+#: ../../../views/html/quests/quest.tpl:68
+msgid "Task successfully solved"
+msgstr "Du hast die Aufgabe erfolgreich gelöst"
+
+#: ../../../views/html/quests/quest.tpl:69
 msgid "Go on"
 msgstr "Hier geht es weiter"
 
-#: ../../../views/html/quests/quest.tpl:65
-#: ../../../views/html/quests/quest.tpl:67
+#: ../../../views/html/quests/quest.tpl:74
+#: ../../../views/html/quests/quest.tpl:76
 msgid "Quest"
 msgstr "Quest"
-
-#: ../../../views/html/quests/quest.tpl:81
-msgid "Task"
-msgstr "Aufgabe"
 
 #: ../../../views/html/quests/submission.tpl:11
 #, php-format
