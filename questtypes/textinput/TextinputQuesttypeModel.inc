@@ -38,9 +38,12 @@
 				'i',
 				$questId
 			);
+			if(!empty($data)) {
+				return $data[0];
+			}
 			
 			
-			return $data[0];
+			return null;
 		}
 		
 		
