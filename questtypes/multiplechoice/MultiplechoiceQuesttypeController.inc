@@ -96,8 +96,13 @@
 		{
 			// Get questions
 			$questions = $this->Multiplechoice->getQuestionsOfQuest($quest['id']);
-			foreach($questions as &$question) {
-				$question['answer'] = $this->Multiplechoice->getCharacterSubmission($question['id'], $character['id']);
+			
+			// Get user answers
+			if($this->request->getGetParam('show-answer') == 'true')
+			{
+				foreach($questions as &$question) {
+					$question['answer'] = $this->Multiplechoice->getCharacterSubmission($question['id'], $character['id']);
+				}
 			}
 			
 			// Has Character already solved Quest?

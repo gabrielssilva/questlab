@@ -13,5 +13,5 @@
 	</div>
 	
 	<br />
-	<input type="submit" name="submit" value="<?=_('solve')?>" <?=($solved) ? 'disabled="disabled"' : '' ?> />
+	<input type="submit" name="submit" value="<?=_('solve')?>" />
 </form>

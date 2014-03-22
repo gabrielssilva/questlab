@@ -347,13 +347,15 @@
 				$questtypeAgent = $this->loadQuesttypeAgent($questtypeClassname, $request, $response);
 				
 				// Solve Quest
-				if($this->request->getRequestMethod() == 'POST' && !is_null($this->request->getPostParam('submit')) && !$this->Quests->hasCharacterSolvedQuest($quest['id'], $character['id']))
+				if($this->request->getRequestMethod() == 'POST' && !is_null($this->request->getPostParam('submit')))
 				{
 					// Get user answers
 					$answers = $this->request->getPostParam('answers');
 					
 					// Save answers in database
-					$questtypeAgent->saveAnswersOfCharacter($seminary, $questgroup, $quest, $character, $answers);
+					if(!$this->Quests->hasCharacterSolvedQuest($quest['id'], $character['id'])) {
+						$questtypeAgent->saveAnswersOfCharacter($seminary, $questgroup, $quest, $character, $answers);
+					}
 					
 					// Match answers with correct ones
 					$status = $questtypeAgent->matchAnswersofCharacter($seminary, $questgroup, $quest, $character, $answers);

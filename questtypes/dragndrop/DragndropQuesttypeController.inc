@@ -125,7 +125,6 @@
 			$this->set('field', $dndField);
 			$this->set('drops', $drops);
 			$this->set('drags', $drags);
-			$this->set('solved', $solved);
 		}
 		
 		

@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: The Legend of Z\n"
-"POT-Creation-Date: 2014-03-22 14:37+0100\n"
-"PO-Revision-Date: 2014-03-22 14:37+0100\n"
+"POT-Creation-Date: 2014-03-22 21:17+0100\n"
+"PO-Revision-Date: 2014-03-22 21:18+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de_DE\n"
@@ -19,20 +19,6 @@ msgstr ""
 #: ../../../views/html/error/index.tpl:1
 msgid "Error"
 msgstr "Fehler"
-
-#: ../../../views/html/charactergroups/group.tpl:1
-#: ../../../views/html/charactergroups/groupsgroup.tpl:1
-#: ../../../views/html/charactergroups/index.tpl:1
-#: ../../../views/html/charactergroupsquests/quest.tpl:1
-#: ../../../views/html/menu/index.tpl:4 ../../../views/html/quests/quest.tpl:1
-#: ../../../views/html/quests/submission.tpl:1
-#: ../../../views/html/quests/submissions.tpl:1
-#: ../../../views/html/seminaries/create.tpl:1
-#: ../../../views/html/seminaries/delete.tpl:1
-#: ../../../views/html/seminaries/edit.tpl:1
-#: ../../../views/html/seminaries/index.tpl:1
-msgid "Seminaries"
-msgstr "Kurse"
 
 #: ../../../views/html/charactergroups/group.tpl:3
 #: ../../../views/html/charactergroups/groupsgroup.tpl:3
@@ -103,6 +89,14 @@ msgstr "Einführung"
 msgid "Users"
 msgstr "Benutzer"
 
+#: ../../../views/html/menu/index.tpl:4
+#: ../../../views/html/seminaries/create.tpl:1
+#: ../../../views/html/seminaries/delete.tpl:1
+#: ../../../views/html/seminaries/edit.tpl:1
+#: ../../../views/html/seminaries/index.tpl:1
+msgid "Seminaries"
+msgstr "Kurse"
+
 #: ../../../views/html/menu/index.tpl:10 ../../../views/html/users/login.tpl:2
 #: ../../../views/html/users/login.tpl:11
 msgid "Login"
@@ -118,34 +112,38 @@ msgstr "Logout"
 msgid "locked"
 msgstr "gesperrt"
 
-#: ../../../views/html/quests/quest.tpl:21
-#: ../../../views/html/quests/submissions.tpl:28
+#: ../../../views/html/quests/quest.tpl:20
+#: ../../../views/html/quests/submissions.tpl:27
 msgid "solved"
 msgstr "gelöst"
 
-#: ../../../views/html/quests/quest.tpl:23
-#: ../../../views/html/quests/submissions.tpl:19
+#: ../../../views/html/quests/quest.tpl:22
+#: ../../../views/html/quests/submissions.tpl:18
 msgid "unsolved"
 msgstr "ungelöst"
 
-#: ../../../views/html/quests/quest.tpl:60
+#: ../../../views/html/quests/quest.tpl:59
 msgid "Task"
 msgstr "Aufgabe"
 
-#: ../../../views/html/quests/quest.tpl:68
+#: ../../../views/html/quests/quest.tpl:67
 msgid "Task successfully solved"
 msgstr "Du hast die Aufgabe erfolgreich gelöst"
 
-#: ../../../views/html/quests/quest.tpl:69
+#: ../../../views/html/quests/quest.tpl:67
+msgid "Show correct answer"
+msgstr "Richtige Lösung anzeigen"
+
+#: ../../../views/html/quests/quest.tpl:68
 msgid "Go on"
 msgstr "Hier geht es weiter"
 
-#: ../../../views/html/quests/quest.tpl:74
-#: ../../../views/html/quests/quest.tpl:76
+#: ../../../views/html/quests/quest.tpl:73
+#: ../../../views/html/quests/quest.tpl:75
 msgid "Quest"
 msgstr "Quest"
 
-#: ../../../views/html/quests/submission.tpl:11
+#: ../../../views/html/quests/submission.tpl:10
 #, php-format
 msgid "Submission of %s"
 msgstr "Lösungen von %s"

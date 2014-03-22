@@ -64,7 +64,7 @@
 
 <?php if(!is_null($nextquests) || !is_null($nextquestgroup)) : ?>
 <section>
-	<p><?=_('Task successfully solved')?></p>
+	<p><?=_('Task successfully solved')?> (<a href="<?=$linker->link(null,0,false,array('show-answer'=>'true'))?>"><?=_('Show correct answer')?></a>)</p>
 	<h1><?=_('Go on') ?></h1>
 	<?php if(count($nextquests) > 0) : ?>
 	<ul>

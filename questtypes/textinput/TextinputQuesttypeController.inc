@@ -104,9 +104,13 @@
 			$textParts = preg_split('/(\$\$)/', $task['text'], -1, PREG_SPLIT_NO_EMPTY);
 			
 			// Get Character answers
-			$regexs = $this->Textinput->getTextinputRegexs($quest['id']);
-			foreach($regexs as &$regex) {
-				$regex['answer'] = $this->Textinput->getCharacterSubmission($regex['id'], $character['id']);
+			$regexs = null;
+			if($this->request->getGetParam('show-answer') == 'true')
+			{
+				$regexs = $this->Textinput->getTextinputRegexs($quest['id']);
+				foreach($regexs as &$regex) {
+					$regex['answer'] = $this->Textinput->getCharacterSubmission($regex['id'], $character['id']);
+				}
 			}
 			
 			// Has Character already solved Quest?
@@ -116,7 +120,6 @@
 			// Pass data to view
 			$this->set('texts', $textParts);
 			$this->set('regexs', $regexs);
-			$this->set('solved', $solved);
 		}
 		
 		

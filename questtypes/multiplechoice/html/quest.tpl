@@ -2,10 +2,10 @@
 	<ol>
 		<?php foreach($questions as $i => &$question) : ?>
 		<li>
-			<input type="checkbox" id="answers[<?=$i?>]" name="answers[<?=$i?>]" value="true" <?=($question['answer']) ? 'checked="checked"' : '' ?> <?=($solved) ? 'disabled="disabled"' : '' ?>/>
+			<input type="checkbox" id="answers[<?=$i?>]" name="answers[<?=$i?>]" value="true" <?=(array_key_exists('answer', $question) && $question['answer']) ? 'checked="checked"' : '' ?> />
 			<label for="answers[<?=$i?>]"><?=\hhu\z\Utils::t($question['question'])?></label>
 		</li>
 		<?php endforeach ?>
 	</ol>
-	<input type="submit" name="submit" value="<?=_('solve')?>" <?=($solved) ? 'disabled="disabled"' : '' ?> />
+	<input type="submit" name="submit" value="<?=_('solve')?>" />
 </form>
