@@ -84,7 +84,9 @@ article{padding:70px 0 30px}
 .questgroups img{display:block}
 .questgroups section{padding:20px;background:#fff}
 
-.qg li{margin:0 0 25px 0}
+.qg li{margin-left:10px;padding:0 0 25px 30px;border:2px solid #dbd9d5;border-width:0 0 0 2px}
+.qgicon{margin:17px 0 0 -39px;background:#f7f5f2;font-size:1.25em;float:left}
+.qgicon.locked{margin-top:-2px}
 .qgtitle a{background:#5cb6bd;border-radius:3px 3px 0 0;display:block;padding:20px;color:#fff;font-weight:700}
 .qgprogress,.qghidden{margin-bottom:4px;padding:20px 20px 4px 20px;background:#fff;border-radius:0 0 3px 3px}
 
@@ -98,8 +100,9 @@ article{padding:70px 0 30px}
 .xpbar span{display:block;height:100%;border-radius:20px;background:#bcd75e;position:relative;overflow:hidden}
 .xpnumeric{float:right;color:#869845}
 
-.cta{display:inline-block;margin-top:10px;color:#fff;font-weight:700;padding:7px 20px;border-radius:4px}
-.orange{text-shadow:1px 2px #d4701a;background:#f5821f;border:solid #d4701a;border-width:0 0 3px 0}
+.cta,input[type="submit"]{display:inline-block;margin-top:10px;color:#fff;font-weight:700;padding:7px 20px;border-radius:4px}
+.orange,input[type="submit"]{text-shadow:1px 2px #d4701a;background:#f5821f;border:solid #d4701a;border-width:0 0 3px 0}
+input[type="submit"][disabled]{text-shadow:1px 2px #d48c4e;background:#f9ac69;border-color:#d48c4e}
 
 .qtextbox{font-size:0.875em;background:#fff;height:200px;padding:0 20px;margin:0;border:20px solid #fff;border-width:20px 0 10px;border-radius:3px 3px 0 0;overflow-y:scroll;-webkit-overflow-scrolling:touch}
 .qtexticon{background:#fff;background:linear-gradient(to bottom, rgba(255,255,255,1) 0%,rgba(247,245,242,1) 100%);padding-bottom:5px;border-radius:0 0 3px 3px;text-align:center}
@@ -109,6 +112,10 @@ article{padding:70px 0 30px}
 @media only screen and (min-width:480px){
 .questgroups li{width:48%;float:left}
 .questgroups li:nth-child(even){float:right}
+}
+
+@media only screen and (min-width:768px){
+
 }
 
 @media only screen and (min-width:1024px){
