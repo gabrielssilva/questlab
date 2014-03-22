@@ -192,26 +192,30 @@
 		/**
 		 * Save the answers of a Character for a Quest.
 		 * 
-		 * @param	int	$questId	ID of Quest to save answers for
-		 * @param	int	$characterId	ID of Character to save answers of
+		 * @param	array	$seminary	Current Seminary data
+		 * @param	array	$questgroup	Current Questgroup data
+		 * @param	array	$quest		Current Quest data
+		 * @param	array	$character	Current Character data
 		 * @param	array	$answers	Character answers for the Quest
 		 */
-		public function saveAnswersOfCharacter($questId, $characterId, $answers)
+		public function saveAnswersOfCharacter($seminary, $questgroup, $quest, $character, $answers)
 		{
-			$this->controller->saveAnswersOfCharacter($questId, $characterId, $answers);
+			$this->controller->saveAnswersOfCharacter($seminary, $questgroup, $quest, $character, $answers);
 		}
 		
 		
 		/**
 		 * Check if answers of a Character for a Quest match the correct ones.
 		 * 
-		 * @param	int	$questId	ID of Quest to match answers for
-		 * @param	int	$characterId	ID of Character to match answers of
+		 * @param	array	$seminary	Current Seminary data
+		 * @param	array	$questgroup	Current Questgroup data
+		 * @param	array	$quest		Current Quest data
+		 * @param	array	$character	Current Character data
 		 * @param	array	$answers	Character answers for the Quest
 		 */
-		public function matchAnswersOfCharacter($questId, $characterId, $answers)
+		public function matchAnswersOfCharacter($seminary, $questgroup, $quest, $character, $answers)
 		{
-			return $this->controller->matchAnswersOfCharacter($questId, $characterId, $answers);
+			return $this->controller->matchAnswersOfCharacter($seminary, $questgroup, $quest, $character, $answers);
 		}
 		
 		
