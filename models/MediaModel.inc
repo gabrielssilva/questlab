@@ -1,0 +1,90 @@
+<?php
+
+	/**
+	 * The Legend of Z
+	 *
+	 * @author	Oliver Hanraths <oliver.hanraths@uni-duesseldorf.de>
+	 * @copyright	2014 Heinrich-Heine-Universität Düsseldorf
+	 * @license	http://www.gnu.org/licenses/gpl.html
+	 * @link	https://bitbucket.org/coderkun/the-legend-of-z
+	 */
+	
+	namespace hhu\z\models;
+	
+	
+	/**
+	 * Model to interact with the Media-tables.
+	 * 
+	 * @author	Oliver Hanraths <oliver.hanraths@uni-duesseldorf.de>
+	 */
+	class MediaModel extends \hhu\z\Model
+	{
+		
+		
+		
+		
+		/**
+		 * Construct a new MediaModel.
+		 */
+		public function __construct()
+		{
+			parent::__construct();
+		}
+		
+		
+		
+		
+		/**
+		 * Get a Medium by its URL.
+		 * 
+		 * @throws	IdNotFoundException
+		 * @param	int	$seminaryId	ID of the seminary
+		 * @param	string	$mediaURL	URL-name of the Medium
+		 * @return	array			Medium data
+		 */
+		public function getMediaByUrl($seminaryId, $mediaUrl)
+		{
+			$data = $this->db->query(
+				'SELECT id, name, url, description, mimetype '.
+				'FROM media '.
+				'WHERE media.url = ?',
+				's',
+				$mediaUrl
+			);
+			if(empty($data)) {
+				throw new \nre\exceptions\IdNotFoundException($mediaUrl);
+			}
+			
+			
+			return $data[0];
+		}
+		
+		
+		/**
+		 * Get a Medium by its ID.
+		 * 
+		 * @throws	IdNotFoundException
+		 * @param	int	$seminaryId	ID of the seminary
+		 * @param	int	$mediaId	ID of the Medium
+		 * @return	array			Medium data
+		 */
+		public function getMediaById($mediaId)
+		{
+			$data = $this->db->query(
+				'SELECT id, name, url, description, mimetype '.
+				'FROM media '.
+				'WHERE media.id = ?',
+				'i',
+				$mediaId
+			);
+			if(empty($data)) {
+				throw new \nre\exceptions\IdNotFoundException($mediaId);
+			}
+			
+			
+			return $data[0];
+		}
+		
+	}
+
+?>
