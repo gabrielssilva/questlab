@@ -42,7 +42,7 @@
 		<li><a href="<?=$linker->link(array('quest',$seminary['url'],$questgroup['url'],$relatedquesttext['quest']['url'],$relatedquesttext['type_url'],$relatedquesttext['pos']),1)?>"><?=$questtext['abort_text']?></a></li>
 		<?php endif ?>
 		<?php if(!empty($questtext['out_text']) && $questtext['pos'] < $questtext['count']) : ?>
-		<li><a href="<?=$linker->link($questtext['pos']+1, 6)?>"><?=$questtext['out_text']?></a></li>
+		<li><a href="<?=$linker->link(array($questtext['type_url'],$questtext['pos']+1),5,true,null,true,'questtext')?>"><?=$questtext['out_text']?></a></li>
 		<?php endif ?>
 	</ul>
 	
