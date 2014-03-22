@@ -18,6 +18,7 @@
 		<span class="qgicon"><i class="fa fa-check-square-o"></i></span>
 		<div class="qgtitle"><a href="<?=$linker->link(array('questgroups','questgroup',$seminary['url'],$group['url']))?>"><?=$group['title']?></a></div>
 		<div class="qgprogress cf">
+			<p class="xpinfo">Fortschritt:</p>
 			<div class="xpbar">
 				<span style="width:<?=round($group['character_xps']/$group['xps']*100)?>%"></span>
 			</div>
