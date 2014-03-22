@@ -129,3 +129,7 @@ menu a{padding:10px 0}
 article{padding-top:20px}
 .breadcrumbs li{display:inline;padding-right:10px}
 }
+
+@media only screen and (min-width:1200px){
+.wrap{width:860px;max-width:860px}
+}
