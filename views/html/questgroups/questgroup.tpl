@@ -13,9 +13,10 @@
 <h3><?=$hierarchy['title_plural']?></h3>
 <ul class="qg">
 	<?php foreach($hierarchy['questgroups'] as &$group) : ?>
-	<li>
+	<li class="cf">
 		<?php if(!array_key_exists('access', $group) || $group['access']) : ?>
-		<div class="qgtitle"><a href="<?=$linker->link(array('questgroups','questgroup',$seminary['url'],$group['url']))?>"><i class="fa fa-square-o fa-fw"></i><?=$group['title']?></a></div>
+		<span class="qgicon"><i class="fa fa-check-square-o"></i></span>
+		<div class="qgtitle"><a href="<?=$linker->link(array('questgroups','questgroup',$seminary['url'],$group['url']))?>"><?=$group['title']?></a></div>
 		<div class="qgprogress cf">
 			<div class="xpbar">
 				<span style="width:<?=round($group['character_xps']/$group['xps']*100)?>%"></span>
@@ -23,7 +24,8 @@
 			<p class="xpnumeric"><?=$group['character_xps']?> / <?=$group['xps']?> XP</p>
 		</div>
 		<?php else : ?>
-		<div class="qgtitle"><i class="fa fa-square-o fa-fw"></i><?=$hierarchy['title_singular']?> <?=_('locked')?></div>
+		<span class="qgicon locked"><i class="fa fa-square-o"></i></span>
+		<div class="qgtitle"><?=$hierarchy['title_singular']?> <?=_('locked')?></div>
 		<?php endif ?>
 	</li>
 	<?php endforeach?>
