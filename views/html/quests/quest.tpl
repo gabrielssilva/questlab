@@ -47,9 +47,9 @@
 	</ul>
 	
 	<?php if(array_key_exists('pos', $questtext)) : ?>
-	<?php if($questtext['pos'] > 1) : ?><a href="<?=$linker->link(array($questtext['type_url'],$questtext['pos']-1),5)?>">&lt;</a><?php endif ?>
+	<?php if($questtext['pos'] > 1) : ?><a href="<?=$linker->link(array($questtext['type_url'],$questtext['pos']-1),5,true,null,true,'questtext')?>">&lt;</a><?php endif ?>
 	<?=$questtext['pos']?>/<?=$questtext['count']?>
-	<?php if($questtext['pos'] < $questtext['count'] && empty($questtext['out_text'])) : ?><a href="<?=$linker->link(array($questtext['type_url'],$questtext['pos']+1),5)?>">&gt;</a><?php endif ?>
+	<?php if($questtext['pos'] < $questtext['count'] && empty($questtext['out_text'])) : ?><a href="<?=$linker->link(array($questtext['type_url'],$questtext['pos']+1),5,true,null,true,'questtext')?>">&gt;</a><?php endif ?>
 	<?php endif ?>
 </section>
 <?php endif ?>
