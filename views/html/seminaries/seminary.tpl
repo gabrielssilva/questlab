@@ -8,7 +8,7 @@
 	<?php foreach($hierarchy['questgroups'] as &$group) : ?>
 	<li>
 		<?php if(!is_null($group['picture'])) : ?>
-		<img src="<?=$linker->link(array('media','index',$seminary['url'],$group['picture']['url'],'questgroup'))?>">
+		<img src="<?=$linker->link(array('media','index',$seminary['url'],$group['picture']['url']))?>">
 		<?php endif ?>
 		<section>
 			<p class="fwb"><?=$hierarchy['title_singular']?> <?=$group['pos']?>:
