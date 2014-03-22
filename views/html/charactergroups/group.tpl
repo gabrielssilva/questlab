@@ -1,8 +1,8 @@
-<h1><?=_('Seminaries')?></h1>
-<h2><?=$seminary['title']?></h2>
-<h3><a href="<?=$linker->link(array('index',$seminary['url']),1)?>"><?=_('Character Groups')?></a></h3>
-<h4><a href="<?=$linker->link(array('groupsgroup',$seminary['url'],$groupsgroup['url']),1)?>"><?=$groupsgroup['name']?></a></h4>
-<h5><?=$group['name']?></h5>
+<h2><a href="<?=$linker->link(array('seminaries',$seminary['url']))?>"><?=$seminary['title']?></a></h2>
+<h3><?=$seminary['title']?></h3>
+<h4><a href="<?=$linker->link(array('index',$seminary['url']),1)?>"><?=_('Character Groups')?></a></h4>
+<h5><a href="<?=$linker->link(array('groupsgroup',$seminary['url'],$groupsgroup['url']),1)?>"><?=$groupsgroup['name']?></a></h5>
+<h6><?=$group['name']?></h6>
 
 <section>
 	XPs: <?=$group['xps']?>

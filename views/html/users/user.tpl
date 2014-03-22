@@ -1,5 +1,5 @@
-<h1><?=_('Users')?></h1>
-<h2><?=$user['username']?></h2>
+<h2><?=_('Users')?></h2>
+<h3><?=$user['username']?></h3>
 <nav>
 	<li><a href="<?=$linker->link('edit', 3)?>"><?=_('Edit user')?></a></li>
 	<li><a href="<?=$linker->link('delete', 3)?>"><?=_('Delete user')?></a></li>

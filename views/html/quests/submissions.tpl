@@ -1,5 +1,4 @@
-<h1><?=_('Seminaries')?></h1>
-<h2><?=$seminary['title']?></h2>
+<h2><a href="<?=$linker->link(array('seminaries',$seminary['url']))?>"><?=$seminary['title']?></a></h2>
 
 <?=$questgroupshierarchypath?>
 <?=$questgroupspicture?>

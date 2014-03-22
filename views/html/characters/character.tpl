@@ -1,6 +1,6 @@
-<h1><?=$seminary['title']?></h1>
-<h2><?=_('Characters')?></h2>
-<h3><?=$character['name']?></h3>
+<h2><a href="<?=$linker->link(array('seminaries',$seminary['url']))?>"><?=$seminary['title']?></a></h2>
+<h3><?=_('Characters')?></h3>
+<h4><?=$character['name']?></h4>
 
 <section>
 	<p>

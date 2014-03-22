@@ -1,5 +1,4 @@
-<h1><?=_('Seminaries')?></h1>
-<h2><?=$seminary['title']?></h2>
+<h2><a href="<?=$linker->link(array('seminaries',$seminary['url']))?>"><?=$seminary['title']?></a></h2>
 
 <?=$questgroupshierarchypath?>
 <?=$questgroupspicture?>
@@ -8,7 +7,7 @@
 <img src="<?=$linker->link(array('media','index',$seminary['url'],$media['url']))?>" />
 <?php endif ?>
 
-<h3><?=sprintf(_('Submission of %s'),$character['name'])?></h1>
+<h2><?=sprintf(_('Submission of %s'),$character['name'])?></h2>
 <section>
 	<?=$output?>
 </section>

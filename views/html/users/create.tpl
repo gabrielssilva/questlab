@@ -1,5 +1,5 @@
-<h1><?=_('Users')?></h1>
-<h2><?=_('New user')?></h2>
+<h2><?=_('Users')?></h2>
+<h3><?=_('New user')?></h3>
 
 <form method="post" action="<?=$linker->link('create', 1)?>">
 	<fieldset>

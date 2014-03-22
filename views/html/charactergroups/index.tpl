@@ -1,6 +1,6 @@
-<h1><?=_('Seminaries')?></h1>
-<h2><?=$seminary['title']?></h2>
-<h3><?=_('Character Groups')?></h3>
+<h2><a href="<?=$linker->link(array('seminaries',$seminary['url']))?>"><?=$seminary['title']?></a></h2>
+<h3><?=$seminary['title']?></h3>
+<h4><?=_('Character Groups')?></h4>
 
 <ul>
 	<?php foreach($groupsgroups as &$group) : ?>

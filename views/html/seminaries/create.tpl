@@ -1,5 +1,5 @@
-<h1><?=_('Seminaries')?></h1>
-<h2><?=_('New seminary')?></h2>
+<h2><?=_('Seminaries')?></h2>
+<h3><?=_('New seminary')?></h3>
 
 <form method="post" action="<?=$linker->link('create', 1)?>">
 	<fieldset>

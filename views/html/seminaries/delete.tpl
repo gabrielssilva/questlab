@@ -1,5 +1,5 @@
-<h1><?=_('Seminaries')?></h1>
-<h2><?=_('Delete seminary')?></h2>
+<h2><?=_('Seminaries')?></h2>
+<h3><?=_('Delete seminary')?></h3>
 
 <?=sprintf(_('Should the seminary “%s” really be deleted?'), $seminary['title'])?>
 <form method="post">

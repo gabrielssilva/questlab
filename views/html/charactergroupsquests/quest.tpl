@@ -1,7 +1,7 @@
-<h1><?=_('Seminaries')?></h1>
-<h2><?=$seminary['title']?></h2>
-<h3><?=_('Character Groups Quests')?></h3>
-<h4><?=$quest['title']?></h4>
+<h2><a href="<?=$linker->link(array('seminaries',$seminary['url']))?>"><?=$seminary['title']?></a></h2>
+<h3><?=$seminary['title']?></h3>
+<h4><?=_('Character Groups Quests')?></h4>
+<h5><?=$quest['title']?></h5>
 
 <?php if(!is_null($media)) : ?>
 <img src="<?=$linker->link(array('media','index',$seminary['url'],$media['url']))?>" />
