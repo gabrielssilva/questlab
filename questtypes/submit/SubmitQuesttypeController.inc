@@ -32,18 +32,20 @@
 		/**
 		 * Save the answers of a Character for a Quest.
 		 * 
-		 * @param	int	$questId	ID of Quest to save answers for
-		 * @param	int	$characterId	ID of Character to save answers of
+		 * @param	array	$seminary	Current Seminary data
+		 * @param	array	$questgroup	Current Questgroup data
+		 * @param	array	$quest		Current Quest data
+		 * @param	array	$character	Current Character data
 		 * @param	array	$answers	Character answers for the Quest
 		 */
-		public function saveAnswersOfCharacter($questId, $characterId, $answers)
+		public function saveAnswersOfCharacter($seminary, $questgroup, $quest, $character, $answers)
 		{
 			// Get already submitted answer
-			$characterSubmission = $this->Submit->getCharacterSubmission($questId, $characterId);
+			$characterSubmission = $this->Submit->getCharacterSubmission($quest['id'], $character['id']);
 			
 			// Save answer
 			if(is_null($characterSubmission) && array_key_exists(0, $answers)) {
-				$this->Submit->setCharacterSubmission($questId, $characterId, $answers[0]);
+				$this->Submit->setCharacterSubmission($quest['id'], $character['id'], $answers[0]);
 			}
 		}
 		
@@ -51,12 +53,14 @@
 		/**
 		 * Check if answers of a Character for a Quest match the correct ones.
 		 * 
-		 * @param	int	$questId	ID of Quest to match answers for
-		 * @param	int	$characterId	ID of Character to match answers of
+		 * @param	array	$seminary	Current Seminary data
+		 * @param	array	$questgroup	Current Questgroup data
+		 * @param	array	$quest		Current Quest data
+		 * @param	array	$character	Current Character data
 		 * @param	array	$answers	Character answers for the Quest
 		 * @return	boolean			True/false for a right/wrong answer or null for moderator evaluation
 		 */
-		public function matchAnswersOfCharacter($questId, $characterId, $answers)
+		public function matchAnswersOfCharacter($seminary, $questgroup, $quest, $character, $answers)
 		{
 			// A moderator has to evaluate the answer
 			return null;
@@ -69,13 +73,15 @@
 		 * Display a big textbox to let the user enter a text that has
 		 * to be evaluated by a moderator.
 		 * 
-		 * @param	int	$questId	ID of Quest to show
-		 * @param	int	$characterId	ID of Character
+		 * @param	array	$seminary	Current Seminary data
+		 * @param	array	$questgroup	Current Questgroup data
+		 * @param	array	$quest		Current Quest data
+		 * @param	array	$character	Current Character data
 		 */
-		public function quest($questId, $characterId)
+		public function quest($seminary, $questgroup, $quest, $character)
 		{
 			// Answer (Submission)
-			$characterSubmission = $this->Submit->getCharacterSubmission($questId, $characterId);
+			$characterSubmission = $this->Submit->getCharacterSubmission($quest['id'], $character['id']);
 			
 			// Wordcount
 			$wordcount = 0;
@@ -84,7 +90,7 @@
 			}
 			
 			// Has Character already solved Quest?
-			$solved = $this->Quests->hasCharacterSolvedQuest($questId, $characterId);
+			$solved = $this->Quests->hasCharacterSolvedQuest($quest['id'], $character['id']);
 			
 			
 			// Pass data to view
@@ -99,16 +105,18 @@
 		 * 
 		 * Show the submission of a Character for a Quest.
 		 * 
-		 * @param	int	$questId	ID of Quest to show submission for
-		 * @param	int	$characterId	ID of Character to show submission of
+		 * @param	array	$seminary	Current Seminary data
+		 * @param	array	$questgroup	Current Questgroup data
+		 * @param	array	$quest		Current Quest data
+		 * @param	array	$character	Current Character data
 		 */
-		public function submission($questId, $characterId)
+		public function submission($seminary, $questgroup, $quest, $character)
 		{
 			// Get Character submission
-			$submission = $this->Submit->getCharacterSubmission($questId, $characterId);
+			$submission = $this->Submit->getCharacterSubmission($quest['id'], $character['id']);
 			
 			// Status
-			$solved = $this->Quests->hasCharacterSolvedQuest($questId, $characterId);
+			$solved = $this->Quests->hasCharacterSolvedQuest($quest['id'], $character['id']);
 			
 			
 			// Pass data to view

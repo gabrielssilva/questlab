@@ -26,20 +26,22 @@
 		/**
 		 * Save the answers of a Character for a Quest.
 		 * 
-		 * @param	int	$questId	ID of Quest to save answers for
-		 * @param	int	$characterId	ID of Character to save answers of
+		 * @param	array	$seminary	Current Seminary data
+		 * @param	array	$questgroup	Current Questgroup data
+		 * @param	array	$quest		Current Quest data
+		 * @param	array	$character	Current Character data
 		 * @param	array	$answers	Character answers for the Quest
 		 */
-		public function saveAnswersOfCharacter($questId, $characterId, $answers)
+		public function saveAnswersOfCharacter($seminary, $questgroup, $quest, $character, $answers)
 		{
 			// Get questions
-			$questions = $this->Multiplechoice->getQuestionsOfQuest($questId);
+			$questions = $this->Multiplechoice->getQuestionsOfQuest($quest['id']);
 			
 			// Save answers
 			foreach($questions as &$question)
 			{
 				$answer = (array_key_exists(intval($question['pos'])-1, $answers)) ? true : false;
-				$this->Multiplechoice->setCharacterSubmission($question['id'], $characterId, $answer);
+				$this->Multiplechoice->setCharacterSubmission($question['id'], $character['id'], $answer);
 			}
 		}
 		
@@ -47,14 +49,16 @@
 		/**
 		 * Check if answers of a Character for a Quest match the correct ones.
 		 * 
-		 * @param	int	$questId	ID of Quest to match answers for
-		 * @param	int	$characterId	ID of Character to match answers of
+		 * @param	array	$seminary	Current Seminary data
+		 * @param	array	$questgroup	Current Questgroup data
+		 * @param	array	$quest		Current Quest data
+		 * @param	array	$character	Current Character data
 		 * @return	boolean			True/false for a right/wrong answer or null for moderator evaluation
 		 */
-		public function matchAnswersOfCharacter($questId, $characterId, $answers)
+		public function matchAnswersOfCharacter($seminary, $questgroup, $quest, $character, $answers)
 		{
 			// Get right answers
-			$tickQuestions = $this->Multiplechoice->getTickQuestionsOfQuest($questId);
+			$tickQuestions = $this->Multiplechoice->getTickQuestionsOfQuest($quest['id']);
 			
 			// Match tick questions with user answers
 			$allSolved = true;
@@ -83,19 +87,21 @@
 		 * Display questions with a checkbox to let the user choose the
 		 * right ones.
 		 * 
-		 * @param	int	$questId	ID of Quest to show
-		 * @param	int	$characterId	ID of Character
+		 * @param	array	$seminary	Current Seminary data
+		 * @param	array	$questgroup	Current Questgroup data
+		 * @param	array	$quest		Current Quest data
+		 * @param	array	$character	Current Character data
 		 */
-		public function quest($questId, $characterId)
+		public function quest($seminary, $questgroup, $quest, $character)
 		{
 			// Get questions
-			$questions = $this->Multiplechoice->getQuestionsOfQuest($questId);
+			$questions = $this->Multiplechoice->getQuestionsOfQuest($quest['id']);
 			foreach($questions as &$question) {
-				$question['answer'] = $this->Multiplechoice->getCharacterSubmission($question['id'], $characterId);
+				$question['answer'] = $this->Multiplechoice->getCharacterSubmission($question['id'], $character['id']);
 			}
 			
 			// Has Character already solved Quest?
-			$solved = $this->Quests->hasCharacterSolvedQuest($questId, $characterId);
+			$solved = $this->Quests->hasCharacterSolvedQuest($quest['id'], $character['id']);
 			
 			
 			// Pass data to view
@@ -109,15 +115,17 @@
 		 * 
 		 * Show the submission of a Character for a Quest.
 		 * 
-		 * @param	int	$questId	ID of Quest to show submission for
-		 * @param	int	$characterId	ID of Character to show submission of
+		 * @param	array	$seminary	Current Seminary data
+		 * @param	array	$questgroup	Current Questgroup data
+		 * @param	array	$quest		Current Quest data
+		 * @param	array	$character	Current Character data
 		 */
-		public function submission($questId, $characterId)
+		public function submission($seminary, $questgroup, $quest, $character)
 		{
 			// Get questions
-			$questions = $this->Multiplechoice->getQuestionsOfQuest($questId);
+			$questions = $this->Multiplechoice->getQuestionsOfQuest($quest['id']);
 			foreach($questions as &$question) {
-				$question['answer'] = $this->Multiplechoice->getCharacterSubmission($question['id'], $characterId);
+				$question['answer'] = $this->Multiplechoice->getCharacterSubmission($question['id'], $character['id']);
 			}
 			
 			

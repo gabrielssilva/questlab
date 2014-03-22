@@ -26,21 +26,23 @@
 		/**
 		 * Save the answers of a Character for a Quest.
 		 * 
-		 * @param	int	$questId	ID of Quest to save answers for
-		 * @param	int	$characterId	ID of Character to save answers of
+		 * @param	array	$seminary	Current Seminary data
+		 * @param	array	$questgroup	Current Questgroup data
+		 * @param	array	$quest		Current Quest data
+		 * @param	array	$character	Current Character data
 		 * @param	array	$answers	Character answers for the Quest
 		 */
-		public function saveAnswersOfCharacter($questId, $characterId, $answers)
+		public function saveAnswersOfCharacter($seminary, $questgroup, $quest, $character, $answers)
 		{
 			// Get regexs
-			$regexs = $this->Textinput->getTextinputRegexs($questId);
+			$regexs = $this->Textinput->getTextinputRegexs($quest['id']);
 			
 			// Save answers
 			foreach($regexs as &$regex)
 			{
 				$pos = intval($regex['number']) - 1;
 				$answer = (array_key_exists($pos, $answers)) ? $answers[$pos] : '';
-				$this->Textinput->setCharacterSubmission($regex['id'], $characterId, $answer);
+				$this->Textinput->setCharacterSubmission($regex['id'], $character['id'], $answer);
 			}
 		}
 		
@@ -48,14 +50,16 @@
 		/**
 		 * Check if answers of a Character for a Quest match the correct ones.
 		 * 
-		 * @param	int	$questId	ID of Quest to match answers for
-		 * @param	int	$characterId	ID of Character to match answers of
+		 * @param	array	$seminary	Current Seminary data
+		 * @param	array	$questgroup	Current Questgroup data
+		 * @param	array	$quest		Current Quest data
+		 * @param	array	$character	Current Character data
 		 * @return	boolean			True/false for a right/wrong answer or null for moderator evaluation
 		 */
-		public function matchAnswersOfCharacter($questId, $characterId, $answers)
+		public function matchAnswersOfCharacter($seminary, $questgroup, $quest, $character, $answers)
 		{
 			// Get right answers
-			$regexs = $this->Textinput->getTextinputRegexs($questId);
+			$regexs = $this->Textinput->getTextinputRegexs($quest['id']);
 			
 			// Match regexs with user answers
 			$allSolved = true;
@@ -86,25 +90,27 @@
 		 * Display a text with input fields and evaluate if user input
 		 * matches with stored regular expressions.
 		 * 
-		 * @param	int	$questId	ID of Quest to show
-		 * @param	int	$characterId	ID of Character
+		 * @param	array	$seminary	Current Seminary data
+		 * @param	array	$questgroup	Current Questgroup data
+		 * @param	array	$quest		Current Quest data
+		 * @param	array	$character	Current Character data
 		 */
-		public function quest($questId, $characterId)
+		public function quest($seminary, $questgroup, $quest, $character)
 		{
 			// Get Task
-			$task = $this->Textinput->getTextinputQuest($questId);
+			$task = $this->Textinput->getTextinputQuest($quest['id']);
 			
 			// Process text
 			$textParts = preg_split('/(\$\$)/', $task['text'], -1, PREG_SPLIT_NO_EMPTY);
 			
 			// Get Character answers
-			$regexs = $this->Textinput->getTextinputRegexs($questId);
+			$regexs = $this->Textinput->getTextinputRegexs($quest['id']);
 			foreach($regexs as &$regex) {
-				$regex['answer'] = $this->Textinput->getCharacterSubmission($regex['id'], $characterId);
+				$regex['answer'] = $this->Textinput->getCharacterSubmission($regex['id'], $character['id']);
 			}
 			
 			// Has Character already solved Quest?
-			$solved = $this->Quests->hasCharacterSolvedQuest($questId, $characterId);
+			$solved = $this->Quests->hasCharacterSolvedQuest($quest['id'], $character['id']);
 			
 			
 			// Pass data to view
@@ -119,21 +125,23 @@
 		 * 
 		 * Show the submission of a Character for a Quest.
 		 * 
-		 * @param	int	$questId	ID of Quest to show submission for
-		 * @param	int	$characterId	ID of Character to show submission of
+		 * @param	array	$seminary	Current Seminary data
+		 * @param	array	$questgroup	Current Questgroup data
+		 * @param	array	$quest		Current Quest data
+		 * @param	array	$character	Current Character data
 		 */
-		public function submission($questId, $characterId)
+		public function submission($seminary, $questgroup, $quest, $character)
 		{
 			// Get Task
-			$task = $this->Textinput->getTextinputQuest($questId);
+			$task = $this->Textinput->getTextinputQuest($quest['id']);
 			
 			// Process text
 			$textParts = preg_split('/(\$\$)/', $task['text'], -1, PREG_SPLIT_NO_EMPTY);
 			
 			// Get Character answers
-			$regexs = $this->Textinput->getTextinputRegexs($questId);
+			$regexs = $this->Textinput->getTextinputRegexs($quest['id']);
 			foreach($regexs as &$regex) {
-				$regex['answer'] = $this->Textinput->getCharacterSubmission($regex['id'], $characterId);
+				$regex['answer'] = $this->Textinput->getCharacterSubmission($regex['id'], $character['id']);
 				$regex['right'] = $this->isMatching($regex['regex'], $regex['answer']);
 			}
 			

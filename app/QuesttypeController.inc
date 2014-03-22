@@ -32,22 +32,26 @@
 		/**
 		 * Save the answers of a Character for a Quest.
 		 * 
-		 * @param	int	$questId	ID of Quest to save answers for
-		 * @param	int	$characterId	ID of Character to save answers of
+		 * @param	array	$seminary	Current Seminary data
+		 * @param	array	$questgroup	Current Questgroup data
+		 * @param	array	$quest		Current Quest data
+		 * @param	array	$character	Current Character data
 		 * @param	array	$answers	Character answers for the Quest
 		 */
-		public abstract function saveAnswersOfCharacter($questId, $characterId, $answers);
+		public abstract function saveAnswersOfCharacter($seminary, $questgroup, $quest, $character, $answers);
 		
 		
 		/**
 		 * Check if answers of a Character for a Quest match the correct ones.
 		 * 
-		 * @param	int	$questId	ID of Quest to match answers for
-		 * @param	int	$characterId	ID of Character to match answers of
+		 * @param	array	$seminary	Current Seminary data
+		 * @param	array	$questgroup	Current Questgroup data
+		 * @param	array	$quest		Current Quest data
+		 * @param	array	$character	Current Character data
 		 * @param	array	$answers	Character answers for the Quest
 		 * @return	boolean			True/false for a right/wrong answer or null for moderator evaluation
 		 */
-		public abstract function matchAnswersOfCharacter($questId, $characterId, $answers);
+		public abstract function matchAnswersOfCharacter($seminary, $questgroup, $quest, $character, $answers);
 		
 		
 		/**
@@ -55,10 +59,12 @@
 		 * 
 		 * Show the task of a Quest.
 		 * 
-		 * @param	int	$questId	ID of Quest to show
-		 * @param	int	$characterId	ID of Character
+		 * @param	array	$seminary	Current Seminary data
+		 * @param	array	$questgroup	Current Questgroup data
+		 * @param	array	$quest		Current Quest data
+		 * @param	array	$character	Current Character data
 		 */
-		public abstract function quest($questId, $characterId);
+		public abstract function quest($seminary, $questgroup, $quest, $character);
 		
 		
 		
@@ -67,10 +73,12 @@
 		 * 
 		 * Show the submission of a Character for a Quest.
 		 * 
-		 * @param	int	$questId	ID of Quest to show submission for
-		 * @param	int	$characterId	ID of Character to show submission of
+		 * @param	array	$seminary	Current Seminary data
+		 * @param	array	$questgroup	Current Questgroup data
+		 * @param	array	$quest		Current Quest data
+		 * @param	array	$character	Current Character data
 		 */
-		public abstract function submission($questId, $characterId);
+		public abstract function submission($seminary, $questgroup, $quest, $character);
 		
 		
 		

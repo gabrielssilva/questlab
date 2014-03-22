@@ -334,7 +334,7 @@
 			try {
 				// Generate request and response
 				$request = clone $this->request;
-				$response = $this->createQuesttypeResponse('quest', $quest['id'], $character['id']);
+				$response = $this->createQuesttypeResponse('quest', $seminary, $questgroup, $quest, $character);
 				
 				// Load Questtype Agent
 				$questtypeAgent = $this->loadQuesttypeAgent($questtypeClassname, $request, $response);
@@ -346,10 +346,10 @@
 					$answers = $this->request->getPostParam('answers');
 					
 					// Save answers in database
-					$questtypeAgent->saveAnswersOfCharacter($quest['id'], $character['id'], $answers);
+					$questtypeAgent->saveAnswersOfCharacter($seminary, $questgroup, $quest, $character, $answers);
 					
 					// Match answers with correct ones
-					$status = $questtypeAgent->matchAnswersofCharacter($quest['id'], $character['id'], $answers);
+					$status = $questtypeAgent->matchAnswersofCharacter($seminary, $questgroup, $quest, $character, $answers);
 					if($status === true)
 					{
 						// Mark Quest as solved
@@ -418,7 +418,7 @@
 			try {
 				// Generate request and response
 				$request = clone $this->request;
-				$response = $this->createQuesttypeResponse('submission', $quest['id'], $character['id']);
+				$response = $this->createQuesttypeResponse('submission', $seminary, $questgroup, $quest, $character);
 				
 				// Load Questtype Agent
 				$questtypeAgent = $this->loadQuesttypeAgent($questtypeClassname, $request, $response);
