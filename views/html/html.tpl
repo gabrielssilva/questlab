@@ -32,7 +32,6 @@
 		</nav>
 	</header>
 	<article class="wrap">
-		<h1><a href="<?=$linker->link(array(), 0, true, array(), true)?>">The Legend of Z</a></h1>
 		<?=$intermediate?>
 	</article>
 </body>

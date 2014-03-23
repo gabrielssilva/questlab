@@ -1,7 +1,11 @@
+<div class="moodpic">
+	<img src="http://s1.directupload.net/images/140323/tpzvoy5c.png">
+</div>
+
+<?=$questgroupspicture?>
 <h2><a href="<?=$linker->link(array('seminaries',$seminary['url']))?>"><?=$seminary['title']?></a></h2>
 
 <?=$questgroupshierarchypath?>
-<?=$questgroupspicture?>
 
 <h3><?=$questgroupshierarchy['title_singular']?> <?=$questgroup['pos']?>: <?=$questgroup['title']?></h3>
 <?php foreach($texts as &$text) : ?>
