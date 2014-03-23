@@ -56,16 +56,24 @@ table{border-collapse:collapse;border-spacing:0}
 .wrap{margin:0 5%;max-height:999999px;min-height:1px}
 
 a{color:#50a4ab;text-decoration:none}
+a:hover{color:#5bbac2}
 .fa{padding:0 10px 0 0}
 .fwb{font-weight:700}
 
 header{background:#0f373c;margin-bottom:1.1875em;position:fixed;width:100%;z-index:99}
-header .fa{color:#5e9499}
-
 header nav{z-index:99;margin:0 5%}
+
+header .fa{color:#5e9499}
+header a:hover .fa{color:#7fb0b4}
+
 menu{display:none;opacity:0;position:absolute;margin:0;padding:0 0 15px;background:#0f373c;right:0;left:0}
 menu li{display:block;margin:0 5%}
-menu a,#profile{display:block;padding:15px 0;color:#fff}
+
+menu a,#profile{display:block;padding:15px 0;color:#d9e5e7}
+menu a:hover,#profile:hover{color:#fff}
+
+menu .active{color:#fff}
+menu .active .fa{color:#bcd75e}
 
 #profile{float:right}
 .circlenote{margin-left:15px;background:#bcd75e;border-radius:0.8em;display:inline-block;color:#0f373c;font-weight:bold;line-height:1.6em;text-align:center;width:1.6em;font-size:.8em}
@@ -106,6 +114,8 @@ article{padding:70px 0 30px}
 
 .cta,input[type="submit"]{display:inline-block;margin-top:10px;color:#fff;font-weight:700;padding:7px 20px;border-radius:4px}
 .orange,input[type="submit"]{text-shadow:1px 2px #d4701a;background:#f5821f;border:solid #d4701a;border-width:0 0 3px 0}
+.orange:hover,input[type="submit"]:hover{color:#fff;background:#f09140}
+
 input[type="submit"][disabled]{text-shadow:1px 2px #d48c4e;background:#f9ac69;border-color:#d48c4e}
 
 .qtextbox{font-size:0.875em;background:#fff;height:200px;padding:0 20px;margin:0;border:20px solid #fff;border-width:20px 0 10px;border-radius:3px 3px 0 0;overflow-y:scroll;-webkit-overflow-scrolling:touch}
