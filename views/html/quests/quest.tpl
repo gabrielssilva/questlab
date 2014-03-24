@@ -10,10 +10,6 @@
 <h4><?=$quest['title']?></h4>
 <?php endif ?>
 
-<?php if(!is_null($media)) : ?>
-<img src="<?=$linker->link(array('media','index',$seminary['url'],$media['url']))?>" />
-<?php endif ?>
-
 <?php if(!is_null($queststatustext)) : ?>
 <section>
 	<?php if($queststatus == 'solved') : ?>
@@ -29,7 +25,7 @@
 <section>
 	<h1 id="questtext"><?=$questtext['type']?></h1>
 	<div id="qtextbox">
-		<p class="qtext"><?=\hhu\z\Utils::t($questtext['text'])?></p>
+		<p class="qtext cf"><?php if(!is_null($media)) : ?><img src="<?=$linker->link(array('media','index',$seminary['url'],$media['url']))?>" /><?php endif ?><?=\hhu\z\Utils::t($questtext['text'])?></p>
 	</div>
 	
 	<ul>
