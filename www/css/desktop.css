@@ -17,7 +17,7 @@ p{margin:0 0 16px;padding:0}
 audio,canvas,video{display:inline-block}
 audio:not([controls]){display:none;height:0}
 [hidden]{display:none}
-abbr[title]{border-bottom:.0625em dotted}
+abbr[title]{border-bottom:1px dotted}
 hr{-moz-box-sizing:content-box;box-sizing:content-box;height:0}
 mark{background:#ff0;color:#000}
 code,kbd,pre,samp{font-family:monospace,serif;font-size:1em}
@@ -60,7 +60,7 @@ a:hover{color:#5bbac2}
 .fa{padding:0 10px 0 0}
 .fwb{font-weight:700}
 
-header{background:#0f373c;margin-bottom:1.1875em;position:fixed;width:100%;z-index:99}
+header{background:#0f373c;margin-bottom:19px;position:fixed;width:100%;z-index:99}
 header nav{z-index:99;margin:0 5%}
 
 header .fa{color:#5e9499}
