@@ -28,11 +28,9 @@
 <?php if(!is_null($questtext)) : ?>
 <section>
 	<h1 id="questtext"><?=$questtext['type']?></h1>
-	<p class="qtextbox">
-		<?=\hhu\z\Utils::t($questtext['text'])?>
-	</p>
-	<p class="qtexticon"><i class="fa fa-angle-down"></i></p>
-	
+	<div id="qtextbox">
+		<p class="qtext"><?=\hhu\z\Utils::t($questtext['text'])?></p>
+	</div>
 	
 	<ul>
 		<?php foreach($questtext['sidequests'] as &$sidequest) : ?>

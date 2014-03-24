@@ -107,6 +107,9 @@ article{padding:70px 0 30px}
 .qglist .qgtitle .solved .fa{color:#bcd75e}
 .qglist .qgtitle .bonus{background:#f5821f}
 
+#qtextbox{font-size:.875em;border-radius:5px;background:#fff;border:15px solid #fff;height:200px;overflow:hidden}
+.qtext{padding-right:15px}
+
 .xpinfo{display:none}
 .xpbar{width:60%;float:left;height:10px;position:relative;background:#eee;border-radius:25px;margin:8px 0 16px}
 .xpbar span{display:block;height:100%;border-radius:20px;background:#bcd75e;position:relative;overflow:hidden}
@@ -118,8 +121,6 @@ article{padding:70px 0 30px}
 
 input[type="submit"][disabled]{text-shadow:1px 2px #d48c4e;background:#f9ac69;border-color:#d48c4e}
 
-.qtextbox{font-size:0.875em;background:#fff;height:200px;padding:0 20px;margin:0;border:20px solid #fff;border-width:20px 0 10px;border-radius:3px 3px 0 0;overflow-y:scroll;-webkit-overflow-scrolling:touch}
-.qtexticon{background:#fff;background:linear-gradient(to bottom, rgba(255,255,255,1) 0%,rgba(247,245,242,1) 100%);padding-bottom:5px;border-radius:0 0 3px 3px;text-align:center}
 
 /** Media Queries **/
 
