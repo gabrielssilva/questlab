@@ -15,9 +15,9 @@
 		<span>Schweb wie ein Schmetterling! Stich wie eine Biene!</span>
 	</div>
 	<ul>
-		<li><small><i class="fa fa-users fa-fw"></i>6 Mitglieder</small></li>
-		<li><small><i class="fa fa-lightbulb-o fa-fw"></i><?=$group['xps']?> XP</small></li>
-		<li><small><i class="fa fa-th-list fa-fw"></i>7. Platz</small></li>
+		<li><i class="fa fa-users fa-fw"></i>6 Mitglieder</li>
+		<li><i class="fa fa-lightbulb-o fa-fw"></i><?=$group['xps']?> XP</li>
+		<li><i class="fa fa-th-list fa-fw"></i>7. Platz</li>
 	</ul>
 </section>
 

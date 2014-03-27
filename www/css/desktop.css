@@ -180,7 +180,7 @@ input[type="submit"][disabled]{text-shadow:1px 2px #d48c4e;background:#f9ac69;bo
 .cportrait{float:right;width:25%}
 
 .gdata .gbanner{float:left;min-width:100px}
-.gdata .gdesc{float:left;width:60%}
+.gdata .gdesc{float:left;width:75%}
 .gdata ul{clear:both}
 .gchars li{width:32%;margin-right:5px}
 .gchars li:nth-child(even){float:left}
@@ -190,6 +190,8 @@ input[type="submit"][disabled]{text-shadow:1px 2px #d48c4e;background:#f9ac69;bo
 .xpbar{width:70%}
 
 .gdata{margin-top:40px}
+.gdata .gdesc{width:60%}
+.gdata li{font-size:.875em;padding-bottom:5px}
 .gdata ul{clear:none;float:right;width:20%;margin:0;padding:0}
 .gchars li{width:19%}
 
