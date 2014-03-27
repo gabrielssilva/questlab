@@ -26,41 +26,36 @@
 	<ul class="gchars cf">
 		<?php foreach($characters as &$character) : ?>
 		<li>
-			<i class="fa fa-star"></i>
+			<i class="fa fa-star fa-fw"></i>
 			<?php if($character['is_leader'] > 0) : ?><i class="fa fa-star"></i><?php endif ?>
-			<img src="http://s7.directupload.net/images/140325/e2wdqhqa.png">
+			<p><img src="http://s7.directupload.net/images/140325/e2wdqhqa.png"></p>
 			<p><a href="<?=$linker->link(array('characters','character',$seminary['url'],$character['url']))?>"><?=$character['name']?></a></p>
 			<p><small><?=$character['xps']?> XP</small></p>
 		</li>
 		<li>
-			<img src="http://s7.directupload.net/images/140325/e2wdqhqa.png">
+			<p><img src="http://s7.directupload.net/images/140325/e2wdqhqa.png"></p>
 			<p><a href="<?=$linker->link(array('characters','character',$seminary['url'],$character['url']))?>"><?=$character['name']?></a></p>
 			<p><small><?=$character['xps']?> XP</small></p>
-			<?php if($character['is_leader'] > 0) : ?><i class="fa fa-star"></i><?php endif ?>
 		</li>
 		<li>
-			<img src="http://s7.directupload.net/images/140325/e2wdqhqa.png">
+			<p><img src="http://s7.directupload.net/images/140325/e2wdqhqa.png"></p>
 			<p><a href="<?=$linker->link(array('characters','character',$seminary['url'],$character['url']))?>"><?=$character['name']?></a></p>
 			<p><small><?=$character['xps']?> XP</small></p>
-			<?php if($character['is_leader'] > 0) : ?><i class="fa fa-star"></i><?php endif ?>
 		</li>
 		<li>
-			<img src="http://s7.directupload.net/images/140325/e2wdqhqa.png">
+			<p><img src="http://s7.directupload.net/images/140325/e2wdqhqa.png"></p>
 			<p><a href="<?=$linker->link(array('characters','character',$seminary['url'],$character['url']))?>"><?=$character['name']?></a></p>
 			<p><small><?=$character['xps']?> XP</small></p>
-			<?php if($character['is_leader'] > 0) : ?><i class="fa fa-star"></i><?php endif ?>
 		</li>
 		<li>
-			<img src="http://s7.directupload.net/images/140325/e2wdqhqa.png">
+			<p><img src="http://s7.directupload.net/images/140325/e2wdqhqa.png"></p>
 			<p><a href="<?=$linker->link(array('characters','character',$seminary['url'],$character['url']))?>"><?=$character['name']?></a></p>
 			<p><small><?=$character['xps']?> XP</small></p>
-			<?php if($character['is_leader'] > 0) : ?><i class="fa fa-star"></i><?php endif ?>
 		</li>
 		<li>
-			<img src="http://s7.directupload.net/images/140325/e2wdqhqa.png">
+			<p><img src="http://s7.directupload.net/images/140325/e2wdqhqa.png"></p>
 			<p><a href="<?=$linker->link(array('characters','character',$seminary['url'],$character['url']))?>"><?=$character['name']?></a></p>
 			<p><small><?=$character['xps']?> XP</small></p>
-			<?php if($character['is_leader'] > 0) : ?><i class="fa fa-star"></i><?php endif ?>
 		</li>
 		<?php endforeach ?>
 	</ul>
