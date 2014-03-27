@@ -22,7 +22,7 @@
 			<p><small>Platz</small></p>
 		</div>
 
-		<h2><i class="fa fa-bookmark fa-fw"></i>Belohnungen</h2>
+		<h2><i class="fa fa-certificate fa-fw"></i>Belohnungen</h2>
 		<ul class="crewards">
 			<li>
 				<p class="unlocked"><i class="fa fa-check-circle fa-fw"></i>Aktive Beteiligung</p>

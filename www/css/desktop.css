@@ -151,6 +151,23 @@ input[type="submit"][disabled]{text-shadow:1px 2px #d48c4e;background:#f9ac69;bo
 .ctopics .xpbar span{background:#50a4ab}
 
 
+/** Charactergroup Profile **/
+
+.gdata{margin-top:20px}
+.gdata img{border-radius:3px;margin-bottom:15px}
+.gdata h1{margin:0;padding:0}
+
+.gchars li{background:#fff;padding:15px 0;border-radius:3px;text-align:center;float:left;margin-bottom:5px;width:49%}
+.gchars li:nth-child(even){float:right}
+.gchars img{width:50px;height:50px;border-radius:25px}
+.gchars p{margin:0;padding:0}
+.gchars .fa{position:absolute;margin-left:-14px}
+
+.gquests li{padding:12px 15px 0 15px;border-radius:3px}
+.gquests li:nth-child(odd){background:#fff}
+.gquests .date{color:#aca8a1;display:block}
+.gquests .xp{display:block}
+
 /** Media Queries **/
 
 @media only screen and (min-width:480px){
@@ -161,10 +178,23 @@ input[type="submit"][disabled]{text-shadow:1px 2px #d48c4e;background:#f9ac69;bo
 
 .cinfo{float:left;width:70%}
 .cportrait{float:right;width:25%}
+
+.gdata .gbanner{float:left;min-width:100px}
+.gdata .gdesc{float:left;width:60%}
+.gdata ul{clear:both}
+.gchars li{width:32%;margin-right:5px}
+.gchars li:nth-child(even){float:left}
 }
 
 @media only screen and (min-width:768px){
 .xpbar{width:70%}
+
+.gdata{margin-top:40px}
+.gdata ul{clear:none;float:right;width:20%;margin:0;padding:0}
+.gchars li{width:19%}
+
+.gquests .date{display:inline;margin-right:15px}
+.gquests .xp{float:right}
 }
 
 @media only screen and (min-width:1024px){
@@ -178,6 +208,8 @@ menu a{padding:10px 0}
 article{padding:20px 40px 80px 40px}
 .moodpic{margin:-20px -40px}
 .breadcrumbs li{display:inline;padding-right:10px}
+
+.gchars li{width:19%}
 }
 
 @media only screen and (min-width:1366px){
