@@ -24,7 +24,7 @@
 		 * 
 		 * @var array
 		 */
-		public $models = array('seminaries', 'questgroupshierarchy', 'questgroups', 'quests', 'questtexts');
+		public $models = array('seminaries', 'questgroupshierarchy', 'questgroups', 'quests', 'questtexts', 'media');
 		/**
 		 * User permissions
 		 * 
@@ -105,6 +105,13 @@
 			
 			// Get Character XPs
 			$questgroup['character_xps'] = $this->Questgroups->getAchievedXPsForQuestgroup($questgroup['id'], $character['id']);
+			
+			// Media
+			$picture = null;
+			if(!is_null($questgroup['questgroupspicture_id']))
+			{
+				$picture = $this->Media->getMediaById($questgroup['questgroupspicture_id']);
+			}
 					
 			
 			// Get Quests
@@ -133,6 +140,7 @@
 			$this->set('questgroup', $questgroup);
 			$this->set('childquestgroupshierarchy', $childQuestgroupshierarchy);
 			$this->set('texts', $questgroupTexts);
+			$this->set('picture', $picture);
 			$this->set('quests', $quests);
 		}
 		

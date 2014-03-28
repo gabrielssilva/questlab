@@ -29,7 +29,6 @@
 		public function quest(\nre\core\Request $request, \nre\core\Response $response)
 		{
 			$this->addSubAgent('Questgroupshierarchypath', 'index', $request->getParam(3), $request->getParam(4), true);
-			$this->addSubAgent('Questgroupspicture', 'index', $request->getParam(3), $request->getParam(4), true);
 		}
 		
 		
@@ -39,7 +38,6 @@
 		public function submissions(\nre\core\Request $request, \nre\core\Response $response)
 		{
 			$this->addSubAgent('Questgroupshierarchypath', 'index', $request->getParam(3), $request->getParam(4), true);
-			$this->addSubAgent('Questgroupspicture', 'index', $request->getParam(3), $request->getParam(4), true);
 		}
 		
 		
@@ -49,7 +47,6 @@
 		public function submission(\nre\core\Request $request, \nre\core\Response $response)
 		{
 			$this->addSubAgent('Questgroupshierarchypath', 'index', $request->getParam(3), $request->getParam(4), true);
-			$this->addSubAgent('Questgroupspicture', 'index', $request->getParam(3), $request->getParam(4), true);
 		}
 		
 	}

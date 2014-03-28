@@ -1,8 +1,8 @@
+<?php if(!is_null($picture)) : ?>
 <div class="moodpic">
-	<img src="http://s1.directupload.net/images/140323/tpzvoy5c.png">
+	<img src="<?=$linker->link(array('media','index',$seminary['url'],$picture['url']))?>" />
 </div>
-
-<?=$questgroupspicture?>
+<?php endif ?>
 <h2><a href="<?=$linker->link(array('seminaries',$seminary['url']))?>"><?=$seminary['title']?></a></h2>
 
 <?=$questgroupshierarchypath?>

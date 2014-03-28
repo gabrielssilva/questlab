@@ -29,7 +29,6 @@
 		public function questgroup(\nre\core\Request $request, \nre\core\Response $response)
 		{
 			$this->addSubAgent('Questgroupshierarchypath', 'index', $request->getParam(3), $request->getParam(4));
-			$this->addSubAgent('Questgroupspicture', 'index', $request->getParam(3), $request->getParam(4), true);
 		}
 		
 	}
