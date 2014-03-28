@@ -1,3 +1,9 @@
+<?php if(!is_null($media)) : ?>
+<div class="moodpic">
+	<img src="<?=$linker->link(array('media','index',$seminary['url'],$media['url']))?>">
+</div>
+<?php endif ?>
+
 <h2><a href="<?=$linker->link(array('seminaries',$seminary['url']))?>"><?=$seminary['title']?></a></h2>
 <h3><?=_('Description')?></h3>
 <p><?=\hhu\z\Utils::t($seminary['description'])?></p>

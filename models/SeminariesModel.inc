@@ -60,7 +60,7 @@
 		public function getSeminaryById($seminaryId)
 		{
 			$seminary = $this->db->query(
-				'SELECT id, created, created_user_id, title, url, description '.
+				'SELECT id, created, created_user_id, title, url, description, media_id '.
 				'FROM seminaries '.
 				'WHERE id = ?',
 				'i',
@@ -85,7 +85,7 @@
 		public function getSeminaryByUrl($seminaryUrl)
 		{
 			$seminary = $this->db->query(
-				'SELECT id, created, created_user_id, title, url, description '.
+				'SELECT id, created, created_user_id, title, url, description, media_id '.
 				'FROM seminaries '.
 				'WHERE url = ?',
 				's',
