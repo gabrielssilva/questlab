@@ -3,12 +3,7 @@
 <?=$questgroupshierarchypath?>
 <?=$questgroupspicture?>
 
-<?php if(is_null($relatedquesttext)) : ?>
 <h3><?=$quest['title']?></h3>
-<?php else : ?>
-<h3><a href="<?=$linker->link(array('quest',$seminary['url'],$questgroup['url'],$relatedquesttext['quest']['url'],$relatedquesttext['type_url'],$relatedquesttext['pos']),1)?>"><?=$relatedquesttext['quest']['title']?></a></h3>
-<h4><?=$quest['title']?></h4>
-<?php endif ?>
 
 <?php if(!is_null($queststatustext)) : ?>
 <section>
@@ -29,8 +24,8 @@
 	</div>
 	
 	<ul>
-		<?php foreach($questtext['sidequests'] as &$sidequest) : ?>
-		<li><a href="<?=$linker->link(array('quest',$seminary['url'],$questgroup['url'],$sidequest['url']),1)?>"><?=$sidequest['entry_text']?></a></li>
+		<?php foreach($questtext['relatedQuestsgroups'] as &$relatedQuestgroup) : ?>
+		<li><a href="<?=$linker->link(array('questgroups','questgroup',$seminary['url'],$relatedQuestgroup['url']))?>"><?=$relatedQuestgroup['entry_text']?></a></li>
 		<?php endforeach ?>
 		<?php if(!empty($questtext['abort_text'])) : ?>
 		<li><a href="<?=$linker->link(array('quest',$seminary['url'],$questgroup['url'],$relatedquesttext['quest']['url'],$relatedquesttext['type_url'],$relatedquesttext['pos']),1)?>"><?=$questtext['abort_text']?></a></li>
@@ -71,7 +66,7 @@
 		<?php endforeach ?>
 	</ul>
 	<?php elseif(!is_null($nextquestgroup)) : ?>
-	<a href="<?=$linker->link(array('questgroups','questgroup',$seminary['url'],$nextquestgroup['url']))?>"><?=$nextquestgroup['hierarchy']['title_singular']?> <?=$nextquestgroup['pos']?>: <?=$nextquestgroup['title']?></a>
+	<a href="<?=$linker->link(array('questgroups','questgroup',$seminary['url'],$nextquestgroup['url']))?>"><?=$nextquestgroup['hierarchy']['title_singular']?> <?=$nextquestgroup['hierarchy']['pos']?>: <?=$nextquestgroup['title']?></a>
 	<?php else : ?>
 	Spiel vorbei
 	<?php endif ?>

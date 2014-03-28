@@ -24,7 +24,7 @@
 		 * 
 		 * @var array
 		 */
-		public $models = array('questgroupshierarchy', 'quests');
+		public $models = array('questgroupshierarchy', 'quests', 'questtexts');
 		
 		
 		
@@ -54,10 +54,11 @@
 			if(is_null($parentQuestgroupId))
 			{
 				$questgroups = $this->db->query(
-					'SELECT id, questgroupshierarchy_id, pos, title, url, questgroupspicture_id '.
-					'FROM questgroups '.
-					'WHERE questgroups.questgroupshierarchy_id = ? AND parent_questgroup_id IS NULL '.
-					'ORDER BY questgroups.pos ASC',
+					'SELECT questgroups.id, questgroups_questgroupshierarchy.questgroupshierarchy_id, questgroups_questgroupshierarchy.pos, questgroups.title, questgroups.url, questgroups.questgroupspicture_id '.
+					'FROM questgroups_questgroupshierarchy '.
+					'INNER JOIN questgroups ON questgroups.id = questgroups_questgroupshierarchy.questgroup_id '.
+					'WHERE questgroups_questgroupshierarchy.questgroupshierarchy_id = ? AND questgroups_questgroupshierarchy.parent_questgroup_id IS NULL '.
+					'ORDER BY questgroups_questgroupshierarchy.pos ASC',
 					'i',
 					$hierarchyId
 				);
@@ -65,10 +66,11 @@
 			else
 			{
 				$questgroups = $this->db->query(
-					'SELECT id, questgroupshierarchy_id, pos, title, url, questgroupspicture_id '.
-					'FROM questgroups '.
-					'WHERE questgroups.questgroupshierarchy_id = ? AND parent_questgroup_id = ? '.
-					'ORDER BY questgroups.pos ASC',
+					'SELECT questgroups.id, questgroups_questgroupshierarchy.questgroupshierarchy_id, questgroups_questgroupshierarchy.pos, questgroups.title, questgroups.url, questgroups.questgroupspicture_id '.
+					'FROM questgroups_questgroupshierarchy '.
+					'INNER JOIN questgroups ON questgroups.id = questgroups_questgroupshierarchy.questgroup_id '.
+					'WHERE questgroups_questgroupshierarchy.questgroupshierarchy_id = ? AND questgroups_questgroupshierarchy.parent_questgroup_id = ? '.
+					'ORDER BY questgroups_questgroupshierarchy.pos ASC',
 					'ii',
 					$hierarchyId, $parentQuestgroupId
 				);
@@ -97,7 +99,7 @@
 		public function getQuestgroupById($questgroupId)
 		{
 			$data = $this->db->query(
-				'SELECT id, questgroupshierarchy_id, parent_questgroup_id, pos, title, url, questgroupspicture_id '.
+				'SELECT id, title, url, questgroupspicture_id '.
 				'FROM questgroups '.
 				'WHERE questgroups.id = ?',
 				'i',
@@ -123,10 +125,9 @@
 		public function getQuestgroupByUrl($seminaryId, $questgroupUrl)
 		{
 			$data = $this->db->query(
-				'SELECT questgroups.id, questgroups.questgroupshierarchy_id, questgroups.parent_questgroup_id, questgroups.pos, questgroups.title, questgroups.url, questgroups.questgroupspicture_id '.
+				'SELECT id, title, url, questgroupspicture_id '.
 				'FROM questgroups '.
-				'LEFT JOIN questgroupshierarchy ON questgroupshierarchy.id = questgroups.questgroupshierarchy_id '.
-				'WHERE questgroupshierarchy.seminary_id = ? AND questgroups.url = ?',
+				'WHERE seminary_id = ? AND url = ?',
 				'is',
 				$seminaryId, $questgroupUrl
 			);
@@ -197,11 +198,14 @@
 		public function getNextQuestgroup($questgroupId)
 		{
 			$currentQuestgroup = $this->getQuestgroupById($questgroupId);
-			$nextQuestgroup = $this->_getNextQuestgroup($currentQuestgroup['parent_questgroup_id'], $currentQuestgroup['pos']);
-			while(is_null($nextQuestgroup) && !is_null($currentQuestgroup['parent_questgroup_id']))
-			{
-				$currentQuestgroup = $this->getQuestgroupById($currentQuestgroup['parent_questgroup_id']);
-				$nextQuestgroup = $this->_getNextQuestgroup($currentQuestgroup['parent_questgroup_id'], $currentQuestgroup['pos']);
+			$currentQuestgroup['hierarchy'] = $this->Questgroupshierarchy->getHierarchyForQuestgroup($currentQuestgroup['id']);
+			if(empty($currentQuestgroup['hierarchy'])) {
+				return null;
+			}
+			
+			$nextQuestgroup = $this->_getNextQuestgroup($currentQuestgroup['hierarchy']['parent_questgroup_id'], $currentQuestgroup['hierarchy']['questgroup_pos']);
+			if(is_null($nextQuestgroup) && !is_null($currentQuestgroup['hierarchy']['parent_questgroup_id'])) {
+				$nextQuestgroup = $this->getNextQuestgroup($currentQuestgroup['hierarchy']['parent_questgroup_id']);
 			}
 			
 			
@@ -223,11 +227,14 @@
 		public function getPreviousQuestgroup($questgroupId)
 		{
 			$currentQuestgroup = $this->getQuestgroupById($questgroupId);
-			$previousQuestgroup = $this->_getPreviousQuestgroup($currentQuestgroup['parent_questgroup_id'], $currentQuestgroup['pos']);
-			while(is_null($previousQuestgroup) && !is_null($currentQuestgroup['parent_questgroup_id']))
-			{
-				$currentQuestgroup = $this->getQuestgroupById($currentQuestgroup['parent_questgroup_id']);
-				$previousQuestgroup = $this->_getPreviousQuestgroup($currentQuestgroup['parent_questgroup_id'], $currentQuestgroup['pos']);
+			$currentQuestgroup['hierarchy'] = $this->Questgroupshierarchy->getHierarchyForQuestgroup($currentQuestgroup['id']);
+			if(empty($currentQuestgroup['hierarchy'])) {
+				return null;
+			}
+			
+			$previousQuestgroup = $this->_getPreviousQuestgroup($currentQuestgroup['hierarchy']['parent_questgroup_id'], $currentQuestgroup['hierarchy']['questgroup_pos']);
+			if(is_null($previousQuestgroup) && !is_null($currentQuestgroup['hierarchy']['parent_questgroup_id'])) {
+				$previousQuestgroup = $this->getPreviousQuestgroup($currentQuestgroup['hierarchy']['parent_questgroup_id']);
 			}
 			
 			
@@ -245,22 +252,74 @@
 		 */
 		public function hasCharacterSolvedQuestgroup($questgroupId, $characterId)
 		{
-			$currentQuestgroup = $this->getQuestgroupById($questgroupId);
-			$childQuestgroupshierarchy = $this->Questgroupshierarchy->getChildQuestgroupshierarchy($currentQuestgroup['questgroupshierarchy_id']);
-			$lastChildQuestgroupshierarchy = array_pop($childQuestgroupshierarchy);
-			while(!is_null($lastChildQuestgroupshierarchy))
-			{
-				$questgroups = $this->getQuestgroupsForHierarchy($lastChildQuestgroupshierarchy['id'], $currentQuestgroup['id']);
-				$currentQuestgroup = array_pop($questgroups);
-				$childQuestgroupshierarchy = $this->Questgroupshierarchy->getChildQuestgroupshierarchy($currentQuestgroup['questgroupshierarchy_id']);
-				$lastChildQuestgroupshierarchy = array_pop($childQuestgroupshierarchy);
+			// Get data of Questgroup
+			$questgroup = $this->getQuestgroupById($questgroupId);
+			
+			// Chack all Quests
+			$quests = $this->Quests->getQuestsForQuestgroup($questgroup['id']);
+			foreach($quests as &$quest) {
+				if(!$this->Quests->hasCharacterSolvedQuest($quest['id'], $characterId)) {
+					return false;
+				}
 			}
 			
-			$quests = $this->Quests->getMainquestsForQuestgroup($currentQuestgroup['id']);
-			$lastQuest = array_pop($quests);
+			// Check all child Questgroups
+			$questgroup['hierarchy'] = $this->Questgroupshierarchy->getHierarchyForQuestgroup($questgroup['id']);
+			if(!empty($questgroup['hierarchy']))
+			{
+				$childQuestgroupshierarchy = $this->Questgroupshierarchy->getChildQuestgroupshierarchy($questgroup['hierarchy']['id']);
+				foreach($childQuestgroupshierarchy as &$hierarchy)
+				{
+					// Get Questgroups
+					$questgroups = $this->getQuestgroupsForHierarchy($hierarchy['id'], $questgroup['id']);
+					foreach($questgroups as &$group) {
+						if(!$this->hasCharacterSolvedQuestgroup($group['id'], $characterId)) {
+							return false;
+						}
+					}
+				}
+			}
 			
 			
-			return $this->Quests->hasCharacterSolvedQuest($lastQuest['id'], $characterId);
+			return true;
+		}
+		
+		
+		/**
+		 * Get all related Questgroups of a Questtext.
+		 * 
+		 * @param	int	$questtextId	ID of the questtext
+		 * @return	array			Sidequests for the questtext
+		 */
+		public function getRelatedQuestsgroupsOfQuesttext($questtextId)
+		{
+			return $this->db->query(
+				'SELECT questgroups.id, questgroups_questtexts.questtext_id, questgroups.title, questgroups.url, questgroups_questtexts.entry_text '.
+				'FROM questgroups_questtexts '.
+				'INNER JOIN questgroups ON questgroups.id = questgroups_questtexts.questgroup_id '.
+				'WHERE questgroups_questtexts.questtext_id = ?',
+				'i',
+				$questtextId
+			);
+		}
+		
+		
+		/**
+		 * Get all related Questgroups of a Quest.
+		 * 
+		 * @param	int	$questId	ID of the quest
+		 * @return	array			Sidequests for the quest
+		 */
+		public function getRelatedQuestsgroupsOfQuest($questId)
+		{
+			$questgroups = array();
+			$questtexts = $this->Questtexts->getQuesttextsOfQuest($questId);
+			foreach($questtexts as &$questtext) {
+				$questgroups = array_merge($questgroups, $this->getRelatedQuestsgroupsOfQuesttext($questtext['id']));
+			}
+			
+			
+			return $questgroups;
 		}
 		
 		
@@ -278,20 +337,32 @@
 			
 			// Current Questgroup
 			$questgroup = $this->getQuestgroupById($questgroupId);
+			$questgroup['hierarchy'] = $this->Questgroupshierarchy->getHierarchyForQuestgroup($questgroup['id']);
 			
 			// Quests of current Questgroup
-			$quests = $this->Quests->getMainquestsForQuestgroup($questgroup['id']);
-			foreach($quests as &$quest) {
+			$quests = $this->Quests->getQuestsForQuestgroup($questgroup['id']);
+			foreach($quests as &$quest)
+			{
 				$xps += $quest['xps'];
+			
+				// Related Questgroups
+				$relatedQuestgroups = $this->getRelatedQuestsgroupsOfQuest($quest['id']);
+				foreach($relatedQuestgroups as $group) {
+					$xps += $this->getAchievableXPsForQuestgroup($group['id']);
+				}
 			}
 			
 			// XPs of child Questgroups
-			$childQuestgroupshierarchy = $this->Questgroupshierarchy->getChildQuestgroupshierarchy($questgroup['questgroupshierarchy_id']);
-			foreach($childQuestgroupshierarchy as &$hierarchy)
+			$questgroupHierarchy = $this->Questgroupshierarchy->getHierarchyForQuestgroup($questgroup['id']);
+			if(!empty($questgroupHierarchy))
 			{
-				$questgroups = $this->getQuestgroupsForHierarchy($hierarchy['id'], $questgroup['id']);
-				foreach($questgroups as &$questgroup) {
-					$xps += $this->getAchievableXPsForQuestgroup($questgroup['id']);
+				$childQuestgroupshierarchy = $this->Questgroupshierarchy->getChildQuestgroupshierarchy($questgroupHierarchy['id']);
+				foreach($childQuestgroupshierarchy as &$hierarchy)
+				{
+					$questgroups = $this->getQuestgroupsForHierarchy($hierarchy['id'], $questgroup['id']);
+					foreach($questgroups as &$questgroup) {
+						$xps += $this->getAchievableXPsForQuestgroup($questgroup['id']);
+					}
 				}
 			}
 			
@@ -318,16 +389,26 @@
 			$questgroup = $this->getQuestgroupById($questgroupId);
 			
 			// Quests of current Questgroup
-			$quests = $this->Quests->getMainquestsForQuestgroup($questgroup['id']);
+			$quests = $this->Quests->getQuestsForQuestgroup($questgroup['id']);
 			foreach($quests as &$quest)
 			{
 				if($this->Quests->hasCharacterSolvedQuest($quest['id'], $characterId)) {
 					$xps += $quest['xps'];
 				}
+				
+				// Related Questgroups
+				$relatedQuestgroups = $this->getRelatedQuestsgroupsOfQuest($quest['id']);
+				foreach($relatedQuestgroups as $group) {
+					$xps += $this->getAchievedXPsForQuestgroup($group['id'], $characterId);
+				}
 			}
 			
 			// XPs of child Questgroups
-			$childQuestgroupshierarchy = $this->Questgroupshierarchy->getChildQuestgroupshierarchy($questgroup['questgroupshierarchy_id']);
+			$questgroupHierarchy = $this->Questgroupshierarchy->getHierarchyForQuestgroup($questgroup['id']);
+			if(empty($questgroupHierarchy)) {
+				return $xps;
+			}
+			$childQuestgroupshierarchy = $this->Questgroupshierarchy->getChildQuestgroupshierarchy($questgroupHierarchy['id']);
 			foreach($childQuestgroupshierarchy as &$hierarchy)
 			{
 				$questgroups = $this->getQuestgroupsForHierarchy($hierarchy['id'], $questgroup['id']);
@@ -357,7 +438,8 @@
 			{
 				$data = $this->db->query(
 					'SELECT * '.
-					'FROM questgroups '.
+					'FROM questgroups_questgroupshierarchy '.
+					'INNER JOIN questgroups ON questgroups.id = questgroups_questgroupshierarchy.questgroup_id '.
 					'WHERE parent_questgroup_id = ? AND pos = ? + 1',
 					'ii',
 					$parentQuestgroupId, $questgroupPos
@@ -367,7 +449,8 @@
 			{
 				$data = $this->db->query(
 					'SELECT * '.
-					'FROM questgroups '.
+					'FROM questgroups_questgroupshierarchy '.
+					'INNER JOIN questgroups ON questgroups.id = questgroups_questgroupshierarchy.questgroup_id '.
 					'WHERE parent_questgroup_id IS NULL AND pos = ? + 1',
 					'i',
 					$questgroupPos
@@ -395,7 +478,8 @@
 			{
 				$data = $this->db->query(
 					'SELECT * '.
-					'FROM questgroups '.
+					'FROM questgroups_questgroupshierarchy '.
+					'INNER JOIN questgroups ON questgroups.id = questgroups_questgroupshierarchy.questgroup_id '.
 					'WHERE parent_questgroup_id = ? AND pos = ? - 1',
 					'ii',
 					$parentQuestgroupId, $questgroupPos
@@ -405,7 +489,8 @@
 			{
 				$data = $this->db->query(
 					'SELECT * '.
-					'FROM questgroups '.
+					'FROM questgroups_questgroupshierarchy '.
+					'INNER JOIN questgroups ON questgroups.id = questgroups_questgroupshierarchy.questgroup_id '.
 					'WHERE parent_questgroup_id IS NULL AND pos = ? - 1',
 					'i',
 					$questgroupPos

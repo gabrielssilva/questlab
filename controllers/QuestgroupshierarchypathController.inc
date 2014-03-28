@@ -25,7 +25,7 @@
 		 * 
 		 * @var array
 		 */
-		public $models = array('seminaries', 'questgroups', 'questgroupshierarchy');
+		public $models = array('seminaries', 'questgroups', 'questgroupshierarchy', 'quests', 'questtexts');
 		
 		
 		
@@ -46,22 +46,28 @@
 			
 			// Get Questgroup
 			$questgroup = $this->Questgroups->getQuestgroupByUrl($seminary['id'], $questgroupUrl);
+			$questgroup['hierarchy'] = $this->Questgroupshierarchy->getHierarchyForQuestgroup($questgroup['id']);
 			
 			// Get parent Questgrouphierarchy
-			$parentQuestgroupshierarchy = array();
 			$currentQuestgroup = $questgroup;
+			$parentQuestgroupshierarchy = array();
 			if($showGroup) {
-				$currentQuestgroup['hierarchy'] = $this->Questgroupshierarchy->getHierarchyById($currentQuestgroup['questgroupshierarchy_id']);
+				array_unshift($parentQuestgroupshierarchy, $currentQuestgroup);	
+			}
+			if(is_null($questgroup['hierarchy']))
+			{
+				$questtext = $this->Questtexts->getRelatedQuesttextForQuestgroup($currentQuestgroup['id']);
+				$quest = $this->Quests->getQuestById($questtext['quest_id']);
+				$currentQuestgroup = $this->Questgroups->getQuestgroupById($quest['questgroup_id']);
+				$currentQuestgroup['hierarchy'] = $this->Questgroupshierarchy->getHierarchyForQuestgroup($currentQuestgroup['id']);
+				$quest['questgroup'] = $currentQuestgroup;
+				array_unshift($parentQuestgroupshierarchy, $quest);
 				array_unshift($parentQuestgroupshierarchy, $currentQuestgroup);
 			}
-			while(!is_null($currentQuestgroup['parent_questgroup_id']))
+			while(!empty($currentQuestgroup['hierarchy']) && !is_null($currentQuestgroup['hierarchy']['parent_questgroup_id']))
 			{
-				// Get Questgroup
-				$currentQuestgroup = $this->Questgroups->GetQuestgroupById($currentQuestgroup['parent_questgroup_id']);
-				
-				// Get Questgroupshierarchy
-				$currentQuestgroup['hierarchy'] = $this->Questgroupshierarchy->getHierarchyById($currentQuestgroup['questgroupshierarchy_id']);
-				
+				$currentQuestgroup = $this->Questgroups->GetQuestgroupById($currentQuestgroup['hierarchy']['parent_questgroup_id']);
+				$currentQuestgroup['hierarchy'] = $this->Questgroupshierarchy->getHierarchyForQuestgroup($currentQuestgroup['id']);
 				array_unshift($parentQuestgroupshierarchy, $currentQuestgroup);
 			}
 			

@@ -65,7 +65,7 @@
 		 * @param	int	$seminaryId	ID of the seminary to get hierarchy for
 		 * @return	array			Toplevel hierarchy
 		 */
-		public function getHierarchyForSeminary($seminaryId)
+		public function getHierarchyOfSeminary($seminaryId)
 		{
 			return $this->db->query(
 				'SELECT id, seminary_id, parent_questgroupshierarchy_id, pos, title_singular, title_plural, url '.
@@ -77,6 +77,31 @@
 				'i',
 				$seminaryId
 			);
+		}
+		
+		
+		/**
+		 * Get the Questgroup-Hierarchy for a Questgroup.
+		 * 
+		 * @param	int	$questgroupId	ID of Questgroup
+		 * @return	array			Hierarchy for Questgroup
+		 */
+		public function getHierarchyForQuestgroup($questgroupId)
+		{
+			$data = $this->db->query(
+				'SELECT questgroups_questgroupshierarchy.parent_questgroup_id, questgroups_questgroupshierarchy.pos AS questgroup_pos, questgroupshierarchy.id, questgroupshierarchy.seminary_id, questgroupshierarchy.parent_questgroupshierarchy_id, questgroupshierarchy.pos, questgroupshierarchy.title_singular, questgroupshierarchy.title_plural, questgroupshierarchy.url '.
+				'FROM questgroups_questgroupshierarchy '.
+				'INNER JOIN questgroupshierarchy ON questgroupshierarchy.id = questgroups_questgroupshierarchy.questgroupshierarchy_id '.
+				'WHERE questgroups_questgroupshierarchy.questgroup_id = ?',
+				'i',
+				$questgroupId
+			);
+			if(!empty($data)) {
+				return $data[0];
+			}
+			
+			
+			return null;
 		}
 		
 		

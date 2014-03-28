@@ -63,6 +63,25 @@
 		
 		
 		/**
+		 * Get all Questtexts for a Quest.
+		 * 
+		 * @param	int	$questId	ID of the Quest
+		 * @return	array			All Questtexts for a Quest
+		 */
+		public function getQuesttextsOfQuest($questId)
+		{
+			return $this->db->query(
+				'SELECT questtexts.id, questtexts.text, questtexts.pos, questtexts.out_text, questtexts.abort_text, questtexts.questsmedia_id, questtexttypes.id AS type_id, questtexttypes.type, questtexttypes.url AS type_url '.
+				'FROM questtexts '.
+				'LEFT JOIN questtexttypes ON questtexttypes.id = questtexts.questtexttype_id '.
+				'WHERE questtexts.quest_id = ?',
+				'i',
+				$questId
+			);
+		}
+		
+		
+		/**
 		 * Get count of Questtexts for a Quest.
 		 * 
 		 * @param	int	$questId		ID of the Quest
@@ -96,24 +115,23 @@
 		 * @param	int	$sidequestId	ID of the Sidequest to get the Questtext for
 		 * @param	array			Questtext data
 		 */
-		public function getQuesttextForSidequest($sidequestId)
+		public function getRelatedQuesttextForQuestgroup($questgroupId)
 		{
 			$data = $this->db->query(
 				'SELECT questtexts.id, questtexts.text, questtexts.pos, questtexts.quest_id, questtexttypes.id AS type_id, questtexttypes.type, questtexttypes.url AS type_url '.
-				'FROM quests '.
-				'INNER JOIN sidequests ON sidequests.quest_id = quests.id '.
-				'LEFT JOIN questtexts ON questtexts.id = sidequests.questtext_id '.
+				'FROM questgroups_questtexts '.
+				'LEFT JOIN questtexts ON questtexts.id = questgroups_questtexts.questtext_id '.
 				'LEFT JOIN questtexttypes ON questtexttypes.id = questtexts.questtexttype_id '.
-				'WHERE quests.id = ?',
+				'WHERE questgroups_questtexts.questgroup_id = ?',
 				'i',
-				$sidequestId
+				$questgroupId
 			);
-			if(empty($data)) {
-				throw new \nre\exceptions\IdNotFoundException($sidequestId);
+			if(!empty($data)) {
+				return $data[0];
 			}
 			
 			
-			return $data[0];
+			return null;
 		}
 		
 		
