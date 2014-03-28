@@ -94,14 +94,13 @@
 			$character = $this->Characters->getCharacterForUserAndSeminary($this->Auth->getUserId(), $seminary['id']);
 			
 			// Questgrouphierarchy and Questgroups
-			$questgroupshierarchy = $this->Questgroupshierarchy->getHierarchyForSeminary($seminary['id']);
+			$questgroupshierarchy = $this->Questgroupshierarchy->getHierarchyOfSeminary($seminary['id']);
 			foreach($questgroupshierarchy as &$hierarchy)
 			{
 				// Get Questgroups
 				$hierarchy['questgroups'] = $this->Questgroups->getQuestgroupsForHierarchy($hierarchy['id']);
 				
 				// Get additional data
-				//for($i=0; $i<count($hierarchy['questgroups']); $i++)
 				foreach($hierarchy['questgroups'] as $i => &$questgroup)
 				{
 					// Get first Questgroup text
@@ -147,7 +146,6 @@
 			if($this->request->getRequestMethod() == 'POST' && !is_null($this->request->getPostParam('create')))
 			{
 				// Create new seminary
-				var_dump($this->Auth->getUserId());
 				$seminaryId = $this->Seminaries->createSeminary(
 					$this->request->getPostParam('title'),
 					$this->Auth->getUserId()

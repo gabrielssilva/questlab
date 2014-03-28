@@ -3,12 +3,7 @@
 <?=$questgroupshierarchypath?>
 <?=$questgroupspicture?>
 
-<?php if(is_null($relatedquesttext)) : ?>
 <h3><?=$quest['title']?></h3>
-<?php else : ?>
-<h3><a href="<?=$linker->link(array('quest',$seminary['url'],$questgroup['url'],$relatedquesttext['quest']['url'],$relatedquesttext['type_url'],$relatedquesttext['pos']),1)?>"><?=$relatedquesttext['quest']['title']?></a></h3>
-<h4><?=$quest['title']?></h4>
-<?php endif ?>
 
 <?php if(!is_null($media)) : ?>
 <img src="<?=$linker->link(array('media','index',$seminary['url'],$media['url']))?>" />

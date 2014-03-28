@@ -40,16 +40,36 @@
 		 * @param	int	$questgroupId	ID of a Questgroup
 		 * @return	array			Quests of the given Questgroup
 		 */
-		public function getMainquestsForQuestgroup($questgroupId)
+		public function getQuestsForQuestgroup($questgroupId)
 		{
-			return $this->db->query(
+			$quests = array();
+			
+			// Get first Quest
+			$quest = $this->db->query(
 				'SELECT id, questtype_id, title, url, xps, task '.
 				'FROM quests '.
-				'INNER JOIN mainquests ON mainquests.quest_id = quests.id '.
-				'WHERE questgroup_id = ?',
+				'LEFT JOIN quests_previousquests ON quests_previousquests.quest_id = quests.id '.
+				'WHERE questgroup_id = ? AND quests_previousquests.previous_quest_id IS NULL',
 				'i',
 				$questgroupId
 			);
+			if(empty($quest)) {
+				return $quests;
+			}
+			$quest = $quest[0];
+			array_push($quests, $quest);
+			
+			// Get next Quests
+			// TODO Multiple next Quests
+			while(($nextQuests = $this->getNextQuests($quest['id'])) != null)
+			{
+				$quest = $nextQuests[0];
+				array_push($quests, $quest);
+			}
+			
+			
+			// Return Quests
+			return $quests;
 		}
 		
 		
@@ -65,20 +85,16 @@
 		public function getQuestByUrl($seminaryId, $questgroupId, $questUrl)
 		{
 			$data = $this->db->query(
-				'SELECT quests.id, quests.questtype_id, quests.title, quests.url, quests.xps, quests.task, quests.right_text, quests.wrong_text, quests.questsmedia_id, ('.
-					'SELECT count(mainquests.quest_id) FROM mainquests WHERE mainquests.quest_id = quests.id) AS is_mainquest '.
+				'SELECT quests.id, quests.questgroup_id, quests.questtype_id, quests.title, quests.url, quests.xps, quests.task, quests.right_text, quests.wrong_text, quests.questsmedia_id '.
 				'FROM quests '.
 				'LEFT JOIN questgroups ON questgroups.id = quests.questgroup_id '.
-				'LEFT JOIN questgroupshierarchy ON questgroupshierarchy.id = questgroups.questgroupshierarchy_id '.
-				'WHERE questgroupshierarchy.seminary_id = ? AND questgroups.id = ? AND quests.url = ?',
+				'WHERE questgroups.seminary_id = ? AND questgroups.id = ? AND quests.url = ?',
 				'iis',
 				$seminaryId, $questgroupId, $questUrl
 			);
 			if(empty($data)) {
 				throw new \nre\exceptions\IdNotFoundException($questUrl);
 			}
-			
-			$data[0]['is_mainquest'] = ($data[0]['is_mainquest'] == 1);
 			
 			
 			return $data[0];
@@ -95,11 +111,9 @@
 		public function getQuestById($questId)
 		{
 			$data = $this->db->query(
-				'SELECT quests.id, quests.questtype_id, quests.title, quests.url, quests.xps, quests.task, quests.right_text, quests.wrong_text, quests.questsmedia_id, ('.
-					'SELECT count(mainquests.quest_id) FROM mainquests WHERE mainquests.quest_id = quests.id) AS is_mainquest '.
+				'SELECT quests.id, quests.questgroup_id, quests.questtype_id, quests.title, quests.url, quests.xps, quests.task, quests.right_text, quests.wrong_text, quests.questsmedia_id '.
 				'FROM quests '.
 				'LEFT JOIN questgroups ON questgroups.id = quests.questgroup_id '.
-				'LEFT JOIN questgroupshierarchy ON questgroupshierarchy.id = questgroups.questgroupshierarchy_id '.
 				'WHERE quests.id = ?',
 				'i',
 				$questId
@@ -108,86 +122,8 @@
 				throw new \nre\exceptions\IdNotFoundException($questId);
 			}
 			
-			$data[0]['is_mainquest'] = ($data[0]['is_mainquest'] == 1);
-			
 			
 			return $data[0];
-		}
-		
-		
-		/**
-		 * Get a Sidequest and its data by its URL.
-		 * 
-		 * @throws	IdNotFoundException
-		 * @param	int	$seminaryId	ID of the corresponding Seminary
-		 * @param	int	$questgroupId	ID of the corresponding Questgroup
-		 * @param	int	$questId	ID of the Quest
-		 * @param	string	$sidequestUrl	URL-title of a Sidequest
-		 * @return	array			Sidequest data
-		 */
-		public function getSidequestByUrl($seminaryId, $questgroupId, $questId, $sidequestUrl)
-		{
-			$data = $this->db->query(
-				'SELECT quests.id, quests.questtype_id, quests.title, quests.url, quests.xps, quests.task, quests.right_text, quests.wrong_text, quests.questsmedia_id '.
-				'FROM quests '.
-				'INNER JOIN sidequests ON sidequests.quest_id = quests.id '.
-				'LEFT JOIN questtexts ON questtexts.id = sidequests.questtext_id '.
-				'LEFT JOIN mainquests ON mainquests.quest_id = questtexts.mainquest_id '.
-				'LEFT JOIN questgroups ON questgroups.id = quests.questgroup_id '.
-				'LEFT JOIN questgroupshierarchy ON questgroupshierarchy.id = questgroups.questgroupshierarchy_id '.
-				'LEFT JOIN seminaries ON seminaries.id = questgroupshierarchy.seminary_id '.
-				'WHERE quests.url = ? AND mainquests.id = ? AND questgroups.id = ? AND seminaries.id = ?',
-				'siii',
-				$sidequestUrl,
-				$questId,
-				$questgroupId,
-				$seminaryId
-			);
-			if(empty($data)) {
-				throw new \nre\exceptions\IdNotFoundException($sidequestUrl);
-			}
-			
-			
-			return $data[0];
-		}
-		
-		
-		/**
-		 * Get all sidequests for a Quest.
-		 * 
-		 * @param	int	$questId	ID of the quest
-		 * @return	array			Sidequests for the quest
-		 */
-		public function getSidequestsForQuest($questId)
-		{
-			return $this->db->query(
-				'SELECT quests.id, sidequests.questtext_id, quests.title, quests.url, sidequests.entry_text '.
-				'FROM quests '.
-				'INNER JOIN sidequests ON sidequests.quest_id = quests.id '.
-				'LEFT JOIN questtexts ON questtexts.id = sidequests.questtext_id '.
-				'WHERE questtexts.quest_id = ?',
-				'i',
-				$questId
-			);
-		}
-		
-		
-		/**
-		 * Get all sidequests for a Questtext.
-		 * 
-		 * @param	int	$questtextId	ID of the questtext
-		 * @return	array			Sidequests for the questtext
-		 */
-		public function getSidequestsForQuesttext($questtextId)
-		{
-			return $this->db->query(
-				'SELECT id, questtext_id, title, url, entry_text '.
-				'FROM quests '.
-				'INNER JOIN sidequests ON sidequests.quest_id = quests.id '.
-				'WHERE questtext_id = ?',
-				'i',
-				$questtextId
-			);
 		}
 		
 		
@@ -200,13 +136,11 @@
 		public function getNextQuests($questId)
 		{
 			return $this->db->query(
-				'SELECT quests.id, quests.title, quests.url, questgroups.title AS questgroup_title, questgroups.url AS questgroup_url '.
-				'FROM mainquests_previousmainquests '.
-				'LEFT JOIN mainquests ON mainquests.quest_id = mainquests_previousmainquests.mainquest_id '.
-				'INNER JOIN quests ON quests.id = mainquests.quest_id '.
-				'LEFT JOIN questgroups ON questgroups.id = quests.questgroup_id '.
-				'LEFT JOIN questgroupshierarchy ON questgroupshierarchy.id = questgroups.questgroupshierarchy_id '.
-				'WHERE mainquests_previousmainquests.previous_mainquest_id = ?',
+				'SELECT quests.id, quests.questtype_id, quests.title, quests.url, quests.xps, quests.task, questgroups.title AS questgroup_title, questgroups.url AS questgroup_url '.
+				'FROM quests_previousquests '.
+				'INNER JOIN quests ON quests.id = quests_previousquests.quest_id '.
+				'INNER JOIN questgroups ON questgroups.id = quests.questgroup_id '.
+				'WHERE quests_previousquests.previous_quest_id = ?',
 				'i',
 				$questId
 			);
@@ -223,12 +157,10 @@
 		{
 			return $this->db->query(
 				'SELECT quests.id, quests.title, quests.url, questgroups.title AS questgroup_title, questgroups.url AS questgroup_url '.
-				'FROM mainquests_previousmainquests '.
-				'LEFT JOIN mainquests ON mainquests.quest_id = mainquests_previousmainquests.previous_mainquest_id '.
-				'INNER JOIN quests ON quests.id = mainquests.quest_id '.
-				'LEFT JOIN questgroups ON questgroups.id = quests.questgroup_id '.
-				'LEFT JOIN questgroupshierarchy ON questgroupshierarchy.id = questgroups.questgroupshierarchy_id '.
-				'WHERE mainquests_previousmainquests.mainquest_id = ?',
+				'FROM quests_previousquests '.
+				'INNER JOIN quests ON quests.id = quests_previousquests.previous_quest_id '.
+				'INNER JOIN questgroups ON questgroups.id = quests.questgroup_id '.
+				'WHERE quests_previousquests.quest_id = ?',
 				'i',
 				$questId
 			);
@@ -274,6 +206,29 @@
 				$characterId,
 				-1
 			);
+		}
+		
+		
+		/**
+		 * Determine if the given Character has tried to solve a Quest.
+		 * 
+		 * @param	int	$questId	ID of Quest to check
+		 * @param	int	$characterId	ID of Character to check
+		 * @result	boolean			Whether Character has tried to solved the Quest or not
+		 */
+		public function hasCharacterTriedQuest($questId, $characterId)
+		{
+			$count = $this->db->query(
+				'SELECT count(id) AS c '.
+				'FROM quests_characters '.
+				'WHERE quest_id = ? AND character_id = ? AND status IN (-1,0)',
+				'ii',
+				$questId,
+				$characterId
+			);
+			
+			
+			return (!empty($count) && intval($count[0]['c']) > 0);
 		}
 		
 		

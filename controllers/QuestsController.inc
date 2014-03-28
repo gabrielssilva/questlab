@@ -88,30 +88,41 @@
 			else
 			{
 				// Previous Quests
-				if(count($previousQuests) > 0)
+				// One previous Quest has to be solved and no other
+				// following Quests of ones has to be tried
+				$solved = false;
+				$tried = false;
+				foreach($previousQuests as &$previousQuest)
 				{
-					$solved = false;
-					foreach($previousQuests as &$previousQuest)
+					// // Check previous Quest
+					if($this->Quests->hasCharacterSolvedQuest($previousQuest['id'], $character['id']))
 					{
-						if($this->Quests->hasCharacterSolvedQuest($previousQuest['id'], $character['id'])) {
-							$solved = true;
-							break;
+						$solved = true;
+						
+						// Check following Quests
+						$followingQuests = $this->Quests->getNextQuests($previousQuest['id']);
+						foreach($followingQuests as $followingQuest)
+						{
+							// Check following Quest
+							if($followingQuest['id'] != $quest['id'] && $this->Quests->hasCharacterTriedQuest($followingQuest['id'], $character['id']))
+							{
+								$tried = true;
+								break;
+							}
 						}
+						
+						break;
 					}
-					if(!$solved) {
-						throw new \nre\exceptions\AccessDeniedException();
-					}
+				}
+				if(!$solved || $tried) {
+					throw new \nre\exceptions\AccessDeniedException();
 				}
 			}
 			
-			// Get (related) Questtext (for Sidequests)
-			$relatedQuesttext = null;
-			if(!$quest['is_mainquest'])
-			{
-				$relatedQuesttext = $this->Questtexts->getQuesttextForSidequest($quest['id']);
-				if(!empty($relatedQuesttext)) {
-					$relatedQuesttext['quest'] = $this->Quests->getQuestById($relatedQuesttext['quest_id']);
-				}
+			// Get (related) Questtext
+			$relatedQuesttext = $this->Questtexts->getRelatedQuesttextForQuestgroup($questgroup['id']);
+			if(!empty($relatedQuesttext)) {
+				$relatedQuesttext['quest'] = $this->Quests->getQuestById($relatedQuesttext['quest_id']);
 			}
 			
 			// Get Questtext
@@ -128,7 +139,7 @@
 				try {
 					$questtext = $this->Questtexts->getQuesttextByUrl($quest['id'], $questtexttypeUrl, $questtextPos);
 					$questtext['count'] = $questtextCount;
-					$questtext['sidequests'] = $this->Quests->getSidequestsForQuesttext($questtext['id']);
+					$questtext['relatedQuestsgroups'] = $this->Questgroups->getRelatedQuestsgroupsOfQuesttext($questtext['id']);
 				}
 				catch(\nre\exceptions\IdNotFoundException $e) {
 					if(!($questtexttypeUrl == 'Prolog' || $questtexttypeUrl == 'Epilog' && $questtextPos == 1)) {
@@ -181,23 +192,24 @@
 			$nextQuestgroup = null;
 			if($questtexttypeUrl == 'Epilog' || $solved)
 			{
-				if($quest['is_mainquest'])
-				{
-					// Next Quest
-					$nextQuests = $this->Quests->getNextQuests($quest['id']);
+				// Next Quest
+				$nextQuests = $this->Quests->getNextQuests($quest['id']);
 				
-					// Next Questgroup
-					if(empty($nextQuests))
+				// Next Questgroup
+				if(empty($nextQuests))
+				{
+					if(is_null($relatedQuesttext))
 					{
 						$nextQuestgroup = $this->Questgroups->getNextQuestgroup($questgroup['id']);
-						$nextQuestgroup['hierarchy'] = $this->Questgroupshierarchy->getHierarchyById($nextQuestgroup['questgroupshierarchy_id']);
+						$nextQuestgroup['hierarchy'] = $this->Questgroupshierarchy->getHierarchyForQuestgroup($nextQuestgroup['id']);
 					}
-				}
-				else {
-					// Related (Main-) Quest
-					$nextQuest = $relatedQuesttext['quest'];
-					$nextQuest['questgroup_url'] = $questgroup['url'];
-					$nextQuests = array($nextQuest);
+					else
+					{
+						// Related (Main-) Quest
+						$nextQuest = $relatedQuesttext['quest'];
+						$nextQuest['questgroup_url'] = $this->Questgroups->getQuestgroupById($nextQuest['questgroup_id'])['url'];
+						$nextQuests = array($nextQuest);
+					}
 				}
 			}
 			
@@ -237,16 +249,6 @@
 			// Get Quest
 			$quest = $this->Quests->getQuestByUrl($seminary['id'], $questgroup['id'], $questUrl);
 			
-			// Get (related) Questtext (for Sidequests)
-			$relatedQuesttext = null;
-			if(!$quest['is_mainquest'])
-			{
-				$relatedQuesttext = $this->Questtexts->getQuesttextForSidequest($quest['id']);
-				if(!empty($relatedQuesttext)) {
-					$relatedQuesttext['quest'] = $this->Quests->getQuestById($relatedQuesttext['quest_id']);
-				}
-			}
-			
 			// Media
 			$questmedia = null;
 			if(!is_null($quest['questsmedia_id'])) {
@@ -270,7 +272,6 @@
 			$this->set('seminary', $seminary);
 			$this->set('questgroup', $questgroup);
 			$this->set('quest', $quest);
-			$this->set('relatedquesttext', $relatedQuesttext);
 			$this->set('media', $questmedia);
 			$this->set('unsolvedsubmissions', $unsolvedSubmissions);
 			$this->set('solvedsubmissions', $solvedSubmissions);

@@ -24,7 +24,7 @@
 		 * 
 		 * @var array
 		 */
-		public $models = array('seminaries', 'questgroupshierarchy', 'questgroups', 'quests');
+		public $models = array('seminaries', 'questgroupshierarchy', 'questgroups', 'quests', 'questtexts');
 		/**
 		 * User permissions
 		 * 
@@ -63,7 +63,7 @@
 			$questgroup = $this->Questgroups->getQuestgroupByUrl($seminary['id'], $questgroupUrl);
 			
 			// Get Questgrouphierarchy
-			$questgroupshierarchy = $this->Questgroupshierarchy->getHierarchyById($questgroup['questgroupshierarchy_id']);
+			$questgroup['hierarchy'] = $this->Questgroupshierarchy->getHierarchyForQuestgroup($questgroup['id']);
 			
 			// Get Character
 			$character = $this->Characters->getCharacterForUserAndSeminary($this->Auth->getUserId(), $seminary['id']);
@@ -77,21 +77,25 @@
 			}
 			
 			// Get child Questgroupshierarchy
-			$childQuestgroupshierarchy = $this->Questgroupshierarchy->getChildQuestgroupshierarchy($questgroupshierarchy['id']);
-			foreach($childQuestgroupshierarchy as &$hierarchy)
+			$childQuestgroupshierarchy = null;
+			if(!empty($questgroup['hierarchy']))
 			{
-				// Get Questgroups
-				$hierarchy['questgroups'] = $this->Questgroups->getQuestgroupsForHierarchy($hierarchy['id'], $questgroup['id']);
-				
-				// Get additional data
-				for($i=0; $i<count($hierarchy['questgroups']); $i++)
+				$childQuestgroupshierarchy = $this->Questgroupshierarchy->getChildQuestgroupshierarchy($questgroup['hierarchy']['id']);
+				foreach($childQuestgroupshierarchy as &$hierarchy)
 				{
-					// Get Character XPs
-					$hierarchy['questgroups'][$i]['character_xps'] = $this->Questgroups->getAchievedXPsForQuestgroup($hierarchy['questgroups'][$i]['id'], $character['id']);
+					// Get Questgroups
+					$hierarchy['questgroups'] = $this->Questgroups->getQuestgroupsForHierarchy($hierarchy['id'], $questgroup['id']);
 				
-					// Check permission of Questgroups
-					if($i >= 1) {
-						$hierarchy['questgroups'][$i]['access'] =  $this->Questgroups->hasCharacterSolvedQuestgroup($hierarchy['questgroups'][$i-1]['id'], $character['id']);
+					// Get additional data
+					for($i=0; $i<count($hierarchy['questgroups']); $i++)
+					{
+						// Get Character XPs
+						$hierarchy['questgroups'][$i]['character_xps'] = $this->Questgroups->getAchievedXPsForQuestgroup($hierarchy['questgroups'][$i]['id'], $character['id']);
+				
+						// Check permission of Questgroups
+						if($i >= 1) {
+							$hierarchy['questgroups'][$i]['access'] =  $this->Questgroups->hasCharacterSolvedQuestgroup($hierarchy['questgroups'][$i-1]['id'], $character['id']);
+						}
 					}
 				}
 			}
@@ -107,7 +111,7 @@
 			$quests = null;
 			if(count($childQuestgroupshierarchy) == 0)
 			{
-				$quests = $this->Quests->getMainquestsForQuestgroup($questgroup['id']);
+				$quests = $this->Quests->getQuestsForQuestgroup($questgroup['id']);
 				foreach($quests as $i => &$quest)
 				{
 					// Set status
@@ -118,8 +122,8 @@
 						$quest['access'] = $this->Quests->hasCharacterSolvedQuest($quests[$i-1]['id'], $character['id']);
 					}
 					
-					// Attach sidequests
-					$quests[$i]['sidequests'] = $this->Quests->getSidequestsForQuest($quest['id']);
+					// Attach related Questgroups
+					$quest['relatedQuestgroups'] = $this->Questgroups->getRelatedQuestsgroupsOfQuest($quest['id']);
 				}
 			}
 			
@@ -127,7 +131,6 @@
 			// Pass data to view
 			$this->set('seminary', $seminary);
 			$this->set('questgroup', $questgroup);
-			$this->set('questgroupshierarchy', $questgroupshierarchy);
 			$this->set('childquestgroupshierarchy', $childQuestgroupshierarchy);
 			$this->set('texts', $questgroupTexts);
 			$this->set('quests', $quests);

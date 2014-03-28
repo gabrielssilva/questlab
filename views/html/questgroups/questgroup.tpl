@@ -7,11 +7,16 @@
 
 <?=$questgroupshierarchypath?>
 
-<h3><?=$questgroupshierarchy['title_singular']?> <?=$questgroup['pos']?>: <?=$questgroup['title']?></h3>
+<?php if(!is_null($questgroup['hierarchy'])) : ?>
+<h3><?=$questgroup['hierarchy']['title_singular']?> <?=$questgroup['hierarchy']['questgroup_pos']?>: <?=$questgroup['title']?></h3>
+<?php else : ?>
+<h3><?=$questgroup['title']?></h3>
+<?php endif ?>
 <?php foreach($texts as &$text) : ?>
 <p><?=\hhu\z\Utils::t($text['text'])?></p>
 <?php endforeach ?>
 
+<?php if(!is_null($childquestgroupshierarchy)) : ?>
 <?php foreach($childquestgroupshierarchy as &$hierarchy) : ?>
 <?php if(count($hierarchy['questgroups']) > 0) : ?>
 <h3><?=$hierarchy['title_plural']?></h3>
@@ -37,6 +42,7 @@
 </ul>
 <?php endif ?>
 <?php endforeach ?>
+<?php endif ?>
 
 <?php if(isset($quests) && !is_null($quests)) : ?>
 <h3><?=_('Quests')?></h3>
@@ -45,11 +51,11 @@
 	<li class="qgtitle">
 		<?php if(!array_key_exists('access', $quest) || $quest['access']) : ?>
 		<a href="<?=$linker->link(array('quests','quest',$seminary['url'],$questgroup['url'],$quest['url']))?>" <?php if($quest['solved']) : ?>class="solved"<?php endif ?>><i class="fa <?=($quest['solved']) ? 'fa-check-square-o' : 'fa-share-square-o'?> fa-fw"></i><?=$quest['title']?></a>
-		<?php if(count($quest['sidequests']) > 0) : ?>
+		<?php if(count($quest['relatedQuestgroups']) > 0) : ?>
 		<ul class="gplist">
-			<?php foreach($quest['sidequests'] as &$sidequest) : ?>
+			<?php foreach($quest['relatedQuestgroups'] as &$relatedQuestgroup) : ?>
 			<li class="qgtitle">
-				<a href="<?=$linker->link(array('quests','quest',$seminary['url'],$questgroup['url'],$sidequest['url']))?>" class="bonus"><i class="fa fa-share-square-o fa-fw"><?=$sidequest['title']?></i></a>
+				<a href="<?=$linker->link(array('questgroups','questgroup',$seminary['url'],$relatedQuestgroup['url']))?>" class="bonus"><i class="fa fa-share-square-o fa-fw"><?=$relatedQuestgroup['title']?></i></a>
 			</li>
 			<?php endforeach ?>
 		</ul>
