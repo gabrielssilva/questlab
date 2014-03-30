@@ -19,6 +19,24 @@
 	 */
 	class QuestsModel extends \hhu\z\Model
 	{
+		/**
+		 * Quest-status: Entered
+		 * 
+		 * @var int;
+		 */
+		const QUEST_STATUS_ENTERED = 1;
+		/**
+		 * Quest-status: Solved
+		 * 
+		 * @var int;
+		 */
+		const QUEST_STATUS_SOLVED = 0;
+		/**
+		 * Quest-status: Unsolved
+		 * 
+		 * @var int;
+		 */
+		const QUEST_STATUS_UNSOLVED = -1;
 		
 		
 		
@@ -32,45 +50,6 @@
 		}
 		
 		
-		
-		
-		/**
-		 * Get all Quests for the given Questgroup.
-		 * 
-		 * @param	int	$questgroupId	ID of a Questgroup
-		 * @return	array			Quests of the given Questgroup
-		 */
-		public function getQuestsForQuestgroup($questgroupId)
-		{
-			$quests = array();
-			
-			// Get first Quest
-			$quest = $this->db->query(
-				'SELECT id, questtype_id, title, url, xps, task '.
-				'FROM quests '.
-				'LEFT JOIN quests_previousquests ON quests_previousquests.quest_id = quests.id '.
-				'WHERE questgroup_id = ? AND quests_previousquests.previous_quest_id IS NULL',
-				'i',
-				$questgroupId
-			);
-			if(empty($quest)) {
-				return $quests;
-			}
-			$quest = $quest[0];
-			array_push($quests, $quest);
-			
-			// Get next Quests
-			// TODO Multiple next Quests
-			while(($nextQuests = $this->getNextQuests($quest['id'])) != null)
-			{
-				$quest = $nextQuests[0];
-				array_push($quests, $quest);
-			}
-			
-			
-			// Return Quests
-			return $quests;
-		}
 		
 		
 		/**
@@ -128,6 +107,31 @@
 		
 		
 		/**
+		 * Get the first Quest of a Qusetgroup.
+		 * 
+		 * @param	int	$questId	ID of Questgroup
+		 * @return	array			Data of first Quest
+		 */
+		public function getFirstQuestOfQuestgroup($questgroupId)
+		{
+			$data = $this->db->query(
+				'SELECT id, questtype_id, title, url, xps, task '.
+				'FROM quests '.
+				'LEFT JOIN quests_previousquests ON quests_previousquests.quest_id = quests.id '.
+				'WHERE questgroup_id = ? AND quests_previousquests.previous_quest_id IS NULL',
+				'i',
+				$questgroupId
+			);
+			if(!empty($data)) {
+				return $data[0];
+			}
+			
+			
+			return null;
+		}
+		
+		
+		/**
 		 * Get Quests that follow-up a Quest.
 		 * 
 		 * @param	int	$questId	ID of Quest to get next Quests of
@@ -168,6 +172,18 @@
 		
 		
 		/**
+		 * Mark a Quest as entered for a Character.
+		 * 
+		 * @param	int	$questId	ID of Quest to mark as entered
+		 * @param	int	$characterId	ID of Character that entered the Quest
+		 */
+		public function setQuestEntered($questId, $characterId)
+		{
+			$this->setQuestStatus($questId, $characterId, static::QUEST_STATUS_ENTERED);
+		}
+		
+		
+		/**
 		 * Mark a Quest as solved for a Character.
 		 * 
 		 * @param	int	$questId	ID of Quest to mark as solved
@@ -175,16 +191,7 @@
 		 */
 		public function setQuestSolved($questId, $characterId)
 		{
-			$this->db->query(
-				'INSERT INTO quests_characters '.
-				'(quest_id, character_id, status) '.
-				'VALUES '.
-				'(?, ?, ?)',
-				'iii',
-				$questId,
-				$characterId,
-				0
-			);
+			$this->setQuestStatus($questId, $characterId, static::QUEST_STATUS_SOLVED);
 		}
 		
 		
@@ -196,16 +203,31 @@
 		 */
 		public function setQuestUnsolved($questId, $characterId)
 		{
-			$this->db->query(
-				'INSERT INTO quests_characters '.
-				'(quest_id, character_id, status) '.
-				'VALUES '.
-				'(?, ?, ?)',
-				'iii',
+			$this->setQuestStatus($questId, $characterId, static::QUEST_STATUS_UNSOLVED);
+		}
+		
+		
+		/**
+		 * Determine if the given Character has entered a Quest.
+		 * 
+		 * @param	int	$questId	ID of Quest to check
+		 * @param	int	$characterId	ID of Character to check
+		 * @result	boolean			Whether Character has entered the Quest or not
+		 */
+		public function hasCharacterEnteredQuest($questId, $characterId)
+		{
+			$count = $this->db->query(
+				'SELECT count(id) AS c '.
+				'FROM quests_characters '.
+				'WHERE quest_id = ? AND character_id = ? AND status IN (?,?,?)',
+				'iiiii',
 				$questId,
 				$characterId,
-				-1
+				static::QUEST_STATUS_ENTERED, static::QUEST_STATUS_SOLVED, static::QUEST_STATUS_UNSOLVED
 			);
+			
+			
+			return (!empty($count) && intval($count[0]['c']) > 0);
 		}
 		
 		
@@ -221,10 +243,11 @@
 			$count = $this->db->query(
 				'SELECT count(id) AS c '.
 				'FROM quests_characters '.
-				'WHERE quest_id = ? AND character_id = ? AND status IN (-1,0)',
-				'ii',
+				'WHERE quest_id = ? AND character_id = ? AND status IN (?,?)',
+				'iiii',
 				$questId,
-				$characterId
+				$characterId,
+				static::QUEST_STATUS_SOLVED, static::QUEST_STATUS_UNSOLVED
 			);
 			
 			
@@ -244,10 +267,11 @@
 			$count = $this->db->query(
 				'SELECT count(id) AS c '.
 				'FROM quests_characters '.
-				'WHERE quest_id = ? AND character_id = ? AND status = 0',
-				'ii',
+				'WHERE quest_id = ? AND character_id = ? AND status = ?',
+				'iii',
 				$questId,
-				$characterId
+				$characterId,
+				static::QUEST_STATUS_SOLVED
 			);
 			
 			
@@ -267,10 +291,11 @@
 				'SELECT character_id, created, text '.
 				'FROM questtypes_submit_characters '.
 				'WHERE quest_id = ? AND EXISTS ('.
-					'SELECT character_id FROM quests_characters WHERE quest_id = questtypes_submit_characters.quest_id AND status = 0'.
+					'SELECT character_id FROM quests_characters WHERE quest_id = questtypes_submit_characters.quest_id AND status = ?'.
 				')',
-				'i',
-				$questId
+				'ii',
+				$questId,
+				static::QUEST_STATUS_SOLVED
 			);
 		}
 		
@@ -287,10 +312,35 @@
 				'SELECT character_id, created, text '.
 				'FROM questtypes_submit_characters '.
 				'WHERE quest_id = ? AND NOT EXISTS ('.
-					'SELECT character_id FROM quests_characters WHERE quest_id = questtypes_submit_characters.quest_id AND status = 0'.
+					'SELECT character_id FROM quests_characters WHERE quest_id = questtypes_submit_characters.quest_id AND status = ?'.
 				')',
-				'i',
-				$questId
+				'ii',
+				$questId,
+				static::QUEST_STATUS_SOLVED
+			);
+		}
+		
+		
+		
+		
+		/**
+		 * Mark a Quest for a Character.
+		 * 
+		 * @param	int	$questId	ID of Quest to mark
+		 * @param	int	$characterId	ID of Character to mark the Quest for
+		 * @param	int	$status		Quest status to mark
+		 */
+		private function setQuestStatus($questId, $characterId, $status)
+		{
+			$this->db->query(
+				'INSERT INTO quests_characters '.
+				'(quest_id, character_id, status) '.
+				'VALUES '.
+				'(?, ?, ?) ',
+				'iii',
+				$questId,
+				$characterId,
+				$status
 			);
 		}
 		

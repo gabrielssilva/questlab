@@ -256,10 +256,33 @@
 			$questgroup = $this->getQuestgroupById($questgroupId);
 			
 			// Chack all Quests
-			$quests = $this->Quests->getQuestsForQuestgroup($questgroup['id']);
-			foreach($quests as &$quest) {
-				if(!$this->Quests->hasCharacterSolvedQuest($quest['id'], $characterId)) {
+			$currentQuest = $this->Quests->getFirstQuestOfQuestgroup($questgroup['id']);
+			if(!is_null($currentQuest))
+			{
+				if(!$this->Quests->hasCharacterSolvedQuest($currentQuest['id'], $characterId)) {
 					return false;
+				}
+				
+				// Get next Quests
+				while(!is_null($currentQuest) && !empty($nextQuests = $this->Quests->getNextQuests($currentQuest['id'])))
+				{
+					// Get choosed Quest
+					$currentQuest = null;
+					foreach($nextQuests as &$nextQuest) {
+						if($this->Quests->hasCharacterEnteredQuest($nextQuest['id'], $characterId)) {
+							$currentQuest = $nextQuest;
+						}
+					}
+					
+					// Check Quest
+					if(is_null($currentQuest)) {
+						return false;
+					}
+					
+					// Check status
+					if(!$this->Quests->hasCharacterSolvedQuest($currentQuest['id'], $characterId)) {
+						return false;
+					}
 				}
 			}
 			
@@ -328,7 +351,7 @@
 		 * sub-Questgroups.
 		 * 
 		 * @param	int	$questgroupId	ID of Questgroup
-		 * @return				Sum of XPs
+		 * @return	int			Sum of XPs
 		 */
 		public function getAchievableXPsForQuestgroup($questgroupId)
 		{
@@ -340,16 +363,9 @@
 			$questgroup['hierarchy'] = $this->Questgroupshierarchy->getHierarchyForQuestgroup($questgroup['id']);
 			
 			// Quests of current Questgroup
-			$quests = $this->Quests->getQuestsForQuestgroup($questgroup['id']);
-			foreach($quests as &$quest)
-			{
-				$xps += $quest['xps'];
-			
-				// Related Questgroups
-				$relatedQuestgroups = $this->getRelatedQuestsgroupsOfQuest($quest['id']);
-				foreach($relatedQuestgroups as $group) {
-					$xps += $this->getAchievableXPsForQuestgroup($group['id']);
-				}
+			$quest = $this->Quests->getFirstQuestOfQuestgroup($questgroup['id']);
+			if(!is_null($quest)) {
+				$xps += $this->getAchievableXPsForQuest($quest);
 			}
 			
 			// XPs of child Questgroups
@@ -373,12 +389,44 @@
 		
 		
 		/**
+		 * Summarize XPs of the given Quest, its following Quests and
+		 * its related Questgroups.
+		 * 
+		 * @param	array	$quest	Quest to summarize XPs for
+		 * @return	int		Sum of XPs
+		 */
+		public function getAchievableXPsForQuest($quest)
+		{
+			// XPs for the given Quest
+			$xps = $quest['xps'];
+			
+			// Related Questgroups
+			$relatedQuestgroups = $this->getRelatedQuestsgroupsOfQuest($quest['id']);
+			foreach($relatedQuestgroups as &$relatedQuestgroup) {
+				$xps += $this->getAchievableXPsForQuestgroup($relatedQuestgroup['id']);
+			}
+			
+			// Next Quests
+			$nextQuests = $this->Quests->getNextQuests($quest['id']);
+			$nextXPs = array(0);
+			foreach($nextQuests as &$nextQuest)
+			{
+				$nextXPs[] = $this->getAchievableXPsForQuest($nextQuest);
+			}
+			$xps += max($nextXPs);
+			
+			
+			return $xps;
+		}
+		
+		
+		/**
 		 * Summarize XPs of all Quests for a Questgroup and its
 		 * sub-Questgroups solved by a Character.
 		 * 
 		 * @param	int	$questgroupId	ID of Questgroup
 		 * @param	int	$characterId	ID of Character
-		 * @return				Sum of XPs
+		 * @return	int			Sum of XPs
 		 */
 		public function getAchievedXPsForQuestgroup($questgroupId, $characterId)
 		{
@@ -389,18 +437,9 @@
 			$questgroup = $this->getQuestgroupById($questgroupId);
 			
 			// Quests of current Questgroup
-			$quests = $this->Quests->getQuestsForQuestgroup($questgroup['id']);
-			foreach($quests as &$quest)
-			{
-				if($this->Quests->hasCharacterSolvedQuest($quest['id'], $characterId)) {
-					$xps += $quest['xps'];
-				}
-				
-				// Related Questgroups
-				$relatedQuestgroups = $this->getRelatedQuestsgroupsOfQuest($quest['id']);
-				foreach($relatedQuestgroups as $group) {
-					$xps += $this->getAchievedXPsForQuestgroup($group['id'], $characterId);
-				}
+			$quest = $this->Quests->getFirstQuestOfQuestgroup($questgroup['id']);
+			if(!is_null($quest)) {
+				$xps += $this->getAchievedXPsForQuest($quest, $characterId);
 			}
 			
 			// XPs of child Questgroups
@@ -415,6 +454,47 @@
 				foreach($questgroups as &$questgroup) {
 					$xps += $this->getAchievedXPsForQuestgroup($questgroup['id'], $characterId);
 				}
+			}
+			
+			
+			// Return summarized XPs
+			return $xps;
+		}
+		
+		
+		/**
+		 * Summarize XPs of the given Quest, its following Quests and
+		 * its related Questgroups solved by a Character.
+		 * 
+		 * @param	int	$quest		Quest to summarize XPs for
+		 * @param	int	$characterId	ID of Character
+		 * @return	int			Sum of XPs
+		 */
+		public function getAchievedXPsForQuest($quest, $characterId)
+		{
+			$xps = 0;
+			
+			// XPs for the given Quest
+			if($this->Quests->hasCharacterSolvedQuest($quest['id'], $characterId))
+			{
+				$xps += $quest['xps'];
+				
+				// Next Quests
+				$nextQuests = $this->Quests->getNextQuests($quest['id']);
+				foreach($nextQuests as &$nextQuest)
+				{
+					if($this->Quests->hasCharacterEnteredQuest($nextQuest['id'], $characterId))
+					{
+						$xps += $this->getAchievedXPsForQuest($nextQuest, $characterId);
+						break;
+					}
+				}
+			}
+			
+			// Related Questgroups
+			$relatedQuestgroups = $this->getRelatedQuestsgroupsOfQuest($quest['id']);
+			foreach($relatedQuestgroups as &$relatedQuestgroup) {
+				$xps += $this->getAchievedXPsForQuestgroup($relatedQuestgroup['id'], $characterId);
 			}
 			
 			

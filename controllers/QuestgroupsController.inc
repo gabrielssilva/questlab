@@ -87,15 +87,20 @@
 					$hierarchy['questgroups'] = $this->Questgroups->getQuestgroupsForHierarchy($hierarchy['id'], $questgroup['id']);
 				
 					// Get additional data
-					for($i=0; $i<count($hierarchy['questgroups']); $i++)
+					foreach($hierarchy['questgroups'] as $i => &$group)
 					{
-						// Get Character XPs
-						$hierarchy['questgroups'][$i]['character_xps'] = $this->Questgroups->getAchievedXPsForQuestgroup($hierarchy['questgroups'][$i]['id'], $character['id']);
-				
 						// Check permission of Questgroups
-						if($i >= 1) {
-							$hierarchy['questgroups'][$i]['access'] =  $this->Questgroups->hasCharacterSolvedQuestgroup($hierarchy['questgroups'][$i-1]['id'], $character['id']);
+						if($i >= 1)
+						{
+							if(!$this->Questgroups->hasCharacterSolvedQuestgroup($hierarchy['questgroups'][$i-1]['id'], $character['id']))
+							{
+								$hierarchy['questgroups'] = array_slice($hierarchy['questgroups'], 0, $i);
+								break;
+							}
 						}
+						
+						// Get Character XPs
+						$group['character_xps'] = $this->Questgroups->getAchievedXPsForQuestgroup($group['id'], $character['id']);
 					}
 				}
 			}
@@ -115,23 +120,40 @@
 					
 			
 			// Get Quests
-			$quests = null;
+			$quests = array();
 			if(count($childQuestgroupshierarchy) == 0)
 			{
-				$quests = $this->Quests->getQuestsForQuestgroup($questgroup['id']);
-				foreach($quests as $i => &$quest)
-				{
-					// Set status
-					$quest['solved'] = $this->Quests->hasCharacterSolvedQuest($quest['id'], $character['id']);
-					
-					// Check permission
-					if($i > 0) {
-						$quest['access'] = $this->Quests->hasCharacterSolvedQuest($quests[$i-1]['id'], $character['id']);
+				$currentQuest = null;
+				do {
+					// Get next Quest
+					if(is_null($currentQuest)) {
+						$currentQuest = $this->Quests->getFirstQuestOfQuestgroup($questgroup['id']);
+					}
+					else {
+						$nextQuests = $this->Quests->getNextQuests($currentQuest['id']);
+						$currentQuest = null;
+						foreach($nextQuests as &$nextQuest) {
+							if($this->Quests->hasCharacterEnteredQuest($nextQuest['id'], $character['id'])) {
+								$currentQuest = $nextQuest;
+								break;
+							}
+						}
 					}
 					
-					// Attach related Questgroups
-					$quest['relatedQuestgroups'] = $this->Questgroups->getRelatedQuestsgroupsOfQuest($quest['id']);
+					// Add additional data
+					if(!is_null($currentQuest))
+					{
+						// Set status
+						$currentQuest['solved'] = $this->Quests->hasCharacterSolvedQuest($currentQuest['id'], $character['id']);
+						
+						// Attach related Questgroups
+						$currentQuest['relatedQuestgroups'] = $this->Questgroups->getRelatedQuestsgroupsOfQuest($currentQuest['id']);	
+						
+						// Add Quest to Quests
+						$quests[] = $currentQuest;
+					}
 				}
+				while(!is_null($currentQuest) && $currentQuest['solved']);
 			}
 			
 			

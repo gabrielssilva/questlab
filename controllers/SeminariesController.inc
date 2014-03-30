@@ -103,6 +103,16 @@
 				// Get additional data
 				foreach($hierarchy['questgroups'] as $i => &$questgroup)
 				{
+					// Check permission of Questgroups
+					if($i >= 1)
+					{
+						if(!$this->Questgroups->hasCharacterSolvedQuestgroup($hierarchy['questgroups'][$i-1]['id'], $character['id']))
+						{
+							$hierarchy['questgroups'] = array_slice($hierarchy['questgroups'], 0, $i);
+							break;
+						}
+					}
+					
 					// Get first Questgroup text
 					$text = $this->Questgroups->getFirstQuestgroupText($questgroup['id']);
 					if(!empty($text))
@@ -113,11 +123,6 @@
 					
 					// Get Character XPs
 					$hierarchy['questgroups'][$i]['character_xps'] = $this->Questgroups->getAchievedXPsForQuestgroup($questgroup['id'], $character['id']);
-					
-					// Check permission of Questgroups
-					if($i >= 1) {
-						$questgroup['access'] =  $this->Questgroups->hasCharacterSolvedQuestgroup($hierarchy['questgroups'][$i-1]['id'], $character['id']);
-					}
 					
 					// Get Media
 					$questgroup['picture'] = null;

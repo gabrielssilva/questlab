@@ -124,6 +124,9 @@
 				}
 			}
 			
+			// Set status “entered”
+			$this->Quests->setQuestEntered($quest['id'], $character['id']);
+			
 			// Get (related) Questtext
 			$relatedQuesttext = $this->Questtexts->getRelatedQuesttextForQuestgroup($questgroup['id']);
 			if(!empty($relatedQuesttext)) {
@@ -138,7 +141,7 @@
 			$questtexttypes = $this->Questtexts->getQuesttexttypes();
 			$questtexttypes = array_map(function($t) { return $t['url']; }, $questtexttypes);
 			$questtextCount = $this->Questtexts->getQuesttextsCountForQuest($quest['id'], $questtexttypeUrl);
-			if(/*$questtextCount > 0 && */in_array($questtexttypeUrl, $questtexttypes))
+			if(in_array($questtexttypeUrl, $questtexttypes))
 			{
 				$questtextPos = max(intval($questtextPos), 1);
 				try {

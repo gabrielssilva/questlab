@@ -23,7 +23,6 @@
 <ul class="qg">
 	<?php foreach($hierarchy['questgroups'] as &$group) : ?>
 	<li class="cf">
-		<?php if(!array_key_exists('access', $group) || $group['access']) : ?>
 		<span class="qgicon"><i class="fa fa-check-square-o"></i></span>
 		<div class="qgtitle"><a href="<?=$linker->link(array('questgroups','questgroup',$seminary['url'],$group['url']))?>"><?=$group['title']?></a></div>
 		<div class="qgprogress cf">
@@ -33,10 +32,6 @@
 			</div>
 			<p class="xpnumeric"><?=$group['character_xps']?> / <?=$group['xps']?> XP</p>
 		</div>
-		<?php else : ?>
-		<span class="qgicon locked"><i class="fa fa-square-o"></i></span>
-		<div class="qgtitle"><?=$hierarchy['title_singular']?> <?=_('locked')?></div>
-		<?php endif ?>
 	</li>
 	<?php endforeach?>
 </ul>
@@ -49,7 +44,6 @@
 <ul class="qglist">
 	<?php foreach($quests as &$quest) : ?>
 	<li class="qgtitle">
-		<?php if(!array_key_exists('access', $quest) || $quest['access']) : ?>
 		<a href="<?=$linker->link(array('quests','quest',$seminary['url'],$questgroup['url'],$quest['url']))?>" <?php if($quest['solved']) : ?>class="solved"<?php endif ?>><i class="fa <?=($quest['solved']) ? 'fa-check-square-o' : 'fa-share-square-o'?> fa-fw"></i><?=$quest['title']?></a>
 		<?php if(count($quest['relatedQuestgroups']) > 0) : ?>
 		<ul class="gplist">
@@ -59,9 +53,6 @@
 			</li>
 			<?php endforeach ?>
 		</ul>
-		<?php endif ?>
-		<?php else : ?>
-		<i class="fa fa-share-square-o fa-fw"><?=_('locked')?></i>
 		<?php endif ?>
 	</li>
 	<?php endforeach ?>

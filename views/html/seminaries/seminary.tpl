@@ -18,7 +18,6 @@
 		<?php endif ?>
 		<section>
 			<p class="fwb"><?=$hierarchy['title_singular']?> <?=$group['pos']?>:
-			<?php if(!array_key_exists('access', $group) || $group['access']) : ?>
 			<a href="<?=$linker->link(array('questgroups','questgroup',$seminary['url'],$group['url']))?>"><?=$group['title']?></a></p>
 			<div class="cf">
 				<div class="xpbar">
@@ -30,9 +29,6 @@
 			<p><?=$group['text']?></p>
 			<?php endif ?>
 			<a href="<?=$linker->link(array('questgroups','questgroup',$seminary['url'],$group['url']))?>" class="cta orange">Auf ins Abenteuer!</a>
-			<?php else : ?>
-			<?=_('locked')?></p>
-			<?php endif ?>
 		</section>
 	</li>
 	<?php endforeach?>

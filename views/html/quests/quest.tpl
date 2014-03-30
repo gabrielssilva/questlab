@@ -32,7 +32,7 @@
 		<li><a href="<?=$linker->link(array('questgroups','questgroup',$seminary['url'],$relatedQuestgroup['url']))?>"><?=$relatedQuestgroup['entry_text']?></a></li>
 		<?php endforeach ?>
 		<?php if(!empty($questtext['abort_text'])) : ?>
-		<li><a href="<?=$linker->link(array('quest',$seminary['url'],$questgroup['url'],$relatedquesttext['quest']['url'],$relatedquesttext['type_url'],$relatedquesttext['pos']),1)?>"><?=$questtext['abort_text']?></a></li>
+		<li><a href="<?=$linker->link(array('quest',$seminary['url'],$relatedquesttext['quest']['questgroup_url'],$relatedquesttext['quest']['url'],$relatedquesttext['type_url'],$relatedquesttext['pos']),1)?>"><?=$questtext['abort_text']?></a></li>
 		<?php endif ?>
 		<?php if(!empty($questtext['out_text']) && $questtext['pos'] < $questtext['count']) : ?>
 		<li><a href="<?=$linker->link(array($questtext['type_url'],$questtext['pos']+1),5,true,null,true,'questtext')?>"><?=$questtext['out_text']?></a></li>
@@ -70,7 +70,7 @@
 		<?php endforeach ?>
 	</ul>
 	<?php elseif(!is_null($nextquestgroup)) : ?>
-	<a href="<?=$linker->link(array('questgroups','questgroup',$seminary['url'],$nextquestgroup['url']))?>"><?=$nextquestgroup['hierarchy']['title_singular']?> <?=$nextquestgroup['hierarchy']['pos']?>: <?=$nextquestgroup['title']?></a>
+	<a href="<?=$linker->link(array('questgroups','questgroup',$seminary['url'],$nextquestgroup['url']))?>"><?=$nextquestgroup['hierarchy']['title_singular']?> <?=$nextquestgroup['hierarchy']['questgroup_pos']?>: <?=$nextquestgroup['title']?></a>
 	<?php else : ?>
 	Spiel vorbei
 	<?php endif ?>

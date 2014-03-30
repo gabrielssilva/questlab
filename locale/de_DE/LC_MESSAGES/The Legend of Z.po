@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: The Legend of Z\n"
-"POT-Creation-Date: 2014-03-22 21:17+0100\n"
-"PO-Revision-Date: 2014-03-22 21:18+0100\n"
+"POT-Creation-Date: 2014-03-30 04:06+0100\n"
+"PO-Revision-Date: 2014-03-30 04:06+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de_DE\n"
@@ -23,25 +23,20 @@ msgstr "Fehler"
 #: ../../../views/html/charactergroups/group.tpl:3
 #: ../../../views/html/charactergroups/groupsgroup.tpl:3
 #: ../../../views/html/charactergroups/index.tpl:3
-#: ../../../views/html/characters/character.tpl:19
-#: ../../../views/html/seminaries/seminary.tpl:42
+#: ../../../views/html/characters/character.tpl:50
+#: ../../../views/html/seminaries/seminary.tpl:44
 msgid "Character Groups"
 msgstr "Charaktergruppen"
 
-#: ../../../views/html/charactergroups/group.tpl:12
-#: ../../../views/html/characters/character.tpl:2
+#: ../../../views/html/charactergroups/group.tpl:25
 #: ../../../views/html/characters/index.tpl:2
-#: ../../../views/html/seminaries/seminary.tpl:41
+#: ../../../views/html/seminaries/seminary.tpl:43
 #: ../../../views/html/users/user.tpl:11
 msgid "Characters"
 msgstr "Charaktere"
 
-#: ../../../views/html/charactergroups/group.tpl:15
-msgid "Group Leader"
-msgstr "Gruppenleiter"
-
-#: ../../../views/html/charactergroups/group.tpl:21
-#: ../../../views/html/questgroups/questgroup.tpl:35
+#: ../../../views/html/charactergroups/group.tpl:63
+#: ../../../views/html/questgroups/questgroup.tpl:43
 msgid "Quests"
 msgstr "Quests"
 
@@ -51,7 +46,7 @@ msgid "Character Groups Quests"
 msgstr "Charactergruppen-Quests"
 
 #: ../../../views/html/charactergroupsquests/quest.tpl:12
-#: ../../../views/html/seminaries/seminary.tpl:2
+#: ../../../views/html/seminaries/seminary.tpl:8
 msgid "Description"
 msgstr "Beschreibung"
 
@@ -67,29 +62,25 @@ msgstr "Gewonnene Quest"
 msgid "Lost Quest"
 msgstr "Verlorene Quest"
 
-#: ../../../views/html/characters/character.tpl:7
+#: ../../../views/html/characters/character.tpl:14
 #: ../../../views/html/characters/index.tpl:6
 #: ../../../views/html/users/user.tpl:14
 msgid "Level"
 msgstr "Level"
-
-#: ../../../views/html/characters/character.tpl:8
-msgid "User"
-msgstr "Benutzer"
 
 #: ../../../views/html/introduction/index.tpl:1
 #: ../../../views/html/menu/index.tpl:2
 msgid "Introduction"
 msgstr "Einführung"
 
-#: ../../../views/html/menu/index.tpl:3 ../../../views/html/users/create.tpl:1
+#: ../../../views/html/menu/index.tpl:4 ../../../views/html/users/create.tpl:1
 #: ../../../views/html/users/delete.tpl:1 ../../../views/html/users/edit.tpl:1
 #: ../../../views/html/users/index.tpl:1 ../../../views/html/users/login.tpl:1
 #: ../../../views/html/users/user.tpl:1
 msgid "Users"
 msgstr "Benutzer"
 
-#: ../../../views/html/menu/index.tpl:4
+#: ../../../views/html/menu/index.tpl:5
 #: ../../../views/html/seminaries/create.tpl:1
 #: ../../../views/html/seminaries/delete.tpl:1
 #: ../../../views/html/seminaries/edit.tpl:1
@@ -97,49 +88,43 @@ msgstr "Benutzer"
 msgid "Seminaries"
 msgstr "Kurse"
 
-#: ../../../views/html/menu/index.tpl:10 ../../../views/html/users/login.tpl:2
+#: ../../../views/html/menu/index.tpl:11 ../../../views/html/users/login.tpl:2
 #: ../../../views/html/users/login.tpl:11
 msgid "Login"
 msgstr "Login"
 
-#: ../../../views/html/menu/index.tpl:12
+#: ../../../views/html/menu/index.tpl:13
 msgid "Logout"
 msgstr "Logout"
 
-#: ../../../views/html/questgroups/questgroup.tpl:26
-#: ../../../views/html/questgroups/questgroup.tpl:51
-#: ../../../views/html/seminaries/seminary.tpl:28
-msgid "locked"
-msgstr "gesperrt"
-
-#: ../../../views/html/quests/quest.tpl:20
-#: ../../../views/html/quests/submissions.tpl:27
+#: ../../../views/html/quests/quest.tpl:15
+#: ../../../views/html/quests/submissions.tpl:22
 msgid "solved"
 msgstr "gelöst"
 
-#: ../../../views/html/quests/quest.tpl:22
-#: ../../../views/html/quests/submissions.tpl:18
+#: ../../../views/html/quests/quest.tpl:17
+#: ../../../views/html/quests/submissions.tpl:13
 msgid "unsolved"
 msgstr "ungelöst"
 
-#: ../../../views/html/quests/quest.tpl:59
+#: ../../../views/html/quests/quest.tpl:52
 msgid "Task"
 msgstr "Aufgabe"
 
-#: ../../../views/html/quests/quest.tpl:67
+#: ../../../views/html/quests/quest.tpl:60
 msgid "Task successfully solved"
 msgstr "Du hast die Aufgabe erfolgreich gelöst"
 
-#: ../../../views/html/quests/quest.tpl:67
+#: ../../../views/html/quests/quest.tpl:60
 msgid "Show correct answer"
 msgstr "Richtige Lösung anzeigen"
 
-#: ../../../views/html/quests/quest.tpl:68
+#: ../../../views/html/quests/quest.tpl:61
 msgid "Go on"
 msgstr "Hier geht es weiter"
 
-#: ../../../views/html/quests/quest.tpl:73
-#: ../../../views/html/quests/quest.tpl:75
+#: ../../../views/html/quests/quest.tpl:66
+#: ../../../views/html/quests/quest.tpl:68
 msgid "Quest"
 msgstr "Quest"
 
@@ -165,7 +150,7 @@ msgid "create"
 msgstr "erstellen"
 
 #: ../../../views/html/seminaries/delete.tpl:2
-#: ../../../views/html/seminaries/seminary.tpl:38
+#: ../../../views/html/seminaries/seminary.tpl:40
 msgid "Delete seminary"
 msgstr "Kurs löschen"
 
@@ -185,7 +170,7 @@ msgid "cancel"
 msgstr "abbrechen"
 
 #: ../../../views/html/seminaries/edit.tpl:2
-#: ../../../views/html/seminaries/seminary.tpl:37
+#: ../../../views/html/seminaries/seminary.tpl:39
 msgid "Edit seminary"
 msgstr "Kurs bearbeiten"
 
@@ -199,7 +184,7 @@ msgid "Create new seminary"
 msgstr "Neuen Kurs erstellen"
 
 #: ../../../views/html/seminaries/index.tpl:10
-#: ../../../views/html/seminaries/seminary.tpl:45
+#: ../../../views/html/seminaries/seminary.tpl:47
 #, php-format
 msgid "created by %s on %s"
 msgstr "erstellt von %s am %s"
@@ -253,6 +238,15 @@ msgstr "registriert am %s"
 #: ../../../views/html/users/user.tpl:18
 msgid "Roles"
 msgstr "Rollen"
+
+#~ msgid "locked"
+#~ msgstr "gesperrt"
+
+#~ msgid "Group Leader"
+#~ msgstr "Gruppenleiter"
+
+#~ msgid "User"
+#~ msgstr "Benutzer"
 
 #~ msgid "as"
 #~ msgstr "als"
