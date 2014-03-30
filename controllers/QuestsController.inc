@@ -131,6 +131,9 @@
 			$relatedQuesttext = $this->Questtexts->getRelatedQuesttextForQuestgroup($questgroup['id']);
 			if(!empty($relatedQuesttext)) {
 				$relatedQuesttext['quest'] = $this->Quests->getQuestById($relatedQuesttext['quest_id']);
+				if(!empty($relatedQuesttext['quest'])) {
+					$relatedQuesttext['quest']['questgroup_url'] = $this->Questgroups->getQuestgroupById($relatedQuesttext['quest']['questgroup_id'])['url'];
+				}
 			}
 			
 			// Get Questtext
@@ -215,7 +218,6 @@
 					{
 						// Related (Main-) Quest
 						$nextQuest = $relatedQuesttext['quest'];
-						$nextQuest['questgroup_url'] = $this->Questgroups->getQuestgroupById($nextQuest['questgroup_id'])['url'];
 						$nextQuests = array($nextQuest);
 					}
 				}
