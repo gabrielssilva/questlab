@@ -179,7 +179,7 @@
 		 */
 		public function setQuestEntered($questId, $characterId)
 		{
-			$this->setQuestStatus($questId, $characterId, static::QUEST_STATUS_ENTERED);
+			$this->setQuestStatus($questId, $characterId, static::QUEST_STATUS_ENTERED, false);
 		}
 		
 		
@@ -329,9 +329,28 @@
 		 * @param	int	$questId	ID of Quest to mark
 		 * @param	int	$characterId	ID of Character to mark the Quest for
 		 * @param	int	$status		Quest status to mark
+		 * @param	boolean	$repeated	Insert although status is already set for this Quest and Character
 		 */
-		private function setQuestStatus($questId, $characterId, $status)
+		private function setQuestStatus($questId, $characterId, $status, $repeated=true)
 		{
+			// Check if status is already set
+			if(!$repeated)
+			{
+				$count = $this->db->query(
+					'SELECT count(*) AS c '.
+					'FROM quests_characters '.
+					'WHERE quest_id = ? AND character_id = ? AND status = ?',
+					'iii',
+					$questId,
+					$characterId,
+					$status
+				);
+				if(!empty($count) && intval($count[0]['c']) > 0) {
+					return;
+				}
+			}
+			
+			// Set status
 			$this->db->query(
 				'INSERT INTO quests_characters '.
 				'(quest_id, character_id, status) '.
