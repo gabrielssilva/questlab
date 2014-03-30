@@ -200,11 +200,20 @@
 			
 			// Next Quest/Questgroup
 			$nextQuests = null;
+			$charactedHasChoosenNextQuest = false;
 			$nextQuestgroup = null;
 			if($questtexttypeUrl == 'Epilog' || $solved)
 			{
 				// Next Quest
 				$nextQuests = $this->Quests->getNextQuests($quest['id']);
+				foreach($nextQuests as &$nextQuest)
+				{
+					// Set entered status of Quest
+					$nextQuest['entered'] = $this->Quests->hasCharacterEnteredQuest($nextQuest['id'], $character['id']);
+					if($nextQuest['entered']) {
+						$charactedHasChoosenNextQuest = true;
+					}
+				}
 				
 				// Next Questgroup
 				if(empty($nextQuests))
@@ -233,6 +242,7 @@
 			$this->set('queststatustext', $questStatusText);
 			$this->set('relatedquesttext', $relatedQuesttext);
 			$this->set('nextquests', $nextQuests);
+			$this->set('charactedHasChoosenNextQuest', $charactedHasChoosenNextQuest);
 			$this->set('nextquestgroup', $nextQuestgroup);
 			$this->set('task', $task);
 			$this->set('media', $questmedia);

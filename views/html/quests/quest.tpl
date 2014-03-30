@@ -63,9 +63,23 @@
 	<ul>
 		<?php foreach($nextquests as &$nextquest) : ?>
 		<?php if($nextquest['id'] == $relatedquesttext['quest']['id']) : ?>
-		<li><?=_('Quest')?>: <a href="<?=$linker->link(array($nextquest['questgroup_url'],$nextquest['url'],$relatedquesttext['type_url'],$relatedquesttext['pos']),3)?>"><?=$nextquest['title']?></a></li>
+		<li>
+			<?=_('Quest')?>:
+			<?php if($nextquest['entered'] || !$charactedHasChoosenNextQuest) : ?>
+			<a href="<?=$linker->link(array($nextquest['questgroup_url'],$nextquest['url'],$relatedquesttext['type_url'],$relatedquesttext['pos']),3)?>"><?=$nextquest['title']?></a>
+			<?php else : ?>
+			<?=$nextquest['title']?>
+			<?php endif ?>
+		</li>
 		<?php else : ?>
-		<li><?=_('Quest')?>: <a href="<?=$linker->link(array($nextquest['questgroup_url'],$nextquest['url']),3)?>"><?=$nextquest['title']?></a></li>
+		<li>
+			<?=_('Quest')?>:
+			<?php if($nextquest['entered'] || !$charactedHasChoosenNextQuest) : ?>
+			<a href="<?=$linker->link(array($nextquest['questgroup_url'],$nextquest['url']),3)?>"><?=$nextquest['title']?></a>
+			<?php else : ?>
+			<?=$nextquest['title']?>
+			<?php endif ?>
+		</li>
 		<?php endif ?>
 		<?php endforeach ?>
 	</ul>
