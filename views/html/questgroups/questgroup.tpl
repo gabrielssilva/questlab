@@ -3,14 +3,14 @@
 	<img src="<?=$linker->link(array('media','index',$seminary['url'],$picture['url']))?>" />
 </div>
 <?php endif ?>
-<h2><a href="<?=$linker->link(array('seminaries',$seminary['url']))?>"><?=$seminary['title']?></a></h2>
+<h1><a href="<?=$linker->link(array('seminaries',$seminary['url']))?>"><?=$seminary['title']?></a></h1>
 
 <?=$questgroupshierarchypath?>
 
 <?php if(!is_null($questgroup['hierarchy'])) : ?>
-<h3><?=$questgroup['hierarchy']['title_singular']?> <?=$questgroup['hierarchy']['questgroup_pos']?>: <?=$questgroup['title']?></h3>
+<h2><?=$questgroup['hierarchy']['title_singular']?> <?=$questgroup['hierarchy']['questgroup_pos']?>: <?=$questgroup['title']?></h2>
 <?php else : ?>
-<h3><?=$questgroup['title']?></h3>
+<h2><?=$questgroup['title']?></h2>
 <?php endif ?>
 <?php foreach($texts as &$text) : ?>
 <p><?=\hhu\z\Utils::t($text['text'])?></p>

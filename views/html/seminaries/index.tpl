@@ -1,4 +1,4 @@
-<h2><?=_('Seminaries')?></h2>
+<h1><?=_('Seminaries')?></h1>
 <nav>
 	<li><a href="<?=$linker->link('create', 1)?>"><?=_('Create new seminary')?></a></li>
 </nav>

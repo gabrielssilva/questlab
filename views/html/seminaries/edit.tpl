@@ -1,5 +1,5 @@
-<h2><?=_('Seminaries')?></h2>
-<h3><?=_('Edit seminary')?></h3>
+<h1><?=_('Seminaries')?></h1>
+<h2><?=_('Edit seminary')?></h2>
 
 <form method="post">
 	<fieldset>

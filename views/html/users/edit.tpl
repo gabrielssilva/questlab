@@ -1,5 +1,5 @@
-<h2><?=_('Users')?></h2>
-<h3><?=_('Edit user')?></h3>
+<h1><?=_('Users')?></h1>
+<h2><?=_('Edit user')?></h2>
 
 <form method="post">
 	<fieldset>

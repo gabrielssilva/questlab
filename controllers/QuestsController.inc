@@ -265,6 +265,10 @@
 			
 			// Get Questgroup
 			$questgroup = $this->Questgroups->getQuestgroupByUrl($seminary['id'], $questgroupUrl);
+			$questgroup['picture'] = null;
+			if(!is_null($questgroup['questgroupspicture_id'])) {
+				$questgroup['picture'] = $this->Media->getMediaById($questgroup['questgroupspicture_id']);
+			}
 			
 			// Get Quest
 			$quest = $this->Quests->getQuestByUrl($seminary['id'], $questgroup['id'], $questUrl);
@@ -314,6 +318,10 @@
 			
 			// Get Questgroup
 			$questgroup = $this->Questgroups->getQuestgroupByUrl($seminary['id'], $questgroupUrl);
+			$questgroup['picture'] = null;
+			if(!is_null($questgroup['questgroupspicture_id'])) {
+				$questgroup['picture'] = $this->Media->getMediaById($questgroup['questgroupspicture_id']);
+			}
 			
 			// Get Quest
 			$quest = $this->Quests->getQuestByUrl($seminary['id'], $questgroup['id'], $questUrl);

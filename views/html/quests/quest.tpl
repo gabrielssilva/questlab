@@ -3,11 +3,9 @@
 	<img src="<?=$linker->link(array('media','index',$seminary['url'],$questgroup['picture']['url']))?>" />
 </div>
 <?php endif ?>
-<h2><a href="<?=$linker->link(array('seminaries',$seminary['url']))?>"><?=$seminary['title']?></a></h2>
-
+<h1><a href="<?=$linker->link(array('seminaries',$seminary['url']))?>"><?=$seminary['title']?></a></h1>
 <?=$questgroupshierarchypath?>
-
-<h3><?=$quest['title']?></h3>
+<h2><?=$quest['title']?></h2>
 
 <?php if(!is_null($queststatustext)) : ?>
 <section>

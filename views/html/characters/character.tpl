@@ -1,5 +1,6 @@
 <h1><a href="<?=$linker->link(array('seminaries',$seminary['url']))?>"><?=$seminary['title']?></a></h1>
-<h2><i class="fa fa-user fa-fw"></i><?=$character['name']?></h2>
+<h2><a href="<?=$linker->link(array('index',$seminary['url']),1)?>"><?=_('Characters')?></a></h2>
+<h3><i class="fa fa-user fa-fw"></i><?=$character['name']?></h3>
 
 <section class="cf">
 	<div class="cinfo">
@@ -22,7 +23,7 @@
 			<p><small>Platz</small></p>
 		</div>
 
-		<h2><i class="fa fa-certificate fa-fw"></i>Belohnungen</h2>
+		<h1><i class="fa fa-certificate fa-fw"></i>Belohnungen</h1>
 		<ul class="crewards">
 			<li>
 				<p class="unlocked"><i class="fa fa-check-circle fa-fw"></i>Aktive Beteiligung</p>
@@ -47,7 +48,7 @@
 </section>
 
 <section>
-	<h2><i class="fa fa-users fa-fw"></i><?=_('Character Groups')?></h2>
+	<h1><i class="fa fa-users fa-fw"></i><?=_('Character Groups')?></h1>
 	<ul class="cgroups cf">
 		<li class="cf">
 			<img src="http://s1.directupload.net/images/140325/3eqybn4i.png">
@@ -65,7 +66,7 @@
 
 <div class="cf">
 <section class="fll48">
-	<h2><i class="fa fa-trophy fa-fw"></i>Neue Achievements</h2>
+	<h1><i class="fa fa-trophy fa-fw"></i>Neue Achievements</h1>
 	<ul class="cranks">
 		<li>
 			<a href="#" title="Achievement-Titel"><img src="http://legende-von-zyren.de/img/achieve/1b.jpg"></a>
@@ -96,7 +97,7 @@
 </section>
 
 <section class="flr48">
-	<h2><i class="fa fa-list fa-fw"></i>Ranking</h2>
+	<h1><i class="fa fa-list fa-fw"></i>Ranking</h1>
 	<ul class="cranks">
 		<li>
 			<a href="#" title="Achievement-Titel"><img src="http://s7.directupload.net/images/140325/e2wdqhqa.png"></a>
@@ -128,7 +129,7 @@
 </div>
 
 <section>
-	<h2><i class="fa fa-book fa-fw"></i>Thematischer Fortschritt</h2>
+	<h1><i class="fa fa-book fa-fw"></i>Thematischer Fortschritt</h1>
 	<ul class="ctopics cf">
 		<li>
 			<p><small><a href="#">Klassifikation</a> (3/5)</small></p>

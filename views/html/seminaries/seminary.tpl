@@ -4,12 +4,11 @@
 </div>
 <?php endif ?>
 
-<h2><a href="<?=$linker->link(array('seminaries',$seminary['url']))?>"><?=$seminary['title']?></a></h2>
-<h3><?=_('Description')?></h3>
+<h1><a href="<?=$linker->link(array('seminaries',$seminary['url']))?>"><?=$seminary['title']?></a></h1>
 <p><?=\hhu\z\Utils::t($seminary['description'])?></p>
 
 <?php foreach($questgroupshierarchy as &$hierarchy) : ?>
-<h3><?=$hierarchy['title_plural']?></h3>
+<h2><?=$hierarchy['title_plural']?></h2>
 <ul class="questgroups cf">
 	<?php foreach($hierarchy['questgroups'] as &$group) : ?>
 	<li>

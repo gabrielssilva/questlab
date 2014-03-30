@@ -1,5 +1,5 @@
-<h2><a href="<?=$linker->link(array('seminaries',$seminary['url']))?>"><?=$seminary['title']?></a></h2>
-<h3><?=_('Characters')?></h3>
+<h1><a href="<?=$linker->link(array('seminaries',$seminary['url']))?>"><?=$seminary['title']?></a></h1>
+<h2><?=_('Characters')?></h2>
 
 <ul>
 	<?php foreach($characters as &$character) : ?>

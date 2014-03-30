@@ -1,17 +1,14 @@
-<!--<h2><a href="<?=$linker->link(array('seminaries',$seminary['url']))?>"><?=$seminary['title']?></a></h2>
-<h3><?=$seminary['title']?></h3>
-<h4><a href="<?=$linker->link(array('index',$seminary['url']),1)?>"><?=_('Character Groups')?></a></h4>
-<h5><a href="<?=$linker->link(array('groupsgroup',$seminary['url'],$groupsgroup['url']),1)?>"><?=$groupsgroup['name']?></a></h5>
--->
 <div class="moodpic">
 	<img src="http://s1.directupload.net/images/140323/tpzvoy5c.png">
 </div>
+<h1><a href="<?=$linker->link(array('seminaries',$seminary['url']))?>"><?=$seminary['title']?></a></h1>
+<h2><a href="<?=$linker->link(array('index',$seminary['url']),1)?>"><?=_('Character Groups')?></a></h2>
 <section class="gdata cf">
 	<div class="gbanner">
 		<img src="http://s1.directupload.net/images/140325/3eqybn4i.png">
 	</div>
 	<div class="gdesc">
-		<h1><?=$group['name']?></h1>
+		<h3><?=$group['name']?></h3>
 		<span>Schweb wie ein Schmetterling! Stich wie eine Biene!</span>
 	</div>
 	<ul>
@@ -22,7 +19,7 @@
 </section>
 
 <section>
-	<h2><i class="fa fa-users fa-fw"></i><?=_('Characters')?></h2>
+	<h1><i class="fa fa-users fa-fw"></i><?=_('Characters')?></h1>
 	<ul class="gchars cf">
 		<?php foreach($characters as &$character) : ?>
 		<li>
@@ -60,7 +57,7 @@
 </section>
 
 <section>
-	<h2><i class="fa fa-pencil-square-o fa-fw"></i><?=_('Quests')?></h2>
+	<h1><i class="fa fa-pencil-square-o fa-fw"></i><?=_('Quests')?></h1>
 	<ul class="gquests">
 		<?php foreach($quests as &$quest) : ?>
 		<li class="cf">
