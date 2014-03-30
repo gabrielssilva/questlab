@@ -103,7 +103,7 @@
 			array('seminaries/seminary/(.*)',		'seminaries/$1',		false),
 			//array('seminaries/seminary/(.*)',		'$1',				false)
 			array('characters/index/(.*)',			'characters/$1',		true),
-			array('charactergroup/index/(.*)',		'charactergroup/$1',		true),
+			array('charactergroups/index/(.*)',		'charactergroups/$1',		true),
 			array('charactergroupsquests/quest/(.*)',	'charactergroupsquests/$1',	true)
 		);
 		

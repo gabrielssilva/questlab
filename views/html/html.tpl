@@ -38,6 +38,9 @@
 			<?php endif ?>
 			<?php endif ?>
 			<?=$menu?>
+			<?php if(!is_null($loggedSeminary)) : ?>
+			<?=$seminarymenu?>
+			<?php endif ?>
 		</nav>
 	</header>
 	<article class="wrap">

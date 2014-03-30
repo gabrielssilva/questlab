@@ -78,6 +78,13 @@
 			try {
 				static::$user = $this->Users->getUserById($this->Auth->getUserId());
 				
+				// Determine user roles
+				static::$user['roles'] = array();
+				$roles = $this->Userroles->getUserrolesForUserById(static::$user['id']);
+				foreach($roles as &$role) {
+					static::$user['roles'][] = $role['name'];
+				}
+				
 				// Character
 				$controller = $this->agent->getIntermediateAgent()->controller;
 				if(is_subclass_of($controller, '\hhu\z\controllers\SeminaryRoleController'))
@@ -122,7 +129,10 @@
 		private function checkPermission(\nre\core\Request $request, \nre\core\Response $response)
 		{
 			// Determine user
-			$userId = $this->Auth->getUserId();
+			$userRoles = array('guest');
+			if(!is_null(static::$user)) {
+				$userRoles = static::$user['roles'];
+			}
 			
 			
 			// Do not check error pages
@@ -131,20 +141,6 @@
 			}
 			if($response->getParam(1, 'intermediate') == \nre\core\Config::getDefault('intermediate-error')) {
 				return;
-			}
-			
-			
-			// Determine user roles
-			if($userId > 0)
-			{
-				$userRoles = array();
-				$roles = $this->Userroles->getUserrolesForUserById($userId);
-				foreach($roles as &$role) {
-					$userRoles[] = $role['name'];
-				}
-			}
-			else {
-				$userRoles = array('guest');
 			}
 			
 			// Determine permissions of Intermediate Controller for current action
