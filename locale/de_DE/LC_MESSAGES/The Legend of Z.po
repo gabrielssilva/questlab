@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: The Legend of Z\n"
-"POT-Creation-Date: 2014-03-30 04:06+0100\n"
-"PO-Revision-Date: 2014-03-30 04:06+0100\n"
+"POT-Creation-Date: 2014-03-30 05:08+0100\n"
+"PO-Revision-Date: 2014-03-30 05:09+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de_DE\n"
@@ -24,13 +24,13 @@ msgstr "Fehler"
 #: ../../../views/html/charactergroups/groupsgroup.tpl:3
 #: ../../../views/html/charactergroups/index.tpl:3
 #: ../../../views/html/characters/character.tpl:50
-#: ../../../views/html/seminaries/seminary.tpl:44
+#: ../../../views/html/seminarymenu/index.tpl:4
 msgid "Character Groups"
 msgstr "Charaktergruppen"
 
 #: ../../../views/html/charactergroups/group.tpl:25
 #: ../../../views/html/characters/index.tpl:2
-#: ../../../views/html/seminaries/seminary.tpl:43
+#: ../../../views/html/seminarymenu/index.tpl:3
 #: ../../../views/html/users/user.tpl:11
 msgid "Characters"
 msgstr "Charaktere"
@@ -81,6 +81,10 @@ msgid "Users"
 msgstr "Benutzer"
 
 #: ../../../views/html/menu/index.tpl:5
+msgid "Usergroups"
+msgstr "Benutzergruppen"
+
+#: ../../../views/html/menu/index.tpl:6
 #: ../../../views/html/seminaries/create.tpl:1
 #: ../../../views/html/seminaries/delete.tpl:1
 #: ../../../views/html/seminaries/edit.tpl:1
@@ -88,12 +92,12 @@ msgstr "Benutzer"
 msgid "Seminaries"
 msgstr "Kurse"
 
-#: ../../../views/html/menu/index.tpl:11 ../../../views/html/users/login.tpl:2
+#: ../../../views/html/menu/index.tpl:8 ../../../views/html/users/login.tpl:2
 #: ../../../views/html/users/login.tpl:11
 msgid "Login"
 msgstr "Login"
 
-#: ../../../views/html/menu/index.tpl:13
+#: ../../../views/html/menu/index.tpl:10
 msgid "Logout"
 msgstr "Logout"
 
@@ -123,8 +127,8 @@ msgstr "Richtige Lösung anzeigen"
 msgid "Go on"
 msgstr "Hier geht es weiter"
 
-#: ../../../views/html/quests/quest.tpl:66
-#: ../../../views/html/quests/quest.tpl:68
+#: ../../../views/html/quests/quest.tpl:67
+#: ../../../views/html/quests/quest.tpl:76
 msgid "Quest"
 msgstr "Quest"
 
@@ -184,10 +188,18 @@ msgid "Create new seminary"
 msgstr "Neuen Kurs erstellen"
 
 #: ../../../views/html/seminaries/index.tpl:10
-#: ../../../views/html/seminaries/seminary.tpl:47
+#: ../../../views/html/seminaries/seminary.tpl:43
 #, php-format
 msgid "created by %s on %s"
 msgstr "erstellt von %s am %s"
+
+#: ../../../views/html/seminarymenu/index.tpl:5
+msgid "Achievements"
+msgstr "Errungenschaften"
+
+#: ../../../views/html/seminarymenu/index.tpl:6
+msgid "Library"
+msgstr "Bibliothek"
 
 #: ../../../views/html/users/create.tpl:2
 msgid "New user"
@@ -238,6 +250,10 @@ msgstr "registriert am %s"
 #: ../../../views/html/users/user.tpl:18
 msgid "Roles"
 msgstr "Rollen"
+
+#, fuzzy
+#~ msgid "Character groups"
+#~ msgstr "Charaktergruppen"
 
 #~ msgid "locked"
 #~ msgstr "gesperrt"
