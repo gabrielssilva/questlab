@@ -6,24 +6,24 @@
 	<div class="cinfo">
 		<div class="cdata">
 			<div class="xpbar">
-				<span style="width:85%"></span>
+				<span style="width:<?=round($character['quest_xps']*100/$seminary['achievable_xps'])?>%"></span>
 			</div>
-			<p><small>Gesamtfortschritt: 85%</small></p>
+			<p><small><?=_('Total progress')?>: <?=round($character['quest_xps']*100/$seminary['achievable_xps'])?> %</small></p>
 		</div>
 		<div class="cdata square">
 			<p class="value"><?=$character['xplevel']['level']?></p>
 			<p><small><?=_('Level')?></small></p>
 		</div>
 		<div class="cdata square">
-			<p class="value">500</p>
+			<p class="value"><?=$character['xps']?></p>
 			<p><small>XP</small></p>
 		</div>
 		<div class="cdata square blue">
-			<p class="value">7.</p>
-			<p><small>Platz</small></p>
+			<p class="value"><?=$character['rank']?>.</p>
+			<p><small><?=_('Rank')?></small></p>
 		</div>
 
-		<h1><i class="fa fa-certificate fa-fw"></i>Belohnungen</h1>
+		<h1><i class="fa fa-certificate fa-fw"></i><?=_('Achievements')?></h1>
 		<ul class="crewards">
 			<li>
 				<p class="unlocked"><i class="fa fa-check-circle fa-fw"></i>Aktive Beteiligung</p>
@@ -50,16 +50,11 @@
 <section>
 	<h1><i class="fa fa-users fa-fw"></i><?=_('Character Groups')?></h1>
 	<ul class="cgroups cf">
-		<li class="cf">
-			<img src="http://s1.directupload.net/images/140325/3eqybn4i.png">
-			<a href="#">Super wilde Arbeits Gruppe [SWAG]</a><p><span>500 XP</span></p>
-		</li>
-		<li class="cf">
-			<img src="http://s1.directupload.net/images/140325/3eqybn4i.png">
-			<a href="#">Mit Herz und Seele</a><p><span>500 XP</span></p>
-		</li>
 		<?php foreach($groups as &$group) : ?>
-		<li><a href="<?=$linker->link(array('charactergroups','group',$seminary['url'],$group['charactergroupsgroup_url'],$group['url']))?>"><?=$group['name']?></a> (<?=$group['xps']?> XPs)</li>
+		<li class="cf">
+			<img src="http://s1.directupload.net/images/140325/3eqybn4i.png">
+			<a href="<?=$linker->link(array('charactergroups','group',$seminary['url'],$group['charactergroupsgroup_url'],$group['url']))?>"><?=$group['name']?></a><p><span><?=$group['xps']?> XPs</span></p>
+		</li>
 		<?php endforeach ?>
 	</ul>
 </section>

@@ -19,6 +19,12 @@
 	 */
 	class SeminariesModel extends \hhu\z\Model
 	{
+		/**
+		 * Required models
+		 * 
+		 * @var array
+		 */
+		public $models = array('questgroupshierarchy', 'questgroups');
 		
 		
 		
@@ -97,6 +103,32 @@
 			
 			
 			return $seminary[0];
+		}
+		
+		
+		/*
+		 * Calculate sum of XPs for a Seminary.
+		 * 
+		 * @param	int	$seminaryId	ID of Seminary
+		 * @return	int			Total sum of XPs
+		 */
+		public function getTotalXPs($seminaryId)
+		{
+			$xps = 0;
+			
+			// Questgroups
+			$questgroupshierarchy = $this->Questgroupshierarchy->getHierarchyOfSeminary($seminaryId);
+			foreach($questgroupshierarchy as &$hierarchy)
+			{
+				// Get Questgroups
+				$questgroups = $this->Questgroups->getQuestgroupsForHierarchy($hierarchy['id']);
+				foreach($questgroups as &$questgroup) {
+					$xps += $this->Questgroups->getAchievableXPsForQuestgroup($questgroup['id']);
+				}
+			}
+			
+			
+			return $xps;
 		}
 		
 		

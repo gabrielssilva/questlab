@@ -44,7 +44,7 @@
 		public function getQuestsForCharactergroupsgroup($groupsgroupId)
 		{
 			return $this->db->query(
-				'SELECT id, questgroups_id, title, url '.
+				'SELECT id, questgroups_id, title, url, xps '.
 				'FROM charactergroupsquests '.
 				'WHERE charactergroupsgroup_id = ?',
 				'i',

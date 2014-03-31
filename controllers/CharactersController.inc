@@ -81,12 +81,13 @@
 		{
 			// Get Seminary
 			$seminary = $this->Seminaries->getSeminaryByUrl($seminaryUrl);
+			$seminary['achievable_xps'] = $this->Seminaries->getTotalXPs($seminary['id']);
 			
 			// Get Character
 			$character = $this->Characters->getCharacterByUrl($seminary['id'], $characterUrl);
-			
-			// Character Level
+			$character['quest_xps'] = $this->Characters->getQuestXPsOfCharacter($character['id']);
 			$character['xplevel'] = $this->Characters->getXPLevelOfCharacters($character['id']);
+			$character['rank'] = $this->Characters->getXPRank($seminary['id'], $character['xps']);
 			
 			// Get Seminarycharacterfields
 			$characterfields = $this->Seminarycharacterfields->getFieldsForCharacter($character['id']);

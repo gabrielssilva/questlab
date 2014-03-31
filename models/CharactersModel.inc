@@ -181,6 +181,30 @@
 		
 		
 		/**
+		 * Calculate only XPs for a Character achieved through Quests.
+		 * 
+		 * @param	int	$characterId	ID of Character
+		 * @return	int			Quest-XPs for Character
+		 */
+		public function getQuestXPsOfCharacter($characterId)
+		{
+			$data = $this->db->query(
+				'SELECT quest_xps '.
+				'FROM v_charactersxps '.
+				'WHERE character_id = ?',
+				'i',
+				$characterId
+			);
+			if(!empty($data)) {
+				return $data[0]['quest_xps'];
+			}
+			
+			
+			return 0;
+		}
+		
+		
+		/**
 		 * Get the XP-level of a Character.
 		 * 
 		 * @param	string	$characterId	ID of the Character
@@ -202,6 +226,32 @@
 			
 			
 			return null;
+		}
+		
+		
+		/**
+		 * Get the rank of a XP-value of a Character.
+		 * 
+		 * @param	int	$seminaryId	ID of Seminary
+		 * @param	int	$xps		XP-value to get rank for
+		 * @return	int			Rank of XP-value
+		 */
+		public function getXPRank($seminaryId, $xps)
+		{
+			$data = $this->db->query(
+				'SELECT count(v_characters.id) AS c '.
+				'FROM charactertypes '.
+				'INNER JOIN v_characters ON v_characters.charactertype_id = charactertypes.id '.
+				'WHERE seminary_id = ? AND v_characters.xps > ?',
+				'id',
+				$seminaryId, $xps
+			);
+			if(!empty($data)) {
+				return $data[0]['c'] + 1;
+			}
+			
+			
+			return 1;
 		}
 		
 	}
