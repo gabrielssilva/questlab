@@ -7,17 +7,6 @@
 <?=$questgroupshierarchypath?>
 <h2><?=$quest['title']?></h2>
 
-<?php if(!is_null($queststatustext)) : ?>
-<section>
-	<?php if($queststatus == 'solved') : ?>
-	<h1><?=_('solved')?></h1>
-	<?php elseif($queststatus == 'unsolved') : ?>
-	<h1><?=_('unsolved')?></h1>
-	<?php endif ?>
-	<p><?=\hhu\z\Utils::t($queststatustext)?></p>
-</section>
-<?php endif ?>
-
 <?php if(count($questtexts) > 0) : ?>
 <section>
 	<h1 id="questtext"><?=$questtexttype['type']?></h1>
@@ -45,18 +34,35 @@
 </section>
 <?php endif ?>
 
+<?php if(!is_null($queststatustext)) : ?>
+<section>
+	<?php if($queststatus == 'solved') : ?>
+	<h1><?=_('solved')?></h1>
+	<?php elseif($queststatus == 'unsolved') : ?>
+	<h1><?=_('unsolved')?></h1>
+	<?php endif ?>
+	<p><?=\hhu\z\Utils::t($queststatustext)?></p>
+</section>
+<?php endif ?>
+
 <?php if(!is_null($task)) : ?>
 <section>
-	<h1><?=_('Task')?></h1>
+	<h1 id="task"><?=_('Task')?></h1>
 	<p><?=\hhu\z\Utils::t($quest['task'])?></p>
 	<?=$task?>
+	
+	<?php if($solved) : ?>
+	<p><?=_('Task already successfully solved')?>:</p>
+	<ul>
+		<li><a href="<?=$linker->link(null,0,false,array('show-answer'=>'true'),true,'task')?>"><?=_('Show answer')?></a></li>
+		<li><a href="<?=$linker->link('Epilog',5)?>">Aufgabe Überspringen</a></l>
+	</ul>
+	<?php endif ?>
 </section>
 <?php endif ?>
 
 <?php if(!is_null($nextquests) || !is_null($nextquestgroup)) : ?>
 <section>
-	<p><?=_('Task successfully solved')?> (<a href="<?=$linker->link(null,0,false,array('show-answer'=>'true'))?>"><?=_('Show correct answer')?></a>)</p>
-	<h1><?=_('Go on') ?></h1>
 	<?php if(count($nextquests) > 0) : ?>
 	<ul>
 		<?php foreach($nextquests as &$nextquest) : ?>
