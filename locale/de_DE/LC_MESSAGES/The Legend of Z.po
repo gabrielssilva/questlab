@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: The Legend of Z\n"
-"POT-Creation-Date: 2014-03-30 05:08+0100\n"
-"PO-Revision-Date: 2014-03-30 05:09+0100\n"
+"POT-Creation-Date: 2014-04-01 13:43+0100\n"
+"PO-Revision-Date: 2014-04-01 13:43+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de_DE\n"
@@ -20,33 +20,33 @@ msgstr ""
 msgid "Error"
 msgstr "Fehler"
 
-#: ../../../views/html/charactergroups/group.tpl:3
-#: ../../../views/html/charactergroups/groupsgroup.tpl:3
-#: ../../../views/html/charactergroups/index.tpl:3
-#: ../../../views/html/characters/character.tpl:50
+#: ../../../views/html/charactergroups/group.tpl:5
+#: ../../../views/html/charactergroups/groupsgroup.tpl:2
+#: ../../../views/html/charactergroups/index.tpl:2
+#: ../../../views/html/characters/character.tpl:51
 #: ../../../views/html/seminarymenu/index.tpl:4
 msgid "Character Groups"
 msgstr "Charaktergruppen"
 
-#: ../../../views/html/charactergroups/group.tpl:25
+#: ../../../views/html/charactergroups/group.tpl:22
+#: ../../../views/html/characters/character.tpl:2
 #: ../../../views/html/characters/index.tpl:2
 #: ../../../views/html/seminarymenu/index.tpl:3
 #: ../../../views/html/users/user.tpl:11
 msgid "Characters"
 msgstr "Charaktere"
 
-#: ../../../views/html/charactergroups/group.tpl:63
+#: ../../../views/html/charactergroups/group.tpl:60
 #: ../../../views/html/questgroups/questgroup.tpl:43
 msgid "Quests"
 msgstr "Quests"
 
-#: ../../../views/html/charactergroups/groupsgroup.tpl:13
+#: ../../../views/html/charactergroups/groupsgroup.tpl:12
 #: ../../../views/html/charactergroupsquests/quest.tpl:3
 msgid "Character Groups Quests"
 msgstr "Charactergruppen-Quests"
 
 #: ../../../views/html/charactergroupsquests/quest.tpl:12
-#: ../../../views/html/seminaries/seminary.tpl:8
 msgid "Description"
 msgstr "Beschreibung"
 
@@ -62,29 +62,41 @@ msgstr "Gewonnene Quest"
 msgid "Lost Quest"
 msgstr "Verlorene Quest"
 
-#: ../../../views/html/characters/character.tpl:14
+#: ../../../views/html/characters/character.tpl:11
+msgid "Total progress"
+msgstr "Fortschritt"
+
+#: ../../../views/html/characters/character.tpl:15
 #: ../../../views/html/characters/index.tpl:6
 #: ../../../views/html/users/user.tpl:14
 msgid "Level"
 msgstr "Level"
 
+#: ../../../views/html/characters/character.tpl:23
+msgid "Rank"
+msgstr "Platz"
+
+#: ../../../views/html/characters/character.tpl:26
+#: ../../../views/html/seminarymenu/index.tpl:5
+msgid "Achievements"
+msgstr "Errungenschaften"
+
 #: ../../../views/html/introduction/index.tpl:1
-#: ../../../views/html/menu/index.tpl:2
 msgid "Introduction"
 msgstr "Einführung"
 
-#: ../../../views/html/menu/index.tpl:4 ../../../views/html/users/create.tpl:1
+#: ../../../views/html/menu/index.tpl:3 ../../../views/html/users/create.tpl:1
 #: ../../../views/html/users/delete.tpl:1 ../../../views/html/users/edit.tpl:1
 #: ../../../views/html/users/index.tpl:1 ../../../views/html/users/login.tpl:1
 #: ../../../views/html/users/user.tpl:1
 msgid "Users"
 msgstr "Benutzer"
 
-#: ../../../views/html/menu/index.tpl:5
+#: ../../../views/html/menu/index.tpl:4
 msgid "Usergroups"
 msgstr "Benutzergruppen"
 
-#: ../../../views/html/menu/index.tpl:6
+#: ../../../views/html/menu/index.tpl:5
 #: ../../../views/html/seminaries/create.tpl:1
 #: ../../../views/html/seminaries/delete.tpl:1
 #: ../../../views/html/seminaries/edit.tpl:1
@@ -92,47 +104,43 @@ msgstr "Benutzergruppen"
 msgid "Seminaries"
 msgstr "Kurse"
 
-#: ../../../views/html/menu/index.tpl:8 ../../../views/html/users/login.tpl:2
+#: ../../../views/html/menu/index.tpl:7 ../../../views/html/users/login.tpl:2
 #: ../../../views/html/users/login.tpl:11
 msgid "Login"
 msgstr "Login"
 
-#: ../../../views/html/menu/index.tpl:10
+#: ../../../views/html/menu/index.tpl:9
 msgid "Logout"
 msgstr "Logout"
 
-#: ../../../views/html/quests/quest.tpl:15
-#: ../../../views/html/quests/submissions.tpl:22
+#: ../../../views/html/quests/quest.tpl:40
+#: ../../../views/html/quests/submissions.tpl:24
 msgid "solved"
 msgstr "gelöst"
 
-#: ../../../views/html/quests/quest.tpl:17
-#: ../../../views/html/quests/submissions.tpl:13
+#: ../../../views/html/quests/quest.tpl:42
+#: ../../../views/html/quests/submissions.tpl:15
 msgid "unsolved"
 msgstr "ungelöst"
 
-#: ../../../views/html/quests/quest.tpl:52
+#: ../../../views/html/quests/quest.tpl:50
 msgid "Task"
 msgstr "Aufgabe"
 
-#: ../../../views/html/quests/quest.tpl:60
-msgid "Task successfully solved"
-msgstr "Du hast die Aufgabe erfolgreich gelöst"
+#: ../../../views/html/quests/quest.tpl:55
+msgid "Task already successfully solved"
+msgstr "Du hast die Aufgabe bereits erfolgreich gelöst"
 
-#: ../../../views/html/quests/quest.tpl:60
-msgid "Show correct answer"
-msgstr "Richtige Lösung anzeigen"
+#: ../../../views/html/quests/quest.tpl:57
+msgid "Show answer"
+msgstr "Lösung anzeigen"
 
-#: ../../../views/html/quests/quest.tpl:61
-msgid "Go on"
-msgstr "Hier geht es weiter"
-
-#: ../../../views/html/quests/quest.tpl:67
-#: ../../../views/html/quests/quest.tpl:76
+#: ../../../views/html/quests/quest.tpl:71
+#: ../../../views/html/quests/quest.tpl:80
 msgid "Quest"
 msgstr "Quest"
 
-#: ../../../views/html/quests/submission.tpl:10
+#: ../../../views/html/quests/submission.tpl:13
 #, php-format
 msgid "Submission of %s"
 msgstr "Lösungen von %s"
@@ -154,7 +162,7 @@ msgid "create"
 msgstr "erstellen"
 
 #: ../../../views/html/seminaries/delete.tpl:2
-#: ../../../views/html/seminaries/seminary.tpl:40
+#: ../../../views/html/seminaries/seminary.tpl:39
 msgid "Delete seminary"
 msgstr "Kurs löschen"
 
@@ -174,7 +182,7 @@ msgid "cancel"
 msgstr "abbrechen"
 
 #: ../../../views/html/seminaries/edit.tpl:2
-#: ../../../views/html/seminaries/seminary.tpl:39
+#: ../../../views/html/seminaries/seminary.tpl:38
 msgid "Edit seminary"
 msgstr "Kurs bearbeiten"
 
@@ -188,14 +196,10 @@ msgid "Create new seminary"
 msgstr "Neuen Kurs erstellen"
 
 #: ../../../views/html/seminaries/index.tpl:10
-#: ../../../views/html/seminaries/seminary.tpl:43
+#: ../../../views/html/seminaries/seminary.tpl:42
 #, php-format
 msgid "created by %s on %s"
 msgstr "erstellt von %s am %s"
-
-#: ../../../views/html/seminarymenu/index.tpl:5
-msgid "Achievements"
-msgstr "Errungenschaften"
 
 #: ../../../views/html/seminarymenu/index.tpl:6
 msgid "Library"
@@ -250,6 +254,9 @@ msgstr "registriert am %s"
 #: ../../../views/html/users/user.tpl:18
 msgid "Roles"
 msgstr "Rollen"
+
+#~ msgid "Go on"
+#~ msgstr "Hier geht es weiter"
 
 #, fuzzy
 #~ msgid "Character groups"
