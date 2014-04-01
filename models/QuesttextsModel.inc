@@ -35,76 +35,37 @@
 		
 		
 		/**
-		 * Get a Questtext for a Quest by its URL.
-		 * 
-		 * @throws	IdNotFoundException
-		 * @param	int	$questId		ID of the Quest to get text for
-		 * @param	string	$questtexttypeUrl	URL of the Questtexttype
-		 * @param	int	$pos			Position of Questtexttype
-		 * @return	array				Questtexttype data
-		 */
-		public function getQuesttextByUrl($questId, $questtexttypeUrl, $pos)
-		{
-			$data = $this->db->query(
-				'SELECT questtexts.id, questtexts.text, questtexts.pos, questtexts.out_text, questtexts.abort_text, questtexts.questsmedia_id, questtexttypes.id AS type_id, questtexttypes.type, questtexttypes.url AS type_url '.
-				'FROM questtexts '.
-				'LEFT JOIN questtexttypes ON questtexttypes.id = questtexts.questtexttype_id '.
-				'WHERE questtexts.quest_id = ? AND questtexttypes.url = ? AND questtexts.pos = ?',
-				'isi',
-				$questId, $questtexttypeUrl, $pos
-			);
-			if(empty($data)) {
-				throw new \nre\exceptions\IdNotFoundException($questtexttypeUrl);
-			}
-			
-			
-			return $data = $data[0];
-		}
-		
-		
-		/**
 		 * Get all Questtexts for a Quest.
-		 * 
-		 * @param	int	$questId	ID of the Quest
-		 * @return	array			All Questtexts for a Quest
-		 */
-		public function getQuesttextsOfQuest($questId)
-		{
-			return $this->db->query(
-				'SELECT questtexts.id, questtexts.text, questtexts.pos, questtexts.out_text, questtexts.abort_text, questtexts.questsmedia_id, questtexttypes.id AS type_id, questtexttypes.type, questtexttypes.url AS type_url '.
-				'FROM questtexts '.
-				'LEFT JOIN questtexttypes ON questtexttypes.id = questtexts.questtexttype_id '.
-				'WHERE questtexts.quest_id = ?',
-				'i',
-				$questId
-			);
-		}
-		
-		
-		/**
-		 * Get count of Questtexts for a Quest.
 		 * 
 		 * @param	int	$questId		ID of the Quest
 		 * @param	string	$questtexttypeUrl	URL of the Questtexttype
-		 * @return	int				Conut of Questtexts for Quest
+		 * @return	array				All Questtexts for a Quest
 		 */
-		public function getQuesttextsCountForQuest($questId, $questtexttypUrl)
+		public function getQuesttextsOfQuest($questId, $questtexttypeUrl=null)
 		{
-			$count = 0;
-			$data = $this->db->query(
-				'SELECT COUNT(questtexts.id) AS c '.
-				'FROM questtexts '.
-				'LEFT JOIN questtexttypes ON questtexttypes.id = questtexts.questtexttype_id '.
-				'WHERE questtexts.quest_id = ? AND questtexttypes.url = ?',
-				'is',
-				$questId, $questtexttypUrl
-			);
-			if(!empty($data)) {
-				$count = $data[0]['c'];
+			if(is_null($questtexttypeUrl))
+			{
+				return $this->db->query(
+					'SELECT questtexts.id, questtexts.text, questtexts.pos, questtexts.out_text, questtexts.abort_text, questtexts.questsmedia_id, questtexttypes.id AS type_id, questtexttypes.type, questtexttypes.url AS type_url '.
+					'FROM questtexts '.
+					'LEFT JOIN questtexttypes ON questtexttypes.id = questtexts.questtexttype_id '.
+					'WHERE questtexts.quest_id = ?',
+					'i',
+					$questId
+				);
 			}
-			
-			
-			return $count;
+			else
+			{
+				return $this->db->query(
+					'SELECT questtexts.id, questtexts.text, questtexts.pos, questtexts.out_text, questtexts.abort_text, questtexts.questsmedia_id, questtexttypes.id AS type_id, questtexttypes.type, questtexttypes.url AS type_url '.
+					'FROM questtexts '.
+					'LEFT JOIN questtexttypes ON questtexttypes.id = questtexts.questtexttype_id '.
+					'WHERE questtexts.quest_id = ? and questtexttypes.url = ?',
+					'is',
+					$questId,
+					$questtexttypeUrl
+				);
+			}
 		}
 		
 		

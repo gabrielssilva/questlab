@@ -18,30 +18,30 @@
 </section>
 <?php endif ?>
 
-<?php if(!is_null($questtext)) : ?>
+<?php if(count($questtexts) > 0) : ?>
 <section>
-	<h1 id="questtext"><?=$questtext['type']?></h1>
+	<h1 id="questtext"><?=$questtexttype['type']?></h1>
+	
+	
+	
 	<div id="qtextbox">
-		<p class="qtext cf"><?php if(!is_null($media)) : ?><img src="<?=$linker->link(array('media','index',$seminary['url'],$media['url']))?>" /><?php endif ?><?=\hhu\z\Utils::t($questtext['text'])?></p>
-	</div>
-	
-	<ul>
-		<?php foreach($questtext['relatedQuestsgroups'] as &$relatedQuestgroup) : ?>
-		<li><a href="<?=$linker->link(array('questgroups','questgroup',$seminary['url'],$relatedQuestgroup['url']))?>"><?=$relatedQuestgroup['entry_text']?></a></li>
+		<?php foreach($questtexts as &$questtext) : ?>
+		<p class="qtext cf">
+			<?php if(array_key_exists('media', $questtext)) : ?><img src="<?=$linker->link(array('media','index',$seminary['url'],$questtext['media']['url']))?>" /><?php endif ?>
+			<?=\hhu\z\Utils::t($questtext['text'])?>
+		</p>
+		<?php if(count($questtext['relatedQuestsgroups']) > 0 || !empty($questtext['abort_text'])) : ?>
+		<ul>
+			<?php foreach($questtext['relatedQuestsgroups'] as &$relatedQuestgroup) : ?>
+			<li><a href="<?=$linker->link(array('questgroups','questgroup',$seminary['url'],$relatedQuestgroup['url']))?>"><?=$relatedQuestgroup['entry_text']?></a></li>
+			<?php endforeach ?>
+			<?php if(!empty($questtext['abort_text'])) : ?>
+			<li><a href="<?=$linker->link(array('quest',$seminary['url'],$relatedquesttext['quest']['questgroup_url'],$relatedquesttext['quest']['url'],$relatedquesttext['type_url']),1)?>"><?=$questtext['abort_text']?></a></li>
+			<?php endif ?>
+		</ul>
+		<?php endif ?>
 		<?php endforeach ?>
-		<?php if(!empty($questtext['abort_text'])) : ?>
-		<li><a href="<?=$linker->link(array('quest',$seminary['url'],$relatedquesttext['quest']['questgroup_url'],$relatedquesttext['quest']['url'],$relatedquesttext['type_url'],$relatedquesttext['pos']),1)?>"><?=$questtext['abort_text']?></a></li>
-		<?php endif ?>
-		<?php if(!empty($questtext['out_text']) && $questtext['pos'] < $questtext['count']) : ?>
-		<li><a href="<?=$linker->link(array($questtext['type_url'],$questtext['pos']+1),5,true,null,true,'questtext')?>"><?=$questtext['out_text']?></a></li>
-		<?php endif ?>
-	</ul>
-	
-	<?php if(array_key_exists('pos', $questtext)) : ?>
-	<?php if($questtext['pos'] > 1) : ?><a href="<?=$linker->link(array($questtext['type_url'],$questtext['pos']-1),5,true,null,true,'questtext')?>">&lt;</a><?php endif ?>
-	<?=$questtext['pos']?>/<?=$questtext['count']?>
-	<?php if($questtext['pos'] < $questtext['count'] && empty($questtext['out_text'])) : ?><a href="<?=$linker->link(array($questtext['type_url'],$questtext['pos']+1),5,true,null,true,'questtext')?>">&gt;</a><?php endif ?>
-	<?php endif ?>
+	</div>
 </section>
 <?php endif ?>
 
@@ -64,7 +64,7 @@
 		<li>
 			<?=_('Quest')?>:
 			<?php if($nextquest['entered'] || !$charactedHasChoosenNextQuest) : ?>
-			<a href="<?=$linker->link(array($nextquest['questgroup_url'],$nextquest['url'],$relatedquesttext['type_url'],$relatedquesttext['pos']),3)?>"><?=$nextquest['title']?></a>
+			<a href="<?=$linker->link(array($nextquest['questgroup_url'],$nextquest['url'],$relatedquesttext['type_url']),3)?>"><?=$nextquest['title']?></a>
 			<?php else : ?>
 			<?=$nextquest['title']?>
 			<?php endif ?>

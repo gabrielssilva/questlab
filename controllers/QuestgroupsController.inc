@@ -147,7 +147,15 @@
 						$currentQuest['solved'] = $this->Quests->hasCharacterSolvedQuest($currentQuest['id'], $character['id']);
 						
 						// Attach related Questgroups
-						$currentQuest['relatedQuestgroups'] = $this->Questgroups->getRelatedQuestsgroupsOfQuest($currentQuest['id']);	
+						$currentQuest['relatedQuestgroups'] = array();
+						$relatedQuestgroups = $this->Questgroups->getRelatedQuestsgroupsOfQuest($currentQuest['id']);
+						foreach($relatedQuestgroups as &$relatedQuestgroup)
+						{
+							$firstQuest = $this->Quests->getFirstQuestOfQuestgroup($relatedQuestgroup['id']);
+							if(!empty($firstQuest) && $this->Quests->hasCharacterEnteredQuest($firstQuest['id'], $character['id'])) {
+								$currentQuest['relatedQuestgroups'][] = $relatedQuestgroup;
+							}
+						}
 						
 						// Add Quest to Quests
 						$quests[] = $currentQuest;

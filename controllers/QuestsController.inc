@@ -136,27 +136,26 @@
 				}
 			}
 			
-			// Get Questtext
-			$questtext = null;
+			// Get Questtexts
 			if(is_null($questtexttypeUrl)) {
 				$questtexttypeUrl = 'Prolog';
 			}
 			$questtexttypes = $this->Questtexts->getQuesttexttypes();
-			$questtexttypes = array_map(function($t) { return $t['url']; }, $questtexttypes);
-			$questtextCount = $this->Questtexts->getQuesttextsCountForQuest($quest['id'], $questtexttypeUrl);
-			if(in_array($questtexttypeUrl, $questtexttypes))
+			//$questtexttypesUrls = array_map(function($t) { return $t['url']; }, $questtexttypes);
+			if(($questtexttypeIndex = array_search($questtexttypeUrl, array_map(function($t) { return $t['url']; }, $questtexttypes))) === false) {
+				throw new ParamsNotValidException($questtexttypeUrl);
+			}
+			$questtexttype = $questtexttypes[$questtexttypeIndex];
+			$questtexts = $this->Questtexts->getQuesttextsOfQuest($quest['id'], $questtexttypeUrl);
+			foreach($questtexts as &$questtext)
 			{
-				$questtextPos = max(intval($questtextPos), 1);
-				try {
-					$questtext = $this->Questtexts->getQuesttextByUrl($quest['id'], $questtexttypeUrl, $questtextPos);
-					$questtext['count'] = $questtextCount;
-					$questtext['relatedQuestsgroups'] = $this->Questgroups->getRelatedQuestsgroupsOfQuesttext($questtext['id']);
+				// Questtext media
+				if(!is_null($questtext['questsmedia_id'])) {
+					$questtext['media'] = $this->Media->getMediaById($questtext['questsmedia_id']);
 				}
-				catch(\nre\exceptions\IdNotFoundException $e) {
-					if(!($questtexttypeUrl == 'Prolog' || $questtexttypeUrl == 'Epilog' && $questtextPos == 1)) {
-						throw $e;
-					}
-				}
+				
+				// Related Questgroups
+				$questtext['relatedQuestsgroups'] = $this->Questgroups->getRelatedQuestsgroupsOfQuesttext($questtext['id']);
 			}
 			
 			// Quest status
@@ -175,12 +174,9 @@
 				}
 			}
 			
-			// Media
+			// Quest media
 			$questmedia = null;
-			if(!is_null($questtext) && array_key_exists('questmedia_id', $questtext) && !empty($questtext['questsmedia_id'])) {
-				$questmedia = $this->Media->getMediaById($questtext['questsmedia_id']);
-			}
-			elseif(!is_null($quest['questsmedia_id'])) {
+			if(!is_null($quest['questsmedia_id'])) {
 				$questmedia = $this->Media->getMediaById($quest['questsmedia_id']);
 			}
 			
@@ -227,6 +223,7 @@
 					{
 						// Related (Main-) Quest
 						$nextQuest = $relatedQuesttext['quest'];
+						$nextQuest['entered'] = true;
 						$nextQuests = array($nextQuest);
 					}
 				}
@@ -236,7 +233,8 @@
 			// Pass data to view
 			$this->set('seminary', $seminary);
 			$this->set('questgroup', $questgroup);
-			$this->set('questtext', $questtext);
+			$this->set('questtexttype', $questtexttype);
+			$this->set('questtexts', $questtexts);
 			$this->set('quest', $quest);
 			$this->set('queststatus', $questStatus);
 			$this->set('queststatustext', $questStatusText);
