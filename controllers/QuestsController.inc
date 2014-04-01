@@ -198,7 +198,7 @@
 			$nextQuests = null;
 			$charactedHasChoosenNextQuest = false;
 			$nextQuestgroup = null;
-			if($questtexttypeUrl == 'Epilog'))
+			if($questtexttypeUrl == 'Epilog')
 			{
 				// Next Quest
 				$nextQuests = $this->Quests->getNextQuests($quest['id']);
