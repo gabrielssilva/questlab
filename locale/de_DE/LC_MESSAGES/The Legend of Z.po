@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: The Legend of Z\n"
-"POT-Creation-Date: 2014-04-01 13:43+0100\n"
-"PO-Revision-Date: 2014-04-01 13:43+0100\n"
+"POT-Creation-Date: 2014-04-03 01:16+0100\n"
+"PO-Revision-Date: 2014-04-03 01:16+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de_DE\n"
@@ -10,10 +10,53 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Poedit 1.6.4\n"
-"X-Poedit-Basepath: .\n"
+"X-Poedit-Basepath: ./\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 "X-Poedit-SearchPath-0: ../../../views\n"
+"X-Poedit-SearchPath-1: ../../../questtypes\n"
+
+#: ../../../questtypes/dragndrop/html/quest.tpl:16
+#: ../../../questtypes/multiplechoice/html/quest.tpl:19
+#: ../../../questtypes/submit/html/quest.tpl:12
+#: ../../../questtypes/textinput/html/quest.tpl:10
+msgid "solve"
+msgstr "lösen"
+
+#: ../../../questtypes/multiplechoice/html/quest.tpl:3
+#, php-format
+msgid "Question %d of %d"
+msgstr "Frage %d von %d"
+
+#: ../../../questtypes/multiplechoice/html/quest.tpl:17
+msgid "solve Question"
+msgstr "Frage lösen"
+
+#: ../../../questtypes/submit/html/quest.tpl:6
+msgid "Words"
+msgstr "Wörter"
+
+#: ../../../questtypes/submit/html/quest.tpl:8
+msgid "Word"
+msgstr "Wort"
+
+#: ../../../questtypes/submit/html/quest.tpl:10
+#, php-format
+msgid "submitted at %s on %s h"
+msgstr "eingereicht am %s um %s Uhr"
+
+#: ../../../questtypes/submit/html/submission.tpl:6
+#: ../../../questtypes/submit/html/submission.tpl:8
+#: ../../../views/html/quests/quest.tpl:40
+#: ../../../views/html/quests/submissions.tpl:24
+msgid "solved"
+msgstr "gelöst"
+
+#: ../../../questtypes/submit/html/submission.tpl:9
+#: ../../../views/html/quests/quest.tpl:42
+#: ../../../views/html/quests/submissions.tpl:15
+msgid "unsolved"
+msgstr "ungelöst"
 
 #: ../../../views/binary/error/index.tpl:1
 #: ../../../views/html/error/index.tpl:1
@@ -112,16 +155,6 @@ msgstr "Login"
 #: ../../../views/html/menu/index.tpl:9
 msgid "Logout"
 msgstr "Logout"
-
-#: ../../../views/html/quests/quest.tpl:40
-#: ../../../views/html/quests/submissions.tpl:24
-msgid "solved"
-msgstr "gelöst"
-
-#: ../../../views/html/quests/quest.tpl:42
-#: ../../../views/html/quests/submissions.tpl:15
-msgid "unsolved"
-msgstr "ungelöst"
 
 #: ../../../views/html/quests/quest.tpl:50
 msgid "Task"
