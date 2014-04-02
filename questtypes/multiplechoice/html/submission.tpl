@@ -1,9 +1,16 @@
-<ul>
-	<?php foreach($questions as &$question) : ?>
+<ol>
+	<?php foreach($questions as $pos => &$question) : ?>
 	<li>
-		<?php if($question['answer']) : ?>☑<?php else : ?>☐<?php endif ?>
-		<?php if($question['answer'] == $question['tick']) : ?>✓<?php else : ?>×<?php endif ?>
-		<?=$question['question']?>
+		<h1><?=\hhu\z\Utils::t($question['question'])?></h1>
+		<ol>
+			<?php foreach($question['answers'] as &$answer) : ?>
+			<li>
+				<?php if($answer['useranswer']) : ?>☑<?php else : ?>☐<?php endif ?>
+				<?php if($answer['useranswer'] == $answer['tick']) : ?>✓<?php else : ?>×<?php endif ?>
+				<?=$answer['answer']?>
+			</li>
+			<?php endforeach ?>
+		</ol>
 	</li>
 	<?php endforeach ?>
-</ul>
+</ol>

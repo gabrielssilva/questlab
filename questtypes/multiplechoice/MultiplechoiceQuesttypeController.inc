@@ -34,14 +34,23 @@
 		 */
 		public function saveAnswersOfCharacter($seminary, $questgroup, $quest, $character, $answers)
 		{
-			// Get questions
-			$questions = $this->Multiplechoice->getQuestionsOfQuest($quest['id']);
+			// Save temporary user answer of last question
+			$answers = (!is_array($answers)) ? array() : $answers;
+			$pos = $this->Multiplechoice->getQuestionsCountOfQuest($quest['id']);
+			$question = $this->Multiplechoice->getQuestionOfQuest($quest['id'], $pos);
+			$this->saveUserAnswers($quest['id'], $question['id'], $answers);
 			
 			// Save answers
+			$questions = $this->Multiplechoice->getQuestionsOfQuest($quest['id']);
 			foreach($questions as &$question)
 			{
-				$answer = (array_key_exists(intval($question['pos'])-1, $answers)) ? true : false;
-				$this->Multiplechoice->setCharacterSubmission($question['id'], $character['id'], $answer);
+				$userAnswers = $this->getUserAnswers($quest['id'], $question['id']);
+				$answers = $this->Multiplechoice->getAnswersOfQuestion($question['id']);
+				foreach($answers as &$answer)
+				{
+					$userAnswer = (array_key_exists($answer['pos']-1, $userAnswers)) ? true : false;
+					$this->Multiplechoice->setCharacterSubmission($answer['id'], $character['id'], $userAnswer);
+				}
 			}
 		}
 		
@@ -57,27 +66,43 @@
 		 */
 		public function matchAnswersOfCharacter($seminary, $questgroup, $quest, $character, $answers)
 		{
-			// Get right answers
-			$tickQuestions = $this->Multiplechoice->getTickQuestionsOfQuest($quest['id']);
+			// Save temporary user answer of last question
+			$answers = (!is_array($answers)) ? array() : $answers;
+			$pos = $this->Multiplechoice->getQuestionsCountOfQuest($quest['id']);
+			$question = $this->Multiplechoice->getQuestionOfQuest($quest['id'], $pos);
+			$this->saveUserAnswers($quest['id'], $question['id'], $answers);
 			
-			// Match tick questions with user answers
-			$allSolved = true;
-			foreach($tickQuestions as &$tickQuestion)
+			// Get questions
+			$questions = $this->Multiplechoice->getQuestionsOfQuest($quest['id']);
+			
+			// Iterate questions
+			foreach($questions as &$question)
 			{
-				$pos = intval($tickQuestion['pos'])-1;
-				if(!array_key_exists($pos, $answers) || $answers[$pos] != 'true')
+				// Get answers
+				$userAnswers = $this->getUserAnswers($quest['id'], $question['id']);
+				$answers = $this->Multiplechoice->getAnswersOfQuestion($question['id']);
+				var_dump($userAnswers);
+				var_dump($answers);
+				
+				// Match answers with user answers
+				foreach($answers as &$answer)
 				{
-					$allSolved = false;
-					break;
-				}
-				else {
-					unset($answers[$pos]);
+					if($answer['tick']) {
+						if(!array_key_exists($answer['pos']-1, $userAnswers)) {
+							return false;
+						}
+					}
+					else {
+						if(array_key_exists($answer['pos']-1, $userAnswers)) {
+							return false;
+						}
+					}
 				}
 			}
 			
 			
-			// Return status
-			return ($allSolved && count($answers) == 0);
+			// All questions correct answerd
+			return true;
 		}
 		
 		
@@ -94,24 +119,54 @@
 		 */
 		public function quest($seminary, $questgroup, $quest, $character)
 		{
-			// Get questions
-			$questions = $this->Multiplechoice->getQuestionsOfQuest($quest['id']);
+			// Get count of questions
+			$count = $this->Multiplechoice->getQuestionsCountOfQuest($quest['id']);
 			
-			// Get user answers
-			if($this->request->getGetParam('show-answer') == 'true')
-			{
-				foreach($questions as &$question) {
-					$question['answer'] = $this->Multiplechoice->getCharacterSubmission($question['id'], $character['id']);
+			// Get position
+			$pos = 1;
+			if($this->request->getRequestMethod() == 'POST' && !is_null($this->request->getPostParam('submit-answer')))
+			{	
+				if(!is_null($this->request->getPostParam('question')))
+				{
+					// Get current position
+					$pos = intval($this->request->getPostParam('question'));
+					if($pos < 0 || $pos > $count) {
+						throw new \nre\exceptions\ParamsNotValidException($pos);
+					}
+					
+					// Save temporary answer of user
+					$question = $this->Multiplechoice->getQuestionOfQuest($quest['id'], $pos);
+					$answers = ($this->request->getRequestMethod() == 'POST' && !is_null($this->request->getPostParam('answers'))) ? $this->request->getPostParam('answers') : array();
+					$this->saveUserAnswers($quest['id'], $question['id'], $answers);
+					
+					// Go to next position
+					$pos++;
+				}
+				else {
+					throw new \nre\exceptions\ParamsNotValidException('pos');
 				}
 			}
 			
-			// Has Character already solved Quest?
-			$solved = $this->Quests->hasCharacterSolvedQuest($quest['id'], $character['id']);
+			// Get current question
+			$question = $this->Multiplechoice->getQuestionOfQuest($quest['id'], $pos);
+			
+			// Get answers
+			$question['answers'] = $this->Multiplechoice->getAnswersOfQuestion($question['id']);
+			
+			
+			// Get previous user answers
+			if($this->request->getGetParam('show-answer') == 'true')
+			{
+				foreach($question['answers'] as &$answer) {
+					$answer['useranswer'] = $this->Multiplechoice->getCharacterSubmission($answer['id'], $character['id']);
+				}
+			}
 			
 			
 			// Pass data to view
-			$this->set('questions', $questions);
-			$this->set('solved', $solved);
+			$this->set('question', $question);
+			$this->set('pos', $pos);
+			$this->set('count', $count);
 		}
 		
 		
@@ -129,13 +184,75 @@
 		{
 			// Get questions
 			$questions = $this->Multiplechoice->getQuestionsOfQuest($quest['id']);
-			foreach($questions as &$question) {
-				$question['answer'] = $this->Multiplechoice->getCharacterSubmission($question['id'], $character['id']);
+			
+			// Get answers
+			foreach($questions as &$question)
+			{
+				$question['answers'] = $this->Multiplechoice->getAnswersOfQuestion($question['id']);
+				
+				// Get user answers
+				foreach($question['answers'] as &$answer) {
+					$answer['useranswer'] = $this->Multiplechoice->getCharacterSubmission($answer['id'], $character['id']);
+				}
 			}
 			
 			
 			// Pass data to view
 			$this->set('questions', $questions);
+		}
+		
+		
+		
+		
+		/**
+		 * Save the answers of a user for a question temporary in the
+		 * session.
+		 * 
+		 * @param	int	$questId	ID of Quest
+		 * @param	int	$questionId	ID of multiple choice question
+		 * @param	array	$userAnswers	Answers of user for the question
+		 */
+		private function saveUserAnswers($questId, $questionId, $userAnswers)
+		{
+			// Ensure session structure
+			if(!array_key_exists('answers', $_SESSION)) {
+				$_SESSION['answers'] = array();
+			}
+			if(!array_key_exists($questId, $_SESSION['answers'])) {
+				$_SESSION['answers'][$questId] = array();
+			}
+			$_SESSION['answers'][$questId][$questionId] = array();
+			
+			// Save answres
+			foreach($userAnswers as $pos => &$answer) {
+				$_SESSION['answers'][$questId][$questionId][$pos] = $answer;
+			}
+		}
+		
+		
+		/**
+		 * Get the temporary saved answers of a user for a question.
+		 * 
+		 * @param	int	$questId	ID of Quest
+		 * @param	int	$questionId	ID of multiple choice question
+		 * @return	array			Answers of user for the question
+		 */
+		private function getUserAnswers($questId, $questionId)
+		{
+			// Ensure session structure
+			if(!array_key_exists('answers', $_SESSION)) {
+				$_SESSION['answers'] = array();
+			}
+			if(!array_key_exists($questId, $_SESSION['answers'])) {
+				$_SESSION['answers'][$questId] = array();
+			}
+			if(!array_key_exists($questionId, $_SESSION['answers'][$questId])) {
+				$_SESSION['answers'][$questId][$questionId] = array();
+			}
+			
+			
+			// Return answers
+			return $_SESSION['answers'][$questId][$questionId];
 		}
 		
 	}
