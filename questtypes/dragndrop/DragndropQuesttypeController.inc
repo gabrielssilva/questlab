@@ -49,9 +49,18 @@
 			// Save user answers
 			foreach($drops as &$drop)
 			{
-				if(!array_key_exists($drop['id'], $answers)) {
-					$this->Dragndrop->setCharacterSubmission($drop['id'], $character['id'], $answers[$drop['id']]);
+				// Determine user answer
+				$answer = null;
+				if(array_key_exists($drop['id'], $answers) && !empty($answers[$drop['id']]))
+				{
+					$a = intval(substr($answers[$drop['id']], 4));
+					if($a !== false && $a > 0) {
+						$answer = $a;
+					}
 				}
+				
+				// Update database record
+				$this->Dragndrop->setCharacterSubmission($drop['id'], $character['id'], $answer);
 			}
 		}
 		
@@ -74,19 +83,16 @@
 			$drops = $this->Dragndrop->getDrops($dndField['quest_id']);
 			
 			// Match drops with user answers
-			$allSolved = true;
 			foreach($drops as &$drop)
 			{
-				if(!array_key_exists($drop['id'], $answers) || $answer[$drop['id']] != $drop['questtypes_dragndrop_drag_id'])
-				{
-					$allSolved = false;
-					break;
+				if(!array_key_exists($drop['id'], $answers) || intval(substr($answers[$drop['id']], 4)) !== $drop['questtypes_dragndrop_drag_id']) {
+					return false;
 				}
 			}
 			
 			
 			// Set status
-			return $allSolved;
+			return true;
 		}
 		
 		
@@ -107,17 +113,26 @@
 			$dndField = $this->Dragndrop->getDragndrop($quest['id']);
 			$dndField['media'] = $this->Media->getMediaById($dndField['questmedia_id']);
 			
-			// Get Drops
-			$drops = $this->Dragndrop->getDrops($dndField['quest_id']);
-			
 			// Get Drags
-			$drags = $this->Dragndrop->getDrags($dndField['quest_id']);
-			foreach($drags as &$drag) {
+			$drags = array();
+			$dragsByIndex = $this->Dragndrop->getDrags($dndField['quest_id']);
+			foreach($dragsByIndex as &$drag) {
 				$drag['media'] = $this->Media->getMediaById($drag['questmedia_id']);
+				$drags[$drag['id']] = $drag;
 			}
 			
-			// Has Character already solved Quest?
-			$solved = $this->Quests->hasCharacterSolvedQuest($quest['id'], $character['id']);
+			// Get Drops
+			$drops = $this->Dragndrop->getDrops($dndField['quest_id']);
+			foreach($drops as &$drop)
+			{
+				// Get saved user answer
+				$drop['useranswer'] = $this->Dragndrop->getCharacterSubmission($drop['id'], $character['id']);
+				if(!is_null($drop['useranswer']))
+				{
+					$drop['useranswer'] = $drags[$drop['useranswer']];
+					unset($drags[$drop['useranswer']['id']]);
+				}
+			}
 			
 			
 			// Pass data to view
@@ -130,7 +145,6 @@
 		
 		/**
 		 * Action: submission.
-		 * TODO submission()
 		 * 
 		 * Show the submission of a Character for a Quest.
 		 * 
@@ -141,6 +155,37 @@
 		 */
 		public function submission($seminary, $questgroup, $quest, $character)
 		{
+			// Get Drag&Drop field
+			$dndField = $this->Dragndrop->getDragndrop($quest['id']);
+			$dndField['media'] = $this->Media->getMediaById($dndField['questmedia_id']);
+			
+			// Get Drags
+			$drags = array();
+			$dragsByIndex = $this->Dragndrop->getDrags($dndField['quest_id']);
+			foreach($dragsByIndex as &$drag) {
+				$drag['media'] = $this->Media->getMediaById($drag['questmedia_id']);
+				$drags[$drag['id']] = $drag;
+			}
+			
+			// Get Drops
+			$drops = $this->Dragndrop->getDrops($dndField['quest_id']);
+			foreach($drops as &$drop)
+			{
+				// Get saved user answer
+				$drop['useranswer'] = $this->Dragndrop->getCharacterSubmission($drop['id'], $character['id']);
+				if(!is_null($drop['useranswer']))
+				{
+					$drop['useranswer'] = $drags[$drop['useranswer']];
+					unset($drags[$drop['useranswer']['id']]);
+				}
+			}
+			
+			
+			// Pass data to view
+			$this->set('seminary', $seminary);
+			$this->set('field', $dndField);
+			$this->set('drops', $drops);
+			$this->set('drags', $drags);
 		}
 		
 	}

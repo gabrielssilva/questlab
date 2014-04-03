@@ -84,7 +84,7 @@
 		
 		
 		/**
-		 * Save Character’s submitted answer for one Drag&Drop-field.
+		 * Save Character’s submitted answer for one Drop-field.
 		 * 
 		 * @param	int	$dropId		ID of Drop-field
 		 * @param	int	$characterId	ID of Character
@@ -92,16 +92,53 @@
 		 */
 		public function setCharacterSubmission($dropId, $characterId, $answer)
 		{
-			$this->db->query(
-				'INSERT INTO questtypes_dragndrop_drops_characters '.
-				'(questtypes_dragndrop_drops_id, character_id, questtypes_dragndrop_drag_id) '.
-				'VALUES '.
-				'(?, ?, ?) '.
-				'ON DUPLICATE KEY UPDATE '.
-				'questtypes_dragndrop_drag_id = ?',
-				'iiii',
-				$dropId, $characterId, $answer, $answer
+			if(is_null($answer))
+			{
+				$this->db->query(
+					'DELETE FROM questtypes_dragndrop_drops_characters '.
+					'WHERE questtypes_dragndrop_drop_id = ? AND character_id = ?',
+					'ii',
+					$dropId, $characterId
+				);
+			}
+			else
+			{
+				$this->db->query(
+					'INSERT INTO questtypes_dragndrop_drops_characters '.
+					'(questtypes_dragndrop_drop_id, character_id, questtypes_dragndrop_drag_id) '.
+					'VALUES '.
+					'(?, ?, ?) '.
+					'ON DUPLICATE KEY UPDATE '.
+					'questtypes_dragndrop_drag_id = ?',
+					'iiii',
+					$dropId, $characterId, $answer, $answer
+				);
+			}
+		}
+		
+		
+		/**
+		 * Get Character’s saved answer for one Drop-field.
+		 * 
+		 * @param	int	$dropId		ID of Drop-field
+		 * @param	int	$characterId	ID of Character
+		 * @return	int			ID of Drag-field or null
+		 */
+		public function getCharacterSubmission($dropId, $characterId)
+		{
+			$data = $this->db->query(
+				'SELECT questtypes_dragndrop_drag_id '.
+				'FROM questtypes_dragndrop_drops_characters '.
+				'WHERE questtypes_dragndrop_drop_id = ? AND character_id = ?',
+				'ii',
+				$dropId, $characterId
 			);
+			if(!empty($data)) {
+				return $data[0]['questtypes_dragndrop_drag_id'];
+			}
+			
+			
+			return null;
 		}
 		
 	}
