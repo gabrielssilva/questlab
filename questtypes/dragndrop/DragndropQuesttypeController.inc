@@ -123,14 +123,18 @@
 			
 			// Get Drops
 			$drops = $this->Dragndrop->getDrops($dndField['quest_id']);
-			foreach($drops as &$drop)
+			
+			// Get Character answers
+			if($this->request->getGetParam('show-answer') == 'true')
 			{
-				// Get saved user answer
-				$drop['useranswer'] = $this->Dragndrop->getCharacterSubmission($drop['id'], $character['id']);
-				if(!is_null($drop['useranswer']))
+				foreach($drops as &$drop)
 				{
-					$drop['useranswer'] = $drags[$drop['useranswer']];
-					unset($drags[$drop['useranswer']['id']]);
+					$drop['answer'] = $this->Dragndrop->getCharacterSubmission($drop['id'], $character['id']);
+					if(!is_null($drop['answer']))
+					{
+						$drop['answer'] = $drags[$drop['answer']];
+						unset($drags[$drop['answer']['id']]);
+					}
 				}
 			}
 			
@@ -169,14 +173,15 @@
 			
 			// Get Drops
 			$drops = $this->Dragndrop->getDrops($dndField['quest_id']);
+			
+			// Get Character answers
 			foreach($drops as &$drop)
 			{
-				// Get saved user answer
-				$drop['useranswer'] = $this->Dragndrop->getCharacterSubmission($drop['id'], $character['id']);
-				if(!is_null($drop['useranswer']))
+				$drop['answer'] = $this->Dragndrop->getCharacterSubmission($drop['id'], $character['id']);
+				if(!is_null($drop['answer']))
 				{
-					$drop['useranswer'] = $drags[$drop['useranswer']];
-					unset($drags[$drop['useranswer']['id']]);
+					$drop['answer'] = $drags[$drop['answer']];
+					unset($drags[$drop['answer']['id']]);
 				}
 			}
 			
