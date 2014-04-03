@@ -56,11 +56,19 @@
 			}
 			if(is_null($questgroup['hierarchy']))
 			{
+				// Get related Questgroup
 				$questtext = $this->Questtexts->getRelatedQuesttextForQuestgroup($currentQuestgroup['id']);
 				$quest = $this->Quests->getQuestById($questtext['quest_id']);
 				$currentQuestgroup = $this->Questgroups->getQuestgroupById($quest['questgroup_id']);
 				$currentQuestgroup['hierarchy'] = $this->Questgroupshierarchy->getHierarchyForQuestgroup($currentQuestgroup['id']);
 				$quest['questgroup'] = $currentQuestgroup;
+				
+				// Use Hierarchy name for optional Questgroup
+				if(!empty($parentQuestgroupshierarchy)) {
+					$parentQuestgroupshierarchy[0]['hierarchy'] = $currentQuestgroup['hierarchy'];
+					unset($parentQuestgroupshierarchy[0]['hierarchy']['questgroup_pos']);
+				}
+				
 				array_unshift($parentQuestgroupshierarchy, $quest);
 				array_unshift($parentQuestgroupshierarchy, $currentQuestgroup);
 			}
