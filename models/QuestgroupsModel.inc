@@ -264,7 +264,7 @@
 				}
 				
 				// Get next Quests
-				while(!is_null($currentQuest) && !empty($nextQuests = $this->Quests->getNextQuests($currentQuest['id'])))
+				while(!is_null($currentQuest) && $nextQuests = $this->Quests->getNextQuests($currentQuest['id']) && !empty($nextQuests))
 				{
 					// Get choosed Quest
 					$currentQuest = null;
