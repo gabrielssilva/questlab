@@ -14,7 +14,7 @@
 <?php if(is_null($submission)) : ?>
 <form method="post" enctype="multipart/form-data">
 	<input type="file" name="answers" /><br />
-	Erlaubte Dateiformate:
+	<?=_('Allowed file types')?>:
 	<ul>
 		<?php foreach($mimetypes as &$mimetype) : ?>
 		<li><?=$mimetype['mimetype']?> (<?=_('max.')?> <?=$numberFormatter->format(round($mimetype['size']/(1024*1024),2))?> MiB)</li>

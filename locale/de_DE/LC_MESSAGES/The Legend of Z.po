@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: The Legend of Z\n"
-"POT-Creation-Date: 2014-04-03 01:16+0100\n"
-"PO-Revision-Date: 2014-04-03 01:16+0100\n"
+"POT-Creation-Date: 2014-04-04 13:58+0100\n"
+"PO-Revision-Date: 2014-04-04 13:59+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de_DE\n"
@@ -18,7 +18,7 @@ msgstr ""
 
 #: ../../../questtypes/dragndrop/html/quest.tpl:16
 #: ../../../questtypes/multiplechoice/html/quest.tpl:19
-#: ../../../questtypes/submit/html/quest.tpl:12
+#: ../../../questtypes/submit/html/quest.tpl:23
 #: ../../../questtypes/textinput/html/quest.tpl:10
 msgid "solve"
 msgstr "lösen"
@@ -32,15 +32,30 @@ msgstr "Frage %d von %d"
 msgid "solve Question"
 msgstr "Frage lösen"
 
+#: ../../../questtypes/submit/html/quest.tpl:4
+#, php-format
+msgid "File has wrong type “%s”"
+msgstr "Der Dateityp „%s“ ist nicht erlaubt"
+
 #: ../../../questtypes/submit/html/quest.tpl:6
-msgid "Words"
-msgstr "Wörter"
+msgid "File exceeds size maximum"
+msgstr "Die Datei ist zu groß"
 
 #: ../../../questtypes/submit/html/quest.tpl:8
-msgid "Word"
-msgstr "Wort"
+#, php-format
+msgid "Error during file upload: %s"
+msgstr "Fehler beim Dateiupload: %s"
 
-#: ../../../questtypes/submit/html/quest.tpl:10
+#: ../../../questtypes/submit/html/quest.tpl:17
+msgid "Allowed file types"
+msgstr "Erlaubte Dateiformate"
+
+#: ../../../questtypes/submit/html/quest.tpl:20
+msgid "max."
+msgstr "max."
+
+#: ../../../questtypes/submit/html/quest.tpl:26
+#: ../../../questtypes/submit/html/submission.tpl:2
 #, php-format
 msgid "submitted at %s on %s h"
 msgstr "eingereicht am %s um %s Uhr"
@@ -48,13 +63,13 @@ msgstr "eingereicht am %s um %s Uhr"
 #: ../../../questtypes/submit/html/submission.tpl:6
 #: ../../../questtypes/submit/html/submission.tpl:8
 #: ../../../views/html/quests/quest.tpl:40
-#: ../../../views/html/quests/submissions.tpl:24
+#: ../../../views/html/quests/submissions.tpl:33
 msgid "solved"
 msgstr "gelöst"
 
 #: ../../../questtypes/submit/html/submission.tpl:9
 #: ../../../views/html/quests/quest.tpl:42
-#: ../../../views/html/quests/submissions.tpl:15
+#: ../../../views/html/quests/submissions.tpl:24
 msgid "unsolved"
 msgstr "ungelöst"
 
@@ -173,10 +188,14 @@ msgstr "Lösung anzeigen"
 msgid "Quest"
 msgstr "Quest"
 
-#: ../../../views/html/quests/submission.tpl:13
+#: ../../../views/html/quests/submission.tpl:14
 #, php-format
 msgid "Submission of %s"
 msgstr "Lösungen von %s"
+
+#: ../../../views/html/quests/submissions.tpl:15
+msgid "submitted"
+msgstr "eingereicht am %s um %s Uhr"
 
 #: ../../../views/html/seminaries/create.tpl:2
 msgid "New seminary"
@@ -287,6 +306,12 @@ msgstr "registriert am %s"
 #: ../../../views/html/users/user.tpl:18
 msgid "Roles"
 msgstr "Rollen"
+
+#~ msgid "Words"
+#~ msgstr "Wörter"
+
+#~ msgid "Word"
+#~ msgstr "Wort"
 
 #~ msgid "Go on"
 #~ msgstr "Hier geht es weiter"
