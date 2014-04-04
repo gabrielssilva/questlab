@@ -1,7 +1,7 @@
 <?php if(!is_null($exception)) : ?>
 <p class="error">
 	<?php if($exception->getNestedException() instanceof \hhu\z\exceptions\WrongFiletypeException) : ?>
-	<?=_('File has wrong type')?>
+	<?=sprintf(_('File has wrong type “%s”'), $exception->getNestedException()->getType())?>
 	<?php elseif($exception->getNestedException() instanceof \hhu\z\exceptions\WrongFiletypeException) : ?>
 	<?=_('File exceeds size maximum')?>
 	<?php elseif($exception->getNestedException() instanceof \hhu\z\exceptions\FileUploadException) : ?>

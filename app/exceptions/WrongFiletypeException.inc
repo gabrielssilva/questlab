@@ -30,7 +30,14 @@
 		 * 
 		 * @var string
 		 */
-		const MESSAGE	=	'File has wrong type';
+		const MESSAGE	=	'File has wrong type “%s”';
+		
+		/**
+		 * Type of file
+		 * 
+		 * @var string
+		 */
+		private $type;
 		
 		
 		
@@ -38,12 +45,29 @@
 		/**
 		 * Construct a new exception.
 		 */
-		function __construct($message=self::MESSAGE, $code=self::CODE)
+		function __construct($type, $message=self::MESSAGE, $code=self::CODE)
 		{
 			parent::__construct(
 				$message,
-				$code
+				$code,
+				$type
 			);
+			
+			// Store values
+			$this->type = $type;
+		}
+		
+		
+		
+		
+		/**
+		 * Get type of file.
+		 * 
+		 * @return	Type of file
+		 */
+		public function getType()
+		{
+			return $this->type;
 		}
 		
 	}

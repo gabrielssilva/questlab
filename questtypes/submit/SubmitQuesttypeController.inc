@@ -67,7 +67,7 @@
 				}
 				if(is_null($answerMimetype)) {
 					throw new \hhu\z\exceptions\SubmissionNotValidException(
-						new \hhu\z\exceptions\WrongFiletypeException()
+						new \hhu\z\exceptions\WrongFiletypeException($answer['type'])
 					);
 				}
 				
