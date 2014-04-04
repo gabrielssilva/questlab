@@ -49,6 +49,13 @@
 			{
 				$answer = $_FILES['answers'];
 				
+				// Check error
+				if($answer['error'] !== 0) {
+					throw new \hhu\z\exceptions\SubmissionNotValidException(
+						new \hhu\z\exceptions\FileUploadException($answer['error'])
+					);
+				}
+				
 				// Check mimetype
 				$mimetypes = $this->Submit->getAllowedMimetypes($seminary['id']);
 				$answerMimetype = null;
@@ -58,13 +65,13 @@
 						break;
 					}
 				}
-				
-				// Check file
 				if(is_null($answerMimetype)) {
 					throw new \hhu\z\exceptions\SubmissionNotValidException(
 						new \hhu\z\exceptions\WrongFiletypeException()
 					);
 				}
+				
+				// Check file size
 				if($answer['size'] > $answerMimetype['size']) {
 					throw new \hhu\z\exceptions\SubmissionNotValidException(
 						new \hhu\z\exceptions\MaxFilesizeException()
@@ -72,7 +79,11 @@
 				}
 				
 				// Save file
-				$this->Submit->setCharacterSubmission($seminary['id'], $quest['id'], $this->Auth->getUserId(), $character['id'], $answer);
+				if(!$this->Submit->setCharacterSubmission($seminary['id'], $quest['id'], $this->Auth->getUserId(), $character['id'], $answer)) {
+					throw new \hhu\z\exceptions\SubmissionNotValidException(
+						new \hhu\z\exceptions\FileUploadException(error_get_last()['message'])
+					);
+				}
 			}
 		}
 		
