@@ -277,17 +277,14 @@
 				$questmedia = $this->Media->getMediaById($quest['questsmedia_id']);
 			}
 			
+			// Get submitted Character submissions
+			$submittedSubmissionCharacters = $this->Characters->getCharactersSubmittedQuest($quest['id']);
+			
 			// Get unsolved Character submissions
-			$unsolvedSubmissions = $this->Quests->getCharactersUnsolvedQuest($quest['id']);
-			foreach($unsolvedSubmissions as &$submission) {
-				$submission['character'] = $this->Characters->getCharacterById($submission['character_id']);
-			}
+			$unsolvedSubmissionCharacters = $this->Characters->getCharactersUnsolvedQuest($quest['id']);
 			
 			// Get solved Character submissions
-			$solvedSubmissions = $this->Quests->getCharactersSolvedQuest($quest['id']);
-			foreach($solvedSubmissions as &$submission) {
-				$submission['character'] = $this->Characters->getCharacterById($submission['character_id']);
-			}
+			$solvedSubmissionCharacters = $this->Characters->getCharactersSolvedQuest($quest['id']);
 			
 			
 			// Pass data to view
@@ -295,8 +292,9 @@
 			$this->set('questgroup', $questgroup);
 			$this->set('quest', $quest);
 			$this->set('media', $questmedia);
-			$this->set('unsolvedsubmissions', $unsolvedSubmissions);
-			$this->set('solvedsubmissions', $solvedSubmissions);
+			$this->set('submittedSubmissionCharacters', $submittedSubmissionCharacters);
+			$this->set('unsolvedSubmissionCharacters', $unsolvedSubmissionCharacters);
+			$this->set('solvedSubmissionCharacters', $solvedSubmissionCharacters);
 		}
 		
 		
@@ -380,27 +378,39 @@
 					$answers = $this->request->getPostParam('answers');
 					
 					// Save answers in database
-					if(!$this->Quests->hasCharacterSolvedQuest($quest['id'], $character['id'])) {
-						$questtypeAgent->saveAnswersOfCharacter($seminary, $questgroup, $quest, $character, $answers);
-					}
+					try {
+						if(!$this->Quests->hasCharacterSolvedQuest($quest['id'], $character['id'])) {
+							$questtypeAgent->saveAnswersOfCharacter($seminary, $questgroup, $quest, $character, $answers);
+						}
 					
-					// Match answers with correct ones
-					$status = $questtypeAgent->matchAnswersofCharacter($seminary, $questgroup, $quest, $character, $answers);
-					if($status === true)
-					{
-						// Mark Quest as solved
-						$this->Quests->setQuestSolved($quest['id'], $character['id']);
+						// Match answers with correct ones
+						$status = $questtypeAgent->matchAnswersofCharacter($seminary, $questgroup, $quest, $character, $answers);
+						if($status === true)
+						{
+							// Mark Quest as solved
+							$this->Quests->setQuestSolved($quest['id'], $character['id']);
 						
-						// Redirect
-						$this->redirect($this->linker->link('Epilog', 5, true, array('status'=>'solved')));
+							// Redirect
+							$this->redirect($this->linker->link('Epilog', 5, true, array('status'=>'solved')));
+						}
+						elseif($status === false)
+						{
+							// Mark Quest as unsolved
+							$this->Quests->setQuestUnsolved($quest['id'], $character['id']);
+						
+							// Redirect
+							$this->redirect($this->linker->link('Prolog', 5, true, array('status'=>'unsolved')));
+						}
+						else {
+							// Mark Quest as submitted
+							$this->Quests->setQuestSubmitted($quest['id'], $character['id']);
+						
+							// Redirect
+							$this->redirect($this->linker->link('Prolog', 5, true));
+						}
 					}
-					elseif($status === false)
-					{
-						// Mark Quest as unsolved
-						$this->Quests->setQuestUnsolved($quest['id'], $character['id']);
-						
-						// Redirect
-						$this->redirect($this->linker->link('Prolog', 5, true, array('status'=>'unsolved')));
+					catch(\hhu\z\exceptions\SubmissionNotValidException $e) {
+						$response->addParam($e);
 					}
 				}
 				

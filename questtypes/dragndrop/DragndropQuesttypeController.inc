@@ -102,12 +102,13 @@
 		 * Display a text with input fields and evaluate if user input
 		 * matches with stored regular expressions.
 		 * 
-		 * @param	array	$seminary	Current Seminary data
-		 * @param	array	$questgroup	Current Questgroup data
-		 * @param	array	$quest		Current Quest data
-		 * @param	array	$character	Current Character data
+		 * @param	array		$seminary	Current Seminary data
+		 * @param	array		$questgroup	Current Questgroup data
+		 * @param	array		$quest		Current Quest data
+		 * @param	array		$character	Current Character data
+		 * @param	Exception	$exception	Character submission exception
 		 */
-		public function quest($seminary, $questgroup, $quest, $character)
+		public function quest($seminary, $questgroup, $quest, $character, $exception)
 		{
 			// Get Drag&Drop field
 			$dndField = $this->Dragndrop->getDragndrop($quest['id']);

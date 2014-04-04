@@ -12,20 +12,29 @@
 <?php endif ?>
 
 <section>
+	<h1><?=_('submitted')?></h1>
+	<ul>
+		<?php foreach($submittedSubmissionCharacters as &$character) : ?>
+		<li>
+			<a href="<?=$linker->link(array('submission',$seminary['url'],$questgroup['url'],$quest['url'],$character['url']),1)?>"><?=$character['name']?></a>
+		</li>
+		<?php endforeach?>
+	</ul>
+	
 	<h1><?=_('unsolved')?></h1>
 	<ul>
-		<?php foreach($unsolvedsubmissions as &$submission) : ?>
+		<?php foreach($unsolvedSubmissionCharacters as &$character) : ?>
 		<li>
-			<a href="<?=$linker->link(array('submission',$seminary['url'],$questgroup['url'],$quest['url'],$submission['character']['url']),1)?>"><?=$submission['character']['name']?></a>
+			<a href="<?=$linker->link(array('submission',$seminary['url'],$questgroup['url'],$quest['url'],$character['url']),1)?>"><?=$character['name']?></a>
 		</li>
 		<?php endforeach?>
 	</ul>
 
 	<h1><?=_('solved')?></h1>
 	<ul>
-		<?php foreach($solvedsubmissions as &$submission) : ?>
+		<?php foreach($solvedSubmissionCharacters as &$character) : ?>
 		<li>
-			<a href="<?=$linker->link(array('submission',$seminary['url'],$questgroup['url'],$quest['url'],$submission['character']['url']),1)?>"><?=$submission['character']['name']?></a>
+			<a href="<?=$linker->link(array('submission',$seminary['url'],$questgroup['url'],$quest['url'],$character['url']),1)?>"><?=$character['name']?></a>
 		</li>
 		<?php endforeach?>
 	</ul>

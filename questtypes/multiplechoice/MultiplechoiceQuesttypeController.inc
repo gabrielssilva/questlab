@@ -112,12 +112,13 @@
 		 * Display questions with a checkbox to let the user choose the
 		 * right ones.
 		 * 
-		 * @param	array	$seminary	Current Seminary data
-		 * @param	array	$questgroup	Current Questgroup data
-		 * @param	array	$quest		Current Quest data
-		 * @param	array	$character	Current Character data
+		 * @param	array		$seminary	Current Seminary data
+		 * @param	array		$questgroup	Current Questgroup data
+		 * @param	array		$quest		Current Quest data
+		 * @param	array		$character	Current Character data
+		 * @param	Exception	$exception	Character submission exception
 		 */
-		public function quest($seminary, $questgroup, $quest, $character)
+		public function quest($seminary, $questgroup, $quest, $character, $exception)
 		{
 			// Get count of questions
 			$count = $this->Multiplechoice->getQuestionsCountOfQuest($quest['id']);

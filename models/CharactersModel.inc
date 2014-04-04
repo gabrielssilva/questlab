@@ -254,6 +254,88 @@
 			return 1;
 		}
 		
+		
+		/**
+		 * Get Characters that solved a Quest.
+		 * 
+		 * @param	int	$questId	ID of Quest to get Characters for
+		 * @return	array			Characters data
+		 */
+		public function getCharactersSolvedQuest($questId)
+		{
+			return $data = $this->db->query(
+				'SELECT characters.id, characters.created, characters.charactertype_id, characters.name, characters.url, characters.user_id, characters.xps, characters.xplevel, charactertypes.name AS charactertype_name, charactertypes.url AS charactertypes_url, media.url AS avatar_url, media.description AS avatar_description '.
+				'FROM v_characters AS characters '.
+				'LEFT JOIN charactertypes ON charactertypes.id = characters.charactertype_id '.
+				'LEFT JOIN avatars ON avatars.id = characters.avatar_id '.
+				'LEFT JOIN avatarpictures ON avatarpictures.media_id = avatars.avatarpicture_id '.
+				'LEFT JOIN media ON media.id = avatarpictures.media_id '.
+				'WHERE EXISTS ('.
+					'SELECT character_id FROM quests_characters WHERE character_id = characters.id AND quest_id = ? AND status = ?'.
+				')',
+				'ii',
+				$questId,
+				QuestsModel::QUEST_STATUS_SOLVED
+			);
+		}
+		
+		
+		/**
+		 * Get Characters that did not solv a Quest.
+		 * 
+		 * @param	int	$questId	ID of Quest to get Characters for
+		 * @return	array			Characters data
+		 */
+		public function getCharactersUnsolvedQuest($questId)
+		{
+			return $data = $this->db->query(
+				'SELECT characters.id, characters.created, characters.charactertype_id, characters.name, characters.url, characters.user_id, characters.xps, characters.xplevel, charactertypes.name AS charactertype_name, charactertypes.url AS charactertypes_url, media.url AS avatar_url, media.description AS avatar_description '.
+				'FROM v_characters AS characters '.
+				'LEFT JOIN charactertypes ON charactertypes.id = characters.charactertype_id '.
+				'LEFT JOIN avatars ON avatars.id = characters.avatar_id '.
+				'LEFT JOIN avatarpictures ON avatarpictures.media_id = avatars.avatarpicture_id '.
+				'LEFT JOIN media ON media.id = avatarpictures.media_id '.
+				'WHERE EXISTS ('.
+					'SELECT character_id FROM quests_characters WHERE character_id = characters.id AND quest_id = ? AND status = ?'.
+				') AND NOT EXISTS ('.
+					'SELECT character_id FROM quests_characters WHERE character_id = characters.id AND quest_id = ? AND status = ?'.
+				')',
+				'iiii',
+				$questId, QuestsModel::QUEST_STATUS_UNSOLVED,
+				$questId, QuestsModel::QUEST_STATUS_SOLVED
+			);
+		}
+		
+		
+		/**
+		 * Get Characters that sent a submission for a Quest.
+		 * 
+		 * @param	int	$questId	ID of Quest to get Characters for
+		 * @return	array			Characters data
+		 */
+		public function getCharactersSubmittedQuest($questId)
+		{
+			return $data = $this->db->query(
+				'SELECT characters.id, characters.created, characters.charactertype_id, characters.name, characters.url, characters.user_id, characters.xps, characters.xplevel, charactertypes.name AS charactertype_name, charactertypes.url AS charactertypes_url, media.url AS avatar_url, media.description AS avatar_description '.
+				'FROM v_characters AS characters '.
+				'LEFT JOIN charactertypes ON charactertypes.id = characters.charactertype_id '.
+				'LEFT JOIN avatars ON avatars.id = characters.avatar_id '.
+				'LEFT JOIN avatarpictures ON avatarpictures.media_id = avatars.avatarpicture_id '.
+				'LEFT JOIN media ON media.id = avatarpictures.media_id '.
+				'WHERE EXISTS ('.
+					'SELECT character_id FROM quests_characters WHERE character_id = characters.id AND quest_id = ? AND status = ?'.
+				') AND NOT EXISTS ('.
+					'SELECT character_id FROM quests_characters WHERE character_id = characters.id AND quest_id = ? AND status = ?'.
+				') AND NOT EXISTS ('.
+					'SELECT character_id FROM quests_characters WHERE character_id = characters.id AND quest_id = ? AND status = ?'.
+				')',
+				'iiiiii',
+				$questId, QuestsModel::QUEST_STATUS_SUBMITTED,
+				$questId, QuestsModel::QUEST_STATUS_UNSOLVED,
+				$questId, QuestsModel::QUEST_STATUS_SOLVED
+			);
+		}
+		
 	}
 
 ?>

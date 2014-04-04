@@ -59,12 +59,13 @@
 		 * 
 		 * Show the task of a Quest.
 		 * 
-		 * @param	array	$seminary	Current Seminary data
-		 * @param	array	$questgroup	Current Questgroup data
-		 * @param	array	$quest		Current Quest data
-		 * @param	array	$character	Current Character data
+		 * @param	array		$seminary	Current Seminary data
+		 * @param	array		$questgroup	Current Questgroup data
+		 * @param	array		$quest		Current Quest data
+		 * @param	array		$character	Current Character data
+		 * @param	Exception	$exception	Character submission exception
 		 */
-		public abstract function quest($seminary, $questgroup, $quest, $character);
+		public abstract function quest($seminary, $questgroup, $quest, $character, $exception);
 		
 		
 		

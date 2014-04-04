@@ -24,19 +24,25 @@
 		 * 
 		 * @var int;
 		 */
-		const QUEST_STATUS_ENTERED = 1;
+		const QUEST_STATUS_ENTERED = 0;
 		/**
-		 * Quest-status: Solved
+		 * Quest-status: submitted
 		 * 
 		 * @var int;
 		 */
-		const QUEST_STATUS_SOLVED = 0;
+		const QUEST_STATUS_SUBMITTED = 1;
 		/**
 		 * Quest-status: Unsolved
 		 * 
 		 * @var int;
 		 */
-		const QUEST_STATUS_UNSOLVED = -1;
+		const QUEST_STATUS_UNSOLVED = 2;
+		/**
+		 * Quest-status: Solved
+		 * 
+		 * @var int;
+		 */
+		const QUEST_STATUS_SOLVED = 3;
 		
 		
 		
@@ -184,14 +190,14 @@
 		
 		
 		/**
-		 * Mark a Quest as solved for a Character.
+		 * Mark a Quest as submitted for a Character.
 		 * 
-		 * @param	int	$questId	ID of Quest to mark as solved
-		 * @param	int	$characterId	ID of Character that solved the Quest
+		 * @param	int	$questId	ID of Quest to mark as unsolved
+		 * @param	int	$characterId	ID of Character that unsolved the Quest
 		 */
-		public function setQuestSolved($questId, $characterId)
+		public function setQuestSubmitted($questId, $characterId)
 		{
-			$this->setQuestStatus($questId, $characterId, static::QUEST_STATUS_SOLVED);
+			$this->setQuestStatus($questId, $characterId, static::QUEST_STATUS_SUBMITTED);
 		}
 		
 		
@@ -204,6 +210,18 @@
 		public function setQuestUnsolved($questId, $characterId)
 		{
 			$this->setQuestStatus($questId, $characterId, static::QUEST_STATUS_UNSOLVED);
+		}
+		
+		
+		/**
+		 * Mark a Quest as solved for a Character.
+		 * 
+		 * @param	int	$questId	ID of Quest to mark as solved
+		 * @param	int	$characterId	ID of Character that solved the Quest
+		 */
+		public function setQuestSolved($questId, $characterId)
+		{
+			$this->setQuestStatus($questId, $characterId, static::QUEST_STATUS_SOLVED, false);
 		}
 		
 		
@@ -276,48 +294,6 @@
 			
 			
 			return (!empty($count) && intval($count[0]['c']) > 0);
-		}
-		
-		
-		/**
-		 * Get Characters that solved a Quest.
-		 * 
-		 * @param	int	$questId	ID of Quest to get Characters for
-		 * @return	array			Characters data
-		 */
-		public function getCharactersSolvedQuest($questId)
-		{
-			return $data = $this->db->query(
-				'SELECT character_id, created, text '.
-				'FROM questtypes_submit_characters '.
-				'WHERE quest_id = ? AND EXISTS ('.
-					'SELECT character_id FROM quests_characters WHERE quest_id = questtypes_submit_characters.quest_id AND status = ?'.
-				')',
-				'ii',
-				$questId,
-				static::QUEST_STATUS_SOLVED
-			);
-		}
-		
-		
-		/**
-		 * Get Characters that did not solved a Quest.
-		 * 
-		 * @param	int	$questId	ID of Quest to get Characters for
-		 * @return	array			Characters data
-		 */
-		public function getCharactersUnsolvedQuest($questId)
-		{
-			return $data = $this->db->query(
-				'SELECT character_id, created, text '.
-				'FROM questtypes_submit_characters '.
-				'WHERE quest_id = ? AND NOT EXISTS ('.
-					'SELECT character_id FROM quests_characters WHERE quest_id = questtypes_submit_characters.quest_id AND status = ?'.
-				')',
-				'ii',
-				$questId,
-				static::QUEST_STATUS_SOLVED
-			);
 		}
 		
 		
