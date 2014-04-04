@@ -19,32 +19,48 @@
 	 */
 	class SubmitQuesttypeModel extends \hhu\z\QuesttypeModel
 	{
+		/**
+		 * Required models
+		 * 
+		 * @var array
+		 */
+		public $models = array('uploads');
 		
 		
 		
 		
 		/**
-		 * Save Character’s submitted text.
+		 * Save Character’s submitted upload.
 		 * 
 		 * @param	int	$questId	ID of Quest
 		 * @param	int	$characterId	ID of Character
-		 * @param	string	$text		Submitted text
+		 * @param	array	$file		Submitted upload
 		 */
-		public function setCharacterSubmission($questId, $characterId, $text)
+		public function setCharacterSubmission($seminaryId, $questId, $userId, $characterId, $file)
 		{
+			// Save file on harddrive
+			$uploadId = $this->Uploads->uploadFile($userId, $file['name'], $file['tmp_name'], $file['type'], $seminaryId);
+			if($uploadId === false) {
+				return false;
+			}
+			
+			// Create database record
 			$this->db->query(
 				'INSERT INTO questtypes_submit_characters '.
-				'(quest_id, character_id, text) '.
+				'(quest_id, character_id, upload_id) '.
 				'VALUES '.
 				'(?, ?, ?) ',
-				'iis',
-				$questId, $characterId, $text
+				'iii',
+				$questId, $characterId, $uploadId
 			);
+			
+			
+			return true;
 		}
 		
 		
 		/**
-		 * Get text submitted by Character.
+		 * Get upload submitted by Character.
 		 * 
 		 * @param	int	$questId	ID of Quest
 		 * @param	int	$characterId	ID of Character
@@ -53,18 +69,36 @@
 		public function getCharacterSubmission($questId, $characterId)
 		{
 			$data = $this->db->query(
-				'SELECT created, text '.
+				'SELECT upload_id '.
 				'FROM questtypes_submit_characters '.
 				'WHERE quest_id = ? AND character_id = ?',
 				'ii',
 				$questId, $characterId
 			);
 			if(!empty($data)) {
-				return $data[0];
+				return $this->Uploads->getUploadById($data[0]['upload_id']);
 			}
 			
 			
 			return null;
+		}
+		
+		
+		/**
+		 * Get allowed mimetypes for uploading a file.
+		 * 
+		 * @param	int	$seminaryId	ID of Seminary
+		 * @return	array			Allowed mimetypes
+		 */
+		public function getAllowedMimetypes($seminaryId)
+		{
+			return $this->db->query(
+				'SELECT id, mimetype, size '.
+				'FROM questtypes_submit_mimetypes '.
+				'WHERE seminary_id = ?',
+				'i',
+				$seminaryId
+			);
 		}
 		
 	}

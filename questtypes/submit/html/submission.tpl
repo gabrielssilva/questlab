@@ -1,5 +1,5 @@
 <form method="post">
-	<?=\hhu\z\Utils::t($submission['text'])?>
+	<a href="<?=$linker->link(array('uploads','index',$submission['url']))?>"><?=$submission['name']?></a> (<?=sprintf(_('submitted at %s on %s h'), $dateFormatter->format(new \DateTime($submission['created'])), $timeFormatter->format(new \DateTime($submission['created'])))?>)
 	<br /><br />
 	
 	<?php if($solved) : ?>
