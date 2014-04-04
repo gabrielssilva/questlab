@@ -62,7 +62,8 @@
 			'locale'	=>	'locale',
 			'media'		=>	'media',
 			'questtypes'	=>	'questtypes',
-			'temporary'	=>	'tmp'
+			'temporary'	=>	'tmp',
+			'uploads'	=>	'uploads'
 		);
 		
 		
@@ -87,7 +88,9 @@
 			array('characters/(?!(index|character))',			'characters/index/$1',			true),
 			array('charactergroups/(?!(index|groupsgroup|group))',		'charactergroups/index/$1',		true),
 			array('charactergroupsquests/(?!(quest))',			'charactergroupsquests/quest/$1',	true),
-			array('media/(.*)',						'media/$1?layout=binary',		false)
+			array('media/(.*)',						'media/$1?layout=binary',		false),
+			array('uploads/(.*)',						'uploads/$1?layout=binary',		false),
+			array('uploads/(?!(index))',					'uploads/index/$1',			true)
 		);
 
 
@@ -104,7 +107,8 @@
 			//array('seminaries/seminary/(.*)',		'$1',				false)
 			array('characters/index/(.*)',			'characters/$1',		true),
 			array('charactergroups/index/(.*)',		'charactergroups/$1',		true),
-			array('charactergroupsquests/quest/(.*)',	'charactergroupsquests/$1',	true)
+			array('charactergroupsquests/quest/(.*)',	'charactergroupsquests/$1',	true),
+			array('uploads/index/(.*)',			'uploads/$1',			true)
 		);
 		
 		
