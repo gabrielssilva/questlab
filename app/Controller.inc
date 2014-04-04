@@ -67,7 +67,7 @@
 			// Create linker
 			$this->linker = new \nre\core\Linker($this->request);
 			
-			// Create date and time formatter
+			// Create date and time and number formatter
 			$this->set('dateFormatter', new \IntlDateFormatter(
 				\nre\core\Config::getDefault('locale'),
 				\IntlDateFormatter::MEDIUM,
@@ -79,6 +79,10 @@
 				\IntlDateFormatter::NONE,
 				\IntlDateFormatter::SHORT,
 				NULL
+			));
+			$this->set('numberFormatter', new \NumberFormatter(
+				\nre\core\Config::getDefault('locale'),
+				\NumberFormatter::DEFAULT_STYLE
 			));
 		}
 		
