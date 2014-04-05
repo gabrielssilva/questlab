@@ -13,7 +13,7 @@
 <?php endif ?>
 <?php if(is_null($submission)) : ?>
 <form method="post" enctype="multipart/form-data">
-	<input type="file" name="answers" /><br />
+	<input type="file" name="answers" required="required" accept="<?=implode(',', array_map(function($m) { return $m['mimetype']; }, $mimetypes))?>" /><br />
 	<?=_('Allowed file types')?>:
 	<ul>
 		<?php foreach($mimetypes as &$mimetype) : ?>
