@@ -74,7 +74,7 @@
 			// Media
 			$questmedia = null;
 			if(!is_null($quest['questsmedia_id'])) {
-				$questmedia = $this->Media->getMediaById($quest['questsmedia_id']);
+				$questmedia = $this->Media->getSeminaryMediaById($quest['questsmedia_id']);
 			}
 			
 			

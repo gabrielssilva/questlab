@@ -35,19 +35,18 @@
 		
 		
 		/**
-		 * Get a Medium by its URL.
+		 * Get a medium by its URL.
 		 * 
 		 * @throws	IdNotFoundException
-		 * @param	int	$seminaryId	ID of the seminary
 		 * @param	string	$mediaURL	URL-name of the Medium
 		 * @return	array			Medium data
 		 */
-		public function getMediaByUrl($seminaryId, $mediaUrl)
+		public function getMediaByUrl($mediaUrl)
 		{
 			$data = $this->db->query(
 				'SELECT id, name, url, description, mimetype '.
 				'FROM media '.
-				'WHERE media.url = ?',
+				'WHERE url = ?',
 				's',
 				$mediaUrl
 			);
@@ -61,10 +60,9 @@
 		
 		
 		/**
-		 * Get a Medium by its ID.
+		 * Get a medium by its ID.
 		 * 
 		 * @throws	IdNotFoundException
-		 * @param	int	$seminaryId	ID of the seminary
 		 * @param	int	$mediaId	ID of the Medium
 		 * @return	array			Medium data
 		 */
@@ -73,7 +71,59 @@
 			$data = $this->db->query(
 				'SELECT id, name, url, description, mimetype '.
 				'FROM media '.
-				'WHERE media.id = ?',
+				'WHERE id = ?',
+				'i',
+				$mediaId
+			);
+			if(empty($data)) {
+				throw new \nre\exceptions\IdNotFoundException($mediaId);
+			}
+			
+			
+			return $data[0];
+		}
+		
+		
+		/**
+		 * Get a Seminary medium by its URL.
+		 * 
+		 * @throws	IdNotFoundException
+		 * @param	int	$seminaryId	ID of the seminary
+		 * @param	string	$mediaURL	URL-name of the Medium
+		 * @return	array			Medium data
+		 */
+		public function getSeminaryMediaByUrl($seminaryId, $mediaUrl)
+		{
+			$data = $this->db->query(
+				'SELECT id, name, url, description, mimetype '.
+				'FROM seminarymedia '.
+				'WHERE url = ?',
+				's',
+				$mediaUrl
+			);
+			if(empty($data)) {
+				throw new \nre\exceptions\IdNotFoundException($mediaUrl);
+			}
+			
+			
+			return $data[0];
+		}
+		
+		
+		/**
+		 * Get a Seminary medium by its ID.
+		 * 
+		 * @throws	IdNotFoundException
+		 * @param	int	$seminaryId	ID of the seminary
+		 * @param	int	$mediaId	ID of the Medium
+		 * @return	array			Medium data
+		 */
+		public function getSeminaryMediaById($mediaId)
+		{
+			$data = $this->db->query(
+				'SELECT id, name, url, description, mimetype '.
+				'FROM seminarymedia '.
+				'WHERE id = ?',
 				'i',
 				$mediaId
 			);

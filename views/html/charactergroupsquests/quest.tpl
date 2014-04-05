@@ -4,7 +4,7 @@
 <h5><?=$quest['title']?></h5>
 
 <?php if(!is_null($media)) : ?>
-<img src="<?=$linker->link(array('media','index',$seminary['url'],$media['url']))?>" />
+<img src="<?=$linker->link(array('media','seminary',$seminary['url'],$media['url']))?>" />
 <?php endif ?>
 
 <section>

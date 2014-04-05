@@ -70,7 +70,7 @@
 			$questgroup = $this->Questgroups->getQuestgroupByUrl($seminary['id'], $questgroupUrl);
 			$questgroup['picture'] = null;
 			if(!is_null($questgroup['questgroupspicture_id'])) {
-				$questgroup['picture'] = $this->Media->getMediaById($questgroup['questgroupspicture_id']);
+				$questgroup['picture'] = $this->Media->getSeminaryMediaById($questgroup['questgroupspicture_id']);
 			}
 			
 			
@@ -151,7 +151,7 @@
 			{
 				// Questtext media
 				if(!is_null($questtext['questsmedia_id'])) {
-					$questtext['media'] = $this->Media->getMediaById($questtext['questsmedia_id']);
+					$questtext['media'] = $this->Media->getSeminaryMediaById($questtext['questsmedia_id']);
 				}
 				
 				// Related Questgroups
@@ -177,7 +177,7 @@
 			// Quest media
 			$questmedia = null;
 			if(!is_null($quest['questsmedia_id'])) {
-				$questmedia = $this->Media->getMediaById($quest['questsmedia_id']);
+				$questmedia = $this->Media->getSeminaryMediaById($quest['questsmedia_id']);
 			}
 			
 			// Task

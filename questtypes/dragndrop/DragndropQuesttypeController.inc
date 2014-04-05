@@ -112,13 +112,13 @@
 		{
 			// Get Drag&Drop field
 			$dndField = $this->Dragndrop->getDragndrop($quest['id']);
-			$dndField['media'] = $this->Media->getMediaById($dndField['questmedia_id']);
+			$dndField['media'] = $this->Media->getSeminaryMediaById($dndField['questmedia_id']);
 			
 			// Get Drags
 			$drags = array();
 			$dragsByIndex = $this->Dragndrop->getDrags($dndField['quest_id']);
 			foreach($dragsByIndex as &$drag) {
-				$drag['media'] = $this->Media->getMediaById($drag['questmedia_id']);
+				$drag['media'] = $this->Media->getSeminaryMediaById($drag['questmedia_id']);
 				$drags[$drag['id']] = $drag;
 			}
 			
@@ -162,13 +162,13 @@
 		{
 			// Get Drag&Drop field
 			$dndField = $this->Dragndrop->getDragndrop($quest['id']);
-			$dndField['media'] = $this->Media->getMediaById($dndField['questmedia_id']);
+			$dndField['media'] = $this->Media->getSeminaryMediaById($dndField['questmedia_id']);
 			
 			// Get Drags
 			$drags = array();
 			$dragsByIndex = $this->Dragndrop->getDrags($dndField['quest_id']);
 			foreach($dragsByIndex as &$drag) {
-				$drag['media'] = $this->Media->getMediaById($drag['questmedia_id']);
+				$drag['media'] = $this->Media->getSeminaryMediaById($drag['questmedia_id']);
 				$drags[$drag['id']] = $drag;
 			}
 			

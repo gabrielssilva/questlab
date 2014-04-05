@@ -59,11 +59,12 @@
 		 * @var array
 		 */
 		public static $dirs = array(
-			'locale'	=>	'locale',
-			'media'		=>	'media',
-			'questtypes'	=>	'questtypes',
-			'temporary'	=>	'tmp',
-			'uploads'	=>	'uploads'
+			'locale'	=> 'locale',
+			'media'		=> 'media',
+			'seminarymedia'	=> 'seminarymedia',
+			'questtypes'	=> 'questtypes',
+			'temporary'	=> 'tmp',
+			'uploads'	=> 'uploads'
 		);
 		
 		

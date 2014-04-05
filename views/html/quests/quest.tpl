@@ -1,6 +1,6 @@
 <?php if(!is_null($questgroup['picture'])) : ?>
 <div class="moodpic">
-	<img src="<?=$linker->link(array('media','index',$seminary['url'],$questgroup['picture']['url']))?>" />
+	<img src="<?=$linker->link(array('media','seminary',$seminary['url'],$questgroup['picture']['url']))?>" />
 </div>
 <?php endif ?>
 <h1><a href="<?=$linker->link(array('seminaries',$seminary['url']))?>"><?=$seminary['title']?></a></h1>
@@ -16,7 +16,7 @@
 	<div id="qtextbox">
 		<?php foreach($questtexts as &$questtext) : ?>
 		<p class="qtext cf">
-			<?php if(array_key_exists('media', $questtext)) : ?><img src="<?=$linker->link(array('media','index',$seminary['url'],$questtext['media']['url']))?>" /><?php endif ?>
+			<?php if(array_key_exists('media', $questtext)) : ?><img src="<?=$linker->link(array('media','seminary',$seminary['url'],$questtext['media']['url']))?>" /><?php endif ?>
 			<?=\hhu\z\Utils::t($questtext['text'])?>
 		</p>
 		<?php if(count($questtext['relatedQuestsgroups']) > 0 || !empty($questtext['abort_text'])) : ?>

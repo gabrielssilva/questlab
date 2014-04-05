@@ -127,7 +127,7 @@
 					// Get Media
 					$questgroup['picture'] = null;
 					try {
-						$questgroup['picture'] = $this->Media->getMediaById($questgroup['questgroupspicture_id']);
+						$questgroup['picture'] = $this->Media->getSeminaryMediaById($questgroup['questgroupspicture_id']);
 					}
 					catch(\nre\exceptions\IdNotFoundException $e) {
 					}

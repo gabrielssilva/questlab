@@ -1,6 +1,6 @@
 <?php if(!is_null($picture)) : ?>
 <div class="moodpic">
-	<img src="<?=$linker->link(array('media','index',$seminary['url'],$picture['url']))?>" />
+	<img src="<?=$linker->link(array('media','seminary',$seminary['url'],$picture['url']))?>" />
 </div>
 <?php endif ?>
 <h1><a href="<?=$linker->link(array('seminaries',$seminary['url']))?>"><?=$seminary['title']?></a></h1>

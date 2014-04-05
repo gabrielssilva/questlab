@@ -115,7 +115,7 @@
 			$picture = null;
 			if(!is_null($questgroup['questgroupspicture_id']))
 			{
-				$picture = $this->Media->getMediaById($questgroup['questgroupspicture_id']);
+				$picture = $this->Media->getSeminaryMediaById($questgroup['questgroupspicture_id']);
 			}
 					
 			

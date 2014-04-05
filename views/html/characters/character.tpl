@@ -40,9 +40,8 @@
 		</ul>
 	</div>
 	<div class="cportrait">
-		<img src="http://legende-von-zyren.de/img/avatars/Goblin7.png"><br>
 		<?php if(!is_null($character['avatar_url'])) : ?>
-		<img src="<?=$linker->link(array('media','index',$seminary['url'],$character['avatar_url']))?>" alt="<?=$character['avatar_description']?>" />
+		<img src="<?=$linker->link(array('media','seminary',$seminary['url'],$character['avatar_url']))?>" alt="<?=$character['avatar_description']?>" />
 		<?php endif ?>
 	</div>
 </section>

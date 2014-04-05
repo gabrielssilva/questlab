@@ -25,7 +25,8 @@
 		 * @var array
 		 */
 		public $permissions = array(
-			'index' => array('admin', 'moderator', 'user')
+			'index' => array('admin', 'moderator', 'user', 'guest'),
+			'seminary' => array('admin', 'moderator', 'user', 'guest')
 		);
 		/**
 		 * User seminary permissions
@@ -33,7 +34,7 @@
 		 * @var array
 		 */
 		public $seminaryPermissions = array(
-			'index' => array('admin', 'moderator', 'user')
+			'seminary' => array('admin', 'moderator', 'user', 'guest')
 		);
 		/**
 		 * Required models
@@ -64,21 +65,16 @@
 		
 		
 		/**
-		 * Action: index.
+		 * Action: index
 		 * 
-		 * Display a medium without processing.
+		 * Display a medium.
 		 * 
-		 * @throws	IdNotFoundException
-		 * @param	string	$seminaryUrl	URL-title of the Seminary
 		 * @param	string	$mediaUrl	URL-name of the medium
 		 */
-		public function index($seminaryUrl, $mediaUrl, $action=null)
+		public function index($mediaUrl, $action=null)
 		{
-			// Get Seminary
-			$seminary = $this->Seminaries->getSeminaryByUrl($seminaryUrl);
-			
 			// Get Media
-			$media = $this->Media->getMediaByUrl($seminary['id'], $mediaUrl);
+			$media = $this->Media->getMediaByUrl($mediaUrl);
 			
 			// Get format
 			$format = explode('/', $media['mimetype']);
@@ -89,6 +85,63 @@
 			
 			// Set filename
 			$media['filename'] = ROOT.DS.\nre\configs\AppConfig::$dirs['media'].DS.$media['id'];
+			if(!file_exists($media['filename'])) {
+				throw new \nre\exceptions\IdNotFoundException($mediaUrl);
+			}
+			
+			// Cache
+			if($this->setCacheHeaders($media['filename'])) {
+				return;
+			}
+			
+			// Load and process file
+			$file = null;
+			switch($action)
+			{
+				// No action
+				case null:
+					// Do not process the file
+					$file = file_get_contents($media['filename']);
+				break;
+				default:
+					throw new ParamsNotValidException($action);
+				break;
+			}
+			
+			
+			
+			// Pass data to view
+			$this->set('media', $media);
+			$this->set('file', $file);
+		}
+		
+		
+		/**
+		 * Action: seminary.
+		 * 
+		 * Display a Seminary medium.
+		 * 
+		 * @throws	IdNotFoundException
+		 * @param	string	$seminaryUrl	URL-title of the Seminary
+		 * @param	string	$mediaUrl	URL-name of the medium
+		 */
+		public function seminary($seminaryUrl, $mediaUrl, $action=null)
+		{
+			// Get Seminary
+			$seminary = $this->Seminaries->getSeminaryByUrl($seminaryUrl);
+			
+			// Get Media
+			$media = $this->Media->getSeminaryMediaByUrl($seminary['id'], $mediaUrl);
+			
+			// Get format
+			$format = explode('/', $media['mimetype']);
+			$format = $format[1];
+			
+			// Set content-type
+			$this->response->addHeader("Content-type: ".$media['mimetype']."");
+			
+			// Set filename
+			$media['filename'] = ROOT.DS.\nre\configs\AppConfig::$dirs['seminarymedia'].DS.$media['id'];
 			if(!file_exists($media['filename'])) {
 				throw new \nre\exceptions\IdNotFoundException($mediaUrl);
 			}
