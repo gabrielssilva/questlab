@@ -68,6 +68,38 @@
 		
 		
 		/**
+		 * Validation settings for user input
+		 * 
+		 * @static
+		 * @var array
+		 */
+		public static $validation = array(
+			'username' => array(
+				'minlength'	=> 5,
+				'maxlength'	=> 32,
+				'regex'		=> '/^\w*$/'
+			),
+			'email' => array(
+				'regex'		=> '/^\S+@[\w\d.-]{2,}\.[\w]{2,6}$/iU'
+			),
+			'prename' => array(
+				'minlength'	=> 2,
+				'maxlength'	=> 128,
+				'regex'		=> '/^\S*$/'
+			),
+			'surname' => array(
+				'minlength'	=> 2,
+				'maxlength'	=> 128,
+				'regex'		=> '/^\S*$/'
+			),
+			'password' => array(
+				'minlength'	=> 5,
+				'maxlength'	=> 64
+			)
+		);
+		
+		
+		/**
 		 * Routes
 		 *
 		 * @static
@@ -76,7 +108,7 @@
 		public static $routes = array(
 			array('css/?(.*)',						'css/$1?layout=stylesheet',		true),
 			array('users/([^/]+)/(edit|delete)',				'users/$2/$1',				true),
-			array('users/(?!(index|login|logout|create|edit|delete))',	'users/user/$1',			true),
+			array('users/(?!(index|login|register|logout|create|edit|delete))',	'users/user/$1',			true),
 			array('seminaries/([^/]+)/(edit|delete)',			'seminaries/$2/$1',			true),
 			array('seminaries/(?!(index|create|edit|delete))',		'seminaries/seminary/$1',		true),
 			/*// z/<Seminary>					⇒ z/seminaries/seminary/<Seminary>

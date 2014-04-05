@@ -37,6 +37,12 @@
 		 * @var array
 		 */
 		public $models = array('users', 'characters');
+		/**
+		 * Required components
+		 * 
+		 * @var array
+		 */
+		public $components = array('validation');
 		
 		
 		
@@ -102,12 +108,12 @@
 					$username,
 					$this->request->getPostParam('password')
 				);
-				
+			
 				if(!is_null($userId))
 				{
 					$this->Auth->setUserId($userId);
 					$user = $this->Users->getUserById($userId);
-					
+			
 					$this->redirect($this->linker->link(array($user['url']), 1));
 				}
 			}
@@ -116,6 +122,68 @@
 			// Pass data to view
 			$this->set('username', $username);
 			$this->set('failed', ($this->request->getRequestMethod() == 'POST'));
+		}
+		
+		
+		/**
+		 * Action: register.
+		 * 
+		 * Register a new user.
+		 */
+		public function register()
+		{
+			$username = '';
+			$prename = '';
+			$surname = '';
+			$email = '';
+			
+			$fields = array('username', 'prename', 'surname', 'email', 'password');
+			$validation = array();
+			
+			// Register a new user
+			if($this->request->getRequestMethod() == 'POST' && !is_null($this->request->getPostParam('register')))
+			{
+				// Get params and validate them
+				$validation = $this->Validation->validateParams($this->request->getPostParams(), $fields);
+				$username = $this->request->getPostParam('username');
+				$prename = $this->request->getPostParam('prename');
+				$surname = $this->request->getPostParam('surname');
+				$email = $this->request->getPostParam('email');
+				
+				// Register
+				if($validation === true)
+				{
+					$userId = $this->Users->createUser(
+						$username,
+						$prename,
+						$surname,
+						$email,
+						$this->request->getPostParam('password')
+					);
+			
+					// Login
+					$this->Auth->setUserId($userId);
+					$user = $this->Users->getUserById($userId);
+			
+					// Redirect to user page
+					$this->redirect($this->linker->link(array($user['url']), 1));
+				}
+			}
+			
+			// Get validation settings
+			$validationSettings = array();
+			foreach($fields as &$field) {
+				$validationSettings[$field] = \nre\configs\AppConfig::$validation[$field];
+			}
+			
+			
+			// Pass data to view
+			$this->set('username', $username);
+			$this->set('prename', $prename);
+			$this->set('surname', $surname);
+			$this->set('email', $email);
+			$this->set('validation', $validation);
+			$this->set('validationSettings', $validationSettings);
 		}
 		
 		
@@ -146,6 +214,8 @@
 				// Create new user
 				$userId = $this->Users->createUser(
 					$this->request->getPostParam('username'),
+					$this->request->getPostParam('prename'),
+					$this->request->getPostParam('surname'),
 					$this->request->getPostParam('email'),
 					$this->request->getPostParam('password')
 				);
@@ -180,6 +250,8 @@
 					$this->Users->editUser(
 						$user['id'],
 						$this->request->getPostParam('username'),
+						$this->request->getPostParam('prename'),
+						$this->request->getPostParam('surname'),
 						$this->request->getPostParam('email'),
 						$this->request->getPostParam('password')
 					);

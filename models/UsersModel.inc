@@ -132,22 +132,48 @@
 		 * @param	string	$password	Password of the user to create
 		 * @return	int			ID of the newly created user
 		 */
-		public function createUser($username, $email, $password)
+		public function createUser($username, $prename, $surname, $email, $password)
 		{
-			$this->db->query(
-				'INSERT INTO users '.
-				'(username, url, email, password) '.
-				'VALUES '.
-				'(?, ?, ?, ?)',
-				'ssss',
-				$username,
-				\nre\core\Linker::createLinkParam($username),
-				$email,
-				$this->hash($password)
-			);
+			$userId = null;
+			$this->db->setAutocommit(false);
+			try {
+				// Create user
+				$this->db->query(
+					'INSERT INTO users '.
+					'(username, url, surname, prename, email, password) '.
+					'VALUES '.
+					'(?, ?, ?, ?, ?, ?)',
+					'ssssss',
+					$username,
+					\nre\core\Linker::createLinkParam($username),
+					$surname,
+					$prename,
+					$email,
+					$this->hash($password)
+				);
+				$userId = $this->db->getInsertId();
+				
+				// Add role “user”
+				$this->db->query(
+					'INSERT INTO users_userroles '.
+					'(user_id, userrole_id) '.
+					'SELECT ?, userroles.id '.
+					'FROM userroles '.
+					'WHERE userroles.name = ?',
+					'is',
+					$userId,
+					'user'
+				);
+			}
+			catch(Exception $e) {
+				$this->db->rollback();
+				$this->db->setAutocommit(true);
+				throw $e;
+			}
+			$this->db->setAutocommit(true);
 			
 			
-			return $this->db->getInsertId();
+			return $userId;
 		}
 		
 		
@@ -160,17 +186,20 @@
 		 * @param	string	$email		Changed e‑mail-address of user
 		 * @param	string	$password	Changed plaintext password of user
 		 */
-		public function editUser($userId, $username, $email, $password)
+		public function editUser($userId, $username, $prename, $surname, $email, $password)
 		{
+			$this->db->setAutocommit(false);
 			try {
 				// Update user data
 				$this->db->query(
 					'UPDATE users '.
-					'SET username = ?, url = ?, email = ? '.
+					'SET username = ?, url = ?, prename = ?, surname = ?, email = ? '.
 					'WHERE id = ?',
-					'sssi',
+					'sssssi',
 					$username,
 					\nre\core\Linker::createLinkParam($username),
+					$prename,
+					$surname,
 					$email,
 					$userId
 				);
