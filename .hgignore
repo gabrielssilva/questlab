@@ -2,3 +2,4 @@ syntax: glob
 media/*
 tmp/*
 uploads/*
+seminarymedia/*
