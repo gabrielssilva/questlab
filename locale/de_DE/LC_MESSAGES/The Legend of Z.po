@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: The Legend of Z\n"
-"POT-Creation-Date: 2014-04-05 13:30+0100\n"
-"PO-Revision-Date: 2014-04-05 13:30+0100\n"
+"POT-Creation-Date: 2014-04-05 13:37+0100\n"
+"PO-Revision-Date: 2014-04-05 13:39+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de_DE\n"
@@ -133,6 +133,36 @@ msgstr "Errungenschaften"
 msgid "Introduction"
 msgstr "Einführung"
 
+#: views/html/introduction/index.tpl:4 views/html/introduction/index.tpl:12
+#: views/html/menu/index.tpl:7 views/html/users/login.tpl:3
+#: views/html/users/login.tpl:14
+msgid "Login"
+msgstr "Login"
+
+#: views/html/introduction/index.tpl:7 views/html/introduction/index.tpl:8
+#: views/html/users/create.tpl:6 views/html/users/create.tpl:7
+#: views/html/users/edit.tpl:6 views/html/users/edit.tpl:7
+#: views/html/users/login.tpl:9 views/html/users/login.tpl:10
+#: views/html/users/register.tpl:76 views/html/users/register.tpl:77
+msgid "Username"
+msgstr "Benutzername"
+
+#: views/html/introduction/index.tpl:9 views/html/introduction/index.tpl:10
+#: views/html/users/create.tpl:14 views/html/users/create.tpl:15
+#: views/html/users/edit.tpl:14 views/html/users/edit.tpl:15
+#: views/html/users/login.tpl:11 views/html/users/login.tpl:12
+#: views/html/users/register.tpl:84 views/html/users/register.tpl:85
+msgid "Password"
+msgstr "Passwort"
+
+#: views/html/introduction/index.tpl:13
+msgid "or"
+msgstr "oder"
+
+#: views/html/introduction/index.tpl:13
+msgid "register yourself"
+msgstr "registriere dich"
+
 #: views/html/menu/index.tpl:3 views/html/users/create.tpl:1
 #: views/html/users/delete.tpl:1 views/html/users/edit.tpl:1
 #: views/html/users/index.tpl:1 views/html/users/login.tpl:1
@@ -149,11 +179,6 @@ msgstr "Benutzergruppen"
 #: views/html/seminaries/index.tpl:1
 msgid "Seminaries"
 msgstr "Kurse"
-
-#: views/html/menu/index.tpl:7 views/html/users/login.tpl:3
-#: views/html/users/login.tpl:14
-msgid "Login"
-msgstr "Login"
 
 #: views/html/menu/index.tpl:9
 msgid "Logout"
@@ -239,13 +264,6 @@ msgstr "Bibliothek"
 msgid "New user"
 msgstr "Neuer Benutzer"
 
-#: views/html/users/create.tpl:6 views/html/users/create.tpl:7
-#: views/html/users/edit.tpl:6 views/html/users/edit.tpl:7
-#: views/html/users/login.tpl:9 views/html/users/login.tpl:10
-#: views/html/users/register.tpl:76 views/html/users/register.tpl:77
-msgid "Username"
-msgstr "Benutzername"
-
 #: views/html/users/create.tpl:8 views/html/users/create.tpl:9
 #: views/html/users/edit.tpl:8 views/html/users/edit.tpl:9
 #: views/html/users/register.tpl:78 views/html/users/register.tpl:79
@@ -263,13 +281,6 @@ msgstr "Nachname"
 #: views/html/users/register.tpl:82 views/html/users/register.tpl:83
 msgid "E‑mail address"
 msgstr "E‑Mail-Adresse"
-
-#: views/html/users/create.tpl:14 views/html/users/create.tpl:15
-#: views/html/users/edit.tpl:14 views/html/users/edit.tpl:15
-#: views/html/users/login.tpl:11 views/html/users/login.tpl:12
-#: views/html/users/register.tpl:84 views/html/users/register.tpl:85
-msgid "Password"
-msgstr "Passwort"
 
 #: views/html/users/delete.tpl:2 views/html/users/user.tpl:5
 msgid "Delete user"
@@ -400,9 +411,6 @@ msgstr "Rollen"
 
 #~ msgid "Words"
 #~ msgstr "Wörter"
-
-#~ msgid "Word"
-#~ msgstr "Wort"
 
 #~ msgid "Go on"
 #~ msgstr "Hier geht es weiter"
