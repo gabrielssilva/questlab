@@ -49,7 +49,7 @@
 		{			
 			// Get seminaries
 			return $this->db->query(
-				'SELECT id, created, created_user_id, title, url, description '.
+				'SELECT id, created, created_user_id, title, url, description, media_id '.
 				'FROM seminaries '.
 				'ORDER BY created DESC'
 			);

@@ -66,6 +66,11 @@
 			{
 				// Created user
 				$seminary['creator'] = $this->Users->getUserById($seminary['created_user_id']);
+				
+				// Media
+				if(!is_null($seminary['media_id'])) {
+					$seminary['media'] = $this->Media->getMediaById($seminary['media_id']);
+				}
 			}
 			
 			
