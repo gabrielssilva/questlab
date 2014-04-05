@@ -28,6 +28,8 @@
 		 */
 		public function index()
 		{
+			// Pass data to view
+			$this->set('userId', $this->Auth->getUserId());
 		}
 		
 	}

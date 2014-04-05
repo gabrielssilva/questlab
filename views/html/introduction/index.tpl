@@ -1,6 +1,7 @@
 <h1><?=_('Introduction')?></h1>
 <p>Ein Projekt zum Thema „Gamification im Lehrumfeld“ – basierend auf <a href="http://legende-von-zyren.de">Die Legende von Zyren</a>.</p>
 
+<?php if(is_null($userId)) : ?>
 <h2><?=_('Login')?></h2>
 <form method="post" action="<?=$linker->link(array('users','login'))?>">
 	<fieldset>
@@ -12,6 +13,7 @@
 	<input type="submit" name="login" value="<?=_('Login')?>" />
 	<?=_('or')?> <a href="<?=$linker->link(array('users','register'))?>"><?=_('register yourself')?></a>
 </form>
+<?php endif ?>
 
 <h2>Entwickler</h2>
 <ul>
