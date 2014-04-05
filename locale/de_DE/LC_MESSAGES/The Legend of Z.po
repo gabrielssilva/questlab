@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: The Legend of Z\n"
-"POT-Creation-Date: 2014-04-04 13:58+0100\n"
-"PO-Revision-Date: 2014-04-04 13:59+0100\n"
+"POT-Creation-Date: 2014-04-05 13:30+0100\n"
+"PO-Revision-Date: 2014-04-05 13:30+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de_DE\n"
@@ -10,302 +10,393 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Poedit 1.6.4\n"
-"X-Poedit-Basepath: ./\n"
+"X-Poedit-Basepath: ../../../\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Poedit-SourceCharset: UTF-8\n"
-"X-Poedit-SearchPath-0: ../../../views\n"
-"X-Poedit-SearchPath-1: ../../../questtypes\n"
+"X-Poedit-SearchPath-0: views\n"
+"X-Poedit-SearchPath-1: questtypes\n"
 
-#: ../../../questtypes/dragndrop/html/quest.tpl:16
-#: ../../../questtypes/multiplechoice/html/quest.tpl:19
-#: ../../../questtypes/submit/html/quest.tpl:23
-#: ../../../questtypes/textinput/html/quest.tpl:10
+#: questtypes/dragndrop/html/quest.tpl:16
+#: questtypes/multiplechoice/html/quest.tpl:19
+#: questtypes/submit/html/quest.tpl:23 questtypes/textinput/html/quest.tpl:10
 msgid "solve"
 msgstr "lösen"
 
-#: ../../../questtypes/multiplechoice/html/quest.tpl:3
+#: questtypes/multiplechoice/html/quest.tpl:3
 #, php-format
 msgid "Question %d of %d"
 msgstr "Frage %d von %d"
 
-#: ../../../questtypes/multiplechoice/html/quest.tpl:17
+#: questtypes/multiplechoice/html/quest.tpl:17
 msgid "solve Question"
 msgstr "Frage lösen"
 
-#: ../../../questtypes/submit/html/quest.tpl:4
+#: questtypes/submit/html/quest.tpl:4
 #, php-format
 msgid "File has wrong type “%s”"
 msgstr "Der Dateityp „%s“ ist nicht erlaubt"
 
-#: ../../../questtypes/submit/html/quest.tpl:6
+#: questtypes/submit/html/quest.tpl:6
 msgid "File exceeds size maximum"
 msgstr "Die Datei ist zu groß"
 
-#: ../../../questtypes/submit/html/quest.tpl:8
+#: questtypes/submit/html/quest.tpl:8
 #, php-format
 msgid "Error during file upload: %s"
 msgstr "Fehler beim Dateiupload: %s"
 
-#: ../../../questtypes/submit/html/quest.tpl:17
+#: questtypes/submit/html/quest.tpl:17
 msgid "Allowed file types"
 msgstr "Erlaubte Dateiformate"
 
-#: ../../../questtypes/submit/html/quest.tpl:20
+#: questtypes/submit/html/quest.tpl:20
 msgid "max."
 msgstr "max."
 
-#: ../../../questtypes/submit/html/quest.tpl:26
-#: ../../../questtypes/submit/html/submission.tpl:2
+#: questtypes/submit/html/quest.tpl:26 questtypes/submit/html/submission.tpl:2
 #, php-format
 msgid "submitted at %s on %s h"
 msgstr "eingereicht am %s um %s Uhr"
 
-#: ../../../questtypes/submit/html/submission.tpl:6
-#: ../../../questtypes/submit/html/submission.tpl:8
-#: ../../../views/html/quests/quest.tpl:40
-#: ../../../views/html/quests/submissions.tpl:33
+#: questtypes/submit/html/submission.tpl:6
+#: questtypes/submit/html/submission.tpl:8 views/html/quests/quest.tpl:40
+#: views/html/quests/submissions.tpl:33
 msgid "solved"
 msgstr "gelöst"
 
-#: ../../../questtypes/submit/html/submission.tpl:9
-#: ../../../views/html/quests/quest.tpl:42
-#: ../../../views/html/quests/submissions.tpl:24
+#: questtypes/submit/html/submission.tpl:9 views/html/quests/quest.tpl:42
+#: views/html/quests/submissions.tpl:24
 msgid "unsolved"
 msgstr "ungelöst"
 
-#: ../../../views/binary/error/index.tpl:1
-#: ../../../views/html/error/index.tpl:1
+#: views/binary/error/index.tpl:1 views/html/error/index.tpl:1
 msgid "Error"
 msgstr "Fehler"
 
-#: ../../../views/html/charactergroups/group.tpl:5
-#: ../../../views/html/charactergroups/groupsgroup.tpl:2
-#: ../../../views/html/charactergroups/index.tpl:2
-#: ../../../views/html/characters/character.tpl:51
-#: ../../../views/html/seminarymenu/index.tpl:4
+#: views/html/charactergroups/group.tpl:5
+#: views/html/charactergroups/groupsgroup.tpl:2
+#: views/html/charactergroups/index.tpl:2
+#: views/html/characters/character.tpl:51 views/html/seminarymenu/index.tpl:4
 msgid "Character Groups"
 msgstr "Charaktergruppen"
 
-#: ../../../views/html/charactergroups/group.tpl:22
-#: ../../../views/html/characters/character.tpl:2
-#: ../../../views/html/characters/index.tpl:2
-#: ../../../views/html/seminarymenu/index.tpl:3
-#: ../../../views/html/users/user.tpl:11
+#: views/html/charactergroups/group.tpl:22
+#: views/html/characters/character.tpl:2 views/html/characters/index.tpl:2
+#: views/html/seminarymenu/index.tpl:3 views/html/users/user.tpl:11
 msgid "Characters"
 msgstr "Charaktere"
 
-#: ../../../views/html/charactergroups/group.tpl:60
-#: ../../../views/html/questgroups/questgroup.tpl:43
+#: views/html/charactergroups/group.tpl:60
+#: views/html/questgroups/questgroup.tpl:43
 msgid "Quests"
 msgstr "Quests"
 
-#: ../../../views/html/charactergroups/groupsgroup.tpl:12
-#: ../../../views/html/charactergroupsquests/quest.tpl:3
+#: views/html/charactergroups/groupsgroup.tpl:12
+#: views/html/charactergroupsquests/quest.tpl:3
 msgid "Character Groups Quests"
 msgstr "Charactergruppen-Quests"
 
-#: ../../../views/html/charactergroupsquests/quest.tpl:12
+#: views/html/charactergroupsquests/quest.tpl:12
 msgid "Description"
 msgstr "Beschreibung"
 
-#: ../../../views/html/charactergroupsquests/quest.tpl:15
+#: views/html/charactergroupsquests/quest.tpl:15
 msgid "Rules"
 msgstr "Regeln"
 
-#: ../../../views/html/charactergroupsquests/quest.tpl:22
+#: views/html/charactergroupsquests/quest.tpl:22
 msgid "Won Quest"
 msgstr "Gewonnene Quest"
 
-#: ../../../views/html/charactergroupsquests/quest.tpl:28
+#: views/html/charactergroupsquests/quest.tpl:28
 msgid "Lost Quest"
 msgstr "Verlorene Quest"
 
-#: ../../../views/html/characters/character.tpl:11
+#: views/html/characters/character.tpl:11
 msgid "Total progress"
 msgstr "Fortschritt"
 
-#: ../../../views/html/characters/character.tpl:15
-#: ../../../views/html/characters/index.tpl:6
-#: ../../../views/html/users/user.tpl:14
+#: views/html/characters/character.tpl:15 views/html/characters/index.tpl:6
+#: views/html/users/user.tpl:14
 msgid "Level"
 msgstr "Level"
 
-#: ../../../views/html/characters/character.tpl:23
+#: views/html/characters/character.tpl:23
 msgid "Rank"
 msgstr "Platz"
 
-#: ../../../views/html/characters/character.tpl:26
-#: ../../../views/html/seminarymenu/index.tpl:5
+#: views/html/characters/character.tpl:26 views/html/seminarymenu/index.tpl:5
 msgid "Achievements"
 msgstr "Errungenschaften"
 
-#: ../../../views/html/introduction/index.tpl:1
+#: views/html/introduction/index.tpl:1
 msgid "Introduction"
 msgstr "Einführung"
 
-#: ../../../views/html/menu/index.tpl:3 ../../../views/html/users/create.tpl:1
-#: ../../../views/html/users/delete.tpl:1 ../../../views/html/users/edit.tpl:1
-#: ../../../views/html/users/index.tpl:1 ../../../views/html/users/login.tpl:1
-#: ../../../views/html/users/user.tpl:1
+#: views/html/menu/index.tpl:3 views/html/users/create.tpl:1
+#: views/html/users/delete.tpl:1 views/html/users/edit.tpl:1
+#: views/html/users/index.tpl:1 views/html/users/login.tpl:1
+#: views/html/users/register.tpl:1 views/html/users/user.tpl:1
 msgid "Users"
 msgstr "Benutzer"
 
-#: ../../../views/html/menu/index.tpl:4
+#: views/html/menu/index.tpl:4
 msgid "Usergroups"
 msgstr "Benutzergruppen"
 
-#: ../../../views/html/menu/index.tpl:5
-#: ../../../views/html/seminaries/create.tpl:1
-#: ../../../views/html/seminaries/delete.tpl:1
-#: ../../../views/html/seminaries/edit.tpl:1
-#: ../../../views/html/seminaries/index.tpl:1
+#: views/html/menu/index.tpl:5 views/html/seminaries/create.tpl:1
+#: views/html/seminaries/delete.tpl:1 views/html/seminaries/edit.tpl:1
+#: views/html/seminaries/index.tpl:1
 msgid "Seminaries"
 msgstr "Kurse"
 
-#: ../../../views/html/menu/index.tpl:7 ../../../views/html/users/login.tpl:2
-#: ../../../views/html/users/login.tpl:11
+#: views/html/menu/index.tpl:7 views/html/users/login.tpl:3
+#: views/html/users/login.tpl:14
 msgid "Login"
 msgstr "Login"
 
-#: ../../../views/html/menu/index.tpl:9
+#: views/html/menu/index.tpl:9
 msgid "Logout"
 msgstr "Logout"
 
-#: ../../../views/html/quests/quest.tpl:50
+#: views/html/quests/quest.tpl:50
 msgid "Task"
 msgstr "Aufgabe"
 
-#: ../../../views/html/quests/quest.tpl:55
+#: views/html/quests/quest.tpl:55
 msgid "Task already successfully solved"
 msgstr "Du hast die Aufgabe bereits erfolgreich gelöst"
 
-#: ../../../views/html/quests/quest.tpl:57
+#: views/html/quests/quest.tpl:57
 msgid "Show answer"
 msgstr "Lösung anzeigen"
 
-#: ../../../views/html/quests/quest.tpl:71
-#: ../../../views/html/quests/quest.tpl:80
+#: views/html/quests/quest.tpl:71 views/html/quests/quest.tpl:80
 msgid "Quest"
 msgstr "Quest"
 
-#: ../../../views/html/quests/submission.tpl:14
+#: views/html/quests/submission.tpl:14
 #, php-format
 msgid "Submission of %s"
 msgstr "Lösungen von %s"
 
-#: ../../../views/html/quests/submissions.tpl:15
+#: views/html/quests/submissions.tpl:15
 msgid "submitted"
 msgstr "eingereicht am %s um %s Uhr"
 
-#: ../../../views/html/seminaries/create.tpl:2
+#: views/html/seminaries/create.tpl:2
 msgid "New seminary"
 msgstr "Neuer Kurs"
 
-#: ../../../views/html/seminaries/create.tpl:6
-#: ../../../views/html/seminaries/create.tpl:7
-#: ../../../views/html/seminaries/edit.tpl:6
-#: ../../../views/html/seminaries/edit.tpl:7
+#: views/html/seminaries/create.tpl:6 views/html/seminaries/create.tpl:7
+#: views/html/seminaries/edit.tpl:6 views/html/seminaries/edit.tpl:7
 msgid "Title"
 msgstr "Titel"
 
-#: ../../../views/html/seminaries/create.tpl:9
-#: ../../../views/html/users/create.tpl:13
+#: views/html/seminaries/create.tpl:9 views/html/users/create.tpl:17
 msgid "create"
 msgstr "erstellen"
 
-#: ../../../views/html/seminaries/delete.tpl:2
-#: ../../../views/html/seminaries/seminary.tpl:39
+#: views/html/seminaries/delete.tpl:2 views/html/seminaries/seminary.tpl:39
 msgid "Delete seminary"
 msgstr "Kurs löschen"
 
-#: ../../../views/html/seminaries/delete.tpl:4
+#: views/html/seminaries/delete.tpl:4
 #, php-format
 msgid "Should the seminary “%s” really be deleted?"
 msgstr "Soll der Kurs „%s“ wirklich gelöscht werden?"
 
-#: ../../../views/html/seminaries/delete.tpl:6
-#: ../../../views/html/users/delete.tpl:6
+#: views/html/seminaries/delete.tpl:6 views/html/users/delete.tpl:6
 msgid "delete"
 msgstr "löschen"
 
-#: ../../../views/html/seminaries/delete.tpl:7
-#: ../../../views/html/users/delete.tpl:7
+#: views/html/seminaries/delete.tpl:7 views/html/users/delete.tpl:7
 msgid "cancel"
 msgstr "abbrechen"
 
-#: ../../../views/html/seminaries/edit.tpl:2
-#: ../../../views/html/seminaries/seminary.tpl:38
+#: views/html/seminaries/edit.tpl:2 views/html/seminaries/seminary.tpl:38
 msgid "Edit seminary"
 msgstr "Kurs bearbeiten"
 
-#: ../../../views/html/seminaries/edit.tpl:9
-#: ../../../views/html/users/edit.tpl:13
+#: views/html/seminaries/edit.tpl:9 views/html/users/edit.tpl:17
 msgid "save"
 msgstr "speichern"
 
-#: ../../../views/html/seminaries/index.tpl:3
+#: views/html/seminaries/index.tpl:3
 msgid "Create new seminary"
 msgstr "Neuen Kurs erstellen"
 
-#: ../../../views/html/seminaries/index.tpl:10
-#: ../../../views/html/seminaries/seminary.tpl:42
+#: views/html/seminaries/index.tpl:10 views/html/seminaries/seminary.tpl:42
 #, php-format
 msgid "created by %s on %s"
 msgstr "erstellt von %s am %s"
 
-#: ../../../views/html/seminarymenu/index.tpl:6
+#: views/html/seminarymenu/index.tpl:6
 msgid "Library"
 msgstr "Bibliothek"
 
-#: ../../../views/html/users/create.tpl:2
+#: views/html/users/create.tpl:2
 msgid "New user"
 msgstr "Neuer Benutzer"
 
-#: ../../../views/html/users/create.tpl:6
-#: ../../../views/html/users/create.tpl:7 ../../../views/html/users/edit.tpl:6
-#: ../../../views/html/users/edit.tpl:7 ../../../views/html/users/login.tpl:6
-#: ../../../views/html/users/login.tpl:7
+#: views/html/users/create.tpl:6 views/html/users/create.tpl:7
+#: views/html/users/edit.tpl:6 views/html/users/edit.tpl:7
+#: views/html/users/login.tpl:9 views/html/users/login.tpl:10
+#: views/html/users/register.tpl:76 views/html/users/register.tpl:77
 msgid "Username"
 msgstr "Benutzername"
 
-#: ../../../views/html/users/create.tpl:8
-#: ../../../views/html/users/create.tpl:9 ../../../views/html/users/edit.tpl:8
-#: ../../../views/html/users/edit.tpl:9
-msgid "E‑Mail-Address"
+#: views/html/users/create.tpl:8 views/html/users/create.tpl:9
+#: views/html/users/edit.tpl:8 views/html/users/edit.tpl:9
+#: views/html/users/register.tpl:78 views/html/users/register.tpl:79
+msgid "Prename"
+msgstr "Vorname"
+
+#: views/html/users/create.tpl:10 views/html/users/create.tpl:11
+#: views/html/users/edit.tpl:10 views/html/users/edit.tpl:11
+#: views/html/users/register.tpl:80 views/html/users/register.tpl:81
+msgid "Surname"
+msgstr "Nachname"
+
+#: views/html/users/create.tpl:12 views/html/users/create.tpl:13
+#: views/html/users/edit.tpl:12 views/html/users/edit.tpl:13
+#: views/html/users/register.tpl:82 views/html/users/register.tpl:83
+msgid "E‑mail address"
 msgstr "E‑Mail-Adresse"
 
-#: ../../../views/html/users/create.tpl:10
-#: ../../../views/html/users/create.tpl:11
-#: ../../../views/html/users/edit.tpl:10 ../../../views/html/users/edit.tpl:11
-#: ../../../views/html/users/login.tpl:8 ../../../views/html/users/login.tpl:9
+#: views/html/users/create.tpl:14 views/html/users/create.tpl:15
+#: views/html/users/edit.tpl:14 views/html/users/edit.tpl:15
+#: views/html/users/login.tpl:11 views/html/users/login.tpl:12
+#: views/html/users/register.tpl:84 views/html/users/register.tpl:85
 msgid "Password"
 msgstr "Passwort"
 
-#: ../../../views/html/users/delete.tpl:2 ../../../views/html/users/user.tpl:5
+#: views/html/users/delete.tpl:2 views/html/users/user.tpl:5
 msgid "Delete user"
 msgstr "Benutzer löschen"
 
-#: ../../../views/html/users/delete.tpl:4
+#: views/html/users/delete.tpl:4
 #, php-format
 msgid "Should the user “%s” (%s) really be deleted?"
 msgstr "Soll der Benutzer „%s“ (%s) wirklich gelöscht werden?"
 
-#: ../../../views/html/users/edit.tpl:2 ../../../views/html/users/user.tpl:4
+#: views/html/users/edit.tpl:2 views/html/users/user.tpl:4
 msgid "Edit user"
 msgstr "Benutzer bearbeiten"
 
-#: ../../../views/html/users/index.tpl:3
+#: views/html/users/index.tpl:3
 msgid "Create new user"
 msgstr "Neuen Benutzer erstellen"
 
-#: ../../../views/html/users/index.tpl:10 ../../../views/html/users/user.tpl:8
+#: views/html/users/index.tpl:10 views/html/users/user.tpl:8
 #, php-format
 msgid "registered on %s"
 msgstr "registriert am %s"
 
-#: ../../../views/html/users/user.tpl:18
+#: views/html/users/login.tpl:5
+msgid "Login failed"
+msgstr "Die Anmeldung war nicht korrekt"
+
+#: views/html/users/register.tpl:3
+msgid "Registration"
+msgstr "Registrierung"
+
+#: views/html/users/register.tpl:15
+#, php-format
+msgid "Username is too short (min. %d chars)"
+msgstr "Der Benutzername ist zu kurz (min. %d Zeichen)"
+
+#: views/html/users/register.tpl:17
+#, php-format
+msgid "Username is too long (max. %d chars)"
+msgstr "Der Benutzername ist zu lang (max. %d Zeichen)"
+
+#: views/html/users/register.tpl:19
+msgid "Username contains illegal characters"
+msgstr "Der Benutzername enthält ungültige Zeichen"
+
+#: views/html/users/register.tpl:21
+msgid "Username invalid"
+msgstr "Der Benutzername ist ungültig"
+
+#: views/html/users/register.tpl:26
+#, php-format
+msgid "Prename is too short (min. %d chars)"
+msgstr "Der Vorname ist zu kurz (min. %d Zeichen)"
+
+#: views/html/users/register.tpl:28
+#, php-format
+msgid "Prename is too long (max. %d chars)"
+msgstr "Der Vorname ist zu lang (max. %d Zeichen)"
+
+#: views/html/users/register.tpl:30
+#, php-format
+msgid "Prename contains illegal characters"
+msgstr "Der Vorname enthält ungültige Zeichen"
+
+#: views/html/users/register.tpl:32
+msgid "Prename invalid"
+msgstr "Der Vorname ist ungültig"
+
+#: views/html/users/register.tpl:37
+#, php-format
+msgid "Surname is too short (min. %d chars)"
+msgstr "Der Nachname ist zu kurz (min. %d Zeichen)"
+
+#: views/html/users/register.tpl:39
+#, php-format
+msgid "Surname is too long (max. %d chars)"
+msgstr "Der Nachname ist zu lang (max. %d Zeichen)"
+
+#: views/html/users/register.tpl:41
+#, php-format
+msgid "Surname contains illegal characters"
+msgstr "Der Nachname enthält ungültige Zeichen"
+
+#: views/html/users/register.tpl:43
+msgid "Surname invalid"
+msgstr "Der Nachname ist ungültig"
+
+#: views/html/users/register.tpl:48 views/html/users/register.tpl:50
+msgid "E‑mail address invalid"
+msgstr "Die E‑Mail-Adresse ist ungültig"
+
+#: views/html/users/register.tpl:55
+#, php-format
+msgid "Password is too short (min. %d chars)"
+msgstr "Das Passwort ist zu kurz (min. %d Zeichen)"
+
+#: views/html/users/register.tpl:57
+#, php-format
+msgid "Password is too long (max. %d chars)"
+msgstr "Das Passwort ist zu lang (max. %d Zeichen)"
+
+#: views/html/users/register.tpl:59
+msgid "Password invalid"
+msgstr "Das Passwort ist ungültig"
+
+#: views/html/users/register.tpl:87
+msgid "Register"
+msgstr "Registrieren"
+
+#: views/html/users/user.tpl:18
 msgid "Roles"
 msgstr "Rollen"
+
+#~ msgid "E‑Mail"
+#~ msgstr "E‑Mail"
+
+#~ msgid "E‑Mail-Address"
+#~ msgstr "E‑Mail-Adresse"
+
+#~ msgid "E‑mail address not valid"
+#~ msgstr "Die E‑Mail-Adresse ist nicht gültig"
+
+#~ msgid "Username is too long"
+#~ msgstr "Der Benutzername ist zu lang"
+
+#~ msgid "Registration failed: %s"
+#~ msgstr "Registrierung fehlgeschlagen: %s"
 
 #~ msgid "Words"
 #~ msgstr "Wörter"
@@ -340,6 +431,3 @@ msgstr "Rollen"
 
 #~ msgid "created by %s on %s at %s"
 #~ msgstr "erstellt von %s am %s um %s Uhr"
-
-#~ msgid "registered on"
-#~ msgstr "registriert seit"
