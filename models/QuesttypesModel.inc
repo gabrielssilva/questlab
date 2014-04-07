@@ -1,0 +1,62 @@
+<?php
+
+	/**
+	 * The Legend of Z
+	 *
+	 * @author	Oliver Hanraths <oliver.hanraths@uni-duesseldorf.de>
+	 * @copyright	2014 Heinrich-Heine-Universität Düsseldorf
+	 * @license	http://www.gnu.org/licenses/gpl.html
+	 * @link	https://bitbucket.org/coderkun/the-legend-of-z
+	 */
+	
+	namespace hhu\z\models;
+	
+	
+	/**
+	 * Model to interact with Questtypes-table.
+	 * 
+	 * @author	Oliver Hanraths <oliver.hanraths@uni-duesseldorf.de>
+	 */
+	class QuesttypesModel extends \hhu\z\Model
+	{
+		
+		
+		
+		
+		/**
+		 * Construct a new QuesttypesModel.
+		 */
+		public function __construct()
+		{
+			parent::__construct();
+		}
+		
+		
+		
+		
+		/**
+		 * Get a Questtype by its ID
+		 * 
+		 * @param	int	$questtypeId	ID of Questtype
+		 * @return	array			Questtype data
+		 */
+		public function getQuesttypeById($questtypeId)
+		{
+			$data = $this->db->query(
+				'SELECT title, classname '.
+				'FROM questtypes '.
+				'WHERE id = ?',
+				'i',
+				$questtypeId
+			);
+			if(empty($data)) {
+				throw new \nre\exceptions\IdNotFoundException($questtypeId);
+			}
+			
+			
+			return $data = $data[0];
+		}
+		
+	}
+
+?>
