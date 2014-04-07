@@ -161,12 +161,12 @@
 					$file = file_get_contents($media['filename']);
 				break;
 				case 'questgroup':
-					if(!in_array(strtoupper($format), static::getImageTypes())) {
+					if(!in_array(strtoupper($format), self::getImageTypes())) {
 						$file = file_get_contents($media['filename']);
 					}
 					else
 					{
-						$file = static::resizeImage(
+						$file = self::resizeImage(
 							$media['filename'],
 							$format,
 							480
