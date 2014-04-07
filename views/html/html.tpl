@@ -38,10 +38,12 @@
 			<a href="<?=$linker->link(array('users',$loggedUser['url']))?>" id="profile"><i class="fa fa-user fa-fw"></i><?=$loggedUser['username']?></a>
 			<?php endif ?>
 			<?php endif ?>
-			<?=$menu?>
-			<?php if(!is_null($loggedSeminary)) : ?>
-			<?=$seminarymenu?>
-			<?php endif ?>
+			<menu>
+				<?=$menu?>
+				<?php if(!is_null($loggedSeminary)) : ?>
+				<?=$seminarymenu?>
+				<?php endif ?>
+			</menu>
 		</nav>
 	</header>
 	<article class="wrap">
