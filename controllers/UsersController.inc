@@ -67,12 +67,18 @@
 		 * Show a user and its details.
 		 * 
 		 * @throws	IdNotFoundException
+		 * @throws	AccessDeniedException
 		 * @param	string	$userUrl	URL-Username of an user
 		 */
 		public function user($userUrl)
 		{
 			// Get user
 			$user = $this->Users->getUserByUrl($userUrl);
+			
+			// Check permissions
+			if(count(array_intersect(array('admin','moderator'), \hhu\z\controllers\IntermediateController::$user['roles'])) == 0 && $user['id'] != IntermediateController::$user['id']) {
+				throw new \nre\exceptions\AccessDeniedException();
+			}
 			
 			// Get Characters
 			$characters = $this->Characters->getCharactersForUser($user['id']);
