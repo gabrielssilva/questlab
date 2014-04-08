@@ -35,6 +35,26 @@
 		
 		
 		/**
+		 * Get all Character fields of a Seminary.
+		 * 
+		 * @param	int	$seminaryId	ID of Seminary to get fields of
+		 * @param	array			Seminary Character fields
+		 */
+		public function getFieldsForSeminary($seminaryId)
+		{
+			return $this->db->query(
+				'SELECT seminarycharacterfields.id, seminarycharacterfields.title, seminarycharacterfields.url, seminarycharacterfields.regex, seminarycharacterfields.required, seminarycharacterfieldtypes.id AS type_id, seminarycharacterfieldtypes.title AS type_title, seminarycharacterfieldtypes.url AS type_url '.
+				'FROM seminarycharacterfields '.
+				'LEFT JOIN seminarycharacterfieldtypes ON seminarycharacterfieldtypes.id = seminarycharacterfields.seminarycharacterfieldtype_id '.
+				'WHERE seminarycharacterfields.seminary_id = ? '.
+				'ORDER BY pos ASC',
+				'i',
+				$seminaryId
+			);
+		}
+		
+		
+		/**
 		 * Get Seminary Character fields of a Character.
 		 * 
 		 * @param	int	$characterId	ID of the Character

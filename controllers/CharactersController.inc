@@ -20,20 +20,36 @@
 	class CharactersController extends \hhu\z\controllers\SeminaryRoleController
 	{
 		/**
+		 * Required models
+		 * 
+		 * @var array
+		 */
+		public $models = array('seminaries', 'characters', 'users', 'charactergroups', 'charactertypes', 'seminarycharacterfields', 'avatars', 'media');
+		/**
+		 * Required components
+		 * 
+		 * @var array
+		 */
+		public $components = array('validation');
+		/**
 		 * User permissions
 		 * 
 		 * @var array
 		 */
 		public $permissions = array(
 			'index' => array('admin', 'moderator'),
-			'character' => array('admin', 'moderator', 'user')
+			'character' => array('admin', 'moderator', 'user'),
+			'register' => array('admin', 'moderator', 'user')
 		);
 		/**
-		 * Required models
+		 * User seminary permissions
 		 * 
 		 * @var array
 		 */
-		public $models = array('seminaries', 'characters', 'users', 'charactergroups', 'seminarycharacterfields');
+		public $seminaryPermissions = array(
+			'index' => array('admin', 'moderator'),
+			'character' => array('admin', 'moderator', 'user')
+		);
 		
 		
 		
@@ -50,6 +66,9 @@
 		{
 			// Get Seminary
 			$seminary = $this->Seminaries->getSeminaryByUrl($seminaryUrl);
+			if(!is_null($seminary['media_id'])) {
+				$seminary['media'] = $this->Media->getMediaById($seminary['media_id']);
+			}
 			
 			// Get registered Characters
 			$characters = $this->Characters->getCharactersForSeminary($seminary['id']);
@@ -59,6 +78,12 @@
 			{
 				// Level
 				$character['xplevel'] = $this->Characters->getXPLevelOfCharacters($character['id']);
+				
+				// Avatar
+				$avatar = $this->Avatars->getAvatarById($character['avatar_id']);
+				if(!is_null($avatar['small_avatarpicture_id'])) {
+					$character['small_avatar'] = $this->Media->getSeminaryMediaById($avatar['small_avatarpicture_id']);
+				}
 			}
 			
 			
@@ -82,6 +107,9 @@
 			// Get Seminary
 			$seminary = $this->Seminaries->getSeminaryByUrl($seminaryUrl);
 			$seminary['achievable_xps'] = $this->Seminaries->getTotalXPs($seminary['id']);
+			if(!is_null($seminary['media_id'])) {
+				$seminary['media'] = $this->Media->getMediaById($seminary['media_id']);
+			}
 			
 			// Get Character
 			$character = $this->Characters->getCharacterByUrl($seminary['id'], $characterUrl);
@@ -105,6 +133,104 @@
 			$this->set('characterfields', $characterfields);
 			$this->set('user', $user);
 			$this->set('groups', $groups);
+		}
+		
+		
+		/**
+		 * Acton: register.
+		 * 
+		 * Register a new character for a Seminary.
+		 * 
+		 * @throws	IdNotFoundException
+		 * @throws	ParamsNotValidException
+		 * @param	string	$seminaryUrl	URL-Title of a Seminary
+		 */
+		public function register($seminaryUrl)
+		{
+			// Get seminary
+			$seminary = $this->Seminaries->getSeminaryByUrl($seminaryUrl);
+			
+			// Character types
+			$types = $this->Charactertypes->getCharacterTypesForSeminary($seminary['id']);
+			
+			// Character fields
+			$fields = $this->Seminarycharacterfields->getFieldsForSeminary($seminary['id']);
+			
+			// Register Character
+			$charactername = '';
+			$validation = true;
+			$fieldsValidation = true;
+			if($this->request->getRequestMethod() == 'POST' && !is_null($this->request->getPostParam('create')))
+			{
+				// Validate Character properties
+				$validation = $this->Validation->validateParams($this->request->getPostParams(), array('charactername'));
+				$charactername = $this->request->getPostParam('charactername');
+				
+				// Validate type
+				$typeIndex = null;
+				foreach($types as $index => &$type)
+				{
+					$type['selected'] = ($type['url'] == $this->request->getPostParam('type'));
+					if($type['selected']) {
+						$typeIndex = $index;
+					}
+				}
+				if(is_null($typeIndex)) {
+					throw new \nre\exceptions\ParamsNotValidException($characterType);
+				}
+				
+				// Validate fields
+				$fieldsValues = $this->request->getPostParam('fields');
+				foreach($fields as &$field)
+				{
+					if(!array_key_exists($field['url'], $fieldsValues)) {
+						throw new \nre\exceptions\ParamsNotValidException($index);
+					}
+					if($field['required'])
+					{
+						$fieldValidation = $this->Validation->validate($fieldsValues[$field['url']], array('regex'=>$field['regex']));
+						if($fieldValidation !== true)
+						{
+							if(!is_array($fieldsValidation)) {
+								$fieldsValidation = array();
+							}
+							$fieldsValidation[$field['url']] = $fieldValidation;
+						}
+					}
+				}
+				
+				// Register
+				if($validation === true && $fieldsValidation === true)
+				{
+					$characterId = $this->Characters->createCharacter($this->Auth->getUserId(), $types[$typeIndex]['id'], $charactername);
+					
+					// Add Seminary fields
+					foreach($fields as &$field) {
+						if(!empty($fieldsValues[$field['url']])) {
+							$this->Characters->setSeminaryFieldOfCharacter($characterId, $field['id'], $fieldsValues[$field['url']]);
+						}
+					}
+					
+					// Redirect
+					$this->redirect($this->linker->link(array('seminaries')));
+				}
+			}
+			
+			// Medium
+			$media = null;
+			if(!is_null($seminary['media_id'])) {
+				$media = $this->Media->getMediaById($seminary['media_id']);
+			}
+			
+			
+			// Pass data to view
+			$this->set('seminary', $seminary);
+			$this->set('types', $types);
+			$this->set('fields', $fields);
+			$this->set('media', $media);
+			$this->set('charactername', $charactername);
+			$this->set('validation', $validation);
+			$this->set('fieldsValidation', $fieldsValidation);
 		}
 		
 	}

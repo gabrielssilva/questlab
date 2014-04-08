@@ -43,7 +43,7 @@
 		public function getCharactersForUser($userId)
 		{
 			return $this->db->query(
-				'SELECT characters.id, characters.created, characters.charactertype_id, characters.name, characters.url, characters.xps, characters.xplevel, charactertypes.name AS charactertype_name, charactertypes.url AS charactertypes_url, seminaries.id AS seminary_url, seminaries.title AS seminary_title, seminaries.url AS seminary_url '.
+				'SELECT characters.id, characters.created, characters.charactertype_id, characters.name, characters.url, characters.xps, characters.xplevel, characters.avatar_id, charactertypes.name AS charactertype_name, charactertypes.url AS charactertypes_url, seminaries.id AS seminary_id, seminaries.url AS seminary_url, seminaries.title AS seminary_title, seminaries.url AS seminary_url '.
 				'FROM v_characters AS characters '.
 				'LEFT JOIN charactertypes ON charactertypes.id = characters.charactertype_id '.
 				'LEFT JOIN seminaries ON seminaries.id = charactertypes.seminary_id '.
@@ -63,7 +63,7 @@
 		public function getCharactersForSeminary($seminaryId)
 		{
 			return $this->db->query(
-				'SELECT characters.id, characters.created, characters.charactertype_id, characters.name, characters.url, characters.user_id, characters.xps, characters.xplevel, charactertypes.name AS charactertype_name, charactertypes.url AS charactertypes_url, seminaries.id AS seminary_url, seminaries.title AS seminary_title, seminaries.url AS seminary_url '.
+				'SELECT characters.id, characters.created, characters.charactertype_id, characters.name, characters.url, characters.user_id, characters.xps, characters.xplevel, characters.avatar_id, charactertypes.name AS charactertype_name, charactertypes.url AS charactertypes_url, seminaries.id AS seminary_url, seminaries.title AS seminary_title, seminaries.url AS seminary_url '.
 				'FROM v_characters AS characters '.
 				'LEFT JOIN charactertypes ON charactertypes.id = characters.charactertype_id '.
 				'LEFT JOIN seminaries ON seminaries.id = charactertypes.seminary_id '.
@@ -83,7 +83,7 @@
 		public function getCharactersForGroup($groupId)
 		{
 			return $this->db->query(
-				'SELECT characters.id, characters.created, characters.charactertype_id, characters.name, characters.url, characters.user_id, characters.xps, charactertypes.name AS charactertype_name, charactertypes.url AS charactertypes_url '.
+				'SELECT characters.id, characters.created, characters.charactertype_id, characters.name, characters.url, characters.user_id, characters.xps, characters.avatar_id, charactertypes.name AS charactertype_name, charactertypes.url AS charactertypes_url '.
 				'FROM v_characters AS characters '.
 				'LEFT JOIN characters_charactergroups ON characters_charactergroups.character_id = characters.id '.
 				'LEFT JOIN charactertypes ON charactertypes.id = characters.charactertype_id '.
@@ -105,7 +105,7 @@
 		public function getCharacterForUserAndSeminary($userId, $seminaryId)
 		{
 			$data = $this->db->query(
-				'SELECT characters.id, characters.created, characters.charactertype_id, characters.name, characters.url, characters.user_id, characters.xps, characters.xplevel, charactertypes.name AS charactertype_name, charactertypes.url AS charactertypes_url '.
+				'SELECT characters.id, characters.created, characters.charactertype_id, characters.name, characters.url, characters.user_id, characters.xps, characters.xplevel, characters.avatar_id, charactertypes.name AS charactertype_name, charactertypes.url AS charactertypes_url '.
 				'FROM v_characters AS characters '.
 				'LEFT JOIN charactertypes ON charactertypes.id = characters.charactertype_id '.
 				'WHERE characters.user_id = ? AND charactertypes.seminary_id = ?',
@@ -132,7 +132,7 @@
 		public function getCharacterByUrl($seminaryId, $characterUrl)
 		{
 			$data = $this->db->query(
-				'SELECT characters.id, characters.created, characters.charactertype_id, characters.name, characters.url, characters.user_id, characters.xps, characters.xplevel, charactertypes.name AS charactertype_name, charactertypes.url AS charactertypes_url, seminarymedia.url AS avatar_url, seminarymedia.description AS avatar_description '.
+				'SELECT characters.id, characters.created, characters.charactertype_id, characters.name, characters.url, characters.user_id, characters.xps, characters.xplevel, characters.avatar_id, charactertypes.name AS charactertype_name, charactertypes.url AS charactertypes_url, seminarymedia.url AS avatar_url, seminarymedia.description AS avatar_description '.
 				'FROM v_characters AS characters '.
 				'LEFT JOIN charactertypes ON charactertypes.id = characters.charactertype_id '.
 				'LEFT JOIN avatars ON avatars.id = characters.avatar_id '.
@@ -161,7 +161,7 @@
 		public function getCharacterById($characterId)
 		{
 			$data = $this->db->query(
-				'SELECT characters.id, characters.created, characters.charactertype_id, characters.name, characters.url, characters.user_id, characters.xps, characters.xplevel, charactertypes.name AS charactertype_name, charactertypes.url AS charactertypes_url, seminarymedia.url AS avatar_url, seminarymedia.description AS avatar_description '.
+				'SELECT characters.id, characters.created, characters.charactertype_id, characters.name, characters.url, characters.user_id, characters.xps, characters.xplevel, characters.avatar_id, charactertypes.name AS charactertype_name, charactertypes.url AS charactertypes_url, seminarymedia.url AS avatar_url, seminarymedia.description AS avatar_description '.
 				'FROM v_characters AS characters '.
 				'LEFT JOIN charactertypes ON charactertypes.id = characters.charactertype_id '.
 				'LEFT JOIN avatars ON avatars.id = characters.avatar_id '.
@@ -333,6 +333,58 @@
 				$questId, QuestsModel::QUEST_STATUS_SUBMITTED,
 				$questId, QuestsModel::QUEST_STATUS_UNSOLVED,
 				$questId, QuestsModel::QUEST_STATUS_SOLVED
+			);
+		}
+		
+		
+		/**
+		 * Create a new Character.
+		 * 
+		 * @param	int	$userId			User-ID that creates the new character
+		 * @param	int	$charactertypeId	ID of type of new Character
+		 * @param	string	$characterName		Name for the new Character
+		 * @return	int				ID of Character
+		 */
+		public function createCharacter($userId, $charactertypeId, $characterName)
+		{
+			$this->db->query(
+				'INSERT INTO characters '.
+				'(user_id, charactertype_id, name, url) '.
+				'VALUES '.
+				'(?, ?, ?, ?)',
+				'iiss',
+				$userId,
+				$charactertypeId,
+				$characterName,
+				\nre\core\Linker::createLinkParam($characterName)
+			);
+			
+			
+			return $this->db->getInsertId();
+		}
+		
+		
+		/**
+		 * Set the value of a Seminary field for a Character.
+		 * 
+		 * @param	int	$characterId			ID of Character
+		 * @param	int	$seminarycharacterfieldId	ID of seminarycharacterfield to set value of
+		 * @param	string	$value				Value to set
+		 */
+		public function setSeminaryFieldOfCharacter($characterId, $seminarycharacterfieldId, $value)
+		{
+			$this->db->query(
+				'INSERT INTO characters_seminarycharacterfields '.
+				'(character_id, seminarycharacterfield_id, value) '.
+				'VALUES '.
+				'(?, ?, ?) '.
+				'ON DUPLICATE KEY UPDATE '.
+				'value = ?',
+				'iiss',
+				$characterId,
+				$seminarycharacterfieldId,
+				$value,
+				$value
 			);
 		}
 		
