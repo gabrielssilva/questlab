@@ -24,7 +24,7 @@
 		 * 
 		 * @var array
 		 */
-		public $models = array('seminaries', 'users', 'questgroupshierarchy', 'questgroups', 'media');
+		public $models = array('seminaries', 'users', 'userseminaryroles', 'questgroupshierarchy', 'questgroups', 'media');
 		/**
 		 * User permissions
 		 * 
@@ -64,6 +64,8 @@
 			// Get additional data
 			foreach($seminaries as &$seminary)
 			{
+				$seminary['description'] = \hhu\z\Utils::shortenString($seminary['description'], 100, 120).' …';
+				
 				// Created user
 				$seminary['creator'] = $this->Users->getUserById($seminary['created_user_id']);
 				
@@ -71,6 +73,15 @@
 				if(!is_null($seminary['media_id'])) {
 					$seminary['media'] = $this->Media->getMediaById($seminary['media_id']);
 				}
+				
+				// Character of currently logged-in user
+				try {
+					$seminary['usercharacter'] = $this->Characters->getCharacterForUserAndSeminary($this->Auth->getUserId(), $seminary['id']);
+				}
+				catch(\nre\exceptions\IdNotFoundException $e) {
+				}
+				$seminary['userroles'] = $this->Userseminaryroles->getUserseminaryrolesForUserById(IntermediateController::$user['id'], $seminary['id']);
+				
 			}
 			
 			

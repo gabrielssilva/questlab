@@ -36,7 +36,7 @@
 		 * 
 		 * @var array
 		 */
-		public $models = array('users', 'characters');
+		public $models = array('users', 'characters', 'avatars', 'media', 'userseminaryroles');
 		/**
 		 * Required components
 		 * 
@@ -86,8 +86,20 @@
 			// Additional Character information
 			foreach($characters as &$character)
 			{
+				// Seminary roles
+				$character['user_seminaryroles'] = $this->Userseminaryroles->getUserseminaryrolesForUserById(\hhu\z\controllers\IntermediateController::$user['id'], $character['seminary_id']);
+				$character['user_seminaryroles'] = array_map(function($a) { return $a['name']; }, $character['user_seminaryroles']);
+				
 				// Level
 				$character['xplevel'] = $this->Characters->getXPLevelOfCharacters($character['id']);
+				
+				// Avatar
+				$avatar = $this->Avatars->getAvatarById($character['avatar_id']);
+				if(!is_null($avatar['small_avatarpicture_id']))
+				{
+					//$character['seminary'] = 
+					$character['small_avatar'] = $this->Media->getSeminaryMediaById($avatar['small_avatarpicture_id']);
+				}
 			}
 			
 			

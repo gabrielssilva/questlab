@@ -61,6 +61,9 @@
 		{
 			// Get seminary
 			$seminary = $this->Seminaries->getSeminaryByUrl($seminaryUrl);
+			if(!is_null($seminary['media_id'])) {
+				$seminary['media'] = $this->Media->getMediaById($seminary['media_id']);
+			}
 			
 			// Get Character groups-group
 			$groupsgroup = $this->Charactergroups->getGroupsgroupByUrl($seminary['id'], $groupsgroupUrl);

@@ -88,7 +88,7 @@
 		public function getGroupsForGroupsgroup($groupsgroupId)
 		{
 			return $this->db->query(
-				'SELECT id, name, url, xps '.
+				'SELECT id, name, url, xps, motto '.
 				'FROM v_charactergroups '.
 				'WHERE charactergroupsgroup_id = ?',
 				'i',
@@ -128,7 +128,7 @@
 		public function getGroupByUrl($groupsgroupId, $groupUrl)
 		{
 			$data = $this->db->query(
-				'SELECT id, name, url, xps '.
+				'SELECT id, name, url, xps, motto '.
 				'FROM v_charactergroups '.
 				'WHERE charactergroupsgroup_id = ? AND url = ?',
 				'is',
@@ -140,6 +140,31 @@
 			
 			
 			return $data[0];
+		}
+		
+		
+		/**
+		 * Get the rank of a XP-value of a Character.
+		 * 
+		 * @param	int	$seminaryId	ID of Seminary
+		 * @param	int	$xps		XP-value to get rank for
+		 * @return	int			Rank of XP-value
+		 */
+		public function getXPRank($groupsgroupId, $xps)
+		{
+			$data = $this->db->query(
+				'SELECT count(id) AS c '.
+				'FROM v_charactergroups '.
+				'WHERE charactergroupsgroup_id = ? AND xps > ?',
+				'id',
+				$groupsgroupId, $xps
+			);
+			if(!empty($data)) {
+				return $data[0]['c'] + 1;
+			}
+			
+			
+			return 1;
 		}
 		
 	}

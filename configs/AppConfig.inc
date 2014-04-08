@@ -96,6 +96,11 @@
 			'password' => array(
 				'minlength'	=> 5,
 				'maxlength'	=> 64
+			),
+			'charactername' => array(
+				'minlength'	=> 5,
+				'maxlength'	=> 32,
+				'regex'		=> '/^\w*$/'
 			)
 		);
 		
@@ -109,7 +114,7 @@
 		public static $routes = array(
 			array('css/?(.*)',						'css/$1?layout=stylesheet',		true),
 			array('users/([^/]+)/(edit|delete)',				'users/$2/$1',				true),
-			array('users/(?!(index|login|register|logout|create|edit|delete))',	'users/user/$1',			true),
+			array('users/(?!(index|login|register|logout|create|edit|delete))',	'users/user/$1',		true),
 			array('seminaries/([^/]+)/(edit|delete)',			'seminaries/$2/$1',			true),
 			array('seminaries/(?!(index|create|edit|delete))',		'seminaries/seminary/$1',		true),
 			/*// z/<Seminary>					⇒ z/seminaries/seminary/<Seminary>
@@ -118,7 +123,7 @@
 			array('^([^/]+)/([^/]+)/?$',					'questgropus/questgroup/$1/$2',		true),
 			// z/<Seminary>/<Questgroup>/<Quest>			⇒ z/quests/quest/<Seminary>/<Questgroup>/<Quest>
 			array('^([^/]+)/([^/]+)/([^/]+)/?$',				'quests/quest/$1/$2/3',			true)*/
-			array('characters/(?!(index|character))',			'characters/index/$1',			true),
+			array('characters/(?!(index|character|register))',		'characters/index/$1',			true),
 			array('charactergroups/(?!(index|groupsgroup|group))',		'charactergroups/index/$1',		true),
 			array('charactergroupsquests/(?!(quest))',			'charactergroupsquests/quest/$1',	true),
 			array('media/(.*)',						'media/$1?layout=binary',		false),

@@ -11,9 +11,21 @@
 </p>
 
 <h2><?=_('Characters')?></h2>
-<ul>
+<ul class="gchars cf">
 	<?php foreach($characters as &$character) : ?>
-	<li><a href="<?=$linker->link(array('characters','character',$character['seminary_url'],$character['url']))?>"><?=$character['name']?></a> (<?=$character['xps']?> XPs, <?=_('Level')?> <?=$character['xplevel']['level']?><?php if(!is_null($character['xplevel']['name'])) : ?>: <?=$character['xplevel']['name']?><?php endif ?>) (<a href="<?=$linker->link(array('seminaries',$character['seminary_url']))?>"><?=$character['seminary_title']?></a>)</li>
+	<li>
+		<?php if(array_key_exists('small_avatar', $character)) : ?>
+		<p><img src="<?=$linker->link(array('media','seminary',$character['seminary_url'],$character['small_avatar']['url']))?>"></p>
+		<?php endif ?>
+		<p>
+			<?php if(count($character['user_seminaryroles']) > 0) : ?>
+			<a href="<?=$linker->link(array('characters','character',$character['seminary_url'],$character['url']))?>"><?=$character['name']?></a>
+			<?php else : ?>
+			<?=$character['name']?>
+			<?php endif ?>
+		</p>
+		<p><small><?=_('Level')?> <?=$character['xplevel']['level']?></small></p>
+	</li>
 	<?php endforeach ?>
 </ul>
 

@@ -1,7 +1,12 @@
-<h2><a href="<?=$linker->link(array('seminaries',$seminary['url']))?>"><?=$seminary['title']?></a></h2>
-<h3><?=$seminary['title']?></h3>
-<h4><?=_('Character Groups Quests')?></h4>
-<h5><?=$quest['title']?></h5>
+<?php if(array_key_exists('media', $seminary)) : ?>
+<div class="moodpic">
+	<img src="<?=$linker->link(array('media','index',$seminary['media']['url']))?>">
+</div>
+<?php endif ?>
+<h1><a href="<?=$linker->link(array('seminaries',$seminary['url']))?>"><?=$seminary['title']?></a></h1>
+<h2><?=_('Character Groups Quests')?></h2>
+<h3><a href="<?=$linker->link(array('charactergroups','groupsgroup',$seminary['url'],$groupsgroup['url']))?>"><?=$groupsgroup['name']?></a></h3>
+<h4><?=$quest['title']?></h4>
 
 <?php if(!is_null($media)) : ?>
 <img src="<?=$linker->link(array('media','seminary',$seminary['url'],$media['url']))?>" />
