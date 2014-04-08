@@ -44,13 +44,12 @@
 		/**
 		 * Validate an user input.
 		 * 
-		 * @param	mixed	$input	User input to validate
-		 * @param	string	$name	Name of the field to validate against
-		 * @return	mixed		True or the settings the validation fails on
+		 * @param	mixed	$input		User input to validate
+		 * @param	array	$settings	Validation setting
+		 * @return	mixed			True or the settings the validation fails on
 		 */
-		public function validate($input, $name)
+		public function validate($input, $settings)
 		{
-			$settings = $this->config[$name];
 			$validation = array();
 			
 			// Min string length
@@ -93,10 +92,13 @@
 				}
 				
 				// Check parameter
-				$param = $params[$index];
-				$check = $this->validate($param, $index);
-				if($check !== true) {
-					$validation[$index] = $check;
+				if(array_key_exists($index, $this->config))
+				{
+					$param = $params[$index];
+					$check = $this->validate($param, $this->config[$index]);
+					if($check !== true) {
+						$validation[$index] = $check;
+					}
 				}
 			}
 			
