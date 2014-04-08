@@ -24,7 +24,7 @@
 		 * 
 		 * @var array
 		 */
-		public $models = array('seminaries', 'charactergroups', 'charactergroupsquests');
+		public $models = array('seminaries', 'charactergroups', 'charactergroupsquests', 'avatars', 'media');
 		/**
 		 * User permissions
 		 * 
@@ -57,6 +57,9 @@
 		{
 			// Get seminary
 			$seminary = $this->Seminaries->getSeminaryByUrl($seminaryUrl);
+			if(!is_null($seminary['media_id'])) {
+				$seminary['media'] = $this->Media->getMediaById($seminary['media_id']);
+			}
 			
 			// Get Character groups-groups
 			$groupsgroups = $this->Charactergroups->getGroupsroupsForSeminary($seminary['id']);
@@ -82,6 +85,9 @@
 		{
 			// Get seminary
 			$seminary = $this->Seminaries->getSeminaryByUrl($seminaryUrl);
+			if(!is_null($seminary['media_id'])) {
+				$seminary['media'] = $this->Media->getMediaById($seminary['media_id']);
+			}
 			
 			// Get Character groups-group
 			$groupsgroup = $this->Charactergroups->getGroupsgroupByUrl($seminary['id'], $groupsgroupUrl);
@@ -116,15 +122,26 @@
 		{
 			// Get seminary
 			$seminary = $this->Seminaries->getSeminaryByUrl($seminaryUrl);
+			if(!is_null($seminary['media_id'])) {
+				$seminary['media'] = $this->Media->getMediaById($seminary['media_id']);
+			}
 			
 			// Get Character groups-group
 			$groupsgroup = $this->Charactergroups->getGroupsgroupByUrl($seminary['id'], $groupsgroupUrl);
 			
 			// Get Character group
 			$group = $this->Charactergroups->getGroupByUrl($groupsgroup['id'], $groupUrl);
+			$group['characters'] = $this->Characters->getCharactersForGroup($group['id']);
+			$group['rank'] = $this->Charactergroups->getXPRank($groupsgroup['id'], $group['xps']);
 			
-			// Get Characters
-			$characters = $this->Characters->getCharactersForGroup($group['id']);
+			// Get Character avatars
+			foreach($group['characters'] as &$character)
+			{
+				$avatar = $this->Avatars->getAvatarById($character['avatar_id']);
+				if(!is_null($avatar['small_avatarpicture_id'])) {
+					$character['small_avatar'] = $this->Media->getSeminaryMediaById($avatar['small_avatarpicture_id']);
+				}
+			}
 			
 			// Get Character groups Quests
 			$quests = $this->Charactergroupsquests->getQuestsForGroup($group['id']);
@@ -134,7 +151,6 @@
 			$this->set('seminary', $seminary);
 			$this->set('groupsgroup', $groupsgroup);
 			$this->set('group', $group);
-			$this->set('characters', $characters);
 			$this->set('quests', $quests);
 		}
 		

@@ -1,8 +1,19 @@
+<?php if(array_key_exists('media', $seminary)) : ?>
+<div class="moodpic">
+	<img src="<?=$linker->link(array('media','index',$seminary['media']['url']))?>">
+</div>
+<?php endif ?>
 <h1><a href="<?=$linker->link(array('seminaries',$seminary['url']))?>"><?=$seminary['title']?></a></h1>
 <h2><?=_('Characters')?></h2>
 
 <ul>
 	<?php foreach($characters as &$character) : ?>
-	<li><a href="<?=$linker->link(array('character',$seminary['url'],$character['url']),1)?>"><?=$character['name']?></a> (<?=$character['xps']?> XPs, <?=_('Level')?> <?=$character['xplevel']['level']?><?php if(!is_null($character['xplevel']['name'])) : ?>: <?=$character['xplevel']['name']?><?php endif ?>)</li>
+	<li>
+		<?php if(array_key_exists('small_avatar', $character)) : ?>
+		<p><img src="<?=$linker->link(array('media','seminary',$seminary['url'],$character['small_avatar']['url']))?>"></p>
+		<?php endif ?>
+		<p><a href="<?=$linker->link(array('characters','character',$seminary['url'],$character['url']))?>"><?=$character['name']?></a></p>
+		<p><small><?=$character['xps']?> XP</small></p>
+	</li>
 	<?php endforeach ?>
 </ul>

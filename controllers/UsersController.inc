@@ -88,6 +88,14 @@
 			{
 				// Level
 				$character['xplevel'] = $this->Characters->getXPLevelOfCharacters($character['id']);
+				
+				// Avatar
+				$avatar = $this->Avatars->getAvatarById($character['avatar_id']);
+				if(!is_null($avatar['small_avatarpicture_id']))
+				{
+					//$character['seminary'] = 
+					$character['small_avatar'] = $this->Media->getSeminaryMediaById($avatar['small_avatarpicture_id']);
+				}
 			}
 			
 			
