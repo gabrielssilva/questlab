@@ -12,7 +12,7 @@
 	</div>
 	<div class="gdesc">
 		<h3><?=$group['name']?></h3>
-		<span>Schweb wie ein Schmetterling! Stich wie eine Biene!</span>
+		<span><?=$group['motto']?></span>
 	</div>
 	<ul>
 		<li><i class="fa fa-th-list fa-fw"></i><?=$group['rank']?>. <?=_('Rank')?></li>
