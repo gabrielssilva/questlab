@@ -40,9 +40,6 @@
 			<?php endif ?>
 			<menu>
 				<?=$menu?>
-				<?php if(!is_null($loggedSeminary)) : ?>
-				<?=$seminarymenu?>
-				<?php endif ?>
 			</menu>
 		</nav>
 	</header>

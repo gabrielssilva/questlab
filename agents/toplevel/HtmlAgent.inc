@@ -37,9 +37,8 @@
 		 */
 		public function index(\nre\core\Request $request, \nre\core\Response $response)
 		{
-			// Add menus
+			// Add menu
 			$this->addSubAgent('Menu');
-			$this->addSubAgent('Seminarymenu');
 		}
 		
 		

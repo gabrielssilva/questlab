@@ -28,6 +28,8 @@
 		 */
 		public function index(\nre\core\Request $request, \nre\core\Response $response)
 		{
+			// Add Seminary menu
+			$this->addSubAgent('Seminarymenu');
 		}
 		
 	}
