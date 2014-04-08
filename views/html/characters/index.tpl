@@ -6,7 +6,7 @@
 <h1><a href="<?=$linker->link(array('seminaries',$seminary['url']))?>"><?=$seminary['title']?></a></h1>
 <h2><?=_('Characters')?></h2>
 
-<ul>
+<ul class="gchars cf">
 	<?php foreach($characters as &$character) : ?>
 	<li>
 		<?php if(array_key_exists('small_avatar', $character)) : ?>
