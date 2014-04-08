@@ -1,10 +1,9 @@
 <h1><?=_('Users')?></h1>
 
 <h2><?=_('Registration')?></h2>
-<?php if(!empty($validation)) : ?>
+<?php if($validation !== true) : ?>
 <ul>
 	<?php foreach($validation as $field => &$settings) : ?>
-	<?php if($settings !== true) : ?>
 	<li>
 		<ul>
 			<?php foreach($settings as $setting => $value) : ?>
@@ -67,7 +66,6 @@
 			<?php endforeach ?>
 		</ul>
 	</li>
-	<?php endif ?>
 	<?php endforeach ?>
 </ul>
 <?php endif ?>
