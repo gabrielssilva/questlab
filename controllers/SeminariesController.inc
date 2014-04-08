@@ -64,6 +64,8 @@
 			// Get additional data
 			foreach($seminaries as &$seminary)
 			{
+				$seminary['description'] = \hhu\z\Utils::shortenString($seminary['description'], 100, 120).' …';
+				
 				// Created user
 				$seminary['creator'] = $this->Users->getUserById($seminary['created_user_id']);
 				
