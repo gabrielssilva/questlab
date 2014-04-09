@@ -219,8 +219,9 @@ article{padding:20px 40px 80px 40px}
 }
 
 @media only screen and (min-width:1366px){
-body{background:#eae8e4}
-.wrap{width:800px;max-width:800px}
+html{overflow-y:scroll;height:100%}
+body{background:#eae8e4;height:100%}
+.wrap{width:800px;max-width:800px;height:auto !important;min-height:100%;height:100%;position:relative;overflow:hidden}
 article{background:#f7f5f2;float:left}
 .moodpic{margin:-20px 0 0 -40px;width:880px;height:230px}
 .moodpic img{width:auto}
