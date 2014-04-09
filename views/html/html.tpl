@@ -53,13 +53,23 @@
 			<ul class="charstats">
 				<li><i class="fa fa-caret-right fa-fw"></i>Level 1</li>
 				<li><i class="fa fa-caret-right fa-fw"></i>1500 XP</li>
-				<li><i class="fa fa-caret-right fa-fw"></i>Rang 11</li>
+				<li><i class="fa fa-caret-right fa-fw"></i>Platz 11</li>
 				<li><i class="fa fa-caret-right fa-fw"></i><a href="#">Zum Profil</a></li>
 			</ul>
 		</section>
 		<section>
 			<h1>Aktuelle Quest</h1>
 			<p><i class="fa fa-pencil-square-o fa-fw"></i><a href="#">Die verwunschene Stadt</a></p>
+		</section>
+		<section>
+			<h1>Letzte Errungenschaft</h1>
+			<ul class="cranks">
+				<li>
+					<a href="#" title="Achievement-Titel"><img src="http://legende-von-zyren.de/img/achieve/1b.jpg"></a>
+					<p><a href="#">Des Königs neue Quests</a></p>
+					<p><small>erreicht am: 14.07.2014</small></p>
+				</li>
+			</ul>
 		</section>
 		<section>
 			<h1>Wille und die Majas</h1>
