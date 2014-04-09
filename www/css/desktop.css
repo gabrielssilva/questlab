@@ -229,8 +229,8 @@ article{background:#f7f5f2;float:left}
 @media only screen and (min-width:1600px){
 aside{display:block;float:left;width:350px;min-width:350px;margin:0 0 0 40px}
 aside section{margin:20px 0 40px 0}
-aside .char{width:120px;float:left;margin-right:30px}
-aside .charstats{background:#f7f5f2;border-radius:3px;padding:10px 0;margin-top:50px;list-style-type:square}
-aside .charstats li{font-size:.875em;padding:2px 0 2px 6px}
+aside .char{width:120px;float:left;margin-right:10px}
+aside .charstats{background:#f7f5f2;border-radius:3px;padding:10px 0;margin-top:50px}
+aside .charstats li{font-size:.875em;padding:2px 0}
 aside .cranks li:nth-child(odd){background:#f7f5f2}
 }

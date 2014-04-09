@@ -51,10 +51,10 @@
 			<h1>Zyrendaniel</h1>
 			<img src="http://legende-von-zyren.de/img/avatars/Goblin7.png" class="char">
 			<ul class="charstats">
-				<li>Level 1</li>
-				<li>1500 XP</li>
-				<li>Rang 11</li>
-				<li><a href="#">Zum Profil</a></li>
+				<li><i class="fa fa-caret-right fa-fw"></i>Level 1</li>
+				<li><i class="fa fa-caret-right fa-fw"></i>1500 XP</li>
+				<li><i class="fa fa-caret-right fa-fw"></i>Rang 11</li>
+				<li><i class="fa fa-caret-right fa-fw"></i><a href="#">Zum Profil</a></li>
 			</ul>
 		</section>
 		<section>
