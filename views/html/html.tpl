@@ -53,7 +53,7 @@
 			<ul class="charstats">
 				<li><i class="fa fa-caret-right fa-fw"></i>Level 1</li>
 				<li><i class="fa fa-caret-right fa-fw"></i>1500 XP</li>
-				<li><i class="fa fa-caret-right fa-fw"></i>Platz 11</li>
+				<li><i class="fa fa-caret-right fa-fw"></i>11. Platz</li>
 				<li><i class="fa fa-caret-right fa-fw"></i><a href="#">Zum Profil</a></li>
 			</ul>
 		</section>
