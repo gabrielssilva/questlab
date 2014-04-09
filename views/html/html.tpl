@@ -58,7 +58,7 @@
 			</ul>
 		</section>
 		<section>
-			<h1>Aktuelle Quest</h1>
+			<h1>Letzter Speicherpunkt</h1>
 			<p><i class="fa fa-pencil-square-o fa-fw"></i><a href="#">Die verwunschene Stadt</a></p>
 		</section>
 		<section>
