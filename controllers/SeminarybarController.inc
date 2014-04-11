@@ -20,25 +20,14 @@
 	 */
 	class SeminarybarController extends \hhu\z\Controller
 	{
-		
-		
-		
-		
 		/**
-		 * Prefilter.
+		 * Required models
 		 * 
-		 * @param	Request		$request	Current request
-		 * @param	Response	$response	Current response
+		 * @var array
 		 */
-		public function preFilter(\nre\core\Request $request, \nre\core\Response $response)
-		{
-			parent::preFilter($request, $response);
-			
-			// Set userdata
-			$this->set('loggedUser', IntermediateController::$user);
-			$this->set('loggedSeminary', IntermediateController::$seminary);
-			$this->set('loggedCharacter', IntermediateController::$character);
-		}
+		public $models = array('characters', 'quests', 'questgroups');
+		
+		
 		
 		
 		/**
@@ -46,6 +35,29 @@
 		 */
 		public function index()
 		{
+			if(is_null(IntermediateController::$seminary)) {
+				return;
+			}
+			
+			// Get Seminary
+			$seminary = IntermediateController::$seminary;
+			
+			// Get Character
+			$character = IntermediateController::$character;
+			$character['xplevel'] = $this->Characters->getXPLevelOfCharacters($character['id']);
+			$character['rank'] = $this->Characters->getXPRank($seminary['id'], $character['xps']);
+			
+			// Get “last” Quest
+			$lastQuest = $this->Quests->getLastQuestForCharacter($character['id']);
+			if(!is_null($lastQuest)) {
+				$lastQuest['questgroup'] = $this->Questgroups->getQuestgroupById($lastQuest['questgroup_id']);
+			}
+			
+			
+			// Pass data to view
+			$this->set('seminary', $seminary);
+			$this->set('character', $character);
+			$this->set('lastQuest', $lastQuest);
 		}
 		
 	}

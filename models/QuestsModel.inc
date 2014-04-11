@@ -297,6 +297,34 @@
 		}
 		
 		
+		/**
+		 * Get the last Quests for a Character.
+		 * 
+		 * @param	int	$characterId	ID of Character
+		 * @retrun	array			Quest data
+		 */
+		public function getLastQuestForCharacter($characterId)
+		{
+			$data = $this->db->query(
+				'SELECT quests.id, quests.questgroup_id, quests.questtype_id, quests.title, quests.url, quests.xps, quests.task, quests.right_text, quests.wrong_text, quests.questsmedia_id '.
+				'FROM quests_characters '.
+				'LEFT JOIN quests ON quests.id = quests_characters.quest_id '.
+				'WHERE quests_characters.character_id = ? AND quests_characters.status IN (?, ?, ?) '.
+				'ORDER BY quests_characters.created desc '.
+				'LIMIT 1',
+				'iiii',
+				$characterId,
+				self::QUEST_STATUS_ENTERED, self::QUEST_STATUS_SUBMITTED, self::QUEST_STATUS_SOLVED
+			);
+			if(!empty($data)) {
+				return $data[0];
+			}
+			
+			
+			return null;
+		}
+		
+		
 		
 		
 		/**

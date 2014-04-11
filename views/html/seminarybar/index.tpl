@@ -1,19 +1,23 @@
 <section class="cf">
-	<h1>Zyrendaniel</h1>
-	<img src="http://legende-von-zyren.de/img/avatars/Goblin7.png" class="char">
+	<h1><?=$character['name']?></h1>
+	<img src="<?=$linker->link(array('media','seminary',$seminary['url'],$character['avatar_url']))?>" class="char">
 	<ul class="charstats">
-		<li><i class="fa fa-caret-right fa-fw"></i>Level 1</li>
-		<li><i class="fa fa-caret-right fa-fw"></i>1500 XP</li>
-		<li><i class="fa fa-caret-right fa-fw"></i>11. Platz</li>
-		<li><i class="fa fa-caret-right fa-fw"></i><a href="#">Zum Profil</a></li>
+		<li><i class="fa fa-caret-right fa-fw"></i><?=('Level')?> <?=$character['xplevel']['level']?></li>
+		<li><i class="fa fa-caret-right fa-fw"></i><?=$character['xps']?> XPs</li>
+		<li><i class="fa fa-caret-right fa-fw"></i><?=$character['rank']?>. <?=_('Rank')?></li>
+		<li><i class="fa fa-caret-right fa-fw"></i><a href="<?=$linker->link(array('characters','character',$seminary['url'],$character['url']))?>">Zum Profil</a></li>
 	</ul>
 </section>
+
+<?php if(!is_null($lastQuest)) : ?>
 <section>
-	<h1>Letzter Speicherpunkt</h1>
-	<p><i class="fa fa-pencil-square-o fa-fw"></i><a href="#">Die verwunschene Stadt</a></p>
+	<h1><?=_('Last Quest')?></h1>
+	<p><i class="fa fa-pencil-square-o fa-fw"></i><a href="<?=$linker->link(array('quests','quest',$seminary['url'],$lastQuest['questgroup']['url'],$lastQuest['url']))?>"><?=$lastQuest['title']?></a></p>
 </section>
+<?php endif ?>
+
 <section>
-	<h1>Letzte Errungenschaft</h1>
+	<h1><?=('Last Achievement')?></h1>
 	<ul class="cranks">
 		<li>
 			<a href="#" title="Achievement-Titel"><img src="http://legende-von-zyren.de/img/achieve/1b.jpg"></a>
