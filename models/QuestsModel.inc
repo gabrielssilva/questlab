@@ -185,7 +185,7 @@
 		 */
 		public function setQuestEntered($questId, $characterId)
 		{
-			$this->setQuestStatus($questId, $characterId, static::QUEST_STATUS_ENTERED, false);
+			$this->setQuestStatus($questId, $characterId, self::QUEST_STATUS_ENTERED, false);
 		}
 		
 		
@@ -197,7 +197,7 @@
 		 */
 		public function setQuestSubmitted($questId, $characterId)
 		{
-			$this->setQuestStatus($questId, $characterId, static::QUEST_STATUS_SUBMITTED);
+			$this->setQuestStatus($questId, $characterId, self::QUEST_STATUS_SUBMITTED);
 		}
 		
 		
@@ -209,7 +209,7 @@
 		 */
 		public function setQuestUnsolved($questId, $characterId)
 		{
-			$this->setQuestStatus($questId, $characterId, static::QUEST_STATUS_UNSOLVED);
+			$this->setQuestStatus($questId, $characterId, self::QUEST_STATUS_UNSOLVED);
 		}
 		
 		
@@ -221,7 +221,7 @@
 		 */
 		public function setQuestSolved($questId, $characterId)
 		{
-			$this->setQuestStatus($questId, $characterId, static::QUEST_STATUS_SOLVED, false);
+			$this->setQuestStatus($questId, $characterId, self::QUEST_STATUS_SOLVED, false);
 		}
 		
 		
@@ -241,7 +241,7 @@
 				'iiiii',
 				$questId,
 				$characterId,
-				static::QUEST_STATUS_ENTERED, static::QUEST_STATUS_SOLVED, static::QUEST_STATUS_UNSOLVED
+				self::QUEST_STATUS_ENTERED, self::QUEST_STATUS_SOLVED, self::QUEST_STATUS_UNSOLVED
 			);
 			
 			
@@ -265,7 +265,7 @@
 				'iiii',
 				$questId,
 				$characterId,
-				static::QUEST_STATUS_SOLVED, static::QUEST_STATUS_UNSOLVED
+				self::QUEST_STATUS_SOLVED, self::QUEST_STATUS_UNSOLVED
 			);
 			
 			
@@ -289,7 +289,7 @@
 				'iii',
 				$questId,
 				$characterId,
-				static::QUEST_STATUS_SOLVED
+				self::QUEST_STATUS_SOLVED
 			);
 			
 			
