@@ -39,6 +39,9 @@
 		{
 			// Add menu
 			$this->addSubAgent('Menu');
+			
+			// Add Seminary sidebar
+			$this->addSubAgent('Seminarybar');
 		}
 		
 		
