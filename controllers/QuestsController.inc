@@ -265,7 +265,7 @@
 			$questgroup = $this->Questgroups->getQuestgroupByUrl($seminary['id'], $questgroupUrl);
 			$questgroup['picture'] = null;
 			if(!is_null($questgroup['questgroupspicture_id'])) {
-				$questgroup['picture'] = $this->Media->getMediaById($questgroup['questgroupspicture_id']);
+				$questgroup['picture'] = $this->Media->getSeminaryMediaById($questgroup['questgroupspicture_id']);
 			}
 			
 			// Get Quest
@@ -274,7 +274,7 @@
 			// Media
 			$questmedia = null;
 			if(!is_null($quest['questsmedia_id'])) {
-				$questmedia = $this->Media->getMediaById($quest['questsmedia_id']);
+				$questmedia = $this->Media->getSeminaryMediaById($quest['questsmedia_id']);
 			}
 			
 			// Get submitted Character submissions
@@ -316,7 +316,7 @@
 			$questgroup = $this->Questgroups->getQuestgroupByUrl($seminary['id'], $questgroupUrl);
 			$questgroup['picture'] = null;
 			if(!is_null($questgroup['questgroupspicture_id'])) {
-				$questgroup['picture'] = $this->Media->getMediaById($questgroup['questgroupspicture_id']);
+				$questgroup['picture'] = $this->Media->getSeminaryMediaById($questgroup['questgroupspicture_id']);
 			}
 			
 			// Get Quest
@@ -328,7 +328,7 @@
 			// Media
 			$questmedia = null;
 			if(!is_null($quest['questsmedia_id'])) {
-				$questmedia = $this->Media->getMediaById($quest['questsmedia_id']);
+				$questmedia = $this->Media->getSeminaryMediaById($quest['questsmedia_id']);
 			}
 			
 			// Questtype
