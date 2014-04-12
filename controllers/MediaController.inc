@@ -25,8 +25,10 @@
 		 * @var array
 		 */
 		public $permissions = array(
-			'index' => array('admin', 'moderator', 'user', 'guest'),
-			'seminary' => array('admin', 'moderator', 'user', 'guest')
+			'index' 		=> array('admin', 'moderator', 'user', 'guest'),
+			'seminaryheader'	=> array('admin', 'moderator', 'user', 'guest'),
+			'seminary' 		=> array('admin', 'moderator', 'user', 'guest'),
+			'avatar'		=> array('admin', 'moderator', 'user')
 		);
 		/**
 		 * User seminary permissions
@@ -70,44 +72,48 @@
 		 * Display a medium.
 		 * 
 		 * @param	string	$mediaUrl	URL-name of the medium
+		 * @param	string	$action		Action for processing the media
 		 */
 		public function index($mediaUrl, $action=null)
 		{
 			// Get Media
 			$media = $this->Media->getMediaByUrl($mediaUrl);
 			
-			// Get format
-			$format = explode('/', $media['mimetype']);
-			$format = $format[1];
-			
-			// Set content-type
-			$this->response->addHeader("Content-type: ".$media['mimetype']."");
-			
-			// Set filename
-			$media['filename'] = ROOT.DS.\nre\configs\AppConfig::$dirs['media'].DS.$media['id'];
-			if(!file_exists($media['filename'])) {
-				throw new \nre\exceptions\IdNotFoundException($mediaUrl);
-			}
-			
-			// Cache
-			if($this->setCacheHeaders($media['filename'])) {
+			// Get file
+			$file = $this->getMediaFile($media, $action);
+			if(is_null($media)) {
 				return;
 			}
 			
-			// Load and process file
-			$file = null;
-			switch($action)
-			{
-				// No action
-				case null:
-					// Do not process the file
-					$file = file_get_contents($media['filename']);
-				break;
-				default:
-					throw new ParamsNotValidException($action);
-				break;
-			}
 			
+			// Pass data to view
+			$this->set('media', $media);
+			$this->set('file', $file);
+		}
+		
+		
+		/**
+		 * Action: seminaryheader
+		 * 
+		 * Display the header of a Seminary.
+		 * 
+		 * @throws	IdNotFoundException
+		 * @param	string	$seminaryUrl	URL-title of the Seminary
+		 * @param	string	$action		Action for processing the media
+		 */
+		public function seminaryheader($seminaryUrl, $action=null)
+		{
+			// Get Seminary
+			$seminary = $this->Seminaries->getSeminaryByUrl($seminaryUrl);
+			
+			// Get media
+			$media = $this->Media->getSeminaryMediaById($seminary['seminarymedia_id']);
+			
+			// Get file
+			$file = $this->getMediaFile($media, $action);
+			if(is_null($file)) {
+				return;
+			}
 			
 			
 			// Pass data to view
@@ -124,6 +130,7 @@
 		 * @throws	IdNotFoundException
 		 * @param	string	$seminaryUrl	URL-title of the Seminary
 		 * @param	string	$mediaUrl	URL-name of the medium
+		 * @param	string	$action		Action for processing the media
 		 */
 		public function seminary($seminaryUrl, $mediaUrl, $action=null)
 		{
@@ -133,51 +140,11 @@
 			// Get Media
 			$media = $this->Media->getSeminaryMediaByUrl($seminary['id'], $mediaUrl);
 			
-			// Get format
-			$format = explode('/', $media['mimetype']);
-			$format = $format[1];
-			
-			// Set content-type
-			$this->response->addHeader("Content-type: ".$media['mimetype']."");
-			
-			// Set filename
-			$media['filename'] = ROOT.DS.\nre\configs\AppConfig::$dirs['seminarymedia'].DS.$media['id'];
-			if(!file_exists($media['filename'])) {
-				throw new \nre\exceptions\IdNotFoundException($mediaUrl);
-			}
-			
-			// Cache
-			if($this->setCacheHeaders($media['filename'])) {
+			// Get file
+			$file = $this->getMediaFile($media, $action);
+			if(is_null($media)) {
 				return;
 			}
-			
-			// Load and process file
-			$file = null;
-			switch($action)
-			{
-				// No action
-				case null:
-					// Do not process the file
-					$file = file_get_contents($media['filename']);
-				break;
-				case 'questgroup':
-					if(!in_array(strtoupper($format), self::getImageTypes())) {
-						$file = file_get_contents($media['filename']);
-					}
-					else
-					{
-						$file = self::resizeImage(
-							$media['filename'],
-							$format,
-							480
-						);
-					}
-				break;
-				default:
-					throw new ParamsNotValidException($action);
-				break;
-			}
-			
 			
 			
 			// Pass data to view
@@ -225,6 +192,66 @@
 		}
 		
 		
+		/**
+		 * Determine the file for a medium and process it if necessary.
+		 * 
+		 * @throws	IdNotFoundException
+		 * @throws	ParamsNotValidException
+		 * @param	array	$media	Medium to get file for
+		 * @param	string	$action	Action for processing the media
+		 * @return	object		File for the medium (or null if medium is cached)
+		 */
+		private function getMediaFile($media, $action=null)
+		{
+			// Get format
+			$format = explode('/', $media['mimetype']);
+			$format = $format[1];
+			
+			// Set content-type
+			$this->response->addHeader("Content-type: ".$media['mimetype']."");
+			
+			// Set filename
+			$media['filename'] = ROOT.DS.\nre\configs\AppConfig::$dirs['seminarymedia'].DS.$media['id'];
+			if(!file_exists($media['filename'])) {
+				throw new \nre\exceptions\IdNotFoundException($mediaUrl);
+			}
+			
+			// Cache
+			if($this->setCacheHeaders($media['filename'])) {
+				return null;
+			}
+			
+			// Load and process file
+			$file = null;
+			switch($action)
+			{
+				// No action
+				case null:
+					// Do not process the file
+					$file = file_get_contents($media['filename']);
+				break;
+				case 'questgroup':
+					if(!in_array(strtoupper($format), self::getImageTypes())) {
+						$file = file_get_contents($media['filename']);
+					}
+					else
+					{
+						$file = self::resizeImage(
+							$media['filename'],
+							$format,
+							480
+						);
+					}
+				break;
+				default:
+					throw new ParamsNotValidException($action);
+				break;
+			}
+			
+			
+			// Return file
+			return $file;
+		}
 		
 		
 		/**

@@ -7,8 +7,8 @@
 <ul>
 	<?php foreach($seminaries as &$seminary) : ?>
 	<li>
-		<?php if(array_key_exists('media', $seminary)) : ?>
-		<img src="<?=$linker->link(array('media','index',$seminary['media']['url']))?>" />
+		<?php if(!is_null($seminary['seminarymedia_id'])) : ?>
+		<img src="<?=$linker->link(array('media','seminaryheader',$seminary['url']))?>" />
 		<?php endif ?>
 		<h2>
 			<?php if(count($seminary['userroles']) > 0) : ?>

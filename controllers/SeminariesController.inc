@@ -69,11 +69,6 @@
 				// Created user
 				$seminary['creator'] = $this->Users->getUserById($seminary['created_user_id']);
 				
-				// Media
-				if(!is_null($seminary['media_id'])) {
-					$seminary['media'] = $this->Media->getMediaById($seminary['media_id']);
-				}
-				
 				// Character of currently logged-in user
 				try {
 					$seminary['usercharacter'] = $this->Characters->getCharacterForUserAndSeminary($this->Auth->getUserId(), $seminary['id']);
@@ -150,17 +145,10 @@
 				}
 			}
 			
-			// Medium
-			$media = null;
-			if(!is_null($seminary['media_id'])) {
-				$media = $this->Media->getMediaById($seminary['media_id']);
-			}
-			
 			
 			// Pass data to view
 			$this->set('seminary', $seminary);
 			$this->set('questgroupshierarchy', $questgroupshierarchy);
-			$this->set('media', $media);
 		}
 		
 		

@@ -66,9 +66,6 @@
 		{
 			// Get Seminary
 			$seminary = $this->Seminaries->getSeminaryByUrl($seminaryUrl);
-			if(!is_null($seminary['media_id'])) {
-				$seminary['media'] = $this->Media->getMediaById($seminary['media_id']);
-			}
 			
 			// Get registered Characters
 			$characters = $this->Characters->getCharactersForSeminary($seminary['id']);
@@ -107,9 +104,6 @@
 			// Get Seminary
 			$seminary = $this->Seminaries->getSeminaryByUrl($seminaryUrl);
 			$seminary['achievable_xps'] = $this->Seminaries->getTotalXPs($seminary['id']);
-			if(!is_null($seminary['media_id'])) {
-				$seminary['media'] = $this->Media->getMediaById($seminary['media_id']);
-			}
 			
 			// Get Character
 			$character = $this->Characters->getCharacterByUrl($seminary['id'], $characterUrl);
@@ -216,18 +210,11 @@
 				}
 			}
 			
-			// Medium
-			$media = null;
-			if(!is_null($seminary['media_id'])) {
-				$media = $this->Media->getMediaById($seminary['media_id']);
-			}
-			
 			
 			// Pass data to view
 			$this->set('seminary', $seminary);
 			$this->set('types', $types);
 			$this->set('fields', $fields);
-			$this->set('media', $media);
 			$this->set('charactername', $charactername);
 			$this->set('validation', $validation);
 			$this->set('fieldsValidation', $fieldsValidation);

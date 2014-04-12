@@ -1,6 +1,6 @@
-<?php if(array_key_exists('media', $seminary)) : ?>
+<?php if(!is_null($seminary['seminarymedia_id'])) : ?>
 <div class="moodpic">
-	<img src="<?=$linker->link(array('media','index',$seminary['media']['url']))?>">
+	<img src="<?=$linker->link(array('media','seminaryheader',$seminary['url']))?>">
 </div>
 <?php endif ?>
 <h1><a href="<?=$linker->link(array('seminaries',$seminary['url']))?>"><?=$seminary['title']?></a></h1>
