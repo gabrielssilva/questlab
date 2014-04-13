@@ -1,5 +1,5 @@
-syntax: glob
-media/*
-tmp/*
-uploads/*
-seminarymedia/*
+syntax: regex
+^media/*
+^tmp/*
+^uploads/*
+^seminarymedia/*
