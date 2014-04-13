@@ -67,31 +67,15 @@
 <section class="fll48">
 	<h1><i class="fa fa-trophy fa-fw"></i>Neue Achievements</h1>
 	<ul class="cranks">
+		<?php foreach($achievements as &$achievement) : ?>
 		<li>
-			<a href="#" title="Achievement-Titel"><img src="http://legende-von-zyren.de/img/achieve/1b.jpg"></a>
-			<p><a href="#">Des Königs neue Quests</a></p>
-			<p><small>erreicht am: 14.07.2014</small></p>
+			<?php if(!is_null($achievement['achieved_achievementsmedia_id'])) : ?>
+			<a href="#" title="Achievement-Titel"><img src="<?=$linker->link(array('media','achievement',$seminary['url'],$achievement['url']))?>"></a>
+			<?php endif ?>
+			<p><a href="#"><?=$achievement['title']?></a></p>
+			<p><small><?=sprintf(_('achieved at: %s'), $dateFormatter->format(new \DateTime($achievement['created'])))?></small></p>
 		</li>
-		<li>
-			<a href="#" title="Achievement-Titel"><img src="http://legende-von-zyren.de/img/achieve/2b.jpg"></a>
-			<p><a href="#">Des Königs neue Quests</a></p>
-			<p><small>erreicht am: 14.07.2014</small></p>
-		</li>
-		<li>
-			<a href="#" title="Achievement-Titel"><img src="http://legende-von-zyren.de/img/achieve/3b.jpg"></a>
-			<p><a href="#">Des Königs neue Quests</a></p>
-			<p><small>erreicht am: 14.07.2014</small></p>
-		</li>
-		<li>
-			<a href="#" title="Achievement-Titel"><img src="http://legende-von-zyren.de/img/achieve/4b.jpg"></a>
-			<p><a href="#">Des Königs neue Quests</a></p>
-			<p><small>erreicht am: 14.07.2014</small></p>
-		</li>
-		<li>
-			<a href="#" title="Achievement-Titel"><img src="http://legende-von-zyren.de/img/achieve/5b.jpg"></a>
-			<p><a href="#">Des Königs neue Quests</a></p>
-			<p><small>erreicht am: 14.07.2014</small></p>
-		</li>
+		<?php endforeach ?>
 	</ul>
 </section>
 

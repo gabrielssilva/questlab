@@ -25,7 +25,7 @@
 		 * 
 		 * @var array
 		 */
-		public $models = array('characters', 'quests', 'questgroups');
+		public $models = array('characters', 'quests', 'questgroups', 'achievements');
 		
 		
 		
@@ -53,11 +53,16 @@
 				$lastQuest['questgroup'] = $this->Questgroups->getQuestgroupById($lastQuest['questgroup_id']);
 			}
 			
+			// Get last achieved Achievement
+			$achievements = $this->Achievements->getAchievedAchievementsForCharacter($character['id']);
+			$lastAchievement = array_shift($achievements);
+			
 			
 			// Pass data to view
 			$this->set('seminary', $seminary);
 			$this->set('character', $character);
 			$this->set('lastQuest', $lastQuest);
+			$this->set('lastAchievement', $lastAchievement);
 		}
 		
 	}

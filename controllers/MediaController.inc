@@ -28,7 +28,7 @@
 			'index' 		=> array('admin', 'moderator', 'user', 'guest'),
 			'seminaryheader'	=> array('admin', 'moderator', 'user', 'guest'),
 			'seminary' 		=> array('admin', 'moderator', 'user', 'guest'),
-			'avatar'		=> array('admin', 'moderator', 'user')
+			'achievement'		=> array('admin', 'moderator', 'user', 'guest')
 		);
 		/**
 		 * User seminary permissions
@@ -36,14 +36,15 @@
 		 * @var array
 		 */
 		public $seminaryPermissions = array(
-			'seminary' => array('admin', 'moderator', 'user', 'guest')
+			'seminary' 	=> array('admin', 'moderator', 'user', 'guest'),
+			'achievement'	=> array('admin', 'moderator', 'user', 'guest')
 		);
 		/**
 		 * Required models
 		 * 
 		 * @var array
 		 */
-		public $models = array('seminaries', 'media');
+		public $models = array('seminaries', 'achievements', 'media');
 		
 		
 		
@@ -143,6 +144,53 @@
 			// Get file
 			$file = $this->getMediaFile($media, $action);
 			if(is_null($media)) {
+				return;
+			}
+			
+			
+			// Pass data to view
+			$this->set('media', $media);
+			$this->set('file', $file);
+		}
+		
+		
+		/**
+		 * Action: achievement
+		 * 
+		 * Display the achievement of a Seminary.
+		 * 
+		 * @throws	IdNotFoundException
+		 * @param	string	$seminaryUrl	URL-title of the Seminary
+		 * @param	string	$achievementUrl	URL-title of the Achievement
+		 * @param	string	$action		Action for processing the media
+		 */
+		public function achievement($seminaryUrl, $achievementUrl)
+		{
+			// Get Seminary
+			$seminary = $this->Seminaries->getSeminaryByUrl($seminaryUrl);
+			
+			// Get Character
+			$character = IntermediateController::$character;
+			
+			// Get Achievement
+			$achievement = $this->Achievements->getAchievementByUrl($seminary['id'], $achievementUrl);
+			
+			// Get media
+			$index = '';
+			if(is_null($character) || !$this->Achievements->hasCharacterAchievedAchievement($achievement['id'], $character['id'])) {
+				$index = 'unachieved_achievementsmedia_id';
+			}
+			else {
+				$index = 'achieved_achievementsmedia_id';
+			}
+			if(is_null($achievement[$index])) {
+				throw new \nre\exceptions\IdNotFoundException($achievementUrl);
+			}
+			$media = $this->Media->getSeminaryMediaById($achievement[$index]);
+			
+			// Get file
+			$file = $this->getMediaFile($media, null);
+			if(is_null($file)) {
 				return;
 			}
 			

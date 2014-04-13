@@ -16,16 +16,21 @@
 </section>
 <?php endif ?>
 
+<?php if(!is_null($lastAchievement)) : ?>
 <section>
 	<h1><?=('Last Achievement')?></h1>
 	<ul class="cranks">
 		<li>
-			<a href="#" title="Achievement-Titel"><img src="http://legende-von-zyren.de/img/achieve/1b.jpg"></a>
-			<p><a href="#">Des Königs neue Quests</a></p>
-			<p><small>erreicht am: 14.07.2014</small></p>
+			<?php if(!is_null($lastAchievement['achieved_achievementsmedia_id'])) : ?>
+			<a href="#" title="Achievement-Titel"><img src="<?=$linker->link(array('media','achievement',$seminary['url'],$lastAchievement['url']))?>"></a>
+			<?php endif ?>
+			<p><a href="#"><?=$lastAchievement['title']?></a></p>
+			<p><small><?=sprintf(_('achieved at: %s'), $dateFormatter->format(new \DateTime($lastAchievement['created'])))?></small></p>
 		</li>
 	</ul>
 </section>
+<?php endif ?>
+
 <section>
 	<h1>Wille und die Majas</h1>
 	<ul class="cranks">

@@ -120,6 +120,9 @@
 			// Get Character groups
 			$groups = $this->Charactergroups->getGroupsForCharacter($character['id']);
 			
+			// Get Achievements
+			$achievements = $this->Achievements->getAchievedAchievementsForCharacter($character['id']);
+			
 			
 			// Pass data to view
 			$this->set('seminary', $seminary);
@@ -127,6 +130,7 @@
 			$this->set('characterfields', $characterfields);
 			$this->set('user', $user);
 			$this->set('groups', $groups);
+			$this->set('achievements', $achievements);
 		}
 		
 		

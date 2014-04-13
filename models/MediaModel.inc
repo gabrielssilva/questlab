@@ -88,21 +88,21 @@
 		 * Get a Seminary medium by its URL.
 		 * 
 		 * @throws	IdNotFoundException
-		 * @param	int	$seminaryId	ID of the seminary
-		 * @param	string	$mediaURL	URL-name of the Medium
-		 * @return	array			Medium data
+		 * @param	int	$seminaryId		ID of the seminary
+		 * @param	string	$seminaryMediaUrl	URL-name of the Seminary medium
+		 * @return	array				Seminary medium data
 		 */
-		public function getSeminaryMediaByUrl($seminaryId, $mediaUrl)
+		public function getSeminaryMediaByUrl($seminaryId, $seminaryMediaUrl)
 		{
 			$data = $this->db->query(
 				'SELECT id, name, url, description, mimetype '.
 				'FROM seminarymedia '.
 				'WHERE url = ?',
 				's',
-				$mediaUrl
+				$seminaryMediaUrl
 			);
 			if(empty($data)) {
-				throw new \nre\exceptions\IdNotFoundException($mediaUrl);
+				throw new \nre\exceptions\IdNotFoundException($seminaryMediaUrl);
 			}
 			
 			
@@ -114,9 +114,8 @@
 		 * Get a Seminary medium by its ID.
 		 * 
 		 * @throws	IdNotFoundException
-		 * @param	int	$seminaryId	ID of the seminary
-		 * @param	int	$mediaId	ID of the Medium
-		 * @return	array			Medium data
+		 * @param	int	$seminaryMediaId	ID of the Seminary medium
+		 * @return	array				Seminary medium data
 		 */
 		public function getSeminaryMediaById($mediaId)
 		{

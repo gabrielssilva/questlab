@@ -73,6 +73,9 @@
 			
 			// Check permissions
 			$this->checkPermission($request, $response);
+			
+			// Check achievements
+			$this->checkAchievements($request, $response);
 		}
 		
 		
@@ -128,6 +131,137 @@
 			// Check permissions
 			if(count(array_intersect($userSeminaryRoles, $permissions)) == 0) {
 				throw new \nre\exceptions\AccessDeniedException();
+			}
+		}
+		
+		
+		/**
+		 * Check for newly achieved Achievements.
+		 */
+		private function checkAchievements(\nre\core\Request $request, \nre\core\Response $response)
+		{
+			// Get Seminary
+			$seminary = self::$seminary;
+			
+			// Get Character
+			$character = self::$character;
+			
+			// Get unachieved Achievments
+			$achievements = array_merge(
+				$this->Achievements->getUnachhievedAchievementsForCharacter($seminary['id'], $character['id']),
+				$this->Achievements->getUnachievedOnlyOnceAchievementsForSeminary($seminary['id'])
+			);
+			
+			// Check conditions
+			foreach($achievements as &$achievement)
+			{
+				// Get conditions
+				$conditions = array();
+				$progress = 0;
+				switch($achievement['condition'])
+				{
+					// Date conditions
+					case 'date':
+						$conditionsDate = $this->Achievements->getAchievementConditionsDate($achievement['id']);
+						foreach($conditionsDate as &$condition)
+						{
+							$conditions[] = array(
+								'func'		=> 'checkAchievementConditionDate',
+								'params'	=> array(
+									$condition['select']
+								)
+							);
+						}
+					break;
+					// Character conditions
+					case 'character':
+						$conditionsCharacter = $this->Achievements->getAchievementConditionsCharacter($achievement['id']);
+						foreach($conditionsCharacter as &$condition)
+						{
+							$conditions[] = array(
+								'func'		=> 'checkAchievementConditionCharacter',
+								'params'	=> array(
+									$condition['field'],
+									$condition['value'],
+									$character['id']
+								)
+							);
+						}
+					break;
+					// Quest conditions
+					case 'quest':
+						$conditionsQuest = $this->Achievements->getAchievementConditionsQuest($achievement['id']);
+						foreach($conditionsQuest as &$condition)
+						{
+							$conditions[] = array(
+								'func'		=> 'checkAchievementConditionQuest',
+								'params'	=> array(
+									$condition['field'],
+									$condition['count'],
+									$condition['value'],
+									$condition['status'],
+									$condition['groupby'],
+									$condition['quest_id'],
+									$character['id']
+								)
+							);
+						}
+					break;
+					// Achievement conditions
+					case 'achievement':
+						$conditionsAchievement = $this->Achievements->getAchievementConditionsAchievement($achievement['id']);
+						foreach($conditionsAchievement as &$condition)
+						{
+							$conditions[] = array(
+								'func'		=> 'checkAchievementConditionAchievement',
+								'params'	=> array(
+									$condition['field'],
+									$condition['count'],
+									$condition['value'],
+									$condition['groupby'],
+									$condition['meta_achievement_id'],
+									$character['id']
+								)
+							);
+						}
+					break;
+				}
+				
+				// Check conditions
+				$achieved = ($achievement['all_conditions'] == 1);
+				foreach($conditions as &$condition)
+				{
+					// Calculate result of condition
+					$result = call_user_func_array(
+						array(
+							$this->Achievements,
+							$condition['func']
+						),
+						$condition['params']
+					);
+					
+					// The overall result and abort if possible
+					if($achievement['all_conditions'])
+					{
+						if(!$result) {
+							$achieved = false;
+							break;
+						}
+					}
+					else
+					{
+						if($result) {
+							$achieved = true;
+							break;
+						}
+					}
+					
+				}
+				
+				// Set status
+				if($achieved) {
+					$this->Achievements->setAchievementAchieved($achievement['id'], $character['id']);
+				}
 			}
 		}
 		
