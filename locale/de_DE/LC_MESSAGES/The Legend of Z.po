@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: The Legend of Z\n"
-"POT-Creation-Date: 2014-04-14 15:20+0100\n"
-"PO-Revision-Date: 2014-04-14 15:21+0100\n"
+"POT-Creation-Date: 2014-04-15 00:04+0100\n"
+"PO-Revision-Date: 2014-04-15 00:04+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de_DE\n"
@@ -17,12 +17,22 @@ msgstr ""
 "X-Poedit-SearchPath-1: questtypes\n"
 
 #: questtypes/choiceinput/html/quest.tpl:14
-#: questtypes/crossword/html/quest.tpl:25
+#: questtypes/crossword/html/quest.tpl:30
 #: questtypes/dragndrop/html/quest.tpl:16
 #: questtypes/multiplechoice/html/quest.tpl:19
 #: questtypes/submit/html/quest.tpl:23 questtypes/textinput/html/quest.tpl:10
 msgid "solve"
 msgstr "lösen"
+
+#: questtypes/crossword/html/quest.tpl:22
+#: questtypes/crossword/html/submission.tpl:22
+msgid "vertical"
+msgstr "vertikal"
+
+#: questtypes/crossword/html/quest.tpl:24
+#: questtypes/crossword/html/submission.tpl:24
+msgid "horizontal"
+msgstr "horizontal"
 
 #: questtypes/multiplechoice/html/quest.tpl:3
 #, php-format

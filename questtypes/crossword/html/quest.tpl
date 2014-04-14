@@ -17,7 +17,14 @@
 	</table>
 	<ol>
 		<?php foreach($words as &$word) : ?>
-		<li><?=$word['question']?></li>
+		<li>
+			<?php if($word['vertical']) : ?>
+			<?=_('vertical')?>:
+			<?php else : ?>
+			<?=_('horizontal')?>:
+			<?php endif ?>
+			<?=\hhu\z\Utils::t($word['question'])?>
+		</li>
 		<?php endforeach ?>
 	</ol>
 	<input type="submit" name="submit" value="<?=_('solve')?>" />
