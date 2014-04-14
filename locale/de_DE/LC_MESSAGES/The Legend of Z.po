@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: The Legend of Z\n"
-"POT-Creation-Date: 2014-04-11 16:16+0100\n"
-"PO-Revision-Date: 2014-04-11 16:16+0100\n"
+"POT-Creation-Date: 2014-04-14 15:20+0100\n"
+"PO-Revision-Date: 2014-04-14 15:21+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de_DE\n"
@@ -16,6 +16,8 @@ msgstr ""
 "X-Poedit-SearchPath-0: views\n"
 "X-Poedit-SearchPath-1: questtypes\n"
 
+#: questtypes/choiceinput/html/quest.tpl:14
+#: questtypes/crossword/html/quest.tpl:25
 #: questtypes/dragndrop/html/quest.tpl:16
 #: questtypes/multiplechoice/html/quest.tpl:19
 #: questtypes/submit/html/quest.tpl:23 questtypes/textinput/html/quest.tpl:10
@@ -78,10 +80,18 @@ msgstr "Fehler"
 msgid "Achievements"
 msgstr "Errungenschaften"
 
+#: views/html/achievements/index.tpl:15
+msgid "Secret Achievement"
+msgstr "Geheime Errungenschaft"
+
+#: views/html/achievements/index.tpl:19
+msgid "Continue playing to unlock this secret Achievement"
+msgstr "Spiele weiter, um diesen geheimen Erfolg freizuschalten"
+
 #: views/html/charactergroups/group.tpl:7
 #: views/html/charactergroups/groupsgroup.tpl:7
 #: views/html/charactergroups/index.tpl:7
-#: views/html/characters/character.tpl:55 views/html/seminarymenu/index.tpl:3
+#: views/html/characters/character.tpl:53 views/html/seminarymenu/index.tpl:3
 msgid "Character Groups"
 msgstr "Charaktergruppen"
 
@@ -100,7 +110,7 @@ msgstr "Mitglied"
 
 #: views/html/charactergroups/group.tpl:25
 #: views/html/characters/character.tpl:7 views/html/characters/index.tpl:7
-#: views/html/seminarymenu/index.tpl:2 views/html/users/user.tpl:13
+#: views/html/seminarymenu/index.tpl:2 views/html/users/user.tpl:15
 msgid "Characters"
 msgstr "Charaktere"
 
@@ -134,9 +144,14 @@ msgstr "Verlorene Quest"
 msgid "Total progress"
 msgstr "Fortschritt"
 
-#: views/html/characters/character.tpl:20 views/html/users/user.tpl:27
+#: views/html/characters/character.tpl:20 views/html/users/user.tpl:29
 msgid "Level"
 msgstr "Level"
+
+#: views/html/characters/character.tpl:39 views/html/seminarybar/index.tpl:28
+#, php-format
+msgid "achieved at: %s"
+msgstr "erhalten am: %s"
 
 #: views/html/characters/register.tpl:7
 msgid "Create Character"
@@ -181,7 +196,7 @@ msgstr "Das Kursfeld „%s“ ist ungültig"
 msgid "Seminary fields"
 msgstr "Kursfelder"
 
-#: views/html/characters/register.tpl:71 views/html/seminaries/create.tpl:9
+#: views/html/characters/register.tpl:79 views/html/seminaries/create.tpl:14
 #: views/html/users/create.tpl:17
 msgid "create"
 msgstr "erstellen"
@@ -191,7 +206,7 @@ msgid "Introduction"
 msgstr "Einführung"
 
 #: views/html/introduction/index.tpl:5 views/html/introduction/index.tpl:13
-#: views/html/menu/index.tpl:7 views/html/users/login.tpl:3
+#: views/html/menu/index.tpl:6 views/html/users/login.tpl:3
 #: views/html/users/login.tpl:14
 msgid "Login"
 msgstr "Login"
@@ -227,17 +242,13 @@ msgstr "registriere dich"
 msgid "Users"
 msgstr "Benutzer"
 
-#: views/html/menu/index.tpl:3
-msgid "Usergroups"
-msgstr "Benutzergruppen"
-
-#: views/html/menu/index.tpl:4 views/html/seminaries/create.tpl:1
-#: views/html/seminaries/delete.tpl:1 views/html/seminaries/edit.tpl:1
+#: views/html/menu/index.tpl:3 views/html/seminaries/create.tpl:6
+#: views/html/seminaries/delete.tpl:6 views/html/seminaries/edit.tpl:6
 #: views/html/seminaries/index.tpl:1
 msgid "Seminaries"
 msgstr "Kurse"
 
-#: views/html/menu/index.tpl:9
+#: views/html/menu/index.tpl:8
 msgid "Logout"
 msgstr "Logout"
 
@@ -266,37 +277,37 @@ msgstr "Lösungen von %s"
 msgid "submitted"
 msgstr "eingereicht am %s um %s Uhr"
 
-#: views/html/seminaries/create.tpl:2
+#: views/html/seminaries/create.tpl:7
 msgid "New seminary"
 msgstr "Neuer Kurs"
 
-#: views/html/seminaries/create.tpl:6 views/html/seminaries/create.tpl:7
-#: views/html/seminaries/edit.tpl:6 views/html/seminaries/edit.tpl:7
+#: views/html/seminaries/create.tpl:11 views/html/seminaries/create.tpl:12
+#: views/html/seminaries/edit.tpl:11 views/html/seminaries/edit.tpl:12
 msgid "Title"
 msgstr "Titel"
 
-#: views/html/seminaries/delete.tpl:2 views/html/seminaries/seminary.tpl:39
+#: views/html/seminaries/delete.tpl:7 views/html/seminaries/seminary.tpl:39
 msgid "Delete seminary"
 msgstr "Kurs löschen"
 
-#: views/html/seminaries/delete.tpl:4
+#: views/html/seminaries/delete.tpl:9
 #, php-format
 msgid "Should the seminary “%s” really be deleted?"
 msgstr "Soll der Kurs „%s“ wirklich gelöscht werden?"
 
-#: views/html/seminaries/delete.tpl:6 views/html/users/delete.tpl:6
+#: views/html/seminaries/delete.tpl:11 views/html/users/delete.tpl:6
 msgid "delete"
 msgstr "löschen"
 
-#: views/html/seminaries/delete.tpl:7 views/html/users/delete.tpl:7
+#: views/html/seminaries/delete.tpl:12 views/html/users/delete.tpl:7
 msgid "cancel"
 msgstr "abbrechen"
 
-#: views/html/seminaries/edit.tpl:2 views/html/seminaries/seminary.tpl:38
+#: views/html/seminaries/edit.tpl:7 views/html/seminaries/seminary.tpl:38
 msgid "Edit seminary"
 msgstr "Kurs bearbeiten"
 
-#: views/html/seminaries/edit.tpl:9 views/html/users/edit.tpl:17
+#: views/html/seminaries/edit.tpl:14 views/html/users/edit.tpl:17
 msgid "save"
 msgstr "speichern"
 
@@ -345,6 +356,7 @@ msgstr "Nachname"
 #: views/html/users/create.tpl:12 views/html/users/create.tpl:13
 #: views/html/users/edit.tpl:12 views/html/users/edit.tpl:13
 #: views/html/users/register.tpl:80 views/html/users/register.tpl:81
+#: views/html/users/user.tpl:12
 msgid "E‑mail address"
 msgstr "E‑Mail-Adresse"
 
@@ -456,9 +468,16 @@ msgstr "Das Passwort ist ungültig"
 msgid "Register"
 msgstr "Registrieren"
 
-#: views/html/users/user.tpl:32
+#: views/html/users/user.tpl:11
+msgid "Name"
+msgstr "Name"
+
+#: views/html/users/user.tpl:34
 msgid "Roles"
 msgstr "Rollen"
+
+#~ msgid "Usergroups"
+#~ msgstr "Benutzergruppen"
 
 #~ msgid "E‑Mail"
 #~ msgstr "E‑Mail"
