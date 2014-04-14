@@ -184,14 +184,13 @@
 					
 					foreach(range($startY, $endY) as $y)
 					{
-						$oldValue = (array_key_exists($x, $matrix) && array_key_exists($y, $matrix[$x]) && !is_null($matrix[$x][$y])) ? $matrix[$x][$y] : null;
 						$matrix[$x][$y] = array(
 							'char'		=> mb_substr($word['word'], $y-$startY, 1, 'UTF-8'),
-							'indices'	=> array($index),
+							'indices'	=> (array_key_exists($x, $matrix) && array_key_exists($y, $matrix[$x]) && !is_null($matrix[$x][$y]) && array_key_exists('indices', $matrix[$x][$y])) ? $matrix[$x][$y]['indices'] : array(),
 							'answer' 	=> null
 						);
-						if(!is_null($oldValue)) {
-							$matrix[$x][$y]['indices'] = array_merge($matrix[$x][$y]['indices'], $oldValue['indices']);
+						if($y == $startY) {
+							$matrix[$x][$y]['indices'][] = $index;
 						}
 						if(array_key_exists('answer', $word))
 						{
@@ -216,14 +215,14 @@
 					{
 						$matrix[$x] = array_pad($matrix[$x], $y+1, null);
 						
-						$oldValue = (array_key_exists($x, $matrix) && array_key_exists($y, $matrix[$x]) && !is_null($matrix[$x][$y])) ? $matrix[$x][$y] : null;
 						$matrix[$x][$y] = array(
 							'char'		=> mb_substr($word['word'], $x-$startX, 1, 'UTF-8'),
-							'indices'	=> array($index),
+							'indices'	=> (array_key_exists($x, $matrix) && array_key_exists($y, $matrix[$x]) && !is_null($matrix[$x][$y]) && array_key_exists('indices', $matrix[$x][$y])) ? $matrix[$x][$y]['indices'] : array(),
 							'answer'	=> null
 						);
-						if(!is_null($oldValue)) {
-							$matrix[$x][$y]['indices'] = array_merge($matrix[$x][$y]['indices'], $oldValue['indices']);
+						if($x == $startX) {
+							$matrix[$x][$y]['indices'][] = $index;
+							var_dump($matrix[$x][$y]['indices']);
 						}
 						if(array_key_exists('answer', $word))
 						{

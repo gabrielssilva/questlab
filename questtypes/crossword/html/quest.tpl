@@ -6,7 +6,7 @@
 				<?php foreach(range(0, $maxX) as $x) : ?>
 				<td>
 					<?php if(array_key_exists($x, $matrix) && array_key_exists($y, $matrix[$x]) && !is_null($matrix[$x][$y])) : ?>
-					<span class="index"><?=implode('/',$matrix[$x][$y]['indices'])?></span>
+					<?php if(count($matrix[$x][$y]['indices']) > 0) : ?><span class="index"><?=implode('/',array_map(function($e) { return $e+1; }, $matrix[$x][$y]['indices']))?></span><?php endif ?>
 					<input type="text" name="answers[<?=$x?>][<?=$y?>]" maxlength="1" size="1" value="<?=(!is_null($matrix[$x][$y]['answer'])) ? $matrix[$x][$y]['answer'] : ''?>" />	
 					<?php endif ?>
 				</td>
