@@ -7,7 +7,9 @@
 </nav>
 <?php endif ?>
 <p>
-	<?=sprintf(_('registered on %s'), $dateFormatter->format(new \DateTime($user['created'])))?>
+	<?=sprintf(_('registered on %s'), $dateFormatter->format(new \DateTime($user['created'])))?><br />
+	<?=_('Name')?>: <?=$user['prename']?> <?=$user['surname']?><br />
+	<?=_('E‑mail address')?>: <a href="mailto:<?=$user['email']?>"><?=$user['email']?></a>
 </p>
 
 <h2><?=_('Characters')?></h2>
