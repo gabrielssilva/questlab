@@ -65,7 +65,15 @@
 			case 'Text': ?>
 				<textarea name="fields[<?=$field['url']?>]"></textarea>
 			<?php break;
+			case 'List': ?>
+				<select name="fields[<?=$field['url']?>]">
+					<?php foreach(explode('|', substr($field['regex'],1,strrpos($field['regex'],$field['regex'][0])-1)) as $option) : ?>
+					<option value="<?=$option?>"><?=mb_eregi_replace('\\\\','',$option)?></option>
+					<?php endforeach?>
+				</select>
+			<?php break;
 		} ?>
+		<br />
 		<?php endforeach ?>
 	</fieldset>
 	<input type="submit" name="create" value="<?=_('create')?>" />
