@@ -66,15 +66,16 @@
 		 * @param	int	$seminaryId	ID of Seminary to get Achievements of
 		 * @return	array			Achievements data
 		 */
-		public function getAchievementsForSeminary($seminaryId, $includeHidden=false)
+		public function getAchievementsForSeminary($seminaryId)
 		{
 			return $this->db->query(
-				'SELECT achievements.id, achievementconditions.condition, title, url, description, progress, unachieved_achievementsmedia_id, achieved_achievementsmedia_id '.
+				'SELECT achievements.id, achievementconditions.condition, title, url, description, progress, hidden, unachieved_achievementsmedia_id, achieved_achievementsmedia_id '.
 				'FROM achievements '.
 				'LEFT JOIN achievementconditions ON achievementconditions.id = achievements.achievementcondition_id '.
-				'WHERE seminary_id = ? AND hidden <= ?',
-				'ii',
-				$seminaryId, $includeHidden
+				'WHERE seminary_id = ? '.
+				'ORDER BY achievements.pos ASC',
+				'i',
+				$seminaryId
 			);
 		}
 		

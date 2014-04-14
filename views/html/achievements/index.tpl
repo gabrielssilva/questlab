@@ -12,8 +12,13 @@
 		<?php if(!is_null($achievement[$achievement['media_index']])) : ?>
 		<img src="<?=$linker->link(array('media','achievement',$seminary['url'],$achievement['url']))?>" />
 		<?php endif ?>
-		<h3><?=$achievement['title']?></h3>
-		<?=\hhu\z\Utils::t($achievement['description'])?><br />
+		<h3><?=(!$achievement['hidden']) ? $achievement['title'] : _('Secret Achievement')?></h3>
+		<?php if(!$achievement['hidden']) : ?>
+		<?=\hhu\z\Utils::t($achievement['description'])?>
+		<?php else : ?>
+		<?=_('Continue playing to unlock this secret Achievement')?>
+		<?php endif ?>
+		<br />
 		
 		<?php if(array_key_exists('characterProgress', $achievement)) : ?>
 		<div class="cf">
