@@ -222,7 +222,6 @@
 						);
 						if($x == $startX) {
 							$matrix[$x][$y]['indices'][] = $index;
-							var_dump($matrix[$x][$y]['indices']);
 						}
 						if(array_key_exists('answer', $word))
 						{
