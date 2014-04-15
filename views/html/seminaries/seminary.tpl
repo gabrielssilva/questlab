@@ -5,6 +5,13 @@
 <?php endif ?>
 
 <h1><a href="<?=$linker->link(array('seminaries',$seminary['url']))?>"><?=$seminary['title']?></a></h1>
+<?php if(count(array_intersect(array('admin', 'moderator'), \hhu\z\controllers\IntermediateController::$user['seminaryroles'])) > 0) : ?>
+<nav>
+	<?php if(in_array('admin', \hhu\z\controllers\IntermediateController::$user['seminaryroles'])) : ?><li><a href="<?=$linker->link('edit', 3)?>"><?=_('Edit seminary')?></a></li><?php endif ?>
+	<?php if(in_array('admin', \hhu\z\controllers\IntermediateController::$user['seminaryroles'])) : ?><li><a href="<?=$linker->link('delete', 3)?>"><?=_('Delete seminary')?></a></li><?php endif ?>
+	<?php if(count(array_intersect(array('admin','moderator'), \hhu\z\controllers\IntermediateController::$user['seminaryroles'])) > 0) : ?><li><a href="<?=$linker->link(array('quests','index',$seminary['url']))?>"><?=_('Show Quests')?></a></li><?php endif ?>
+</nav>
+<?php endif ?>
 <p><?=\hhu\z\Utils::t($seminary['description'])?></p>
 
 <?php foreach($questgroupshierarchy as &$hierarchy) : ?>
@@ -33,11 +40,3 @@
 	<?php endforeach?>
 </ul>
 <?php endforeach ?>
-
-<nav>
-	<li><a href="<?=$linker->link('edit', 3)?>"><?=_('Edit seminary')?></a></li>
-	<li><a href="<?=$linker->link('delete', 3)?>"><?=_('Delete seminary')?></a></li>
-</nav>
-<p>
-	<?=sprintf(_('created by %s on %s'), $seminary['creator']['username'],  $dateFormatter->format(new \DateTime($seminary['created'])))?>
-</p>
