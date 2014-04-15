@@ -25,7 +25,7 @@
 		 * 
 		 * @var array
 		 */
-		public $models = array('characters', 'quests', 'questgroups', 'achievements');
+		public $models = array('characters', 'quests', 'questgroups', 'achievements', 'charactergroups', 'avatars', 'media');
 		
 		
 		
@@ -60,12 +60,35 @@
 			$achievements = $this->Achievements->getAchievedAchievementsForCharacter($character['id']);
 			$lastAchievement = array_shift($achievements);
 			
+			// Get Character group members
+			$characterGroups = array();
+			foreach($this->Charactergroups->getGroupsForCharacter($character['id']) as $group)
+			{
+				$groupsgroup = $this->Charactergroups->getGroupsgroupById($group['charactergroupsgroup_id']);
+				if($groupsgroup['preferred'])
+				{
+					$group['members'] = $this->Characters->getCharactersForGroup($group['id']);
+					foreach($group['members'] as &$member)
+					{
+						if(!is_null($member['avatar_id']))
+						{
+							$avatar = $this->Avatars->getAvatarById($member['avatar_id']);
+							if(!is_null($avatar['small_avatarpicture_id'])) {
+								$member['small_avatar'] = $this->Media->getSeminaryMediaById($avatar['small_avatarpicture_id']);
+							}
+						}
+					}
+					$characterGroups[] = $group;
+				}
+			}
+			
 			
 			// Pass data to view
 			$this->set('seminary', $seminary);
 			$this->set('character', $character);
 			$this->set('lastQuest', $lastQuest);
 			$this->set('lastAchievement', $lastAchievement);
+			$this->set('characterGroups', $characterGroups);
 		}
 		
 	}

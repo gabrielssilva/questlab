@@ -83,7 +83,7 @@
 		public function getCharactersForGroup($groupId)
 		{
 			return $this->db->query(
-				'SELECT characters.id, characters.created, characters.charactertype_id, characters.name, characters.url, characters.user_id, characters.xps, characters.avatar_id, charactertypes.name AS charactertype_name, charactertypes.url AS charactertypes_url '.
+				'SELECT characters.id, characters.created, characters.charactertype_id, characters.name, characters.url, characters.user_id, characters.xps, characters.xplevel, characters.avatar_id, charactertypes.name AS charactertype_name, charactertypes.url AS charactertypes_url '.
 				'FROM v_characters AS characters '.
 				'LEFT JOIN characters_charactergroups ON characters_charactergroups.character_id = characters.id '.
 				'LEFT JOIN charactertypes ON charactertypes.id = characters.charactertype_id '.

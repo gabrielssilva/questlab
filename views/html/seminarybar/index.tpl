@@ -32,33 +32,19 @@
 <?php endif ?>
 
 <section>
-	<h1>Wille und die Majas</h1>
+	<?php foreach($characterGroups as &$group) : ?>
+	<h1><?=$group['name']?></h1>
 	<ul class="cranks">
+		<?php foreach($group['members'] as &$member) : ?>
 		<li>
-			<a href="#" title="Achievement-Titel"><img src="http://s7.directupload.net/images/140325/e2wdqhqa.png"></a>
-			<p><a href="#">Anduin</a></p>
-			<p><small>Level 27 (1500 XP)</small></p>
+			<?php if(array_key_exists('small_avatar', $member)) : ?>
+			<a href="#" title="Achievement-Titel"><img src="<?=$linker->link(array('media','seminary',$seminary['url'],$member['small_avatar']['url']))?>"></a>
+			<?php endif ?>
+			<p><a href="<?=$linker->link(array('characters','character',$seminary['url'],$member['url']))?>"><?=$member['name']?></a></p>
+			<p><small><?=_('Level')?> <?=$member['xplevel']?> (<?=$member['xps']?> XPs)</small></p>
 		</li>
-		<li>
-			<a href="#" title="Achievement-Titel"><img src="http://s1.directupload.net/images/140325/upv2dg2r.png"></a>
-			<p><a href="#">Jaina</a></p>
-			<p><small>Level 26 (1400 XP)</small></p>
-		</li>
-		<li>
-			<a href="#" title="Achievement-Titel"><img src="http://s14.directupload.net/images/140325/x9ny5kgu.png"></a>
-			<p><a href="#">Uther</a></p>
-			<p><small>Level 25 (1300 XP)</small></p>
-		</li>
-		<li>
-			<a href="#" title="Achievement-Titel"><img src="http://s7.directupload.net/images/140325/e2wdqhqa.png"></a>
-			<p><a href="#">Lothar</a></p>
-			<p><small>Level 24 (1200 XP)</small></p>
-		</li>
-		<li>
-			<a href="#" title="Achievement-Titel"><img src="http://s1.directupload.net/images/140325/whre34td.png"></a>
-			<p><a href="#">Morris</a></p>
-			<p><small>Level 23 (1100 XP)</small></p>
-		</li>
+		<?php endforeach ?>
 	</ul>
-	<p><i class="fa fa-users fa-fw"></i><a href="#">Gildenprofil ansehen</a></p>
+	<p><i class="fa fa-users fa-fw"></i><a href="<?=$linker->link(array('charactergroups','group',$seminary['url'],$group['charactergroupsgroup_url'],$group['url']))?>"><?=sprintf(_('Show %s-Profile'),$group['charactergroupsgroup_name'])?></a></p>
+	<?php endforeach ?>
 </section>

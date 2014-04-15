@@ -44,7 +44,7 @@
 		public function getGroupsroupsForSeminary($seminaryId)
 		{
 			return $this->db->query(
-				'SELECT id, name, url '.
+				'SELECT id, name, url, preferred '.
 				'FROM charactergroupsgroups '.
 				'WHERE seminary_id = ?',
 				'i',
@@ -64,7 +64,7 @@
 		public function getGroupsgroupByUrl($seminaryId, $groupsgroupUrl)
 		{
 			$data = $this->db->query(
-				'SELECT id, name, url '.
+				'SELECT id, name, url, preferred '.
 				'FROM charactergroupsgroups '.
 				'WHERE seminary_id = ? AND url = ?',
 				'is',
@@ -72,6 +72,31 @@
 			);
 			if(empty($data)) {
 				throw new \nre\exceptions\IdNotFoundException($groupsgroupUrl);
+			}
+			
+			
+			return $data[0];
+		}
+		
+		
+		/**
+		 * Get a Character groups-group by its ID.
+		 * 
+		 * @throws	IdNotFoundException
+		 * @param	string	$groupsgroupId	ID of the Character groups-group
+		 * @return	array			Character groups-group data
+		 */
+		public function getGroupsgroupById($groupsgroupId)
+		{
+			$data = $this->db->query(
+				'SELECT id, name, url, preferred '.
+				'FROM charactergroupsgroups '.
+				'WHERE id = ?',
+				'i',
+				$groupsgroupId
+			);
+			if(empty($data)) {
+				throw new \nre\exceptions\IdNotFoundException($groupsgroupId);
 			}
 			
 			
