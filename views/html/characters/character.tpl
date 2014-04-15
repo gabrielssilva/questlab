@@ -94,38 +94,16 @@
 </div>
 
 <section>
-	<h1><i class="fa fa-book fa-fw"></i>Thematischer Fortschritt</h1>
+	<h1><i class="fa fa-book fa-fw"></i><?=_('Topic progress')?></h1>
 	<ul class="ctopics cf">
+		<?php foreach($questtopics as &$topic) : ?>
 		<li>
-			<p><small><a href="#">Klassifikation</a> (3/5)</small></p>
+			<p><small><a href="<?=$linker->link(array('library','topic',$seminary['url'],$topic['url']))?>"><?=$topic['title']?></a> (<?=$topic['characterQuestcount']?>/<?=$topic['questcount']?>)</small></p>
 			<div class="xpbar">
-				<span style="width:60%"></span>
+				<span style="width:<?=round($topic['characterQuestcount']/$topic['questcount']*100)?>%"></span>
 			</div>
 		</li>
-		<li>
-			<p><small><a href="#">Thesauri</a> (1/10)</small></p>
-			<div class="xpbar">
-				<span style="width:10%"></span>
-			</div>
-		</li>
-		<li>
-			<p><small><a href="#">Indexierung</a> (3/5)</small></p>
-			<div class="xpbar">
-				<span style="width:20%"></span>
-			</div>
-		</li>
-		<li>
-			<p><small><a href="#">Recherche</a> (3/5)</small></p>
-			<div class="xpbar">
-				<span style="width:80%"></span>
-			</div>
-		</li>
-		<li>
-			<p><small><a href="#">Folksonomies</a> (3/5)</small></p>
-			<div class="xpbar">
-				<span style="width:70%"></span>
-			</div>
-		</li>
+		<?php endforeach ?>
 	</ul>
 </section>
 

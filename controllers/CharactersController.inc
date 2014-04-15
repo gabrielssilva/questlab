@@ -24,7 +24,7 @@
 		 * 
 		 * @var array
 		 */
-		public $models = array('seminaries', 'characters', 'users', 'charactergroups', 'charactertypes', 'seminarycharacterfields', 'avatars', 'media');
+		public $models = array('seminaries', 'characters', 'users', 'charactergroups', 'charactertypes', 'seminarycharacterfields', 'avatars', 'media', 'questtopics');
 		/**
 		 * Required components
 		 * 
@@ -123,6 +123,14 @@
 			// Get Achievements
 			$achievements = $this->Achievements->getAchievedAchievementsForCharacter($character['id']);
 			
+			// Get Quest topics
+			$questtopics = $this->Questtopics->getQuesttopicsForSeminary($seminary['id']);
+			foreach($questtopics as &$questtopic)
+			{
+				$questtopic['questcount'] = $this->Questtopics->getQuestCountForQuesttopic($questtopic['id']);
+				$questtopic['characterQuestcount'] = $this->Questtopics->getCharacterQuestCountForQuesttopic($questtopic['id'], $character['id']);
+			}
+			
 			
 			// Pass data to view
 			$this->set('seminary', $seminary);
@@ -131,6 +139,7 @@
 			$this->set('user', $user);
 			$this->set('groups', $groups);
 			$this->set('achievements', $achievements);
+			$this->set('questtopics', $questtopics);
 		}
 		
 		
