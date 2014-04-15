@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: The Legend of Z\n"
-"POT-Creation-Date: 2014-04-15 16:13+0100\n"
-"PO-Revision-Date: 2014-04-15 16:13+0100\n"
+"POT-Creation-Date: 2014-04-15 20:19+0100\n"
+"PO-Revision-Date: 2014-04-15 20:19+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de_DE\n"
@@ -133,7 +133,7 @@ msgid "Characters"
 msgstr "Charaktere"
 
 #: views/html/charactergroups/group.tpl:40
-#: views/html/questgroups/questgroup.tpl:43
+#: views/html/questgroups/questgroup.tpl:43 views/html/quests/index.tpl:7
 msgid "Quests"
 msgstr "Quests"
 
@@ -279,6 +279,26 @@ msgstr "Kurse"
 msgid "Logout"
 msgstr "Logout"
 
+#: views/html/quests/index.tpl:15
+msgid "Questgroup"
+msgstr "Questgruppe"
+
+#: views/html/quests/index.tpl:21
+msgid "Questname"
+msgstr "Questname"
+
+#: views/html/quests/index.tpl:24
+msgid "Questtype"
+msgstr "Questtyp"
+
+#: views/html/quests/index.tpl:47
+msgid "Apply filters"
+msgstr "Filter anwenden"
+
+#: views/html/quests/index.tpl:48
+msgid "Reset filters"
+msgstr "Filter zurücksetzen"
+
 #: views/html/quests/quest.tpl:50
 msgid "Task"
 msgstr "Aufgabe"
@@ -313,7 +333,7 @@ msgstr "Neuer Kurs"
 msgid "Title"
 msgstr "Titel"
 
-#: views/html/seminaries/delete.tpl:7 views/html/seminaries/seminary.tpl:39
+#: views/html/seminaries/delete.tpl:7 views/html/seminaries/seminary.tpl:11
 msgid "Delete seminary"
 msgstr "Kurs löschen"
 
@@ -330,7 +350,7 @@ msgstr "löschen"
 msgid "cancel"
 msgstr "abbrechen"
 
-#: views/html/seminaries/edit.tpl:7 views/html/seminaries/seminary.tpl:38
+#: views/html/seminaries/edit.tpl:7 views/html/seminaries/seminary.tpl:10
 msgid "Edit seminary"
 msgstr "Kurs bearbeiten"
 
@@ -342,7 +362,7 @@ msgstr "speichern"
 msgid "Create new seminary"
 msgstr "Neuen Kurs erstellen"
 
-#: views/html/seminaries/index.tpl:23 views/html/seminaries/seminary.tpl:42
+#: views/html/seminaries/index.tpl:23
 #, php-format
 msgid "created by %s on %s"
 msgstr "erstellt von %s am %s"
@@ -355,6 +375,10 @@ msgstr "Erstelle einen Charakter"
 #, php-format
 msgid "Your Character “%s” has not been activated yet"
 msgstr "Dein Charakter „%s“ wurde noch nicht aktiviert"
+
+#: views/html/seminaries/seminary.tpl:12
+msgid "Show Quests"
+msgstr "Quests anzeigen"
 
 #: views/html/seminarybar/index.tpl:14
 msgid "Last Quest"
