@@ -148,20 +148,16 @@
 		 */
 		private function checkAchievements(\nre\core\Request $request, \nre\core\Response $response)
 		{
-			// Get Seminary
-			$seminary = self::$seminary;
-			
-			// Get Character
-			$character = self::$character;
-			if(is_null($character)) {
+			// Check if Character is present
+			if(is_null(self::$character)) {
 				return;
 			}
 			
 			// Get unachieved Achievments
-			$achievements = array_merge(
-				$this->Achievements->getUnachhievedAchievementsForCharacter($seminary['id'], $character['id']),
-				$this->Achievements->getUnachievedOnlyOnceAchievementsForSeminary($seminary['id'])
-			);
+			$achievements = $this->Achievements->getUnachhievedAchievementsForCharacter(self::$seminary['id'], self::$character['id']);
+			if(in_array('user', self::$user['seminaryroles'])) {
+				$achievements = array_merge($achievements, $this->Achievements->getUnachievedOnlyOnceAchievementsForSeminary(self::$seminary['id']));
+			}
 			
 			// Check conditions
 			foreach($achievements as &$achievement)
