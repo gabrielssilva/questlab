@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: The Legend of Z\n"
-"POT-Creation-Date: 2014-04-15 00:04+0100\n"
-"PO-Revision-Date: 2014-04-15 00:04+0100\n"
+"POT-Creation-Date: 2014-04-15 16:13+0100\n"
+"PO-Revision-Date: 2014-04-15 16:13+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de_DE\n"
@@ -16,6 +16,14 @@ msgstr ""
 "X-Poedit-SearchPath-0: views\n"
 "X-Poedit-SearchPath-1: questtypes\n"
 
+#: questtypes/bossfight/html/quest.tpl:21
+#: questtypes/bossfight/html/quest.tpl:31
+#: questtypes/bossfight/html/submission.tpl:27
+#: questtypes/bossfight/html/submission.tpl:37
+msgid "lost"
+msgstr "verloren"
+
+#: questtypes/bossfight/html/quest.tpl:54
 #: questtypes/choiceinput/html/quest.tpl:14
 #: questtypes/crossword/html/quest.tpl:30
 #: questtypes/dragndrop/html/quest.tpl:16
@@ -154,7 +162,8 @@ msgstr "Verlorene Quest"
 msgid "Total progress"
 msgstr "Fortschritt"
 
-#: views/html/characters/character.tpl:20 views/html/users/user.tpl:29
+#: views/html/characters/character.tpl:20 views/html/seminarybar/index.tpl:44
+#: views/html/users/user.tpl:29
 msgid "Level"
 msgstr "Level"
 
@@ -162,6 +171,10 @@ msgstr "Level"
 #, php-format
 msgid "achieved at: %s"
 msgstr "erhalten am: %s"
+
+#: views/html/characters/character.tpl:97
+msgid "Topic progress"
+msgstr "Thematischer Fortschritt"
 
 #: views/html/characters/register.tpl:7
 msgid "Create Character"
@@ -244,6 +257,10 @@ msgstr "oder"
 #: views/html/introduction/index.tpl:14
 msgid "register yourself"
 msgstr "registriere dich"
+
+#: views/html/library/index.tpl:7 views/html/library/topic.tpl:7
+msgid "Questtopics"
+msgstr "Themen"
 
 #: views/html/menu/index.tpl:2 views/html/users/create.tpl:1
 #: views/html/users/delete.tpl:1 views/html/users/edit.tpl:1
@@ -342,6 +359,11 @@ msgstr "Dein Charakter „%s“ wurde noch nicht aktiviert"
 #: views/html/seminarybar/index.tpl:14
 msgid "Last Quest"
 msgstr "Letzter Speicherpunkt"
+
+#: views/html/seminarybar/index.tpl:48
+#, php-format
+msgid "Show %s-Profile"
+msgstr "%s-Profil anzeigen"
 
 #: views/html/seminarymenu/index.tpl:5
 msgid "Library"

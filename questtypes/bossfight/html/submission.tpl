@@ -24,7 +24,7 @@
 				♥
 				<?php endforeach ?>
 				<?php else : ?>
-				<?=_('verloren')?>
+				<?=_('lost')?>
 				<?php endif ?>
 			</td>
 			<td>
@@ -34,7 +34,7 @@
 				♥
 				<?php endforeach ?>
 				<?php else : ?>
-				<?=_('verloren')?>
+				<?=_('lost')?>
 				<?php endif ?>
 			</td>
 		</tr>
