@@ -68,7 +68,7 @@
 			case 'List': ?>
 				<select name="fields[<?=$field['url']?>]">
 					<?php foreach(explode('|', substr($field['regex'],1,strrpos($field['regex'],$field['regex'][0])-1)) as $option) : ?>
-					<option value="<?=$option?>"><?=mb_eregi_replace('\\\\','',$option)?></option>
+					<option value="<?=mb_eregi_replace('\\\\','',$option)?>"><?=mb_eregi_replace('\\\\','',$option)?></option>
 					<?php endforeach?>
 				</select>
 			<?php break;
