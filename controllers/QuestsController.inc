@@ -31,9 +31,10 @@
 		 * @var array
 		 */
 		public $permissions = array(
-			'quest' => array('admin', 'moderator', 'user'),
-			'submissions' => array('admin', 'moderator'),
-			'submission' => array('admin', 'moderator')
+			'index'		=> array('admin', 'moderator', 'user'),
+			'quest'		=> array('admin', 'moderator', 'user'),
+			'submissions'	=> array('admin', 'moderator', 'user'),
+			'submission'	=> array('admin', 'moderator', 'user')
 		);
 		/**
 		 * User seminary permissions
@@ -41,12 +42,75 @@
 		 * @var array
 		 */
 		public $seminaryPermissions = array(
+			'index' => array('admin', 'moderator', 'user'),
 			'quest' => array('admin', 'moderator', 'user'),
 			'submissions' => array('admin', 'moderator'),
 			'submission' => array('admin', 'moderator')
 		);
 		
 		
+		
+		
+		/**
+		 * Action: index.
+		 * 
+		 * List all Quests for a Seminary.
+		 * 
+		 * @param	string	$seminaryUrl	URL-Title of Seminary
+		 */
+		public function index($seminaryUrl)
+		{
+			// Get seminary
+			$seminary = $this->Seminaries->getSeminaryByUrl($seminaryUrl);
+			
+			// Prepare filters
+			$filters = array(	
+				'questgroups'	=> array(),
+				'questtypes'	=> array()
+			);
+			
+			// Get selected filters
+			$selectedFilters = array(
+				'questgroup'	=> "0",
+				'questtype'	=> ""
+			);
+			if($this->request->getRequestMethod() == 'POST' && !is_null($this->request->getPostParam('filters'))) {
+				$selectedFilters = $this->request->getPostParam('filters');
+			}
+			
+			// Get Quests
+			$quests = array();
+			foreach($this->Quests->getQuestsForSeminary($seminary['id']) as $quest)
+			{
+				// Get Questgroup
+				$quest['questgroup'] = $this->Questgroups->getQuestgroupById($quest['questgroup_id']);
+				if($selectedFilters['questgroup'] != "0" && $selectedFilters['questgroup'] != $quest['questgroup']['id']) {
+					continue;
+				}
+				
+				// Get Questtype
+				$quest['questtype'] = $this->Questtypes->getQuesttypeById($quest['questtype_id']);
+				if($selectedFilters['questtype'] != "" && $selectedFilters['questtype'] != $quest['questtype']['classname']) {
+					continue;
+				}
+				
+				// Add filter values
+				$filters['questgroups'][$quest['questgroup']['id']] = $quest['questgroup'];
+				$filters['questtypes'][$quest['questtype']['classname']] = $quest['questtype'];
+				
+				// Add open submissions count
+				$quest['opensubmissionscount'] = count($this->Characters->getCharactersSubmittedQuest($quest['id']));
+				
+				$quests[] = $quest;
+			}
+			
+			
+			// Pass data to view
+			$this->set('seminary', $seminary);
+			$this->set('quests', $quests);
+			$this->set('filters', $filters);
+			$this->set('selectedFilters', $selectedFilters);
+		}
 		
 		
 		/**

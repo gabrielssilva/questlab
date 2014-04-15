@@ -326,6 +326,25 @@
 		
 		
 		/**
+		 * Get all Quests for a Seminary.
+		 * 
+		 * @param	int	$seminaryId	ID of Seminary
+		 * @return	array			Quests for this Seminary
+		 */
+		public function getQuestsForSeminary($seminaryId)
+		{
+			return $this->db->query(
+				'SELECT DISTINCT quests.id, quests.questgroup_id, quests.questtype_id, quests.title, quests.url, quests.xps, quests.task, quests.right_text, quests.wrong_text, quests.questsmedia_id '.
+				'FROM questgroups '.
+				'INNER JOIN quests ON quests.questgroup_id = questgroups.id '.
+				'WHERE questgroups.seminary_id = ?',
+				'i',
+				$seminaryId
+			);
+		}
+		
+		
+		/**
 		 * Get all Quests that are linked to a Questtopic.
 		 * 
 		 * @param	int	$questtopicId	ID of Questtopic
