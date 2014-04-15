@@ -59,7 +59,7 @@
 			$seminary = $this->Seminaries->getSeminaryByUrl($seminaryUrl);
 			
 			// Get Character
-			$character = IntermediateController::$character;
+			$character = SeminaryRoleController::$character;
 			
 			// Get Quest topics
 			$questtopics = $this->Questtopics->getQuesttopicsForSeminary($seminary['id']);
@@ -94,7 +94,7 @@
 			$seminary = $this->Seminaries->getSeminaryByUrl($seminaryUrl);
 			
 			// Get Character
-			$character = IntermediateController::$character;
+			$character = SeminaryRoleController::$character;
 			
 			// Get Questtopic
 			$questtopic = $this->Questtopics->getQuesttopicByUrl($seminary['id'], $questtopicUrl);

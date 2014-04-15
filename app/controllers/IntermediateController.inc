@@ -31,18 +31,6 @@
 		 * @var array
 		 */
 		public static $user = null;
-		/**
-		 * Current Seminary
-		 * 
-		 * var array
-		 */
-		public static $seminary = null;
-		/**
-		 * Character of current user and Seminary
-		 * 
-		 * @var array
-		 */
-		public static $character = null;
 		
 		
 		
@@ -79,22 +67,7 @@
 			// Get userdata
 			try {
 				self::$user = $this->Users->getUserById($this->Auth->getUserId());
-				
-				// Determine user roles
-				self::$user['roles'] = array();
-				$roles = $this->Userroles->getUserrolesForUserById(self::$user['id']);
-				foreach($roles as &$role) {
-					self::$user['roles'][] = $role['name'];
-				}
-				
-				// Character
-				$controller = $this->agent->controller;
-				if(is_subclass_of($controller, '\hhu\z\controllers\SeminaryRoleController'))
-				{
-					$seminaryUrl = $this->request->getParam(3);
-					self::$seminary = $this->Seminaries->getSeminaryByUrl($seminaryUrl);
-					self::$character = $this->Characters->getCharacterForUserAndSeminary(self::$user['id'], self::$seminary['id']);
-				}
+				self::$user['roles'] = array_map(function($r) { return $r['name']; }, $this->Userroles->getUserrolesForUserById(self::$user['id']));
 			}
 			catch(\nre\exceptions\IdNotFoundException $e) {
 			}
@@ -104,8 +77,6 @@
 			
 			// Set userdata
 			$this->set('loggedUser', self::$user);
-			$this->set('loggedSeminary', self::$seminary);
-			$this->set('loggedCharacter', self::$character);
 		}
 		
 		

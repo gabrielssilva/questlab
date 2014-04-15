@@ -33,11 +33,17 @@
 		 */
 		public $models = array('seminaries', 'userseminaryroles', 'characters', 'achievements');
 		/**
-		 * Data of currently logged in user if any
+		 * Current Seminary
+		 * 
+		 * var array
+		 */
+		public static $seminary = null;
+		/**
+		 * Character of current user and Seminary
 		 * 
 		 * @var array
 		 */
-		public static $user = null;
+		public static $character = null;
 		
 		
 		
@@ -71,11 +77,24 @@
 		{
 			parent::preFilter($request, $response);
 			
+			// Get Seminary and Character data
+			try {
+				self::$seminary = $this->Seminaries->getSeminaryByUrl($this->request->getParam(3));
+				self::$character = $this->Characters->getCharacterForUserAndSeminary(self::$user['id'], self::$seminary['id']);
+				self::$user['seminaryroles'] = array_map(function($r) { return $r['name']; }, $this->Userseminaryroles->getUserseminaryrolesForUserById(self::$user['id'], self::$seminary['id']));
+			}
+			catch(\nre\exceptions\IdNotFoundException $e) {
+			}
+			
 			// Check permissions
 			$this->checkPermission($request, $response);
 			
 			// Check achievements
 			$this->checkAchievements($request, $response);
+			
+			// Set Seminary and Character data
+			$this->set('loggedSeminary', self::$seminary);
+			$this->set('loggedCharacter', self::$character);
 		}
 		
 		
@@ -105,17 +124,6 @@
 				return;
 			}
 			
-			// Determine user and seminary
-			$userId = $this->Auth->getUserId();
-			$seminary = $this->Seminaries->getSeminaryByUrl($request->getParam(3));
-			
-			// Determine user seminary roles
-			$userSeminaryRoles = array();
-			$roles = $this->Userseminaryroles->getUserseminaryrolesForUserById($userId, $seminary['id']);
-			foreach($roles as &$role) {
-				$userSeminaryRoles[] = $role['name'];
-			}
-			
 			
 			// Determine permissions for current action
 			$action = $this->request->getParam(2, 'action');
@@ -129,7 +137,7 @@
 			
 			
 			// Check permissions
-			if(count(array_intersect($userSeminaryRoles, $permissions)) == 0) {
+			if(count(array_intersect(self::$user['seminaryroles'], $permissions)) == 0) {
 				throw new \nre\exceptions\AccessDeniedException();
 			}
 		}
@@ -186,7 +194,7 @@
 								'params'	=> array(
 									$condition['field'],
 									$condition['value'],
-									$character['id']
+									self::$character['id']
 								)
 							);
 						}
@@ -205,7 +213,7 @@
 									$condition['status'],
 									$condition['groupby'],
 									$condition['quest_id'],
-									$character['id']
+									self::$character['id']
 								)
 							);
 						}
@@ -223,7 +231,7 @@
 									$condition['value'],
 									$condition['groupby'],
 									$condition['meta_achievement_id'],
-									$character['id']
+									self::$character['id']
 								)
 							);
 						}
@@ -263,7 +271,7 @@
 				
 				// Set status
 				if($achieved) {
-					$this->Achievements->setAchievementAchieved($achievement['id'], $character['id']);
+					$this->Achievements->setAchievementAchieved($achievement['id'], self::$character['id']);
 				}
 			}
 		}

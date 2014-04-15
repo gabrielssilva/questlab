@@ -170,7 +170,7 @@
 			$seminary = $this->Seminaries->getSeminaryByUrl($seminaryUrl);
 			
 			// Get Character
-			$character = IntermediateController::$character;
+			$character = SeminaryRoleController::$character;
 			
 			// Get Achievement
 			$achievement = $this->Achievements->getAchievementByUrl($seminary['id'], $achievementUrl);
