@@ -7,11 +7,7 @@
 <?=$questgroupshierarchypath?>
 <h2><?=$quest['title']?></h2>
 
-<?php if(!is_null($media)) : ?>
-<img src="<?=$linker->link(array('media','seminary',$seminary['url'],$media['url']))?>" />
-<?php endif ?>
-
-<h2><?=sprintf(_('Submission of %s'),$character['name'])?></h2>
+<h3><?=sprintf(_('Submission of %s'),$character['name'])?></h3>
 <section>
 	<?=$output?>
 </section>
