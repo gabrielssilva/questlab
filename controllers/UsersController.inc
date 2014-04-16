@@ -164,9 +164,16 @@
 				// Get params and validate them
 				$validation = $this->Validation->validateParams($this->request->getPostParams(), $fields);
 				$username = $this->request->getPostParam('username');
+				if($this->Users->usernameExists($username)) {
+					$validation = $this->Validation->addValidationResult($validation, 'username', 'exist', true);
+				}
 				$prename = $this->request->getPostParam('prename');
 				$surname = $this->request->getPostParam('surname');
 				$email = $this->request->getPostParam('email');
+				if($this->Users->emailExists($email)) {
+					$validation = $this->Validation->addValidationResult($validation, 'email', 'exist', true);
+				}
+				
 				
 				// Register
 				if($validation === true)
@@ -178,7 +185,10 @@
 						$email,
 						$this->request->getPostParam('password')
 					);
-			
+					
+					// Send mail
+					$this->sendRegistrationMail($username, $email);
+					
 					// Login
 					$this->Auth->setUserId($userId);
 					$user = $this->Users->getUserById($userId);
@@ -322,6 +332,31 @@
 			$this->set('user', $user);
 		}
 		
+		
+		
+		
+		/**
+		 * Send mail for new user registration.
+		 * 
+		 * @param	string	$username	Name of newly registered user
+		 * @param	string	$email		E‑mail address of newly registered user
+		 */
+		private function sendRegistrationMail($username, $email)
+		{
+			$sender = \nre\configs\AppConfig::$app['mailsender'];
+			if(empty($sender)) {
+				return;
+			}
+			
+			// Send notification mail to system moderators
+			$subject = sprintf('new user registration: %s', $username);
+			$message = sprintf('User “%s” <%s> has registered themself to %s', $username, $email, \nre\configs\AppConfig::$app['name']);
+			$moderators = $this->Users->getUsersWithRole('moderator');
+			foreach($moderators as &$moderator)
+			{
+				\hhu\z\Utils::sendMail($sender, $moderator['email'], $subject, $message);
+			}
+		}
 		
 	}
 

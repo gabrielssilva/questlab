@@ -110,6 +110,31 @@
 			return $validation;
 		}
 		
+		
+		/**
+		 * Add a custom determined validation result to a validation
+		 * store.
+		 * 
+		 * @param	mixed	$validation	Validation store to add result to
+		 * @param	string	$param		Name of parameter of the custom validation result
+		 * @param	string	$setting	Name of setting of the custom validation result
+		 * @param	mixed	$result		Validation result
+		 * @return	mixed			The altered validation store
+		 */
+		public function addValidationResult($validation, $param, $setting, $result)
+		{
+			if(!is_array($validation)) {
+				$validation = array();
+			}
+			if(!array_key_exists($param, $validation)) {
+				$validation[$param] = array();
+			}
+			$validation[$param][$setting] = $result;
+			
+			
+			return $validation;
+		}
+		
 	}
 
 ?>

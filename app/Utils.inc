@@ -78,6 +78,35 @@
 			return substr($string, 0, $pos);
 		}
 		
+		
+		/**
+		 * Send an e‑mail.
+		 * 
+		 * @param	string	$from		Sender of mail
+		 * @param	mixed	$to		One (string) or many (array) receivers
+		 * @param	string	$subject	Subject of mail
+		 * @param	string	$message	Message of mail
+		 * @param	boolean	$html		Whether mail should be formatted as HTML or not
+		 * @return				Whether mail has been send or not
+		 */
+		public static function sendMail($from, $to, $subject, $message, $html=false)
+		{
+			// Set receivers
+			$to = is_array($to) ? implode(',', $to) : $to;
+			
+			// Set header
+			$headers = array();
+			$headers[] = 'Content-type: text/'.($html ? 'html' : 'plain').'; charset=UTF-8';
+			if(!is_null($from)) {
+				$headers[] = "From: $from";
+			}
+			$header = implode("\r\n", $headers)."\r\n";
+			
+			
+			// Send mail
+			return mail($to, $subject, $message, $header);
+		}
+		
 	}
 
 ?>

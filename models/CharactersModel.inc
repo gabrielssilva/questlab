@@ -391,6 +391,31 @@
 		
 		
 		/**
+		 * Check if a Character name already exists.
+		 * 
+		 * @param	string	$name	Character name to check
+		 * @return	boolean		Whether Character name exists or not
+		 */
+		public function characterNameExists($name)
+		{
+			$data = $this->db->query(
+				'SELECT count(id) AS c '.
+				'FROM characters '.
+				'WHERE name = ? OR url = ?',
+				'ss',
+				$name,
+				\nre\core\Linker::createLinkParam($name)
+			);
+			if(!empty($data)) {
+				return ($data[0]['c'] > 0);
+			}
+			
+			
+			return false;
+		}
+		
+		
+		/**
 		 * Create a new Character.
 		 * 
 		 * @param	int	$userId			User-ID that creates the new character

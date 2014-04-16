@@ -23,6 +23,8 @@
 								break;
 								case 'regex': echo _('Character name contains illegal characters');
 								break;
+								case 'exist': echo _('Character name already exists');
+								break;
 								default: echo _('Character name invalid');
 							}
 						break;

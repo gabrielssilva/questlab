@@ -199,6 +199,9 @@
 				// Validate Character properties
 				$validation = $this->Validation->validateParams($this->request->getPostParams(), array('charactername'));
 				$charactername = $this->request->getPostParam('charactername');
+				if($this->Characters->characterNameExists($charactername)) {
+					$validation = $this->Validation->addValidationResult($validation, 'charactername', 'exist', true);
+				}
 				
 				// Validate type
 				$typeIndex = null;
@@ -245,6 +248,9 @@
 						}
 					}
 					
+					// Send mail
+					$this->sendRegistrationMail($charactername);
+					
 					// Redirect
 					$this->redirect($this->linker->link(array('seminaries')));
 				}
@@ -258,6 +264,31 @@
 			$this->set('charactername', $charactername);
 			$this->set('validation', $validation);
 			$this->set('fieldsValidation', $fieldsValidation);
+		}
+		
+		
+		
+		
+		/**
+		 * Send mail for new Character registration.
+		 * 
+		 * @param	string	$charactername	Name of newly registered Character
+		 */
+		private function sendRegistrationMail($charactername)
+		{
+			$sender = \nre\configs\AppConfig::$app['mailsender'];
+			if(empty($sender)) {
+				return;
+			}
+			
+			// Send notification mail to system moderators
+			$subject = sprintf('new Character registration: %s', $charactername);
+			$message = sprintf('User “%s” <%s> has registered a new Character “%s” for the Seminary “%s”', self::$user['username'], self::$user['email'], $charactername, self::$seminary['title']);
+			$moderators = $this->Users->getUsersWithSeminaryRole(self::$seminary['id'], 'moderator');
+			foreach($moderators as &$moderator)
+			{
+				\hhu\z\Utils::sendMail($sender, $moderator['email'], $subject, $message);
+			}
 		}
 		
 	}

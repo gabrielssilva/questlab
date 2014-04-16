@@ -17,6 +17,8 @@
 							break;
 							case 'regex': echo _('Username contains illegal characters');
 							break;
+							case 'exist': echo _('Username already exists');
+							break;
 							default: echo _('Username invalid');
 						}
 					break;
@@ -45,6 +47,8 @@
 					case 'email':
 						switch($setting) {
 							case 'regex': echo _('E‑mail address invalid');
+							break;
+							case 'exist': echo _('E‑mail address already exists');
 							break;
 							default: echo _('E‑mail address invalid');
 						}

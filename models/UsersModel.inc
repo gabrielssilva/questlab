@@ -50,6 +50,49 @@
 		
 		
 		/**
+		 * Get users with the given user role.
+		 * 
+		 * @param	string	$userrole	User role
+		 * @return	array			List of users
+		 */
+		public function getUsersWithRole($userrole)
+		{
+			return $this->db->query(
+				'SELECT users.id, users.created, users.username, users.url, users.surname, users.prename, users.email '.
+				'FROM users '.
+				'LEFT JOIN users_userroles ON users_userroles.user_id = users.id '.
+				'LEFT JOIN userroles ON userroles.id = users_userroles.userrole_id '.
+				'WHERE userroles.name = ? '.
+				'ORDER BY username ASC',
+				's',
+				$userrole
+			);
+		}
+		
+		
+		/**
+		 * Get users with the given user Seminary role.
+		 * 
+		 * @param	int	$seminaryId		ID of Seminary
+		 * @param	string	$userseminaryrole	User Seminary role
+		 * @return	array				List of users
+		 */
+		public function getUsersWithSeminaryRole($seminaryId, $userseminaryrole)
+		{
+			return $this->db->query(
+				'SELECT users.id, users.created, users.username, users.url, users.surname, users.prename, users.email '.
+				'FROM users '.
+				'LEFT JOIN users_userseminaryroles ON users_userseminaryroles.user_id = users.id '.
+				'LEFT JOIN userseminaryroles ON userseminaryroles.id = users_userseminaryroles.userseminaryrole_id '.
+				'WHERE users_userseminaryroles.seminary_id = ? AND userseminaryroles.name = ? '.
+				'ORDER BY username ASC',
+				'is',
+				$seminaryId, $userseminaryrole
+			);
+		}
+		
+		
+		/**
 		 * Get a user and its data by its ID.
 		 * 
 		 * @throws	IdNotFoundException
@@ -121,6 +164,55 @@
 			
 			
 			return null;
+		}
+		
+		
+		/**
+		 * Check if an username already exists.
+		 * 
+		 * @param	string	$username	Username to check
+		 * @return	boolean			Whether username exists or not
+		 */
+		public function usernameExists($username)
+		{
+			$data = $this->db->query(
+				'SELECT count(id) AS c '.
+				'FROM users '.
+				'WHERE username = ? OR url = ?',
+				'ss',
+				$username,
+				\nre\core\Linker::createLinkParam($username)
+			);
+			if(!empty($data)) {
+				return ($data[0]['c'] > 0);
+			}
+			
+			
+			return false;
+		}
+		
+		
+		/**
+		 * Check if an e‑mail address already exists.
+		 * 
+		 * @param	string	$email	E‑mail address to check
+		 * @return	boolean		Whether e‑mail address exists or not
+		 */
+		public function emailExists($email)
+		{
+			$data = $this->db->query(
+				'SELECT count(id) AS c '.
+				'FROM users '.
+				'WHERE email = ?',
+				's',
+				$email
+			);
+			if(!empty($data)) {
+				return ($data[0]['c'] > 0);
+			}
+			
+			
+			return false;
 		}
 		
 		

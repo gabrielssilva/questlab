@@ -32,7 +32,8 @@
 		public static $app = array(
 			'name'			=>	'The Legend of Z',
 			'namespace'		=>	'hhu\\z\\',
-			'timeZone'		=>	'Europe/Berlin'
+			'timeZone'		=>	'Europe/Berlin',
+			'mailsender'		=>	'noreply@zyren.inf-d.de'
 		);
 		
 		
