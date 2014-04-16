@@ -1,0 +1,5 @@
+syntax: regex
+^media/*
+^tmp/*
+^uploads/*
+^seminarymedia/*
