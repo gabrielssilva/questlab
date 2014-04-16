@@ -1,39 +1,31 @@
-<table>
-	<tbody>
-		<tr>
-			<td>
-				<img src="<?=$linker->link(array('media','seminary',$seminary['url'],$character['avatar_url']))?>" />
-			</td>
-			<td>
-				<?php if(array_key_exists('bossmedia', $fight)) : ?>
-				<img src="<?=$linker->link(array('media','seminary',$seminary['url'],$fight['bossmedia']['url']))?>" />
-				<?php endif ?>
-			</td>
-		</tr>
-		<tr>
-			<td>
-				<?=$character['name']?>:
-				<?php if($lives['character'] > 0) : ?>
-				<?php foreach(range(1,$lives['character']) as $i) : ?>
-				♥
-				<?php endforeach ?>
-				<?php else : ?>
-				<?=_('lost')?>
-				<?php endif ?>
-			</td>
-			<td>
-				<?=$fight['bossname']?>:
-				<?php if($lives['boss'] > 0) : ?>
-				<?php foreach(range(1,$lives['boss']) as $i) : ?>
-				♥
-				<?php endforeach ?>
-				<?php else : ?>
-				<?=_('lost')?>
-				<?php endif ?>
-			</td>
-		</tr>
-	</tbody>
-</table>
+<div class="cf">
+<section class="opponent">
+	<p class="fwb"><?=$character['name']?></p>
+	<p class="portrait"><img src="<?=$linker->link(array('media','seminary',$seminary['url'],$character['avatar_url']))?>" class="hero" /></p>
+	<p>
+		<?php if($lives['character'] > 0) : ?>
+		<?php foreach(range(1,$lives['character']) as $i) : ?>
+		<i class="fa fa-heart fa-fw"></i>
+		<?php endforeach ?>
+		<?php else : ?>
+		<?=_('lost')?>
+		<?php endif ?>
+	</p>
+</section>
+<section class="opponent">
+	<p class="fwb"><?=$fight['bossname']?></p>
+	<p class="portrait"><img src="<?=$linker->link(array('media','seminary',$seminary['url'],$fight['bossmedia']['url']))?>" class="boss" /></p>
+	<p>
+		<?php if($lives['boss'] > 0) : ?>
+		<?php foreach(range(1,$lives['boss']) as $i) : ?>
+		<i class="fa fa-heart fa-fw"></i>
+		<?php endforeach ?>
+		<?php else : ?>
+		<?=_('lost')?>
+		<?php endif ?>
+	</p>
+</section>
+</div>
 
 <p><?=\hhu\z\Utils::t($stage['text'])?></p>
 
