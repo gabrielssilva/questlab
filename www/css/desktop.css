@@ -182,6 +182,14 @@ input[type="submit"][disabled]{text-shadow:1px 2px #d48c4e;background:#f9ac69;bo
 .crossword li{margin-top:20px}
 .crossword .index{position:absolute;font-size:0.625em;margin:-2px 0 0 2px}
 
+.opponent{width:50%;float:left}
+.opponent .portrait{height:250px;overflow:hidden;margin-bottom:15px}
+.opponent .hero{background:#fff;max-width:130px}
+.opponent .boss{max-width:100%}
+.opponent p{text-align:center}
+.opponent .fa{font-size:1.25em;color:#c7135b;padding-right:0}
+
+
 /** Media Queries **/
 
 @media only screen and (min-width:480px){
@@ -198,6 +206,8 @@ input[type="submit"][disabled]{text-shadow:1px 2px #d48c4e;background:#f9ac69;bo
 .gdata ul{clear:both}
 .gchars li{width:32%;margin-right:5px}
 .gchars li:nth-child(even){float:left}
+
+.opponent .hero{max-width:200px}
 }
 
 @media only screen and (min-width:768px){
