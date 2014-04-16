@@ -29,23 +29,15 @@
 	</section>
 
 	<section class="rare hunter">
-	<h3>Die erfolgreichsten Sammler</h3>
+	<h3><?=_('Most successful collectors')?></h3>
 		<ol>
+			<?php foreach($successfulCharacters as $successfulCharacter) : ?>
 			<li class="cf">
-				<img src="http://zyren.inf-d.de/media/seminary/Die-Legende-von-Zyren/Mensch01-Portrait" />
-				<p class="fwb">VHS</p>
-				<p><small>hat 15 Errungenschaften gefunden</small></p>
+				<img src="<?=$linker->link(array('media','avatar',$seminary['url'],$successfulCharacter['charactertype_url'],$successfulCharacter['xplevel'],'portrait'))?>" />
+				<p class="fwb"><?=$successfulCharacter['name']?></p>
+				<p><small><?=sprintf(_('Character has achieved %d Achievements'), $successfulCharacter['c'])?></small></p>
 			</li>
-			<li class="cf">
-				<img src="http://zyren.inf-d.de/media/seminary/Die-Legende-von-Zyren/Mensch01-Portrait" />
-				<p class="fwb">Betamax</p>
-				<p><small>hat 14 Errungenschaften gefunden</small></p>
-			</li>
-			<li class="cf">
-				<img src="http://zyren.inf-d.de/media/seminary/Die-Legende-von-Zyren/Mensch01-Portrait" />
-				<p class="fwb">Laserdisc</p>
-				<p><small>hat 12 Errungenschaften gefunden</small></p>
-			</li>
+			<?php endforeach ?>
 		</ol>
 	</section>
 </div>

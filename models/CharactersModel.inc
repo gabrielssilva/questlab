@@ -175,6 +175,32 @@
 		
 		
 		/**
+		 * Get Characters with the most amount of Achievements.
+		 * 
+		 * @param	int	$seminaryId	ID of Seminary
+		 * @param	int	$conut		Amount of Characters to retrieve
+		 * @return	array			List of Characters
+		 */
+		public function getCharactersWithMostAchievements($seminaryId, $count)
+		{
+			return $this->db->query(
+				'SELECT characters.id, characters.created, characters.charactertype_id, characters.name, characters.url, characters.user_id, characters.xps, characters.xplevel, characters.avatar_id, charactertypes.name AS charactertype_name, charactertypes.url AS charactertype_url, count(DISTINCT achievement_id) AS c '.
+				'FROM achievements_characters '.
+				'LEFT JOIN achievements ON achievements.id = achievements_characters.achievement_id '.
+				'LEFT JOIN v_characters AS characters ON characters.id = achievements_characters.character_id '.
+				'LEFT JOIN charactertypes ON charactertypes.id = characters.charactertype_id '.
+				'WHERE achievements.seminary_id = ? '.
+				'GROUP BY character_id '.
+				'ORDER BY count(DISTINCT achievement_id) DESC '.
+				'LIMIT ?',
+				'ii',
+				$seminaryId,
+				$count
+			);
+		}
+		
+		
+		/**
 		 * Calculate only XPs for a Character achieved through Quests.
 		 * 
 		 * @param	int	$characterId	ID of Character

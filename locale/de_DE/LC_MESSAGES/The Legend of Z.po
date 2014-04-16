@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: The Legend of Z\n"
-"POT-Creation-Date: 2014-04-17 01:27+0100\n"
-"PO-Revision-Date: 2014-04-17 01:27+0100\n"
+"POT-Creation-Date: 2014-04-17 01:46+0100\n"
+"PO-Revision-Date: 2014-04-17 01:46+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de_DE\n"
@@ -111,33 +111,42 @@ msgstr "Die seltensten Errungenschaften"
 msgid "Achievement has been achieved only %d times"
 msgstr "wurde erst %d mal gefunden"
 
-#: views/html/achievements/index.tpl:53
+#: views/html/achievements/index.tpl:32
+msgid "Most successful collectors"
+msgstr "Die erfolgreichsten Sammler"
+
+#: views/html/achievements/index.tpl:38
+#, php-format
+msgid "Character has achieved %d Achievements"
+msgstr "hat %d Errungenschaften erhalten"
+
+#: views/html/achievements/index.tpl:45
 #, php-format
 msgid "Own progress: %d %%"
 msgstr "Persönlicher Fortschritt: %d %%"
 
-#: views/html/achievements/index.tpl:54
+#: views/html/achievements/index.tpl:46
 #: views/html/charactergroups/group.tpl:18
 #: views/html/characters/character.tpl:28 views/html/seminarybar/index.tpl:7
 msgid "Rank"
 msgstr "Platz"
 
-#: views/html/achievements/index.tpl:54
+#: views/html/achievements/index.tpl:46
 #, php-format
 msgid "You achieved %d of %d Achievements so far"
 msgstr "Du hast bislang %d von insgesamt %d Errungenschaften erreicht"
 
-#: views/html/achievements/index.tpl:68 views/html/characters/character.tpl:39
+#: views/html/achievements/index.tpl:60 views/html/characters/character.tpl:39
 #: views/html/seminarybar/index.tpl:28
 #, php-format
 msgid "achieved at: %s"
 msgstr "erhalten am: %s"
 
-#: views/html/achievements/index.tpl:79
+#: views/html/achievements/index.tpl:71
 msgid "Secret Achievement"
 msgstr "Geheime Errungenschaft"
 
-#: views/html/achievements/index.tpl:84
+#: views/html/achievements/index.tpl:76
 msgid "Continue playing to unlock this secret Achievement"
 msgstr "Spiele weiter, um diesen geheimen Erfolg freizuschalten"
 
