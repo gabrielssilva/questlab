@@ -1,7 +1,7 @@
 <div class="cf">
 <section class="opponent">
 	<p class="fwb"><?=$character['name']?></p>
-	<p class="portrait"><img src="<?=$linker->link(array('media','seminary',$seminary['url'],$character['avatar_url']))?>" class="hero" /></p>
+	<p class="portrait"><img src="<?=$linker->link(array('media','avatar',$seminary['url'],$character['charactertype_url'],$character['xplevel']))?>" class="hero" /></p>
 	<p>
 		<?php if($lives['character'] > 0) : ?>
 		<?php foreach(range(1,$lives['character']) as $i) : ?>

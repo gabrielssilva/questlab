@@ -70,6 +70,24 @@
 		
 		
 		/**
+		 * Media sizes
+		 *
+		 * @static
+		 * @var array
+		 */
+		public static $media = array(
+			'questgroup' => array(
+				'width'		=> 480,
+				'height'	=> 5000
+			),
+			'avatar' => array(
+				'width'		=> 500,
+				'height'	=> 500
+			)
+		);
+		
+		
+		/**
 		 * Miscellaneous settings
 		 * 
 		 * @static

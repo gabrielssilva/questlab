@@ -75,12 +75,6 @@
 			{
 				// Level
 				$character['xplevel'] = $this->Characters->getXPLevelOfCharacters($character['id']);
-				
-				// Avatar
-				$avatar = $this->Avatars->getAvatarById($character['avatar_id']);
-				if(!is_null($avatar['small_avatarpicture_id'])) {
-					$character['small_avatar'] = $this->Media->getSeminaryMediaById($avatar['small_avatarpicture_id']);
-				}
 			}
 			
 			
@@ -128,26 +122,6 @@
 				'superior' => $this->Characters->getSuperiorCharacters($seminary['id'], $character['xps'], \nre\configs\AppConfig::$misc['ranking_range']),
 				'inferior' => $this->Characters->getInferiorCharacters($seminary['id'], $character['xps'], \nre\configs\AppConfig::$misc['ranking_range'])
 			);
-			foreach($ranking['superior'] as &$rankCharacter)
-			{
-				if(!is_null($rankCharacter['avatar_id']))
-				{
-					$avatar = $this->Avatars->getAvatarById($rankCharacter['avatar_id']);
-					if(!is_null($avatar['small_avatarpicture_id'])) {
-						$rankCharacter['small_avatar'] = $this->Media->getSeminaryMediaById($avatar['small_avatarpicture_id']);
-					}
-				}
-			}
-			foreach($ranking['inferior'] as &$rankCharacter)
-			{
-				if(!is_null($rankCharacter['avatar_id']))
-				{
-					$avatar = $this->Avatars->getAvatarById($rankCharacter['avatar_id']);
-					if(!is_null($avatar['small_avatarpicture_id'])) {
-						$rankCharacter['small_avatar'] = $this->Media->getSeminaryMediaById($avatar['small_avatarpicture_id']);
-					}
-				}
-			}
 			
 			// Get Quest topics
 			$questtopics = $this->Questtopics->getQuesttopicsForSeminary($seminary['id']);

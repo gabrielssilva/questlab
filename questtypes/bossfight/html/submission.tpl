@@ -1,6 +1,6 @@
 <div class="cf">
 <section class="opponent">
-	<p class="portrait"><img src="<?=$linker->link(array('media','seminary',$seminary['url'],$character['avatar_url']))?>" class="hero" /></p>
+	<p class="portrait"><img src="<?=$linker->link(array('media','avatar',$seminary['url'],$character['charactertype_url'],$character['xplevel']))?>" class="hero" /></p>
 </section>
 <section class="opponent">
 	<p class="portrait"><img src="<?=$linker->link(array('media','seminary',$seminary['url'],$fight['bossmedia']['url']))?>" class="boss" /></p>

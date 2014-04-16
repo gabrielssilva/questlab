@@ -26,9 +26,10 @@
 		 */
 		public $permissions = array(
 			'index' 		=> array('admin', 'moderator', 'user', 'guest'),
-			'seminaryheader'	=> array('admin', 'moderator', 'user', 'guest'),
-			'seminary' 		=> array('admin', 'moderator', 'user', 'guest'),
-			'achievement'		=> array('admin', 'moderator', 'user', 'guest')
+			'seminaryheader'	=> array('admin', 'moderator', 'user'),
+			'seminary' 		=> array('admin', 'moderator', 'user'),
+			'avatar'		=> array('admin', 'moderator', 'user'),
+			'achievement'		=> array('admin', 'moderator', 'user')
 		);
 		/**
 		 * User seminary permissions
@@ -44,7 +45,7 @@
 		 * 
 		 * @var array
 		 */
-		public $models = array('seminaries', 'achievements', 'media');
+		public $models = array('seminaries', 'achievements', 'media', 'avatars');
 		
 		
 		
@@ -143,7 +144,56 @@
 			
 			// Get file
 			$file = $this->getMediaFile($media, $action);
-			if(is_null($media)) {
+			if(is_null($file)) {
+				return;
+			}
+			
+			
+			// Pass data to view
+			$this->set('media', $media);
+			$this->set('file', $file);
+		}
+		
+		
+		/**
+		 * Action: avatar.
+		 * 
+		 * Display an Avatar as full size or portrait.
+		 * 
+		 * @throws	ParamsNotValidException
+		 * @throws	IdNotFoundException
+		 * @param	string	$seminaryUrl		URL-title of the Seminary
+		 * @param	string	$charactertypeUrl	URL-title of Character type
+		 * @param	int	$xplevel		XP-level
+		 * @param	string	$action			Size to show (avatar or portrait)
+		 */
+		public function avatar($seminaryUrl, $charactertypeUrl, $xplevel, $action='avatar')
+		{
+			// Get Seminary
+			$seminary = $this->Seminaries->getSeminaryByUrl($seminaryUrl);
+			
+			// Get Avatar
+			$avatar = $this->Avatars->getAvatarByTypeAndLevel($seminary['id'], $charactertypeUrl, $xplevel);
+			
+			// Get media
+			switch($action)
+			{
+				case null:
+				case 'avatar':
+					$media = $this->Media->getSeminaryMediaById($avatar['avatarpicture_id']);
+					$file = $this->getMediaFile($media, 'avatar');
+				break;
+				case 'portrait':
+					$media = $this->Media->getSeminaryMediaById($avatar['small_avatarpicture_id']);
+					$file = $this->getMediaFile($media);
+				break;
+				default:
+					throw new \nre\exceptions\ParamsNotValidException($action);
+				break;
+			}
+			
+			// Get file
+			if(is_null($file)) {
 				return;
 			}
 			
@@ -287,9 +337,18 @@
 						$file = self::resizeImage(
 							$media['filename'],
 							$format,
-							480
+							\nre\configs\AppConfig::$media['questgroup']['width'],
+							\nre\configs\AppConfig::$media['questgroup']['height']
 						);
 					}
+				break;
+				case 'avatar':
+					$file = self::resizeImage(
+						$media['filename'],
+						$format,
+						\nre\configs\AppConfig::$media['avatar']['width'],
+						\nre\configs\AppConfig::$media['avatar']['height']
+					);
 				break;
 				default:
 					throw new ParamsNotValidException($action);
@@ -321,12 +380,14 @@
 		 * 
 		 * @param	string	$fileName	Absolute pathname of image to resize
 		 * @param	string	$mimeType	Mimetype of target image
-		 * @param	int	$size		New size to resize to
+		 * @param	int	$width		Max. width to resize to
+		 * @param	int	$height		Max. height to resize to
+		 * @return	mixed			Resized image
 		 */
-		private static function resizeImage($fileName, $mimeType, $size)
+		private static function resizeImage($fileName, $mimeType, $width, $height)
 		{
 			// Read image from cache
-			$tempFileName = ROOT.DS.\nre\configs\AppConfig::$dirs['temporary'].DS.'media-'.basename($fileName).'-'.$size;
+			$tempFileName = ROOT.DS.\nre\configs\AppConfig::$dirs['temporary'].DS.'media-'.basename($fileName).'-'.$width.'x'.$height;
 			if(file_exists($tempFileName))
 			{
 				// Check age of file
@@ -346,12 +407,15 @@
 			
 			// Calculate new size
 			$geometry = $im->getImageGeometry();
-			if($geometry['width'] < $size) {
-				$size = $geometry['width'];
+			if($geometry['width'] < $width) {
+				$width = $geometry['width'];
+			}
+			if($geometry['height'] < $height) {
+				$height = $geometry['width'];
 			}
 			
 			// Process 
-			$im->thumbnailImage($size, 5000, true);
+			$im->thumbnailImage($width, $height, true);
 			$im->contrastImage(1);
 			$im->setImageFormat($mimeType);
 			

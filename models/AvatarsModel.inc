@@ -57,6 +57,36 @@
 			return null;
 		}
 		
+		
+		/**
+		 * Get an Avatar by its Character type and XP-level.
+		 * 
+		 * @param	int	$seminaryId		ID of Seminary
+		 * @param	string	$charactertypeUrl	URL-title of Character type
+		 * @param	int	$xplevel		XP-level
+		 * @return	array				Avatar data
+		 */
+		public function getAvatarByTypeAndLevel($seminaryId, $charactertypeUrl, $xplevel)
+		{
+			$data = $this->db->query(
+				'SELECT avatars.id, charactertype_id, xplevel_id, avatarpicture_id, small_avatarpicture_id '.
+				'FROM avatars '.
+				'INNER JOIN charactertypes ON charactertypes.id = avatars.charactertype_id '.
+				'INNER JOIN xplevels ON xplevels.id = avatars.xplevel_id AND xplevels.seminary_id = charactertypes.seminary_id '.
+				'WHERE charactertypes.seminary_id = ? AND charactertypes.url = ? AND xplevels.level = ?',
+				'isi',
+				$seminaryId,
+				$charactertypeUrl,
+				$xplevel
+			);
+			if(empty($data)) {
+				throw new \nre\exceptions\IdNotFoundException($charactertypeUrl);
+			}
+			
+			
+			return $data[0];
+		}
+		
 	}
 
 ?>

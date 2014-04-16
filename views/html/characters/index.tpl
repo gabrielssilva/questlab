@@ -9,9 +9,7 @@
 <ul class="gchars cf">
 	<?php foreach($characters as &$character) : ?>
 	<li>
-		<?php if(array_key_exists('small_avatar', $character)) : ?>
-		<p><img src="<?=$linker->link(array('media','seminary',$seminary['url'],$character['small_avatar']['url']))?>"></p>
-		<?php endif ?>
+		<p><img src="<?=$linker->link(array('media','avatar',$seminary['url'],$character['charactertype_url'],$character['xplevel']['level'],'portrait'))?>"></p>
 		<p><a href="<?=$linker->link(array('characters','character',$seminary['url'],$character['url']))?>"><?=$character['name']?></a></p>
 		<p><small><?=$character['xps']?> XP</small></p>
 	</li>
