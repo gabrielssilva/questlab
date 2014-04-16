@@ -3,4 +3,3 @@
 <li><a href="<?=$linker->link(array('charactergroups','index',$loggedSeminary['url']))?>" class="smnry"><i class="fa fa-users fa-fw"></i><?=_('Character Groups')?></a></li>
 <li><a href="<?=$linker->link(array('achievements','index',$loggedSeminary['url']))?>" class="smnry"><i class="fa fa-trophy fa-fw"></i><?=_('Achievements')?></a></li>
 <li><a href="<?=$linker->link(array('library','index',$loggedSeminary['url']))?>" class="smnry"><i class="fa fa-book fa-fw"></i><?=_('Library')?></a></li>
-

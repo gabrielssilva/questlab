@@ -68,16 +68,6 @@
 				if($groupsgroup['preferred'])
 				{
 					$group['members'] = $this->Characters->getCharactersForGroup($group['id']);
-					foreach($group['members'] as &$member)
-					{
-						if(!is_null($member['avatar_id']))
-						{
-							$avatar = $this->Avatars->getAvatarById($member['avatar_id']);
-							if(!is_null($avatar['small_avatarpicture_id'])) {
-								$member['small_avatar'] = $this->Media->getSeminaryMediaById($avatar['small_avatarpicture_id']);
-							}
-						}
-					}
 					$characterGroups[] = $group;
 				}
 			}

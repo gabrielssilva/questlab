@@ -43,7 +43,7 @@
 		public function getCharactersForUser($userId)
 		{
 			return $this->db->query(
-				'SELECT characters.id, characters.created, characters.charactertype_id, characters.name, characters.url, characters.xps, characters.xplevel, characters.avatar_id, charactertypes.name AS charactertype_name, charactertypes.url AS charactertypes_url, seminaries.id AS seminary_id, seminaries.url AS seminary_url, seminaries.title AS seminary_title, seminaries.url AS seminary_url '.
+				'SELECT characters.id, characters.created, characters.charactertype_id, characters.name, characters.url, characters.xps, characters.xplevel, characters.avatar_id, charactertypes.name AS charactertype_name, charactertypes.url AS charactertype_url, seminaries.id AS seminary_id, seminaries.url AS seminary_url, seminaries.title AS seminary_title, seminaries.url AS seminary_url '.
 				'FROM v_characters AS characters '.
 				'LEFT JOIN charactertypes ON charactertypes.id = characters.charactertype_id '.
 				'LEFT JOIN seminaries ON seminaries.id = charactertypes.seminary_id '.
@@ -63,7 +63,7 @@
 		public function getCharactersForSeminary($seminaryId)
 		{
 			return $this->db->query(
-				'SELECT characters.id, characters.created, characters.charactertype_id, characters.name, characters.url, characters.user_id, characters.xps, characters.xplevel, characters.avatar_id, charactertypes.name AS charactertype_name, charactertypes.url AS charactertypes_url, seminaries.id AS seminary_url, seminaries.title AS seminary_title, seminaries.url AS seminary_url '.
+				'SELECT characters.id, characters.created, characters.charactertype_id, characters.name, characters.url, characters.user_id, characters.xps, characters.xplevel, characters.avatar_id, charactertypes.name AS charactertype_name, charactertypes.url AS charactertype_url, seminaries.id AS seminary_url, seminaries.title AS seminary_title, seminaries.url AS seminary_url '.
 				'FROM v_characters AS characters '.
 				'LEFT JOIN charactertypes ON charactertypes.id = characters.charactertype_id '.
 				'LEFT JOIN seminaries ON seminaries.id = charactertypes.seminary_id '.
@@ -83,7 +83,7 @@
 		public function getCharactersForGroup($groupId)
 		{
 			return $this->db->query(
-				'SELECT characters.id, characters.created, characters.charactertype_id, characters.name, characters.url, characters.user_id, characters.xps, characters.xplevel, characters.avatar_id, charactertypes.name AS charactertype_name, charactertypes.url AS charactertypes_url '.
+				'SELECT characters.id, characters.created, characters.charactertype_id, characters.name, characters.url, characters.user_id, characters.xps, characters.xplevel, characters.avatar_id, charactertypes.name AS charactertype_name, charactertypes.url AS charactertype_url '.
 				'FROM v_characters AS characters '.
 				'LEFT JOIN characters_charactergroups ON characters_charactergroups.character_id = characters.id '.
 				'LEFT JOIN charactertypes ON charactertypes.id = characters.charactertype_id '.
@@ -105,12 +105,9 @@
 		public function getCharacterForUserAndSeminary($userId, $seminaryId)
 		{
 			$data = $this->db->query(
-				'SELECT characters.id, characters.created, characters.charactertype_id, characters.name, characters.url, characters.user_id, characters.xps, characters.xplevel, characters.avatar_id, charactertypes.name AS charactertype_name, charactertypes.url AS charactertypes_url, seminarymedia.url AS avatar_url, seminarymedia.description AS avatar_description '.
+				'SELECT characters.id, characters.created, characters.charactertype_id, characters.name, characters.url, characters.user_id, characters.xps, characters.xplevel, characters.avatar_id, charactertypes.name AS charactertype_name, charactertypes.url AS charactertype_url '.
 				'FROM v_characters AS characters '.
 				'LEFT JOIN charactertypes ON charactertypes.id = characters.charactertype_id '.
-				'LEFT JOIN avatars ON avatars.id = characters.avatar_id '.
-				'LEFT JOIN avatarpictures ON avatarpictures.seminarymedia_id = avatars.avatarpicture_id '.
-				'LEFT JOIN seminarymedia ON seminarymedia.id = avatarpictures.seminarymedia_id '.
 				'WHERE characters.user_id = ? AND charactertypes.seminary_id = ?',
 				'ii',
 				$userId, $seminaryId
@@ -135,14 +132,9 @@
 		public function getCharacterByUrl($seminaryId, $characterUrl)
 		{
 			$data = $this->db->query(
-				'SELECT characters.id, characters.created, characters.charactertype_id, characters.name, characters.url, characters.user_id, characters.xps, characters.xplevel, characters.avatar_id, charactertypes.name AS charactertype_name, charactertypes.url AS charactertypes_url, seminarymedia.url AS avatar_url, seminarymedia.description AS avatar_description, small_seminarymedia.url AS small_avatar_url, small_seminarymedia.description AS small_avatar_description '.
+				'SELECT characters.id, characters.created, characters.charactertype_id, characters.name, characters.url, characters.user_id, characters.xps, characters.xplevel, characters.avatar_id, charactertypes.name AS charactertype_name, charactertypes.url AS charactertype_url '.
 				'FROM v_characters AS characters '.
 				'LEFT JOIN charactertypes ON charactertypes.id = characters.charactertype_id '.
-				'LEFT JOIN avatars ON avatars.id = characters.avatar_id '.
-				'LEFT JOIN avatarpictures ON avatarpictures.seminarymedia_id = avatars.avatarpicture_id '.
-				'LEFT JOIN seminarymedia ON seminarymedia.id = avatarpictures.seminarymedia_id '.
-				'LEFT JOIN avatarpictures AS small_avatarpictures ON small_avatarpictures.seminarymedia_id = avatars.small_avatarpicture_id '.
-				'LEFT JOIN seminarymedia AS small_seminarymedia ON small_seminarymedia.id = small_avatarpictures.seminarymedia_id '.
 				'WHERE charactertypes.seminary_id = ? AND characters.url = ?',
 				'is',
 				$seminaryId, $characterUrl
@@ -166,14 +158,9 @@
 		public function getCharacterById($characterId)
 		{
 			$data = $this->db->query(
-				'SELECT characters.id, characters.created, characters.charactertype_id, characters.name, characters.url, characters.user_id, characters.xps, characters.xplevel, characters.avatar_id, charactertypes.name AS charactertype_name, charactertypes.url AS charactertypes_url, seminarymedia.url AS avatar_url, seminarymedia.description AS avatar_description, small_seminarymedia.url AS small_avatar_url, small_seminarymedia.description AS small_avatar_description '.
+				'SELECT characters.id, characters.created, characters.charactertype_id, characters.name, characters.url, characters.user_id, characters.xps, characters.xplevel, characters.avatar_id, charactertypes.name AS charactertype_name, charactertypes.url AS charactertype_url '.
 				'FROM v_characters AS characters '.
 				'LEFT JOIN charactertypes ON charactertypes.id = characters.charactertype_id '.
-				'LEFT JOIN avatars ON avatars.id = characters.avatar_id '.
-				'LEFT JOIN avatarpictures ON avatarpictures.seminarymedia_id = avatars.avatarpicture_id '.
-				'LEFT JOIN seminarymedia ON seminarymedia.id = avatarpictures.seminarymedia_id '.
-				'LEFT JOIN avatarpictures AS small_avatarpictures ON small_avatarpictures.seminarymedia_id = avatars.small_avatarpicture_id '.
-				'LEFT JOIN seminarymedia AS small_seminarymedia ON small_seminarymedia.id = small_avatarpictures.seminarymedia_id '.
 				'WHERE characters.id = ?',
 				'i',
 				$characterId
@@ -273,7 +260,7 @@
 		public function getSuperiorCharacters($seminaryId, $xps, $count)
 		{
 			return $this->db->query(
-				'SELECT characters.id, characters.created, characters.charactertype_id, characters.name, characters.url, characters.user_id, characters.xps, characters.xplevel, characters.avatar_id, charactertypes.name AS charactertype_name, charactertypes.url AS charactertypes_url '.
+				'SELECT characters.id, characters.created, characters.charactertype_id, characters.name, characters.url, characters.xps, characters.xplevel, characters.avatar_id, charactertypes.name AS charactertype_name, charactertypes.url AS charactertype_url '.
 				'FROM v_characters AS characters  '.
 				'INNER JOIN charactertypes ON charactertypes.id = characters.charactertype_id '.
 				'WHERE charactertypes.seminary_id = ? AND characters.xps > ? '.
@@ -296,7 +283,7 @@
 		public function getInferiorCharacters($seminaryId, $xps, $count)
 		{
 			return $this->db->query(
-				'SELECT characters.id, characters.created, characters.charactertype_id, characters.name, characters.url, characters.user_id, characters.xps, characters.xplevel, characters.avatar_id, charactertypes.name AS charactertype_name, charactertypes.url AS charactertypes_url '.
+				'SELECT characters.id, characters.created, characters.charactertype_id, characters.name, characters.url, characters.xps, characters.xplevel, characters.avatar_id, charactertypes.name AS charactertype_name, charactertypes.url AS charactertype_url '.
 				'FROM v_characters AS characters  '.
 				'INNER JOIN charactertypes ON charactertypes.id = characters.charactertype_id '.
 				'WHERE charactertypes.seminary_id = ? AND characters.xps < ? '.
@@ -317,12 +304,9 @@
 		public function getCharactersSolvedQuest($questId)
 		{
 			return $data = $this->db->query(
-				'SELECT characters.id, characters.created, characters.charactertype_id, characters.name, characters.url, characters.user_id, characters.xps, characters.xplevel, charactertypes.name AS charactertype_name, charactertypes.url AS charactertypes_url, seminarymedia.url AS avatar_url, seminarymedia.description AS avatar_description '.
+				'SELECT characters.id, characters.created, characters.charactertype_id, characters.name, characters.url, characters.user_id, characters.xps, characters.xplevel, charactertypes.name AS charactertype_name, charactertypes.url AS charactertype_url '.
 				'FROM v_characters AS characters '.
 				'LEFT JOIN charactertypes ON charactertypes.id = characters.charactertype_id '.
-				'LEFT JOIN avatars ON avatars.id = characters.avatar_id '.
-				'LEFT JOIN avatarpictures ON avatarpictures.seminarymedia_id = avatars.avatarpicture_id '.
-				'LEFT JOIN seminarymedia ON seminarymedia.id = avatarpictures.seminarymedia_id '.
 				'WHERE EXISTS ('.
 					'SELECT character_id FROM quests_characters WHERE character_id = characters.id AND quest_id = ? AND status = ?'.
 				')',
@@ -342,12 +326,9 @@
 		public function getCharactersUnsolvedQuest($questId)
 		{
 			return $data = $this->db->query(
-				'SELECT characters.id, characters.created, characters.charactertype_id, characters.name, characters.url, characters.user_id, characters.xps, characters.xplevel, charactertypes.name AS charactertype_name, charactertypes.url AS charactertypes_url, seminarymedia.url AS avatar_url, seminarymedia.description AS avatar_description '.
+				'SELECT characters.id, characters.created, characters.charactertype_id, characters.name, characters.url, characters.user_id, characters.xps, characters.xplevel, charactertypes.name AS charactertype_name, charactertypes.url AS charactertype_url '.
 				'FROM v_characters AS characters '.
 				'LEFT JOIN charactertypes ON charactertypes.id = characters.charactertype_id '.
-				'LEFT JOIN avatars ON avatars.id = characters.avatar_id '.
-				'LEFT JOIN avatarpictures ON avatarpictures.seminarymedia_id = avatars.avatarpicture_id '.
-				'LEFT JOIN seminarymedia ON seminarymedia.id = avatarpictures.seminarymedia_id '.
 				'WHERE EXISTS ('.
 					'SELECT character_id FROM quests_characters WHERE character_id = characters.id AND quest_id = ? AND status = ?'.
 				') AND NOT EXISTS ('.
@@ -369,12 +350,9 @@
 		public function getCharactersSubmittedQuest($questId)
 		{
 			return $data = $this->db->query(
-				'SELECT characters.id, characters.created, characters.charactertype_id, characters.name, characters.url, characters.user_id, characters.xps, characters.xplevel, charactertypes.name AS charactertype_name, charactertypes.url AS charactertypes_url, seminarymedia.url AS avatar_url, seminarymedia.description AS avatar_description '.
+				'SELECT characters.id, characters.created, characters.charactertype_id, characters.name, characters.url, characters.user_id, characters.xps, characters.xplevel, charactertypes.name AS charactertype_name, charactertypes.url AS charactertype_url '.
 				'FROM v_characters AS characters '.
 				'LEFT JOIN charactertypes ON charactertypes.id = characters.charactertype_id '.
-				'LEFT JOIN avatars ON avatars.id = characters.avatar_id '.
-				'LEFT JOIN avatarpictures ON avatarpictures.seminarymedia_id = avatars.avatarpicture_id '.
-				'LEFT JOIN seminarymedia ON seminarymedia.id = avatarpictures.seminarymedia_id '.
 				'WHERE EXISTS ('.
 					'SELECT character_id FROM quests_characters WHERE character_id = characters.id AND quest_id = ? AND status = ?'.
 				') AND NOT EXISTS ('.

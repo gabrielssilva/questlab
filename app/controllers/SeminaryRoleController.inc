@@ -137,7 +137,7 @@
 			
 			
 			// Check permissions
-			if(count(array_intersect(self::$user['seminaryroles'], $permissions)) == 0) {
+			if(!array_key_exists('seminaryroles', self::$user) || count(array_intersect(self::$user['seminaryroles'], $permissions)) == 0) {
 				throw new \nre\exceptions\AccessDeniedException();
 			}
 		}

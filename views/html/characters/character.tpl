@@ -42,9 +42,7 @@
 		</ul>
 	</div>
 	<div class="cportrait">
-		<?php if(!is_null($character['avatar_url'])) : ?>
-		<img src="<?=$linker->link(array('media','seminary',$seminary['url'],$character['avatar_url']))?>" alt="<?=$character['avatar_description']?>" />
-		<?php endif ?>
+		<img src="<?=$linker->link(array('media','avatar',$seminary['url'],$character['charactertype_url'],$character['xplevel']['level']))?>" />
 	</div>
 </section>
 
@@ -66,25 +64,19 @@
 		<ul class="cranks">
 			<?php foreach($ranking['superior'] as $index => &$rankCharacter) : ?>
 			<li>
-				<?php if(array_key_exists('small_avatar', $rankCharacter)) : ?>
-				<a href="#" title="Achievement-Titel"><img src="<?=$linker->link(array('media','seminary',$seminary['url'],$rankCharacter['small_avatar']['url']))?>"></a>
-				<?php endif ?>
+				<a href="#" title="Achievement-Titel"><img src="<?=$linker->link(array('media','avatar',$seminary['url'],$rankCharacter['charactertype_url'],$rankCharacter['xplevel'],'portrait'))?>"></a>
 				<p><?=$character['rank']-count($ranking['superior'])+$index?>. <a href="#"><?=$rankCharacter['name']?></a></p>
 				<p><small><?=_('Level')?> <?=$rankCharacter['xplevel']?> (<?=$rankCharacter['xps']?> XPs)</small></p>
 			</li>
 			<?php endforeach ?>
 			<li>
-				<?php if(array_key_exists('small_avatar_url', $character)) : ?>
-				<a href="#" title="Achievement-Titel"><img src="<?=$linker->link(array('media','seminary',$seminary['url'],$character['small_avatar_url']))?>"></a>
-				<?php endif ?>
+				<a href="#" title="Achievement-Titel"><img src="<?=$linker->link(array('media','avatar',$seminary['url'],$character['charactertype_url'],$character['xplevel']['level'],'portrait'))?>"></a>
 				<p class="fwb"><?=$character['rank']?>. <a href="#"><?=$character['name']?></a></p>
 				<p><small><?=_('Level')?> <?=$character['xplevel']['level']?> (<?=$character['xps']?> XPs)</small></p>
 			</li>
 			<?php foreach($ranking['inferior'] as $index => &$rankCharacter) : ?>
 			<li>
-				<?php if(array_key_exists('small_avatar', $rankCharacter)) : ?>
-				<a href="#" title="Achievement-Titel"><img src="<?=$linker->link(array('media','seminary',$seminary['url'],$rankCharacter['small_avatar']['url']))?>"></a>
-				<?php endif ?>
+				<a href="#" title="Achievement-Titel"><img src="<?=$linker->link(array('media','avatar',$seminary['url'],$rankCharacter['charactertype_url'],$rankCharacter['xplevel'],'portrait'))?>"></a>
 				<p><?=$character['rank']+$index+1?>. <a href="#"><?=$rankCharacter['name']?></a></p>
 				<p><small><?=_('Level')?> <?=$rankCharacter['xplevel']?> (<?=$rankCharacter['xps']?> XPs)</small></p>
 			</li>

@@ -1,6 +1,6 @@
 <section class="cf">
 	<h1><?=$character['name']?></h1>
-	<img src="<?=$linker->link(array('media','seminary',$seminary['url'],$character['avatar_url']))?>" class="char">
+	<img src="<?=$linker->link(array('media','avatar',$seminary['url'],$character['charactertype_url'],$character['xplevel']['level']))?>" class="char">
 	<ul class="charstats">
 		<li><i class="fa fa-caret-right fa-fw"></i><?=('Level')?> <?=$character['xplevel']['level']?></li>
 		<li><i class="fa fa-caret-right fa-fw"></i><?=$character['xps']?> XPs</li>
@@ -37,9 +37,7 @@
 	<ul class="cranks">
 		<?php foreach($group['members'] as &$member) : ?>
 		<li>
-			<?php if(array_key_exists('small_avatar', $member)) : ?>
-			<a href="#" title="Achievement-Titel"><img src="<?=$linker->link(array('media','seminary',$seminary['url'],$member['small_avatar']['url']))?>"></a>
-			<?php endif ?>
+			<a href="#" title="Achievement-Titel"><img src="<?=$linker->link(array('media','avatar',$seminary['url'],$member['charactertype_url'],$member['xplevel'],'portrait'))?>"></a>
 			<p><a href="<?=$linker->link(array('characters','character',$seminary['url'],$member['url']))?>"><?=$member['name']?></a></p>
 			<p><small><?=_('Level')?> <?=$member['xplevel']?> (<?=$member['xps']?> XPs)</small></p>
 		</li>
