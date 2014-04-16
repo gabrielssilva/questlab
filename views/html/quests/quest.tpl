@@ -45,19 +45,21 @@
 </section>
 <?php endif ?>
 
-<?php if(!is_null($task)) : ?>
+<?php if($questtexttype['type'] == 'Prolog') : ?>
 <section>
+	<?php if(!is_null($task)) : ?>
 	<h1 id="task"><?=_('Task')?></h1>
 	<p><?=\hhu\z\Utils::t($quest['task'])?></p>
 	<?=$task?>
+	<?php endif ?>
 	
-	<?php if($solved) : ?>
+	<?php if($solved && !is_null($task)) : ?>
 	<p><?=_('Task already successfully solved')?>:</p>
+	<?php endif ?>
 	<ul>
-		<li><a href="<?=$linker->link(null,0,false,array('show-answer'=>'true'),true,'task')?>"><?=_('Show answer')?></a></li>
+		<?php if(!is_null($task)) : ?><li><a href="<?=$linker->link(null,0,false,array('show-answer'=>'true'),true,'task')?>"><?=_('Show answer')?></a></li><?php endif ?>
 		<li><a href="<?=$linker->link('Epilog',5)?>">Aufgabe Überspringen</a></l>
 	</ul>
-	<?php endif ?>
 </section>
 <?php endif ?>
 

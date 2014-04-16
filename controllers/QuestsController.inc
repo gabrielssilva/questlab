@@ -252,7 +252,13 @@
 				$questtype = $this->Questtypes->getQuesttypeById($quest['questtype_id']);
 				
 				// Render task
-				$task = $this->renderTask($questtype['classname'], $seminary, $questgroup, $quest, $character);
+				if(!is_null($questtype['classname'])) {
+					$task = $this->renderTask($questtype['classname'], $seminary, $questgroup, $quest, $character);
+				}
+				else {
+					// Mark Quest as solved
+					$this->Quests->setQuestSolved($quest['id'], $character['id']);
+				}
 			}
 			
 			// Has Character solved quest?
