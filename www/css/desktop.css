@@ -181,6 +181,23 @@ input[type="submit"][disabled]{text-shadow:1px 2px #d48c4e;background:#f9ac69;bo
 .gquests .xp{display:block}
 
 
+/** Achievements **/
+
+.rare ol{margin-bottom:40px}
+.rare li{margin-bottom:15px}
+.rare img{float:left;width:45px;height:45px;margin:4px 10px 0 0;border-radius:3px}
+.rare p{margin:0}
+
+.achmnts li{background:#fff;margin-bottom:10px;padding:15px;border-radius:3px}
+.achmnts img{width:55px;height:55px;float:left;margin-right:15px;border-radius:3px}
+.achmnts p{margin:0 0 4px}
+.achmnts .unlcked{margin-top:3px;font-size:.875em;font-weight:normal;display:block}
+.achmnts .desc{font-size:.875em;padding-top:10px}
+.achmnts .prgrss{margin-top:15px}
+.achmnts .xpbar{margin:8px 0 0 0;width:80%}
+.achmnts .xpnumeric{margin:0}
+
+
 /** Quest Types **/
 
 .crossword table{width:100%;max-width:800px;border-spacing:2px;border-collapse:separate}
@@ -216,6 +233,8 @@ input[type="submit"][disabled]{text-shadow:1px 2px #d48c4e;background:#f9ac69;bo
 .gchars li{width:32%;margin-right:5px}
 .gchars li:nth-child(even){float:left}
 
+.achmnts .xpbar{width:89%}
+
 .opponent .hero{max-width:200px}
 }
 
@@ -230,6 +249,11 @@ input[type="submit"][disabled]{text-shadow:1px 2px #d48c4e;background:#f9ac69;bo
 
 .gquests .date{display:inline;margin-right:15px}
 .gquests .xp{float:right}
+
+.rare,.hunter{float:left;width:49%}
+.hunter{float:right}
+.achmnts .desc{padding-top:0}
+.achmnts .unlcked{font-size:.75em;float:right;margin:-6px -4px 0 0;color:#878787}
 
 .bossfight li{float:left;width:44%}
 .bossfight li:nth-child(even){float:right}
