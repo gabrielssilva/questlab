@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: The Legend of Z\n"
-"POT-Creation-Date: 2014-04-16 13:19+0100\n"
-"PO-Revision-Date: 2014-04-16 13:19+0100\n"
+"POT-Creation-Date: 2014-04-16 15:53+0100\n"
+"PO-Revision-Date: 2014-04-16 15:54+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de_DE\n"
@@ -16,14 +16,18 @@ msgstr ""
 "X-Poedit-SearchPath-0: views\n"
 "X-Poedit-SearchPath-1: questtypes\n"
 
-#: questtypes/bossfight/html/quest.tpl:21
-#: questtypes/bossfight/html/quest.tpl:31
-#: questtypes/bossfight/html/submission.tpl:27
-#: questtypes/bossfight/html/submission.tpl:37
+#: questtypes/bossfight/html/quest.tpl:11
+#: questtypes/bossfight/html/quest.tpl:24
+#: questtypes/bossfight/html/submission.tpl:21
+#: questtypes/bossfight/html/submission.tpl:33
 msgid "lost"
 msgstr "verloren"
 
-#: questtypes/bossfight/html/quest.tpl:54
+#: questtypes/bossfight/html/quest.tpl:41
+msgid "Choose"
+msgstr "Wählen"
+
+#: questtypes/bossfight/html/quest.tpl:47
 #: questtypes/choiceinput/html/quest.tpl:14
 #: questtypes/crossword/html/quest.tpl:30
 #: questtypes/dragndrop/html/quest.tpl:16
@@ -326,10 +330,10 @@ msgstr "Lösung anzeigen"
 msgid "Quest"
 msgstr "Quest"
 
-#: views/html/quests/submission.tpl:14
+#: views/html/quests/submission.tpl:10
 #, php-format
 msgid "Submission of %s"
-msgstr "Lösungen von %s"
+msgstr "Lösung von %s"
 
 #: views/html/quests/submissions.tpl:15
 msgid "submitted"

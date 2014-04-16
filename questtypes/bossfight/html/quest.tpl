@@ -34,10 +34,11 @@
 	<ul>
 		<?php foreach($childStages as &$childStage) : ?>
 		<li>
-			<?php if(array_key_exists('answer', $childStage) && $childStage['answer']) : ?>
-			→
-			<?php endif ?>
-			<input type="submit" name="submit_stages[<?=$childStage['id']?>]" value="<?=$childStage['question']?>" />
+			<p>
+				<?php if(array_key_exists('answer', $childStage) && $childStage['answer']) : ?>→<?php endif ?>
+				<?=\hhu\z\Utils::t($childStage['question'])?>
+			</p>
+			<input type="submit" name="submit_stages[<?=$childStage['id']?>]" value="<?=_('Choose')?>" />
 		</li>
 		<?php endforeach?>
 		<?php if($lives['character'] == 0 || $lives['boss'] == 0) : ?>
