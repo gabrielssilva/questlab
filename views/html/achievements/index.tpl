@@ -8,23 +8,23 @@
 
 <div class="cf">
 	<section class="rare">
-		<h3>Die seltensten Errungenschaften</h3>
+		<h3><?=_('Seldom Achievements')?></h3>
 		<ol>
+			<?php foreach($seldomAchievements as &$achievement) : ?>
 			<li class="cf">
-				<img src="http://legende-von-zyren.de/img/achieve/36b.jpg" />
-				<p class="fwb">Des Königs neue Kleider</p>
-				<p><small>wurde erst 5 mal gefunden</small></p>
+				<?php if($achievement['achieved'] !== false) : ?>
+				<?php if(!is_null($achievement['achieved_achievementsmedia_id'])) : ?>
+				<img src="<?=$linker->link(array('media','achievement',$seminary['url'],$achievement['url']))?>" />
+				<?php endif ?>
+				<?php else : ?>
+				<?php if(!is_null($achievement['unachieved_achievementsmedia_id'])) : ?>
+				<img src="<?=$linker->link(array('media','achievement',$seminary['url'],$achievement['url']))?>" />
+				<?php endif ?>
+				<?php endif ?>
+				<p class="fwb"><?=$achievement['title']?></p>
+				<p><small><?=sprintf(_('Achievement has been achieved only %d times'), $achievement['c'])?></small></p>
 			</li>
-			<li class="cf">
-				<img src="http://legende-von-zyren.de/img/achieve/1b.jpg" />
-				<p class="fwb">Sein oder Sterben</p>
-				<p><small>wurde erst 7 mal gefunden</small></p>
-			</li>
-			<li class="cf">
-				<img src="http://legende-von-zyren.de/img/achieve/35b.jpg" />
-				<p class="fwb">Hungersnot? Ohne mich.</p>
-				<p><small>wurde erst 9 mal gefunden</small></p>
-			</li>
+			<?php endforeach ?>
 		</ol>
 	</section>
 

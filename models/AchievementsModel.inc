@@ -85,6 +85,30 @@
 		
 		
 		/**
+		 * Get seldom Achievements.
+		 * 
+		 * @param	int	$seminaryId	ID of Seminary
+		 * @param	int	$count		Number of Achievements to retrieve
+		 * @return	array			List of seldom Achievements
+		 */
+		public function getSeldomAchievements($seminaryId, $count)
+		{
+			return $this->db->query(
+				'SELECT id, title, url, description, progress, hidden, unachieved_achievementsmedia_id, achieved_achievementsmedia_id, count(DISTINCT character_id) AS c '.
+				'FROM achievements_characters '.
+				'LEFT JOIN achievements ON achievements.id = achievements_characters.achievement_id '.
+				'WHERE achievements.seminary_id = ? AND only_once = 0 '.
+				'GROUP BY achievement_id '.
+				'ORDER BY count(DISTINCT character_id) ASC '.
+				'LIMIT ?',
+				'ii',
+				$seminaryId,
+				$count
+			);
+		}
+		
+		
+		/**
 		 * Get all achieved Achievements for a Character.
 		 * 
 		 * @param	int	$characterId	ID of Character

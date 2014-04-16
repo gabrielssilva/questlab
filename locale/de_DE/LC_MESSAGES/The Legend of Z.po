@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: The Legend of Z\n"
-"POT-Creation-Date: 2014-04-17 01:08+0100\n"
-"PO-Revision-Date: 2014-04-17 01:08+0100\n"
+"POT-Creation-Date: 2014-04-17 01:27+0100\n"
+"PO-Revision-Date: 2014-04-17 01:27+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de_DE\n"
@@ -101,6 +101,15 @@ msgstr "Fehler"
 #: views/html/seminarymenu/index.tpl:4
 msgid "Achievements"
 msgstr "Errungenschaften"
+
+#: views/html/achievements/index.tpl:11
+msgid "Seldom Achievements"
+msgstr "Die seltensten Errungenschaften"
+
+#: views/html/achievements/index.tpl:25
+#, php-format
+msgid "Achievement has been achieved only %d times"
+msgstr "wurde erst %d mal gefunden"
 
 #: views/html/achievements/index.tpl:53
 #, php-format

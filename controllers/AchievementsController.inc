@@ -61,6 +61,12 @@
 			// Get Character
 			$character = SeminaryRoleController::$character;
 			
+			// Get seldom Achievements
+			$seldomAchievements = $this->Achievements->getSeldomAchievements($seminary['id'], \nre\configs\AppConfig::$misc['seldom_achievements_range']);
+			foreach($seldomAchievements as &$achievement) {
+				$achievement['achieved'] = $this->Achievements->hasCharacterAchievedAchievement($achievement['id'], $character['id']);
+			}
+			
 			// Get achieved Achievements
 			$achievedAchievements = $this->Achievements->getAchievedAchievementsForCharacter($character['id']);
 			
@@ -152,6 +158,7 @@
 			// Pass data to view
 			$this->set('seminary', $seminary);
 			$this->set('character', $character);
+			$this->set('seldomAchievements', $seldomAchievements);
 			$this->set('achievedAchievements', $achievedAchievements);
 			$this->set('unachievedAchievements', $unachievedAchievements);
 		}

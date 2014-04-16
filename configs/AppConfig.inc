@@ -94,7 +94,8 @@
 		 * @var array
 		 */
 		public static $misc = array(
-			'ranking_range'	=> 2
+			'ranking_range'			=> 2,
+			'seldom_achievements_range'	=> 3
 		);
 		
 		
