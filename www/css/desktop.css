@@ -29,7 +29,7 @@ sup{top:-.5em}
 sub{bottom:-.25em}
 svg:not(:root){overflow:hidden}
 figure{margin:0}
-fieldset{border:.0625em solid #c0c0c0;margin:0 .125em;padding:.35em .625em .75em}
+fieldset{border:0;margin:0;padding:0}
 legend{border:0;padding:0}
 button,input,select,textarea{font-family:inherit;font-size:100%;margin:0}
 button,input{line-height:normal}
@@ -124,6 +124,14 @@ aside{display:none}
 .orange:hover,input[type="submit"]:hover{color:#fff;background:#f09140}
 
 input[type="submit"][disabled]{text-shadow:1px 2px #d48c4e;background:#f9ac69;border-color:#d48c4e}
+
+
+/** Login & Registration **/
+
+.logreg{width:auto;display:inline-block;padding:15px 20px;background:#eae8e4;border-radius:3px}
+.logreg label{display:block;font-size:.875em}
+.logreg input{margin:5px 0 15px}
+.logreg .cta{display:block}
 
 
 /** Character Profile **/

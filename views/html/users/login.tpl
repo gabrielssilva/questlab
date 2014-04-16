@@ -4,7 +4,7 @@
 <?php if($failed) : ?>
 <p class="invalid"><?=_('Login failed')?>.</p>
 <?php endif ?>
-<form method="post" action="<?=$linker->link(array(), 2)?>">
+<form method="post" action="<?=$linker->link(array(), 2)?>" class="logreg">
 	<fieldset>
 		<label for="username"><?=_('Username')?>:</label>
 		<input name="username" type="text" placeholder="<?=_('Username')?>" value="<?=$username?>" required="required" /><br />

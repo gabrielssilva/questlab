@@ -73,7 +73,7 @@
 	<?php endforeach ?>
 </ul>
 <?php endif ?>
-<form method="post" action="<?=$linker->link(array(), 2)?>">
+<form method="post" action="<?=$linker->link(array(), 2)?>" class="logreg">
 	<fieldset>
 		<label for="username"><?=_('Username')?>:</label>
 		<input name="username" type="text" placeholder="<?=_('Username')?>" title="<?=_('Username')?>" required="required" maxlength="<?=$validationSettings['username']['maxlength']?>" value="<?=$username?>" <?=(array_key_exists('username', $validation)) ? 'class="invalid"' : null?> /><br />
