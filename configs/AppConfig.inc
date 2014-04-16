@@ -69,6 +69,17 @@
 		
 		
 		/**
+		 * Miscellaneous settings
+		 * 
+		 * @static
+		 * @var array
+		 */
+		public static $misc = array(
+			'ranking_range'	=> 2
+		);
+		
+		
+		/**
 		 * Validation settings for user input
 		 * 
 		 * @static

@@ -123,6 +123,32 @@
 			// Get Achievements
 			$achievements = $this->Achievements->getAchievedAchievementsForCharacter($character['id']);
 			
+			// Get ranking
+			$ranking = array(
+				'superior' => $this->Characters->getSuperiorCharacters($seminary['id'], $character['xps'], \nre\configs\AppConfig::$misc['ranking_range']),
+				'inferior' => $this->Characters->getInferiorCharacters($seminary['id'], $character['xps'], \nre\configs\AppConfig::$misc['ranking_range'])
+			);
+			foreach($ranking['superior'] as &$rankCharacter)
+			{
+				if(!is_null($rankCharacter['avatar_id']))
+				{
+					$avatar = $this->Avatars->getAvatarById($rankCharacter['avatar_id']);
+					if(!is_null($avatar['small_avatarpicture_id'])) {
+						$rankCharacter['small_avatar'] = $this->Media->getSeminaryMediaById($avatar['small_avatarpicture_id']);
+					}
+				}
+			}
+			foreach($ranking['inferior'] as &$rankCharacter)
+			{
+				if(!is_null($rankCharacter['avatar_id']))
+				{
+					$avatar = $this->Avatars->getAvatarById($rankCharacter['avatar_id']);
+					if(!is_null($avatar['small_avatarpicture_id'])) {
+						$rankCharacter['small_avatar'] = $this->Media->getSeminaryMediaById($avatar['small_avatarpicture_id']);
+					}
+				}
+			}
+			
 			// Get Quest topics
 			$questtopics = $this->Questtopics->getQuesttopicsForSeminary($seminary['id']);
 			foreach($questtopics as &$questtopic)
@@ -139,6 +165,7 @@
 			$this->set('user', $user);
 			$this->set('groups', $groups);
 			$this->set('achievements', $achievements);
+			$this->set('ranking', $ranking);
 			$this->set('questtopics', $questtopics);
 		}
 		

@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: The Legend of Z\n"
-"POT-Creation-Date: 2014-04-15 20:19+0100\n"
-"PO-Revision-Date: 2014-04-15 20:19+0100\n"
+"POT-Creation-Date: 2014-04-16 11:36+0100\n"
+"PO-Revision-Date: 2014-04-16 11:36+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de_DE\n"
@@ -162,7 +162,10 @@ msgstr "Verlorene Quest"
 msgid "Total progress"
 msgstr "Fortschritt"
 
-#: views/html/characters/character.tpl:20 views/html/seminarybar/index.tpl:44
+#: views/html/characters/character.tpl:20
+#: views/html/characters/character.tpl:73
+#: views/html/characters/character.tpl:81
+#: views/html/characters/character.tpl:89 views/html/seminarybar/index.tpl:44
 #: views/html/users/user.tpl:29
 msgid "Level"
 msgstr "Level"
@@ -171,6 +174,10 @@ msgstr "Level"
 #, php-format
 msgid "achieved at: %s"
 msgstr "erhalten am: %s"
+
+#: views/html/characters/character.tpl:65
+msgid "Ranking"
+msgstr "Ranking"
 
 #: views/html/characters/character.tpl:97
 msgid "Topic progress"

@@ -62,33 +62,33 @@
 	</section>
 
 	<section class="flr48">
-		<h1><i class="fa fa-list fa-fw"></i>Ranking</h1>
+		<h1><i class="fa fa-list fa-fw"></i><?=_('Ranking')?></h1>
 		<ul class="cranks">
+			<?php foreach($ranking['superior'] as $index => &$rankCharacter) : ?>
 			<li>
-				<a href="#" title="Achievement-Titel"><img src="http://s7.directupload.net/images/140325/e2wdqhqa.png"></a>
-				<p>7. <a href="#">Anduin</a></p>
-				<p><small>Level 27 (1500 XP)</small></p>
+				<?php if(array_key_exists('small_avatar', $rankCharacter)) : ?>
+				<a href="#" title="Achievement-Titel"><img src="<?=$linker->link(array('media','seminary',$seminary['url'],$rankCharacter['small_avatar']['url']))?>"></a>
+				<?php endif ?>
+				<p><?=$character['rank']-count($ranking['superior'])+$index?>. <a href="#"><?=$rankCharacter['name']?></a></p>
+				<p><small><?=_('Level')?> <?=$rankCharacter['xplevel']?> (<?=$rankCharacter['xps']?> XPs)</small></p>
 			</li>
+			<?php endforeach ?>
 			<li>
-				<a href="#" title="Achievement-Titel"><img src="http://s1.directupload.net/images/140325/upv2dg2r.png"></a>
-				<p>8. <a href="#">Jaina</a></p>
-				<p><small>Level 26 (1400 XP)</small></p>
+				<?php if(array_key_exists('small_avatar_url', $character)) : ?>
+				<a href="#" title="Achievement-Titel"><img src="<?=$linker->link(array('media','seminary',$seminary['url'],$character['small_avatar_url']))?>"></a>
+				<?php endif ?>
+				<p class="fwb"><?=$character['rank']?>. <a href="#"><?=$character['name']?></a></p>
+				<p><small><?=_('Level')?> <?=$character['xplevel']['level']?> (<?=$character['xps']?> XPs)</small></p>
 			</li>
+			<?php foreach($ranking['inferior'] as $index => &$rankCharacter) : ?>
 			<li>
-				<a href="#" title="Achievement-Titel"><img src="http://s14.directupload.net/images/140325/x9ny5kgu.png"></a>
-				<p class="fwb">9. <a href="#">Uther</a></p>
-				<p><small>Level 25 (1300 XP)</small></p>
+				<?php if(array_key_exists('small_avatar', $rankCharacter)) : ?>
+				<a href="#" title="Achievement-Titel"><img src="<?=$linker->link(array('media','seminary',$seminary['url'],$rankCharacter['small_avatar']['url']))?>"></a>
+				<?php endif ?>
+				<p><?=$character['rank']+$index+1?>. <a href="#"><?=$rankCharacter['name']?></a></p>
+				<p><small><?=_('Level')?> <?=$rankCharacter['xplevel']?> (<?=$rankCharacter['xps']?> XPs)</small></p>
 			</li>
-			<li>
-				<a href="#" title="Achievement-Titel"><img src="http://s7.directupload.net/images/140325/e2wdqhqa.png"></a>
-				<p>10. <a href="#">Lothar</a></p>
-				<p><small>Level 24 (1200 XP)</small></p>
-			</li>
-			<li>
-				<a href="#" title="Achievement-Titel"><img src="http://s1.directupload.net/images/140325/whre34td.png"></a>
-				<p>11. <a href="#">Morris</a></p>
-				<p><small>Level 23 (1100 XP)</small></p>
-			</li>
+			<?php endforeach ?>
 		</ul>
 	</section>
 </div>

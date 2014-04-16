@@ -135,12 +135,14 @@
 		public function getCharacterByUrl($seminaryId, $characterUrl)
 		{
 			$data = $this->db->query(
-				'SELECT characters.id, characters.created, characters.charactertype_id, characters.name, characters.url, characters.user_id, characters.xps, characters.xplevel, characters.avatar_id, charactertypes.name AS charactertype_name, charactertypes.url AS charactertypes_url, seminarymedia.url AS avatar_url, seminarymedia.description AS avatar_description '.
+				'SELECT characters.id, characters.created, characters.charactertype_id, characters.name, characters.url, characters.user_id, characters.xps, characters.xplevel, characters.avatar_id, charactertypes.name AS charactertype_name, charactertypes.url AS charactertypes_url, seminarymedia.url AS avatar_url, seminarymedia.description AS avatar_description, small_seminarymedia.url AS small_avatar_url, small_seminarymedia.description AS small_avatar_description '.
 				'FROM v_characters AS characters '.
 				'LEFT JOIN charactertypes ON charactertypes.id = characters.charactertype_id '.
 				'LEFT JOIN avatars ON avatars.id = characters.avatar_id '.
 				'LEFT JOIN avatarpictures ON avatarpictures.seminarymedia_id = avatars.avatarpicture_id '.
 				'LEFT JOIN seminarymedia ON seminarymedia.id = avatarpictures.seminarymedia_id '.
+				'LEFT JOIN avatarpictures AS small_avatarpictures ON small_avatarpictures.seminarymedia_id = avatars.small_avatarpicture_id '.
+				'LEFT JOIN seminarymedia AS small_seminarymedia ON small_seminarymedia.id = small_avatarpictures.seminarymedia_id '.
 				'WHERE charactertypes.seminary_id = ? AND characters.url = ?',
 				'is',
 				$seminaryId, $characterUrl
@@ -164,12 +166,14 @@
 		public function getCharacterById($characterId)
 		{
 			$data = $this->db->query(
-				'SELECT characters.id, characters.created, characters.charactertype_id, characters.name, characters.url, characters.user_id, characters.xps, characters.xplevel, characters.avatar_id, charactertypes.name AS charactertype_name, charactertypes.url AS charactertypes_url, seminarymedia.url AS avatar_url, seminarymedia.description AS avatar_description '.
+				'SELECT characters.id, characters.created, characters.charactertype_id, characters.name, characters.url, characters.user_id, characters.xps, characters.xplevel, characters.avatar_id, charactertypes.name AS charactertype_name, charactertypes.url AS charactertypes_url, seminarymedia.url AS avatar_url, seminarymedia.description AS avatar_description, small_seminarymedia.url AS small_avatar_url, small_seminarymedia.description AS small_avatar_description '.
 				'FROM v_characters AS characters '.
 				'LEFT JOIN charactertypes ON charactertypes.id = characters.charactertype_id '.
 				'LEFT JOIN avatars ON avatars.id = characters.avatar_id '.
 				'LEFT JOIN avatarpictures ON avatarpictures.seminarymedia_id = avatars.avatarpicture_id '.
 				'LEFT JOIN seminarymedia ON seminarymedia.id = avatarpictures.seminarymedia_id '.
+				'LEFT JOIN avatarpictures AS small_avatarpictures ON small_avatarpictures.seminarymedia_id = avatars.small_avatarpicture_id '.
+				'LEFT JOIN seminarymedia AS small_seminarymedia ON small_seminarymedia.id = small_avatarpictures.seminarymedia_id '.
 				'WHERE characters.id = ?',
 				'i',
 				$characterId
@@ -255,6 +259,52 @@
 			
 			
 			return 1;
+		}
+		
+		
+		/**
+		 * Get the superior $count Characters in the ranking.
+		 * 
+		 * @param	int	$seminaryId	ID of Seminary
+		 * @param	int	$xps		XP-value of Character
+		 * @param	int	$count		Count of Characters to determine
+		 * @return	array			List of superior Characters
+		 */
+		public function getSuperiorCharacters($seminaryId, $xps, $count)
+		{
+			return $this->db->query(
+				'SELECT characters.id, characters.created, characters.charactertype_id, characters.name, characters.url, characters.user_id, characters.xps, characters.xplevel, characters.avatar_id, charactertypes.name AS charactertype_name, charactertypes.url AS charactertypes_url '.
+				'FROM v_characters AS characters  '.
+				'INNER JOIN charactertypes ON charactertypes.id = characters.charactertype_id '.
+				'WHERE charactertypes.seminary_id = ? AND characters.xps > ? '.
+				'ORDER BY characters.xps ASC '.
+				'LIMIT ?',
+				'idd',
+				$seminaryId, $xps, $count
+			);
+		}
+		
+		
+		/**
+		 * Get the inferior $count Characters in the ranking.
+		 * 
+		 * @param	int	$seminaryId	ID of Seminary
+		 * @param	int	$xps		XP-value of Character
+		 * @param	int	$count		Count of Characters to determine
+		 * @return	array			List of inferior Characters
+		 */
+		public function getInferiorCharacters($seminaryId, $xps, $count)
+		{
+			return $this->db->query(
+				'SELECT characters.id, characters.created, characters.charactertype_id, characters.name, characters.url, characters.user_id, characters.xps, characters.xplevel, characters.avatar_id, charactertypes.name AS charactertype_name, charactertypes.url AS charactertypes_url '.
+				'FROM v_characters AS characters  '.
+				'INNER JOIN charactertypes ON charactertypes.id = characters.charactertype_id '.
+				'WHERE charactertypes.seminary_id = ? AND characters.xps < ? '.
+				'ORDER BY characters.xps DESC '.
+				'LIMIT ?',
+				'idd',
+				$seminaryId, $xps, $count
+			);
 		}
 		
 		
