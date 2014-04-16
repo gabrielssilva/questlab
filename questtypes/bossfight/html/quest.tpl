@@ -21,7 +21,7 @@
 		<i class="fa fa-heart fa-fw"></i>
 		<?php endforeach ?>
 		<?php else : ?>
-		<?=_('lost')?>
+		<b><?=_('lost')?></b>
 		<?php endif ?>
 	</p>
 </section>
