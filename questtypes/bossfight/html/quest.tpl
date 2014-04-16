@@ -31,14 +31,14 @@
 
 <form method="post" action="#task">
 	<input type="hidden" name="stage" value="<?=$stage['id']?>" />
-	<ul>
+	<ul class="bossfight cf">
 		<?php foreach($childStages as &$childStage) : ?>
-		<li>
+		<li class="option">
 			<p>
 				<?php if(array_key_exists('answer', $childStage) && $childStage['answer']) : ?>→<?php endif ?>
 				<?=\hhu\z\Utils::t($childStage['question'])?>
 			</p>
-			<input type="submit" name="submit_stages[<?=$childStage['id']?>]" value="<?=_('Choose')?>" />
+			<p><input type="submit" name="submit_stages[<?=$childStage['id']?>]" value="<?=_('Choose')?>" /></p>
 		</li>
 		<?php endforeach?>
 		<?php if($lives['character'] == 0 || $lives['boss'] == 0) : ?>

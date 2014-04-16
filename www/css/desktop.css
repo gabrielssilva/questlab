@@ -188,6 +188,7 @@ input[type="submit"][disabled]{text-shadow:1px 2px #d48c4e;background:#f9ac69;bo
 .opponent .boss{max-width:100%}
 .opponent p{text-align:center}
 .opponent .fa{font-size:1.25em;color:#c7135b;padding-right:0}
+.bossfight .option{background:#fff;margin-bottom:10px;padding:15px 15px 5px;border-radius:3px}
 
 
 /** Media Queries **/
@@ -221,6 +222,10 @@ input[type="submit"][disabled]{text-shadow:1px 2px #d48c4e;background:#f9ac69;bo
 
 .gquests .date{display:inline;margin-right:15px}
 .gquests .xp{float:right}
+
+.bossfight li{float:left;width:44%}
+.bossfight li:nth-child(even){float:right}
+.bossfight input,.bossfight p{text-align:center}
 }
 
 @media only screen and (min-width:1024px){
