@@ -47,10 +47,8 @@
 		<?=$intermediate?>
 	</article>
 	<aside>
-		<?php if(!is_null($loggedUser)) : ?>
-		<?php if(!is_null($loggedCharacter)) : ?>
+		<?php if(!is_null($loggedCharacter) && count($loggedUser['seminaryroles']) > 0) : ?>
 		<?=$seminarybar?>
-		<?php endif ?>
 		<?php endif ?>
 	</aside>
 </body>

@@ -35,6 +35,7 @@
 			
 			// Set userdata
 			$this->set('loggedUser', IntermediateController::$user);
+			$this->set('loggedCharacter', SeminaryRoleController::$character);
 			$this->set('loggedSeminary', SeminaryRoleController::$seminary);
 		}
 		

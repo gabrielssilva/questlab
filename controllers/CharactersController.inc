@@ -158,6 +158,16 @@
 			// Get seminary
 			$seminary = $this->Seminaries->getSeminaryByUrl($seminaryUrl);
 			
+			// Check for already existing Character
+			try {
+				$this->Characters->getCharacterForUserAndSeminary($this->Auth->getUserId(), $seminary['id']);
+				throw new \nre\exceptions\AccessDeniedException();
+			}
+			catch(\nre\exceptions\IdNotFoundException $e) {
+				// The should be the case
+			}
+				
+			
 			// Character types
 			$types = $this->Charactertypes->getCharacterTypesForSeminary($seminary['id']);
 			
