@@ -50,20 +50,34 @@
 	</section>
 </div>
 
-<h3>Persönlicher Fortschritt: 75%</h3>
-<p><b>12. Platz:</b> Du hast bislang 13 von insgesamt 75 Errungenschaften erreicht.</p>
+<h3><?=sprintf(_('Own progress: %d %%'), round(count($achievedAchievements) / (count($achievedAchievements)+count($unachievedAchievements)) * 100))?></h3>
+<p><b><?=$character['rank']?>. <?=_('Rank')?>:</b> <?=sprintf(_('You achieved %d of %d Achievements so far'), count($achievedAchievements), count($achievedAchievements)+count($unachievedAchievements))?>.</p>
 <ul class="achmnts">
 	<li class="cf">
 		<img src="http://legende-von-zyren.de/img/achieve/36b.jpg" />
 		<p class="fwb">Freigeschaltetes Achievement<span class="unlcked">erreicht am 17.06.104</span></p>
 		<p class="desc">Das Bild ist entsprechend farbig, ein eventueller Fortschrittsbalken mit 100% soll entfallen.</p>
 	</li>
-	<?php foreach($achievements as &$achievement) : ?>
+	<?php foreach($achievedAchievements as &$achievement) : ?>
 	<li class="cf">
-		<?php if(!is_null($achievement[$achievement['media_index']])) : ?>
+		<?php if(!is_null($achievement['achieved_achievementsmedia_id'])) : ?>
 		<img src="<?=$linker->link(array('media','achievement',$seminary['url'],$achievement['url']))?>" />
 		<?php endif ?>
-		<p class="fwb"><?=(!$achievement['hidden']) ? $achievement['title'] : _('Secret Achievement')?><span class="unlcked">erreicht am 17.06.104</span></p>
+		<p class="fwb">
+			<?=$achievement['title']?>
+			<span class="unlcked"><?=sprintf(_('achieved at: %s'), $dateFormatter->format(new \DateTime($achievement['created'])))?></span>
+		</p>
+		<p class="desc"><?=\hhu\z\Utils::t($achievement['description'])?></p>
+	</li>
+	<?php endforeach?>
+	<?php foreach($unachievedAchievements as &$achievement) : ?>
+	<li class="cf">
+		<?php if(!is_null($achievement['unachieved_achievementsmedia_id'])) : ?>
+		<img src="<?=$linker->link(array('media','achievement',$seminary['url'],$achievement['url']))?>" />
+		<?php endif ?>
+		<p class="fwb">
+			<?=(!$achievement['hidden']) ? $achievement['title'] : _('Secret Achievement')?>
+		</p>
 		<?php if(!$achievement['hidden']) : ?>
 		<p class="desc"><?=\hhu\z\Utils::t($achievement['description'])?></p>
 		<?php else : ?>

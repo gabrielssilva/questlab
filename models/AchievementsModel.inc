@@ -61,26 +61,6 @@
 		
 		
 		/**
-		 * Get all Achievements of a Seminary.
-		 * 
-		 * @param	int	$seminaryId	ID of Seminary to get Achievements of
-		 * @return	array			Achievements data
-		 */
-		public function getAchievementsForSeminary($seminaryId)
-		{
-			return $this->db->query(
-				'SELECT achievements.id, achievementconditions.condition, title, url, description, progress, hidden, unachieved_achievementsmedia_id, achieved_achievementsmedia_id '.
-				'FROM achievements '.
-				'LEFT JOIN achievementconditions ON achievementconditions.id = achievements.achievementcondition_id '.
-				'WHERE seminary_id = ? '.
-				'ORDER BY achievements.pos ASC',
-				'i',
-				$seminaryId
-			);
-		}
-		
-		
-		/**
 		 * Get all not yet achieved Achievements for a Seminary that can
 		 * only be achieved once (only by one Character).
 		 * 
@@ -131,23 +111,57 @@
 		 * @param	int	$characterId	ID of Character
 		 * @return	array			Achievements data
 		 */
-		public function getUnachhievedAchievementsForCharacter($seminaryId, $characterId)
+		public function getUnachhievedAchievementsForCharacter($seminaryId, $characterId, $includeOnlyOnce=false)
 		{
 			return $this->db->query(
 				'SELECT achievements.id, achievementconditions.condition, title, url, description, progress, hidden, only_once, all_conditions, unachieved_achievementsmedia_id, achieved_achievementsmedia_id '.
 				'FROM achievements '.
 				'LEFT JOIN achievementconditions ON achievementconditions.id = achievements.achievementcondition_id '.
-				'WHERE achievements.seminary_id = ? AND only_once = 0 AND NOT EXISTS ('.
+				'WHERE achievements.seminary_id = ? AND only_once <= ? AND NOT EXISTS ('.
 					'SELECT character_id '.
 					'FROM achievements_characters '.
 					'WHERE '.
 						'achievements_characters.achievement_id = achievements.id AND '.
 						'achievements_characters.character_id = ?'.
-				')',
-				'ii',
+				') '.
+				'ORDER BY achievements.pos ASC',
+				'iii',
 				$seminaryId,
+				$includeOnlyOnce,
 				$characterId
 			);
+		}
+		
+		
+		/**
+		 * Get the rank for the number of achieved Achievements.
+		 * 
+		 * @param	int	$seminaryId	ID of Seminary
+		 * @param	int	$xps		Amount of achieved Achievements
+		 * @return	int			Rank of Achievements count
+		 */
+		public function getCountRank($seminaryId, $count)
+		{
+			$data = $this->db->query(
+				'SELECT count(*) AS c '.
+				'FROM ('.
+					'SELECT count(DISTINCT achievement_id) '.
+					'FROM achievements_characters '.
+					'LEFT JOIN achievements ON achievements.id = achievements_characters.achievement_id '.
+					'WHERE achievements.seminary_id = ? '.
+					'GROUP BY character_id '.
+					'HAVING count(DISTINCT achievement_id) > ?'.
+				') AS ranking',
+				'ii',
+				$seminaryId,
+				$count
+			);
+			if(!empty($data)) {
+				return $data[0]['c'] + 1;
+			}
+			
+			
+			return 1;
 		}
 		
 		
@@ -492,15 +506,18 @@
 		public function hasCharacterAchievedAchievement($achievementId, $characterId)
 		{
 			$data = $this->db->query(
-				'SELECT character_id '.
+				'SELECT achievement_id, character_id, created '.
 				'FROM achievements_characters '.
 				'WHERE achievement_id = ? AND character_id = ?',
 				'ii',
 				$achievementId, $characterId
 			);
+			if(!empty($data)) {
+				return $data[0];
+			}
 			
 			
-			return !empty($data);
+			return false;
 		}
 		
 	}

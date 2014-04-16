@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: The Legend of Z\n"
-"POT-Creation-Date: 2014-04-16 15:53+0100\n"
-"PO-Revision-Date: 2014-04-16 15:54+0100\n"
+"POT-Creation-Date: 2014-04-17 01:08+0100\n"
+"PO-Revision-Date: 2014-04-17 01:08+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de_DE\n"
@@ -102,25 +102,42 @@ msgstr "Fehler"
 msgid "Achievements"
 msgstr "Errungenschaften"
 
-#: views/html/achievements/index.tpl:15
+#: views/html/achievements/index.tpl:53
+#, php-format
+msgid "Own progress: %d %%"
+msgstr "Persönlicher Fortschritt: %d %%"
+
+#: views/html/achievements/index.tpl:54
+#: views/html/charactergroups/group.tpl:18
+#: views/html/characters/character.tpl:28 views/html/seminarybar/index.tpl:7
+msgid "Rank"
+msgstr "Platz"
+
+#: views/html/achievements/index.tpl:54
+#, php-format
+msgid "You achieved %d of %d Achievements so far"
+msgstr "Du hast bislang %d von insgesamt %d Errungenschaften erreicht"
+
+#: views/html/achievements/index.tpl:68 views/html/characters/character.tpl:39
+#: views/html/seminarybar/index.tpl:28
+#, php-format
+msgid "achieved at: %s"
+msgstr "erhalten am: %s"
+
+#: views/html/achievements/index.tpl:79
 msgid "Secret Achievement"
 msgstr "Geheime Errungenschaft"
 
-#: views/html/achievements/index.tpl:19
+#: views/html/achievements/index.tpl:84
 msgid "Continue playing to unlock this secret Achievement"
 msgstr "Spiele weiter, um diesen geheimen Erfolg freizuschalten"
 
 #: views/html/charactergroups/group.tpl:7
 #: views/html/charactergroups/groupsgroup.tpl:7
 #: views/html/charactergroups/index.tpl:7
-#: views/html/characters/character.tpl:53 views/html/seminarymenu/index.tpl:3
+#: views/html/characters/character.tpl:51 views/html/seminarymenu/index.tpl:3
 msgid "Character Groups"
 msgstr "Charaktergruppen"
-
-#: views/html/charactergroups/group.tpl:18
-#: views/html/characters/character.tpl:28 views/html/seminarybar/index.tpl:7
-msgid "Rank"
-msgstr "Platz"
 
 #: views/html/charactergroups/group.tpl:20
 msgid "Members"
@@ -167,23 +184,18 @@ msgid "Total progress"
 msgstr "Fortschritt"
 
 #: views/html/characters/character.tpl:20
-#: views/html/characters/character.tpl:73
-#: views/html/characters/character.tpl:81
-#: views/html/characters/character.tpl:89 views/html/seminarybar/index.tpl:44
+#: views/html/characters/character.tpl:69
+#: views/html/characters/character.tpl:75
+#: views/html/characters/character.tpl:81 views/html/seminarybar/index.tpl:42
 #: views/html/users/user.tpl:29
 msgid "Level"
 msgstr "Level"
 
-#: views/html/characters/character.tpl:39 views/html/seminarybar/index.tpl:28
-#, php-format
-msgid "achieved at: %s"
-msgstr "erhalten am: %s"
-
-#: views/html/characters/character.tpl:65
+#: views/html/characters/character.tpl:63
 msgid "Ranking"
 msgstr "Ranking"
 
-#: views/html/characters/character.tpl:97
+#: views/html/characters/character.tpl:89
 msgid "Topic progress"
 msgstr "Thematischer Fortschritt"
 
@@ -399,7 +411,7 @@ msgstr "Quests anzeigen"
 msgid "Last Quest"
 msgstr "Letzter Speicherpunkt"
 
-#: views/html/seminarybar/index.tpl:48
+#: views/html/seminarybar/index.tpl:46
 #, php-format
 msgid "Show %s-Profile"
 msgstr "%s-Profil anzeigen"
@@ -554,6 +566,10 @@ msgstr "Name"
 #: views/html/users/user.tpl:34
 msgid "Roles"
 msgstr "Rollen"
+
+#, fuzzy
+#~ msgid "achieved at %s"
+#~ msgstr "erhalten am: %s"
 
 #~ msgid "Usergroups"
 #~ msgstr "Benutzergruppen"

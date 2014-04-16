@@ -61,15 +61,15 @@
 			// Get Character
 			$character = SeminaryRoleController::$character;
 			
-			// Get Achievements
-			$achievements = $this->Achievements->getAchievementsForSeminary($seminary['id']);
-			foreach($achievements as &$achievement)
+			// Get achieved Achievements
+			$achievedAchievements = $this->Achievements->getAchievedAchievementsForCharacter($character['id']);
+			
+			// Get unachieved Achievements
+			$unachievedAchievements = $this->Achievements->getUnachhievedAchievementsForCharacter($seminary['id'], $character['id'], true);
+			foreach($unachievedAchievements as &$achievement)
 			{
-				// Get status for Character
-				$achieved = $this->Achievements->hasCharacterAchievedAchievement($achievement['id'], $character['id']);
-				
 				// Get Character progress
-				if(!$achieved && $achievement['progress'])
+				if($achievement['progress'])
 				{
 					$conditions = array();
 					switch($achievement['condition'])
@@ -143,18 +143,17 @@
 					
 					$achievement['characterProgress'] = array_sum($characterProgresses) / count($characterProgresses);
 				}
-				
-				// Get media
-				$achievement['media_index'] = 'unachieved_achievementsmedia_id';
-				if($achieved) {
-					$achievement['media_index'] = 'achieved_achievementsmedia_id';
-				}
 			}
+			
+			// Get ranking
+			$character['rank'] = $this->Achievements->getCountRank($seminary['id'], count($achievedAchievements));
 			
 			
 			// Pass data to view
 			$this->set('seminary', $seminary);
-			$this->set('achievements', $achievements);
+			$this->set('character', $character);
+			$this->set('achievedAchievements', $achievedAchievements);
+			$this->set('unachievedAchievements', $unachievedAchievements);
 		}
 		
 	}
