@@ -35,7 +35,7 @@
 			<?php foreach($quests as &$quest) : ?>
 			<tr>
 				<td><a href="<?=$linker->link(array('questgroups','questgroup',$seminary['url'],$quest['questgroup']['url']))?>"><?=$quest['questgroup']['title']?></a></td>
-				<td><a href="<?=$linker->link(array('quests','quest',$seminary['url'],$quest['url']))?>"><?=$quest['title']?></a></td>
+				<td><a href="<?=$linker->link(array('quests','quest',$seminary['url'],$quest['questgroup']['url'],$quest['url']))?>"><?=$quest['title']?></a></td>
 				<td><?=$quest['questtype']['title']?></td>
 				<td><?=$quest['xps']?></td>
 				<td><?=$quest['opensubmissionscount']?></td>
