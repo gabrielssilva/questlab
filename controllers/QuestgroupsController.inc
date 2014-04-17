@@ -31,7 +31,8 @@
 		 * @var array
 		 */
 		public $permissions = array(
-			'questgroup' => array('admin', 'moderator', 'user')
+			'questgroup'	=> array('admin', 'moderator', 'user'),
+			'create'	=> array('admin', 'moderator', 'user')
 		);
 		/**
 		 * User seminary permissions
@@ -39,7 +40,8 @@
 		 * @var array
 		 */
 		public $seminaryPermissions = array(
-			'questgroup' => array('admin', 'moderator', 'user')
+			'questgroup'	=> array('admin', 'moderator', 'user'),
+			'create'	=> array('admin', 'moderator')
 		);
 		
 		
@@ -172,6 +174,45 @@
 			$this->set('texts', $questgroupTexts);
 			$this->set('picture', $picture);
 			$this->set('quests', $quests);
+		}
+		
+		
+		/**
+		 * Action: create.
+		 * 
+		 * Create a new Questgroup.
+		 * 
+		 * @param	string	$seminaryUrl	URL-Title of a Seminary
+		 */
+		public function create($seminaryUrl)
+		{
+			// Get seminary
+			$seminary = $this->Seminaries->getSeminaryByUrl($seminaryUrl);
+			
+			// Create Questgroup
+			$validation = true;
+			if($this->request->getRequestMethod() == 'POST' && !is_null($this->request->getPostParam('create')))
+			{
+				// TODO Validation
+				$title = $this->request->getPostParam('title');
+				
+				// Create new Questgroup
+				if($validation === true)
+				{
+					$questgroupId = $this->Questgroups->createQuestgroup(
+						$this->Auth->getUserId(),
+						$seminary['id'],
+						$title
+					);
+					
+					// Redirect
+					$this->redirect($this->linker->link(array('seminaries', 'seminary', $seminary['url'])));
+				}
+			}
+			
+			
+			// Pass data to view
+			$this->set('seminary', $seminary);
 		}
 		
 	}

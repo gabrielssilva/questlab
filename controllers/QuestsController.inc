@@ -34,7 +34,8 @@
 			'index'		=> array('admin', 'moderator', 'user'),
 			'quest'		=> array('admin', 'moderator', 'user'),
 			'submissions'	=> array('admin', 'moderator', 'user'),
-			'submission'	=> array('admin', 'moderator', 'user')
+			'submission'	=> array('admin', 'moderator', 'user'),
+			'create'	=> array('admin', 'moderator', 'user')
 		);
 		/**
 		 * User seminary permissions
@@ -42,10 +43,11 @@
 		 * @var array
 		 */
 		public $seminaryPermissions = array(
-			'index' => array('admin', 'moderator', 'user'),
-			'quest' => array('admin', 'moderator', 'user'),
-			'submissions' => array('admin', 'moderator'),
-			'submission' => array('admin', 'moderator')
+			'index'		=> array('admin', 'moderator', 'user'),
+			'quest'		=> array('admin', 'moderator', 'user'),
+			'submissions'	=> array('admin', 'moderator'),
+			'submission'	=> array('admin', 'moderator'),
+			'create'	=> array('admin', 'moderator')
 		);
 		
 		
@@ -415,6 +417,86 @@
 			$this->set('character', $character);
 			$this->set('media', $questmedia);
 			$this->set('output', $output);
+		}
+		
+		
+		/**
+		 * Action: create.
+		 * 
+		 * Create a new Quest.
+		 * 
+		 * @param	string	$seminaryUrl	URL-Title of a Seminary
+		 */
+		public function create($seminaryUrl)
+		{
+			// Get seminary
+			$seminary = $this->Seminaries->getSeminaryByUrl($seminaryUrl);
+			
+			// Quest groups
+			$questgroups = $this->Questgroups->getQuestgroupsForSeminary($seminary['id']);
+			
+			// Quest types
+			$questtypes = $this->Questtypes->getQuesttypes();
+			
+			// Create Quest
+			$validation = true;
+			if($this->request->getRequestMethod() == 'POST' && !is_null($this->request->getPostParam('create')))
+			{
+				// TODO Validation
+				$name = $this->request->getPostParam('name');
+				$xps = $this->request->getPostParam('xps');
+				$wrongtext = $this->request->getPostParam('wrongtext');
+				$task = $this->request->getPostParam('task');
+				
+				// Validate Questgroup
+				$questgroupIndex = null;
+				foreach($questgroups as $index => &$questgroup)
+				{
+					$questgroup['selected'] = ($questgroup['url'] == $this->request->getPostParam('questgroup'));
+					if($questgroup['selected']) {
+						$questgroupIndex = $index;
+					}
+				}
+				if(is_null($questgroupIndex)) {
+					throw new \nre\exceptions\ParamsNotValidException($questgroup);
+				}
+				
+				// Validate Questtype
+				$questtypeIndex = null;
+				foreach($questtypes as $index => &$questtype)
+				{
+					$questtype['selected'] = ($questtype['url'] == $this->request->getPostParam('questtype'));
+					if($questtype['selected']) {
+						$questtypeIndex = $index;
+					}
+				}
+				if(is_null($questtypeIndex)) {
+					throw new \nre\exceptions\ParamsNotValidException($questtype);
+				}
+				
+				// Create new Quest
+				if($validation === true)
+				{
+					$questId = $this->Quests->createQuest(
+						$this->Auth->getUserId(),
+						$name,
+						$questgroups[$questgroupIndex]['id'],
+						$questtypes[$questtypeIndex]['id'],
+						$xps,
+						$wrongtext,
+						$task
+					);
+					
+					// Redirect
+					$this->redirect($this->linker->link(array('quests', 'index', $seminary['url'])));
+				}
+			}
+			
+			
+			// Pass data to view
+			$this->set('seminary', $seminary);
+			$this->set('questgroups', $questgroups);
+			$this->set('questtypes', $questtypes);
 		}
 		
 		

@@ -90,6 +90,25 @@
 		
 		
 		/**
+		 * Get all Questgroups for a Seminary.
+		 * 
+		 * @param	int	$seminaryId	ID of Seminary
+		 * @return	array			List of Questgroups
+		 */
+		public function getQuestgroupsForSeminary($seminaryId)
+		{
+			return $this->db->query(
+				'SELECT id, title, url '.
+				'FROM questgroups '.
+				'WHERE seminary_id = ? '.
+				'ORDER BY title ASC',
+				'i',
+				$seminaryId
+			);
+		}
+		
+		
+		/**
 		 * Get a Questgroup by its ID.
 		 * 
 		 * @throws	IdNotFoundException
@@ -500,6 +519,33 @@
 			
 			// Return summarized XPs
 			return $xps;
+		}
+		
+		
+		/**
+		 * Create a new Questgroup.
+		 * 
+		 * @param	int	$userId		User-ID that creates the new character
+		 * @param	int	$seminaryId	ID of Seminary
+		 * @param	string	$title		Title for new Questgroup
+		 * @return	int			ID of new Questgroup
+		 */
+		public function createQuestgroup($userId, $seminaryId, $title)
+		{
+			$this->db->query(
+				'INSERT INTO questgroups '.
+				'(created_user_id, seminary_id, title, url) '.
+				'VALUES '.
+				'(?, ?, ?, ?)',
+				'iiss',
+				$userId,
+				$seminaryId,
+				$title,
+				\nre\core\Linker::createLinkParam($title)
+			);
+			
+			
+			return $this->db->getInsertId();
 		}
 		
 		

@@ -35,6 +35,21 @@
 		
 		
 		/**
+		 * Get all registered Questtypes.
+		 * 
+		 * @return	array	List of registered Questtypes
+		 */
+		public function getQuesttypes()
+		{
+			return $this->db->query(
+				'SELECT id, title, url, classname '.
+				'FROM questtypes '.
+				'ORDER BY title ASC'
+			);
+		}
+		
+		
+		/**
 		 * Get a Questtype by its ID
 		 * 
 		 * @param	int	$questtypeId	ID of Questtype

@@ -405,6 +405,36 @@
 			);
 		}
 		
+		
+		/**
+		 * Create a new Quest.
+		 * 
+		 * @param	int	$userId		User-ID that creates the new character
+		 * @param	string	$name		Name for new Quest
+		 * @param	int	$questgroupId	ID of Questgroup
+		 * @param	int	$questtypeId	ID of Questtype
+		 * @param	int	$xps		XPs for new Quest
+		 * @param	string	$wrongtext	Wrongtext for new Quest
+		 * @param	string	$task		Task for new Quest
+		 * @return	int			ID of new Quest
+		 */
+		public function createQuest($userId, $name, $questgroupId, $questtypeId, $xps, $wrongtext, $task)
+		{
+			$this->db->query(
+				'INSERT INTO quests '.
+				'(created_user_id, questgroup_id, questtype_id, title, url, xps, wrong_text, task) '.
+				'VALUES '.
+				'(?, ?, ?, ?, ?, ?, ?, ?)',
+				'iiississ',
+				$userId, $questgroupId, $questtypeId,
+				$name, \nre\core\Linker::createLinkParam($name),
+				$xps, $wrongtext, $task
+			);
+			
+			
+			return $this->db->getInsertId();
+		}
+		
 	}
 
 ?>
