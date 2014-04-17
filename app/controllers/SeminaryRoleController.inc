@@ -80,8 +80,8 @@
 			// Get Seminary and Character data
 			try {
 				self::$seminary = $this->Seminaries->getSeminaryByUrl($this->request->getParam(3));
-				self::$character = $this->Characters->getCharacterForUserAndSeminary(self::$user['id'], self::$seminary['id']);
 				self::$user['seminaryroles'] = array_map(function($r) { return $r['name']; }, $this->Userseminaryroles->getUserseminaryrolesForUserById(self::$user['id'], self::$seminary['id']));
+				self::$character = $this->Characters->getCharacterForUserAndSeminary(self::$user['id'], self::$seminary['id']);
 			}
 			catch(\nre\exceptions\IdNotFoundException $e) {
 			}
