@@ -3,23 +3,21 @@
 	<img src="<?=$linker->link(array('media','seminaryheader',$seminary['url']))?>">
 </div>
 <?php endif ?>
-<h1><a href="<?=$linker->link(array('seminaries',$seminary['url']))?>"><?=$seminary['title']?></a></h1>
-<h2><a href="<?=$linker->link(array('index',$seminary['url']),1)?>"><?=_('Character Groups')?></a></h2>
-<h3><a href="<?=$linker->link(array('groupsgroup',$seminary['url'],$groupsgroup['url']),1)?>"><?=$groupsgroup['name']?></a></h3>
-<section class="gdata cf">
-	<div class="gbanner">
-		<img src="http://s1.directupload.net/images/140325/3eqybn4i.png">
-	</div>
-	<div class="gdesc">
-		<h3><?=$group['name']?></h3>
-		<span><?=$group['motto']?></span>
-	</div>
-	<ul>
-		<li><i class="fa fa-th-list fa-fw"></i><?=$group['rank']?>. <?=_('Rank')?></li>
-		<li><i class="fa fa-lightbulb-o fa-fw"></i><?=$group['xps']?> XPs</li>
-		<li><i class="fa fa-users fa-fw"></i><?=count($group['characters'])?> <?=(count($group['characters']) > 1) ? _('Members') : _('Member')?></li>
-	</ul>
-</section>
+<ul class="breadcrumbs">
+	<li><a href="<?=$linker->link(array('seminaries',$seminary['url']))?>"><?=$seminary['title']?></a></li>
+	<li><i class="fa fa-chevron-right fa-fw"></i><a href="<?=$linker->link(array('index',$seminary['url']),1)?>"><?=_('Character Groups')?></a></li>
+	<li><i class="fa fa-chevron-right fa-fw"></i><a href="<?=$linker->link(array('groupsgroup',$seminary['url'],$groupsgroup['url']),1)?>"><?=$groupsgroup['name']?></a></li>
+</ul>
+<div class="gbanner cf">
+	<img src="http://s1.directupload.net/images/140325/3eqybn4i.png" class="gbanner">
+	<h1><?=$group['name']?></h1>
+	<p>"<?=$group['motto']?>"</p>
+</div>
+<ul class="gdata cf">
+	<li><?=$group['rank']?>. <?=_('Rank')?></li>
+	<li><?=$group['xps']?> XP</li>
+	<li><?=count($group['characters'])?> <?=(count($group['characters']) > 1) ? _('Members') : _('Member')?></li>
+</ul>
 
 <section>
 	<h1><i class="fa fa-users fa-fw"></i><?=_('Characters')?></h1>

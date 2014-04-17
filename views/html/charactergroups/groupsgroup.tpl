@@ -3,19 +3,22 @@
 	<img src="<?=$linker->link(array('media','seminaryheader',$seminary['url']))?>">
 </div>
 <?php endif ?>
-<h1><a href="<?=$linker->link(array('seminaries',$seminary['url']))?>"><?=$seminary['title']?></a></h1>
-<h2><a href="<?=$linker->link(array('index',$seminary['url']),1)?>"><?=_('Character Groups')?></a></h2>
-<h3><?=$groupsgroup['name']?></h3>
-
-<ul>
-	<?php foreach($groups as &$group) : ?>
-	<li><a href="<?=$linker->link(array('group',$seminary['url'],$groupsgroup['url'],$group['url']),1)?>"><?=$group['name']?> (<?=$group['xps']?> XPs)</a></li>
-	<?php endforeach ?>
+<ul class="breadcrumbs">
+	<li><a href="<?=$linker->link(array('seminaries',$seminary['url']))?>"><?=$seminary['title']?></a></li>
+	<li><i class="fa fa-chevron-right fa-fw"></i><a href="<?=$linker->link(array('index',$seminary['url']),1)?>"><?=_('Character Groups')?></a></li>
 </ul>
 
+<h1><?=$groupsgroup['name']?></h1>
 
-<h3><?=_('Character Groups Quests')?></h3>
-<ul>
+<ol class="cglist">
+	<?php foreach($groups as &$group) : ?>
+	<li><a href="<?=$linker->link(array('group',$seminary['url'],$groupsgroup['url'],$group['url']),1)?>"><?=$group['name']?></a><span class="xp"><?=$group['xps']?> XP</span></li>
+	<?php endforeach ?>
+</ol>
+
+
+<h2><?=_('Character Groups Quests')?></h2>
+<ul class="cgqlist">
 	<?php foreach($quests as &$quest) : ?>
 	<li><a href="<?=$linker->link(array('charactergroupsquests','quest',$seminary['url'],$groupsgroup['url'],$quest['url']))?>"><?=$quest['title']?></a></li>
 	<?php endforeach ?>
