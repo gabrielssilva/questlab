@@ -62,7 +62,7 @@
 	<?php if($solved && !is_null($task)) : ?>
 	<p><?=_('Task already successfully solved')?>:</p>
 	<?php endif ?>
-	<ul>
+	<ul class="admin">
 		<?php if(!is_null($task)) : ?>
 			<li><a href="<?=$linker->link(null,0,false,array('show-answer'=>'true'),true,'task')?>"><?=_('Show answer')?></a></li>
 			<li><a href="<?=$linker->link('Epilog',5)?>"><?=_('Skip Quest')?></a></l>
