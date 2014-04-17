@@ -1,7 +1,7 @@
 <h1><?=_('Users')?></h1>
 <h2><?=_('New user')?></h2>
 
-<form method="post" action="<?=$linker->link('create', 1)?>">
+<form method="post" action="<?=$linker->link('create', 1)?>" class="logreg">
 	<fieldset>
 		<label for="username"><?=_('Username')?>:</label>
 		<input type="text" name="username" placeholder="<?=_('Username')?>" /><br />
