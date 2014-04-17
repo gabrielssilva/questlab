@@ -25,6 +25,8 @@
 		</select><br />
 		<label for="name">XPs:</label>
 		<input type="number" name="xps" value="" placeholder="<?=_('XPs')?>" /><br />
+		<label for="entrytext"><?=('Entry text')?>:</label><br />
+		<textarea name="entrytext" placeholder="<?=_('Entry text')?>"></textarea><br />
 		<label for="wrongtext"><?=('Wrong text')?>:</label><br />
 		<textarea name="wrongtext" placeholder="<?=_('Wrong text')?>"></textarea><br />
 		<label for="task"><?=_('Task')?>:</label><br />

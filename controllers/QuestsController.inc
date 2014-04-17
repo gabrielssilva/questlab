@@ -445,6 +445,7 @@
 				// TODO Validation
 				$name = $this->request->getPostParam('name');
 				$xps = $this->request->getPostParam('xps');
+				$entrytext = $this->request->getPostParam('entrytext');
 				$wrongtext = $this->request->getPostParam('wrongtext');
 				$task = $this->request->getPostParam('task');
 				
@@ -483,6 +484,7 @@
 						$questgroups[$questgroupIndex]['id'],
 						$questtypes[$questtypeIndex]['id'],
 						$xps,
+						$entrytext,
 						$wrongtext,
 						$task
 					);

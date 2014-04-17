@@ -414,21 +414,22 @@
 		 * @param	int	$questgroupId	ID of Questgroup
 		 * @param	int	$questtypeId	ID of Questtype
 		 * @param	int	$xps		XPs for new Quest
+		 * @param	string	$entrytext	Entrytext for new Quest
 		 * @param	string	$wrongtext	Wrongtext for new Quest
 		 * @param	string	$task		Task for new Quest
 		 * @return	int			ID of new Quest
 		 */
-		public function createQuest($userId, $name, $questgroupId, $questtypeId, $xps, $wrongtext, $task)
+		public function createQuest($userId, $name, $questgroupId, $questtypeId, $xps, $entrytext, $wrongtext, $task)
 		{
 			$this->db->query(
 				'INSERT INTO quests '.
-				'(created_user_id, questgroup_id, questtype_id, title, url, xps, wrong_text, task) '.
+				'(created_user_id, questgroup_id, questtype_id, title, url, xps, entry_text, wrong_text, task) '.
 				'VALUES '.
-				'(?, ?, ?, ?, ?, ?, ?, ?)',
-				'iiississ',
+				'(?, ?, ?, ?, ?, ?, ?, ?, ?)',
+				'iiississs',
 				$userId, $questgroupId, $questtypeId,
 				$name, \nre\core\Linker::createLinkParam($name),
-				$xps, $wrongtext, $task
+				$xps, $entrytext, $wrongtext, $task
 			);
 			
 			
