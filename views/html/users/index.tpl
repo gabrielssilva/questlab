@@ -1,5 +1,5 @@
 <h1><?=_('Users')?></h1>
-<nav>
+<nav class="admin">
 	<li><a href="<?=$linker->link('create', 1)?>"><?=_('Create new user')?></a></li>
 </nav>
 <ul>

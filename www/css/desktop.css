@@ -56,7 +56,7 @@ table{border-collapse:collapse;border-spacing:0}
 .wrap{margin:0 5%;max-height:999999px;min-height:1px}
 
 a{color:#50a4ab;text-decoration:none}
-a:hover{color:#5bbac2}
+a:hover{color:#62c5cd}
 .fa{padding:0 10px 0 0}
 .fwb{font-weight:700}
 
@@ -102,7 +102,7 @@ aside{display:none}
 .qgicon{margin:17px 0 0 -39px;background:#f7f5f2;font-size:1.25em;float:left}
 .qgicon.locked{margin-top:-2px}
 .qgtitle a{background:#5cb6bd;border-radius:3px 3px 0 0;display:block;padding:20px;color:#fff;font-weight:700}
-.qgtitle a:hover{background:#5bbac2}
+.qgtitle a:hover{background:#62c5cd}
 .qgprogress,.qghidden{margin-bottom:4px;padding:20px 20px 4px 20px;background:#fff;border-radius:0 0 3px 3px}
 
 .qglist li{margin: 0 0 5px 0}
@@ -126,6 +126,9 @@ aside{display:none}
 
 input[type="submit"][disabled]{text-shadow:1px 2px #d48c4e;background:#f9ac69;border-color:#d48c4e}
 
+.admin li{margin:0 0 15px 0;display:inline-block}
+.admin li a{padding:4px 15px;background:#5cb6bd;border-bottom:2px solid #50a0a6;color:#fff;border-radius:3px}
+.admin li a:hover{background:#62c5cd}
 
 /** Login & Registration **/
 

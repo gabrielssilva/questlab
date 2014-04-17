@@ -6,7 +6,7 @@
 <h1><?=_('Seminaries')?></h1>
 <h2><?=_('Edit seminary')?></h2>
 
-<form method="post">
+<form method="post" class="logreg">
 	<fieldset>
 		<label for="title"><?=_('Title')?>:</label>
 		<input type="text" name="title" placeholder="<?=_('Title')?>" value="<?=$seminary['title']?>" /><br />
