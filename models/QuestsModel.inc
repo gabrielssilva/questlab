@@ -70,7 +70,7 @@
 		public function getQuestByUrl($seminaryId, $questgroupId, $questUrl)
 		{
 			$data = $this->db->query(
-				'SELECT quests.id, quests.questgroup_id, quests.questtype_id, quests.title, quests.url, quests.xps, quests.task, quests.right_text, quests.wrong_text, quests.questsmedia_id '.
+				'SELECT quests.id, quests.questgroup_id, quests.questtype_id, quests.title, quests.url, quests.xps, quests.entry_text, quests.task, quests.right_text, quests.wrong_text, quests.questsmedia_id '.
 				'FROM quests '.
 				'LEFT JOIN questgroups ON questgroups.id = quests.questgroup_id '.
 				'WHERE questgroups.seminary_id = ? AND questgroups.id = ? AND quests.url = ?',
@@ -96,7 +96,7 @@
 		public function getQuestById($questId)
 		{
 			$data = $this->db->query(
-				'SELECT quests.id, quests.questgroup_id, quests.questtype_id, quests.title, quests.url, quests.xps, quests.task, quests.right_text, quests.wrong_text, quests.questsmedia_id '.
+				'SELECT quests.id, quests.questgroup_id, quests.questtype_id, quests.title, quests.url, quests.xps, quests.entry_text, quests.task, quests.right_text, quests.wrong_text, quests.questsmedia_id '.
 				'FROM quests '.
 				'LEFT JOIN questgroups ON questgroups.id = quests.questgroup_id '.
 				'WHERE quests.id = ?',
@@ -146,7 +146,7 @@
 		public function getNextQuests($questId)
 		{
 			return $this->db->query(
-				'SELECT quests.id, quests.questtype_id, quests.title, quests.url, quests.xps, quests.task, questgroups.title AS questgroup_title, questgroups.url AS questgroup_url '.
+				'SELECT quests.id, quests.questtype_id, quests.title, quests.url, quests.xps, quests.entry_text, quests.task, questgroups.title AS questgroup_title, questgroups.url AS questgroup_url '.
 				'FROM quests_previousquests '.
 				'INNER JOIN quests ON quests.id = quests_previousquests.quest_id '.
 				'INNER JOIN questgroups ON questgroups.id = quests.questgroup_id '.
@@ -166,7 +166,7 @@
 		public function getPreviousQuests($questId)
 		{
 			return $this->db->query(
-				'SELECT quests.id, quests.title, quests.url, questgroups.title AS questgroup_title, questgroups.url AS questgroup_url '.
+				'SELECT quests.id, quests.title, quests.url, quests.entry_text, questgroups.title AS questgroup_title, questgroups.url AS questgroup_url '.
 				'FROM quests_previousquests '.
 				'INNER JOIN quests ON quests.id = quests_previousquests.previous_quest_id '.
 				'INNER JOIN questgroups ON questgroups.id = quests.questgroup_id '.

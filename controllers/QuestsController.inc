@@ -270,7 +270,7 @@
 			$nextQuests = null;
 			$charactedHasChoosenNextQuest = false;
 			$nextQuestgroup = null;
-			if($questtexttypeUrl == 'Epilog')
+			if($questtexttypeUrl == 'Epilog' || $this->Questtexts->getQuesttextCountOfQuest($quest['id'], 'Epilog') == 0)
 			{
 				// Next Quest
 				$nextQuests = $this->Quests->getNextQuests($quest['id']);

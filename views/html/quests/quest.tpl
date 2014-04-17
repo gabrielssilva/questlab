@@ -63,8 +63,12 @@
 	<p><?=_('Task already successfully solved')?>:</p>
 	<?php endif ?>
 	<ul>
-		<?php if(!is_null($task)) : ?><li><a href="<?=$linker->link(null,0,false,array('show-answer'=>'true'),true,'task')?>"><?=_('Show answer')?></a></li><?php endif ?>
-		<li><a href="<?=$linker->link('Epilog',5)?>">Aufgabe Überspringen</a></l>
+		<?php if(!is_null($task)) : ?>
+			<li><a href="<?=$linker->link(null,0,false,array('show-answer'=>'true'),true,'task')?>"><?=_('Show answer')?></a></li>
+			<li><a href="<?=$linker->link('Epilog',5)?>"><?=_('Skip Quest')?></a></l>
+		<?php elseif(count($nextquests) == 0) : ?>
+			<li><a href="<?=$linker->link('Epilog',5)?>"><?=_('continue')?></a></l>
+		<?php endif ?>
 	</ul>
 </section>
 <?php endif ?>
@@ -85,11 +89,19 @@
 		</li>
 		<?php else : ?>
 		<li>
-			<?=_('Quest')?>:
 			<?php if($nextquest['entered'] || !$charactedHasChoosenNextQuest) : ?>
+			<?php if(!empty($nextquest['entry_text'])) : ?>
+			<a href="<?=$linker->link(array($nextquest['questgroup_url'],$nextquest['url']),3)?>"><?=$nextquest['entry_text']?></a>
+			<?php else : ?>
+			<?=_('Quest')?>:
 			<a href="<?=$linker->link(array($nextquest['questgroup_url'],$nextquest['url']),3)?>"><?=$nextquest['title']?></a>
+			<?php endif ?>
+			<?php else : ?>
+			<?php if(!empty($nextquest['entry_text'])) : ?>
+			<?=$nextquest['entry_text']?>
 			<?php else : ?>
 			<?=$nextquest['title']?>
+			<?php endif ?>
 			<?php endif ?>
 		</li>
 		<?php endif ?>
