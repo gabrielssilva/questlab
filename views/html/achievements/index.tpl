@@ -3,12 +3,20 @@
 	<img src="<?=$linker->link(array('media','seminaryheader',$seminary['url']))?>" />
 </div>
 <?php endif ?>
-<h1><a href="<?=$linker->link(array('seminaries',$seminary['url']))?>"><?=$seminary['title']?></a></h1>
-<h2><i class="fa fa-trophy fa-fw"></i><?=_('Achievements')?></h2>
-
+<ul class="breadcrumbs">
+	<li><a href="<?=$linker->link(array('seminaries',$seminary['url']))?>"><?=$seminary['title']?></a></li>
+</ul>
+<h1><i class="fa fa-trophy fa-fw"></i><?=_('Achievements')?></h1>
+<p>Errungenschaften sind Auszeichnungen für deine Erfolge im Verlauf der Reise. Sie dienen als historische Erinnerungen an Meilensteine, besondere Taten und interessante oder lustige Ereignisse, die du erlebst.</p>
+<div class="libindxpr cf">
+	<p><small><?=sprintf(_('Own progress: %d %%'), round(count($achievedAchievements) / (count($achievedAchievements)+count($unachievedAchievements)) * 100))?></small></p>
+	<div class="xpbar">
+		<span style="width:77%"></span>
+	</div>
+</div>
 <div class="cf">
 	<section class="rare">
-		<h3><?=_('Seldom Achievements')?></h3>
+		<h2><?=_('Seldom Achievements')?></h2>
 		<ol>
 			<?php foreach($seldomAchievements as &$achievement) : ?>
 			<li class="cf">
@@ -27,9 +35,8 @@
 			<?php endforeach ?>
 		</ol>
 	</section>
-
 	<section class="rare hunter">
-	<h3><?=_('Most successful collectors')?></h3>
+		<h2><?=_('Most successful collectors')?></h2>
 		<ol>
 			<?php foreach($successfulCharacters as $successfulCharacter) : ?>
 			<li class="cf">
@@ -41,9 +48,7 @@
 		</ol>
 	</section>
 </div>
-
-<h3><?=sprintf(_('Own progress: %d %%'), round(count($achievedAchievements) / (count($achievedAchievements)+count($unachievedAchievements)) * 100))?></h3>
-<p><b><?=$character['rank']?>. <?=_('Rank')?>:</b> <?=sprintf(_('You achieved %d of %d Achievements so far'), count($achievedAchievements), count($achievedAchievements)+count($unachievedAchievements))?>.</p>
+<p><small><b><?=$character['rank']?>. <?=_('Rank')?>:</b> <?=sprintf(_('You achieved %d of %d Achievements so far'), count($achievedAchievements), count($achievedAchievements)+count($unachievedAchievements))?>.</small></p>
 <ul class="achmnts">
 	<li class="cf">
 		<img src="http://legende-von-zyren.de/img/achieve/36b.jpg" />

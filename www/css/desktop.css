@@ -219,7 +219,7 @@ input[type="submit"][disabled]{text-shadow:1px 2px #d48c4e;background:#f9ac69;bo
 
 /** Library **/
 
-.libindxpr{margin:20px 0}
+.libindxpr{margin-top:20px}
 .libindxpr p{font-weight:bold;margin:0}
 .libindxpr .xpbar{float:none;margin:9px 0 20px 0;background:#e4e1dd;width:100%}
 .libindxpr .xpbar span{background:#50a4ab}
