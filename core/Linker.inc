@@ -77,7 +77,7 @@
 				// Mask special signs seperately
 				$specials = array('/', '?', '&');
 				foreach($specials as &$special) {
-					$param = str_replace($special, rawurlencode(rawurlencode($special)), $param);
+					$param = str_replace($special, rawurlencode($special), $param);
 				}
 				
 				// Process parameter
@@ -92,7 +92,7 @@
 				);
 				
 				// Encode parameter
-				$linkParams[] = rawurlencode($param);
+				$linkParams[] = $param;
 			}
 			
 			
