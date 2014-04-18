@@ -19,7 +19,7 @@
 <ul class="libtop">
 	<?php foreach($quests as &$quest) : ?>
 	<li class="cf">
-		<p><a href="<?=$linker->link(array('quests','quest',$seminary['url'],$quest['questgroup']['url'],$quest['url']))?>">Die vielen Facetten des Orden des<?=$quest['title']?></a></p>
+		<p><a href="<?=$linker->link(array('quests','quest',$seminary['url'],$quest['questgroup']['url'],$quest['url']))?>"><?=$quest['title']?></a></p>
 		<?php foreach($quest['subtopics'] as &$subtopic) : ?>
 		<p class="addon"><?=$subtopic['title']?></p>
 		<?php endforeach ?>
