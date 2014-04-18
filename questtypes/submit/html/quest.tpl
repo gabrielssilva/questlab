@@ -12,9 +12,9 @@
 </p>
 <?php endif ?>
 <?php if(is_null($submission)) : ?>
-<form method="post" enctype="multipart/form-data">
-	<input type="file" name="answers" required="required" accept="<?=implode(',', array_map(function($m) { return $m['mimetype']; }, $mimetypes))?>" /><br />
-	<?=_('Allowed file types')?>:
+<form method="post" enctype="multipart/form-data" class="submit">
+	<input type="file" name="answers" required="required" accept="<?=implode(',', array_map(function($m) { return $m['mimetype']; }, $mimetypes))?>" />
+	<p><?=_('Allowed file types')?>:</p>
 	<ul>
 		<?php foreach($mimetypes as &$mimetype) : ?>
 		<li><?=$mimetype['mimetype']?> (<?=_('max.')?> <?=$numberFormatter->format(round($mimetype['size']/(1024*1024),2))?> MiB)</li>

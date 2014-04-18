@@ -242,6 +242,11 @@ input[type="submit"][disabled]{text-shadow:1px 2px #d48c4e;background:#f9ac69;bo
 .mchoice input[type=checkbox]{width:8%;float:left;margin-top:6px}
 .mchoice label{width:92%;float:right}
 
+.submit{padding:15px;background:#eae8e4;border-radius:3px;margin-bottom:15px}
+.submit p{margin:15px 0 0 0;font-weight:bold}
+.submit ul{list-style-type:square;margin-left:20px}
+.error{padding:2px 5px;border:1px solid #850000;background:#ebd3d3;color:#850000;border-radius:3px}
+
 .crossword table{width:100%;max-width:800px;border-spacing:2px;border-collapse:separate}
 .crossword td{background:#d7d4cf;padding:1px}
 .crossword input[type=text]{text-align:center;height:26px;width:100%;min-width:8px;max-width:40px;margin:0;padding:0;border:none;text-transform:uppercase}
