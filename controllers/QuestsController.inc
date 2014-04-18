@@ -507,7 +507,7 @@
 					// Create Questmedia
 					if(!is_null($questmedia))
 					{
-						$questsmediaId = $this->Quests->createQuestMedia(
+						$questsmediaId = $this->Media->createQuestMedia(
 							$this->Auth->getUserId(),
 							$seminary['id'],
 							$questmedia['name'],
