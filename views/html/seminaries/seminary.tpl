@@ -3,17 +3,15 @@
 	<img src="<?=$linker->link(array('media','seminaryheader',$seminary['url']))?>">
 </div>
 <?php endif ?>
-
 <h1><a href="<?=$linker->link(array('seminaries',$seminary['url']))?>"><?=$seminary['title']?></a></h1>
 <?php if(count(array_intersect(array('admin', 'moderator'), \hhu\z\controllers\IntermediateController::$user['seminaryroles'])) > 0) : ?>
-<nav>
+<nav class="admin">
 	<?php if(in_array('admin', \hhu\z\controllers\IntermediateController::$user['seminaryroles'])) : ?><li><a href="<?=$linker->link('edit', 3)?>"><?=_('Edit seminary')?></a></li><?php endif ?>
 	<?php if(in_array('admin', \hhu\z\controllers\IntermediateController::$user['seminaryroles'])) : ?><li><a href="<?=$linker->link('delete', 3)?>"><?=_('Delete seminary')?></a></li><?php endif ?>
 	<?php if(count(array_intersect(array('admin','moderator'), \hhu\z\controllers\IntermediateController::$user['seminaryroles'])) > 0) : ?><li><a href="<?=$linker->link(array('quests','index',$seminary['url']))?>"><?=_('Show Quests')?></a></li><?php endif ?>
 </nav>
 <?php endif ?>
 <p><?=\hhu\z\Utils::t($seminary['description'])?></p>
-
 <?php foreach($questgroupshierarchy as &$hierarchy) : ?>
 <h2><?=$hierarchy['title_plural']?></h2>
 <ul class="questgroups cf">

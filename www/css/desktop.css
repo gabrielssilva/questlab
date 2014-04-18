@@ -56,7 +56,7 @@ table{border-collapse:collapse;border-spacing:0}
 .wrap{margin:0 5%;max-height:999999px;min-height:1px}
 
 a{color:#50a4ab;text-decoration:none}
-a:hover{color:#5bbac2}
+a:hover{color:#62c5cd}
 .fa{padding:0 10px 0 0}
 .fwb{font-weight:700}
 
@@ -102,6 +102,7 @@ aside{display:none}
 .qgicon{margin:17px 0 0 -39px;background:#f7f5f2;font-size:1.25em;float:left}
 .qgicon.locked{margin-top:-2px}
 .qgtitle a{background:#5cb6bd;border-radius:3px 3px 0 0;display:block;padding:20px;color:#fff;font-weight:700}
+.qgtitle a:hover{background:#62c5cd}
 .qgprogress,.qghidden{margin-bottom:4px;padding:20px 20px 4px 20px;background:#fff;border-radius:0 0 3px 3px}
 
 .qglist li{margin: 0 0 5px 0}
@@ -112,7 +113,7 @@ aside{display:none}
 
 #qtextbox{font-size:.875em;border-radius:5px;background:#fff;border:15px solid #fff;height:200px;overflow:hidden}
 .qtext{padding-right:15px}
-.qtext img{float:right;margin-left:15px;max-width:30%;border-radius:3px}
+.qtext img,.grpqimg{float:right;margin-left:15px;max-width:30%;border-radius:3px}
 
 .xpinfo{display:none}
 .xpbar{width:60%;float:left;height:10px;position:relative;background:#eee;border-radius:25px;margin:8px 0 16px}
@@ -125,6 +126,9 @@ aside{display:none}
 
 input[type="submit"][disabled]{text-shadow:1px 2px #d48c4e;background:#f9ac69;border-color:#d48c4e}
 
+.admin li{margin:0 0 15px 0;display:inline-block}
+.admin li a{padding:4px 15px;background:#5cb6bd;border-bottom:2px solid #50a0a6;color:#fff;border-radius:3px}
+.admin li a:hover{background:#62c5cd}
 
 /** Login & Registration **/
 
@@ -162,12 +166,19 @@ input[type="submit"][disabled]{text-shadow:1px 2px #d48c4e;background:#f9ac69;bo
 .ctopics .xpbar span{background:#50a4ab}
 
 
+/** Charactergroup List **/
+
+.cglist li{list-style-type:decimal;background:#fff;margin:0 0 6px 25px;padding:5px 15px;border-radius:3px}
+.cglist .xp{float:right}
+.cgqlist li{list-style-type:square;margin-left:25px;padding:2px 15px}
+
 /** Charactergroup Profile **/
 
-.gdata{margin-top:20px}
-.gdata img{border-radius:3px;margin-bottom:15px}
-.gdata h1{margin:0;padding:0}
-.gdata .fa{color:#aca8a1}
+.gbanner img{margin-top:10px;border-radius:3px}
+.gbanner h1{margin:10px 0 5px 0}
+
+.gdata{margin:20px 0 40px 0}
+.gdata li{float:left;background:#fff;padding:5px 15px;margin:0 5px 5px 0;border-radius:3px}
 
 .gchars li{background:#fff;padding:15px 0;border-radius:3px;float:left;margin-bottom:5px;width:49%}
 .gchars li:nth-child(even){float:right}
@@ -179,6 +190,14 @@ input[type="submit"][disabled]{text-shadow:1px 2px #d48c4e;background:#f9ac69;bo
 .gquests li:nth-child(odd){background:#fff}
 .gquests .date{color:#aca8a1;display:block}
 .gquests .xp{display:block}
+
+
+/** Charactergroup Quest **/
+
+.grpqlist li{background:#fff;margin-bottom:6px;padding:5px 15px 5px 0;font-size:.875em;border-radius:3px}
+.grpqlist .date{padding:0 15px;border-right:1px solid #dad8d5}
+.grpqlist .group{padding:0 15px}
+.grpqlist .xp{float:right}
 
 
 /** Achievements **/
@@ -227,9 +246,9 @@ input[type="submit"][disabled]{text-shadow:1px 2px #d48c4e;background:#f9ac69;bo
 .cinfo{float:left;width:70%}
 .cportrait{float:right;width:25%}
 
-.gdata .gbanner{float:left;min-width:100px}
-.gdata .gdesc{float:left;width:75%}
-.gdata ul{clear:both}
+.gbanner img{float:left;margin:20px 20px 0 0}
+.gbanner h1{margin:25px 0 2px}
+
 .gchars li{width:32%;margin-right:5px}
 .gchars li:nth-child(even){float:left}
 
@@ -241,10 +260,6 @@ input[type="submit"][disabled]{text-shadow:1px 2px #d48c4e;background:#f9ac69;bo
 @media only screen and (min-width:768px){
 .xpbar{width:70%}
 
-.gdata{margin-top:40px}
-.gdata .gdesc{width:60%}
-.gdata li{font-size:.875em;padding-bottom:5px}
-.gdata ul{clear:none;float:right;width:20%;margin:0;padding:0}
 .gchars li{width:19%}
 
 .gquests .date{display:inline;margin-right:15px}
@@ -269,7 +284,7 @@ menu a{padding:10px 0}
 #toggle,.toggle{display:none}
 .wrap{margin:0 0 0 300px}
 article{padding:20px 40px 80px 40px}
-.moodpic{margin:-20px -40px}
+.moodpic{margin:-20px -40px 0 -40px}
 .breadcrumbs li{display:inline;padding-right:10px}
 
 .gchars li{width:19%}
@@ -280,7 +295,7 @@ html{overflow-y:scroll;height:100%}
 body{background:#eae8e4;height:100%}
 .wrap{width:800px;max-width:800px;height:auto !important;min-height:100%;height:100%;position:relative;overflow:hidden}
 article{background:#f7f5f2;float:left}
-.moodpic{margin:-20px 0 0 -40px;width:880px;height:230px}
+.moodpic{width:880px;height:230px}
 .moodpic img{width:100%}
 }
 

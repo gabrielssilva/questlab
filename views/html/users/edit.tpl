@@ -1,7 +1,7 @@
 <h1><?=_('Users')?></h1>
 <h2><?=_('Edit user')?></h2>
 
-<form method="post">
+<form method="post" class="logreg">
 	<fieldset>
 		<label for="username"><?=_('Username')?>:</label>
 		<input type="text" name="username" placeholder="<?=_('Username')?>" value="<?=$user['username']?>" /><br />

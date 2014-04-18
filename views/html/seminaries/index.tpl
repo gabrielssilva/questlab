@@ -1,6 +1,6 @@
 <h1><?=_('Seminaries')?></h1>
 <?php if(count(array_intersect(array('admin','moderator'),\hhu\z\controllers\IntermediateController::$user['roles'])) > 0) : ?>
-<nav>
+<nav class="admin">
 	<li><a href="<?=$linker->link('create', 1)?>"><?=_('Create new seminary')?></a></li>
 </nav>
 <?php endif ?>
