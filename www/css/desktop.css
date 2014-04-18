@@ -30,7 +30,7 @@ sub{bottom:-.25em}
 svg:not(:root){overflow:hidden}
 figure{margin:0}
 fieldset{border:0;margin:0;padding:0}
-legend{border:0;padding:0}
+legend{border:0;padding:0;margin-bottom:15px}
 button,input,select,textarea{font-family:inherit;font-size:100%;margin:0}
 button,input{line-height:normal}
 button,select{text-transform:none}
@@ -237,6 +237,10 @@ input[type="submit"][disabled]{text-shadow:1px 2px #d48c4e;background:#f9ac69;bo
 
 
 /** Quest Types **/
+
+.mchoice li{margin-bottom:10px}
+.mchoice input[type=checkbox]{width:8%;float:left;margin-top:6px}
+.mchoice label{width:92%;float:right}
 
 .crossword table{width:100%;max-width:800px;border-spacing:2px;border-collapse:separate}
 .crossword td{background:#d7d4cf;padding:1px}

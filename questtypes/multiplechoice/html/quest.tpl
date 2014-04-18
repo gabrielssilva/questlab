@@ -1,10 +1,10 @@
 <form method="post">
 	<fieldset>
-		<legend><?=sprintf(_('Question %d of %d'), $pos, $count)?></legend>
-		<p><?=\hhu\z\Utils::t($question['question'])?></p>
-		<ol>
+		<legend><?=sprintf(_('Question %d of %d'), $pos, $count)?>:</legend>
+		<p class="fwb"><?=\hhu\z\Utils::t($question['question'])?></p>
+		<ol class="mchoice">
 			<?php foreach($question['answers'] as $i => &$answer) : ?>
-			<li>
+			<li class="cf">
 				<input type="checkbox" id="answers[<?=$i?>]" name="answers[<?=$i?>]" value="true" <?=(array_key_exists('useranswer', $answer) && $answer['useranswer']) ? 'checked="checked"' : '' ?> />
 				<label for="answers[<?=$i?>]"><?=$t->t($answer['answer'])?></label>
 			</li>
