@@ -74,10 +74,10 @@
 			
 			foreach($params as $param)
 			{
-				// Mask special signs seperately
+				// Delete critical signs
 				$specials = array('/', '?', '&');
 				foreach($specials as &$special) {
-					$param = str_replace($special, rawurlencode($special), $param);
+					$param = str_replace($special, '', $param);
 				}
 				
 				// Process parameter
