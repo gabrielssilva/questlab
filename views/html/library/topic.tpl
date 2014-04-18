@@ -18,11 +18,13 @@
 <h2>Quests zu diesem Thema:</h2>
 <ul class="libtop">
 	<?php foreach($quests as &$quest) : ?>
-	<li class="cf">
+	<li>
 		<p><a href="<?=$linker->link(array('quests','quest',$seminary['url'],$quest['questgroup']['url'],$quest['url']))?>"><?=$quest['title']?></a></p>
-		<?php foreach($quest['subtopics'] as &$subtopic) : ?>
-		<p class="addon"><?=$subtopic['title']?></p>
-		<?php endforeach ?>
+		<ul class="addon">
+			<?php foreach($quest['subtopics'] as &$subtopic) : ?>
+			<li><?=$subtopic['title']?></li>
+			<?php endforeach ?>
+		</ul>
 	</li>
 	<?php endforeach ?>
 </ul>

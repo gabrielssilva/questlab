@@ -149,7 +149,7 @@ input[type="submit"][disabled]{text-shadow:1px 2px #d48c4e;background:#f9ac69;bo
 .cdata .value{font-size:1.5em;margin:0;padding-top:8px}
 
 .crewards li{background:#fff;margin-bottom:5px;padding:15px 15px 1px 15px;border-radius:3px;font-size:.875em}
-.crewards li:last{margin-bottom:0}
+.crewards li:last-child{margin-bottom:0}
 .crewards li .fa{font-size:1.25em}
 .crewards .locked{color:#aca8a1;padding:10px;}
 
@@ -230,8 +230,10 @@ input[type="submit"][disabled]{text-shadow:1px 2px #d48c4e;background:#f9ac69;bo
 .libindx .xpbar{width:100%;margin:0}
 
 .libtop li{background:#fff;padding:5px 5px 5px 10px;border-radius:3px;margin-bottom:6px}
-.libtop p{margin-bottom:6px}
-.libtop .addon{float:left;margin-right:5px;padding:2px 5px;border-radius:3px;background:#f7f5f2;font-size:.875em}
+.libtop p{margin-bottom:2px}
+.libtop .addon li{display:inline;font-size:.875em;padding:0}
+.libtop .addon li:after{content:", "}
+.libtop .addon li:last-child:after{content: ""}
 
 
 /** Quest Types **/
@@ -294,9 +296,6 @@ input[type="submit"][disabled]{text-shadow:1px 2px #d48c4e;background:#f9ac69;bo
 .libindx li{float:left;width:32%;margin-right:2%}
 .libindx li:nth-child(2n){float:left}
 .libindx li:nth-child(3n){margin-right:0}
-
-.libtop p{float:left;margin-bottom:0}
-.libtop .addon{float:right;margin:0 0 0 5px}
 
 .bossfight li{float:left;width:44%}
 .bossfight li:nth-child(even){float:right}
