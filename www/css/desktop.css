@@ -92,7 +92,7 @@ aside{display:none}
 .moodpic img{width:100vw}
 
 .breadcrumbs li{display:block;font-size:.875em}
-.breadcrumbs .fa{padding-right:5px;font-size:.75em}
+.breadcrumbs .fa{padding-right:5px;font-size:.75em;color:#989693}
 
 .questgroups li{margin:0 0 25px 0;border-radius:3px;overflow:hidden}
 .questgroups img{display:block;width:100%;}
@@ -162,7 +162,7 @@ input[type="submit"][disabled]{text-shadow:1px 2px #d48c4e;background:#f9ac69;bo
 .cranks img{float:left;margin-right:15px;width:50px;height:50px;border-radius:25px}
 .cranks p,.ctopics p{margin:0;padding:0}
 
-.ctopics .xpbar{background:#e4e1dd}
+.ctopics .xpbar,.ltopics .xpbar{background:#e4e1dd}
 .ctopics .xpbar span{background:#50a4ab}
 
 
@@ -217,6 +217,23 @@ input[type="submit"][disabled]{text-shadow:1px 2px #d48c4e;background:#f9ac69;bo
 .achmnts .xpnumeric{margin:0}
 
 
+/** Library **/
+
+.libindxpr{margin:20px 0}
+.libindxpr p{font-weight:bold;margin:0}
+.libindxpr .xpbar{float:none;margin:9px 0 20px 0;background:#e4e1dd;width:100%}
+.libindxpr .xpbar span{background:#50a4ab}
+
+.libindx li{text-align:center;background:#fff;border-radius:3px;margin:0 0 15px 0;padding:15px;-webkit-box-sizing:border-box;-moz-box-sizing:border-box;box-sizing:border-box}
+.libindx i{margin-bottom:15px;font-size:1.25em;padding:0}
+.libindx .ltopc{overflow:hidden;text-overflow:ellipsis}
+.libindx .xpbar{width:100%;margin:0}
+
+.libtop li{background:#fff;padding:5px 5px 5px 10px;border-radius:3px;margin-bottom:6px}
+.libtop p{margin-bottom:6px}
+.libtop .addon{float:left;margin-right:5px;padding:2px 5px;border-radius:3px;background:#f7f5f2;font-size:.875em}
+
+
 /** Quest Types **/
 
 .crossword table{width:100%;max-width:800px;border-spacing:2px;border-collapse:separate}
@@ -254,6 +271,10 @@ input[type="submit"][disabled]{text-shadow:1px 2px #d48c4e;background:#f9ac69;bo
 
 .achmnts .xpbar{width:89%}
 
+.libindx li{float:left;width:49%}
+.libindx li:nth-child(2n){float:right}
+.libindx .ltopc{height:80px}
+
 .opponent .hero{max-width:200px}
 }
 
@@ -270,6 +291,13 @@ input[type="submit"][disabled]{text-shadow:1px 2px #d48c4e;background:#f9ac69;bo
 .achmnts .desc{padding-top:0}
 .achmnts .unlcked{font-size:.75em;float:right;margin:-6px -4px 0 0;color:#878787}
 
+.libindx li{float:left;width:32%;margin-right:2%}
+.libindx li:nth-child(2n){float:left}
+.libindx li:nth-child(3n){margin-right:0}
+
+.libtop p{float:left;margin-bottom:0}
+.libtop .addon{float:right;margin:0 0 0 5px}
+
 .bossfight li{float:left;width:44%}
 .bossfight li:nth-child(even){float:right}
 .bossfight input,.bossfight p{text-align:center}
@@ -285,7 +313,7 @@ menu a{padding:10px 0}
 .wrap{margin:0 0 0 300px}
 article{padding:20px 40px 80px 40px}
 .moodpic{margin:-20px -40px 0 -40px}
-.breadcrumbs li{display:inline;padding-right:10px}
+.breadcrumbs li{display:inline;padding-right:5px}
 
 .gchars li{width:19%}
 }
