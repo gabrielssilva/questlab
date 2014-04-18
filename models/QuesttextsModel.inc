@@ -150,6 +150,71 @@
 			);
 		}
 		
+		
+		/**
+		 * Get a Questtexttype by its URL.
+		 * 
+		 * @param	string	$questtexttypeUrl	URL-type of Questtexttype
+		 * @return	array				Questtexttype data
+		 */
+		public function getQuesttexttypeByUrl($questtexttypeUrl)
+		{
+			$data = $this->db->query(
+				'SELECT id, type, url '.
+				'FROM questtexttypes '.
+				'WHERE url = ?',
+				's',
+				$questtexttypeUrl
+			);
+			if(!empty($data)) {
+				return $data[0];
+			}
+			
+			
+			return null;
+		}
+		
+		
+		/**
+		 * Add a list of Questtexts to a Quest.
+		 * 
+		 * @param	int	$userId			ID of user
+		 * @param	int	$questId		ID of Quest to add texts to
+		 * @param	string	$questtexttypeUrl	URL-type of Questtexttype of texts
+		 * @param	array	$texts			List of texts to add.
+		 */
+		public function addQuesttextsToQuest($userId, $questId, $questtexttypeUrl, $texts)
+		{
+			$questtexttype = $this->getQuesttexttypeByUrl($questtexttypeUrl);
+			if(is_null($questtexttype)) {
+				return;
+			}
+			foreach($texts as &$text)
+			{
+				$pos = $this->db->query(
+					'SELECT COALESCE(MAX(pos),0)+1 AS pos '.
+					'FROM questtexts '.
+					'WHERE quest_id = ?',
+					'i',
+					$questId
+				);
+				$pos = $pos[0]['pos'];
+				
+				$this->db->query(
+					'INSERT INTO questtexts '.
+					'(created_user_id, quest_id, questtexttype_id, pos, text) '.
+					'VALUES '.
+					'(?, ?, ?, ?, ?)',
+					'iiiis',
+					$userId, $questId, $questtexttype['id'], $pos,
+					$text
+				);
+			}
+		}
+		
+		
+		
+		
 	}
 
 ?>

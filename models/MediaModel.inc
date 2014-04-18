@@ -134,6 +134,62 @@
 			return $data[0];
 		}
 		
+		
+		/**
+		 * Create a new Questsmedia by creating a new Seminarymedia and
+		 * adding it to the list of Questsmedia.
+		 * TODO Currently only temporary for easier data import.
+		 */
+		public function createQuestMedia($userId, $seminaryId, $filename, $description, $mimetype, $tmpFilename)
+		{
+			$uploadId = false;
+			$this->db->setAutocommit(false);
+			
+			try {
+				// Create database record
+				$this->db->query(
+					'INSERT INTO seminarymedia '.
+					'(created_user_id, seminary_id, name, url, description, mimetype) '.
+					'VALUES '.
+					'(?, ? ,? ,?, ?, ?)',
+					'iissss',
+					$userId,
+					$seminaryId,
+					$filename,
+					\nre\core\Linker::createLinkParam($filename),
+					$description,
+					$mimetype
+				);
+				$uploadId = $this->db->getInsertId();
+				
+				$this->db->query(
+					'INSERT INTO questsmedia '.
+					'(media_id, created_user_id) '.
+					'VALUES '.
+					'(?, ?)',
+					'ii',
+					$uploadId,
+					$userId
+				);
+			
+				// Create filename
+				$filename = ROOT.DS.'seminarymedia'.DS.$uploadId;
+				if(!move_uploaded_file($tmpFilename, $filename))
+				{
+					$this->db->rollback();
+					$uploadId = false;
+				}
+			}
+			catch(\nre\exceptions\DatamodelException $e) {
+				$this->db->rollback();
+				$this->db->setAutocommit(true);
+			}
+			
+			
+			$this->db->setAutocommit(true);
+			return $uploadId;
+		}
+		
 	}
 
 ?>

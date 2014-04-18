@@ -448,6 +448,7 @@
 				// TODO Validation
 				$name = $this->request->getPostParam('name');
 				$xps = $this->request->getPostParam('xps');
+				$prolog = $this->request->getPostParam('prolog');
 				$entrytext = $this->request->getPostParam('entrytext');
 				$wrongtext = $this->request->getPostParam('wrongtext');
 				$task = $this->request->getPostParam('task');
@@ -478,6 +479,17 @@
 					throw new \nre\exceptions\ParamsNotValidException($questtype);
 				}
 				
+				// Questmedia
+				$questmedia = null;
+				if(array_key_exists('questmedia', $_FILES) && !empty($_FILES['questmedia']) && $_FILES['questmedia']['error'] == 0) {
+					$questmedia = $_FILES['questmedia'];
+				}
+				
+				// Process Prolog
+				if(!empty($prolog)) {
+					$prolog = preg_split('/\s*(_|=){5,}\s*/', $prolog, -1, PREG_SPLIT_NO_EMPTY);
+				}
+				
 				// Create new Quest
 				if($validation === true)
 				{
@@ -492,6 +504,28 @@
 						$task
 					);
 					
+					// Create Questmedia
+					if(!is_null($questmedia))
+					{
+						$questsmediaId = $this->Quests->createQuestMedia(
+							$this->Auth->getUserId(),
+							$seminary['id'],
+							$questmedia['name'],
+							$name,
+							$questmedia['type'],
+							$questmedia['tmp_name']
+						);
+						if($questsmediaId > 0) {
+							$this->Quests->setQuestmedia($questId, $questsmediaId);
+						}
+					}
+					
+					// Add Prolog-texts
+					if(!empty($prolog)) {
+						$this->Questtexts->addQuesttextsToQuest($this->Auth->getUserId(), $questId, 'Prolog', $prolog);
+					}
+					
+					
 					// Redirect
 					$this->redirect($this->linker->link(array('quests', 'index', $seminary['url'])));
 				}
@@ -502,6 +536,46 @@
 			$this->set('seminary', $seminary);
 			$this->set('questgroups', $questgroups);
 			$this->set('questtypes', $questtypes);
+		}
+		
+		
+		/**
+		 * Action: createmedia.
+		 * TODO only temporary for easier data import.
+		 * 
+		 * Display a form for creating new Seminary media.
+		 * 
+		 * @param	string	$seminaryUrl	URL-title of Seminary
+		 */
+		public function createmedia($seminaryUrl)
+		{
+			// Get seminary
+			$seminary = $this->Seminaries->getSeminaryByUrl($seminaryUrl);
+			
+			// Create media
+			$mediaId = null;
+			$error = null;
+			if($this->request->getRequestMethod() == 'POST' && !is_null($this->request->getPostParam('submit')))
+			{
+				$file = $_FILES['file'];
+				$error = $file['error'];
+				if(empty($error))
+				{
+					$mediaId = $this->Media->createQuestMedia(
+						$this->Auth->getUserId(),
+						$seminary['id'],
+						$file['name'],
+						$this->request->getPostParam('description'),
+						$file['type'],
+						$file['tmp_name']
+					);
+				}
+			}
+			
+			
+			// Pass data to view
+			$this->set('seminary', $seminary);
+			$this->set('mediaid', $mediaId);
 		}
 		
 		

@@ -436,6 +436,25 @@
 			return $this->db->getInsertId();
 		}
 		
+		
+		/**
+		 * Set the media for a Quest.
+		 * 
+		 * @param	int	$questId	ID of Quest to set media for
+		 * @param	int	$questmediaId	ID of Questsmedia to set
+		 */
+		public function setQuestmedia($questId, $questsmediaId)
+		{
+			$this->db->query(
+				'UPDATE quests '.
+				'SET questsmedia_id = ? '.
+				'WHERE id = ?',
+				'ii',
+				$questsmediaId,
+				$questId
+			);
+		}
+		
 	}
 
 ?>
