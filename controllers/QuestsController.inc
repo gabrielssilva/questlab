@@ -147,46 +147,49 @@
 			$character = $this->Characters->getCharacterForUserAndSeminary($this->Auth->getUserId(), $seminary['id']);
 			
 			// Check permissions
-			$previousQuests = $this->Quests->getPreviousQuests($quest['id']);
-			if(count($previousQuests) == 0)
+			if(count(array_intersect(array('admin','moderator'), IntermediateController::$user['seminaryroles'])) == 0)
 			{
-				// Previous Questgroup
-				$previousQuestgroup = $this->Questgroups->getPreviousQuestgroup($questgroup['id']);
-				if(!is_null($previousQuestgroup) && !$this->Questgroups->hasCharacterSolvedQuestgroup($previousQuestgroup['id'], $character['id'])) {
-					throw new \nre\exceptions\AccessDeniedException();
-				}
-			}
-			else
-			{
-				// Previous Quests
-				// One previous Quest has to be solved and no other
-				// following Quests of ones has to be tried
-				$solved = false;
-				$tried = false;
-				foreach($previousQuests as &$previousQuest)
+				$previousQuests = $this->Quests->getPreviousQuests($quest['id']);
+				if(count($previousQuests) == 0)
 				{
-					// // Check previous Quest
-					if($this->Quests->hasCharacterSolvedQuest($previousQuest['id'], $character['id']))
-					{
-						$solved = true;
-						
-						// Check following Quests
-						$followingQuests = $this->Quests->getNextQuests($previousQuest['id']);
-						foreach($followingQuests as $followingQuest)
-						{
-							// Check following Quest
-							if($followingQuest['id'] != $quest['id'] && $this->Quests->hasCharacterTriedQuest($followingQuest['id'], $character['id']))
-							{
-								$tried = true;
-								break;
-							}
-						}
-						
-						break;
+					// Previous Questgroup
+					$previousQuestgroup = $this->Questgroups->getPreviousQuestgroup($questgroup['id']);
+					if(!is_null($previousQuestgroup) && !$this->Questgroups->hasCharacterSolvedQuestgroup($previousQuestgroup['id'], $character['id'])) {
+						throw new \nre\exceptions\AccessDeniedException();
 					}
 				}
-				if(!$solved || $tried) {
-					throw new \nre\exceptions\AccessDeniedException();
+				else
+				{
+					// Previous Quests
+					// One previous Quest has to be solved and no other
+					// following Quests of ones has to be tried
+					$solved = false;
+					$tried = false;
+					foreach($previousQuests as &$previousQuest)
+					{
+						// // Check previous Quest
+						if($this->Quests->hasCharacterSolvedQuest($previousQuest['id'], $character['id']))
+						{
+							$solved = true;
+						
+							// Check following Quests
+							$followingQuests = $this->Quests->getNextQuests($previousQuest['id']);
+							foreach($followingQuests as $followingQuest)
+							{
+								// Check following Quest
+								if($followingQuest['id'] != $quest['id'] && $this->Quests->hasCharacterTriedQuest($followingQuest['id'], $character['id']))
+								{
+									$tried = true;
+									break;
+								}
+							}
+						
+							break;
+						}
+					}
+					if(!$solved || $tried) {
+						throw new \nre\exceptions\AccessDeniedException();
+					}
 				}
 			}
 			
@@ -270,7 +273,7 @@
 			$nextQuests = null;
 			$charactedHasChoosenNextQuest = false;
 			$nextQuestgroup = null;
-			if($questtexttypeUrl == 'Epilog' || $this->Questtexts->getQuesttextCountOfQuest($quest['id'], 'Epilog') == 0)
+			if($questtexttypeUrl == 'Epilog' || ($solved && $this->Questtexts->getQuesttextCountOfQuest($quest['id'], 'Epilog') == 0) || count(array_intersect(array('admin','moderator'), IntermediateController::$user['seminaryroles'])) > 0)
 			{
 				// Next Quest
 				$nextQuests = $this->Quests->getNextQuests($quest['id']);

@@ -55,21 +55,21 @@
 <section>
 	<?php if(!is_null($task)) : ?>
 	<h1 id="task"><?=_('Task')?></h1>
-	<p><?=\hhu\z\Utils::t($quest['task'])?></p>
+	<p><?=$t->t($quest['task'])?></p>
 	<?=$task?>
-	<?php endif ?>
 	
-	<?php if($solved && !is_null($task)) : ?>
-	<p><?=_('Task already successfully solved')?>:</p>
-	<?php endif ?>
+	<?php if($solved) : ?>
+	<p><?=_('Task already successfully solved')?>:
 	<ul>
-		<?php if(!is_null($task)) : ?>
-			<li><a href="<?=$linker->link(null,0,false,array('show-answer'=>'true'),true,'task')?>"><?=_('Show answer')?></a></li>
-			<li><a href="<?=$linker->link('Epilog',5)?>"><?=_('Skip Quest')?></a></l>
-		<?php elseif(count($nextquests) == 0) : ?>
-			<li><a href="<?=$linker->link('Epilog',5)?>"><?=_('continue')?></a></l>
-		<?php endif ?>
+		<li><a href="<?=$linker->link(null,0,false,array('show-answer'=>'true'),true,'task')?>"><?=_('Show answer')?></a></li>
+		<li><a href="<?=$linker->link('Epilog',5)?>"><?=_('Skip Quest')?></a></l>
 	</ul>
+	<?php endif ?>
+	<?php else : ?>
+	<?php if(count($nextquests) == 0) : ?>
+	<p><a href="<?=$linker->link('Epilog',5)?>"><?=_('continue')?></a></p>
+	<?php endif ?>
+	<?php endif ?>
 </section>
 <?php endif ?>
 

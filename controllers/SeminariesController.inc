@@ -115,7 +115,7 @@
 				foreach($hierarchy['questgroups'] as $i => &$questgroup)
 				{
 					// Check permission of Questgroups
-					if($i >= 1)
+					if($i >= 1 && count(array_intersect(array('admin','moderator'), IntermediateController::$user['seminaryroles'])) == 0)
 					{
 						if(!$this->Questgroups->hasCharacterSolvedQuestgroup($hierarchy['questgroups'][$i-1]['id'], $character['id']))
 						{

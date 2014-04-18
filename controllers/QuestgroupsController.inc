@@ -71,10 +71,13 @@
 			$character = $this->Characters->getCharacterForUserAndSeminary($this->Auth->getUserId(), $seminary['id']);
 			
 			// Check permission
-			$previousQuestgroup = $this->Questgroups->getPreviousQuestgroup($questgroup['id']);
-			if(!is_null($previousQuestgroup)) {
-				if(!$this->Questgroups->hasCharacterSolvedQuestgroup($previousQuestgroup['id'], $character['id'])) {
-					throw new \nre\exceptions\AccessDeniedException();
+			if(count(array_intersect(array('admin','moderator'), IntermediateController::$user['seminaryroles'])) == 0)
+			{
+				$previousQuestgroup = $this->Questgroups->getPreviousQuestgroup($questgroup['id']);
+				if(!is_null($previousQuestgroup)) {
+					if(!$this->Questgroups->hasCharacterSolvedQuestgroup($previousQuestgroup['id'], $character['id'])) {
+						throw new \nre\exceptions\AccessDeniedException();
+					}
 				}
 			}
 			
@@ -92,7 +95,7 @@
 					foreach($hierarchy['questgroups'] as $i => &$group)
 					{
 						// Check permission of Questgroups
-						if($i >= 1)
+						if($i >= 1 && count(array_intersect(array('admin','moderator'), IntermediateController::$user['seminaryroles'])) == 0)
 						{
 							if(!$this->Questgroups->hasCharacterSolvedQuestgroup($hierarchy['questgroups'][$i-1]['id'], $character['id']))
 							{
@@ -163,7 +166,7 @@
 						$quests[] = $currentQuest;
 					}
 				}
-				while(!is_null($currentQuest) && $currentQuest['solved']);
+				while(!is_null($currentQuest) && ($currentQuest['solved'] || count(array_intersect(array('admin','moderator'), IntermediateController::$user['seminaryroles'])) > 0));
 			}
 			
 			
