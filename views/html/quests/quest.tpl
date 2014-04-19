@@ -40,14 +40,10 @@
 </section>
 <?php endif ?>
 
-<?php if(!is_null($queststatustext)) : ?>
+<?php if(!is_null($queststatus) && $queststatus == 'unsolved') : ?>
 <section>
-	<?php if($queststatus == 'solved') : ?>
-	<h1><?=_('solved')?></h1>
-	<?php elseif($queststatus == 'unsolved') : ?>
 	<h1><?=_('unsolved')?></h1>
-	<?php endif ?>
-	<p><?=\hhu\z\Utils::t($queststatustext)?></p>
+	<p><?=\hhu\z\Utils::t($quest['wrong_text'])?></p>
 </section>
 <?php endif ?>
 
@@ -61,14 +57,14 @@
 	<?php if($solved) : ?>
 	<p><?=_('Task already successfully solved')?>:
 	<ul>
+		<?php if($solved) : ?>
 		<li><a href="<?=$linker->link(null,0,false,array('show-answer'=>'true'),true,'task')?>"><?=_('Show answer')?></a></li>
-		<li><a href="<?=$linker->link('Epilog',5)?>"><?=_('Skip Quest')?></a></l>
+		<li><a href="<?=$linker->link('Epilog',5)?>"><?=_('Skip task')?></a></l>
+		<?php endif ?>
 	</ul>
 	<?php endif ?>
-	<?php else : ?>
-	<?php if(count($nextquests) == 0) : ?>
+	<?php elseif($hasEpilog) : ?>
 	<p><a href="<?=$linker->link('Epilog',5)?>"><?=_('continue')?></a></p>
-	<?php endif ?>
 	<?php endif ?>
 </section>
 <?php endif ?>
@@ -109,8 +105,6 @@
 	</ul>
 	<?php elseif(!is_null($nextquestgroup)) : ?>
 	<a href="<?=$linker->link(array('questgroups','questgroup',$seminary['url'],$nextquestgroup['url']))?>"><?=$nextquestgroup['hierarchy']['title_singular']?> <?=$nextquestgroup['hierarchy']['questgroup_pos']?>: <?=$nextquestgroup['title']?></a>
-	<?php else : ?>
-	Spiel vorbei
 	<?php endif ?>
 </section>
 <?php endif ?>

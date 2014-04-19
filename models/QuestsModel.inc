@@ -70,7 +70,7 @@
 		public function getQuestByUrl($seminaryId, $questgroupId, $questUrl)
 		{
 			$data = $this->db->query(
-				'SELECT quests.id, quests.questgroup_id, quests.questtype_id, quests.title, quests.url, quests.xps, quests.entry_text, quests.task, quests.right_text, quests.wrong_text, quests.questsmedia_id '.
+				'SELECT quests.id, quests.questgroup_id, quests.questtype_id, quests.title, quests.url, quests.xps, quests.entry_text, quests.task, quests.wrong_text, quests.questsmedia_id '.
 				'FROM quests '.
 				'LEFT JOIN questgroups ON questgroups.id = quests.questgroup_id '.
 				'WHERE questgroups.seminary_id = ? AND questgroups.id = ? AND quests.url = ?',
@@ -96,7 +96,7 @@
 		public function getQuestById($questId)
 		{
 			$data = $this->db->query(
-				'SELECT quests.id, quests.questgroup_id, quests.questtype_id, quests.title, quests.url, quests.xps, quests.entry_text, quests.task, quests.right_text, quests.wrong_text, quests.questsmedia_id '.
+				'SELECT quests.id, quests.questgroup_id, quests.questtype_id, quests.title, quests.url, quests.xps, quests.entry_text, quests.task, quests.wrong_text, quests.questsmedia_id '.
 				'FROM quests '.
 				'LEFT JOIN questgroups ON questgroups.id = quests.questgroup_id '.
 				'WHERE quests.id = ?',
@@ -306,7 +306,7 @@
 		public function getLastQuestForCharacter($characterId)
 		{
 			$data = $this->db->query(
-				'SELECT quests.id, quests.questgroup_id, quests.questtype_id, quests.title, quests.url, quests.xps, quests.task, quests.right_text, quests.wrong_text, quests.questsmedia_id '.
+				'SELECT quests.id, quests.questgroup_id, quests.questtype_id, quests.title, quests.url, quests.xps, quests.task, quests.wrong_text, quests.questsmedia_id '.
 				'FROM quests_characters '.
 				'LEFT JOIN quests ON quests.id = quests_characters.quest_id '.
 				'WHERE quests_characters.character_id = ? AND quests_characters.status IN (?, ?, ?) '.
@@ -334,7 +334,7 @@
 		public function getQuestsForSeminary($seminaryId)
 		{
 			return $this->db->query(
-				'SELECT DISTINCT quests.id, quests.questgroup_id, quests.questtype_id, quests.title, quests.url, quests.xps, quests.task, quests.right_text, quests.wrong_text, quests.questsmedia_id '.
+				'SELECT DISTINCT quests.id, quests.questgroup_id, quests.questtype_id, quests.title, quests.url, quests.xps, quests.task, quests.wrong_text, quests.questsmedia_id '.
 				'FROM questgroups '.
 				'INNER JOIN quests ON quests.questgroup_id = questgroups.id '.
 				'WHERE questgroups.seminary_id = ?',
@@ -353,7 +353,7 @@
 		public function getQuestsForQuesttopic($questtopicId)
 		{
 			return $this->db->query(
-				'SELECT DISTINCT quests.id, quests.questgroup_id, quests.questtype_id, quests.title, quests.url, quests.xps, quests.task, quests.right_text, quests.wrong_text, quests.questsmedia_id '.
+				'SELECT DISTINCT quests.id, quests.questgroup_id, quests.questtype_id, quests.title, quests.url, quests.xps, quests.task, quests.wrong_text, quests.questsmedia_id '.
 				'FROM quests_questsubtopics '.
 				'INNER JOIN quests ON quests.id = quests_questsubtopics.quest_id '.
 				'WHERE quests_questsubtopics.questsubtopic_id = ?',

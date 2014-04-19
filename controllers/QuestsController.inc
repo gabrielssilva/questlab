@@ -139,7 +139,6 @@
 				$questgroup['picture'] = $this->Media->getSeminaryMediaById($questgroup['questgroupspicture_id']);
 			}
 			
-			
 			// Get Quest
 			$quest = $this->Quests->getQuestByUrl($seminary['id'], $questgroup['id'], $questUrl);
 			
@@ -210,7 +209,6 @@
 				$questtexttypeUrl = 'Prolog';
 			}
 			$questtexttypes = $this->Questtexts->getQuesttexttypes();
-			//$questtexttypesUrls = array_map(function($t) { return $t['url']; }, $questtexttypes);
 			if(($questtexttypeIndex = array_search($questtexttypeUrl, array_map(function($t) { return $t['url']; }, $questtexttypes))) === false) {
 				throw new ParamsNotValidException($questtexttypeUrl);
 			}
@@ -227,21 +225,11 @@
 				$questtext['relatedQuestsgroups'] = $this->Questgroups->getRelatedQuestsgroupsOfQuesttext($questtext['id']);
 			}
 			
+			// Has Epilog?
+			$hasEpilog = ($this->Questtexts->getQuesttextCountOfQuest($quest['id'], 'Epilog') > 0);
+			
 			// Quest status
 			$questStatus = $this->request->getGetParam('status');
-			$questStatusText = null;
-			if(!is_null($questStatus))
-			{
-				switch($questStatus)
-				{
-					case 'solved':
-						$questStatusText = $quest['right_text'];
-					break;
-					case 'unsolved':
-						$questStatusText = $quest['wrong_text'];
-					break;
-				}
-			}
 			
 			// Quest media
 			$questmedia = null;
@@ -273,7 +261,7 @@
 			$nextQuests = null;
 			$charactedHasChoosenNextQuest = false;
 			$nextQuestgroup = null;
-			if($questtexttypeUrl == 'Epilog' || ($solved && $this->Questtexts->getQuesttextCountOfQuest($quest['id'], 'Epilog') == 0) || count(array_intersect(array('admin','moderator'), IntermediateController::$user['seminaryroles'])) > 0)
+			if($questtexttypeUrl == 'Epilog' || (is_null($questtype['classname']) && !$hasEpilog))
 			{
 				// Next Quest
 				$nextQuests = $this->Quests->getNextQuests($quest['id']);
@@ -310,9 +298,9 @@
 			$this->set('questgroup', $questgroup);
 			$this->set('questtexttype', $questtexttype);
 			$this->set('questtexts', $questtexts);
+			$this->set('hasEpilog', $hasEpilog);
 			$this->set('quest', $quest);
 			$this->set('queststatus', $questStatus);
-			$this->set('queststatustext', $questStatusText);
 			$this->set('relatedquesttext', $relatedQuesttext);
 			$this->set('nextquests', $nextQuests);
 			$this->set('charactedHasChoosenNextQuest', $charactedHasChoosenNextQuest);
