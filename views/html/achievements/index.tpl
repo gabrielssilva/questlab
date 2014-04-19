@@ -7,7 +7,7 @@
 	<li><a href="<?=$linker->link(array('seminaries',$seminary['url']))?>"><?=$seminary['title']?></a></li>
 </ul>
 <h1><i class="fa fa-trophy fa-fw"></i><?=_('Achievements')?></h1>
-<p>Errungenschaften sind Auszeichnungen für deine Erfolge im Verlauf der Reise. Sie dienen als historische Erinnerungen an Meilensteine, besondere Taten und interessante oder lustige Ereignisse, die du erlebst.</p>
+<p><?=_('Achievement description')?></p>
 <div class="cf">
 	<section class="rare">
 		<h2><?=_('Seldom Achievements')?></h2>
@@ -42,11 +42,11 @@
 		</ol>
 	</section>
 </div>
-<h2>Deine Errungenschaften</h2>
+<h2><?=_('Personal Achievements')?></h2>
 <div class="libindxpr cf">
 	<p><small><?=sprintf(_('Own progress: %d %%'), round(count($achievedAchievements) / (count($achievedAchievements)+count($unachievedAchievements)) * 100))?></small></p>
 	<div class="xpbar">
-		<span style="width:77%"></span>
+		<span style="width:<?=round(count($achievedAchievements) / (count($achievedAchievements)+count($unachievedAchievements)) * 100)?>%"></span>
 	</div>
 </div>
 <p><small><b><?=$character['rank']?>. <?=_('Rank')?>:</b> <?=sprintf(_('You achieved %d of %d Achievements so far'), count($achievedAchievements), count($achievedAchievements)+count($unachievedAchievements))?>.</small></p>
