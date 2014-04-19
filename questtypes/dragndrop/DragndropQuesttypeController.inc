@@ -79,13 +79,17 @@
 			// Get Drag&Drop field
 			$dndField = $this->Dragndrop->getDragndrop($quest['id']);
 			
-			// Get Drops
-			$drops = $this->Dragndrop->getDrops($dndField['quest_id']);
+			// Get Drags
+			$drags = $this->Dragndrop->getDrags($dndField['quest_id'], true);
 			
-			// Match drops with user answers
-			foreach($drops as &$drop)
+			// Match drags with user answers
+			foreach($drags as &$drag)
 			{
-				if(!array_key_exists($drop['id'], $answers) || intval(substr($answers[$drop['id']], 4)) !== $drop['questtypes_dragndrop_drag_id']) {
+				$founds = array_keys($answers, 'drag'.$drag['id']);
+				if(count($founds) != 1) {
+					return false;
+				}
+				if(!$this->Dragndrop->dragMatchesDrop($drag['id'], $founds[0])) {
 					return false;
 				}
 			}

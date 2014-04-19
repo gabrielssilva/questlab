@@ -56,7 +56,7 @@
 		public function getDrops($dragndropId)
 		{
 			return $this->db->query(
-				'SELECT id, top, `left`, width, height, questtypes_dragndrop_drag_id '.
+				'SELECT id, top, `left`, width, height '. //, questtypes_dragndrop_drag_id '.
 				'FROM questtypes_dragndrop_drops '.
 				'WHERE questtypes_dragndrop_id = ?',
 				'i',
@@ -69,17 +69,51 @@
 		 * Get Drag-items.
 		 * 
 		 * @param	int	$dragndropId	ID of Drag&Drop-field
+		 * @param	boolean	$onlyUsed	Only Drag-items that are used for a Drop-item
 		 * @return	array			Drag-items
 		 */
-		public function getDrags($dragndropId)
+		public function getDrags($dragndropId, $onlyUsed=false)
 		{
 			return $this->db->query(
 				'SELECT id, questmedia_id '.
 				'FROM questtypes_dragndrop_drags '.
-				'WHERE questtypes_dragndrop_id = ?',
+				'WHERE questtypes_dragndrop_id = ?'.
+				($onlyUsed
+					? ' AND EXISTS ('.
+						'SELECT questtypes_dragndrop_drag_id '.
+						'FROM questtypes_dragndrop_drops_drags '.
+						'WHERE questtypes_dragndrop_drag_id = questtypes_dragndrop_drags.id'.
+					')'
+					: null
+				),
 				'i',
 				$dragndropId
 			);
+		}
+		
+		
+		/**
+		 * Check if a Drag-item mathes a Drop-item.
+		 * 
+		 * @param	int	$dragId	ID of Drag-field
+		 * @param	int	$dropId	ID of Drop-field
+		 * @return	boolean	Drag-item is valid for Drop-item
+		 */
+		public function dragMatchesDrop($dragId, $dropId)
+		{
+			$data = $this->db->query(
+				'SELECT count(*) AS c '.
+				'FROM questtypes_dragndrop_drops_drags '.
+				'WHERE questtypes_dragndrop_drop_id = ? AND questtypes_dragndrop_drag_id = ?',
+				'ii',
+				$dropId, $dragId
+			);
+			if(!empty($data)) {
+				return ($data[0]['c'] > 0);
+			}
+			
+			
+			return false;
 		}
 		
 		
