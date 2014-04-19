@@ -61,17 +61,17 @@
 			$string = nl2br(htmlspecialchars($string));
 			
 			// Handle Seminarymedia
-			preg_match_all('/\[seminarymedia:(\d+)\]/iu', $string, $matches, PREG_SET_ORDER | PREG_OFFSET_CAPTURE);
-			foreach($matches as &$match)
+			$seminarymedia = array();
+			preg_match_all('/\[seminarymedia:(\d+)\]/iu', $string, $matches); //, PREG_SET_ORDER | PREG_OFFSET_CAPTURE);
+			$seminarymediaIds = array_unique($matches[1]);
+			foreach($seminarymediaIds as &$seminarymediaId)
 			{
-				// Get Seminary media
-				$seminarymediaId = intval($match[1][0]);
-				$htmlImage = null;
+				$replacement = null;
 				if(!is_null(\hhu\z\controllers\SeminaryRoleController::$seminary) && $this->loadMediaModel())
 				{
 					try {
 						$medium = self::$Media->getSeminaryMediaById($seminarymediaId);
-						$htmlImage = sprintf(
+						$replacement = sprintf(
 							'<img src="%s" alt="%s" />',
 							$this->linker->link(array('media','seminary', \hhu\z\controllers\SeminaryRoleController::$seminary['url'],$medium['url'])),
 							$medium['description']
@@ -81,10 +81,10 @@
 					}
 				}
 				
-				// Replace placholder
-				$startPos = mb_strlen(substr($string, 0, $match[0][1]), 'UTF-8');
-				$endPos = $startPos + mb_strlen($match[0][0]);
-				$string = mb_substr($string, 0, $startPos, 'UTF-8'). $htmlImage . mb_substr($string, $endPos, null, 'UTF-8');
+				$seminarymedia[$seminarymediaId] = $replacement;
+			}
+			foreach($seminarymedia as $seminarymediaId => $replacement) {
+				$string = str_replace("[seminarymedia:$seminarymediaId]", $replacement, $string);
 			}
 			
 			
