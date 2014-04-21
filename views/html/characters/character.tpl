@@ -33,9 +33,9 @@
 			<?php foreach($achievements as &$achievement) : ?>
 			<li>
 				<?php if(!is_null($achievement['achieved_achievementsmedia_id'])) : ?>
-				<a href="#" title="Achievement-Titel"><img src="<?=$linker->link(array('media','achievement',$seminary['url'],$achievement['url']))?>"></a>
+				<a href="<?=$linker->link(array('achievements','index',$seminary['url']),0,true,null,true,$achievement['url'])?>" title="Achievement-Titel"><img src="<?=$linker->link(array('media','achievement',$seminary['url'],$achievement['url']))?>"></a>
 				<?php endif ?>
-				<p><a href="#"><?=$achievement['title']?></a></p>
+				<p><a href="<?=$linker->link(array('achievements','index',$seminary['url']),0,true,null,true,$achievement['url'])?>"><?=$achievement['title']?></a></p>
 				<p><small><?=sprintf(_('achieved at: %s'), $dateFormatter->format(new \DateTime($achievement['created'])))?></small></p>
 			</li>
 			<?php endforeach ?>

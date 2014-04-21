@@ -56,8 +56,8 @@
 		<?php if(!is_null($achievement['achieved_achievementsmedia_id'])) : ?>
 		<img src="<?=$linker->link(array('media','achievement',$seminary['url'],$achievement['url']))?>" />
 		<?php endif ?>
+		<h3 id="<?=$achievement['url']?>"><?=$achievement['title']?></h3>
 		<p class="fwb">
-			<?=$achievement['title']?>
 			<span class="unlcked"><?=sprintf(_('achieved at: %s'), $dateFormatter->format(new \DateTime($achievement['created'])))?></span>
 		</p>
 		<p class="desc"><?=\hhu\z\Utils::t($achievement['description'])?></p>
@@ -68,9 +68,7 @@
 		<?php if(!is_null($achievement['unachieved_achievementsmedia_id'])) : ?>
 		<img src="<?=$linker->link(array('media','achievement',$seminary['url'],$achievement['url']))?>" />
 		<?php endif ?>
-		<p class="fwb">
-			<?=(!$achievement['hidden']) ? $achievement['title'] : _('Secret Achievement')?>
-		</p>
+		<h3 id="<?=$achievement['url']?>"><?=(!$achievement['hidden']) ? $achievement['title'] : _('Secret Achievement')?></h3>
 		<?php if(!$achievement['hidden']) : ?>
 		<p class="desc"><?=\hhu\z\Utils::t($achievement['description'])?></p>
 		<?php else : ?>

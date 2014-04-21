@@ -22,9 +22,9 @@
 	<ul class="cranks">
 		<li>
 			<?php if(!is_null($lastAchievement['achieved_achievementsmedia_id'])) : ?>
-			<a href="#" title="Achievement-Titel"><img src="<?=$linker->link(array('media','achievement',$seminary['url'],$lastAchievement['url']))?>"></a>
+			<a href="<?=$linker->link(array('achievements','index',$seminary['url']),0,true,null,true,$lastAchievement['url'])?>" title="Achievement-Titel"><img src="<?=$linker->link(array('media','achievement',$seminary['url'],$lastAchievement['url']))?>"></a>
 			<?php endif ?>
-			<p><a href="#"><?=$lastAchievement['title']?></a></p>
+			<p><a href="<?=$linker->link(array('achievements','index',$seminary['url']),0,true,null,true,$lastAchievement['url'])?>"><?=$lastAchievement['title']?></a></p>
 			<p><small><?=sprintf(_('achieved at: %s'), $dateFormatter->format(new \DateTime($lastAchievement['created'])))?></small></p>
 		</li>
 	</ul>
