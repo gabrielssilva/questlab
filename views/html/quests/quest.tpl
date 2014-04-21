@@ -10,9 +10,6 @@
 <?php if(count($questtexts) > 0) : ?>
 <section>
 	<h1 id="questtext"><?=$questtexttype['type']?></h1>
-	
-	
-	
 	<div id="qtextbox">
 		<?php $mediaShown = false; ?>
 		<?php foreach($questtexts as &$questtext) : ?>
@@ -40,10 +37,15 @@
 </section>
 <?php endif ?>
 
-<?php if(!is_null($queststatus) && $queststatus == 'unsolved') : ?>
+<?php if(!is_null($queststatus)) : ?>
 <section>
+	<?php if($queststatus == 'solved') : ?>
+	<h1><?=_('solved')?></h1>
+	<p><?=sprintf(_('Quest completed. You have earned %d XPs.'), $quest['xps'])?></p>
+	<?php elseif($queststatus == 'unsolved') : ?>
 	<h1><?=_('unsolved')?></h1>
 	<p><?=\hhu\z\Utils::t($quest['wrong_text'])?></p>
+	<?php endif ?>
 </section>
 <?php endif ?>
 
@@ -71,6 +73,7 @@
 
 <?php if(!is_null($nextquests) || !is_null($nextquestgroup)) : ?>
 <section>
+	<h1><?=_('Continuation')?></h1>
 	<?php if(count($nextquests) > 0) : ?>
 	<ul>
 		<?php foreach($nextquests as &$nextquest) : ?>

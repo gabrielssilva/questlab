@@ -39,7 +39,7 @@
 <?php endforeach ?>
 <?php endif ?>
 
-<?php if(isset($quests) && !is_null($quests)) : ?>
+<?php if(isset($quests) && !is_null($quests) && count($quests) > 0) : ?>
 <h3><?=_('Quests')?></h3>
 <ul class="qglist">
 	<?php foreach($quests as &$quest) : ?>

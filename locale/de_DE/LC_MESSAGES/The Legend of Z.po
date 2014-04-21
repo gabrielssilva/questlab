@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: The Legend of Z\n"
-"POT-Creation-Date: 2014-04-19 23:22+0100\n"
-"PO-Revision-Date: 2014-04-19 23:22+0100\n"
+"POT-Creation-Date: 2014-04-21 21:12+0100\n"
+"PO-Revision-Date: 2014-04-21 21:12+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de_DE\n"
@@ -83,12 +83,12 @@ msgid "submitted at %s on %s h"
 msgstr "eingereicht am %s um %s Uhr"
 
 #: questtypes/submit/html/submission.tpl:6
-#: questtypes/submit/html/submission.tpl:8
+#: questtypes/submit/html/submission.tpl:8 views/html/quests/quest.tpl:43
 #: views/html/quests/submissions.tpl:33
 msgid "solved"
 msgstr "gelöst"
 
-#: questtypes/submit/html/submission.tpl:9 views/html/quests/quest.tpl:45
+#: questtypes/submit/html/submission.tpl:9 views/html/quests/quest.tpl:46
 #: views/html/quests/submissions.tpl:24
 msgid "unsolved"
 msgstr "ungelöst"
@@ -372,7 +372,7 @@ msgstr ""
 msgid "Wrong text"
 msgstr ""
 
-#: views/html/quests/create.tpl:37 views/html/quests/quest.tpl:53
+#: views/html/quests/create.tpl:37 views/html/quests/quest.tpl:55
 msgid "Task"
 msgstr "Aufgabe"
 
@@ -392,23 +392,32 @@ msgstr "Filter anwenden"
 msgid "Reset filters"
 msgstr "Filter zurücksetzen"
 
-#: views/html/quests/quest.tpl:58
+#: views/html/quests/quest.tpl:44
+#, php-format
+msgid "Quest completed. You have earned %d XPs."
+msgstr "Quest abgeschlossen. Du hast %d XPs erhalten."
+
+#: views/html/quests/quest.tpl:60
 msgid "Task already successfully solved"
 msgstr "Du hast die Aufgabe bereits erfolgreich gelöst"
 
-#: views/html/quests/quest.tpl:61
+#: views/html/quests/quest.tpl:63
 msgid "Show answer"
 msgstr "Lösung anzeigen"
 
-#: views/html/quests/quest.tpl:62
+#: views/html/quests/quest.tpl:64
 msgid "Skip task"
 msgstr "Aufgabe überspringen"
 
-#: views/html/quests/quest.tpl:67
+#: views/html/quests/quest.tpl:69
 msgid "continue"
 msgstr "fortfahren"
 
-#: views/html/quests/quest.tpl:79 views/html/quests/quest.tpl:92
+#: views/html/quests/quest.tpl:76
+msgid "Continuation"
+msgstr "Fortsetzung"
+
+#: views/html/quests/quest.tpl:82 views/html/quests/quest.tpl:95
 msgid "Quest"
 msgstr "Quest"
 
