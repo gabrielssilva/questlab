@@ -268,8 +268,8 @@ input[type="submit"][disabled]{text-shadow:1px 2px #d48c4e;background:#f9ac69;bo
 /** Media Queries **/
 
 @media only screen and (min-width:480px){
-.questgroups li,.ctopics li,.fll48{width:48%;float:left}
-.questgroups li:nth-child(even),.ctopics li:nth-child(even),.flr48{width:48%;float:right}
+.questgroups li,.ctopics li,.fll48{width:48%;display:inline-block;margin-right:2%}
+.questgroups li:nth-child(even),.ctopics li:nth-child(even),.flr48{width:48%;display:inline-block;margin-right:0;vertical-align:top}
 .xpinfo{display:inline-block;float:left;padding-right:20px}
 .xpbar{width:50%}
 

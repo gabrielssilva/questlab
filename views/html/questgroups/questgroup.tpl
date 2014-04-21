@@ -44,17 +44,15 @@
 <ul class="qglist">
 	<?php foreach($quests as &$quest) : ?>
 	<li class="qgtitle">
-		<a href="<?=$linker->link(array('quests','quest',$seminary['url'],$questgroup['url'],$quest['url']))?>" <?php if($quest['solved']) : ?>class="solved"<?php endif ?>><i class="fa <?=($quest['solved']) ? 'fa-check-square-o' : 'fa-share-square-o'?> fa-fw"></i><?=$quest['title']?></a>
-		<?php if(count($quest['relatedQuestgroups']) > 0) : ?>
-		<ul class="gplist">
-			<?php foreach($quest['relatedQuestgroups'] as &$relatedQuestgroup) : ?>
-			<li class="qgtitle">
-				<a href="<?=$linker->link(array('questgroups','questgroup',$seminary['url'],$relatedQuestgroup['url']))?>" class="bonus"><i class="fa fa-share-square-o fa-fw"><?=$relatedQuestgroup['title']?></i></a>
-			</li>
-			<?php endforeach ?>
-		</ul>
-		<?php endif ?>
+		<a href="<?=$linker->link(array('quests','quest',$seminary['url'],$questgroup['url'],$quest['url']))?>" <?php if($quest['solved']) : ?>class="solved"<?php endif ?>><i class="fa <?=($quest['solved']) ? 'fa-check-square-o' : 'fa-square-o'?> fa-fw"></i><?=$quest['title']?></a>
 	</li>
+	<?php if(count($quest['relatedQuestgroups']) > 0) : ?>
+		<?php foreach($quest['relatedQuestgroups'] as &$relatedQuestgroup) : ?>
+		<li class="qgtitle">
+			<a href="<?=$linker->link(array('questgroups','questgroup',$seminary['url'],$relatedQuestgroup['url']))?>" class="bonus"><i class="fa fa-share-square-o fa-fw"><?=$relatedQuestgroup['title']?></i></a>
+		</li>
+		<?php endforeach ?>
+	<?php endif ?>
 	<?php endforeach ?>
 </ul>
 <?php endif ?>

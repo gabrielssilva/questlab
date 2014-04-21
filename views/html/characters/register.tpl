@@ -6,7 +6,7 @@
 <h1><?=$seminary['title']?></h1>
 <h2><?=_('Create Character')?></h2>
 
-<form method="post" action="">
+<form method="post" action="" class="logreg">
 	<?php if($validation !== true) : ?>
 	<ul>
 		<?php foreach($validation as $field => &$settings) : ?>
