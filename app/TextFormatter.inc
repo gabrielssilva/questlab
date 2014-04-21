@@ -57,8 +57,22 @@
 		 */
 		public function t($string)
 		{
-			// Remove chars and replace linefeeds
-			$string = nl2br(htmlspecialchars($string));
+			// Remove chars
+			$string = htmlspecialchars($string, ENT_NOQUOTES);
+			
+			// Create tables
+			$string = str_replace('[table]', '</p><table>', $string);
+			$string = str_replace('[/table]', '</table><p>', $string);
+			$string = str_replace('[tr]', '<tr>', $string);
+			$string = str_replace('[/tr]', '</tr>', $string);
+			$string = str_replace('[th]', '<th>', $string);
+			$string = str_replace('[/th]', '</th>', $string);
+			$string = str_replace('[td]', '<td>', $string);
+			$string = str_replace('[/td]', '</td>', $string);
+			
+			// Create links
+			$string = preg_replace('!(^|\s)"([^"]+)":(https?://[^\s]+)(\s|$)!i', '$1<a href="$3">$2</a>$4', $string);
+			$string = preg_replace('!(^|\s)(https?://[^\s]+)(\s|$)!i', '$1<a href="$2">$2</a>$4', $string);
 			
 			// Handle Seminarymedia
 			$seminarymedia = array();
@@ -89,7 +103,7 @@
 			
 			
 			// Return processed string
-			return $string;
+			return nl2br($string);
 		}
 		
 		
