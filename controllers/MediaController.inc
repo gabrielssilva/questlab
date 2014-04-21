@@ -1,0 +1,432 @@
+<?php
+
+	/**
+	 * The Legend of Z
+	 *
+	 * @author	Oliver Hanraths <oliver.hanraths@uni-duesseldorf.de>
+	 * @copyright	2014 Heinrich-Heine-Universität Düsseldorf
+	 * @license	http://www.gnu.org/licenses/gpl.html
+	 * @link	https://bitbucket.org/coderkun/the-legend-of-z
+	 */
+	
+	namespace hhu\z\controllers;
+	
+	
+	/**
+	 * Controller of the MediaAgent to process and show Media.
+	 * 
+	 * @author	Oliver Hanraths <oliver.hanraths@uni-duesseldorf.de>
+	 */
+	class MediaController extends \hhu\z\controllers\SeminaryRoleController
+	{
+		/**
+		 * User permissions
+		 * 
+		 * @var array
+		 */
+		public $permissions = array(
+			'index' 		=> array('admin', 'moderator', 'user', 'guest'),
+			'seminaryheader'	=> array('admin', 'moderator', 'user'),
+			'seminary' 		=> array('admin', 'moderator', 'user'),
+			'avatar'		=> array('admin', 'moderator', 'user'),
+			'achievement'		=> array('admin', 'moderator', 'user')
+		);
+		/**
+		 * User seminary permissions
+		 * 
+		 * @var array
+		 */
+		public $seminaryPermissions = array(
+			'seminary' 	=> array('admin', 'moderator', 'user', 'guest'),
+			'achievement'	=> array('admin', 'moderator', 'user', 'guest')
+		);
+		/**
+		 * Required models
+		 * 
+		 * @var array
+		 */
+		public $models = array('seminaries', 'achievements', 'media', 'avatars');
+		
+		
+		
+		
+		/**
+		 * Prefilter.
+		 * 
+		 * @param	Request		$request	Current request
+		 * @param	Response	$response	Current response
+		 */
+		public function preFilter(\nre\core\Request $request, \nre\core\Response $response)
+		{
+			parent::preFilter($request, $response);
+			
+			// Set headers for caching control
+			$response->addHeader("Pragma: public");
+			$response->addHeader("Cache-control: public, max-age=".(60*60*24));
+			$response->addHeader("Expires: ".gmdate('r', time()+(60*60*24)));
+			$response->addHeader("Date: ".gmdate(\DateTime::RFC822));
+		}
+		
+		
+		/**
+		 * Action: index
+		 * 
+		 * Display a medium.
+		 * 
+		 * @param	string	$mediaUrl	URL-name of the medium
+		 * @param	string	$action		Action for processing the media
+		 */
+		public function index($mediaUrl, $action=null)
+		{
+			// Get Media
+			$media = $this->Media->getMediaByUrl($mediaUrl);
+			
+			// Get file
+			$file = $this->getMediaFile($media, $action);
+			if(is_null($media)) {
+				return;
+			}
+			
+			
+			// Pass data to view
+			$this->set('media', $media);
+			$this->set('file', $file);
+		}
+		
+		
+		/**
+		 * Action: seminaryheader
+		 * 
+		 * Display the header of a Seminary.
+		 * 
+		 * @throws	IdNotFoundException
+		 * @param	string	$seminaryUrl	URL-title of the Seminary
+		 * @param	string	$action		Action for processing the media
+		 */
+		public function seminaryheader($seminaryUrl, $action=null)
+		{
+			// Get Seminary
+			$seminary = $this->Seminaries->getSeminaryByUrl($seminaryUrl);
+			
+			// Get media
+			$media = $this->Media->getSeminaryMediaById($seminary['seminarymedia_id']);
+			
+			// Get file
+			$file = $this->getMediaFile($media, $action);
+			if(is_null($file)) {
+				return;
+			}
+			
+			
+			// Pass data to view
+			$this->set('media', $media);
+			$this->set('file', $file);
+		}
+		
+		
+		/**
+		 * Action: seminary.
+		 * 
+		 * Display a Seminary medium.
+		 * 
+		 * @throws	IdNotFoundException
+		 * @param	string	$seminaryUrl	URL-title of the Seminary
+		 * @param	string	$mediaUrl	URL-name of the medium
+		 * @param	string	$action		Action for processing the media
+		 */
+		public function seminary($seminaryUrl, $mediaUrl, $action=null)
+		{
+			// Get Seminary
+			$seminary = $this->Seminaries->getSeminaryByUrl($seminaryUrl);
+			
+			// Get Media
+			$media = $this->Media->getSeminaryMediaByUrl($seminary['id'], $mediaUrl);
+			
+			// Get file
+			$file = $this->getMediaFile($media, $action);
+			if(is_null($file)) {
+				return;
+			}
+			
+			
+			// Pass data to view
+			$this->set('media', $media);
+			$this->set('file', $file);
+		}
+		
+		
+		/**
+		 * Action: avatar.
+		 * 
+		 * Display an Avatar as full size or portrait.
+		 * 
+		 * @throws	ParamsNotValidException
+		 * @throws	IdNotFoundException
+		 * @param	string	$seminaryUrl		URL-title of the Seminary
+		 * @param	string	$charactertypeUrl	URL-title of Character type
+		 * @param	int	$xplevel		XP-level
+		 * @param	string	$action			Size to show (avatar or portrait)
+		 */
+		public function avatar($seminaryUrl, $charactertypeUrl, $xplevel, $action='avatar')
+		{
+			// Get Seminary
+			$seminary = $this->Seminaries->getSeminaryByUrl($seminaryUrl);
+			
+			// Get Avatar
+			$avatar = $this->Avatars->getAvatarByTypeAndLevel($seminary['id'], $charactertypeUrl, $xplevel);
+			
+			// Get media
+			switch($action)
+			{
+				case null:
+				case 'avatar':
+					$media = $this->Media->getSeminaryMediaById($avatar['avatarpicture_id']);
+					$file = $this->getMediaFile($media, 'avatar');
+				break;
+				case 'portrait':
+					$media = $this->Media->getSeminaryMediaById($avatar['small_avatarpicture_id']);
+					$file = $this->getMediaFile($media);
+				break;
+				default:
+					throw new \nre\exceptions\ParamsNotValidException($action);
+				break;
+			}
+			
+			// Get file
+			if(is_null($file)) {
+				return;
+			}
+			
+			
+			// Pass data to view
+			$this->set('media', $media);
+			$this->set('file', $file);
+		}
+		
+		
+		/**
+		 * Action: achievement
+		 * 
+		 * Display the achievement of a Seminary.
+		 * 
+		 * @throws	IdNotFoundException
+		 * @param	string	$seminaryUrl	URL-title of the Seminary
+		 * @param	string	$achievementUrl	URL-title of the Achievement
+		 * @param	string	$action		Action for processing the media
+		 */
+		public function achievement($seminaryUrl, $achievementUrl)
+		{
+			// Get Seminary
+			$seminary = $this->Seminaries->getSeminaryByUrl($seminaryUrl);
+			
+			// Get Character
+			$character = SeminaryRoleController::$character;
+			
+			// Get Achievement
+			$achievement = $this->Achievements->getAchievementByUrl($seminary['id'], $achievementUrl);
+			
+			// Get media
+			$index = '';
+			if(is_null($character) || !$this->Achievements->hasCharacterAchievedAchievement($achievement['id'], $character['id'])) {
+				$index = 'unachieved_achievementsmedia_id';
+			}
+			else {
+				$index = 'achieved_achievementsmedia_id';
+			}
+			if(is_null($achievement[$index])) {
+				throw new \nre\exceptions\IdNotFoundException($achievementUrl);
+			}
+			$media = $this->Media->getSeminaryMediaById($achievement[$index]);
+			
+			// Get file
+			$file = $this->getMediaFile($media, null);
+			if(is_null($file)) {
+				return;
+			}
+			
+			
+			// Pass data to view
+			$this->set('media', $media);
+			$this->set('file', $file);
+		}
+		
+		
+		
+		
+		/**
+		 * Determine file information and set the HTTP-header for
+		 * caching accordingly.
+		 * 
+		 * @param	string	$fileName	Filename
+		 * @return	boolean			HTTP-status 304 was set (in cache)
+		 */
+		private function setCacheHeaders($fileName)
+		{
+			// Determine last change of file
+			$fileLastModified = gmdate('r', filemtime($fileName));
+			
+			// Generate E-Tag
+			$fileEtag = hash('sha256', $fileLastModified.$fileName);
+			
+			
+			// Set header
+			$this->response->addHeader("Last-Modified: ".$fileLastModified);
+			$this->response->addHeader("Etag: ".$fileEtag);
+			// HTTP-status
+			$headerModifiedSince = $this->request->getServerParam('HTTP_IF_MODIFIED_SINCE');
+			$headerNoneMatch = $this->request->getServerParam('HTTP_IF_NONE_MATCH');
+			if(
+				!is_null($headerModifiedSince) && $fileLastModified < strtotime($headerModifiedSince) &&
+				!is_null($headerNoneMatch) && $headerNoneMatch == $fileEtag
+			) {
+				$this->response->setExit(true);
+				$this->response->addHeader(\nre\core\WebUtils::getHttpHeader(304));
+				
+				return true;
+			}
+			
+			
+			return false;
+		}
+		
+		
+		/**
+		 * Determine the file for a medium and process it if necessary.
+		 * 
+		 * @throws	IdNotFoundException
+		 * @throws	ParamsNotValidException
+		 * @param	array	$media	Medium to get file for
+		 * @param	string	$action	Action for processing the media
+		 * @return	object		File for the medium (or null if medium is cached)
+		 */
+		private function getMediaFile($media, $action=null)
+		{
+			// Get format
+			$format = explode('/', $media['mimetype']);
+			$format = $format[1];
+			
+			// Set content-type
+			$this->response->addHeader("Content-type: ".$media['mimetype']."");
+			
+			// Set filename
+			$media['filename'] = ROOT.DS.\nre\configs\AppConfig::$dirs['seminarymedia'].DS.$media['id'];
+			if(!file_exists($media['filename'])) {
+				throw new \nre\exceptions\IdNotFoundException($mediaUrl);
+			}
+			
+			// Cache
+			if($this->setCacheHeaders($media['filename'])) {
+				return null;
+			}
+			
+			// Load and process file
+			$file = null;
+			switch($action)
+			{
+				// No action
+				case null:
+					// Do not process the file
+					$file = file_get_contents($media['filename']);
+				break;
+				case 'questgroup':
+					if(!in_array(strtoupper($format), self::getImageTypes())) {
+						$file = file_get_contents($media['filename']);
+					}
+					else
+					{
+						$file = self::resizeImage(
+							$media['filename'],
+							$format,
+							\nre\configs\AppConfig::$media['questgroup']['width'],
+							\nre\configs\AppConfig::$media['questgroup']['height']
+						);
+					}
+				break;
+				case 'avatar':
+					$file = self::resizeImage(
+						$media['filename'],
+						$format,
+						\nre\configs\AppConfig::$media['avatar']['width'],
+						\nre\configs\AppConfig::$media['avatar']['height']
+					);
+				break;
+				default:
+					throw new ParamsNotValidException($action);
+				break;
+			}
+			
+			
+			// Return file
+			return $file;
+		}
+		
+		
+		/**
+		 * Get supported image types.
+		 * 
+		 * @return	array	List of supported image types
+		 */
+		private static function getImageTypes()
+		{
+			$im = new \Imagick();
+			
+			
+			return $im->queryFormats();
+		}
+		
+		
+		/**
+		 * Resize an image.
+		 * 
+		 * @param	string	$fileName	Absolute pathname of image to resize
+		 * @param	string	$mimeType	Mimetype of target image
+		 * @param	int	$width		Max. width to resize to
+		 * @param	int	$height		Max. height to resize to
+		 * @return	mixed			Resized image
+		 */
+		private static function resizeImage($fileName, $mimeType, $width, $height)
+		{
+			// Read image from cache
+			$tempFileName = ROOT.DS.\nre\configs\AppConfig::$dirs['temporary'].DS.'media-'.basename($fileName).'-'.$width.'x'.$height;
+			if(file_exists($tempFileName))
+			{
+				// Check age of file
+				if(date('r', filemtime($tempFileName)+(60*60*24)) > date('r', time())) {
+					// Too old, delete
+					unlink($tempFileName);
+				}
+				else {
+					// Valid, read and return
+					return file_get_contents($tempFileName);
+				}
+			}
+			
+			
+			// ImageMagick
+			$im = new \Imagick($fileName);
+			
+			// Calculate new size
+			$geometry = $im->getImageGeometry();
+			if($geometry['width'] < $width) {
+				$width = $geometry['width'];
+			}
+			if($geometry['height'] < $height) {
+				$height = $geometry['width'];
+			}
+			
+			// Process 
+			$im->thumbnailImage($width, $height, true);
+			$im->contrastImage(1);
+			$im->setImageFormat($mimeType);
+			
+			// Save temporary file
+			$im->writeImage($tempFileName);
+			
+			
+			// Return resized image
+			return $im;
+		}
+		
+	}
+
+?>
