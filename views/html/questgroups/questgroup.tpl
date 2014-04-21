@@ -44,7 +44,7 @@
 <ul class="qglist">
 	<?php foreach($quests as &$quest) : ?>
 	<li class="qgtitle">
-		<a href="<?=$linker->link(array('quests','quest',$seminary['url'],$questgroup['url'],$quest['url']))?>" <?php if($quest['solved']) : ?>class="solved"<?php endif ?>><i class="fa <?=($quest['solved']) ? 'fa-check-square-o' : 'fa-share-square-o'?> fa-fw"></i><?=$quest['title']?></a>
+		<a href="<?=$linker->link(array('quests','quest',$seminary['url'],$questgroup['url'],$quest['url']))?>" <?php if($quest['solved']) : ?>class="solved"<?php endif ?>><i class="fa <?=($quest['solved']) ? 'fa-check-square-o' : 'fa-square-o'?> fa-fw"></i><?=$quest['title']?></a>
 	</li>
 	<?php if(count($quest['relatedQuestgroups']) > 0) : ?>
 		<?php foreach($quest['relatedQuestgroups'] as &$relatedQuestgroup) : ?>
