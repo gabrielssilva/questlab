@@ -62,19 +62,25 @@
 			$character = SeminaryRoleController::$character;
 			
 			// Get Quest topics
+			$totalQuestcount = 0;
+			$totalCharacterQuestcount = 0;
 			$questtopics = $this->Questtopics->getQuesttopicsForSeminary($seminary['id']);
 			foreach($questtopics as &$questtopic)
 			{
 				// Get Quest count
 				$questtopic['questcount'] = $this->Questtopics->getQuestCountForQuesttopic($questtopic['id']);
+				$totalQuestcount += $questtopic['questcount'];
 				
 				// Get Character progress
 				$questtopic['characterQuestcount'] = $this->Questtopics->getCharacterQuestCountForQuesttopic($questtopic['id'], $character['id']);
+				$totalCharacterQuestcount += $questtopic['characterQuestcount'];
 			}
 			
 			
 			// Pass data to view
 			$this->set('seminary', $seminary);
+			$this->set('totalQuestcount', $totalQuestcount);
+			$this->set('totalCharacterQuestcount', $totalCharacterQuestcount);
 			$this->set('questtopics', $questtopics);
 		}
 		

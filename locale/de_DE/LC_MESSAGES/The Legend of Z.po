@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: The Legend of Z\n"
-"POT-Creation-Date: 2014-04-21 21:12+0100\n"
-"PO-Revision-Date: 2014-04-21 21:12+0100\n"
+"POT-Creation-Date: 2014-04-21 21:42+0100\n"
+"PO-Revision-Date: 2014-04-22 00:29+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de_DE\n"
@@ -147,17 +147,17 @@ msgstr "Platz"
 msgid "You achieved %d of %d Achievements so far"
 msgstr "Du hast bislang %d von insgesamt %d Errungenschaften erreicht"
 
-#: views/html/achievements/index.tpl:66 views/html/characters/character.tpl:39
+#: views/html/achievements/index.tpl:61 views/html/characters/character.tpl:39
 #: views/html/seminarybar/index.tpl:28
 #, php-format
 msgid "achieved at: %s"
 msgstr "erhalten am: %s"
 
-#: views/html/achievements/index.tpl:77
+#: views/html/achievements/index.tpl:72
 msgid "Secret Achievement"
 msgstr "Geheime Errungenschaft"
 
-#: views/html/achievements/index.tpl:82
+#: views/html/achievements/index.tpl:77
 msgid "Continue playing to unlock this secret Achievement"
 msgstr "Spiele weiter, um diesen geheimen Erfolg freizuschalten"
 
@@ -319,6 +319,20 @@ msgstr "registriere dich"
 msgid "Questtopics"
 msgstr "Themen"
 
+#: views/html/library/index.tpl:10
+#, php-format
+msgid "Library description, %s, %s"
+msgstr ""
+"Hier findest du alle Themen aus der Vorlesung „%s“ und die passenden Quests "
+"zum Nachschlagen und Wiederholen. Dein Fortschritt in „%s“ beeinflusst den "
+"Umfang der Bibliothek, spiele also regelmäßig weiter und schalte so Quest "
+"für Quest alle Inhalte frei."
+
+#: views/html/library/index.tpl:12
+#, php-format
+msgid "Total progress: %d %%"
+msgstr "Gesamtfortschritt: %d %%"
+
 #: views/html/menu/index.tpl:2 views/html/users/create.tpl:1
 #: views/html/users/delete.tpl:1 views/html/users/edit.tpl:1
 #: views/html/users/index.tpl:1 views/html/users/login.tpl:1
@@ -362,15 +376,15 @@ msgstr "Questgruppe"
 
 #: views/html/quests/create.tpl:27
 msgid "XPs"
-msgstr ""
+msgstr "XPs"
 
 #: views/html/quests/create.tpl:34
 msgid "Entry text"
-msgstr ""
+msgstr "Einstiegstext"
 
 #: views/html/quests/create.tpl:36
 msgid "Wrong text"
-msgstr ""
+msgstr "Text für falsche Antwort"
 
 #: views/html/quests/create.tpl:37 views/html/quests/quest.tpl:55
 msgid "Task"
@@ -428,7 +442,7 @@ msgstr "Lösung von %s"
 
 #: views/html/quests/submissions.tpl:15
 msgid "submitted"
-msgstr "eingereicht am %s um %s Uhr"
+msgstr "eingereicht"
 
 #: views/html/seminaries/create.tpl:7
 msgid "New seminary"
