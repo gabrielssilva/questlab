@@ -81,12 +81,13 @@
 				// Get answers
 				$userAnswers = $this->getUserAnswers($quest['id'], $question['id']);
 				$answers = $this->Multiplechoice->getAnswersOfQuestion($question['id']);
-				var_dump($userAnswers);
-				var_dump($answers);
 				
 				// Match answers with user answers
 				foreach($answers as &$answer)
 				{
+					if(is_null($answer['tick'])) {
+						continue;
+					}
 					if($answer['tick']) {
 						if(!array_key_exists($answer['pos']-1, $userAnswers)) {
 							return false;
