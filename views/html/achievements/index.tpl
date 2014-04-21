@@ -51,11 +51,6 @@
 </div>
 <p><small><b><?=$character['rank']?>. <?=_('Rank')?>:</b> <?=sprintf(_('You achieved %d of %d Achievements so far'), count($achievedAchievements), count($achievedAchievements)+count($unachievedAchievements))?>.</small></p>
 <ul class="achmnts">
-	<li class="cf">
-		<img src="http://legende-von-zyren.de/img/achieve/36b.jpg" />
-		<p class="fwb">Freigeschaltetes Achievement<span class="unlcked">erreicht am 17.06.104</span></p>
-		<p class="desc">Das Bild ist entsprechend farbig, ein eventueller Fortschrittsbalken mit 100% soll entfallen.</p>
-	</li>
 	<?php foreach($achievedAchievements as &$achievement) : ?>
 	<li class="cf">
 		<?php if(!is_null($achievement['achieved_achievementsmedia_id'])) : ?>
