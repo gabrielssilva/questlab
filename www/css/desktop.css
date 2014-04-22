@@ -111,6 +111,7 @@ aside{display:none}
 .qglist .qgtitle .solved:hover{color:#62c5cd}
 .qglist .qgtitle .solved .fa{color:#bcd75e}
 .qglist .qgtitle .bonus{background:#f5821f}
+.qglist .qgtitle .bonus:hover{background:#f68e34}
 
 #qtextbox{font-size:.875em;border-radius:5px;background:#fff;border:15px solid #fff;height:200px;overflow:hidden}
 .qtext{padding-right:15px}
