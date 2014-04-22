@@ -39,7 +39,7 @@
 
 <?php if(!is_null($queststatus)) : ?>
 <?php if($queststatus == 'solved') : ?>
-<section class="solved">
+<section class="success">
 <p class="fwb"><i class="fa fa-check-circle fa-fw"></i><?=_('solved')?></p>
 <p><small><?=sprintf(_('Quest completed. You have earned %d XPs.'), $quest['xps'])?></small></p>
 <?php elseif($queststatus == 'unsolved') : ?>
