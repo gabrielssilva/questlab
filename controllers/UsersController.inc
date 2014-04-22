@@ -117,11 +117,13 @@
 		public function login()
 		{
 			$username = '';
+			$referrer = null;
 			
 			// Log the user in
 			if($this->request->getRequestMethod() == 'POST' && !is_null($this->request->getPostParam('login')))
 			{
 				$username = $this->request->getPostParam('username');
+				$referrer = $this->request->getPostParam('referrer');
 				$userId = $this->Users->login(
 					$username,
 					$this->request->getPostParam('password')
@@ -131,14 +133,20 @@
 				{
 					$this->Auth->setUserId($userId);
 					$user = $this->Users->getUserById($userId);
-			
-					$this->redirect($this->linker->link(array($user['url']), 1));
+					
+					if(!empty($referrer)) {
+						$this->redirect($referrer);
+					}
+					else {
+						$this->redirect($this->linker->link(array($user['url']), 1));
+					}
 				}
 			}
 			
 			
 			// Pass data to view
 			$this->set('username', $username);
+			$this->set('referrer', $referrer);
 			$this->set('failed', ($this->request->getRequestMethod() == 'POST'));
 		}
 		
