@@ -4,7 +4,7 @@
 <form method="post" action="<?=$linker->link(array('users','login'))?>" class="logreg">
 	<fieldset>
 		<label for="username"><?=_('Username')?>:</label>
-		<input name="username" type="text" placeholder="<?=_('Username')?>" title="<?=_('Username')?>" required="required" /><br />
+		<input name="username" type="text" placeholder="<?=_('Username')?>" title="<?=_('Username')?>" required="required" autofocus="autofocus" /><br />
 		<label for="password"><?=_('Password')?>:</label>
 		<input name="password" type="password" placeholder="<?=_('Password')?>" title="<?=_('Password')?>" required="required" /><br />
 	</fieldset>

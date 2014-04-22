@@ -23,6 +23,8 @@
 		
 		
 		
+		
+		
 		/**
 		 * Action: index.
 		 * 
@@ -41,6 +43,7 @@
 			// Display statuscode and message
 			$this->set('code', $httpStatusCode);
 			$this->set('string', \nre\core\WebUtils::$httpStrings[$httpStatusCode]);
+			$this->set('userId', $this->Auth->getUserId());
 		}
 		
 	}
