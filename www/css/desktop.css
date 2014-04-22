@@ -241,6 +241,8 @@ input[type="submit"][disabled]{text-shadow:1px 2px #d48c4e;background:#f9ac69;bo
 .error{border:1px solid #850000;background:#ebd3d3;color:#850000}
 .success p,.error p{margin-bottom:5px}
 
+.solvdmsg{margin-top:20px}
+
 .mchoice{list-style-type:lower-alpha;list-style-position:inside}
 .mchoice li{margin:0 0 10px 0}
 .mchoice input[type=checkbox]{display:inline-block;margin:-19px 10px 0 24px;vertical-align:top}
@@ -250,7 +252,7 @@ input[type="submit"][disabled]{text-shadow:1px 2px #d48c4e;background:#f9ac69;bo
 .submit p{margin:15px 0 0 0;font-weight:bold}
 .submit ul{list-style-type:square;margin-left:20px}
 
-.textinput input[type=text]{height:16px}
+.textinput input[type=text]{height:16px;font-size:.875em}
 
 .crossword table{width:100%;max-width:800px;border-spacing:2px;border-collapse:separate}
 .crossword td{background:#d7d4cf;padding:1px}

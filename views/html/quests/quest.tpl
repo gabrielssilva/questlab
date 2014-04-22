@@ -58,13 +58,15 @@
 	<?=$task?>
 	
 	<?php if($solved) : ?>
-	<p><?=_('Task already successfully solved')?>:
-	<ul>
-		<?php if($solved) : ?>
-		<li><a href="<?=$linker->link(null,0,false,array('show-answer'=>'true'),true,'task')?>"><?=_('Show answer')?></a></li>
-		<li><a href="<?=$linker->link('Epilog',5)?>"><?=_('Skip task')?></a></l>
-		<?php endif ?>
-	</ul>
+	<div class="solvdmsg">
+		<p><?=_('Task already successfully solved')?>:
+		<nav class="admin">
+			<?php if($solved) : ?>
+			<li><a href="<?=$linker->link(null,0,false,array('show-answer'=>'true'),true,'task')?>"><?=_('Show answer')?></a></li>
+			<li><a href="<?=$linker->link('Epilog',5)?>"><?=_('Skip task')?></a></l>
+			<?php endif ?>
+		</nav>
+	</div>
 	<?php endif ?>
 	<?php elseif($hasEpilog) : ?>
 	<p><a href="<?=$linker->link('Epilog',5)?>"><?=_('continue')?></a></p>
