@@ -283,7 +283,8 @@
 				}
 				
 				// Get next Quests
-				while(!is_null($currentQuest) && $nextQuests = $this->Quests->getNextQuests($currentQuest['id']) && !empty($nextQuests))
+				$nextQuests = !is_null($currentQuest) ? $this->Quests->getNextQuests($currentQuest['id']) : null;
+				while(!is_null($currentQuest) && !empty($nextQuests))
 				{
 					// Get choosed Quest
 					$currentQuest = null;
@@ -302,6 +303,8 @@
 					if(!$this->Quests->hasCharacterSolvedQuest($currentQuest['id'], $characterId)) {
 						return false;
 					}
+					
+					$nextQuests = !is_null($currentQuest) ? $this->Quests->getNextQuests($currentQuest['id']) : null;
 				}
 			}
 			
