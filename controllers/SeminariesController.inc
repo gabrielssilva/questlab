@@ -44,8 +44,8 @@
 		 */
 		public $seminaryPermissions = array(
 			'seminary' => array('admin', 'moderator', 'user', 'guest'),
-			'edit' => array('admin', 'moderator'),
-			'delete' => array('admin', 'moderator')
+			'edit' => array('admin'),
+			'delete' => array('admin')
 		);
 		
 		
