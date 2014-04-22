@@ -94,10 +94,12 @@
 					// Get additional data
 					foreach($hierarchy['questgroups'] as $i => &$group)
 					{
+						$group['solved'] = $this->Questgroups->hasCharacterSolvedQuestgroup($group['id'], $character['id']);
+						
 						// Check permission of Questgroups
 						if($i >= 1 && count(array_intersect(array('admin','moderator'), IntermediateController::$user['seminaryroles'])) == 0)
 						{
-							if(!$this->Questgroups->hasCharacterSolvedQuestgroup($hierarchy['questgroups'][$i-1]['id'], $character['id']))
+							if(!$hierarchy['questgroups'][$i-1]['solved'])
 							{
 								$hierarchy['questgroups'] = array_slice($hierarchy['questgroups'], 0, $i);
 								break;

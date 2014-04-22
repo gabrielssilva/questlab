@@ -25,7 +25,13 @@
 <ul class="qg">
 	<?php foreach($hierarchy['questgroups'] as &$group) : ?>
 	<li class="cf">
-		<span class="qgicon"><i class="fa fa-check-square-o"></i></span>
+		<span class="qgicon">
+		<?php if($group['solved']) : ?>
+		<i class="fa fa-check-square-o"></i>
+		<?php else : ?>
+		<i class="fa fa-square-o"></i>
+		<?php endif ?>
+		</span>
 		<div class="qgtitle"><a href="<?=$linker->link(array('questgroups','questgroup',$seminary['url'],$group['url']))?>"><?=$group['title']?></a></div>
 		<div class="qgprogress cf">
 			<p class="xpinfo">Fortschritt:</p>
