@@ -237,6 +237,9 @@ input[type="submit"][disabled]{text-shadow:1px 2px #d48c4e;background:#f9ac69;bo
 
 
 /** Quest Types **/
+.solved,.error{margin-top:15px;padding:5px 15px;border:1px solid #4F8A10;background:#DFF2BF;color:#4F8A10;border-radius:3px}
+.error{border:1px solid #850000;background:#ebd3d3;color:#850000}
+.solved p,.error p{margin-bottom:5px}
 
 .mchoice{list-style-type:lower-alpha;list-style-position:inside}
 .mchoice li{margin:0 0 10px 0}
@@ -246,7 +249,6 @@ input[type="submit"][disabled]{text-shadow:1px 2px #d48c4e;background:#f9ac69;bo
 .submit{padding:15px;background:#eae8e4;border-radius:3px;margin-bottom:15px}
 .submit p{margin:15px 0 0 0;font-weight:bold}
 .submit ul{list-style-type:square;margin-left:20px}
-.error{padding:2px 5px;border:1px solid #850000;background:#ebd3d3;color:#850000;border-radius:3px}
 
 .textinput input[type=text]{height:16px}
 

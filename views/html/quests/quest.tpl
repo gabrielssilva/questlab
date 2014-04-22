@@ -38,14 +38,15 @@
 <?php endif ?>
 
 <?php if(!is_null($queststatus)) : ?>
-<section>
-	<?php if($queststatus == 'solved') : ?>
-	<h1><?=_('solved')?></h1>
-	<p><?=sprintf(_('Quest completed. You have earned %d XPs.'), $quest['xps'])?></p>
-	<?php elseif($queststatus == 'unsolved') : ?>
-	<h1><?=_('unsolved')?></h1>
-	<p><?=\hhu\z\Utils::t($quest['wrong_text'])?></p>
-	<?php endif ?>
+<?php if($queststatus == 'solved') : ?>
+<section class="solved">
+<p class="fwb"><i class="fa fa-check-circle fa-fw"></i><?=_('solved')?></p>
+<p><small><?=sprintf(_('Quest completed. You have earned %d XPs.'), $quest['xps'])?></small></p>
+<?php elseif($queststatus == 'unsolved') : ?>
+<section class="error">
+<p class="fwb"><i class="fa fa-times-circle fa-fw"></i><?=_('unsolved')?></p>
+<p><small><?=\hhu\z\Utils::t($quest['wrong_text'])?></small></p>
+<?php endif ?>
 </section>
 <?php endif ?>
 
