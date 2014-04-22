@@ -59,7 +59,7 @@
 	<?php if(count($quest['relatedQuestgroups']) > 0) : ?>
 		<?php foreach($quest['relatedQuestgroups'] as &$relatedQuestgroup) : ?>
 		<li class="qgtitle">
-			<a href="<?=$linker->link(array('questgroups','questgroup',$seminary['url'],$relatedQuestgroup['url']))?>" class="bonus"><i class="fa fa-share-square-o fa-fw"><?=$relatedQuestgroup['title']?></i></a>
+			<a href="<?=$linker->link(array('questgroups','questgroup',$seminary['url'],$relatedQuestgroup['url']))?>" class="bonus"><i class="fa fa-share-square-o fa-fw"></i><?=$relatedQuestgroup['title']?></a>
 		</li>
 		<?php endforeach ?>
 	<?php endif ?>
