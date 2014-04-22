@@ -56,10 +56,7 @@
 		<?php if(!is_null($achievement['achieved_achievementsmedia_id'])) : ?>
 		<img src="<?=$linker->link(array('media','achievement',$seminary['url'],$achievement['url']))?>" />
 		<?php endif ?>
-		<h3 id="<?=$achievement['url']?>"><?=$achievement['title']?></h3>
-		<p class="fwb">
-			<span class="unlcked"><?=sprintf(_('achieved at: %s'), $dateFormatter->format(new \DateTime($achievement['created'])))?></span>
-		</p>
+		<h3 id="<?=$achievement['url']?>"><?=$achievement['title']?><span class="unlcked"><?=sprintf(_('achieved at: %s'), $dateFormatter->format(new \DateTime($achievement['created'])))?></span></h3>
 		<p class="desc"><?=\hhu\z\Utils::t($achievement['description'])?></p>
 	</li>
 	<?php endforeach?>
