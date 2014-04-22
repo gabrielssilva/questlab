@@ -12,9 +12,11 @@
 <?php else : ?>
 <h2><?=$questgroup['title']?></h2>
 <?php endif ?>
+<div id="qtextbox">
 <?php foreach($texts as &$text) : ?>
 <p><?=\hhu\z\Utils::t($text['text'])?></p>
 <?php endforeach ?>
+</div>
 
 <?php if(!is_null($childquestgroupshierarchy)) : ?>
 <?php foreach($childquestgroupshierarchy as &$hierarchy) : ?>
