@@ -108,6 +108,7 @@ aside{display:none}
 .qglist li{margin: 0 0 5px 0}
 .qglist .qgtitle a{padding:14px;border-radius:3px}
 .qglist .qgtitle .solved{background:#fff;color:#50a4ab}
+.qglist .qgtitle .solved:hover{color:#62c5cd}
 .qglist .qgtitle .solved .fa{color:#bcd75e}
 .qglist .qgtitle .bonus{background:#f5821f}
 
