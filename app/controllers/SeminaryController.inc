@@ -140,7 +140,7 @@
 			
 			
 			// Check permissions
-			if(!array_key_exists('characterroles', self::$character) || count(array_intersect(self::$character['characterroles'], $permissions)) == 0) {
+			if(is_null(self::$character) || !array_key_exists('characterroles', self::$character) || count(array_intersect(self::$character['characterroles'], $permissions)) == 0) {
 				throw new \nre\exceptions\AccessDeniedException();
 			}
 		}
