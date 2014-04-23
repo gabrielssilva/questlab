@@ -625,7 +625,7 @@
 							$this->Quests->setQuestSubmitted($quest['id'], $character['id']);
 						
 							// Redirect
-							//$this->redirect($this->linker->link('Prolog', 5, true));
+							$this->redirect($this->linker->link('Prolog', 5, true));
 						}
 					}
 					catch(\hhu\z\exceptions\SubmissionNotValidException $e) {
