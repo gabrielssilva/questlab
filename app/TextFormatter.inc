@@ -81,13 +81,13 @@
 			foreach($seminarymediaIds as &$seminarymediaId)
 			{
 				$replacement = null;
-				if(!is_null(\hhu\z\controllers\SeminaryRoleController::$seminary) && $this->loadMediaModel())
+				if(!is_null(\hhu\z\controllers\SeminaryController::$seminary) && $this->loadMediaModel())
 				{
 					try {
 						$medium = self::$Media->getSeminaryMediaById($seminarymediaId);
 						$replacement = sprintf(
 							'<img src="%s" alt="%s" />',
-							$this->linker->link(array('media','seminary', \hhu\z\controllers\SeminaryRoleController::$seminary['url'],$medium['url'])),
+							$this->linker->link(array('media','seminary', \hhu\z\controllers\SeminaryController::$seminary['url'],$medium['url'])),
 							$medium['description']
 						);
 					}

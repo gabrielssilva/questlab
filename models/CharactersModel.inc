@@ -468,6 +468,29 @@
 			);
 		}
 		
+		
+		/**
+		 * Get Characters with the given Character role.
+		 * 
+		 * @param	int	$seminaryId		ID of Seminary
+		 * @param	string	$characterrole		Character role
+		 * @return	array				List of users
+		 */
+		public function getCharactersWithCharacterRole($seminaryId, $characterrole)
+		{
+			return $this->db->query(
+				'SELECT characters.id, characters.created, characters.charactertype_id, characters.name, characters.url, characters.user_id, characters.xps, characters.xplevel, characters.avatar_id, charactertypes.name AS charactertype_name, charactertypes.url AS charactertype_url, seminaries.id AS seminary_url, seminaries.title AS seminary_title, seminaries.url AS seminary_url '.
+				'FROM v_characters AS characters '.
+				'LEFT JOIN charactertypes ON charactertypes.id = characters.charactertype_id '.
+				'LEFT JOIN seminaries ON seminaries.id = charactertypes.seminary_id '.
+				'LEFT JOIN characters_characterroles ON characters_characterroles.character_id = characters.id '.
+				'LEFT JOIN characterroles ON characterroles.id = characters_characterroles.characterrole_id '.
+				'WHERE seminaries.id = ? AND characterroles.name = ?',
+				'is',
+				$seminaryId, $characterrole
+			);
+		}
+		
 	}
 
 ?>

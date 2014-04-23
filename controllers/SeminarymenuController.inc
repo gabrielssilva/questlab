@@ -18,7 +18,7 @@
 	 * 
 	 * @author	Oliver Hanraths <oliver.hanraths@uni-duesseldorf.de>
 	 */
-	class SeminarymenuController extends \hhu\z\controllers\SeminaryRoleController
+	class SeminarymenuController extends \hhu\z\controllers\SeminaryController
 	{
 		
 		

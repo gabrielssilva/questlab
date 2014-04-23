@@ -17,7 +17,7 @@
 	 * 
 	 * @author	Oliver Hanraths <oliver.hanraths@uni-duesseldorf.de>
 	 */
-	class MediaController extends \hhu\z\controllers\SeminaryRoleController
+	class MediaController extends \hhu\z\controllers\SeminaryController
 	{
 		/**
 		 * User permissions
@@ -220,7 +220,7 @@
 			$seminary = $this->Seminaries->getSeminaryByUrl($seminaryUrl);
 			
 			// Get Character
-			$character = SeminaryRoleController::$character;
+			$character = SeminaryController::$character;
 			
 			// Get Achievement
 			$achievement = $this->Achievements->getAchievementByUrl($seminary['id'], $achievementUrl);

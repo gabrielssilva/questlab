@@ -36,7 +36,7 @@
 		 * 
 		 * @var array
 		 */
-		public $models = array('users', 'characters', 'avatars', 'media', 'userseminaryroles');
+		public $models = array('users', 'characters', 'avatars', 'media', 'characterroles');
 		/**
 		 * Required components
 		 * 
@@ -87,8 +87,8 @@
 			foreach($characters as &$character)
 			{
 				// Seminary roles
-				$character['user_seminaryroles'] = $this->Userseminaryroles->getUserseminaryrolesForUserById(\hhu\z\controllers\IntermediateController::$user['id'], $character['seminary_id']);
-				$character['user_seminaryroles'] = array_map(function($a) { return $a['name']; }, $character['user_seminaryroles']);
+				$character['characterroles'] = $this->Characterroles->getCharacterrolesForCharacterById($character['id']);
+				$character['characterroles'] = array_map(function($a) { return $a['name']; }, $character['characterroles']);
 				
 				// Level
 				$character['xplevel'] = $this->Characters->getXPLevelOfCharacters($character['id']);

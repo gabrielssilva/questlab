@@ -20,7 +20,7 @@
 		<p><img src="<?=$linker->link(array('media','seminary',$character['seminary_url'],$character['small_avatar']['url']))?>"></p>
 		<?php endif ?>
 		<p>
-			<?php if(count($character['user_seminaryroles']) > 0) : ?>
+			<?php if(count($character['characterroles']) > 0) : ?>
 			<a href="<?=$linker->link(array('characters','character',$character['seminary_url'],$character['url']))?>"><?=$character['name']?></a>
 			<?php else : ?>
 			<?=$character['name']?>

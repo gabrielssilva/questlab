@@ -17,7 +17,7 @@
 	 * 
 	 * @author	Oliver Hanraths <oliver.hanraths@uni-duesseldorf.de>
 	 */
-	class QuestgroupsController extends \hhu\z\controllers\SeminaryRoleController
+	class QuestgroupsController extends \hhu\z\controllers\SeminaryController
 	{
 		/**
 		 * Required models
@@ -71,7 +71,7 @@
 			$character = $this->Characters->getCharacterForUserAndSeminary($this->Auth->getUserId(), $seminary['id']);
 			
 			// Check permission
-			if(count(array_intersect(array('admin','moderator'), IntermediateController::$user['seminaryroles'])) == 0)
+			if(count(array_intersect(array('admin','moderator'), SeminaryController::$character['characterroles'])) == 0)
 			{
 				$previousQuestgroup = $this->Questgroups->getPreviousQuestgroup($questgroup['id']);
 				if(!is_null($previousQuestgroup)) {
@@ -97,7 +97,7 @@
 						$group['solved'] = $this->Questgroups->hasCharacterSolvedQuestgroup($group['id'], $character['id']);
 						
 						// Check permission of Questgroups
-						if($i >= 1 && count(array_intersect(array('admin','moderator'), IntermediateController::$user['seminaryroles'])) == 0)
+						if($i >= 1 && count(array_intersect(array('admin','moderator'), SeminaryController::$character['characterroles'])) == 0)
 						{
 							if(!$hierarchy['questgroups'][$i-1]['solved'])
 							{
@@ -170,7 +170,7 @@
 						$quests[] = $currentQuest;
 					}
 				}
-				while(!is_null($currentQuest) && ($currentQuest['solved'] || count(array_intersect(array('admin','moderator'), IntermediateController::$user['seminaryroles'])) > 0));
+				while(!is_null($currentQuest) && ($currentQuest['solved'] || count(array_intersect(array('admin','moderator'), SeminaryController::$character['characterroles'])) > 0));
 			}
 			
 			

@@ -54,7 +54,7 @@
 		<?=$intermediate?>
 	</article>
 	<aside>
-		<?php if(!is_null($loggedCharacter) && count($loggedUser['seminaryroles']) > 0) : ?>
+		<?php if(!is_null($loggedCharacter) && count($loggedCharacter['characterroles']) > 0) : ?>
 		<?=$seminarybar?>
 		<?php endif ?>
 	</aside>

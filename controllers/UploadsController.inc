@@ -17,21 +17,29 @@
 	 * 
 	 * @author	Oliver Hanraths <oliver.hanraths@uni-duesseldorf.de>
 	 */
-	class UploadsController extends \hhu\z\controllers\IntermediateController
+	class UploadsController extends \hhu\z\controllers\SeminaryController
 	{
 		/**
 		 * Required models
 		 * 
 		 * @var array
 		 */
-		public $models = array('uploads', 'users', 'userroles', 'seminaries');
+		public $models = array('uploads', 'users', 'userroles', 'characterroles', 'seminaries');
 		/**
 		 * User permissions
 		 * 
 		 * @var array
 		 */
 		public $permissions = array(
-			'index' => array('admin', 'moderator', 'user', 'userseminaryroles')
+			'index' => array('admin', 'moderator', 'user', 'guest')
+		);
+		/**
+		 * User seminary permissions
+		 * 
+		 * @var array
+		 */
+		public $seminaryPermissions = array(
+			'seminary' 	=> array('admin', 'moderator', 'user', 'guest')
 		);
 		
 		
@@ -85,9 +93,9 @@
 					// Owner of file
 					if($upload['created_user_id'] != $user['id'])
 					{
-						// Seminary roles
-						$userSeminaryRoles = array_map(function($r) { return $r['name']; }, $this->Userseminaryroles->getUserseminaryrolesForUserById($user['id'], $seminary['id']));
-						if(count(array_intersect(array('admin', 'moderator'), $userSeminaryRoles)) == 0) {
+						// Seminary permissions
+						$characterRoles = array_map(function($r) { return $r['name']; }, $this->Characterroles->getCharacterrolesForCharacterById($character['id']));
+						if(count(array_intersect(array('admin', 'moderator'), $characterRoles)) == 0) {
 							throw new \nre\exceptions\AccessDeniedException();
 						}
 					}

@@ -17,7 +17,7 @@
 	 * 
 	 * @author	Oliver Hanraths <oliver.hanraths@uni-duesseldorf.de>
 	 */
-	class LibraryController extends \hhu\z\controllers\SeminaryRoleController
+	class LibraryController extends \hhu\z\controllers\SeminaryController
 	{
 		/**
 		 * Required models
@@ -59,7 +59,7 @@
 			$seminary = $this->Seminaries->getSeminaryByUrl($seminaryUrl);
 			
 			// Get Character
-			$character = SeminaryRoleController::$character;
+			$character = SeminaryController::$character;
 			
 			// Get Quest topics
 			$totalQuestcount = 0;
@@ -100,7 +100,7 @@
 			$seminary = $this->Seminaries->getSeminaryByUrl($seminaryUrl);
 			
 			// Get Character
-			$character = SeminaryRoleController::$character;
+			$character = SeminaryController::$character;
 			
 			// Get Questtopic
 			$questtopic = $this->Questtopics->getQuesttopicByUrl($seminary['id'], $questtopicUrl);

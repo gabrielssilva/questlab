@@ -17,7 +17,7 @@
 	 * 
 	 * @author	Oliver Hanraths <oliver.hanraths@uni-duesseldorf.de>
 	 */
-	class QuestsController extends \hhu\z\controllers\SeminaryRoleController
+	class QuestsController extends \hhu\z\controllers\SeminaryController
 	{
 		/**
 		 * Required models
@@ -146,7 +146,7 @@
 			$character = $this->Characters->getCharacterForUserAndSeminary($this->Auth->getUserId(), $seminary['id']);
 			
 			// Check permissions
-			if(count(array_intersect(array('admin','moderator'), IntermediateController::$user['seminaryroles'])) == 0)
+			if(count(array_intersect(array('admin','moderator'), SeminaryController::$character['characterroles'])) == 0)
 			{
 				$previousQuests = $this->Quests->getPreviousQuests($quest['id']);
 				if(count($previousQuests) == 0)

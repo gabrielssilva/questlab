@@ -17,7 +17,7 @@
 	 * 
 	 * @author	Oliver Hanraths <oliver.hanraths@uni-duesseldorf.de>
 	 */
-	class AchievementsController extends \hhu\z\controllers\SeminaryRoleController
+	class AchievementsController extends \hhu\z\controllers\SeminaryController
 	{
 		/**
 		 * Required models
@@ -59,7 +59,7 @@
 			$seminary = $this->Seminaries->getSeminaryByUrl($seminaryUrl);
 			
 			// Get Character
-			$character = SeminaryRoleController::$character;
+			$character = SeminaryController::$character;
 			
 			// Get seldom Achievements
 			$seldomAchievements = $this->Achievements->getSeldomAchievements($seminary['id'], \nre\configs\AppConfig::$misc['achievements_range']);

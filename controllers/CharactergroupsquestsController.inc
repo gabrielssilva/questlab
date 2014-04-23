@@ -18,7 +18,7 @@
 	 * 
 	 * @author	Oliver Hanraths <oliver.hanraths@uni-duesseldorf.de>
 	 */
-	class CharactergroupsquestsController extends \hhu\z\controllers\SeminaryRoleController
+	class CharactergroupsquestsController extends \hhu\z\controllers\SeminaryController
 	{
 		/**
 		 * Required models

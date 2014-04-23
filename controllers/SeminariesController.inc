@@ -17,14 +17,14 @@
 	 * 
 	 * @author	Oliver Hanraths <oliver.hanraths@uni-duesseldorf.de>
 	 */
-	class SeminariesController extends \hhu\z\controllers\SeminaryRoleController
+	class SeminariesController extends \hhu\z\controllers\SeminaryController
 	{
 		/**
 		 * Required models
 		 * 
 		 * @var array
 		 */
-		public $models = array('seminaries', 'users', 'userseminaryroles', 'questgroupshierarchy', 'questgroups', 'media');
+		public $models = array('seminaries', 'users', 'characterroles', 'questgroupshierarchy', 'questgroups', 'media');
 		/**
 		 * User permissions
 		 * 
@@ -72,10 +72,10 @@
 				// Character of currently logged-in user
 				try {
 					$seminary['usercharacter'] = $this->Characters->getCharacterForUserAndSeminary($this->Auth->getUserId(), $seminary['id']);
+					$seminary['usercharacter']['characterroles'] = $this->Characterroles->getCharacterrolesForCharacterById($seminary['usercharacter']['id']);
 				}
 				catch(\nre\exceptions\IdNotFoundException $e) {
 				}
-				$seminary['userroles'] = $this->Userseminaryroles->getUserseminaryrolesForUserById(IntermediateController::$user['id'], $seminary['id']);
 				
 			}
 			
@@ -115,7 +115,7 @@
 				foreach($hierarchy['questgroups'] as $i => &$questgroup)
 				{
 					// Check permission of Questgroups
-					if($i >= 1 && count(array_intersect(array('admin','moderator'), IntermediateController::$user['seminaryroles'])) == 0)
+					if($i >= 1 && count(array_intersect(array('admin','moderator'), SeminaryController::$character['characterroles'])) == 0)
 					{
 						if(!$this->Questgroups->hasCharacterSolvedQuestgroup($hierarchy['questgroups'][$i-1]['id'], $character['id']))
 						{

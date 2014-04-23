@@ -17,7 +17,7 @@
 	 * 
 	 * @author	Oliver Hanraths <oliver.hanraths@uni-duesseldorf.de>
 	 */
-	class CharactersController extends \hhu\z\controllers\SeminaryRoleController
+	class CharactersController extends \hhu\z\controllers\SeminaryController
 	{
 		/**
 		 * Required models
@@ -268,9 +268,10 @@
 			// Send notification mail to system moderators
 			$subject = sprintf('new Character registration: %s', $charactername);
 			$message = sprintf('User “%s” <%s> has registered a new Character “%s” for the Seminary “%s”', self::$user['username'], self::$user['email'], $charactername, self::$seminary['title']);
-			$moderators = $this->Users->getUsersWithSeminaryRole(self::$seminary['id'], 'moderator');
-			foreach($moderators as &$moderator)
+			$characters = $this->Characters->getCharactersWithCharacterRole(self::$seminary['id'], 'moderator');
+			foreach($characters as &$character)
 			{
+				$moderator = $this->Users->getUserById($character['user_id']);
 				\hhu\z\Utils::sendMail($sender, $moderator['email'], $subject, $message);
 			}
 		}

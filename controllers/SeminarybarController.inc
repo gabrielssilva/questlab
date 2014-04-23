@@ -35,15 +35,15 @@
 		 */
 		public function index()
 		{
-			if(is_null(SeminaryRoleController::$seminary)) {
+			if(is_null(SeminaryController::$seminary)) {
 				return;
 			}
 			
 			// Get Seminary
-			$seminary = SeminaryRoleController::$seminary;
+			$seminary = SeminaryController::$seminary;
 			
 			// Get Character
-			$character = SeminaryRoleController::$character;
+			$character = SeminaryController::$character;
 			if(is_null($character)) {
 				return;
 			}

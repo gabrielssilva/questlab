@@ -71,28 +71,6 @@
 		
 		
 		/**
-		 * Get users with the given user Seminary role.
-		 * 
-		 * @param	int	$seminaryId		ID of Seminary
-		 * @param	string	$userseminaryrole	User Seminary role
-		 * @return	array				List of users
-		 */
-		public function getUsersWithSeminaryRole($seminaryId, $userseminaryrole)
-		{
-			return $this->db->query(
-				'SELECT users.id, users.created, users.username, users.url, users.surname, users.prename, users.email '.
-				'FROM users '.
-				'LEFT JOIN users_userseminaryroles ON users_userseminaryroles.user_id = users.id '.
-				'LEFT JOIN userseminaryroles ON userseminaryroles.id = users_userseminaryroles.userseminaryrole_id '.
-				'WHERE users_userseminaryroles.seminary_id = ? AND userseminaryroles.name = ? '.
-				'ORDER BY username ASC',
-				'is',
-				$seminaryId, $userseminaryrole
-			);
-		}
-		
-		
-		/**
 		 * Get a user and its data by its ID.
 		 * 
 		 * @throws	IdNotFoundException

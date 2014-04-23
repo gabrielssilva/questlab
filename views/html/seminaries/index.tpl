@@ -12,7 +12,7 @@
 		<?php endif ?>
 		<section>
 			<p class="fwb">
-			<?php if(count($seminary['userroles']) > 0) : ?>
+			<?php if(array_key_exists('usercharacter', $seminary) && count($seminary['usercharacter']['characterroles']) > 0) : ?>
 			<a href="<?=$linker->link(array('seminary', $seminary['url']), 1)?>"><?=$seminary['title']?></a>
 			<?php else : ?>
 			<?=$seminary['title']?>
@@ -22,7 +22,7 @@
 			<p><?=\hhu\z\Utils::t($seminary['description'])?></p>
 			<?php if(!array_key_exists('usercharacter', $seminary)) : ?>
 			<a href="<?=$linker->link(array('characters','register',$seminary['url']))?>" class="cta orange"><?=_('Create a Character')?></a>
-			<?php elseif(count($seminary['userroles']) == 0) : ?>
+			<?php elseif(count($seminary['usercharacter']['characterroles']) == 0) : ?>
 			<p><?=sprintf(_('Your Character “%s” has not been activated yet'), $seminary['usercharacter']['name'])?></p>
 			<?php endif ?>
 		</section>		

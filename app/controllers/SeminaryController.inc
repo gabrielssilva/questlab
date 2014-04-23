@@ -18,7 +18,7 @@
 	 * 
 	 * @author	Oliver Hanraths <oliver.hanraths@uni-duesseldorf.de>
 	 */
-	abstract class SeminaryRoleController extends \hhu\z\controllers\IntermediateController
+	abstract class SeminaryController extends \hhu\z\controllers\IntermediateController
 	{
 		/**
 		 * Required components
@@ -31,7 +31,7 @@
 		 * 
 		 * @var array
 		 */
-		public $models = array('seminaries', 'userseminaryroles', 'characters', 'achievements');
+		public $models = array('seminaries', 'characters', 'characterroles', 'achievements');
 		/**
 		 * Current Seminary
 		 * 
@@ -49,7 +49,7 @@
 		
 		
 		/**
-		 * Construct a new SeminaryRole Controller.
+		 * Construct a new Seminary Controller.
 		 * 
 		 * @throws	DriverNotFoundException
 		 * @throws	DriverNotValidException
@@ -82,8 +82,8 @@
 				self::$seminary = $this->Seminaries->getSeminaryByUrl($this->request->getParam(3));
 				if(!is_null(self::$user))
 				{
-					self::$user['seminaryroles'] = array_map(function($r) { return $r['name']; }, $this->Userseminaryroles->getUserseminaryrolesForUserById(self::$user['id'], self::$seminary['id']));
 					self::$character = $this->Characters->getCharacterForUserAndSeminary(self::$user['id'], self::$seminary['id']);
+					self::$character['characterroles'] = array_map(function($r) { return $r['name']; }, $this->Characterroles->getCharacterrolesForCharacterById(self::$character['id']));
 				}
 			}
 			catch(\nre\exceptions\IdNotFoundException $e) {
@@ -140,7 +140,7 @@
 			
 			
 			// Check permissions
-			if(!array_key_exists('seminaryroles', self::$user) || count(array_intersect(self::$user['seminaryroles'], $permissions)) == 0) {
+			if(!array_key_exists('characterroles', self::$character) || count(array_intersect(self::$character['characterroles'], $permissions)) == 0) {
 				throw new \nre\exceptions\AccessDeniedException();
 			}
 		}
@@ -158,7 +158,7 @@
 			
 			// Get unachieved Achievments
 			$achievements = $this->Achievements->getUnachhievedAchievementsForCharacter(self::$seminary['id'], self::$character['id']);
-			if(in_array('user', self::$user['seminaryroles'])) {
+			if(in_array('user', self::$character['characterroles'])) {
 				$achievements = array_merge($achievements, $this->Achievements->getUnachievedOnlyOnceAchievementsForSeminary(self::$seminary['id']));
 			}
 			
