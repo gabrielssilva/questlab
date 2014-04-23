@@ -625,7 +625,7 @@
 							$this->Quests->setQuestSubmitted($quest['id'], $character['id']);
 						
 							// Redirect
-							$this->redirect($this->linker->link('Prolog', 5, true));
+							//$this->redirect($this->linker->link('Prolog', 5, true));
 						}
 					}
 					catch(\hhu\z\exceptions\SubmissionNotValidException $e) {
@@ -702,6 +702,9 @@
 						// Mark Quest as unsolved
 						$this->Quests->setQuestUnsolved($quest['id'], $character['id']);
 					}
+					
+					// Save additional data for Character answers
+					$questtypeAgent->controller->saveDataForCharacterAnswers($seminary, $questgroup, $quest, $character, $this->request->getPostParam('characterdata'));
 					
 					// Redirect
 					$this->redirect($this->linker->link(array('submissions', $seminary['url'], $questgroup['url'], $quest['url']), 1));

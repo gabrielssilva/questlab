@@ -32,14 +32,15 @@
 		/**
 		 * Save Character’s submitted upload.
 		 * 
+		 * @param	int	$seminaryId	ID of Seminary
 		 * @param	int	$questId	ID of Quest
 		 * @param	int	$characterId	ID of Character
 		 * @param	array	$file		Submitted upload
 		 */
-		public function setCharacterSubmission($seminaryId, $questId, $userId, $characterId, $file)
+		public function setCharacterSubmission($seminaryId, $questId, $userId, $characterId, $file, $filename)
 		{
 			// Save file on harddrive
-			$uploadId = $this->Uploads->uploadFile($userId, $file['name'], $file['tmp_name'], $file['type'], $seminaryId);
+			$uploadId = $this->Uploads->uploadSeminaryFile($userId, $seminaryId, $file['name'], $filename, $file['tmp_name'], $file['type']);
 			if($uploadId === false) {
 				return false;
 			}
@@ -60,27 +61,44 @@
 		
 		
 		/**
-		 * Get upload submitted by Character.
+		 * Add a comment for the answer of a Character.
+		 * 
+		 * @param	int	$userId		ID of user that comments
+		 * @param	int	$submissionId	ID of Character answer to comment
+		 * @param	string	$comment	Comment text
+		 */
+		public function addCommentForCharacterAnswer($userId, $submissionId, $comment)
+		{
+			$this->db->query(
+				'INSERT INTO questtypes_submit_characters_comments '.
+				'(created_user_id, questtypes_submit_character_id, comment) '.
+				'VALUES '.
+				'(?, ?, ?)',
+				'iis',
+				$userId,
+				$submissionId,
+				$comment
+			);
+		}
+		
+		
+		/**
+		 * Get all uploads submitted by Character.
 		 * 
 		 * @param	int	$questId	ID of Quest
 		 * @param	int	$characterId	ID of Character
 		 * @return	array			Text submitted by Character or NULL
 		 */
-		public function getCharacterSubmission($questId, $characterId)
+		public function getCharacterSubmissions($questId, $characterId)
 		{
-			$data = $this->db->query(
-				'SELECT upload_id '.
+			return $this->db->query(
+				'SELECT id, created, upload_id '.
 				'FROM questtypes_submit_characters '.
-				'WHERE quest_id = ? AND character_id = ?',
+				'WHERE quest_id = ? AND character_id = ? '.
+				'ORDER BY created ASC',
 				'ii',
 				$questId, $characterId
 			);
-			if(!empty($data)) {
-				return $this->Uploads->getUploadById($data[0]['upload_id']);
-			}
-			
-			
-			return null;
 		}
 		
 		
@@ -98,6 +116,24 @@
 				'WHERE seminary_id = ?',
 				'i',
 				$seminaryId
+			);
+		}
+		
+		
+		/**
+		 * Get all comments for a Character submission.
+		 * 
+		 * @param	int	$characterSubmissionId	ID of Character submission
+		 * @return	array				Comments for this submission
+		 */
+		public function getCharacterSubmissionComments($characterSubmissionId)
+		{
+			return $this->db->query(
+				'SELECT id, created, created_user_id, comment '.
+				'FROM questtypes_submit_characters_comments '.
+				'WHERE questtypes_submit_character_id = ?',
+				'i',
+				$characterSubmissionId
 			);
 		}
 		

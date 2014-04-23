@@ -42,6 +42,18 @@
 		
 		
 		/**
+		 * Save additional data for the answers of a Character for a Quest.
+		 * 
+		 * @param	array	$seminary	Current Seminary data
+		 * @param	array	$questgroup	Current Questgroup data
+		 * @param	array	$quest		Current Quest data
+		 * @param	array	$character	Current Character data
+		 * @param	array	$data		Additional (POST-) data
+		 */
+		public abstract function saveDataForCharacterAnswers($seminary, $questgroup, $quest, $character, $data);
+		
+		
+		/**
 		 * Check if answers of a Character for a Quest match the correct ones.
 		 * 
 		 * @param	array	$seminary	Current Seminary data

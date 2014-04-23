@@ -407,6 +407,33 @@
 		
 		
 		/**
+		 * Get the last status of a Quest for a Character.
+		 * 
+		 * @param	int	$questId	ID of Quest
+		 * @param	int	$characterId	ID of Character to get status for
+		 * @return	int			Last status
+		 */
+		public function getLastQuestStatus($questId, $characterId)
+		{
+			$data = $this->db->query(
+				'SELECT id, created, status '.
+				'FROM quests_characters '.
+				'WHERE quest_id = ? AND character_id = ? '.
+				'ORDER BY created DESC '.
+				'LIMIT 1',
+				'ii',
+				$questId, $characterId
+			);
+			if(!empty($data)) {
+				return $data[0];
+			}
+			
+			
+			return null;
+		}
+		
+		
+		/**
 		 * Create a new Quest.
 		 * 
 		 * @param	int	$userId		User-ID that creates the new character

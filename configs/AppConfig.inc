@@ -117,12 +117,12 @@
 			),
 			'prename' => array(
 				'minlength'	=> 2,
-				'maxlength'	=> 128,
+				'maxlength'	=> 32,
 				'regex'		=> '/^\S*$/'
 			),
 			'surname' => array(
 				'minlength'	=> 2,
-				'maxlength'	=> 128,
+				'maxlength'	=> 32,
 				'regex'		=> '/^\S*$/'
 			),
 			'password' => array(
