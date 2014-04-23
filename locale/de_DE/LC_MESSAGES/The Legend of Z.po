@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: The Legend of Z\n"
-"POT-Creation-Date: 2014-04-23 16:09+0100\n"
-"PO-Revision-Date: 2014-04-23 16:10+0100\n"
+"POT-Creation-Date: 2014-04-23 21:00+0100\n"
+"PO-Revision-Date: 2014-04-23 21:01+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de_DE\n"
@@ -119,8 +119,7 @@ msgstr "ungelöst"
 msgid "Error"
 msgstr "Fehler"
 
-#: views/html/achievements/index.tpl:9 views/html/characters/character.tpl:31
-#: views/html/seminarymenu/index.tpl:4
+#: views/html/achievements/index.tpl:9 views/html/seminarymenu/index.tpl:4
 msgid "Achievements"
 msgstr "Errungenschaften"
 
@@ -169,8 +168,7 @@ msgstr "Platz"
 msgid "You achieved %d of %d Achievements so far"
 msgstr "Du hast bislang %d von insgesamt %d Errungenschaften erreicht"
 
-#: views/html/achievements/index.tpl:59 views/html/characters/character.tpl:39
-#: views/html/seminarybar/index.tpl:28
+#: views/html/achievements/index.tpl:59 views/html/seminarybar/index.tpl:28
 #, php-format
 msgid "achieved at: %s"
 msgstr "erhalten am: %s"
@@ -186,7 +184,7 @@ msgstr "Spiele weiter, um diesen geheimen Erfolg freizuschalten"
 #: views/html/charactergroups/group.tpl:8
 #: views/html/charactergroups/groupsgroup.tpl:8
 #: views/html/charactergroups/index.tpl:9
-#: views/html/characters/character.tpl:51 views/html/seminarymenu/index.tpl:3
+#: views/html/characters/character.tpl:46 views/html/seminarymenu/index.tpl:3
 msgid "Character Groups"
 msgstr "Charaktergruppen"
 
@@ -198,14 +196,14 @@ msgstr "Mitglieder"
 msgid "Member"
 msgstr "Mitglied"
 
-#: views/html/charactergroups/group.tpl:23
-#: views/html/characters/character.tpl:7 views/html/characters/index.tpl:7
-#: views/html/seminarymenu/index.tpl:2 views/html/users/user.tpl:15
+#: views/html/charactergroups/group.tpl:23 views/html/characters/index.tpl:7
+#: views/html/characters/manage.tpl:7 views/html/seminarymenu/index.tpl:2
+#: views/html/users/user.tpl:15
 msgid "Characters"
 msgstr "Charaktere"
 
 #: views/html/charactergroups/group.tpl:38
-#: views/html/questgroups/questgroup.tpl:53 views/html/quests/create.tpl:7
+#: views/html/questgroups/questgroup.tpl:57 views/html/quests/create.tpl:7
 #: views/html/quests/index.tpl:7
 msgid "Quests"
 msgstr "Quests"
@@ -236,20 +234,48 @@ msgid "Total progress"
 msgstr "Fortschritt"
 
 #: views/html/characters/character.tpl:20
+#: views/html/characters/character.tpl:63
 #: views/html/characters/character.tpl:69
-#: views/html/characters/character.tpl:75
-#: views/html/characters/character.tpl:81 views/html/seminarybar/index.tpl:42
+#: views/html/characters/character.tpl:75 views/html/seminarybar/index.tpl:42
 #: views/html/users/user.tpl:29
 msgid "Level"
 msgstr "Level"
 
-#: views/html/characters/character.tpl:63
+#: views/html/characters/character.tpl:57
 msgid "Ranking"
 msgstr "Ranking"
 
-#: views/html/characters/character.tpl:89
+#: views/html/characters/character.tpl:83
 msgid "Topic progress"
 msgstr "Thematischer Fortschritt"
+
+#: views/html/characters/index.tpl:11 views/html/characters/manage.tpl:8
+msgid "Manage"
+msgstr "Verwalten"
+
+#: views/html/characters/manage.tpl:12
+msgid "Selection"
+msgstr "Auswahl"
+
+#: views/html/characters/manage.tpl:26
+msgid "Add role"
+msgstr "Füge Rolle hinzu"
+
+#: views/html/characters/manage.tpl:28 views/html/characters/manage.tpl:36
+msgid "Admin"
+msgstr "Administrator"
+
+#: views/html/characters/manage.tpl:29 views/html/characters/manage.tpl:37
+msgid "Moderator"
+msgstr "Moderator"
+
+#: views/html/characters/manage.tpl:31 views/html/characters/manage.tpl:39
+msgid "User"
+msgstr "Benutzer"
+
+#: views/html/characters/manage.tpl:34
+msgid "Remove role"
+msgstr "Entferne Rolle"
 
 #: views/html/characters/register.tpl:7
 msgid "Create Character"
@@ -712,9 +738,6 @@ msgstr "Rollen"
 
 #~ msgid "Group Leader"
 #~ msgstr "Gruppenleiter"
-
-#~ msgid "User"
-#~ msgstr "Benutzer"
 
 #~ msgid "as"
 #~ msgstr "als"

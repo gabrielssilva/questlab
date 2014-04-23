@@ -52,6 +52,49 @@
 			);
 		}
 		
+		
+		/**
+		 * Add a role to a Character.
+		 * 
+		 * @param	int	$characterId	ID of Character to add role to
+		 * @param	string	$characterrole	Role to add
+		 */
+		public function addCharacterroleToCharacter($characterId, $characterrole)
+		{
+			$this->db->query(
+				'INSERT IGNORE INTO characters_characterroles '.
+				'(character_id, characterrole_id) '.
+				'SELECT ?, id '.
+				'FROM characterroles '.
+				'WHERE name = ?',
+				'is',
+				$characterId,
+				$characterrole
+			);
+		}
+		
+		
+		/**
+		 * Remove a role from a Character.
+		 * 
+		 * @param	int	$characterId	ID of Character to remove role from
+		 * @param	string	$characterrole	Role to remove
+		 */
+		public function removeCharacterroleFromCharacter($characterId, $characterrole)
+		{
+			$this->db->query(
+				'DELETE FROM characters_characterroles '.
+				'WHERE character_id = ? AND characterrole_id = ('.
+					'SELECT id '.
+					'FROM characterroles '.
+					'WHERE name = ?'.
+				')',
+				'is',
+				$characterId,
+				$characterrole
+			);
+		}
+		
 	}
 
 ?>

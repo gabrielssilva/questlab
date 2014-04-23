@@ -39,7 +39,8 @@
 		public $permissions = array(
 			'index' => array('admin', 'moderator'),
 			'character' => array('admin', 'moderator', 'user'),
-			'register' => array('admin', 'moderator', 'user')
+			'register' => array('admin', 'moderator', 'user'),
+			'manage' => array('admin', 'moderator')
 		);
 		/**
 		 * User seminary permissions
@@ -48,7 +49,8 @@
 		 */
 		public $seminaryPermissions = array(
 			'index' => array('admin', 'moderator'),
-			'character' => array('admin', 'moderator', 'user')
+			'character' => array('admin', 'moderator', 'user'),
+			'manage' => array('admin', 'moderator')
 		);
 		
 		
@@ -248,6 +250,86 @@
 			$this->set('charactername', $charactername);
 			$this->set('validation', $validation);
 			$this->set('fieldsValidation', $fieldsValidation);
+		}
+		
+		
+		/**
+		 * Action: manage.
+		 * 
+		 * Manage Characters.
+		 * 
+		 * @throws	IdNotFoundException
+		 * @param	string	$seminaryUrl	URL-Title of a Seminary
+		 */
+		public function manage($seminaryUrl)
+		{
+			// Get seminary
+			$seminary = $this->Seminaries->getSeminaryByUrl($seminaryUrl);
+			
+			// Do action
+			if($this->request->getRequestMethod() == 'POST' && !empty($this->request->getPostParam('actions')) && !empty($this->request->getPostParam('characters')))
+			{
+				$actions = $this->request->getPostParam('actions');
+				$action = array_keys($actions)[0];
+				$selectedCharacters = $this->request->getPostParam('characters');
+				
+				switch($action)
+				{
+					// Add/remove role to/from Characters
+					case 'addrole':
+					case 'removerole':
+						// Determine role and check permissions
+						$role = null;
+						switch($actions[$action])
+						{
+							case _('Admin'):
+								if(count(array_intersect(array('admin', 'moderator'), \hhu\z\controllers\IntermediateController::$user['roles'])) <= 0 || !in_array('admin', \hhu\z\controllers\SeminaryController::$character['characterroles'])) {
+									throw new \nre\exceptions\AccessDeniedException();
+								}
+								$role = 'admin';
+							break;
+							case _('Moderator'):
+								if(count(array_intersect(array('admin', 'moderator'), \hhu\z\controllers\IntermediateController::$user['roles'])) <= 0 || !in_array('admin', \hhu\z\controllers\SeminaryController::$character['characterroles'])) {
+									throw new \nre\exceptions\AccessDeniedException();
+								}
+								$role = 'moderator';
+							break;
+							case _('User'):
+								if(count(array_intersect(array('admin', 'moderator'), \hhu\z\controllers\IntermediateController::$user['roles'])) <= 0 || count(array_intersect(array('admin', 'moderator'), \hhu\z\controllers\SeminaryController::$character['characterroles'])) <= 0) {
+									throw new \nre\exceptions\AccessDeniedException();
+								}
+								$role = 'user';
+							break;
+						}
+						
+						// Add role
+						if($action == 'addrole') {
+							foreach($selectedCharacters as &$characterId) {
+								$this->Characterroles->addCharacterroleToCharacter($characterId, $role);
+							}
+						}
+						// Remove role
+						else {
+							foreach($selectedCharacters as &$characterId) {
+								$this->Characterroles->removeCharacterroleFromCharacter($characterId, $role);
+							}
+						}
+					break;
+				}
+			}
+			
+			// Get registered Characters
+			$characters = $this->Characters->getCharactersForSeminary($seminary['id']);
+			foreach($characters as &$character)
+			{
+				$character['xplevel'] = $this->Characters->getXPLevelOfCharacters($character['id']);
+				$character['characterroles'] = array_map(function($r) { return $r['name']; }, $this->Characterroles->getCharacterrolesForCharacterById($character['id']));
+			}
+			
+			
+			// Pass data to view
+			$this->set('seminary', $seminary);
+			$this->set('characters', $characters);
 		}
 		
 		
