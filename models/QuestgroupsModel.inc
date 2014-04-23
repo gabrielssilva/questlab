@@ -372,7 +372,7 @@
 		 * @param	array	$calculatedQuests	IDs of already calculated Quests
 		 * @return	array				Cumulated data for Questgroup
 		 */
-		public function getCumulatedDataForQuestgroup($questgroupId, $characterId, &$calculatedQuests=array())
+		public function getCumulatedDataForQuestgroup($questgroupId, $characterId=null, &$calculatedQuests=array())
 		{
 			// Cumulated data
 			$data = array(
@@ -424,12 +424,12 @@
 		 * @param	array	$calculatedQuests	IDs of already calculated Quests
 		 * @return	array				Cumulated data for Quest
 		 */
-		public function getCumulatedDataForQuest($quest, $characterId, &$calculatedQuests=array())
+		public function getCumulatedDataForQuest($quest, $characterId=null, &$calculatedQuests=array())
 		{
 			// Cumulated data
 			$data = array(
 				'xps'		=> $quest['xps'],
-				'character_xps'	=> ($this->Quests->hasCharacterSolvedQuest($quest['id'], $characterId)) ? $quest['xps'] : 0
+				'character_xps'	=> (!is_null($characterId) && $this->Quests->hasCharacterSolvedQuest($quest['id'], $characterId)) ? $quest['xps'] : 0
 			);
 			
 			// Related Questgroups
@@ -466,7 +466,7 @@
 		}
 		
 		
-		/**
+				/**
 		 * Summarize XPs of all Quests for a Questgroup and its
 		 * sub-Questgroups solved by a Character.
 		 * 

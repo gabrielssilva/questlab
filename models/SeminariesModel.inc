@@ -122,8 +122,10 @@
 			{
 				// Get Questgroups
 				$questgroups = $this->Questgroups->getQuestgroupsForHierarchy($hierarchy['id']);
-				foreach($questgroups as &$questgroup) {
-					$xps += $this->Questgroups->getAchievableXPsForQuestgroup($questgroup['id']);
+				foreach($questgroups as &$questgroup)
+				{
+					$data = $this->Questgroups->getCumulatedDataForQuestgroup($questgroup['id']);
+					$xps += $data['xps'];
 				}
 			}
 			
