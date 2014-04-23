@@ -24,7 +24,7 @@
 		 * 
 		 * @var array
 		 */
-		public $models = array('uploads', 'users', 'userroles');
+		public $models = array('uploads', 'users', 'userroles', 'seminaries');
 		/**
 		 * User permissions
 		 * 
@@ -56,50 +56,39 @@
 		
 		
 		/**
-		 * Action: index.
+		 * Action: seminary.
 		 * 
-		 * Display an upload.
+		 * Display a Seminary upload.
 		 * 
 		 * @throws	AccessDeniedException
 		 * @throws	IdNotFoundException
+		 * @param	string	$seminaryUrl	URL-title of Seminary
 		 * @param	string	$uploadUrl	URL-name of the upload
 		 */
-		public function index($uploadUrl)
+		public function seminary($seminaryUrl, $uploadUrl)
 		{
+			// Get Seminary
+			$seminary = $this->Seminaries->getSeminaryByUrl($seminaryUrl);
+			
 			// Get Upload
-			$upload = $this->Uploads->getUploadByUrl($uploadUrl);
+			$upload = $this->Uploads->getSeminaryuploadByUrl($seminary['id'], $uploadUrl);
 			
 			// Check permissions
-			$user = $this->Users->getUserById($this->Auth->getUserId());
-			$user['roles'] = array();
-			foreach($this->Userroles->getUserrolesForUserById($user['id']) as $role) {
-				$user['roles'][] = $role['name'];
-			}
 			if(!$upload['public'])
 			{
+				$user = $this->Users->getUserById($this->Auth->getUserId());
+				$user['roles'] = array_map(function($r) { return $r['name']; }, $this->Userroles->getUserrolesForUserById($user['id']));
+				
 				// System roles
 				if(count(array_intersect(array('admin', 'moderator'), $user['roles'])) == 0)
 				{
 					// Owner of file
 					if($upload['created_user_id'] != $user['id'])
 					{
-						if(!is_null($upload['seminary_id'])) {
+						// Seminary roles
+						$userSeminaryRoles = array_map(function($r) { return $r['name']; }, $this->Userseminaryroles->getUserseminaryrolesForUserById($user['id'], $seminary['id']));
+						if(count(array_intersect(array('admin', 'moderator'), $userSeminaryRoles)) == 0) {
 							throw new \nre\exceptions\AccessDeniedException();
-						}
-						else
-						{
-							// Seminary
-							$seminary = $this->Seminaries->getSeminaryById($upload['seminary_id']);
-							
-							// Seminary roles
-							$userSeminaryRoles = array();
-							foreach($this->Userseminaryroles->getUserseminaryrolesForUserById($user['id'], $seminary['id']) as $role) {
-								$userSeminaryRoles[] = $role['name'];
-							}
-							
-							if(count(array_intersect(array('admin', 'moderator'), $userSeminaryRoles)) == 0) {
-								throw new \nre\exceptions\AccessDeniedException();
-							}
 						}
 					}
 				}
@@ -109,7 +98,7 @@
 			$this->response->addHeader("Content-type: ".$upload['mimetype']."");
 			
 			// Set filename
-			$upload['filename'] = ROOT.DS.\nre\configs\AppConfig::$dirs['uploads'].DS.$upload['id'];
+			$upload['filename'] = ROOT.DS.\nre\configs\AppConfig::$dirs['seminaryuploads'].DS.$upload['url'];
 			if(!file_exists($upload['filename'])) {
 				throw new \nre\exceptions\IdNotFoundException($uploadUrl);
 			}

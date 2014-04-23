@@ -60,12 +60,13 @@
 		 * @var array
 		 */
 		public static $dirs = array(
-			'locale'	=> 'locale',
-			'media'		=> 'media',
-			'seminarymedia'	=> 'seminarymedia',
-			'questtypes'	=> 'questtypes',
-			'temporary'	=> 'tmp',
-			'uploads'	=> 'uploads'
+			'locale'		=> 'locale',
+			'media'			=> 'media',
+			'seminarymedia'		=> 'seminarymedia',
+			'questtypes'		=> 'questtypes',
+			'temporary'		=> 'tmp',
+			'uploads'		=> 'uploads',
+			'seminaryuploads'	=> 'seminaryuploads'
 		);
 		
 		
@@ -159,7 +160,7 @@
 			array('charactergroupsquests/(?!(quest))',			'charactergroupsquests/quest/$1',	true),
 			array('media/(.*)',						'media/$1?layout=binary',		false),
 			array('uploads/(.*)',						'uploads/$1?layout=binary',		false),
-			array('uploads/(?!(index))',					'uploads/index/$1',			true)
+			array('uploads/(?!(index|seminary))',				'uploads/index/$1',			true)
 		);
 
 

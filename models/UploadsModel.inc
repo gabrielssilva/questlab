@@ -38,45 +38,36 @@
 		 * Upload a file and create a database record.
 		 * 
 		 * @param	int	$userId		ID of user that uploads the file
-		 * @param	string	$filename	Name of file to upload
+		 * @param	int	$seminaryId	ID of Seminary
+		 * @param	string	$name		Name of file to upload
+		 * @param	string	$filename	Filename of file to upload
 		 * @param	string	$tmpFilename	Name of temporary uploaded file
 		 * @param	string	$mimetype	Mimetype of file to upload
-		 * @param	int	$seminaryId	Optional ID of Seminary if the upload is in the context of one
 		 * @return	mixed			ID of database record or false
 		 */
-		public function uploadFile($userId, $filename, $tmpFilename, $mimetype, $seminaryId=null)
+		public function uploadSeminaryFile($userId, $seminaryId, $name, $filename, $tmpFilename, $mimetype)
 		{
 			$uploadId = false;
 			$this->db->setAutocommit(false);
 			
 			try {
 				// Create database record
-				if(is_null($seminaryId))
-				{
-					$this->db->query(
-						'INSERT INTO uploads '.
-						'(created_user_id, name, url, mimetype) '.
-						'VALUES '.
-						'(?, ? ,? ,?)',
-						'isss',
-						$userId, $filename, \nre\core\Linker::createLinkParam($filename), $mimetype
-					);
-				}
-				else
-				{
-					$this->db->query(
-						'INSERT INTO uploads '.
-						'(created_user_id, seminary_id, name, url, mimetype) '.
-						'VALUES '.
-						'(?, ?, ? ,? ,?)',
-						'iisss',
-						$userId, $seminaryId, $filename, \nre\core\Linker::createLinkParam($filename), $mimetype
-					);
-				}
+				$this->db->query(
+					'INSERT INTO seminaryuploads '.
+					'(created_user_id, seminary_id, name, url, mimetype) '.
+					'VALUES '.
+					'(?, ? ,? ,?, ?)',
+					'iisss',
+					$userId,
+					$seminaryId,
+					$name,
+					\nre\core\Linker::createLinkParam($filename),
+					$mimetype
+				);
 				$uploadId = $this->db->getInsertId();
 			
 				// Create filename
-				$filename = ROOT.DS.\nre\configs\AppConfig::$dirs['uploads'].DS.$uploadId;
+				$filename = ROOT.DS.\nre\configs\AppConfig::$dirs['seminaryuploads'].DS.$filename;
 				if(!move_uploaded_file($tmpFilename, $filename))
 				{
 					$this->db->rollback();
@@ -101,17 +92,17 @@
 		 * @param	int	$uploadId	ID of the uploaded file
 		 * @return	array			Upload data
 		 */
-		public function getUploadById($uploadId)
+		public function getSeminaryuploadById($seminaryuploadId)
 		{
 			$data = $this->db->query(
 				'SELECT id, created, created_user_id, seminary_id, name, url, mimetype, public '.
-				'FROM uploads '.
+				'FROM seminaryuploads '.
 				'WHERE id = ?',
 				'i',
-				$uploadId
+				$seminaryuploadId
 			);
 			if(empty($data)) {
-				throw new \nre\exceptions\IdNotFoundException($uploadId);
+				throw new \nre\exceptions\IdNotFoundException($seminaryuploadId);
 			}
 			
 			
@@ -123,20 +114,22 @@
 		 * Get an upload by its URL.
 		 * 
 		 * @throws	IdNotFoundException
+		 * @param	int	$seminaryId	ID of Seminary
 		 * @param	int	$uploadId	ID of the uploaded file
 		 * @return	array			Upload data
 		 */
-		public function getUploadByUrl($uploadUrl)
+		public function getSeminaryuploadByUrl($seminaryId, $seminaryuploadUrl)
 		{
 			$data = $this->db->query(
 				'SELECT id, created, created_user_id, seminary_id, name, url, mimetype, public '.
-				'FROM uploads '.
-				'WHERE url = ?',
-				's',
-				$uploadUrl
+				'FROM seminaryuploads '.
+				'WHERE seminary_id = ? AND url = ?',
+				'is',
+				$seminaryId,
+				$seminaryuploadUrl
 			);
 			if(empty($data)) {
-				throw new \nre\exceptions\IdNotFoundException($uploadUrl);
+				throw new \nre\exceptions\IdNotFoundException($seminaryuploadUrl);
 			}
 			
 			
