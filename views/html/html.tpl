@@ -17,6 +17,13 @@
 	}
 	);
 	</script>
+	<script src="/js/imagelightbox.min.js"></script>
+	<script>
+    $( function()
+    {
+        $( 'a' ).imageLightbox();
+    });
+	</script>
 	<!--[if lt IE 9]>
 	<script type="text/javascript" src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
 	<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/respond.js/1.4.2/respond.js"></script>

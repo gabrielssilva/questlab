@@ -117,6 +117,8 @@ aside{display:none}
 .qtext{padding-right:15px}
 .qtext img,.grpqimg{float:right;margin-left:15px;max-width:30%;border-radius:3px}
 
+#imagelightbox{cursor:pointer;position:fixed;z-index:10000;-ms-touch-action:none;touch-action:none;-webkit-box-shadow:0 0 3.125em rgba( 0, 0, 0, .75 ); -moz-box-shadow:0 0 3.125em rgba( 0, 0, 0, .75 );box-shadow:0 0 3.125em rgba( 0, 0, 0, .75 )}
+
 .xpinfo{display:none}
 .xpbar{width:60%;float:left;height:10px;position:relative;background:#eee;border-radius:25px;margin:8px 0 16px}
 .xpbar span{display:block;height:100%;border-radius:20px;background:#bcd75e;position:relative;overflow:hidden}
@@ -131,6 +133,7 @@ input[type="submit"][disabled]{text-shadow:1px 2px #d48c4e;background:#f9ac69;bo
 .admin li{margin:0 0 15px 0;display:inline-block}
 .admin li a{padding:4px 15px;background:#5cb6bd;border-bottom:2px solid #50a0a6;color:#fff;border-radius:3px}
 .admin li a:hover{background:#62c5cd}
+
 
 /** Login & Registration **/
 
@@ -173,6 +176,7 @@ input[type="submit"][disabled]{text-shadow:1px 2px #d48c4e;background:#f9ac69;bo
 .cglist li{list-style-type:decimal;background:#fff;margin:0 0 6px 25px;padding:5px 15px;border-radius:3px}
 .cglist .xp{float:right}
 .cgqlist li{list-style-type:square;margin-left:25px;padding:2px 15px}
+
 
 /** Charactergroup Profile **/
 
@@ -239,6 +243,7 @@ input[type="submit"][disabled]{text-shadow:1px 2px #d48c4e;background:#f9ac69;bo
 
 
 /** Quest Types **/
+
 .success,.error{margin-top:15px;padding:5px 15px;border:1px solid #4F8A10;background:#DFF2BF;color:#4F8A10;border-radius:3px}
 .error{border:1px solid #850000;background:#ebd3d3;color:#850000}
 .success p,.error p{margin-bottom:5px}

@@ -15,10 +15,10 @@
 		<?php foreach($questtexts as &$questtext) : ?>
 		<p class="qtext cf">
 			<?php if(array_key_exists('media', $questtext)) : ?>
-			<img src="<?=$linker->link(array('media','seminary',$seminary['url'],$questtext['media']['url']))?>" />
+			<a href="<?=$linker->link(array('media','seminary',$seminary['url'],$media['url']))?>"><img src="<?=$linker->link(array('media','seminary',$seminary['url'],$questtext['media']['url']))?>" /></a>
 			<?php elseif(!is_null($media) && !$mediaShown) : ?>
 			<?php $mediaShown = true; ?>
-			<img src="<?=$linker->link(array('media','seminary',$seminary['url'],$media['url']))?>" />
+			<a href="<?=$linker->link(array('media','seminary',$seminary['url'],$media['url']))?>"><img src="<?=$linker->link(array('media','seminary',$seminary['url'],$media['url']))?>" /></a>
 			<?php endif ?>
 			<?=\hhu\z\Utils::t($questtext['text'])?>
 		</p>
