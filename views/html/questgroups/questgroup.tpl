@@ -42,6 +42,10 @@
 			</div>
 			<p class="xpnumeric"><?=$group['character_xps']?> / <?=$group['xps']?> XP</p>
 		</div>
+		<div class="qghidden">
+			<p>Versteckte Bonus-Questline gefunden:</p>
+			<p><a href="#"><i class="fa fa-star-o fa-fw"></i>Hier der Titel der entsprechenden Bonus-Questline</a></p>
+		</div>
 	</li>
 	<?php endforeach?>
 </ul>
