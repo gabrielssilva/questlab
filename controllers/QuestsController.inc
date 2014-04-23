@@ -340,7 +340,7 @@
 				$questmedia = $this->Media->getSeminaryMediaById($quest['questsmedia_id']);
 			}
 			
-			// Get submitted Character submissions
+			// Get submitted Character submissions waiting for approval
 			$submittedSubmissionCharacters = $this->Characters->getCharactersSubmittedQuest($quest['id']);
 			
 			// Get unsolved Character submissions

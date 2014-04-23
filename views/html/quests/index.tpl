@@ -7,43 +7,33 @@
 <h2><?=_('Quests')?></h2>
 
 <form method="post">
-	<table>
-		<thead>
-			<tr>
-				<th>
-					<select name="filters[questgroup]">
-						<option value="0"><?=_('Questgroup')?></option>
-						<?php foreach($filters['questgroups'] as &$filter) : ?>
-						<option value="<?=$filter['id']?>" <?php if($filter['id'] == $selectedFilters['questgroup']) : ?>selected="selected"<?php endif ?>><?=$filter['title']?></option>
-						<?php endforeach ?>
-					</select>
-				</th>
-				<th><?=_('Questname')?></th>
-				<th>
-					<select name="filters[questtype]">
-						<option value=""><?=_('Questtype')?></option>
-						<?php foreach($filters['questtypes'] as &$filter) : ?>
-						<option value="<?=$filter['classname']?>" <?php if($filter['classname'] == $selectedFilters['questtype']) : ?>selected="selected"<?php endif ?>><?=$filter['title']?></option>
-						<?php endforeach ?>
-					</select>
-				</th>
-				<th>XPs</th>
-				<th><?=('Submissions')?></th>
-			</tr>
-		</thead>
-		<tbody>
-			<?php foreach($quests as &$quest) : ?>
-			<tr>
-				<td><a href="<?=$linker->link(array('questgroups','questgroup',$seminary['url'],$quest['questgroup']['url']))?>"><?=$quest['questgroup']['title']?></a></td>
-				<td><a href="<?=$linker->link(array('quests','quest',$seminary['url'],$quest['questgroup']['url'],$quest['url']))?>"><?=$quest['title']?></a></td>
-				<td><?=$quest['questtype']['title']?></td>
-				<td><?=$quest['xps']?></td>
-				<td><?=$quest['opensubmissionscount']?></td>
-			</tr>
+	<fieldset>
+		<legend>Filter</legend>
+		<label for="filters[questgroup]"><?=_('Questgroup')?>:</label>
+		<select name="filters[questgroup]">
+			<option value="0">alle</option>
+			<?php foreach($filters['questgroups'] as &$filter) : ?>
+			<option value="<?=$filter['id']?>" <?php if($filter['id'] == $selectedFilters['questgroup']) : ?>selected="selected"<?php endif ?>><?=$filter['title']?></option>
 			<?php endforeach ?>
-		</tbody>
-	</table>
-	
+		</select><br />
+		<label for="filters[questtype]"><?=_('Questtype')?>:</label>
+		<select name="filters[questtype]">
+			<option value="">alle</option>
+			<?php foreach($filters['questtypes'] as &$filter) : ?>
+			<option value="<?=$filter['classname']?>" <?php if($filter['classname'] == $selectedFilters['questtype']) : ?>selected="selected"<?php endif ?>><?=$filter['title']?></option>
+			<?php endforeach ?>
+		</select>
+	</fieldset>
 	<input type="submit" name="filter" value="<?=_('Apply filters')?>" />
 	<input type="submit" name="reset" value="<?=_('Reset filters')?>" />
 </form>
+
+<ul>
+	<?php foreach($quests as &$quest) : ?>
+	<li>
+		<a href="<?=$linker->link(array('questgroups','questgroup',$seminary['url'],$quest['questgroup']['url']))?>"><?=$quest['questgroup']['title']?></a><br />
+		<h3><a href="<?=$linker->link(array('quest',$seminary['url'],$quest['questgroup']['url'],$quest['url']),1)?>"><?=$quest['title']?></a></h3>
+		<?=$quest['questtype']['title']?>, <?=$quest['xps']?> XPs, <a href="<?=$linker->link(array('submissions',$seminary['url'],$quest['questgroup']['url'],$quest['url']),1)?>"><?=$quest['opensubmissionscount']?> open submissions</a>
+	</li>
+	<?php endforeach ?>
+</ul>

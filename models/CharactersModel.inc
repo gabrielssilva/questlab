@@ -379,17 +379,15 @@
 				'SELECT characters.id, characters.created, characters.charactertype_id, characters.name, characters.url, characters.user_id, characters.xps, characters.xplevel, charactertypes.name AS charactertype_name, charactertypes.url AS charactertype_url '.
 				'FROM v_characters AS characters '.
 				'LEFT JOIN charactertypes ON charactertypes.id = characters.charactertype_id '.
-				'WHERE EXISTS ('.
-					'SELECT character_id FROM quests_characters WHERE character_id = characters.id AND quest_id = ? AND status = ?'.
-				') AND NOT EXISTS ('.
-					'SELECT character_id FROM quests_characters WHERE character_id = characters.id AND quest_id = ? AND status = ?'.
-				') AND NOT EXISTS ('.
-					'SELECT character_id FROM quests_characters WHERE character_id = characters.id AND quest_id = ? AND status = ?'.
-				')',
-				'iiiiii',
-				$questId, QuestsModel::QUEST_STATUS_SUBMITTED,
-				$questId, QuestsModel::QUEST_STATUS_UNSOLVED,
-				$questId, QuestsModel::QUEST_STATUS_SOLVED
+				'WHERE ('.
+					'SELECT status '.
+					'FROM quests_characters '.
+					'WHERE quest_id = ? AND character_id = characters.id '.
+					'ORDER BY created DESC '.
+					'LIMIT 1'.
+				') = ?',
+				'ii',
+				$questId, QuestsModel::QUEST_STATUS_SUBMITTED
 			);
 		}
 		
