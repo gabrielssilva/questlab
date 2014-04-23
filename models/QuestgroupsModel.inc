@@ -76,13 +76,6 @@
 				);
 			}
 			
-			// Add additional data
-			foreach($questgroups as &$questgroup)
-			{
-				// Total XPs
-				$questgroup['xps'] = $this->getAchievableXPsForQuestgroup($questgroup['id']);
-			}
-			
 			
 			// Return Questgroups
 			return $questgroups;
@@ -357,37 +350,46 @@
 		 */
 		public function getRelatedQuestsgroupsOfQuest($questId)
 		{
-			$questgroups = array();
-			$questtexts = $this->Questtexts->getQuesttextsOfQuest($questId);
-			foreach($questtexts as &$questtext) {
-				$questgroups = array_merge($questgroups, $this->getRelatedQuestsgroupsOfQuesttext($questtext['id']));
-			}
+			return $this->db->query(
+				'SELECT questgroups_questtexts.questgroup_id AS id '.
+				'FROM quests '.
+				'INNER JOIN questtexts ON questtexts.quest_id = quests.id '.
+				'INNER JOIN questgroups_questtexts ON questgroups_questtexts.questtext_id = questtexts.id '.
+				'WHERE quests.id = ?',
+				'i',
+				$questId
+			);
 			
-			
-			return $questgroups;
 		}
 		
 		
 		/**
-		 * Summarize XPs of all Quests for a Questgroup and its
-		 * sub-Questgroups.
+		 * Calculate cumulated data for a Questgroup, its
+		 * sub-Questgroups and all its Quests.
 		 * 
-		 * @param	int	$questgroupId	ID of Questgroup
-		 * @return	int			Sum of XPs
+		 * @param	int	$questgroupId		ID of Questgroup
+		 * @param	int	$characterId		ID of Character
+		 * @param	array	$calculatedQuests	IDs of already calculated Quests
+		 * @return	array				Cumulated data for Questgroup
 		 */
-		public function getAchievableXPsForQuestgroup($questgroupId)
+		public function getCumulatedDataForQuestgroup($questgroupId, $characterId, &$calculatedQuests=array())
 		{
-			// Sum of XPs
-			$xps = 0;
+			// Cumulated data
+			$data = array(
+				'xps'		=> 0,
+				'character_xps'	=> 0
+			);
 			
 			// Current Questgroup
 			$questgroup = $this->getQuestgroupById($questgroupId);
-			$questgroup['hierarchy'] = $this->Questgroupshierarchy->getHierarchyForQuestgroup($questgroup['id']);
 			
 			// Quests of current Questgroup
 			$quest = $this->Quests->getFirstQuestOfQuestgroup($questgroup['id']);
-			if(!is_null($quest)) {
-				$xps += $this->getAchievableXPsForQuest($quest);
+			if(!is_null($quest))
+			{
+				$questData = $this->getCumulatedDataForQuest($quest, $characterId, $calculatedQuests);
+				$data['xps'] += $questData['xps'];
+				$data['character_xps'] += $questData['character_xps'];
 			}
 			
 			// XPs of child Questgroups
@@ -398,47 +400,69 @@
 				foreach($childQuestgroupshierarchy as &$hierarchy)
 				{
 					$questgroups = $this->getQuestgroupsForHierarchy($hierarchy['id'], $questgroup['id']);
-					foreach($questgroups as &$questgroup) {
-						$xps += $this->getAchievableXPsForQuestgroup($questgroup['id']);
+					foreach($questgroups as &$questgroup)
+					{
+						$childData = $this->getCumulatedDataForQuestgroup($questgroup['id'], $characterId, $calculatedQuests);
+						$data['xps'] += $childData['xps'];
+						$data['character_xps'] += $childData['character_xps'];
 					}
 				}
 			}
 			
 			
-			// Return summarized XPs
-			return $xps;
+			// Return cumulated data
+			return $data;
 		}
 		
 		
 		/**
-		 * Summarize XPs of the given Quest, its following Quests and
-		 * its related Questgroups.
+		 * Calculate cumulated data of the given Quest, its following
+		 * Quests and its related Questgroups.
 		 * 
-		 * @param	array	$quest	Quest to summarize XPs for
-		 * @return	int		Sum of XPs
+		 * @param	array	$quest			Quest data
+		 * @param	int	$characterId		ID of Character
+		 * @param	array	$calculatedQuests	IDs of already calculated Quests
+		 * @return	array				Cumulated data for Quest
 		 */
-		public function getAchievableXPsForQuest($quest)
+		public function getCumulatedDataForQuest($quest, $characterId, &$calculatedQuests=array())
 		{
-			// XPs for the given Quest
-			$xps = $quest['xps'];
+			// Cumulated data
+			$data = array(
+				'xps'		=> $quest['xps'],
+				'character_xps'	=> ($this->Quests->hasCharacterSolvedQuest($quest['id'], $characterId)) ? $quest['xps'] : 0
+			);
 			
 			// Related Questgroups
 			$relatedQuestgroups = $this->getRelatedQuestsgroupsOfQuest($quest['id']);
-			foreach($relatedQuestgroups as &$relatedQuestgroup) {
-				$xps += $this->getAchievableXPsForQuestgroup($relatedQuestgroup['id']);
+			foreach($relatedQuestgroups as &$relatedQuestgroup)
+			{
+				$relatedData = $this->getCumulatedDataForQuestgroup($relatedQuestgroup['id'], $characterId, $calculatedQuests);
+				$data['xps'] += $relatedData['xps'];
+				$data['character_xps'] += $relatedData['character_xps'];
 			}
 			
 			// Next Quests
 			$nextQuests = $this->Quests->getNextQuests($quest['id']);
-			$nextXPs = array(0);
+			$allNextData = array(
+				'xps'		=> array(0),
+				'character_xps'	=> array(0),
+			);
 			foreach($nextQuests as &$nextQuest)
 			{
-				$nextXPs[] = $this->getAchievableXPsForQuest($nextQuest);
+				if(!in_array($nextQuest['id'], $calculatedQuests))
+				{
+					$nextData = $this->getCumulatedDataForQuest($nextQuest, $characterId, $calculatedQuests);
+					$allNextData['xps'][] = $nextData['xps'];
+					$allNextData['character_xps'][] = $nextData['character_xps'];
+					$calculatedQuests[] = $nextQuest['id'];
+				}
 			}
-			$xps += max($nextXPs);
+			$data['xps'] += max($allNextData['xps']);
+			$data['character_xps'] += max($allNextData['character_xps']);
 			
 			
-			return $xps;
+			// Return cumulated data
+			return $data;
 		}
 		
 		

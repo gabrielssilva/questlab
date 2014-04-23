@@ -132,8 +132,10 @@
 						$questgroup['text'] = $text;
 					}
 					
-					// Get Character XPs
-					$hierarchy['questgroups'][$i]['character_xps'] = $this->Questgroups->getAchievedXPsForQuestgroup($questgroup['id'], $character['id']);
+					// Get cumulated data
+					$data = $this->Questgroups->getCumulatedDataForQuestgroup($questgroup['id'], $character['id']);
+					$questgroup['xps'] = $data['xps'];
+					$questgroup['character_xps'] = $data['character_xps'];
 					
 					// Get Media
 					$questgroup['picture'] = null;

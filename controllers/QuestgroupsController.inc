@@ -106,8 +106,10 @@
 							}
 						}
 						
-						// Get Character XPs
-						$group['character_xps'] = $this->Questgroups->getAchievedXPsForQuestgroup($group['id'], $character['id']);
+						// Get cumulated data
+						$data = $this->Questgroups->getCumulatedDataForQuestgroup($group['id'], $character['id']);
+						$group['xps'] = $data['xps'];
+						$group['character_xps'] = $data['character_xps'];
 					}
 				}
 			}
