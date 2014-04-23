@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: The Legend of Z\n"
-"POT-Creation-Date: 2014-04-21 21:42+0100\n"
-"PO-Revision-Date: 2014-04-22 00:29+0100\n"
+"POT-Creation-Date: 2014-04-23 16:09+0100\n"
+"PO-Revision-Date: 2014-04-23 16:10+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de_DE\n"
@@ -74,22 +74,44 @@ msgid "Allowed file types"
 msgstr "Erlaubte Dateiformate"
 
 #: questtypes/submit/html/quest.tpl:20
+#, php-format
+msgid "%s-files"
+msgstr "%s-Dateien"
+
+#: questtypes/submit/html/quest.tpl:20
 msgid "max."
 msgstr "max."
 
-#: questtypes/submit/html/quest.tpl:26 questtypes/submit/html/submission.tpl:2
+#: questtypes/submit/html/quest.tpl:28
+msgid "Past submissions"
+msgstr "Vorherige Lösungen"
+
+#: questtypes/submit/html/quest.tpl:33 questtypes/submit/html/submission.tpl:6
 #, php-format
 msgid "submitted at %s on %s h"
 msgstr "eingereicht am %s um %s Uhr"
 
-#: questtypes/submit/html/submission.tpl:6
-#: questtypes/submit/html/submission.tpl:8 views/html/quests/quest.tpl:43
-#: views/html/quests/submissions.tpl:33
+#: questtypes/submit/html/quest.tpl:35
+msgid "This submission is waiting for approval"
+msgstr "Diese Lösungen wartet auf freigabe"
+
+#: questtypes/submit/html/quest.tpl:42
+#: questtypes/submit/html/submission.tpl:12
+#, php-format
+msgid "Comment from %s on %s at %s"
+msgstr "Kommentar von %s am %s um %s Uhr"
+
+#: questtypes/submit/html/submission.tpl:27
+msgid "Comment"
+msgstr "Kommentar"
+
+#: questtypes/submit/html/submission.tpl:30 views/html/quests/quest.tpl:43
+#: views/html/quests/submissions.tpl:29
 msgid "solved"
 msgstr "gelöst"
 
-#: questtypes/submit/html/submission.tpl:9 views/html/quests/quest.tpl:46
-#: views/html/quests/submissions.tpl:24
+#: questtypes/submit/html/submission.tpl:31 views/html/quests/quest.tpl:47
+#: views/html/quests/submissions.tpl:20
 msgid "unsolved"
 msgstr "ungelöst"
 
@@ -147,17 +169,17 @@ msgstr "Platz"
 msgid "You achieved %d of %d Achievements so far"
 msgstr "Du hast bislang %d von insgesamt %d Errungenschaften erreicht"
 
-#: views/html/achievements/index.tpl:61 views/html/characters/character.tpl:39
+#: views/html/achievements/index.tpl:59 views/html/characters/character.tpl:39
 #: views/html/seminarybar/index.tpl:28
 #, php-format
 msgid "achieved at: %s"
 msgstr "erhalten am: %s"
 
-#: views/html/achievements/index.tpl:72
+#: views/html/achievements/index.tpl:68
 msgid "Secret Achievement"
 msgstr "Geheime Errungenschaft"
 
-#: views/html/achievements/index.tpl:77
+#: views/html/achievements/index.tpl:72
 msgid "Continue playing to unlock this secret Achievement"
 msgstr "Spiele weiter, um diesen geheimen Erfolg freizuschalten"
 
@@ -183,7 +205,7 @@ msgid "Characters"
 msgstr "Charaktere"
 
 #: views/html/charactergroups/group.tpl:38
-#: views/html/questgroups/questgroup.tpl:43 views/html/quests/create.tpl:7
+#: views/html/questgroups/questgroup.tpl:53 views/html/quests/create.tpl:7
 #: views/html/quests/index.tpl:7
 msgid "Quests"
 msgstr "Quests"
@@ -281,17 +303,15 @@ msgstr "Kursfelder"
 msgid "create"
 msgstr "erstellen"
 
-#: views/html/introduction/index.tpl:1
-msgid "Introduction"
-msgstr "Einführung"
-
-#: views/html/introduction/index.tpl:5 views/html/introduction/index.tpl:13
+#: views/html/error/index.tpl:5 views/html/error/index.tpl:14
+#: views/html/introduction/index.tpl:3 views/html/introduction/index.tpl:11
 #: views/html/menu/index.tpl:6 views/html/users/login.tpl:3
-#: views/html/users/login.tpl:14
+#: views/html/users/login.tpl:17
 msgid "Login"
 msgstr "Login"
 
-#: views/html/introduction/index.tpl:8 views/html/introduction/index.tpl:9
+#: views/html/error/index.tpl:8 views/html/error/index.tpl:9
+#: views/html/introduction/index.tpl:6 views/html/introduction/index.tpl:7
 #: views/html/users/create.tpl:6 views/html/users/create.tpl:7
 #: views/html/users/edit.tpl:6 views/html/users/edit.tpl:7
 #: views/html/users/login.tpl:9 views/html/users/login.tpl:10
@@ -299,7 +319,8 @@ msgstr "Login"
 msgid "Username"
 msgstr "Benutzername"
 
-#: views/html/introduction/index.tpl:10 views/html/introduction/index.tpl:11
+#: views/html/error/index.tpl:10 views/html/error/index.tpl:11
+#: views/html/introduction/index.tpl:8 views/html/introduction/index.tpl:9
 #: views/html/users/create.tpl:14 views/html/users/create.tpl:15
 #: views/html/users/edit.tpl:14 views/html/users/edit.tpl:15
 #: views/html/users/login.tpl:11 views/html/users/login.tpl:12
@@ -307,13 +328,17 @@ msgstr "Benutzername"
 msgid "Password"
 msgstr "Passwort"
 
-#: views/html/introduction/index.tpl:14
+#: views/html/error/index.tpl:15 views/html/introduction/index.tpl:12
 msgid "or"
 msgstr "oder"
 
-#: views/html/introduction/index.tpl:14
+#: views/html/error/index.tpl:15 views/html/introduction/index.tpl:12
 msgid "register yourself"
 msgstr "registriere dich"
+
+#: views/html/introduction/index.tpl:1
+msgid "Introduction"
+msgstr "Einführung"
 
 #: views/html/library/index.tpl:9 views/html/library/topic.tpl:8
 msgid "Questtopics"
@@ -370,7 +395,7 @@ msgstr "Titel"
 msgid "Name"
 msgstr "Name"
 
-#: views/html/quests/create.tpl:14 views/html/quests/index.tpl:15
+#: views/html/quests/create.tpl:14 views/html/quests/index.tpl:12
 msgid "Questgroup"
 msgstr "Questgruppe"
 
@@ -386,23 +411,19 @@ msgstr "Einstiegstext"
 msgid "Wrong text"
 msgstr "Text für falsche Antwort"
 
-#: views/html/quests/create.tpl:37 views/html/quests/quest.tpl:55
+#: views/html/quests/create.tpl:37 views/html/quests/quest.tpl:56
 msgid "Task"
 msgstr "Aufgabe"
 
-#: views/html/quests/index.tpl:21
-msgid "Questname"
-msgstr "Questname"
-
-#: views/html/quests/index.tpl:24
+#: views/html/quests/index.tpl:19
 msgid "Questtype"
 msgstr "Questtyp"
 
-#: views/html/quests/index.tpl:47
+#: views/html/quests/index.tpl:27
 msgid "Apply filters"
 msgstr "Filter anwenden"
 
-#: views/html/quests/index.tpl:48
+#: views/html/quests/index.tpl:28
 msgid "Reset filters"
 msgstr "Filter zurücksetzen"
 
@@ -411,27 +432,27 @@ msgstr "Filter zurücksetzen"
 msgid "Quest completed. You have earned %d XPs."
 msgstr "Quest abgeschlossen. Du hast %d XPs erhalten."
 
-#: views/html/quests/quest.tpl:60
+#: views/html/quests/quest.tpl:62
 msgid "Task already successfully solved"
 msgstr "Du hast die Aufgabe bereits erfolgreich gelöst"
 
-#: views/html/quests/quest.tpl:63
+#: views/html/quests/quest.tpl:65
 msgid "Show answer"
 msgstr "Lösung anzeigen"
 
-#: views/html/quests/quest.tpl:64
+#: views/html/quests/quest.tpl:66
 msgid "Skip task"
 msgstr "Aufgabe überspringen"
 
-#: views/html/quests/quest.tpl:69
+#: views/html/quests/quest.tpl:72
 msgid "continue"
 msgstr "fortfahren"
 
-#: views/html/quests/quest.tpl:76
+#: views/html/quests/quest.tpl:79
 msgid "Continuation"
 msgstr "Fortsetzung"
 
-#: views/html/quests/quest.tpl:82 views/html/quests/quest.tpl:95
+#: views/html/quests/quest.tpl:85 views/html/quests/quest.tpl:98
 msgid "Quest"
 msgstr "Quest"
 
@@ -440,7 +461,7 @@ msgstr "Quest"
 msgid "Submission of %s"
 msgstr "Lösung von %s"
 
-#: views/html/quests/submissions.tpl:15
+#: views/html/quests/submissions.tpl:11
 msgid "submitted"
 msgstr "eingereicht"
 
@@ -651,6 +672,9 @@ msgstr "Registrieren"
 msgid "Roles"
 msgstr "Rollen"
 
+#~ msgid "Questname"
+#~ msgstr "Questname"
+
 #, fuzzy
 #~ msgid "achieved at %s"
 #~ msgstr "erhalten am: %s"
@@ -700,6 +724,3 @@ msgstr "Rollen"
 
 #~ msgid "This Quest is optional"
 #~ msgstr "Diese Quest ist optional"
-
-#~ msgid "created by %s on %s at %s"
-#~ msgstr "erstellt von %s am %s um %s Uhr"
