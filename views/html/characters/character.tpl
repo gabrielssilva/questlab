@@ -3,10 +3,10 @@
 	<img src="<?=$linker->link(array('media','seminaryheader',$seminary['url']))?>">
 </div>
 <?php endif ?>
-<h1><a href="<?=$linker->link(array('seminaries',$seminary['url']))?>"><?=$seminary['title']?></a></h1>
-<h2><a href="<?=$linker->link(array('index',$seminary['url']),1)?>"><?=_('Characters')?></a></h2>
-<h3><i class="fa fa-user fa-fw"></i><?=$character['name']?></h3>
-
+<ul class="breadcrumbs">
+	<li><a href="<?=$linker->link(array('seminaries',$seminary['url']))?>"><?=$seminary['title']?></a></li>
+</ul>
+<h1><i class="fa fa-user fa-fw"></i><?=$character['name']?></h1>
 <section class="cf">
 	<div class="cinfo">
 		<div class="cdata">
@@ -27,18 +27,13 @@
 			<p class="value"><?=$character['rank']?>.</p>
 			<p><small><?=_('Rank')?></small></p>
 		</div>
-
-		<h1><i class="fa fa-trophy fa-fw"></i><?=_('Achievements')?></h1>
-		<ul class="cranks">
-			<?php foreach($achievements as &$achievement) : ?>
-			<li>
-				<?php if(!is_null($achievement['achieved_achievementsmedia_id'])) : ?>
-				<a href="<?=$linker->link(array('achievements','index',$seminary['url']),0,true,null,true,$achievement['url'])?>" title="Achievement-Titel"><img src="<?=$linker->link(array('media','achievement',$seminary['url'],$achievement['url']))?>"></a>
-				<?php endif ?>
-				<p><a href="<?=$linker->link(array('achievements','index',$seminary['url']),0,true,null,true,$achievement['url'])?>"><?=$achievement['title']?></a></p>
-				<p><small><?=sprintf(_('achieved at: %s'), $dateFormatter->format(new \DateTime($achievement['created'])))?></small></p>
-			</li>
-			<?php endforeach ?>
+		<h2><i class="fa fa-bookmark fa-fw"></i>Meilensteine</h2>
+		<ul class="crewards">
+			<li><p class="unlocked fwb"><i class="fa fa-check-circle fa-fw"></i>Aktivität</p><p>Erreiche bis zum 31.05.2014 23:59 Uhr mindestens Level 6 (140 XP)</p></li>
+			<li><p class="unlocked fwb"><i class="fa fa-check-circle fa-fw"></i>Beteiligungsnachweis</p><p>Erreiche bis zum 31.07.2014 23:59 Uhr mindestens Level 10 (557 XP)</p></li>
+			<li><p class="unlocked fwb"><i class="fa fa-check-circle fa-fw"></i>0.3 Notenbonus</p><p>Erreiche bis zum 31.08.2014 23:59 Uhr mindestens Level 11 (721 XP)</p></li>
+			<li><p class="fwb"><i class="fa fa-lock fa-fw"></i>0.7 Notenbonus</p><p>Erreiche bis zum 31.08.2014 23:59 Uhr mindestens Level 12 (902 XP)</p></li>
+			<li><p class="fwb"><i class="fa fa-lock fa-fw"></i>1.0 Notenbonus</p><p>Erreiche bis zum 31.08.2014 23:59 Uhr mindestens Level 13 (1127 XP)</p></li>
 		</ul>
 	</div>
 	<div class="cportrait">
@@ -48,7 +43,7 @@
 
 <div class="cf">
 	<section class="fll48">
-		<h1><i class="fa fa-users fa-fw"></i><?=_('Character Groups')?></h1>
+		<h2><i class="fa fa-users fa-fw"></i><?=_('Character Groups')?></h2>
 		<ul class="cgroups cf">
 			<?php foreach($groups as &$group) : ?>
 			<li class="cf">
@@ -58,9 +53,8 @@
 			<?php endforeach ?>
 		</ul>
 	</section>
-
 	<section class="flr48">
-		<h1><i class="fa fa-list fa-fw"></i><?=_('Ranking')?></h1>
+		<h2><i class="fa fa-list fa-fw"></i><?=_('Ranking')?></h2>
 		<ul class="cranks">
 			<?php foreach($ranking['superior'] as $index => &$rankCharacter) : ?>
 			<li>
@@ -86,7 +80,7 @@
 </div>
 
 <section>
-	<h1><i class="fa fa-book fa-fw"></i><?=_('Topic progress')?></h1>
+	<h2><i class="fa fa-book fa-fw"></i><?=_('Topic progress')?></h2>
 	<ul class="ctopics cf">
 		<?php foreach($questtopics as &$topic) : ?>
 		<li>

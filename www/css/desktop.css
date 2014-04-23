@@ -153,10 +153,10 @@ input[type="submit"][disabled]{text-shadow:1px 2px #d48c4e;background:#f9ac69;bo
 .cdata .xpbar,.ctopics .xpbar{width:100%}
 .cdata .value{font-size:1.5em;margin:0;padding-top:8px}
 
-.crewards li{background:#fff;margin-bottom:5px;padding:15px 15px 1px 15px;border-radius:3px;font-size:.875em}
+.crewards li{background:#fff;margin-bottom:5px;padding:15px 15px 10px 15px;border-radius:3px;font-size:.875em}
 .crewards li:last-child{margin-bottom:0}
 .crewards li .fa{font-size:1.25em}
-.crewards .locked{color:#aca8a1;padding:10px;}
+.crewards p{margin-bottom:5px}
 
 .cgroups img{float:left;border-radius:3px;margin-right:5px;height:35px}
 .cgroups p{float:left;0;padding:0 12px;line-height:35px;background:#fff;border-radius:0 3px 3px 0}
