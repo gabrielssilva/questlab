@@ -276,6 +276,8 @@ input[type="submit"][disabled]{text-shadow:1px 2px #d48c4e;background:#f9ac69;bo
 .opponent .fa{font-size:1.25em;color:#c7135b;padding-right:0}
 .bossfight .option{background:#fff;margin-bottom:10px;padding:15px 15px 5px;border-radius:3px}
 
+#dragZone{background:#eae8e4;box-sizing:border-box;padding:5px 5px 0 5px}
+.drop{background:#eae8e4}
 
 /** Media Queries **/
 
