@@ -242,6 +242,9 @@
 				}
 			}
 			
+			// Get XP-levels
+			$xplevels = $this->Characters->getXPLevelsForSeminary($seminary['id']);
+			
 			
 			// Pass data to view
 			$this->set('seminary', $seminary);
@@ -250,6 +253,7 @@
 			$this->set('charactername', $charactername);
 			$this->set('validation', $validation);
 			$this->set('fieldsValidation', $fieldsValidation);
+			$this->set('xplevels', $xplevels);
 		}
 		
 		

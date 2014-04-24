@@ -40,12 +40,14 @@
 		<legend><?=_('Character properties')?></legend>
 		<label for="charactername"><?=_('Character name')?>:</label>
 		<input type="text" name="charactername" placeholder="<?=_('Character name')?>" required="required" value="<?=$charactername?>" /><br />
-		<label for="type"><?=_('Character type')?>:</label>
-		<select name="type" required="required">
+		<ul>
 			<?php foreach($types as &$type) : ?>
-			<option value="<?=$type['url']?>" <?php if(array_key_exists('selected', $type) && $type['selected']) : ?>selected="selected"<?php endif ?>><?=$type['name']?></option>
+			<input id="type-<?=$type['id']?>" name="type" type="radio" value="<?=$type['url']?>" <?php if(array_key_exists('selected', $type) && $type['selected']) : ?>checked="checked"<?php endif ?> />
+			<label for="type-<?=$type['id']?>">
+				<img id="avatar" src="<?=$linker->link(array('media','avatar',$seminary['url'],$type['url'],$xplevels[0]['level']))?>" />
+			</label>
 			<?php endforeach ?>
-		</select>
+		</ul>
 	</fieldset>
 	
 	<?php if($fieldsValidation !== true) : ?>

@@ -392,6 +392,19 @@
 		}
 		
 		
+		public function getXPLevelsForSeminary($seminaryId)
+		{
+			return $this->db->query(
+				'SELECT id, xps, level, name '.
+				'FROM xplevels '.
+				'WHERE seminary_id = ? '.
+				'ORDER BY level ASC',
+				'i',
+				$seminaryId
+			);
+		}
+		
+		
 		/**
 		 * Check if a Character name already exists.
 		 * 
