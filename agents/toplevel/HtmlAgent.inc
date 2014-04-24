@@ -50,7 +50,7 @@
 		private function setLanguage(\nre\core\Request $request)
 		{
 			// Set domain
-			$domain = \nre\configs\AppConfig::$app['name'];
+			$domain = \nre\configs\AppConfig::$app['genericname'];
 			
 			// Get language
 			$locale = $request->getGetParam('lang', 'language');
