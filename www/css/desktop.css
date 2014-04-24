@@ -133,6 +133,13 @@ input[type="submit"][disabled]{text-shadow:1px 2px #d48c4e;background:#f9ac69;bo
 .admin li a{padding:4px 15px;background:#5cb6bd;border-bottom:2px solid #50a0a6;color:#fff;border-radius:3px}
 .admin li a:hover{background:#62c5cd}
 
+.admnql{margin-top:30px}
+.admnql li{background:#fff;margin-bottom:8px;padding:5px 10px;border-radius:3px}
+.admnql p{margin:0}
+.admnql span{font-size:.875em;font-weight:normal;display:block}
+
+.admnqf label{margin:10px 0 5px}
+.admnqf select{font-size:0.875em}
 
 /** Login & Registration **/
 
@@ -280,6 +287,7 @@ input[type="submit"][disabled]{text-shadow:1px 2px #d48c4e;background:#f9ac69;bo
 #dragZone{background:#eae8e4;box-sizing:border-box;padding:5px 5px 0 5px}
 .drop{background:#eae8e4}
 
+
 /** Media Queries **/
 
 @media only screen and (min-width:480px){
@@ -297,6 +305,8 @@ input[type="submit"][disabled]{text-shadow:1px 2px #d48c4e;background:#f9ac69;bo
 .gchars li{width:32%}
 
 .achmnts .xpbar{width:89%}
+
+.admnql span{float:right}
 
 .libindx li{float:left;width:49%}
 .libindx li:nth-child(2n){float:right}
