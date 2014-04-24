@@ -260,11 +260,14 @@
 		public function getXPRank($seminaryId, $xps)
 		{
 			$data = $this->db->query(
-				'SELECT count(v_characters.id) AS c '.
+				'SELECT count(characters.id) AS c '.
 				'FROM charactertypes '.
-				'INNER JOIN v_characters ON v_characters.charactertype_id = charactertypes.id '.
-				'WHERE seminary_id = ? AND v_characters.xps > ?',
-				'id',
+				'INNER JOIN v_characters AS characters ON characters.charactertype_id = charactertypes.id '.
+				'INNER JOIN characters_characterroles ON characters_characterroles.character_id = characters.id '.
+				'INNER JOIN characterroles ON characterroles.id = characters_characterroles.characterrole_id AND characterroles.name = ? '.
+				'WHERE seminary_id = ? AND characters.xps > ?',
+				'sid',
+				'user',
 				$seminaryId, $xps
 			);
 			if(!empty($data)) {
@@ -290,10 +293,13 @@
 				'SELECT characters.id, characters.created, characters.charactertype_id, characters.name, characters.url, characters.xps, characters.xplevel, characters.avatar_id, charactertypes.name AS charactertype_name, charactertypes.url AS charactertype_url '.
 				'FROM v_characters AS characters  '.
 				'INNER JOIN charactertypes ON charactertypes.id = characters.charactertype_id '.
+				'INNER JOIN characters_characterroles ON characters_characterroles.character_id = characters.id '.
+				'INNER JOIN characterroles ON characterroles.id = characters_characterroles.characterrole_id AND characterroles.name = ? '.
 				'WHERE charactertypes.seminary_id = ? AND characters.xps > ? '.
 				'ORDER BY characters.xps ASC '.
 				'LIMIT ?',
-				'idd',
+				'sidd',
+				'user',
 				$seminaryId, $xps, $count
 			);
 		}
@@ -313,10 +319,13 @@
 				'SELECT characters.id, characters.created, characters.charactertype_id, characters.name, characters.url, characters.xps, characters.xplevel, characters.avatar_id, charactertypes.name AS charactertype_name, charactertypes.url AS charactertype_url '.
 				'FROM v_characters AS characters  '.
 				'INNER JOIN charactertypes ON charactertypes.id = characters.charactertype_id '.
+				'INNER JOIN characters_characterroles ON characters_characterroles.character_id = characters.id '.
+				'INNER JOIN characterroles ON characterroles.id = characters_characterroles.characterrole_id AND characterroles.name = ? '.
 				'WHERE charactertypes.seminary_id = ? AND characters.xps < ? '.
 				'ORDER BY characters.xps DESC '.
 				'LIMIT ?',
-				'idd',
+				'sidd',
+				'user',
 				$seminaryId, $xps, $count
 			);
 		}

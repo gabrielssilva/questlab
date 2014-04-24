@@ -24,7 +24,7 @@
 		 * 
 		 * @var array
 		 */
-		public $models = array('seminaries', 'characters', 'users', 'charactergroups', 'charactertypes', 'seminarycharacterfields', 'avatars', 'media', 'questtopics');
+		public $models = array('seminaries', 'characters', 'users', 'charactergroups', 'charactertypes', 'seminarycharacterfields', 'avatars', 'media', 'quests', 'questgroups', 'questtopics');
 		/**
 		 * Required components
 		 * 
@@ -139,6 +139,16 @@
 				$questtopic['characterQuestcount'] = $this->Questtopics->getCharacterQuestCountForQuesttopic($questtopic['id'], $character['id']);
 			}
 			
+			// Get “last” Quest
+			$lastQuest = null;
+			if(count(array_intersect(array('admin', 'moderator'), \hhu\z\controllers\SeminaryController::$character['characterroles'])) > 0)
+			{
+				$lastQuest = $this->Quests->getLastQuestForCharacter($character['id']);
+				if(!is_null($lastQuest)) {
+					$lastQuest['questgroup'] = $this->Questgroups->getQuestgroupById($lastQuest['questgroup_id']);
+				}
+			}
+			
 			
 			// Pass data to view
 			$this->set('seminary', $seminary);
@@ -150,6 +160,7 @@
 			$this->set('milestones', $milestones);
 			$this->set('ranking', $ranking);
 			$this->set('questtopics', $questtopics);
+			$this->set('lastQuest', $lastQuest);
 		}
 		
 		
@@ -279,6 +290,7 @@
 			$seminary = $this->Seminaries->getSeminaryByUrl($seminaryUrl);
 			
 			// Do action
+			$selectedCharacters = array();
 			if($this->request->getRequestMethod() == 'POST' && !empty($this->request->getPostParam('actions')) && !empty($this->request->getPostParam('characters')))
 			{
 				$actions = $this->request->getPostParam('actions');
@@ -342,6 +354,7 @@
 			// Pass data to view
 			$this->set('seminary', $seminary);
 			$this->set('characters', $characters);
+			$this->set('selectedCharacters', $selectedCharacters);
 		}
 		
 		
