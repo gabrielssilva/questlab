@@ -64,15 +64,15 @@
 		<?php switch($field['type_title']) {
 			case 'Number':
 			case 'Varchar': ?>
-				<input type="text" name="fields[<?=$field['url']?>]" pattern="<?=(!empty($field['regex'])) ? substr($field['regex'],1,strrpos($field['regex'],$field['regex'][0])-1) : ''?>" <?php if($field['required']) : ?>required="required"<?php endif ?>/>
+				<input type="text" name="fields[<?=$field['url']?>]" pattern="<?=(!empty($field['regex'])) ? substr($field['regex'],1,strrpos($field['regex'],$field['regex'][0])-1) : ''?>" <?php if(array_key_exists('uservalue', $field)) : ?>value="<?=$field['uservalue']?>"<?php endif ?> <?php if($field['required']) : ?>required="required"<?php endif ?>/>
 			<?php break;
 			case 'Text': ?>
-				<textarea name="fields[<?=$field['url']?>]"></textarea>
+				<textarea name="fields[<?=$field['url']?>]"><?=(array_key_exists('uservalue', $field) ? $field['uservalue'] : null)?></textarea>
 			<?php break;
 			case 'List': ?>
 				<select name="fields[<?=$field['url']?>]">
 					<?php foreach(explode('|', substr($field['regex'],1,strrpos($field['regex'],$field['regex'][0])-1)) as $option) : ?>
-					<option value="<?=mb_eregi_replace('\\\\','',$option)?>"><?=mb_eregi_replace('\\\\','',$option)?></option>
+					<option value="<?=mb_eregi_replace('\\\\','',$option)?>" <?php if(array_key_exists('uservalue', $field) && $field['uservalue'] == mb_eregi_replace('\\\\','',$option)) : ?>selected="selected"<?php endif ?>><?=mb_eregi_replace('\\\\','',$option)?></option>
 					<?php endforeach?>
 				</select>
 			<?php break;

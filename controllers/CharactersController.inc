@@ -199,7 +199,7 @@
 					}
 				}
 				if(is_null($typeIndex)) {
-					throw new \nre\exceptions\ParamsNotValidException($characterType);
+					throw new \nre\exceptions\ParamsNotValidException($typeIndex);
 				}
 				
 				// Validate fields
@@ -209,6 +209,7 @@
 					if(!array_key_exists($field['url'], $fieldsValues)) {
 						throw new \nre\exceptions\ParamsNotValidException($index);
 					}
+					$field['uservalue'] = $fieldsValues[$field['url']];
 					if($field['required'])
 					{
 						$fieldValidation = $this->Validation->validate($fieldsValues[$field['url']], array('regex'=>$field['regex']));
