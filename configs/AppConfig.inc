@@ -156,7 +156,7 @@
 			// z/<Seminary>/<Questgroup>/<Quest>			⇒ z/quests/quest/<Seminary>/<Questgroup>/<Quest>
 			array('^([^/]+)/([^/]+)/([^/]+)/?$',				'quests/quest/$1/$2/3',			true)*/
 			array('characters/(?!(index|character|register|manage))',	'characters/index/$1',			true),
-			array('charactergroups/(?!(index|groupsgroup|group))',		'charactergroups/index/$1',		true),
+			array('charactergroups/(?!(index|groupsgroup|group|managegroup))',	'charactergroups/index/$1',		true),
 			array('charactergroupsquests/(?!(quest))',			'charactergroupsquests/quest/$1',	true),
 			array('media/(.*)',						'media/$1?layout=binary',		false),
 			array('uploads/(.*)',						'uploads/$1?layout=binary',		false),

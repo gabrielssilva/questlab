@@ -8,6 +8,13 @@
 	<li><i class="fa fa-chevron-right fa-fw"></i><a href="<?=$linker->link(array('index',$seminary['url']),1)?>"><?=_('Character Groups')?></a></li>
 	<li><i class="fa fa-chevron-right fa-fw"></i><a href="<?=$linker->link(array('groupsgroup',$seminary['url'],$groupsgroup['url']),1)?>"><?=$groupsgroup['name']?></a></li>
 </ul>
+
+<?php if(count(array_intersect(array('admin', 'moderator'), \hhu\z\controllers\SeminaryController::$character['characterroles'])) > 0) : ?>
+<nav class="admin">
+	<li><a href="<?=$linker->link(array('managegroup',$seminary['url'],$groupsgroup['url'],$group['url']),1)?>"><?=_('Manage')?></a></li>
+</nav>
+<?php endif ?>
+
 <div class="gbanner cf">
 	<img src="http://s1.directupload.net/images/140325/3eqybn4i.png" class="gbanner">
 	<h1><?=$group['name']?></h1>

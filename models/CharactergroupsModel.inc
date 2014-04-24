@@ -192,6 +192,44 @@
 			return 1;
 		}
 		
+		
+		/**
+		 * Add a Character to a Character group.
+		 * 
+		 * @param	int	$groupId	ID of Character group
+		 * @param	int	$characterId	ID of Character to add
+		 */
+		public function addCharacterToCharactergroup($groupId, $characterId)
+		{
+			$this->db->query(
+				'INSERT INTO characters_charactergroups '.
+				'(character_id, charactergroup_id) '.
+				'VALUES '.
+				'(?, ?)',
+				'ii',
+				$characterId,
+				$groupId
+			);
+		}
+		
+		
+		/**
+		 * Remove a Character from a Character group.
+		 * 
+		 * @param	int	$groupId	ID of Character group
+		 * @param	int	$characterId	ID of Character to remove
+		 */
+		public function removeCharacterFromCharactergroup($groupId, $characterId)
+		{
+			$this->db->query(
+				'DELETE FROM characters_charactergroups '.
+				'WHERE charactergroup_id = ? AND character_id = ?',
+				'ii',
+				$groupId,
+				$characterId
+			);
+		}
+		
 	}
 
 ?>
