@@ -3,9 +3,10 @@
 	<img src="<?=$linker->link(array('media','seminaryheader',$seminary['url']))?>">
 </div>
 <?php endif ?>
-<h1><?=$seminary['title']?></h1>
-<h2><?=_('Create Character')?></h2>
-
+<ul class="breadcrumbs">
+	<li><a href="<?=$linker->link(array('seminaries',$seminary['url']))?>"><?=$seminary['title']?></a></li>
+</ul>
+<h1><?=_('Create Character')?></h1>
 <form method="post" action="" class="logreg">
 	<?php if($validation !== true) : ?>
 	<ul>
@@ -37,15 +38,18 @@
 	</ul>
 	<?php endif ?>
 	<fieldset>
-		<legend><?=_('Character properties')?></legend>
+		<legend class="fwb"><?=_('Character properties')?></legend>
 		<label for="charactername"><?=_('Character name')?>:</label>
 		<input type="text" name="charactername" placeholder="<?=_('Character name')?>" required="required" value="<?=$charactername?>" /><br />
-		<ul>
+		<ul class="avatar">
 			<?php foreach($types as &$type) : ?>
-			<input id="type-<?=$type['id']?>" name="type" type="radio" value="<?=$type['url']?>" <?php if(array_key_exists('selected', $type) && $type['selected']) : ?>checked="checked"<?php endif ?> />
-			<label for="type-<?=$type['id']?>">
-				<img id="avatar" src="<?=$linker->link(array('media','avatar',$seminary['url'],$type['url'],$xplevels[0]['level']))?>" />
-			</label>
+			<li>
+				<label for="type-<?=$type['id']?>">
+					<p>Mensch</p>
+					<img id="avatar" src="<?=$linker->link(array('media','avatar',$seminary['url'],$type['url'],$xplevels[0]['level']))?>" />
+				</label>
+				<input id="type-<?=$type['id']?>" name="type" type="radio" value="<?=$type['url']?>" <?php if(array_key_exists('selected', $type) && $type['selected']) : ?>checked="checked"<?php endif ?> />
+			</li>
 			<?php endforeach ?>
 		</ul>
 	</fieldset>
@@ -58,7 +62,7 @@
 	</ul>
 	<?php endif ?>
 	<fieldset>
-		<legend><?=_('Seminary fields')?></legend>
+		<legend class="fwb"><?=_('Seminary fields')?></legend>
 		<?php foreach($fields as &$field) : ?>
 		<label for="fields[<?=$field['url']?>]"><?=$field['title']?>:</label>
 		<?php switch($field['type_title']) {

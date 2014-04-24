@@ -142,6 +142,8 @@ input[type="submit"][disabled]{text-shadow:1px 2px #d48c4e;background:#f9ac69;bo
 .logreg input{margin:5px 0 15px}
 .logreg .cta{display:block}
 
+.avatar li{display:inline-block;margin-right:5px;text-align:center}
+.avatar img{border-radius:3px}
 
 /** Character Profile **/
 
