@@ -20,6 +20,13 @@
 	class QuestgroupsModel extends \hhu\z\Model
 	{
 		/**
+		 * Questgroup-status: Entered
+		 * 
+		 * @var int;
+		 */
+		const QUESTGROUP_STATUS_ENTERED = 0;
+		
+		/**
 		 * Required models
 		 * 
 		 * @var array
@@ -251,6 +258,42 @@
 			
 			
 			return $previousQuestgroup;
+		}
+		
+		
+		/**
+		 * Mark a Questgroup as entered for a Character.
+		 * 
+		 * @param	int	$questId	ID of Quest to mark as entered
+		 * @param	int	$characterId	ID of Character that entered the Quest
+		 */
+		public function setQuestgroupEntered($questgroupId, $characterId)
+		{
+			$this->setQuestgroupStatus($questgroupId, $characterId, self::QUESTGROUP_STATUS_ENTERED, false);
+		}
+		
+		
+		/**
+		 * Determine if the given Character has entered a Questgroup.
+		 * 
+		 * @param	int	$questgroupId	ID of Questgroup to check
+		 * @param	int	$characterId	ID of Character to check
+		 * @result	boolean			Whether Character has entered the Questgroup or not
+		 */
+		public function hasCharacterEnteredQuestgroup($questgroupId, $characterId)
+		{
+			$count = $this->db->query(
+				'SELECT count(id) AS c '.
+				'FROM questgroups_characters '.
+				'WHERE questgroup_id = ? AND character_id = ? AND status IN (?)',
+				'iii',
+				$questgroupId,
+				$characterId,
+				self::QUESTGROUP_STATUS_ENTERED
+			);
+			
+			
+			return (!empty($count) && intval($count[0]['c']) > 0);
 		}
 		
 		
@@ -655,6 +698,47 @@
 			
 			
 			return $data[0];
+		}
+		
+		
+		/**
+		 * Mark a Questgroup for a Character.
+		 * 
+		 * @param	int	$questgroupId	ID of Questgroup to mark
+		 * @param	int	$characterId	ID of Character to mark the Questgroup for
+		 * @param	int	$status		Questgroup status to mark
+		 * @param	boolean	$repeated	Insert although status is already set for this Questgroup and Character
+		 */
+		private function setQuestgroupStatus($questgroupId, $characterId, $status, $repeated=true)
+		{
+			// Check if status is already set
+			if(!$repeated)
+			{
+				$count = $this->db->query(
+					'SELECT count(*) AS c '.
+					'FROM questgroups_characters '.
+					'WHERE questgroup_id = ? AND character_id = ? AND status = ?',
+					'iii',
+					$questgroupId,
+					$characterId,
+					$status
+				);
+				if(!empty($count) && intval($count[0]['c']) > 0) {
+					return;
+				}
+			}
+			
+			// Set status
+			$this->db->query(
+				'INSERT INTO questgroups_characters '.
+				'(questgroup_id, character_id, status) '.
+				'VALUES '.
+				'(?, ?, ?) ',
+				'iii',
+				$questgroupId,
+				$characterId,
+				$status
+			);
 		}
 		
 	}

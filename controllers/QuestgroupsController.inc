@@ -81,6 +81,9 @@
 				}
 			}
 			
+			// Set status “entered”
+			$this->Questgroups->setQuestgroupEntered($questgroup['id'], $character['id']);
+			
 			// Get child Questgroupshierarchy
 			$childQuestgroupshierarchy = null;
 			if(!empty($questgroup['hierarchy']))
@@ -160,10 +163,8 @@
 						$relatedQuestgroups = $this->Questgroups->getRelatedQuestsgroupsOfQuest($currentQuest['id']);
 						foreach($relatedQuestgroups as &$relatedQuestgroup)
 						{
-							$relatedQuestgroup = $this->Questgroups->getQuestgroupById($relatedQuestgroup['id']);
-							$firstQuest = $this->Quests->getFirstQuestOfQuestgroup($relatedQuestgroup['id']);
-							if(!empty($firstQuest) && $this->Quests->hasCharacterEnteredQuest($firstQuest['id'], $character['id'])) {
-								$currentQuest['relatedQuestgroups'][] = $relatedQuestgroup;
+							if($this->Questgroups->hasCharacterEnteredQuestgroup($relatedQuestgroup['id'], $character['id'])) {
+								$currentQuest['relatedQuestgroups'][] = $this->Questgroups->getQuestgroupById($relatedQuestgroup['id']);
 							}
 						}
 						
