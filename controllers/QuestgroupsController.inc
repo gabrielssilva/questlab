@@ -160,6 +160,7 @@
 						$relatedQuestgroups = $this->Questgroups->getRelatedQuestsgroupsOfQuest($currentQuest['id']);
 						foreach($relatedQuestgroups as &$relatedQuestgroup)
 						{
+							$relatedQuestgroup = $this->Questgroups->getQuestgroupById($relatedQuestgroup['id']);
 							$firstQuest = $this->Quests->getFirstQuestOfQuestgroup($relatedQuestgroup['id']);
 							if(!empty($firstQuest) && $this->Quests->hasCharacterEnteredQuest($firstQuest['id'], $character['id'])) {
 								$currentQuest['relatedQuestgroups'][] = $relatedQuestgroup;
