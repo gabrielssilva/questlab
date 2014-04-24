@@ -181,7 +181,7 @@
 		 * @param	int	$conut		Amount of Characters to retrieve
 		 * @return	array			List of Characters
 		 */
-		public function getCharactersWithMostAchievements($seminaryId, $count)
+		public function getCharactersWithMostAchievements($seminaryId, $count, $alsoWithDeadline=true)
 		{
 			return $this->db->query(
 				'SELECT characters.id, characters.created, characters.charactertype_id, characters.name, characters.url, characters.user_id, characters.xps, characters.xplevel, characters.avatar_id, charactertypes.name AS charactertype_name, charactertypes.url AS charactertype_url, count(DISTINCT achievement_id) AS c '.
@@ -189,7 +189,8 @@
 				'LEFT JOIN achievements ON achievements.id = achievements_characters.achievement_id '.
 				'LEFT JOIN v_characters AS characters ON characters.id = achievements_characters.character_id '.
 				'LEFT JOIN charactertypes ON charactertypes.id = characters.charactertype_id '.
-				'WHERE achievements.seminary_id = ? '.
+				'WHERE achievements.seminary_id = ? AND deadline IS NULL '.
+				(!$alsoWithDeadline ? 'AND achievements.deadline IS NULL ' : null).
 				'GROUP BY character_id '.
 				'ORDER BY count(DISTINCT achievement_id) DESC '.
 				'LIMIT ?',

@@ -119,6 +119,12 @@
 			// Get Achievements
 			$achievements = $this->Achievements->getAchievedAchievementsForCharacter($character['id']);
 			
+			// Get Achievements with deadline (milestones)
+			$milestones = $this->Achievements->getDeadlineAchievements($seminary['id']);
+			foreach($milestones as &$milestone) {
+				$milestone['achieved'] = $this->Achievements->hasCharacterAchievedAchievement($milestone['id'], $character['id']);
+			}
+			
 			// Get ranking
 			$ranking = array(
 				'superior' => $this->Characters->getSuperiorCharacters($seminary['id'], $character['xps'], \nre\configs\AppConfig::$misc['ranking_range']),
@@ -141,6 +147,7 @@
 			$this->set('user', $user);
 			$this->set('groups', $groups);
 			$this->set('achievements', $achievements);
+			$this->set('milestones', $milestones);
 			$this->set('ranking', $ranking);
 			$this->set('questtopics', $questtopics);
 		}

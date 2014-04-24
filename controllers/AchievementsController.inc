@@ -62,19 +62,19 @@
 			$character = SeminaryController::$character;
 			
 			// Get seldom Achievements
-			$seldomAchievements = $this->Achievements->getSeldomAchievements($seminary['id'], \nre\configs\AppConfig::$misc['achievements_range']);
+			$seldomAchievements = $this->Achievements->getSeldomAchievements($seminary['id'], \nre\configs\AppConfig::$misc['achievements_range'], false);
 			foreach($seldomAchievements as &$achievement) {
 				$achievement['achieved'] = $this->Achievements->hasCharacterAchievedAchievement($achievement['id'], $character['id']);
 			}
 			
 			// Get Characters with the most Achievements
-			$successfulCharacters = $this->Characters->getCharactersWithMostAchievements($seminary['id'], \nre\configs\AppConfig::$misc['achievements_range']);
+			$successfulCharacters = $this->Characters->getCharactersWithMostAchievements($seminary['id'], \nre\configs\AppConfig::$misc['achievements_range'], false);
 			
 			// Get achieved Achievements
-			$achievedAchievements = $this->Achievements->getAchievedAchievementsForCharacter($character['id']);
+			$achievedAchievements = $this->Achievements->getAchievedAchievementsForCharacter($character['id'], false);
 			
 			// Get unachieved Achievements
-			$unachievedAchievements = $this->Achievements->getUnachhievedAchievementsForCharacter($seminary['id'], $character['id'], true);
+			$unachievedAchievements = $this->Achievements->getUnachhievedAchievementsForCharacter($seminary['id'], $character['id'], true, false);
 			foreach($unachievedAchievements as &$achievement)
 			{
 				// Get Character progress

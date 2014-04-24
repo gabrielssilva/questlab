@@ -27,13 +27,18 @@
 			<p class="value"><?=$character['rank']?>.</p>
 			<p><small><?=_('Rank')?></small></p>
 		</div>
-		<h2><i class="fa fa-bookmark fa-fw"></i>Meilensteine</h2>
+		<h2><i class="fa fa-bookmark fa-fw"></i><?=_('Milestones')?></h2>
 		<ul class="crewards">
-			<li><p class="unlocked fwb"><i class="fa fa-check-circle fa-fw"></i>Aktivität</p><p>Erreiche bis zum 31.05.2014 23:59 Uhr mindestens Level 6 (140 XP)</p></li>
-			<li><p class="unlocked fwb"><i class="fa fa-check-circle fa-fw"></i>Beteiligungsnachweis</p><p>Erreiche bis zum 31.07.2014 23:59 Uhr mindestens Level 10 (557 XP)</p></li>
-			<li><p class="unlocked fwb"><i class="fa fa-check-circle fa-fw"></i>0.3 Notenbonus</p><p>Erreiche bis zum 31.08.2014 23:59 Uhr mindestens Level 11 (721 XP)</p></li>
-			<li><p class="fwb"><i class="fa fa-lock fa-fw"></i>0.7 Notenbonus</p><p>Erreiche bis zum 31.08.2014 23:59 Uhr mindestens Level 12 (902 XP)</p></li>
-			<li><p class="fwb"><i class="fa fa-lock fa-fw"></i>1.0 Notenbonus</p><p>Erreiche bis zum 31.08.2014 23:59 Uhr mindestens Level 13 (1127 XP)</p></li>
+			<?php foreach($milestones as &$milestone) : ?>
+			<li>
+				<?php if($milestone['achieved']) : ?>
+				<p class="unlocked fwb"><i class="fa fa-check-circle fa-fw"></i><?=$milestone['title']?></p>
+				<?php else : ?>
+				<p class="fwb"><i class="fa fa-lock fa-fw"></i><?=$milestone['title']?></p>
+				<?php endif ?>
+				<p><?=\hhu\z\Utils::t($milestone['description'])?></p>
+			</li>
+			<?php endforeach ?>
 		</ul>
 	</div>
 	<div class="cportrait">
