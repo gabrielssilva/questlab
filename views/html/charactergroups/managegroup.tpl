@@ -37,7 +37,7 @@
 			</li>
 			<?php endforeach ?>
 		</ul>
-		<input type="submit" name="actions[removecharacters]" value="<?=_('Remove Character')?>" />
+		<input type="submit" name="actions[removecharacters]" value="<?=_('Remove Characters')?>" />
 	</fieldset>
 	<fieldset>
 		<input type="text" placeholder="<?=_('Filter Characters')?>" onkeyup="filter_characters(this)" /><br />
@@ -46,7 +46,7 @@
 			<option value="<?=$character['id']?>"><?=$character['name']?></option>
 			<?php endforeach ?>
 		</select>
-		<input type="submit" name="actions[addcharacters]" value="<?=_('Add Character')?>" />
+		<input type="submit" name="actions[addcharacters]" value="<?=_('Add Characters')?>" />
 	</fieldset>
 </section>
 

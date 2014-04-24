@@ -5,7 +5,7 @@
 <?php endif ?>
 <ul class="breadcrumbs">
 	<li><a href="<?=$linker->link(array('seminaries',$seminary['url']))?>"><?=$seminary['title']?></a></li>
-	<li><i class="fa fa-chevron-right fa-fw"></i><a href="<?=$linker->link(array('index',$seminary['url']),1)?>"><?=_('Questtopics')?></a></li>
+	<li><i class="fa fa-chevron-right fa-fw"></i><a href="<?=$linker->link(array('index',$seminary['url']),1)?>"><?=_('Library')?></a></li>
 </ul>
 <h1><i class="fa fa-book fa-fw"></i><?=$questtopic['title']?></h1>
 <div class="libindxpr cf">

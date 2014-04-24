@@ -3,7 +3,7 @@
 	<img src="<?=$linker->link(array('media','avatar',$seminary['url'],$character['charactertype_url'],$character['xplevel']['level']))?>" class="char">
 	<ul class="charstats">
 		<li><i class="fa fa-caret-right fa-fw"></i><?=('Level')?> <?=$character['xplevel']['level']?></li>
-		<li><i class="fa fa-caret-right fa-fw"></i><?=$character['xps']?> XPs</li>
+		<li><i class="fa fa-caret-right fa-fw"></i><?=sprintf(_('%d XPs'), $character['xps'])?></li>
 		<li><i class="fa fa-caret-right fa-fw"></i><?=$character['rank']?>. <?=_('Rank')?></li>
 		<li><i class="fa fa-caret-right fa-fw"></i><a href="<?=$linker->link(array('characters','character',$seminary['url'],$character['url']))?>">Zum Profil</a></li>
 	</ul>
@@ -18,7 +18,7 @@
 
 <?php if(!is_null($lastAchievement)) : ?>
 <section>
-	<h1><?=('Last Achievement')?></h1>
+	<h1><?=_('Last Achievement')?></h1>
 	<ul class="cranks">
 		<li>
 			<?php if(!is_null($lastAchievement['achieved_achievementsmedia_id'])) : ?>
@@ -39,7 +39,7 @@
 		<li>
 			<a href="#" title="Achievement-Titel"><img src="<?=$linker->link(array('media','avatar',$seminary['url'],$member['charactertype_url'],$member['xplevel'],'portrait'))?>"></a>
 			<p><a href="<?=$linker->link(array('characters','character',$seminary['url'],$member['url']))?>"><?=$member['name']?></a></p>
-			<p><small><?=_('Level')?> <?=$member['xplevel']?> (<?=$member['xps']?> XPs)</small></p>
+			<p><small><?=_('Level')?> <?=$member['xplevel']?> (<?=sprintf(_('%d XPs'), $member['xps'])?>)</small></p>
 		</li>
 		<?php endforeach ?>
 	</ul>

@@ -33,7 +33,7 @@
 	<li>
 		<a href="<?=$linker->link(array('questgroups','questgroup',$seminary['url'],$quest['questgroup']['url']))?>"><?=$quest['questgroup']['title']?></a><br />
 		<h3><a href="<?=$linker->link(array('quest',$seminary['url'],$quest['questgroup']['url'],$quest['url']),1)?>"><?=$quest['title']?></a></h3>
-		<?=$quest['questtype']['title']?>, <?=$quest['xps']?> XPs, <a href="<?=$linker->link(array('submissions',$seminary['url'],$quest['questgroup']['url'],$quest['url']),1)?>"><?=$quest['opensubmissionscount']?> open submissions</a>
+		<?=$quest['questtype']['title']?>, <?=sprintf(_('%d XPs'), $quest['xps'])?>, <a href="<?=$linker->link(array('submissions',$seminary['url'],$quest['questgroup']['url'],$quest['url']),1)?>"><?=$quest['opensubmissionscount']?> open submissions</a>
 	</li>
 	<?php endforeach ?>
 </ul>

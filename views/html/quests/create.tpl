@@ -23,7 +23,7 @@
 			<option value="<?=$questtype['url']?>"><?=$questtype['title']?></option>
 			<?php endforeach ?>
 		</select><br />
-		<label for="name">XPs:</label>
+		<label for="name"><?=_('XPs')?>:</label>
 		<input type="number" name="xps" value="" placeholder="<?=_('XPs')?>" /><br />
 		<input type="file" name="questmedia" /><br />
 	</fieldset>

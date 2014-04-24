@@ -6,7 +6,7 @@
 <ul class="breadcrumbs">
 	<li><a href="<?=$linker->link(array('seminaries',$seminary['url']))?>"><?=$seminary['title']?></a></li>
 </ul>
-<h1><i class="fa fa-book fa-fw"></i><?=_('Questtopics')?></h1>
+<h1><i class="fa fa-book fa-fw"></i><?=_('Library')?></h1>
 <p><?=sprintf(_('Library description, %s, %s'), $seminary['course'], $seminary['title'])?></p>
 <div class="libindxpr cf">
 	<p><small><?=sprintf(_('Total progress: %d %%'), ($totalQuestcount > 0) ? $numberFormatter->format(round($totalCharacterQuestcount/$totalQuestcount*100)) : 0) ?></small></p>
