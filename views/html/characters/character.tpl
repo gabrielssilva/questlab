@@ -98,3 +98,11 @@
 	</ul>
 </section>
 
+
+<?php if(!is_null($lastQuest)) : ?>
+<section>
+	<h2><?=_('Last Quest')?></h2>
+	<p><i class="fa fa-pencil-square-o fa-fw"></i><a href="<?=$linker->link(array('quests','quest',$seminary['url'],$lastQuest['questgroup']['url'],$lastQuest['url']))?>"><?=$lastQuest['title']?></a></p>
+</section>
+<?php endif ?>
+
