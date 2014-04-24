@@ -34,7 +34,7 @@
 				<?php if($milestone['achieved']) : ?>
 				<p class="unlocked fwb"><i class="fa fa-check-circle fa-fw"></i><?=$milestone['title']?></p>
 				<?php elseif($milestone['deadline'] < date('Y-m-d H:i:s')) : ?>
-				<i class="fa fa-times-circle fa-fw"></i><?=$milestone['title']?></p>
+				<p class="passed fwb"><i class="fa fa-times-circle fa-fw"></i><?=$milestone['title']?></p>
 				<?php else : ?>
 				<p class="fwb"><i class="fa fa-lock fa-fw"></i><?=$milestone['title']?></p>
 				<?php endif ?>
@@ -50,6 +50,30 @@
 
 <div class="cf">
 	<section class="fll48">
+		<h2><i class="fa fa-list fa-fw"></i><?=_('Ranking')?></h2>
+		<ul class="cranks">
+			<?php foreach($ranking['superior'] as $index => &$rankCharacter) : ?>
+			<li>
+				<a href="#"><img src="<?=$linker->link(array('media','avatar',$seminary['url'],$rankCharacter['charactertype_url'],$rankCharacter['xplevel'],'portrait'))?>"></a>
+				<p><?=$character['rank']-count($ranking['superior'])+$index?>. <a href="#"><?=$rankCharacter['name']?></a></p>
+				<p><small><?=_('Level')?> <?=$rankCharacter['xplevel']?> (<?=$rankCharacter['xps']?> XPs)</small></p>
+			</li>
+			<?php endforeach ?>
+			<li>
+				<a href="#"><img src="<?=$linker->link(array('media','avatar',$seminary['url'],$character['charactertype_url'],$character['xplevel']['level'],'portrait'))?>"></a>
+				<p class="fwb"><?=$character['rank']?>. <a href="#"><?=$character['name']?></a></p>
+				<p><small><?=_('Level')?> <?=$character['xplevel']['level']?> (<?=$character['xps']?> XPs)</small></p>
+			</li>
+			<?php foreach($ranking['inferior'] as $index => &$rankCharacter) : ?>
+			<li>
+				<a href="#"><img src="<?=$linker->link(array('media','avatar',$seminary['url'],$rankCharacter['charactertype_url'],$rankCharacter['xplevel'],'portrait'))?>"></a>
+				<p><?=$character['rank']+$index+1?>. <a href="#"><?=$rankCharacter['name']?></a></p>
+				<p><small><?=_('Level')?> <?=$rankCharacter['xplevel']?> (<?=$rankCharacter['xps']?> XPs)</small></p>
+			</li>
+			<?php endforeach ?>
+		</ul>
+	</section>
+	<section class="flr48">
 		<h2><i class="fa fa-users fa-fw"></i><?=_('Character Groups')?></h2>
 		<ul class="cgroups cf">
 			<?php foreach($groups as &$group) : ?>
@@ -60,31 +84,14 @@
 			<?php endforeach ?>
 		</ul>
 	</section>
-	<section class="flr48">
-		<h2><i class="fa fa-list fa-fw"></i><?=_('Ranking')?></h2>
-		<ul class="cranks">
-			<?php foreach($ranking['superior'] as $index => &$rankCharacter) : ?>
-			<li>
-				<a href="#" title="Achievement-Titel"><img src="<?=$linker->link(array('media','avatar',$seminary['url'],$rankCharacter['charactertype_url'],$rankCharacter['xplevel'],'portrait'))?>"></a>
-				<p><?=$character['rank']-count($ranking['superior'])+$index?>. <a href="#"><?=$rankCharacter['name']?></a></p>
-				<p><small><?=_('Level')?> <?=$rankCharacter['xplevel']?> (<?=$rankCharacter['xps']?> XPs)</small></p>
-			</li>
-			<?php endforeach ?>
-			<li>
-				<a href="#" title="Achievement-Titel"><img src="<?=$linker->link(array('media','avatar',$seminary['url'],$character['charactertype_url'],$character['xplevel']['level'],'portrait'))?>"></a>
-				<p class="fwb"><?=$character['rank']?>. <a href="#"><?=$character['name']?></a></p>
-				<p><small><?=_('Level')?> <?=$character['xplevel']['level']?> (<?=$character['xps']?> XPs)</small></p>
-			</li>
-			<?php foreach($ranking['inferior'] as $index => &$rankCharacter) : ?>
-			<li>
-				<a href="#" title="Achievement-Titel"><img src="<?=$linker->link(array('media','avatar',$seminary['url'],$rankCharacter['charactertype_url'],$rankCharacter['xplevel'],'portrait'))?>"></a>
-				<p><?=$character['rank']+$index+1?>. <a href="#"><?=$rankCharacter['name']?></a></p>
-				<p><small><?=_('Level')?> <?=$rankCharacter['xplevel']?> (<?=$rankCharacter['xps']?> XPs)</small></p>
-			</li>
-			<?php endforeach ?>
-		</ul>
-	</section>
 </div>
+
+<?php if(!is_null($lastQuest)) : ?>
+<section>
+	<h2><i class="fa fa-share-square fa-fw"></i><?=_('Last Quest')?></h2>
+	<p><i class="fa fa-pencil-square-o fa-fw"></i><a href="<?=$linker->link(array('quests','quest',$seminary['url'],$lastQuest['questgroup']['url'],$lastQuest['url']))?>"><?=$lastQuest['title']?></a></p>
+</section>
+<?php endif ?>
 
 <section>
 	<h2><i class="fa fa-book fa-fw"></i><?=_('Topic progress')?></h2>
@@ -99,12 +106,4 @@
 		<?php endforeach ?>
 	</ul>
 </section>
-
-
-<?php if(!is_null($lastQuest)) : ?>
-<section>
-	<h2><?=_('Last Quest')?></h2>
-	<p><i class="fa fa-pencil-square-o fa-fw"></i><a href="<?=$linker->link(array('quests','quest',$seminary['url'],$lastQuest['questgroup']['url'],$lastQuest['url']))?>"><?=$lastQuest['title']?></a></p>
-</section>
-<?php endif ?>
 
