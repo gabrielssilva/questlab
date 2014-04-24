@@ -29,8 +29,7 @@ sup{top:-.5em}
 sub{bottom:-.25em}
 svg:not(:root){overflow:hidden}
 figure{margin:0}
-fieldset{border:0;margin:0;padding:0}
-legend{border:0;padding:0;margin-bottom:15px}
+fieldset,legend{border:0;margin:0 0 10px;padding:0}
 button,input,select,textarea{font-family:inherit;font-size:100%;margin:0}
 button,input{line-height:normal}
 button,select{text-transform:none}
@@ -189,10 +188,9 @@ input[type="submit"][disabled]{text-shadow:1px 2px #d48c4e;background:#f9ac69;bo
 .gdata{margin:20px 0 40px 0}
 .gdata li{float:left;background:#fff;padding:5px 15px;margin:0 5px 5px 0;border-radius:3px}
 
-.gchars li{background:#fff;padding:15px 0;border-radius:3px;float:left;margin-bottom:5px;width:49%}
-.gchars li:nth-child(even){float:right}
+.gchars li{background:#fff;padding:15px 0;border-radius:3px;display:inline-block;margin-bottom:5px;width:49%;text-align:center;vertical-align:top}
 .gchars img{width:50px;height:50px;border-radius:25px}
-.gchars p{margin:0;padding:0;text-align:center}
+.gchars p{margin:0;padding:0}
 .gchars .fa{position:absolute;margin:-10px 0 0}
 
 .gquests li{padding:12px 15px 0 15px;border-radius:3px}
@@ -296,8 +294,7 @@ input[type="submit"][disabled]{text-shadow:1px 2px #d48c4e;background:#f9ac69;bo
 .gbanner img{float:left;margin:20px 20px 0 0}
 .gbanner h1{margin:25px 0 2px}
 
-.gchars li{width:32%;margin-right:5px}
-.gchars li:nth-child(even){float:left}
+.gchars li{width:32%}
 
 .achmnts .xpbar{width:89%}
 
@@ -341,8 +338,6 @@ menu a{padding:10px 0}
 article{padding:20px 40px 80px 40px}
 .moodpic{margin:-20px -40px 0 -40px}
 .breadcrumbs li{display:inline;padding-right:5px}
-
-.gchars li{width:19%}
 }
 
 @media only screen and (min-width:1366px){
