@@ -3,13 +3,15 @@
 	<img src="<?=$linker->link(array('media','seminaryheader',$seminary['url']))?>">
 </div>
 <?php endif ?>
-<h1><a href="<?=$linker->link(array('seminaries',$seminary['url']))?>"><?=$seminary['title']?></a></h1>
-<h2><?=_('Characters')?></h2>
-<h3><?=_('Manage')?></h3>
+<ul class="breadcrumbs">
+	<li><a href="<?=$linker->link(array('seminaries',$seminary['url']))?>"><?=$seminary['title']?></a></li>
+	<li><i class="fa fa-chevron-right fa-fw"></i><?=_('Characters')?></li>
+</ul>
+<h1><?=_('Manage')?></h1>
 
 <form method="post">
 	<fieldset>
-		<legend><?=_('Selection')?></legend>
+		<legend><?=_('Selection')?>:</legend>
 		<ul class="gchars cf">
 			<?php foreach($characters as &$character) : ?>
 			<li>
@@ -18,17 +20,9 @@
 					<p><img src="<?=$linker->link(array('media','avatar',$seminary['url'],$character['charactertype_url'],$character['xplevel']['level'],'portrait'))?>"></p>
 					<p><a href="<?=$linker->link(array('characters','character',$seminary['url'],$character['url']))?>"><?=$character['name']?></a></p>
 					<p><small><?=$character['xps']?> XP</small></p>
-					<ul>
-						<?php if(in_array('admin', $character['characterroles'])) : ?>
-						<li><?=_('Admin')?></li>
-						<?php endif ?>
-						<?php if(in_array('moderator', $character['characterroles'])) : ?>
-						<li><?=_('Moderator')?></li>
-						<?php endif ?>
-						<?php if(in_array('user', $character['characterroles'])) : ?>
-						<li><?=_('User')?></li>
-						<?php endif ?>
-					</ul>
+					<?php if(in_array('admin', $character['characterroles'])) : ?><p><small><?=_('Admin')?></small></p><?php endif ?>
+					<?php if(in_array('moderator', $character['characterroles'])) : ?><p><small><?=_('Moderator')?></small></p><?php endif ?>
+					<?php if(in_array('user', $character['characterroles'])) : ?><p><small><?=_('User')?></small></p><?php endif ?>
 				</label>
 			</li>
 			<?php endforeach ?>
