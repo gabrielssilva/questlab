@@ -165,6 +165,11 @@
 			// Check conditions
 			foreach($achievements as &$achievement)
 			{
+				// Check deadline
+				if($achievement['deadline'] < date('Y-m-d H:i:s')) {
+					continue;
+				}
+				
 				// Get conditions
 				$conditions = array();
 				$progress = 0;
@@ -235,6 +240,11 @@
 							);
 						}
 					break;
+				}
+				
+				// Do not achieve Achievements without conditions
+				if(empty($conditions)) {
+					continue;
 				}
 				
 				// Check conditions
