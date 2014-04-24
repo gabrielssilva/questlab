@@ -126,8 +126,6 @@
 				}
 			}
 			
-			print_r($choiceLists);
-			
 			
 			// Pass data to view
 			$this->set('texts', $textParts);
