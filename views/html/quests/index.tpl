@@ -8,7 +8,7 @@
 </ul>
 <h1><?=_('Quests')?></h1>
 
-<form method="post">
+<form method="post" class="logreg admnqf">
 	<fieldset>
 		<legend>Filter</legend>
 		<label for="filters[questgroup]"><?=_('Questgroup')?>:</label>
@@ -30,12 +30,12 @@
 	<input type="submit" name="reset" value="<?=_('Reset filters')?>" />
 </form>
 
-<ul>
+<ul class="admnql">
 	<?php foreach($quests as &$quest) : ?>
 	<li>
-		<a href="<?=$linker->link(array('questgroups','questgroup',$seminary['url'],$quest['questgroup']['url']))?>"><?=$quest['questgroup']['title']?></a><br />
-		<h3><a href="<?=$linker->link(array('quest',$seminary['url'],$quest['questgroup']['url'],$quest['url']),1)?>"><?=$quest['title']?></a></h3>
-		<?=$quest['questtype']['title']?>, <?=sprintf(_('%d XPs'), $quest['xps'])?>, <a href="<?=$linker->link(array('submissions',$seminary['url'],$quest['questgroup']['url'],$quest['url']),1)?>"><?=$quest['opensubmissionscount']?> open submissions</a>
+		<p class="fwb"><a href="<?=$linker->link(array('quest',$seminary['url'],$quest['questgroup']['url'],$quest['url']),1)?>"><?=$quest['title']?></a><span><a href="<?=$linker->link(array('submissions',$seminary['url'],$quest['questgroup']['url'],$quest['url']),1)?>"><?=$quest['opensubmissionscount']?> open submissions</a></span></p>
+		<p><small><?=$quest['questtype']['title']?>, <?=sprintf(_('%d XPs'), $quest['xps'])?></small></p>
+		<p><small><a href="<?=$linker->link(array('questgroups','questgroup',$seminary['url'],$quest['questgroup']['url']))?>"><?=$quest['questgroup']['title']?></a></small></p>
 	</li>
 	<?php endforeach ?>
 </ul>
