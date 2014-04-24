@@ -13,11 +13,23 @@
 		<ul class="gchars cf">
 			<?php foreach($characters as &$character) : ?>
 			<li>
-				<input type="checkbox" name="characters[]" value="<?=$character['id']?>" <?php if($character['id'] == \hhu\z\controllers\SeminaryController::$character['id']) : ?>disabled="disabled"<?php endif ?>/>
-				<p><img src="<?=$linker->link(array('media','avatar',$seminary['url'],$character['charactertype_url'],$character['xplevel']['level'],'portrait'))?>"></p>
-				<p><a href="<?=$linker->link(array('characters','character',$seminary['url'],$character['url']))?>"><?=$character['name']?></a></p>
-				<p><small><?=$character['xps']?> XP</small></p>
-				<p><small><?=implode(', ', $character['characterroles'])?></small></p>
+				<input type="checkbox" id="characters-<?=$character['id']?>" name="characters[]" value="<?=$character['id']?>" <?php if(in_array($character['id'], $selectedCharacters)) : ?>checked="checked"<?php endif ?> <?php if($character['id'] == \hhu\z\controllers\SeminaryController::$character['id']) : ?>disabled="disabled"<?php endif ?>/>
+				<label for="characters-<?=$character['id']?>">
+					<p><img src="<?=$linker->link(array('media','avatar',$seminary['url'],$character['charactertype_url'],$character['xplevel']['level'],'portrait'))?>"></p>
+					<p><a href="<?=$linker->link(array('characters','character',$seminary['url'],$character['url']))?>"><?=$character['name']?></a></p>
+					<p><small><?=$character['xps']?> XP</small></p>
+					<ul>
+						<?php if(in_array('admin', $character['characterroles'])) : ?>
+						<li><?=_('Admin')?></li>
+						<?php endif ?>
+						<?php if(in_array('moderator', $character['characterroles'])) : ?>
+						<li><?=_('Moderator')?></li>
+						<?php endif ?>
+						<?php if(in_array('user', $character['characterroles'])) : ?>
+						<li><?=_('User')?></li>
+						<?php endif ?>
+					</ul>
+				</label>
 			</li>
 			<?php endforeach ?>
 		</ul>
