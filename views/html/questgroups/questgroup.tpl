@@ -40,10 +40,12 @@
 			</div>
 			<p class="xpnumeric"><?=$group['character_xps']?> / <?=$group['xps']?> XP</p>
 		</div>
+		<?php foreach($group['relatedQuestgroups'] as &$relatedGroup) : ?>
 		<div class="qghidden">
-			<p>Versteckte Bonus-Questline gefunden:</p>
-			<p><a href="#"><i class="fa fa-star-o fa-fw"></i>Hier der Titel der entsprechenden Bonus-Questline</a></p>
+			<p><?=_('Found optional Questline')?>:</p>
+			<p><a href="<?=$linker->link(array($seminary['url'],$relatedGroup['url']),2)?>"><i class="fa fa-star-o fa-fw"></i><?=$relatedGroup['title']?></a></p>
 		</div>
+		<?php endforeach ?>
 	</li>
 	<?php endforeach?>
 </ul>

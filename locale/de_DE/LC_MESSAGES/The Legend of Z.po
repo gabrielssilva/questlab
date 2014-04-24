@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: The Legend of Z\n"
-"POT-Creation-Date: 2014-04-24 15:46+0100\n"
-"PO-Revision-Date: 2014-04-24 15:46+0100\n"
+"POT-Creation-Date: 2014-04-24 16:46+0100\n"
+"PO-Revision-Date: 2014-04-24 16:46+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de_DE\n"
@@ -216,7 +216,7 @@ msgstr "Charaktere"
 
 #: views/html/charactergroups/group.tpl:45
 #: views/html/charactergroups/managegroup.tpl:54
-#: views/html/questgroups/questgroup.tpl:55 views/html/quests/create.tpl:9
+#: views/html/questgroups/questgroup.tpl:57 views/html/quests/create.tpl:9
 #: views/html/quests/index.tpl:9
 msgid "Quests"
 msgstr "Quests"
@@ -277,7 +277,7 @@ msgstr "Ranking"
 #: views/html/characters/character.tpl:67
 #: views/html/characters/character.tpl:73
 #: views/html/characters/character.tpl:79
-#: views/html/characters/character.tpl:90 views/html/quests/index.tpl:38
+#: views/html/characters/character.tpl:90 views/html/quests/index.tpl:37
 #: views/html/seminarybar/index.tpl:6 views/html/seminarybar/index.tpl:42
 #, php-format
 msgid "%d XPs"
@@ -439,23 +439,27 @@ msgstr "Kurse"
 msgid "Logout"
 msgstr "Logout"
 
-#: views/html/questgroups/create.tpl:9
+#: views/html/questgroups/create.tpl:8
 msgid "Questgroups"
 msgstr "Questgruppen"
 
-#: views/html/questgroups/create.tpl:11
+#: views/html/questgroups/create.tpl:10
 msgid "Create Questgroup"
 msgstr "Questgruppe erstellen"
 
-#: views/html/questgroups/create.tpl:15 views/html/questgroups/create.tpl:16
+#: views/html/questgroups/create.tpl:14 views/html/questgroups/create.tpl:15
 #: views/html/seminaries/create.tpl:11 views/html/seminaries/create.tpl:12
 #: views/html/seminaries/edit.tpl:11 views/html/seminaries/edit.tpl:12
 msgid "Title"
 msgstr "Titel"
 
-#: views/html/questgroups/create.tpl:18 views/html/quests/create.tpl:43
+#: views/html/questgroups/create.tpl:17 views/html/quests/create.tpl:43
 msgid "Create"
 msgstr "Erstellen"
+
+#: views/html/questgroups/questgroup.tpl:45
+msgid "Found optional Questline"
+msgstr "Optionale Questline gefunden"
 
 #: views/html/quests/create.tpl:11
 msgid "Create Quest"
@@ -788,9 +792,6 @@ msgstr "Rollen"
 
 #~ msgid "as"
 #~ msgstr "als"
-
-#~ msgid "containing optional Quests"
-#~ msgstr "Enthaltene optionale Quests"
 
 #~ msgid "This Quest is optional"
 #~ msgstr "Diese Quest ist optional"

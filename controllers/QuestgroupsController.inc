@@ -113,6 +113,15 @@
 						$data = $this->Questgroups->getCumulatedDataForQuestgroup($group['id'], $character['id']);
 						$group['xps'] = $data['xps'];
 						$group['character_xps'] = $data['character_xps'];
+						
+						// Attach related Questgroups
+						$group['relatedQuestgroups'] = array();
+						$relatedQuestgroups = $this->Questgroups->getRelatedQuestsgroupsOfQuestgroup($group['id']);
+						foreach($relatedQuestgroups as &$relatedQuestgroup) {
+							if($this->Questgroups->hasCharacterEnteredQuestgroup($relatedQuestgroup['id'], $character['id'])) {
+								$group['relatedQuestgroups'][] = $this->Questgroups->getQuestgroupById($relatedQuestgroup['id']);
+							}
+						}
 					}
 				}
 			}

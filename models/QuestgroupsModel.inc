@@ -369,8 +369,8 @@
 		/**
 		 * Get all related Questgroups of a Questtext.
 		 * 
-		 * @param	int	$questtextId	ID of the questtext
-		 * @return	array			Sidequests for the questtext
+		 * @param	int	$questtextId	ID of the Questtext
+		 * @return	array			Related Questgroups for the Questtext
 		 */
 		public function getRelatedQuestsgroupsOfQuesttext($questtextId)
 		{
@@ -388,8 +388,8 @@
 		/**
 		 * Get all related Questgroups of a Quest.
 		 * 
-		 * @param	int	$questId	ID of the quest
-		 * @return	array			Sidequests for the quest
+		 * @param	int	$questId	ID of the Quest
+		 * @return	array			Related Quests for the Quest
 		 */
 		public function getRelatedQuestsgroupsOfQuest($questId)
 		{
@@ -403,6 +403,27 @@
 				$questId
 			);
 			
+		}
+		
+		
+		/**
+		 * Get all related Questgroups of a Questgroup.
+		 * 
+		 * @param	int	$questgroupId	ID of the Questgroup
+		 * @return	array			Related Questgroups for the Questgroup
+		 */
+		public function getRelatedQuestsgroupsOfQuestgroup($questgroupId)
+		{
+			return $this->db->query(
+				'SELECT questgroups_questtexts.questgroup_id AS id '.
+				'FROM questgroups '.
+				'INNER JOIN quests ON quests.questgroup_id = questgroups.id '.
+				'INNER JOIN questtexts ON questtexts.quest_id = quests.id '.
+				'INNER JOIN questgroups_questtexts ON questgroups_questtexts.questtext_id = questtexts.id '.
+				'WHERE questgroups.id = ?',
+				'i',
+				$questgroupId
+			);
 		}
 		
 		
