@@ -195,38 +195,28 @@
 			// Set status “entered”
 			$this->Quests->setQuestEntered($quest['id'], $character['id']);
 			
-			// Get (related) Questtext
-			$relatedQuesttext = $this->Questtexts->getRelatedQuesttextForQuestgroup($questgroup['id']);
-			if(!empty($relatedQuesttext)) {
-				$relatedQuesttext['quest'] = $this->Quests->getQuestById($relatedQuesttext['quest_id']);
-				if(!empty($relatedQuesttext['quest'])) {
-					$relatedQuesttext['quest']['questgroup_url'] = $this->Questgroups->getQuestgroupById($relatedQuesttext['quest']['questgroup_id'])['url'];
-				}
-			}
+			// Has Character solved quest?
+			$solved = $this->Quests->hasCharacterSolvedQuest($quest['id'], $character['id']);
 			
 			// Get Questtexts
-			if(is_null($questtexttypeUrl)) {
-				$questtexttypeUrl = 'Prolog';
+			$questtexts = array();
+			$questtexts['Prolog'] = $this->Questtexts->getQuesttextsOfQuest($quest['id'], 'Prolog');
+			if($solved) {
+				$questtexts['Epilog'] = $this->Questtexts->getQuesttextsOfQuest($quest['id'], 'Epilog');
 			}
-			$questtexttypes = $this->Questtexts->getQuesttexttypes();
-			if(($questtexttypeIndex = array_search($questtexttypeUrl, array_map(function($t) { return $t['url']; }, $questtexttypes))) === false) {
-				throw new ParamsNotValidException($questtexttypeUrl);
-			}
-			$questtexttype = $questtexttypes[$questtexttypeIndex];
-			$questtexts = $this->Questtexts->getQuesttextsOfQuest($quest['id'], $questtexttypeUrl);
-			foreach($questtexts as &$questtext)
+			foreach($questtexts as &$questtextList)
 			{
-				// Questtext media
-				if(!is_null($questtext['questsmedia_id'])) {
-					$questtext['media'] = $this->Media->getSeminaryMediaById($questtext['questsmedia_id']);
-				}
+				foreach($questtextList as &$questtext)
+				{
+					// Questtext media
+					if(!is_null($questtext['questsmedia_id'])) {
+						$questtext['media'] = $this->Media->getSeminaryMediaById($questtext['questsmedia_id']);
+					}
 				
-				// Related Questgroups
-				$questtext['relatedQuestsgroups'] = $this->Questgroups->getRelatedQuestsgroupsOfQuesttext($questtext['id']);
+					// Related Questgroups
+					$questtext['relatedQuestsgroups'] = $this->Questgroups->getRelatedQuestsgroupsOfQuesttext($questtext['id']);
+				}
 			}
-			
-			// Has Epilog?
-			$hasEpilog = ($this->Questtexts->getQuesttextCountOfQuest($quest['id'], 'Epilog') > 0);
 			
 			// Quest status
 			$questStatus = $this->request->getGetParam('status');
@@ -239,29 +229,31 @@
 			
 			// Task
 			$task = null;
-			if($questtexttypeUrl == 'Prolog')
+			$questtype = $this->Questtypes->getQuesttypeById($quest['questtype_id']);
+			if(!is_null($questtype['classname'])) {
+				$task = $this->renderTask($questtype['classname'], $seminary, $questgroup, $quest, $character);
+			}
+			else
 			{
-				// Questtype
-				$questtype = $this->Questtypes->getQuesttypeById($quest['questtype_id']);
-				
-				// Render task
-				if(!is_null($questtype['classname'])) {
-					$task = $this->renderTask($questtype['classname'], $seminary, $questgroup, $quest, $character);
-				}
-				else {
-					// Mark Quest as solved
-					$this->Quests->setQuestSolved($quest['id'], $character['id']);
-				}
+				// Mark Quest as solved
+				$this->Quests->setQuestSolved($quest['id'], $character['id']);
+				$solved = true;
 			}
 			
-			// Has Character solved quest?
-			$solved = $this->Quests->hasCharacterSolvedQuest($quest['id'], $character['id']);
+			// Get (related) Questtext
+			$relatedQuesttext = $this->Questtexts->getRelatedQuesttextForQuestgroup($questgroup['id']);
+			if(!empty($relatedQuesttext)) {
+				$relatedQuesttext['quest'] = $this->Quests->getQuestById($relatedQuesttext['quest_id']);
+				if(!empty($relatedQuesttext['quest'])) {
+					$relatedQuesttext['quest']['questgroup_url'] = $this->Questgroups->getQuestgroupById($relatedQuesttext['quest']['questgroup_id'])['url'];
+				}
+			}
 			
 			// Next Quest/Questgroup
 			$nextQuests = null;
 			$charactedHasChoosenNextQuest = false;
 			$nextQuestgroup = null;
-			if($questtexttypeUrl == 'Epilog' || (is_null($questtype['classname']) && !$hasEpilog))
+			if($solved)
 			{
 				// Next Quest
 				$nextQuests = $this->Quests->getNextQuests($quest['id']);
@@ -296,9 +288,9 @@
 			// Pass data to view
 			$this->set('seminary', $seminary);
 			$this->set('questgroup', $questgroup);
-			$this->set('questtexttype', $questtexttype);
+			//$this->set('questtexttype', $questtexttype);
 			$this->set('questtexts', $questtexts);
-			$this->set('hasEpilog', $hasEpilog);
+			//$this->set('hasEpilog', $hasEpilog);
 			$this->set('quest', $quest);
 			$this->set('queststatus', $questStatus);
 			$this->set('relatedquesttext', $relatedQuesttext);
@@ -610,7 +602,7 @@
 							$this->Quests->setQuestSolved($quest['id'], $character['id']);
 						
 							// Redirect
-							$this->redirect($this->linker->link('Epilog', 5, true, array('status'=>'solved')));
+							$this->redirect($this->linker->link(array(), 5, true, array('status'=>'solved'), false, 'task'));
 						}
 						elseif($status === false)
 						{
@@ -618,14 +610,14 @@
 							$this->Quests->setQuestUnsolved($quest['id'], $character['id']);
 						
 							// Redirect
-							$this->redirect($this->linker->link('Prolog', 5, true, array('status'=>'unsolved')));
+							$this->redirect($this->linker->link(array(), 5, true, array('status'=>'unsolved'), false, 'task'));
 						}
 						else {
 							// Mark Quest as submitted
 							$this->Quests->setQuestSubmitted($quest['id'], $character['id']);
 						
 							// Redirect
-							$this->redirect($this->linker->link('Prolog', 5, true));
+							$this->redirect($this->linker->link(array(), 5, true, false, 'task'));
 						}
 					}
 					catch(\hhu\z\exceptions\SubmissionNotValidException $e) {

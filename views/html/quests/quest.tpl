@@ -6,12 +6,12 @@
 <?=$questgroupshierarchypath?>
 <h1><?=$quest['title']?></h1>
 
-<?php if(count($questtexts) > 0) : ?>
+<?php if(array_key_exists('Prolog', $questtexts) && count($questtexts['Prolog']) > 0) : ?>
 <section>
-	<h1 id="questtext"><?=$questtexttype['type']?></h1>
+	<h1 id="questtext"><?=_('Prolog')?></h1>
 	<div id="qtextbox">
 		<?php $mediaShown = false; ?>
-		<?php foreach($questtexts as &$questtext) : ?>
+		<?php foreach($questtexts['Prolog'] as &$questtext) : ?>
 		<p class="qtext cf">
 			<?php if(array_key_exists('media', $questtext)) : ?>
 			<a href="<?=$linker->link(array('media','seminary',$seminary['url'],$media['url']))?>"><img src="<?=$linker->link(array('media','seminary',$seminary['url'],$questtext['media']['url']))?>" /></a>
@@ -36,40 +36,62 @@
 </section>
 <?php endif ?>
 
-<?php if(!is_null($queststatus)) : ?>
-<?php if($queststatus == 'solved') : ?>
-<section class="success">
-<p class="fwb"><i class="fa fa-check-circle fa-fw"></i><?=_('solved')?></p>
-<p><small><?=sprintf(_('Quest completed. You have earned %d XPs.'), $quest['xps'])?></small></p>
-<?php elseif($queststatus == 'unsolved') : ?>
-<section class="error">
-<p class="fwb"><i class="fa fa-times-circle fa-fw"></i><?=_('unsolved')?></p>
-<p><small><?=\hhu\z\Utils::t($quest['wrong_text'])?></small></p>
-<?php endif ?>
-</section>
-<?php endif ?>
-
-<?php if($questtexttype['type'] == 'Prolog') : ?>
+<?php if(!is_null($task)) : ?>
 <section>
-	<?php if(!is_null($task)) : ?>
 	<h1 id="task"><?=_('Task')?></h1>
+	<?php if(!is_null($queststatus)) : ?>
+	<?php if($queststatus == 'solved') : ?>
+	<div class="success">
+		<p class="fwb"><i class="fa fa-check-circle fa-fw"></i><?=_('solved')?></p>
+		<p><small><?=sprintf(_('Quest completed. You have earned %d XPs.'), $quest['xps'])?></small></p>
+	</div>
+	<?php elseif($queststatus == 'unsolved') : ?>
+	<div class="error">
+		<p class="fwb"><i class="fa fa-times-circle fa-fw"></i><?=_('unsolved')?></p>
+		<p><small><?=\hhu\z\Utils::t($quest['wrong_text'])?></small></p>
+	</div>
+	<?php endif ?>
+	<?php endif ?>
+	
+	<?php if($queststatus != 'solved') : ?>
 	<p><?=$t->t($quest['task'])?></p>
 	<?=$task?>
 	
-	<?php if($solved) : ?>
+	<?php if($solved && empty($queststatus)) : ?>
 	<div class="solvdmsg">
 		<p><?=_('Task already successfully solved')?>:
 		<nav class="admin">
-			<?php if($solved) : ?>
 			<li><a href="<?=$linker->link(null,0,false,array('show-answer'=>'true'),true,'task')?>"><?=_('Show answer')?></a></li>
-			<li><a href="<?=$linker->link('Epilog',5)?>"><?=_('Skip task')?></a></l>
-			<?php endif ?>
 		</nav>
 	</div>
 	<?php endif ?>
-	<?php elseif($hasEpilog) : ?>
-	<p><a href="<?=$linker->link('Epilog',5)?>"><?=_('continue')?></a></p>
 	<?php endif ?>
+</section>
+<?php endif ?>
+
+<?php if(array_key_exists('Epilog', $questtexts) && count($questtexts['Epilog']) > 0) : ?>
+<section>
+	<h1 id="questtext"><?=_('Epilog')?></h1>
+	<div id="qtextbox">
+		<?php foreach($questtexts['Epilog'] as &$questtext) : ?>
+		<p class="qtext cf">
+			<?php if(array_key_exists('media', $questtext)) : ?>
+			<a href="<?=$linker->link(array('media','seminary',$seminary['url'],$media['url']))?>"><img src="<?=$linker->link(array('media','seminary',$seminary['url'],$questtext['media']['url']))?>" /></a>
+			<?php endif ?>
+			<?=\hhu\z\Utils::t($questtext['text'])?>
+		</p>
+		<?php if(count($questtext['relatedQuestsgroups']) > 0 || !empty($questtext['abort_text'])) : ?>
+		<ul>
+			<?php foreach($questtext['relatedQuestsgroups'] as &$relatedQuestgroup) : ?>
+			<li><a href="<?=$linker->link(array('questgroups','questgroup',$seminary['url'],$relatedQuestgroup['url']))?>"><?=$relatedQuestgroup['entry_text']?></a></li>
+			<?php endforeach ?>
+			<?php if(!empty($questtext['abort_text'])) : ?>
+			<li><a href="<?=$linker->link(array('quest',$seminary['url'],$relatedquesttext['quest']['questgroup_url'],$relatedquesttext['quest']['url'],$relatedquesttext['type_url']),1)?>"><?=$questtext['abort_text']?></a></li>
+			<?php endif ?>
+		</ul>
+		<?php endif ?>
+		<?php endforeach ?>
+	</div>
 </section>
 <?php endif ?>
 

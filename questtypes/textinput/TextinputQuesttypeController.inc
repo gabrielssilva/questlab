@@ -123,7 +123,7 @@
 			
 			// Get Character answers
 			$regexs = null;
-			if(!$solved || $this->request->getGetParam('show-answer') == 'true')
+			if(!$solved || $this->request->getGetParam('show-answer') == 'true' || $this->request->getGetParam('status') == 'solved')
 			{
 				$regexs = $this->Textinput->getTextinputRegexs($quest['id']);
 				foreach($regexs as &$regex) {

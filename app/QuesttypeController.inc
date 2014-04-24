@@ -303,59 +303,6 @@
 			$this->view = QuesttypeView::loadAndFactory($layoutName, $controllerName, $action);
 		}
 		
-		
-		/**
-		 * Mark the current Quest as solved and redirect to solved page.
-		 */
-		protected function setQuestSolved()
-		{
-			// Get seminary
-			$seminary = $this->Seminaries->getSeminaryByUrl($this->request->getParam(3));
-			
-			// Get Questgroup
-			$questgroup = $this->Questgroups->getQuestgroupByUrl($seminary['id'], $this->request->getParam(4));
-			
-			// Get Quest
-			$quest = $this->Quests->getQuestByUrl($seminary['id'], $questgroup['id'], $this->request->getParam(5));
-			
-			// Character
-			$character = $this->Characters->getCharacterForUserAndSeminary($this->Auth->getUserId(), $seminary['id']);
-			
-			// Set solved
-			$this->Quests->setQuestSolved($quest['id'], $character['id']);
-			
-			
-			// Redirect
-			$this->redirect($this->linker->link('Epilog', $sidequest != null ? 6 : 5, true, array('status'=>'solved')));
-		}
-		
-		
-		/**
-		 * Mark the current Quest as unsolved and redirect to unsolved
-		 * page.
-		 */
-		protected function setQuestUnsolved()
-		{
-			// Get seminary
-			$seminary = $this->Seminaries->getSeminaryByUrl($this->request->getParam(3));
-			
-			// Get Questgroup
-			$questgroup = $this->Questgroups->getQuestgroupByUrl($seminary['id'], $this->request->getParam(4));
-			
-			// Get Quest
-			$quest = $this->Quests->getQuestByUrl($seminary['id'], $questgroup['id'], $this->request->getParam(5));
-			
-			// Character
-			$character = $this->Characters->getCharacterForUserAndSeminary($this->Auth->getUserId(), $seminary['id']);
-			
-			// Set solved
-			$this->Quests->setQuestUnsolved($quest['id'], $character['id']);
-			
-			
-			// Redirect
-			$this->redirect($this->linker->link('Prolog', $sidequest != null ? 6 : 5, true, array('status'=>'unsolved')));
-		}
-		
 	}
 
 ?>

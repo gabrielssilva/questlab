@@ -119,7 +119,7 @@
 			}
 			
 			// Get Character answers
-			if($this->request->getGetParam('show-answer') == 'true' || !$this->Quests->hasCharacterSolvedQuest($quest['id'], $character['id']))
+			if($this->request->getGetParam('show-answer') == 'true' || !$this->Quests->hasCharacterSolvedQuest($quest['id'], $character['id'])  || $this->request->getGetParam('status') == 'solved')
 			{
 				foreach($choiceLists as &$list) {
 					$list['answer'] = $this->Choiceinput->getCharacterSubmission($list['id'], $character['id']);

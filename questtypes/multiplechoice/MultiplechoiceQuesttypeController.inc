@@ -171,7 +171,7 @@
 			
 			
 			// Get previous user answers
-			if($this->request->getGetParam('show-answer') == 'true' || !$this->Quests->hasCharacterSolvedQuest($quest['id'], $character['id']))
+			if($this->request->getGetParam('show-answer') == 'true' || !$this->Quests->hasCharacterSolvedQuest($quest['id'], $character['id']) || $this->request->getGetParam('status') == 'solved')
 			{
 				foreach($question['answers'] as &$answer) {
 					$answer['useranswer'] = $this->Multiplechoice->getCharacterSubmission($answer['id'], $character['id']);

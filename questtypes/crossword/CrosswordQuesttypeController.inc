@@ -181,7 +181,7 @@
 			$maxY = 0;
 			foreach($words as $index => &$word)
 			{
-				if($this->request->getGetParam('show-answer') == 'true' || !$this->Quests->hasCharacterSolvedQuest($quest['id'], $character['id'])) {
+				if($this->request->getGetParam('show-answer') == 'true' || !$this->Quests->hasCharacterSolvedQuest($quest['id'], $character['id']) || $this->request->getGetParam('status') == 'solved') {
 					$word['answer'] = $this->Crossword->getCharacterSubmission($word['id'], $character['id']);
 				}
 				// Insert word

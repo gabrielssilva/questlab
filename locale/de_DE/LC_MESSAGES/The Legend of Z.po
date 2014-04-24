@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: The Legend of Z\n"
-"POT-Creation-Date: 2014-04-24 16:46+0100\n"
-"PO-Revision-Date: 2014-04-24 16:46+0100\n"
+"POT-Creation-Date: 2014-04-24 18:05+0100\n"
+"PO-Revision-Date: 2014-04-24 18:06+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de_DE\n"
@@ -105,12 +105,12 @@ msgstr "Kommentar von %s am %s um %s Uhr"
 msgid "Comment"
 msgstr "Kommentar"
 
-#: questtypes/submit/html/submission.tpl:30 views/html/quests/quest.tpl:42
+#: questtypes/submit/html/submission.tpl:30 views/html/quests/quest.tpl:45
 #: views/html/quests/submissions.tpl:28
 msgid "solved"
 msgstr "Richtig!"
 
-#: questtypes/submit/html/submission.tpl:31 views/html/quests/quest.tpl:46
+#: questtypes/submit/html/submission.tpl:31 views/html/quests/quest.tpl:50
 #: views/html/quests/submissions.tpl:19
 msgid "unsolved"
 msgstr "Leider falsch!"
@@ -486,7 +486,7 @@ msgstr "Einstiegstext"
 msgid "Wrong text"
 msgstr "Text für falsche Antwort"
 
-#: views/html/quests/create.tpl:40 views/html/quests/quest.tpl:55
+#: views/html/quests/create.tpl:40 views/html/quests/quest.tpl:41
 msgid "Task"
 msgstr "Aufgabe"
 
@@ -502,12 +502,16 @@ msgstr "Filter anwenden"
 msgid "Reset filters"
 msgstr "Filter zurücksetzen"
 
-#: views/html/quests/quest.tpl:43
+#: views/html/quests/quest.tpl:11
+msgid "Prolog"
+msgstr "Prolog"
+
+#: views/html/quests/quest.tpl:46
 #, php-format
 msgid "Quest completed. You have earned %d XPs."
 msgstr "Quest abgeschlossen. Du hast %d XP erhalten."
 
-#: views/html/quests/quest.tpl:61
+#: views/html/quests/quest.tpl:62
 msgid "Task already successfully solved"
 msgstr "Du hast die Aufgabe bereits erfolgreich gelöst"
 
@@ -515,19 +519,15 @@ msgstr "Du hast die Aufgabe bereits erfolgreich gelöst"
 msgid "Show answer"
 msgstr "Lösung anzeigen"
 
-#: views/html/quests/quest.tpl:65
-msgid "Skip task"
-msgstr "Aufgabe überspringen"
+#: views/html/quests/quest.tpl:74
+msgid "Epilog"
+msgstr "Epilog"
 
-#: views/html/quests/quest.tpl:71
-msgid "continue"
-msgstr "fortfahren"
-
-#: views/html/quests/quest.tpl:78
+#: views/html/quests/quest.tpl:100
 msgid "Continuation"
 msgstr "Fortsetzung"
 
-#: views/html/quests/quest.tpl:84 views/html/quests/quest.tpl:97
+#: views/html/quests/quest.tpl:106 views/html/quests/quest.tpl:119
 msgid "Quest"
 msgstr "Quest"
 
@@ -742,6 +742,12 @@ msgstr "Registrieren"
 #: views/html/users/user.tpl:34
 msgid "Roles"
 msgstr "Rollen"
+
+#~ msgid "Skip task"
+#~ msgstr "Aufgabe überspringen"
+
+#~ msgid "continue"
+#~ msgstr "fortfahren"
 
 #~ msgid "Character type"
 #~ msgstr "Charaktertyp"
