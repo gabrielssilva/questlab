@@ -33,6 +33,8 @@
 			<li>
 				<?php if($milestone['achieved']) : ?>
 				<p class="unlocked fwb"><i class="fa fa-check-circle fa-fw"></i><?=$milestone['title']?></p>
+				<?php elseif($milestone['deadline'] < date('Y-m-d H:i:s')) : ?>
+				<i class="fa fa-times-circle fa-fw"></i><?=$milestone['title']?></p>
 				<?php else : ?>
 				<p class="fwb"><i class="fa fa-lock fa-fw"></i><?=$milestone['title']?></p>
 				<?php endif ?>
