@@ -103,15 +103,18 @@
 		<?php foreach($nextquests as &$nextquest) : ?>
 		<?php if($nextquest['id'] == $relatedquesttext['quest']['id']) : ?>
 		<li>
+			<p>
 			<?=_('Quest')?>:
 			<?php if($nextquest['entered'] || !$charactedHasChoosenNextQuest) : ?>
 			<a href="<?=$linker->link(array($nextquest['questgroup_url'],$nextquest['url'],$relatedquesttext['type_url']),3)?>"><?=$nextquest['title']?></a>
 			<?php else : ?>
 			<?=$nextquest['title']?>
 			<?php endif ?>
+			</p>
 		</li>
 		<?php else : ?>
 		<li>
+			<p>
 			<?php if($nextquest['entered'] || !$charactedHasChoosenNextQuest) : ?>
 			<?php if(!empty($nextquest['entry_text'])) : ?>
 			<a href="<?=$linker->link(array($nextquest['questgroup_url'],$nextquest['url']),3)?>"><?=$nextquest['entry_text']?></a>
@@ -126,6 +129,7 @@
 			<?=$nextquest['title']?>
 			<?php endif ?>
 			<?php endif ?>
+			</p>
 		</li>
 		<?php endif ?>
 		<?php endforeach ?>
