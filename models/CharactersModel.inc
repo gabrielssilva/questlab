@@ -186,15 +186,18 @@
 			return $this->db->query(
 				'SELECT characters.id, characters.created, characters.charactertype_id, characters.name, characters.url, characters.user_id, characters.xps, characters.xplevel, characters.avatar_id, charactertypes.name AS charactertype_name, charactertypes.url AS charactertype_url, count(DISTINCT achievement_id) AS c '.
 				'FROM achievements_characters '.
-				'LEFT JOIN achievements ON achievements.id = achievements_characters.achievement_id '.
-				'LEFT JOIN v_characters AS characters ON characters.id = achievements_characters.character_id '.
-				'LEFT JOIN charactertypes ON charactertypes.id = characters.charactertype_id '.
+				'INNER JOIN achievements ON achievements.id = achievements_characters.achievement_id '.
+				'INNER JOIN v_characters AS characters ON characters.id = achievements_characters.character_id '.
+				'INNER JOIN characters_characterroles ON characters_characterroles.character_id = characters.id '.
+				'INNER JOIN characterroles ON characterroles.id = characters_characterroles.characterrole_id AND characterroles.name = ? '.
+				'INNER JOIN charactertypes ON charactertypes.id = characters.charactertype_id '.
 				'WHERE achievements.seminary_id = ? AND deadline IS NULL '.
 				(!$alsoWithDeadline ? 'AND achievements.deadline IS NULL ' : null).
-				'GROUP BY character_id '.
-				'ORDER BY count(DISTINCT achievement_id) DESC '.
+				'GROUP BY achievements_characters.character_id '.
+				'ORDER BY count(DISTINCT achievements_characters.achievement_id) DESC '.
 				'LIMIT ?',
-				'ii',
+				'sii',
+				'user',
 				$seminaryId,
 				$count
 			);

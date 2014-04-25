@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: The Legend of Z\n"
-"POT-Creation-Date: 2014-04-24 18:05+0100\n"
-"PO-Revision-Date: 2014-04-24 18:06+0100\n"
+"POT-Creation-Date: 2014-04-25 02:24+0100\n"
+"PO-Revision-Date: 2014-04-25 02:26+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de_DE\n"
@@ -121,7 +121,7 @@ msgstr "Fehler"
 
 #: views/html/achievements/index.tpl:9 views/html/seminarymenu/index.tpl:4
 msgid "Achievements"
-msgstr "Errungenschaften"
+msgstr "Achievements"
 
 #: views/html/achievements/index.tpl:10
 msgid "Achievement description"
@@ -215,16 +215,11 @@ msgid "Characters"
 msgstr "Charaktere"
 
 #: views/html/charactergroups/group.tpl:45
-#: views/html/charactergroups/managegroup.tpl:54
-#: views/html/questgroups/questgroup.tpl:57 views/html/quests/create.tpl:9
-#: views/html/quests/index.tpl:9
-msgid "Quests"
-msgstr "Quests"
-
 #: views/html/charactergroups/groupsgroup.tpl:20
 #: views/html/charactergroupsquests/quest.tpl:9
-msgid "Character Groups Quests"
-msgstr "Gruppenquests"
+#, php-format
+msgid "%s-Quests"
+msgstr "%squests"
 
 #: views/html/charactergroups/managegroup.tpl:40
 msgid "Remove Characters"
@@ -237,6 +232,12 @@ msgstr "Filtere Charaktere"
 #: views/html/charactergroups/managegroup.tpl:49
 msgid "Add Characters"
 msgstr "Füge Charaktere hinzu"
+
+#: views/html/charactergroups/managegroup.tpl:54
+#: views/html/questgroups/questgroup.tpl:57 views/html/quests/create.tpl:9
+#: views/html/quests/index.tpl:9
+msgid "Quests"
+msgstr "Quests"
 
 #: views/html/charactergroupsquests/quest.tpl:16
 msgid "Description"
@@ -742,6 +743,13 @@ msgstr "Registrieren"
 #: views/html/users/user.tpl:34
 msgid "Roles"
 msgstr "Rollen"
+
+#, fuzzy
+#~ msgid "%stQuests"
+#~ msgstr "Quests"
+
+#~ msgid "Character Groups Quests"
+#~ msgstr "Gruppenquests"
 
 #~ msgid "Skip task"
 #~ msgstr "Aufgabe überspringen"

@@ -17,7 +17,7 @@
 </ol>
 
 
-<h2><?=_('Character Groups Quests')?></h2>
+<h2><?=sprintf(_('%s-Quests'),$groupsgroup['name'])?></h2>
 <ul class="cgqlist">
 	<?php foreach($quests as &$quest) : ?>
 	<li><a href="<?=$linker->link(array('charactergroupsquests','quest',$seminary['url'],$groupsgroup['url'],$quest['url']))?>"><?=$quest['title']?></a></li>

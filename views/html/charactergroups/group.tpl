@@ -42,7 +42,7 @@
 </section>
 
 <section>
-	<h1><i class="fa fa-pencil-square-o fa-fw"></i><?=_('Quests')?></h1>
+	<h1><i class="fa fa-pencil-square-o fa-fw"></i><?=sprintf(_('%s-Quests'),$groupsgroup['name'])?></h1>
 	<ul class="gquests">
 		<?php foreach($quests as &$quest) : ?>
 		<li class="cf">
