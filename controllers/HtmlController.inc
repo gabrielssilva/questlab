@@ -19,6 +19,12 @@
 	 */
 	class HtmlController extends \hhu\z\Controller
 	{
+		/**
+		 * Required components
+		 * 
+		 * @var array
+		 */
+		public $components = array('notification');
 		
 		
 		
@@ -52,6 +58,9 @@
 			$this->set('loggedUser', IntermediateController::$user);
 			$this->set('loggedSeminary', SeminaryController::$seminary);
 			$this->set('loggedCharacter', SeminaryController::$character);
+			
+			// Set notifications
+			$this->set('notifications', $this->Notification->getNotifications());
 		}
 		
 	}

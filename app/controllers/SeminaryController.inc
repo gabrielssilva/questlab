@@ -25,7 +25,7 @@
 		 * 
 		 * @var array
 		 */
-		public $components = array('achievement', 'auth');
+		public $components = array('achievement', 'auth', 'notification');
 		/**
 		 * Required models
 		 * 
@@ -166,7 +166,7 @@
 			foreach($achievements as &$achievement)
 			{
 				// Check deadline
-				if($achievement['deadline'] < date('Y-m-d H:i:s')) {
+				if(!is_null($achievement['deadline']) && $achievement['deadline'] < date('Y-m-d H:i:s')) {
 					continue;
 				}
 				
@@ -278,9 +278,19 @@
 					
 				}
 				
-				// Set status
-				if($achieved) {
+				// Achievement achieved
+				if($achieved)
+				{
+					// Set status
 					$this->Achievements->setAchievementAchieved($achievement['id'], self::$character['id']);
+					
+					// Add notification
+					$this->Notification->addNotification(
+						\hhu\z\controllers\components\NotificationComponent::TYPE_ACHIEVEMENT,
+						$achievement['title'],
+						$this->linker->link(array('achievements', 'index', self::$seminary['url']), 0, true, null, true, $achievement['url']),
+						(!is_null($achievement['achieved_achievementsmedia_id']) ? $this->linker->link(array('media','achievement',self::$seminary['url'],$achievement['url'])) : null)
+					);
 				}
 			}
 		}
