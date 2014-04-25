@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: The Legend of Z\n"
-"POT-Creation-Date: 2014-04-25 02:24+0100\n"
-"PO-Revision-Date: 2014-04-25 02:26+0100\n"
+"POT-Creation-Date: 2014-04-25 13:22+0100\n"
+"PO-Revision-Date: 2014-04-25 13:23+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de_DE\n"
@@ -186,6 +186,7 @@ msgstr "Spiele weiter, um diesen geheimen Erfolg freizuschalten"
 #: views/html/charactergroups/groupsgroup.tpl:8
 #: views/html/charactergroups/index.tpl:9
 #: views/html/charactergroups/managegroup.tpl:8
+#: views/html/charactergroupsquests/quest.tpl:8
 #: views/html/characters/character.tpl:85 views/html/seminarymenu/index.tpl:3
 msgid "Character Groups"
 msgstr "Gruppen"
@@ -216,7 +217,6 @@ msgstr "Charaktere"
 
 #: views/html/charactergroups/group.tpl:45
 #: views/html/charactergroups/groupsgroup.tpl:20
-#: views/html/charactergroupsquests/quest.tpl:9
 #, php-format
 msgid "%s-Quests"
 msgstr "%squests"
@@ -508,9 +508,13 @@ msgid "Prolog"
 msgstr "Prolog"
 
 #: views/html/quests/quest.tpl:46
+msgid "Quest completed."
+msgstr "Quest abgeschlossen."
+
+#: views/html/quests/quest.tpl:46
 #, php-format
-msgid "Quest completed. You have earned %d XPs."
-msgstr "Quest abgeschlossen. Du hast %d XP erhalten."
+msgid "You have earned %d XPs."
+msgstr "Du hast %d XPs erhalten."
 
 #: views/html/quests/quest.tpl:62
 msgid "Task already successfully solved"
