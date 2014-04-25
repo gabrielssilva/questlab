@@ -357,6 +357,7 @@ body{background:#eae8e4;height:100%}
 article{background:#f7f5f2;float:left}
 .moodpic{width:880px;height:230px}
 .moodpic img{width:100%}
+.breadcrumbs{margin-top:0}
 }
 
 @media only screen and (min-width:1600px){
