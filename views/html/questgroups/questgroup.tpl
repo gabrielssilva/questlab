@@ -13,7 +13,7 @@
 <?php if(count($texts) > 0): ?>
 <div id="qtextbox">
 <?php foreach($texts as &$text) : ?>
-<p><?=\hhu\z\Utils::t($text['text'])?></p>
+<p class="qtext"><?=\hhu\z\Utils::t($text['text'])?></p>
 <?php endforeach ?>
 </div>
 <?php endif ?>
