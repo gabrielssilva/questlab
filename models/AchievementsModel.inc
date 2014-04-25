@@ -96,7 +96,8 @@
 				'SELECT achievements.id, achievementconditions.condition, title, url, description, progress, hidden, only_once, all_conditions, deadline, unachieved_achievementsmedia_id, achieved_achievementsmedia_id '.
 				'FROM achievements '.
 				'LEFT JOIN achievementconditions ON achievementconditions.id = achievements.achievementcondition_id '.
-				'WHERE achievements.seminary_id = ? AND deadline IS NOT NULL',
+				'WHERE achievements.seminary_id = ? AND deadline IS NOT NULL '.
+				'ORDER BY deadline ASC',
 				'i',
 				$seminaryId
 			);
