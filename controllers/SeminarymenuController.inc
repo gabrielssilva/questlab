@@ -18,7 +18,7 @@
 	 * 
 	 * @author	Oliver Hanraths <oliver.hanraths@uni-duesseldorf.de>
 	 */
-	class SeminarymenuController extends \hhu\z\controllers\SeminaryController
+	class SeminarymenuController extends \hhu\z\Controller
 	{
 		
 		
@@ -35,8 +35,8 @@
 			parent::preFilter($request, $response);
 			
 			// Set userdata
-			$this->set('loggedUser', self::$user);
-			$this->set('loggedSeminary', self::$seminary);
+			$this->set('loggedUser', \hhu\z\controllers\IntermediateController::$user);
+			$this->set('loggedSeminary', \hhu\z\controllers\SeminaryController::$seminary);
 		}
 		
 		

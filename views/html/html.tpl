@@ -51,6 +51,34 @@
 		</nav>
 	</header>
 	<article class="wrap">
+		<?php if(count($notifications) > 0) : ?>
+		<ul class="notifications">
+			<?php foreach($notifications as &$notification) : ?>
+			<?php if($notification['type'] == \hhu\z\controllers\components\NotificationComponent::TYPE_ACHIEVEMENT) : ?>
+			<li class="achievement">
+				<?php if(!is_null($notification['image'])) : ?>
+				<img src="<?=$notification['image']?>" />
+				<?php endif ?>
+				<small><?=_('Achievement achieved')?>:</small>
+				<?php if(!is_null($notification['link'])) : ?>
+				<a href="<?=$notification['link']?>"><?=$notification['message']?></a>
+				<?php else : ?>
+				<?=$notification['message']?>
+				<?php endif ?>
+			</li>
+			<?php else : ?>
+			<li class="lvlup">
+				<small><?=_('Level-up')?>:</small>
+				<?php if(!is_null($notification['link'])) : ?>
+				<a href="<?=$notification['link']?>"><?=sprintf(_('You have reached level %d'), $notification['message'])?></a>
+				<?php else : ?>
+				<?=sprintf(_('You have reached level %d'), $notification['message'])?>
+				<?php endif ?>
+			</li>
+			<?php endif ?>
+			<?php endforeach ?>
+		</ul>
+		<?php endif ?>
 		<?=$intermediate?>
 	</article>
 	<aside>

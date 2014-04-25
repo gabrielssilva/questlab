@@ -600,6 +600,16 @@
 						{
 							// Mark Quest as solved
 							$this->Quests->setQuestSolved($quest['id'], $character['id']);
+							
+							// Notify of XP-level change
+							$newXPLevel = $this->Characters->getXPLevelOfCharacters($character['id']);
+							if($newXPLevel['level'] > $character['xplevel']) {
+								$this->Notification->addNotification(
+									\hhu\z\controllers\components\NotificationComponent::TYPE_LEVELUP,
+									$newXPLevel['level'],
+									$this->linker->link(array('characters', 'character', $seminary['url'], $character['url']))
+								);
+							}
 						
 							// Redirect
 							$this->redirect($this->linker->link(array(), 5, true, array('status'=>'solved'), false, 'task'));
