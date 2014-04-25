@@ -4,5 +4,5 @@ syntax: regexp
 ^uploads/*
 ^seminarymedia/*
 ^seminaryuploads/*
-^www/analytics/config/*
+^www/analytics/config/config.ini.php*
 ^www/analytics/temp/*
