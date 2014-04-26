@@ -37,10 +37,10 @@
 		 * @var array
 		 */
 		public $permissions = array(
-			'index' => array('admin', 'moderator'),
+			'index' => array('admin', 'moderator', 'user'),
 			'character' => array('admin', 'moderator', 'user'),
 			'register' => array('admin', 'moderator', 'user'),
-			'manage' => array('admin', 'moderator')
+			'manage' => array('admin', 'moderator', 'user')
 		);
 		/**
 		 * User seminary permissions
@@ -307,19 +307,19 @@
 						switch($actions[$action])
 						{
 							case _('Admin'):
-								if(count(array_intersect(array('admin', 'moderator'), \hhu\z\controllers\IntermediateController::$user['roles'])) <= 0 || !in_array('admin', \hhu\z\controllers\SeminaryController::$character['characterroles'])) {
+								if(count(array_intersect(array('admin', 'moderator'), \hhu\z\controllers\IntermediateController::$user['roles'])) <= 0 && !in_array('admin', \hhu\z\controllers\SeminaryController::$character['characterroles'])) {
 									throw new \nre\exceptions\AccessDeniedException();
 								}
 								$role = 'admin';
 							break;
 							case _('Moderator'):
-								if(count(array_intersect(array('admin', 'moderator'), \hhu\z\controllers\IntermediateController::$user['roles'])) <= 0 || !in_array('admin', \hhu\z\controllers\SeminaryController::$character['characterroles'])) {
+								if(count(array_intersect(array('admin', 'moderator'), \hhu\z\controllers\IntermediateController::$user['roles'])) <= 0 && !in_array('admin', \hhu\z\controllers\SeminaryController::$character['characterroles'])) {
 									throw new \nre\exceptions\AccessDeniedException();
 								}
 								$role = 'moderator';
 							break;
 							case _('User'):
-								if(count(array_intersect(array('admin', 'moderator'), \hhu\z\controllers\IntermediateController::$user['roles'])) <= 0 || count(array_intersect(array('admin', 'moderator'), \hhu\z\controllers\SeminaryController::$character['characterroles'])) <= 0) {
+								if(count(array_intersect(array('admin', 'moderator'), \hhu\z\controllers\IntermediateController::$user['roles'])) <= 0 && count(array_intersect(array('admin', 'moderator'), \hhu\z\controllers\SeminaryController::$character['characterroles'])) <= 0) {
 									throw new \nre\exceptions\AccessDeniedException();
 								}
 								$role = 'user';

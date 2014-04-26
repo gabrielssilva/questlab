@@ -30,7 +30,7 @@
 	</fieldset>
 	<fieldset>
 		<legend><?=_('Add role')?></legend>
-		<?php if(in_array('admin', \hhu\z\controllers\SeminaryController::$character['characterroles'])) : ?>
+		<?php if(count(array_intersect(array('admin', 'moderator'), \hhu\z\controllers\IntermediateController::$user['roles'])) > 0 || !in_array('admin', \hhu\z\controllers\SeminaryController::$character['characterroles'])) : ?>
 		<input type="submit" name="actions[addrole]" value="<?=_('Admin')?>" />
 		<input type="submit" name="actions[addrole]" value="<?=_('Moderator')?>" />
 		<?php endif ?>
@@ -38,7 +38,7 @@
 	</fieldset>
 	<fieldset>
 		<legend><?=_('Remove role')?></legend>
-		<?php if(in_array('admin', \hhu\z\controllers\SeminaryController::$character['characterroles'])) : ?>
+		<?php if(count(array_intersect(array('admin', 'moderator'), \hhu\z\controllers\IntermediateController::$user['roles'])) > 0 || !in_array('admin', \hhu\z\controllers\SeminaryController::$character['characterroles'])) : ?>
 		<input type="submit" name="actions[removerole]" value="<?=_('Admin')?>" />
 		<input type="submit" name="actions[removerole]" value="<?=_('Moderator')?>" />
 		<?php endif ?>
