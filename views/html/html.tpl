@@ -65,7 +65,7 @@
 				<?php if(!is_null($notification['image'])) : ?>
 				<img src="<?=$notification['image']?>" />
 				<?php endif ?>
-				<p class="announce"><i class="fa fa-trophy fa-fw"></i><?=_('Achievement achieved')?>:<i class="fa fa-times fa-fw"></i></p>
+				<p class="announce"><i class="fa fa-trophy fa-fw"></i><?=_('Achievement')?>:<i class="fa fa-times fa-fw"></i></p>
 				<?php if(!is_null($notification['link'])) : ?>
 				<p class="fwb"><a href="<?=$notification['link']?>"><?=$notification['message']?></a></p>
 				<?php else : ?>
@@ -74,7 +74,7 @@
 			</li>
 			<?php else : ?>
 			<li class="cf">
-				<img src="http://s1.directupload.net/images/140425/kmuq4lka.jpg">
+				<img src="<?=$linker->link(array('grafics','lvlup.jpg'))?>">
 				<p class="announce"><i class="fa fa-arrow-up fa-fw"></i><?=_('Level-up')?>:<i class="fa fa-times fa-fw"></i></p>
 				<?php if(!is_null($notification['link'])) : ?>
 				<p class="fwb"><a href="<?=$notification['link']?>"><?=sprintf(_('You have reached level %d'), $notification['message'])?></a></p>

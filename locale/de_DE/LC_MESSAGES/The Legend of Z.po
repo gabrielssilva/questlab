@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: The Legend of Z\n"
-"POT-Creation-Date: 2014-04-25 13:22+0100\n"
-"PO-Revision-Date: 2014-04-25 13:23+0100\n"
+"POT-Creation-Date: 2014-04-26 13:38+0100\n"
+"PO-Revision-Date: 2014-04-26 13:39+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de_DE\n"
@@ -400,6 +400,19 @@ msgstr "oder"
 msgid "register yourself"
 msgstr "registriere dich"
 
+#: views/html/html.tpl:68
+msgid "Achievement"
+msgstr "Achievement"
+
+#: views/html/html.tpl:78
+msgid "Level-up"
+msgstr "Levelaufstieg"
+
+#: views/html/html.tpl:80 views/html/html.tpl:82
+#, php-format
+msgid "You have reached level %d"
+msgstr "Du hast Level %d erreicht"
+
 #: views/html/introduction/index.tpl:1
 msgid "Introduction"
 msgstr "Einführung"
@@ -532,7 +545,7 @@ msgstr "Epilog"
 msgid "Continuation"
 msgstr "Fortsetzung"
 
-#: views/html/quests/quest.tpl:106 views/html/quests/quest.tpl:119
+#: views/html/quests/quest.tpl:107 views/html/quests/quest.tpl:122
 msgid "Quest"
 msgstr "Quest"
 
