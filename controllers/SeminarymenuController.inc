@@ -37,6 +37,7 @@
 			// Set userdata
 			$this->set('loggedUser', \hhu\z\controllers\IntermediateController::$user);
 			$this->set('loggedSeminary', \hhu\z\controllers\SeminaryController::$seminary);
+			$this->set('loggedCharacter', \hhu\z\controllers\SeminaryController::$character);
 		}
 		
 		
