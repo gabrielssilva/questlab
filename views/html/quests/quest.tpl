@@ -37,7 +37,7 @@
 <?php endif ?>
 
 <?php if(!is_null($task)) : ?>
-<section>
+<section class="task">
 	<h1 id="task"><?=_('Task')?></h1>
 	<?php if(!is_null($queststatus)) : ?>
 	<?php if($queststatus == 'solved') : ?>

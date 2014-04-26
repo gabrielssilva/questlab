@@ -141,6 +141,7 @@ input[type="submit"][disabled]{text-shadow:1px 2px #d48c4e;background:#f9ac69;bo
 .admnqf label{margin:10px 0 5px}
 .admnqf select{font-size:0.875em}
 
+.task img{max-width:100%}
 
 /** Popup Notification **/
 
