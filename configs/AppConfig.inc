@@ -119,7 +119,7 @@
 			'prename' => array(
 				'minlength'	=> 2,
 				'maxlength'	=> 32,
-				'regex'		=> '/^\S*$/'
+				'regex'		=> '/^(\S| )*$/'
 			),
 			'surname' => array(
 				'minlength'	=> 2,
