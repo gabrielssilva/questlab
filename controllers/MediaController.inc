@@ -214,7 +214,7 @@
 		 * @param	string	$achievementUrl	URL-title of the Achievement
 		 * @param	string	$action		Action for processing the media
 		 */
-		public function achievement($seminaryUrl, $achievementUrl)
+		public function achievement($seminaryUrl, $achievementUrl, $locked=null)
 		{
 			// Get Seminary
 			$seminary = $this->Seminaries->getSeminaryByUrl($seminaryUrl);
@@ -226,12 +226,20 @@
 			$achievement = $this->Achievements->getAchievementByUrl($seminary['id'], $achievementUrl);
 			
 			// Get media
-			$index = '';
-			if(is_null($character) || !$this->Achievements->hasCharacterAchievedAchievement($achievement['id'], $character['id'])) {
-				$index = 'unachieved_achievementsmedia_id';
-			}
-			else {
-				$index = 'achieved_achievementsmedia_id';
+			switch($locked)
+			{
+				case null:
+					if(is_null($character) || !$this->Achievements->hasCharacterAchievedAchievement($achievement['id'], $character['id'])) {
+						throw new \nre\exceptions\AccessDeniedException();
+					}
+					$index = 'achieved_achievementsmedia_id';
+				break;
+				case 'locked':
+					$index = 'unachieved_achievementsmedia_id';
+				break;
+				default:
+					throw new \nre\exceptions\ParamsNotValidException($locked);
+				break;
 			}
 			if(is_null($achievement[$index])) {
 				throw new \nre\exceptions\IdNotFoundException($achievementUrl);

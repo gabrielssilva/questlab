@@ -63,7 +63,7 @@
 	<?php foreach($unachievedAchievements as &$achievement) : ?>
 	<li class="cf">
 		<?php if(!is_null($achievement['unachieved_achievementsmedia_id'])) : ?>
-		<img src="<?=$linker->link(array('media','achievement',$seminary['url'],$achievement['url']))?>" />
+		<img src="<?=$linker->link(array('media','achievement',$seminary['url'],$achievement['url'],'locked'))?>" />
 		<?php endif ?>
 		<h3 id="<?=$achievement['url']?>"><?=(!$achievement['hidden']) ? $achievement['title'] : _('Secret Achievement')?></h3>
 		<?php if(!$achievement['hidden']) : ?>
