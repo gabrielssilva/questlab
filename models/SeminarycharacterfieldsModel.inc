@@ -63,7 +63,7 @@
 		public function getFieldsForCharacter($characterId)
 		{
 			return $this->db->query(
-				'SELECT seminarycharacterfields.title, characters_seminarycharacterfields.value '.
+				'SELECT seminarycharacterfields.id, seminarycharacterfields.title, seminarycharacterfields.url, seminarycharacterfields.regex, seminarycharacterfields.required, seminarycharacterfieldtypes.id AS type_id, seminarycharacterfieldtypes.title AS type_title, seminarycharacterfieldtypes.url AS type_url, characters_seminarycharacterfields.value '.
 				'FROM characters_seminarycharacterfields '.
 				'LEFT JOIN seminarycharacterfields ON seminarycharacterfields.id = characters_seminarycharacterfields.seminarycharacterfield_id '.
 				'LEFT JOIN seminarycharacterfieldtypes ON seminarycharacterfieldtypes.id = seminarycharacterfields.seminarycharacterfieldtype_id '.
