@@ -155,12 +155,19 @@ input[type="submit"][disabled]{text-shadow:1px 2px #d48c4e;background:#f9ac69;bo
 .notify .fa-times{float:right;padding:0;margin:-12px -10px 0 0;color:#d4d2ce}
 
 
-/** Login & Registration **/
+/** Login, Registration & Filter **/
 
-.logreg{width:auto;display:inline-block;padding:15px 20px;background:#eae8e4;border-radius:3px}
+.logreg{margin:15px 0;width:auto;display:inline-block;padding:15px 20px;background:#eae8e4;border-radius:3px}
 .logreg label{display:block;font-size:.875em}
 .logreg input{margin:5px 0 15px}
 .logreg .cta{display:block}
+
+.filter{margin:10px 0 20px;display:block;width:auto;padding:15px 20px;background:#eae8e4;border-radius:3px}
+.filter ul{margin:0}
+.filter li{display:inline-block;margin-bottom:8px}
+.filter label,input{display:inline;vertical-align:middle}
+.filter input[type=checkbox]{margin:0 8px 0 0}
+.filter label{margin-right:20px;font-size:.875em}
 
 .avatar li{display:inline-block;margin-right:5px;text-align:center}
 .avatar img{border-radius:3px}
@@ -210,9 +217,9 @@ input[type="submit"][disabled]{text-shadow:1px 2px #d48c4e;background:#f9ac69;bo
 .gdata{margin:20px 0 40px 0}
 .gdata li{float:left;background:#fff;padding:5px 15px;margin:0 5px 5px 0;border-radius:3px}
 
-.gchars li{background:#fff;padding:15px 0;border-radius:3px;display:inline-block;margin-bottom:5px;width:49%;text-align:center;vertical-align:top}
+.gchars li{background:#fff;padding:15px 5px;border-radius:3px;display:inline-block;margin-bottom:4px;width:49%;text-align:center;vertical-align:top;-webkit-box-sizing:border-box;-moz-box-sizing:border-box;box-sizing:border-box}
 .gchars img{width:50px;height:50px;border-radius:25px}
-.gchars p{margin:0;padding:0}
+.gchars p{margin:0;padding:0;overflow:hidden;text-overflow:ellipsis}
 .gchars .fa{position:absolute;margin:-10px 0 0}
 
 .gquests li{padding:12px 15px 0 15px;border-radius:3px}
