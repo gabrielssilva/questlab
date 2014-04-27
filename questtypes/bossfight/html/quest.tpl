@@ -29,7 +29,7 @@
 
 <p><?=\hhu\z\Utils::t($stage['text'])?></p>
 
-<form method="post" action="#task">
+<form method="post" action="<?=$linker->link(null,0,false,null,true,'task')?>">
 	<input type="hidden" name="stage" value="<?=$stage['id']?>" />
 	<ul class="bossfight cf">
 		<?php foreach($childStages as &$childStage) : ?>
