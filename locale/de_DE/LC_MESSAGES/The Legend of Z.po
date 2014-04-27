@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: The Legend of Z\n"
-"POT-Creation-Date: 2014-04-26 13:38+0100\n"
-"PO-Revision-Date: 2014-04-26 13:39+0100\n"
+"POT-Creation-Date: 2014-04-27 04:32+0100\n"
+"PO-Revision-Date: 2014-04-27 04:33+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de_DE\n"
@@ -292,30 +292,58 @@ msgstr "Letzter Speicherpunkt"
 msgid "Topic progress"
 msgstr "Thematischer Fortschritt"
 
-#: views/html/characters/manage.tpl:14
-msgid "Selection"
-msgstr "Auswahl"
+#: views/html/characters/index.tpl:19 views/html/characters/manage.tpl:14
+msgid "Properties"
+msgstr "Eigenschaften"
 
-#: views/html/characters/manage.tpl:23 views/html/characters/manage.tpl:34
-#: views/html/characters/manage.tpl:42
+#: views/html/characters/index.tpl:20 views/html/characters/manage.tpl:15
+#: views/html/error/index.tpl:8 views/html/error/index.tpl:9
+#: views/html/introduction/index.tpl:6 views/html/introduction/index.tpl:7
+#: views/html/users/create.tpl:6 views/html/users/create.tpl:7
+#: views/html/users/edit.tpl:6 views/html/users/edit.tpl:7
+#: views/html/users/login.tpl:9 views/html/users/login.tpl:10
+#: views/html/users/register.tpl:78 views/html/users/register.tpl:79
+msgid "Username"
+msgstr "Benutzername"
+
+#: views/html/characters/index.tpl:21 views/html/characters/manage.tpl:16
+#: views/html/quests/create.tpl:29 views/html/quests/create.tpl:30
+msgid "XPs"
+msgstr "XP"
+
+#: views/html/characters/index.tpl:22 views/html/characters/manage.tpl:17
+#: views/html/users/user.tpl:34
+msgid "Roles"
+msgstr "Rollen"
+
+#: views/html/characters/index.tpl:26 views/html/characters/manage.tpl:21
+msgid "Set properties"
+msgstr "Setze Eigenschaften"
+
+#: views/html/characters/index.tpl:38 views/html/characters/manage.tpl:35
+#: views/html/characters/manage.tpl:52 views/html/characters/manage.tpl:60
 msgid "Admin"
 msgstr "Administrator"
 
-#: views/html/characters/manage.tpl:24 views/html/characters/manage.tpl:35
-#: views/html/characters/manage.tpl:43
+#: views/html/characters/index.tpl:39 views/html/characters/manage.tpl:36
+#: views/html/characters/manage.tpl:53 views/html/characters/manage.tpl:61
 msgid "Moderator"
 msgstr "Moderator"
 
-#: views/html/characters/manage.tpl:25 views/html/characters/manage.tpl:37
-#: views/html/characters/manage.tpl:45
+#: views/html/characters/index.tpl:40 views/html/characters/manage.tpl:37
+#: views/html/characters/manage.tpl:55 views/html/characters/manage.tpl:63
 msgid "User"
 msgstr "Benutzer"
 
-#: views/html/characters/manage.tpl:32
+#: views/html/characters/manage.tpl:24
+msgid "Selection"
+msgstr "Auswahl"
+
+#: views/html/characters/manage.tpl:50
 msgid "Add role"
 msgstr "Füge Rolle hinzu"
 
-#: views/html/characters/manage.tpl:40
+#: views/html/characters/manage.tpl:58
 msgid "Remove role"
 msgstr "Entferne Rolle"
 
@@ -373,15 +401,6 @@ msgstr "erstellen"
 #: views/html/users/login.tpl:17
 msgid "Login"
 msgstr "Login"
-
-#: views/html/error/index.tpl:8 views/html/error/index.tpl:9
-#: views/html/introduction/index.tpl:6 views/html/introduction/index.tpl:7
-#: views/html/users/create.tpl:6 views/html/users/create.tpl:7
-#: views/html/users/edit.tpl:6 views/html/users/edit.tpl:7
-#: views/html/users/login.tpl:9 views/html/users/login.tpl:10
-#: views/html/users/register.tpl:78 views/html/users/register.tpl:79
-msgid "Username"
-msgstr "Benutzername"
 
 #: views/html/error/index.tpl:10 views/html/error/index.tpl:11
 #: views/html/introduction/index.tpl:8 views/html/introduction/index.tpl:9
@@ -487,10 +506,6 @@ msgstr "Name"
 #: views/html/quests/create.tpl:17 views/html/quests/index.tpl:14
 msgid "Questgroup"
 msgstr "Questgruppe"
-
-#: views/html/quests/create.tpl:29 views/html/quests/create.tpl:30
-msgid "XPs"
-msgstr "XP"
 
 #: views/html/quests/create.tpl:37
 msgid "Entry text"
@@ -756,10 +771,6 @@ msgstr "Das Passwort ist ungültig"
 #: views/html/users/register.tpl:89
 msgid "Register"
 msgstr "Registrieren"
-
-#: views/html/users/user.tpl:34
-msgid "Roles"
-msgstr "Rollen"
 
 #, fuzzy
 #~ msgid "%stQuests"
