@@ -81,7 +81,7 @@ menu .smnry{font-size:0.875em;padding:8px 0 8px 12px;background:#0c2e32;border-b
 
 #toggle,.toggle{display:none}
 .toggle{display:inline-block;padding:15px 15px 15px 0;position:relative;cursor:pointer;-webkit-touch-callout:none;-moz-user-select:none;-ms-user-select:none;-webkit-user-select:none;user-select:none}
-#toggle:checked ~ menu{display:block;opacity:1}
+#toggle:checked ~ menu{display:block;position:fixed;left:0;top:54px;bottom:0;overflow-y:auto;opacity:1}
 #navicon{display:block;color:#d9e5e7}
 
 article{padding:70px 0 30px}
