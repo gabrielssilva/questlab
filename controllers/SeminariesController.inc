@@ -126,10 +126,9 @@
 					
 					// Get first Questgroup text
 					$text = $this->Questgroups->getFirstQuestgroupText($questgroup['id']);
-					if(!empty($text))
+					if(!is_null($text))
 					{
-						$text = \hhu\z\Utils::shortenString($text['text'], 100, 120).' …';
-						$questgroup['text'] = $text;
+						$questgroup['text'] = \hhu\z\Utils::shortenString($text, 100, 120).' …';
 					}
 					
 					// Get cumulated data

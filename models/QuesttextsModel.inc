@@ -35,6 +35,24 @@
 		
 		
 		/**
+		 * Get the first text of a Quest.
+		 * 
+		 * @param	int	$questId	ID of a Quest
+		 * @return	string			First text of this Quest or NULL
+		 */
+		public function getFirstQuestText($questId)
+		{
+			$prolog = $this->getQuesttextsOfQuest($questId, 'Prolog');
+			if(!empty($prolog)) {
+				return $prolog[0]['text'];
+			}
+			
+			
+			return null;
+		}
+		
+		
+		/**
 		 * Get all Questtexts for a Quest.
 		 * 
 		 * @param	int	$questId		ID of the Quest
