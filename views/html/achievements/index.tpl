@@ -20,11 +20,11 @@
 				<?php endif ?>
 				<?php else : ?>
 				<?php if(!is_null($achievement['unachieved_achievementsmedia_id'])) : ?>
-				<img src="<?=$linker->link(array('media','achievement',$seminary['url'],$achievement['url']))?>" />
+				<img src="<?=$linker->link(array('media','achievement',$seminary['url'],$achievement['url'],'locked'))?>" />
 				<?php endif ?>
 				<?php endif ?>
-				<p class="fwb"><?=$achievement['title']?></p>
 				<p><small><?=sprintf(_('Achievement has been achieved only %d times'), $achievement['c'])?></small></p>
+				<p class="fwb"><?=(!$achievement['hidden']) ? $achievement['title'] : _('Secret Achievement')?></p>
 			</li>
 			<?php endforeach ?>
 		</ol>
