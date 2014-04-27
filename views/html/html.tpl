@@ -43,7 +43,7 @@
 	<header>
 		<nav>
 			<input type="checkbox" id="toggle">
-			<label for="toggle" class="toggle" onclick><a id="navicon"><i class="fa fa-bars"></i>Menü</a></label>
+			<label for="toggle" class="toggle" onclick><i class="fa fa-bars"></i>Menü</label>
 			<?php if(!is_null($loggedUser)) : ?>
 			<?php if(!is_null($loggedCharacter)) : ?>
 			<a href="<?=$linker->link(array('characters','character',$loggedSeminary['url'],$loggedCharacter['url']))?>" id="profile"><i class="fa fa-user fa-fw"></i><?=$loggedCharacter['name']?><span class="circlenote"><?=$loggedCharacter['xplevel']?></span></a>
