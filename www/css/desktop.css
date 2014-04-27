@@ -112,7 +112,7 @@ aside{display:none}
 .qglist .qgtitle .bonus{background:#f5821f}
 .qglist .qgtitle .bonus:hover{background:#f68e34}
 
-#qtextbox{font-size:.875em;border-radius:5px;background:#fff;border:15px solid #fff;max-height:200px;overflow:hidden}
+.qtextbox{font-size:.875em;border-radius:5px;background:#fff;border:15px solid #fff;max-height:200px;overflow:hidden}
 .qtext{padding-right:15px}
 .qtext img,.grpqimg{float:right;margin-left:15px;max-width:30%;max-height:200px;border-radius:3px}
 

@@ -9,7 +9,7 @@
 <?php if(array_key_exists('Prolog', $questtexts) && count($questtexts['Prolog']) > 0) : ?>
 <section>
 	<h1 id="questtext"><?=_('Prolog')?></h1>
-	<div id="qtextbox">
+	<div class="qtextbox">
 		<?php $mediaShown = false; ?>
 		<?php foreach($questtexts['Prolog'] as &$questtext) : ?>
 		<p class="qtext cf">
@@ -72,7 +72,7 @@
 <?php if(array_key_exists('Epilog', $questtexts) && count($questtexts['Epilog']) > 0) : ?>
 <section>
 	<h1 id="questtext"><?=_('Epilog')?></h1>
-	<div id="qtextbox">
+	<div class="qtextbox">
 		<?php foreach($questtexts['Epilog'] as &$questtext) : ?>
 		<p class="qtext cf">
 			<?php if(array_key_exists('media', $questtext)) : ?>
@@ -83,10 +83,10 @@
 		<?php if(count($questtext['relatedQuestsgroups']) > 0 || !empty($questtext['abort_text'])) : ?>
 		<ul>
 			<?php foreach($questtext['relatedQuestsgroups'] as &$relatedQuestgroup) : ?>
-			<li><a href="<?=$linker->link(array('questgroups','questgroup',$seminary['url'],$relatedQuestgroup['url']))?>"><?=$relatedQuestgroup['entry_text']?></a></li>
+			<li><p><a href="<?=$linker->link(array('questgroups','questgroup',$seminary['url'],$relatedQuestgroup['url']))?>"><?=$relatedQuestgroup['entry_text']?></a></p></li>
 			<?php endforeach ?>
 			<?php if(!empty($questtext['abort_text'])) : ?>
-			<li><a href="<?=$linker->link(array('quest',$seminary['url'],$relatedquesttext['quest']['questgroup_url'],$relatedquesttext['quest']['url'],$relatedquesttext['type_url']),1)?>"><?=$questtext['abort_text']?></a></li>
+			<li><p><a href="<?=$linker->link(array('quest',$seminary['url'],$relatedquesttext['quest']['questgroup_url'],$relatedquesttext['quest']['url'],$relatedquesttext['type_url']),1)?>"><?=$questtext['abort_text']?></a></p></li>
 			<?php endif ?>
 		</ul>
 		<?php endif ?>

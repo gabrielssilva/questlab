@@ -13,7 +13,7 @@
 	<script type="text/javascript">
 	$(document).ready(
 	function() {
-		$("#qtextbox").niceScroll({autohidemode:false,cursorcolor:"#c2beb9"});
+		$(".qtextbox").niceScroll({autohidemode:false,cursorcolor:"#c2beb9"});
 	}
 	);
 	</script>
