@@ -1,3 +1,6 @@
+<div class="moodpic">
+	<img src="<?=$linker->link(array('grafics','questlab.jpg'))?>" />
+</div>
 <h1><?=_('Users')?></h1>
 
 <h2><?=_('Registration')?></h2>

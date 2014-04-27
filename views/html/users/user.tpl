@@ -1,3 +1,6 @@
+<div class="moodpic">
+	<img src="<?=$linker->link(array('grafics','questlab.jpg'))?>" />
+</div>
 <h1><?=_('Users')?></h1>
 <?php if(count(array_intersect(array('admin','moderator'),\hhu\z\controllers\IntermediateController::$user['roles'])) > 0) : ?>
 <nav class="admin">

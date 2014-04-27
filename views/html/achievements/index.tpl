@@ -1,6 +1,6 @@
-<?php if(!is_null($seminary['seminarymedia_id'])) : ?>
+<?php if(!is_null($seminary['achievements_seminarymedia_id'])) : ?>
 <div class="moodpic">
-	<img src="<?=$linker->link(array('media','seminaryheader',$seminary['url']))?>" />
+	<img src="<?=$linker->link(array('media','seminarymoodpic',$seminary['url'], 'achievements'))?>">
 </div>
 <?php endif ?>
 <ul class="breadcrumbs">

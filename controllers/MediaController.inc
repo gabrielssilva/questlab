@@ -26,7 +26,7 @@
 		 */
 		public $permissions = array(
 			'index' 		=> array('admin', 'moderator', 'user', 'guest'),
-			'seminaryheader'	=> array('admin', 'moderator', 'user'),
+			'seminarymoodpic'	=> array('admin', 'moderator', 'user'),
 			'seminary' 		=> array('admin', 'moderator', 'user'),
 			'avatar'		=> array('admin', 'moderator', 'user'),
 			'achievement'		=> array('admin', 'moderator', 'user')
@@ -95,21 +95,39 @@
 		
 		
 		/**
-		 * Action: seminaryheader
+		 * Action: seminarymoodpic
 		 * 
-		 * Display the header of a Seminary.
+		 * Display the moodpic for a category of a Seminary.
 		 * 
 		 * @throws	IdNotFoundException
 		 * @param	string	$seminaryUrl	URL-title of the Seminary
+		 * @param	string	$category	Category to show moodpic of
 		 * @param	string	$action		Action for processing the media
 		 */
-		public function seminaryheader($seminaryUrl, $action=null)
+		public function seminarymoodpic($seminaryUrl, $category=null, $action=null)
 		{
 			// Get Seminary
 			$seminary = $this->Seminaries->getSeminaryByUrl($seminaryUrl);
 			
+			// Set index
+			switch($category)
+			{
+				case null:
+					$index = 'seminarymedia_id';
+				break;
+				case 'charactergroups':
+					$index = 'charactergroups_seminarymedia_id';
+				break;
+				case 'achievements':
+					$index = 'achievements_seminarymedia_id';
+				break;
+				case 'library':
+					$index = 'library_seminarymedia_id';
+				break;
+			}
+			
 			// Get media
-			$media = $this->Media->getSeminaryMediaById($seminary['seminarymedia_id']);
+			$media = $this->Media->getSeminaryMediaById($seminary[$index]);
 			
 			// Get file
 			$file = $this->getMediaFile($media, $action);
