@@ -190,10 +190,6 @@ input[type="submit"][disabled]{text-shadow:1px 2px #d48c4e;background:#f9ac69;bo
 .crewards p{margin-bottom:5px}
 .crewards .passed .fa{color:#850000}
 
-.cgroups img{float:left;border-radius:3px;margin-right:5px;height:35px}
-.cgroups p{float:left;0;padding:0 12px;line-height:35px;background:#fff;border-radius:0 3px 3px 0}
-.cgroups a{float:left;padding:0 12px;line-height:35px;background:#50a4ab;color:#fff;background:#50a4ab;border-radius:3px 0 0 3px}
-
 .cranks li{clear:both;padding:8px 0 8px 8px;border-radius:3px}
 .cranks li:nth-child(odd){background:#fff}
 .cranks img{float:left;margin-right:15px;width:50px;height:50px;border-radius:25px}
