@@ -161,6 +161,13 @@ input[type="submit"][disabled]{text-shadow:1px 2px #d48c4e;background:#f9ac69;bo
 .logreg input{margin:5px 0 15px}
 .logreg .cta{display:block}
 
+.front{margin-top:0}
+.front label,.front input,.front .cta{display:inline;margin:0;vertical-align:middle}
+.front label{margin-right:10px}
+.front input[type=text],.front input[type=password]{width:150px;margin-right:20px;font-size:.875em}
+.front p{display:inline-block;margin-bottom:10px}
+.front .register{display:block;margin:0;text-align:center;font-size:.875em}
+
 .filter{margin:10px 0 20px;display:block;width:auto;padding:15px 20px;background:#eae8e4;border-radius:3px}
 .filter ul{margin:0}
 .filter li{display:inline-block;margin-bottom:8px}

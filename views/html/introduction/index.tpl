@@ -1,21 +1,18 @@
 <div class="moodpic">
 	<img src="<?=$linker->link(array('grafics','questlab.jpg'))?>" />
 </div>
-<h1><?=_('Introduction')?></h1>
 <?php if(is_null($userId)) : ?>
-<h2><?=_('Login')?></h2>
-<form method="post" action="<?=$linker->link(array('users','login'))?>" class="logreg">
+<form method="post" action="<?=$linker->link(array('users','login'))?>" class="logreg front">
 	<fieldset>
-		<label for="username"><?=_('Username')?>:</label>
-		<input name="username" type="text" placeholder="<?=_('Username')?>" title="<?=_('Username')?>" required="required" autofocus="autofocus" /><br />
-		<label for="password"><?=_('Password')?>:</label>
-		<input name="password" type="password" placeholder="<?=_('Password')?>" title="<?=_('Password')?>" required="required" /><br />
+		<p><label for="username"><?=_('Username')?>:</label><input name="username" type="text" placeholder="<?=_('Username')?>" title="<?=_('Username')?>" required="required" autofocus="autofocus" /></p>
+		<p><label for="password"><?=_('Password')?>:</label><input name="password" type="password" placeholder="<?=_('Password')?>" title="<?=_('Password')?>" required="required" /></p>
+		<input type="submit" name="login" class="cta" value="<?=_('Login')?>" />
 	</fieldset>
-	<input type="submit" name="login" class="cta" value="<?=_('Login')?>" />
-	<?=_('or')?> <a href="<?=$linker->link(array('users','register'))?>"><?=_('register yourself')?></a>
+	<p class="register"><?=_('or')?> <a href="<?=$linker->link(array('users','register'))?>"><?=_('register yourself')?></a></p>
 </form>
 <?php endif ?>
-
+<h1><?=\nre\configs\AppConfig::$app['name']?></h1>
+<h2><?=_('Introduction')?></h2>
 <p itemscope itemtype="http://schema.org/CollegeOrUniversity">Bereits im Sommersemester 2013 wurde das Projekt „Die Legende von Zyren“ unterstützt durch den Lehrförderungsfond der <a itemprop="name" href="http://www.uni-duesseldorf.de">Heinrich-Heine-Universität Düsseldorf</a> ins Leben gerufen, um die Inhalte der Vorlesung „Wissensrepräsentation“ den Studierenden des Faches Informationswissenschaft mit Hilfe von Spielelementen und -modellen zu vermitteln. Die innovative Lernumgebung besteht aus einem virtuellen Textadventure, dass über eine webbasierte Plattform zugänglich ist und realen Spielen in einer Präsenzveranstaltung, in denen die Studierenden unmittelbar in das Abenteuer eintauchen und in Teams spielerisch gegeneinander antreten.</p>
 <p>Auf der Plattform spielt sich jeder der Studierenden mit seinem virtuellen Avatar durch das Reich von Zyren und erlernt und vertieft auf spielerische Weise die Inhalte der Vorlesung „Wissensrepräsentation“, die in Form von Herausforderungen oder Rätseln in das Abenteuer eingebunden wurden und über den Fortlauf und den Erfolg des Spiels entscheiden.</p>
 <p>In der zusätzlichen Präsenzveranstaltung tauchen die Studierenden direkt in das Abenteuer ein und die vertiefen die Inhalte spielerisch. Hier schließen sich die Studierenden in Teams (Gilden) zusammen, müssen eigenverantwortlich Lerninhalte erarbeiten, Probleme lösen und in speziellen Gildenaufgaben gegen andere Teams antreten, um ihr kollaborativ erarbeitetes Wissen auf die Probe zu stellen.</p>
@@ -46,7 +43,7 @@
 	<li itemscope itemtype="http://schema.org/Person"><span itemprop="name">Julia Göretz</span></li>
 	<li itemscope itemtype="http://schema.org/Person"><span itemprop="name">Anja Wintermeyer</span></li>
 </ul>
-<h3>Entwicklung „The Legend of Z“:</h3>
+<h3>Entwicklung „Questlab“:</h3>
 <ul>
 	<li itemscope itemtype="http://schema.org/Person"><span itemprop="name">Oliver Hanraths</span></li>
 	<li itemscope itemtype="http://schema.org/Person"><span itemprop="name">Daniel Miskovic</span></li>
