@@ -83,11 +83,12 @@
 	</section>
 	<section class="flr48">
 		<h2><i class="fa fa-users fa-fw"></i><?=_('Character Groups')?></h2>
-		<ul class="cgroups cf">
+		<ul class="cranks">
 			<?php foreach($groups as &$group) : ?>
-			<li class="cf">
-				<img src="http://s1.directupload.net/images/140325/3eqybn4i.png">
-				<a href="<?=$linker->link(array('charactergroups','group',$seminary['url'],$group['charactergroupsgroup_url'],$group['url']))?>"><?=$group['name']?></a><p><span><?=sprintf(_('%d XPs'), $group['xps'])?></span></p>
+			<li>
+				<a href="<?=$linker->link(array('charactergroups','group',$seminary['url'],$group['charactergroupsgroup_url'],$group['url']))?>"><img src="http://s1.directupload.net/images/140325/3eqybn4i.png"></a>
+				<p><a href="<?=$linker->link(array('charactergroups','group',$seminary['url'],$group['charactergroupsgroup_url'],$group['url']))?>"><?=$group['name']?></a></p>
+				<p><small><?=sprintf(_('%d XPs'), $group['xps'])?></small></p>
 			</li>
 			<?php endforeach ?>
 		</ul>
