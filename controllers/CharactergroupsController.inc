@@ -371,9 +371,7 @@
 				{
 					// Add Characters to group
 					case 'addcharacters':
-						var_dump("hier");
 						foreach($selectedCharacters as &$characterId) {
-							var_dump("add ".$characterId);
 							$this->Charactergroups->addCharacterToCharactergroup($group['id'], $characterId);
 						}
 					break;
