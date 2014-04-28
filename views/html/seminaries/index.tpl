@@ -21,6 +21,12 @@
 			<?=$seminary['title']?>
 			<?php endif ?>
 			</p>
+			<div class="cf">
+				<div class="xpbar">
+					<span style="width:25%"></span>
+				</div>
+				<p class="xpnumeric">25 / 100 XP</p>
+			</div>
 			<p><small><?=sprintf(_('created by %s on %s'), $seminary['creator']['username'], $dateFormatter->format(new \DateTime($seminary['created'])))?></small></p>
 			<p><?=\hhu\z\Utils::t($seminary['description'])?></p>
 			<?php if(!array_key_exists('usercharacter', $seminary)) : ?>
