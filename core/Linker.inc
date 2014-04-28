@@ -137,7 +137,6 @@
 			if(count($reqParams) < $offset && $offset > 1) {
 				$reqParams[] = $this->request->getParam(2, 'action');
 			}
-			$params = array_map('rawurlencode', $params);
 			$params = array_merge($reqParams, $params);
 			
 			// Use Layout
@@ -158,6 +157,9 @@
 					)
 				);
 			}
+			
+			// Encode parameters
+			$params = array_map('rawurlencode', $params);
 			
 			// Set parameters
 			call_user_func_array(
