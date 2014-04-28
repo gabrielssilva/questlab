@@ -145,7 +145,7 @@
 			// Get ranking
 			$ranking = array(
 				'superior' => $this->Characters->getSuperiorCharacters($seminary['id'], $character['xps'], \nre\configs\AppConfig::$misc['ranking_range']),
-				'inferior' => $this->Characters->getInferiorCharacters($seminary['id'], $character['xps'], \nre\configs\AppConfig::$misc['ranking_range'])
+				'inferior' => $this->Characters->getInferiorCharacters($seminary['id'], $character['id'], $character['xps'], \nre\configs\AppConfig::$misc['ranking_range'])
 			);
 			
 			// Get Quest topics
