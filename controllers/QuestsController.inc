@@ -627,7 +627,7 @@
 							$this->Quests->setQuestSubmitted($quest['id'], $character['id']);
 						
 							// Redirect
-							$this->redirect($this->linker->link(array(), 5, true, false, 'task'));
+							$this->redirect($this->linker->link(array(), 5, true, null, false, 'task'));
 						}
 					}
 					catch(\hhu\z\exceptions\SubmissionNotValidException $e) {
