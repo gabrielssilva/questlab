@@ -114,15 +114,18 @@
 		public function getSeldomAchievements($seminaryId, $count, $alsoWithDeadline=true)
 		{
 			return $this->db->query(
-				'SELECT id, title, url, description, progress, hidden, unachieved_achievementsmedia_id, achieved_achievementsmedia_id, count(DISTINCT character_id) AS c '.
+				'SELECT achievements.id, achievements.title, achievements.url, achievements.description, achievements.progress, achievements.hidden, achievements.unachieved_achievementsmedia_id, achievements.achieved_achievementsmedia_id, count(DISTINCT achievements_characters.character_id) AS c '.
 				'FROM achievements_characters '.
+				'INNER JOIN characters_characterroles ON characters_characterroles.character_id = achievements_characters.character_id '.
+				'INNER JOIN characterroles ON characterroles.id = characters_characterroles.characterrole_id AND characterroles.name = ? '. 
 				'LEFT JOIN achievements ON achievements.id = achievements_characters.achievement_id '.
-				'WHERE achievements.seminary_id = ? AND only_once = 0 '.
+				'WHERE achievements.seminary_id = ? AND achievements.only_once = 0 '.
 				(!$alsoWithDeadline ? 'AND achievements.deadline IS NULL ' : null).
-				'GROUP BY achievement_id '.
-				'ORDER BY count(DISTINCT character_id) ASC '.
+				'GROUP BY achievements_characters.achievement_id '.
+				'ORDER BY count(DISTINCT achievements_characters.character_id) ASC '.
 				'LIMIT ?',
-				'ii',
+				'sii',
+				'user',
 				$seminaryId,
 				$count
 			);

@@ -299,7 +299,7 @@
 				'INNER JOIN characters_characterroles ON characters_characterroles.character_id = characters.id '.
 				'INNER JOIN characterroles ON characterroles.id = characters_characterroles.characterrole_id AND characterroles.name = ? '.
 				'WHERE charactertypes.seminary_id = ? AND characters.xps > ? '.
-				'ORDER BY characters.xps ASC '.
+				'ORDER BY characters.xps ASC, RAND() '.
 				'LIMIT ?',
 				'sidd',
 				'user',
@@ -316,7 +316,7 @@
 		 * @param	int	$count		Count of Characters to determine
 		 * @return	array			List of inferior Characters
 		 */
-		public function getInferiorCharacters($seminaryId, $xps, $count)
+		public function getInferiorCharacters($seminaryId, $characterId, $xps, $count)
 		{
 			return $this->db->query(
 				'SELECT characters.id, characters.created, characters.charactertype_id, characters.name, characters.url, characters.xps, characters.xplevel, characters.avatar_id, charactertypes.name AS charactertype_name, charactertypes.url AS charactertype_url '.
@@ -324,12 +324,12 @@
 				'INNER JOIN charactertypes ON charactertypes.id = characters.charactertype_id '.
 				'INNER JOIN characters_characterroles ON characters_characterroles.character_id = characters.id '.
 				'INNER JOIN characterroles ON characterroles.id = characters_characterroles.characterrole_id AND characterroles.name = ? '.
-				'WHERE charactertypes.seminary_id = ? AND characters.xps < ? '.
-				'ORDER BY characters.xps DESC '.
+				'WHERE charactertypes.seminary_id = ? AND characters.xps <= ? AND characters.id <> ? '.
+				'ORDER BY characters.xps DESC, RAND() '.
 				'LIMIT ?',
-				'sidd',
+				'sidid',
 				'user',
-				$seminaryId, $xps, $count
+				$seminaryId, $xps, $characterId, $count
 			);
 		}
 		
