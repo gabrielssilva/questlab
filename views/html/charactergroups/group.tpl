@@ -11,7 +11,9 @@
 
 <?php if(count(array_intersect(array('admin', 'moderator'), \hhu\z\controllers\SeminaryController::$character['characterroles'])) > 0) : ?>
 <nav class="admin">
-	<li><a href="<?=$linker->link(array('managegroup',$seminary['url'],$groupsgroup['url'],$group['url']),1)?>"><?=_('Manage')?></a></li>
+	<li><a href="<?=$linker->link(array('editgroup',$seminary['url'],$groupsgroup['url'],$group['url']),1)?>"><?=_('Edit Character group')?></a></li>
+	<li><a href="<?=$linker->link(array('deletegroup',$seminary['url'],$groupsgroup['url'],$group['url']),1)?>"><?=_('Delete Character group')?></a></li>
+	<li><a href="<?=$linker->link(array('managegroup',$seminary['url'],$groupsgroup['url'],$group['url']),1)?>"><?=_('Manage Character group')?></a></li>
 </nav>
 <?php endif ?>
 

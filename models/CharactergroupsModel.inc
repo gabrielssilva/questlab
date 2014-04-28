@@ -105,6 +105,91 @@
 		
 		
 		/**
+		 * Check if a Character groups-group name already exists.
+		 * 
+		 * @param	string	$name		Name to check
+		 * @param	int	$groupsgroupId	Do not check this ID (for editing)
+		 * @return	boolean			Whether name exists or not
+		 */
+		public function characterGroupsgroupNameExists($name, $groupsgroupId=null)
+		{
+			$data = $this->db->query(
+				'SELECT id '.
+				'FROM charactergroupsgroups '.
+				'WHERE name = ? OR url = ?',
+				'ss',
+				$name,
+				\nre\core\Linker::createLinkParam($name)
+			);
+			
+			
+			return (!empty($data) && (is_null($groupsgroupId) || $groupsgroupId != $data[0]['id']));
+		}
+		
+		
+		/**
+		 * Create a new Character groups-group.
+		 * 
+		 * @param	int	$userId		ID of user
+		 * @param	int	$seminaryId	ID of Seminary
+		 * @param	string	$name		Name of new groups-group
+		 * @param	boolean	$preferred	Whether groups-group is preferred or not
+		 * @return	int			ID of newly created groups-group
+		 */
+		public function createGroupsgroup($userId, $seminaryId, $name, $preferred)
+		{
+			$this->db->query(
+				'INSERT INTO charactergroupsgroups '.
+				'(created_user_id, seminary_id, name, url, preferred) '.
+				'VALUES '.
+				'(?, ?, ?, ?, ?)',
+				'iissd',
+				$userId,
+				$seminaryId,
+				$name,
+				\nre\core\Linker::createLinkParam($name),
+				$preferred
+			);
+			
+			
+			return $this->db->getInsertId();
+		}
+		
+		
+		/**
+		 * Edit a Character groups-group.
+		 * 
+		 * @param	int	$groupsgroupId	ID of groups-group to edit
+		 * @param	string	$name		New name of groups-group
+		 * @param	boolean	$preferred	Whether groups-group is preferred or not
+		 */
+		public function editGroupsgroup($groupsgroupId, $name, $preferred)
+		{
+			$this->db->query(
+				'UPDATE charactergroupsgroups '.
+				'SET name = ?, url = ?, preferred = ? '.
+				'WHERE id = ?',
+				'ssdi',
+				$name,
+				\nre\core\Linker::createLinkParam($name),
+				$preferred,
+				$groupsgroupId
+			);
+		}
+		
+		
+		/**
+		 * Delete a Character groups-group.
+		 * 
+		 * @param	int	$groupsgroupId	ID of groups-group to delete
+		 */
+		public function deleteGroupsgroup($groupsgroupId)
+		{
+			$this->db->query('DELETE FROM charactergroupsgroups WHERE id = ?', 'i', $groupsgroupId);
+		}
+		
+		
+		/**
 		 * Get Character groups for a Character groups-group.
 		 * 
 		 * @param	int	$groupsgroupId	ID of the Character groups-group
@@ -165,6 +250,116 @@
 			
 			
 			return $data[0];
+		}
+		
+		
+		/**
+		 * Get a Character group by its ID.
+		 * 
+		 * @throws	IdNotFoundException
+		 * @param	int	$groupsgroupId	ID of the Character group
+		 * @return	array			Character group data
+		 */
+		public function getGroupById($groupId)
+		{
+			$data = $this->db->query(
+				'SELECT id, name, url, xps, motto '.
+				'FROM v_charactergroups '.
+				'WHERE id = ?',
+				'i',
+				$groupId
+			);
+			if(empty($data)) {
+				throw new \nre\exceptions\IdNotFoundException($groupId);
+			}
+			
+			
+			return $data[0];
+		}
+		
+		
+		/**
+		 * Check if a Character group name already exists.
+		 * 
+		 * @param	string	$name		Name to check
+		 * @param	int	$groupsgroupId	Do not check this ID (for editing)
+		 * @return	boolean			Whether name exists or not
+		 */
+		public function characterGroupNameExists($name, $groupId=null)
+		{
+			$data = $this->db->query(
+				'SELECT id '.
+				'FROM charactergroups '.
+				'WHERE name = ? OR url = ?',
+				'ss',
+				$name,
+				\nre\core\Linker::createLinkParam($name)
+			);
+			
+			
+			return (!empty($data) && (is_null($groupId) || $groupId != $data[0]['id']));
+		}
+		
+		
+		/**
+		 * Create a new Character group.
+		 * 
+		 * @param	int	$userId		ID of user
+		 * @param	int	$groupsgroupId	ID of Character groups-group
+		 * @param	string	$name		Name of new group
+		 * @param	string	$motto		Motto of new group
+		 * @return	int			ID of newly created group
+		 */
+		public function createGroup($userId, $groupsgroupId, $name, $motto)
+		{
+			$this->db->query(
+				'INSERT INTO charactergroups '.
+				'(created_user_id, charactergroupsgroup_id, name, url, motto) '.
+				'VALUES '.
+				'(?, ?, ?, ?, ?)',
+				'iisss',
+				$userId,
+				$groupsgroupId,
+				$name,
+				\nre\core\Linker::createLinkParam($name),
+				$motto
+			);
+			
+			
+			return $this->db->getInsertId();
+		}
+		
+		
+		/**
+		 * Edit a Character group.
+		 * 
+		 * @param	int	$groupId	ID of Character group to edit
+		 * @param	string	$name		New name of group
+		 * @param	string	$motto		New motto of group
+		 */
+		public function editGroup($groupId, $name, $motto)
+		{
+			$this->db->query(
+				'UPDATE charactergroups '.
+				'SET name = ?, url = ?, motto = ? '.
+				'WHERE id = ?',
+				'sssi',
+				$name,
+				\nre\core\Linker::createLinkParam($name),
+				$motto,
+				$groupId
+			);
+		}
+		
+		
+		/**
+		 * Delete a Character group.
+		 * 
+		 * @param	int	$groupId	ID of Character group to delete
+		 */
+		public function deleteGroup($groupId)
+		{
+			$this->db->query('DELETE FROM charactergroups WHERE id = ?', 'i', $groupId);
 		}
 		
 		

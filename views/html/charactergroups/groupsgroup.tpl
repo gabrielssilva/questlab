@@ -7,6 +7,13 @@
 	<li><a href="<?=$linker->link(array('seminaries',$seminary['url']))?>"><?=$seminary['title']?></a></li>
 	<li><i class="fa fa-chevron-right fa-fw"></i><a href="<?=$linker->link(array('index',$seminary['url']),1)?>"><?=_('Character Groups')?></a></li>
 </ul>
+<?php if(count(array_intersect(array('admin', 'moderator'), \hhu\z\controllers\SeminaryController::$character['characterroles'])) > 0) : ?>
+<nav class="admin">
+	<li><a href="<?=$linker->link(array('editgroupsgroup',$seminary['url'],$groupsgroup['url']), 1)?>"><?=_('Edit Character groups-group')?></a></li>
+	<li><a href="<?=$linker->link(array('deletegroupsgroup',$seminary['url'],$groupsgroup['url']), 1)?>"><?=_('Delete Character groups-group')?></a></li>
+	<li><a href="<?=$linker->link(array('creategroup',$seminary['url'],$groupsgroup['url']), 1)?>"><?=_('Create new Character group')?></a></li>
+</nav>
+<?php endif ?>
 
 <h1><?=$groupsgroup['name']?></h1>
 

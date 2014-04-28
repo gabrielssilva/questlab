@@ -8,6 +8,8 @@
 	<li><i class="fa fa-chevron-right fa-fw"></i><a href="<?=$linker->link(array('index',$seminary['url']),1)?>"><?=_('Character Groups')?></a></li>
 	<li><i class="fa fa-chevron-right fa-fw"></i><a href="<?=$linker->link(array('groupsgroup',$seminary['url'],$groupsgroup['url']),1)?>"><?=$groupsgroup['name']?></a></li>
 </ul>
+
+<h1><?=_('Manage Character group')?></h1>
 <div class="gbanner cf">
 	<img src="http://s1.directupload.net/images/140325/3eqybn4i.png" class="gbanner">
 	<h1><?=$group['name']?></h1>

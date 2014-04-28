@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: The Legend of Z\n"
-"POT-Creation-Date: 2014-04-27 04:32+0100\n"
-"PO-Revision-Date: 2014-04-28 09:31+0100\n"
+"POT-Creation-Date: 2014-04-28 10:08+0100\n"
+"PO-Revision-Date: 2014-04-28 10:08+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de_DE\n"
@@ -134,10 +134,14 @@ msgstr ""
 msgid "Seldom Achievements"
 msgstr "Die seltensten Achievements"
 
-#: views/html/achievements/index.tpl:27
+#: views/html/achievements/index.tpl:26
 #, php-format
 msgid "Achievement has been achieved only %d times"
 msgstr "wurde erst %d mal gefunden"
+
+#: views/html/achievements/index.tpl:27 views/html/achievements/index.tpl:68
+msgid "Secret Achievement"
+msgstr "Geheimes Achievement"
 
 #: views/html/achievements/index.tpl:33
 msgid "Most successful collectors"
@@ -158,8 +162,8 @@ msgid "Own progress: %d %%"
 msgstr "Persönlicher Fortschritt: %d %%"
 
 #: views/html/achievements/index.tpl:52
-#: views/html/charactergroups/group.tpl:24
-#: views/html/charactergroups/managegroup.tpl:17
+#: views/html/charactergroups/group.tpl:26
+#: views/html/charactergroups/managegroup.tpl:19
 #: views/html/characters/character.tpl:36 views/html/seminarybar/index.tpl:7
 msgid "Rank"
 msgstr "Platz"
@@ -174,14 +178,16 @@ msgstr "Du hast bislang %d von insgesamt %d Achievements erreicht"
 msgid "achieved at: %s"
 msgstr "erhalten am: %s"
 
-#: views/html/achievements/index.tpl:68
-msgid "Secret Achievement"
-msgstr "Geheimes Achievement"
-
 #: views/html/achievements/index.tpl:72
 msgid "Continue playing to unlock this secret Achievement"
 msgstr "Spiele weiter, um diesen geheimen Erfolg freizuschalten"
 
+#: views/html/charactergroups/creategroup.tpl:8
+#: views/html/charactergroups/creategroupsgroup.tpl:8
+#: views/html/charactergroups/deletegroup.tpl:8
+#: views/html/charactergroups/deletegroupsgroup.tpl:8
+#: views/html/charactergroups/editgroup.tpl:8
+#: views/html/charactergroups/editgroupsgroup.tpl:8
 #: views/html/charactergroups/group.tpl:8
 #: views/html/charactergroups/groupsgroup.tpl:8
 #: views/html/charactergroups/index.tpl:9
@@ -191,49 +197,192 @@ msgstr "Spiele weiter, um diesen geheimen Erfolg freizuschalten"
 msgid "Character Groups"
 msgstr "Gruppen"
 
-#: views/html/charactergroups/group.tpl:14 views/html/characters/index.tpl:13
-#: views/html/characters/manage.tpl:10
-msgid "Manage"
-msgstr "Verwalten"
+#: views/html/charactergroups/creategroup.tpl:12
+msgid "New Character group"
+msgstr "Neue Gruppe"
 
-#: views/html/charactergroups/group.tpl:26
-#: views/html/charactergroups/managegroup.tpl:19
+#: views/html/charactergroups/creategroup.tpl:23
+#: views/html/charactergroups/creategroupsgroup.tpl:22
+#: views/html/charactergroups/editgroup.tpl:23
+#: views/html/charactergroups/editgroupsgroup.tpl:22
+#, php-format
+msgid "Name is too short (min. %d chars)"
+msgstr "Der Name ist zu kurz (min. %d Zeichen)"
+
+#: views/html/charactergroups/creategroup.tpl:25
+#: views/html/charactergroups/creategroupsgroup.tpl:24
+#: views/html/charactergroups/editgroup.tpl:25
+#: views/html/charactergroups/editgroupsgroup.tpl:24
+#, php-format
+msgid "Name is too long (max. %d chars)"
+msgstr "Der Name ist zu lang (max. %d Zeichen)"
+
+#: views/html/charactergroups/creategroup.tpl:27
+#: views/html/charactergroups/creategroupsgroup.tpl:26
+#: views/html/charactergroups/editgroup.tpl:27
+#: views/html/charactergroups/editgroupsgroup.tpl:26
+msgid "Name contains illegal characters"
+msgstr "Der Name enthält ungültige Zeichen"
+
+#: views/html/charactergroups/creategroup.tpl:29
+#: views/html/charactergroups/creategroupsgroup.tpl:28
+#: views/html/charactergroups/editgroup.tpl:29
+#: views/html/charactergroups/editgroupsgroup.tpl:28
+msgid "Name already exists"
+msgstr "Der Name existiert bereits"
+
+#: views/html/charactergroups/creategroup.tpl:31
+#: views/html/charactergroups/creategroupsgroup.tpl:30
+#: views/html/charactergroups/editgroup.tpl:31
+#: views/html/charactergroups/editgroupsgroup.tpl:30
+msgid "Name invalid"
+msgstr "Der Name ist ungültig"
+
+#: views/html/charactergroups/creategroup.tpl:36
+#: views/html/charactergroups/editgroup.tpl:36
+#, php-format
+msgid "Motto is too long (max. %d chars)"
+msgstr "Das Motto ist zu lang (max. %d Zeichen)"
+
+#: views/html/charactergroups/creategroup.tpl:38
+#: views/html/charactergroups/editgroup.tpl:38
+msgid "Motto invalid"
+msgstr "Das Motto ist ungültig"
+
+#: views/html/charactergroups/creategroup.tpl:54
+#: views/html/charactergroups/creategroup.tpl:55
+#: views/html/charactergroups/creategroupsgroup.tpl:46
+#: views/html/charactergroups/creategroupsgroup.tpl:47
+#: views/html/charactergroups/editgroup.tpl:54
+#: views/html/charactergroups/editgroup.tpl:55
+#: views/html/charactergroups/editgroupsgroup.tpl:46
+#: views/html/charactergroups/editgroupsgroup.tpl:47
+#: views/html/quests/create.tpl:15 views/html/quests/create.tpl:16
+#: views/html/users/user.tpl:14
+msgid "Name"
+msgstr "Name"
+
+#: views/html/charactergroups/creategroup.tpl:56
+#: views/html/charactergroups/creategroup.tpl:57
+#: views/html/charactergroups/editgroup.tpl:56
+#: views/html/charactergroups/editgroup.tpl:57
+msgid "Motto"
+msgstr "Motto"
+
+#: views/html/charactergroups/creategroup.tpl:59
+#: views/html/charactergroups/creategroupsgroup.tpl:50
+#: views/html/characters/register.tpl:87 views/html/seminaries/create.tpl:12
+#: views/html/users/create.tpl:20
+msgid "create"
+msgstr "erstellen"
+
+#: views/html/charactergroups/creategroupsgroup.tpl:11
+msgid "New Character groups-group"
+msgstr "Neue Gruppengruppe"
+
+#: views/html/charactergroups/creategroupsgroup.tpl:48
+#: views/html/charactergroups/editgroupsgroup.tpl:48
+msgid "preferred"
+msgstr "bevorzugt"
+
+#: views/html/charactergroups/deletegroup.tpl:11
+#: views/html/charactergroups/group.tpl:15
+msgid "Delete Character group"
+msgstr "Gruppe löschen"
+
+#: views/html/charactergroups/deletegroup.tpl:13
+#, php-format
+msgid "Should the Character group “%s” really be deleted?"
+msgstr "Soll die Gruppe „%s“ wirklich gelöscht werden?"
+
+#: views/html/charactergroups/deletegroup.tpl:15
+#: views/html/charactergroups/deletegroupsgroup.tpl:14
+#: views/html/seminaries/delete.tpl:11 views/html/users/delete.tpl:9
+msgid "delete"
+msgstr "löschen"
+
+#: views/html/charactergroups/deletegroup.tpl:16
+#: views/html/charactergroups/deletegroupsgroup.tpl:15
+#: views/html/seminaries/delete.tpl:12 views/html/users/delete.tpl:10
+msgid "cancel"
+msgstr "abbrechen"
+
+#: views/html/charactergroups/deletegroupsgroup.tpl:10
+#: views/html/charactergroups/groupsgroup.tpl:13
+msgid "Delete Character groups-group"
+msgstr "Gruppengruppe löschen"
+
+#: views/html/charactergroups/deletegroupsgroup.tpl:12
+#, php-format
+msgid "Should the Character groups-group “%s” really be deleted?"
+msgstr "Soll die Gruppengruppe „%s“ wirklich gelöscht werden?"
+
+#: views/html/charactergroups/editgroup.tpl:12
+#: views/html/charactergroups/group.tpl:14
+msgid "Edit Character group"
+msgstr "Gruppe bearbeiten"
+
+#: views/html/charactergroups/editgroup.tpl:59
+#: views/html/charactergroups/editgroupsgroup.tpl:50
+msgid "edit"
+msgstr "bearbeiten"
+
+#: views/html/charactergroups/editgroupsgroup.tpl:11
+#: views/html/charactergroups/groupsgroup.tpl:12
+msgid "Edit Character groups-group"
+msgstr "Gruppengruppe bearbeiten"
+
+#: views/html/charactergroups/group.tpl:16
+#: views/html/charactergroups/managegroup.tpl:12
+msgid "Manage Character group"
+msgstr "Gruppe verwalten"
+
+#: views/html/charactergroups/group.tpl:28
+#: views/html/charactergroups/managegroup.tpl:21
 msgid "Members"
 msgstr "Mitglieder"
 
-#: views/html/charactergroups/group.tpl:26
-#: views/html/charactergroups/managegroup.tpl:19
+#: views/html/charactergroups/group.tpl:28
+#: views/html/charactergroups/managegroup.tpl:21
 msgid "Member"
 msgstr "Mitglied"
 
-#: views/html/charactergroups/group.tpl:30
-#: views/html/charactergroups/managegroup.tpl:23
+#: views/html/charactergroups/group.tpl:32
+#: views/html/charactergroups/managegroup.tpl:25
 #: views/html/characters/character.tpl:11
 #: views/html/characters/character.tpl:13 views/html/characters/index.tpl:9
 #: views/html/characters/manage.tpl:8 views/html/seminarymenu/index.tpl:2
-#: views/html/users/user.tpl:15
+#: views/html/users/user.tpl:18
 msgid "Characters"
 msgstr "Charaktere"
 
-#: views/html/charactergroups/group.tpl:45
-#: views/html/charactergroups/groupsgroup.tpl:20
+#: views/html/charactergroups/group.tpl:47
+#: views/html/charactergroups/groupsgroup.tpl:27
 #, php-format
 msgid "%s-Quests"
 msgstr "%squests"
 
-#: views/html/charactergroups/managegroup.tpl:40
+#: views/html/charactergroups/groupsgroup.tpl:14
+msgid "Create new Character group"
+msgstr "Neue Gruppe"
+
+#: views/html/charactergroups/index.tpl:13
+msgid "Create new Character groups-group"
+msgstr "Neue Gruppengruppe"
+
+#: views/html/charactergroups/managegroup.tpl:42
 msgid "Remove Characters"
 msgstr "Entferne Charaktere"
 
-#: views/html/charactergroups/managegroup.tpl:43
+#: views/html/charactergroups/managegroup.tpl:45
 msgid "Filter Characters"
 msgstr "Filtere Charaktere"
 
-#: views/html/charactergroups/managegroup.tpl:49
+#: views/html/charactergroups/managegroup.tpl:51
 msgid "Add Characters"
 msgstr "Füge Charaktere hinzu"
 
-#: views/html/charactergroups/managegroup.tpl:54
+#: views/html/charactergroups/managegroup.tpl:56
 #: views/html/questgroups/questgroup.tpl:57 views/html/quests/create.tpl:9
 #: views/html/quests/index.tpl:9
 msgid "Quests"
@@ -263,7 +412,7 @@ msgstr "Fortschritt"
 #: views/html/characters/character.tpl:67
 #: views/html/characters/character.tpl:73
 #: views/html/characters/character.tpl:79 views/html/seminarybar/index.tpl:42
-#: views/html/users/user.tpl:29
+#: views/html/users/user.tpl:32
 msgid "Level"
 msgstr "Level"
 
@@ -292,17 +441,21 @@ msgstr "Letzter Speicherpunkt"
 msgid "Topic progress"
 msgstr "Thematischer Fortschritt"
 
+#: views/html/characters/index.tpl:13 views/html/characters/manage.tpl:10
+msgid "Manage"
+msgstr "Verwalten"
+
 #: views/html/characters/index.tpl:19 views/html/characters/manage.tpl:14
 msgid "Properties"
 msgstr "Eigenschaften"
 
 #: views/html/characters/index.tpl:20 views/html/characters/manage.tpl:15
 #: views/html/error/index.tpl:8 views/html/error/index.tpl:9
-#: views/html/introduction/index.tpl:6 views/html/introduction/index.tpl:7
-#: views/html/users/create.tpl:6 views/html/users/create.tpl:7
-#: views/html/users/edit.tpl:6 views/html/users/edit.tpl:7
-#: views/html/users/login.tpl:9 views/html/users/login.tpl:10
-#: views/html/users/register.tpl:78 views/html/users/register.tpl:79
+#: views/html/introduction/index.tpl:9 views/html/introduction/index.tpl:10
+#: views/html/users/create.tpl:9 views/html/users/create.tpl:10
+#: views/html/users/edit.tpl:9 views/html/users/edit.tpl:10
+#: views/html/users/login.tpl:12 views/html/users/login.tpl:13
+#: views/html/users/register.tpl:81 views/html/users/register.tpl:82
 msgid "Username"
 msgstr "Benutzername"
 
@@ -312,7 +465,7 @@ msgid "XPs"
 msgstr "XP"
 
 #: views/html/characters/index.tpl:22 views/html/characters/manage.tpl:17
-#: views/html/users/user.tpl:34
+#: views/html/users/user.tpl:37
 msgid "Roles"
 msgstr "Rollen"
 
@@ -390,32 +543,27 @@ msgstr "Das Kursfeld „%s“ ist ungültig"
 msgid "Seminary fields"
 msgstr "Kursfelder"
 
-#: views/html/characters/register.tpl:87 views/html/seminaries/create.tpl:14
-#: views/html/users/create.tpl:17
-msgid "create"
-msgstr "erstellen"
-
 #: views/html/error/index.tpl:5 views/html/error/index.tpl:14
-#: views/html/introduction/index.tpl:3 views/html/introduction/index.tpl:11
-#: views/html/menu/index.tpl:6 views/html/users/login.tpl:3
-#: views/html/users/login.tpl:17
+#: views/html/introduction/index.tpl:6 views/html/introduction/index.tpl:14
+#: views/html/menu/index.tpl:6 views/html/users/login.tpl:6
+#: views/html/users/login.tpl:20
 msgid "Login"
 msgstr "Login"
 
 #: views/html/error/index.tpl:10 views/html/error/index.tpl:11
-#: views/html/introduction/index.tpl:8 views/html/introduction/index.tpl:9
-#: views/html/users/create.tpl:14 views/html/users/create.tpl:15
-#: views/html/users/edit.tpl:14 views/html/users/edit.tpl:15
-#: views/html/users/login.tpl:11 views/html/users/login.tpl:12
-#: views/html/users/register.tpl:86 views/html/users/register.tpl:87
+#: views/html/introduction/index.tpl:11 views/html/introduction/index.tpl:12
+#: views/html/users/create.tpl:17 views/html/users/create.tpl:18
+#: views/html/users/edit.tpl:16 views/html/users/edit.tpl:17
+#: views/html/users/login.tpl:14 views/html/users/login.tpl:15
+#: views/html/users/register.tpl:89 views/html/users/register.tpl:90
 msgid "Password"
 msgstr "Passwort"
 
-#: views/html/error/index.tpl:15 views/html/introduction/index.tpl:12
+#: views/html/error/index.tpl:15 views/html/introduction/index.tpl:15
 msgid "or"
 msgstr "oder"
 
-#: views/html/error/index.tpl:15 views/html/introduction/index.tpl:12
+#: views/html/error/index.tpl:15 views/html/introduction/index.tpl:15
 msgid "register yourself"
 msgstr "registriere dich"
 
@@ -432,7 +580,7 @@ msgstr "Levelaufstieg"
 msgid "You have reached level %d"
 msgstr "Du hast Level %d erreicht"
 
-#: views/html/introduction/index.tpl:1
+#: views/html/introduction/index.tpl:4
 msgid "Introduction"
 msgstr "Einführung"
 
@@ -455,16 +603,16 @@ msgstr ""
 msgid "Total progress: %d %%"
 msgstr "Gesamtfortschritt: %d %%"
 
-#: views/html/menu/index.tpl:2 views/html/users/create.tpl:1
-#: views/html/users/delete.tpl:1 views/html/users/edit.tpl:1
-#: views/html/users/index.tpl:1 views/html/users/login.tpl:1
-#: views/html/users/register.tpl:1 views/html/users/user.tpl:1
+#: views/html/menu/index.tpl:2 views/html/users/create.tpl:4
+#: views/html/users/delete.tpl:4 views/html/users/edit.tpl:4
+#: views/html/users/index.tpl:4 views/html/users/login.tpl:4
+#: views/html/users/register.tpl:4 views/html/users/user.tpl:4
 msgid "Users"
 msgstr "Benutzer"
 
-#: views/html/menu/index.tpl:3 views/html/seminaries/create.tpl:6
+#: views/html/menu/index.tpl:3 views/html/seminaries/create.tpl:4
 #: views/html/seminaries/delete.tpl:6 views/html/seminaries/edit.tpl:6
-#: views/html/seminaries/index.tpl:1
+#: views/html/seminaries/index.tpl:4
 msgid "Seminaries"
 msgstr "Kurse"
 
@@ -481,7 +629,7 @@ msgid "Create Questgroup"
 msgstr "Questgruppe erstellen"
 
 #: views/html/questgroups/create.tpl:14 views/html/questgroups/create.tpl:15
-#: views/html/seminaries/create.tpl:11 views/html/seminaries/create.tpl:12
+#: views/html/seminaries/create.tpl:9 views/html/seminaries/create.tpl:10
 #: views/html/seminaries/edit.tpl:11 views/html/seminaries/edit.tpl:12
 msgid "Title"
 msgstr "Titel"
@@ -497,11 +645,6 @@ msgstr "Optionale Questline gefunden"
 #: views/html/quests/create.tpl:11
 msgid "Create Quest"
 msgstr "Quest erstellen"
-
-#: views/html/quests/create.tpl:15 views/html/quests/create.tpl:16
-#: views/html/users/user.tpl:11
-msgid "Name"
-msgstr "Name"
 
 #: views/html/quests/create.tpl:17 views/html/quests/index.tpl:14
 msgid "Questgroup"
@@ -573,7 +716,7 @@ msgstr "Lösung von %s"
 msgid "submitted"
 msgstr "eingereicht"
 
-#: views/html/seminaries/create.tpl:7
+#: views/html/seminaries/create.tpl:5
 msgid "New seminary"
 msgstr "Neuer Kurs"
 
@@ -586,36 +729,28 @@ msgstr "Kurs löschen"
 msgid "Should the seminary “%s” really be deleted?"
 msgstr "Soll der Kurs „%s“ wirklich gelöscht werden?"
 
-#: views/html/seminaries/delete.tpl:11 views/html/users/delete.tpl:6
-msgid "delete"
-msgstr "löschen"
-
-#: views/html/seminaries/delete.tpl:12 views/html/users/delete.tpl:7
-msgid "cancel"
-msgstr "abbrechen"
-
 #: views/html/seminaries/edit.tpl:7 views/html/seminaries/seminary.tpl:9
 msgid "Edit seminary"
 msgstr "Kurs bearbeiten"
 
-#: views/html/seminaries/edit.tpl:14 views/html/users/edit.tpl:17
+#: views/html/seminaries/edit.tpl:14 views/html/users/edit.tpl:19
 msgid "save"
 msgstr "speichern"
 
-#: views/html/seminaries/index.tpl:4
+#: views/html/seminaries/index.tpl:7
 msgid "Create new seminary"
 msgstr "Neuen Kurs erstellen"
 
-#: views/html/seminaries/index.tpl:21
+#: views/html/seminaries/index.tpl:24
 #, php-format
 msgid "created by %s on %s"
 msgstr "erstellt von %s am %s"
 
-#: views/html/seminaries/index.tpl:24
+#: views/html/seminaries/index.tpl:27
 msgid "Create a Character"
 msgstr "Erstelle einen Charakter"
 
-#: views/html/seminaries/index.tpl:26
+#: views/html/seminaries/index.tpl:29
 #, php-format
 msgid "Your Character “%s” has not been activated yet"
 msgstr "Dein Charakter „%s“ wurde noch nicht aktiviert"
@@ -633,142 +768,142 @@ msgstr "Letztes Achievement"
 msgid "Show %s-Profile"
 msgstr "%s-Profil anzeigen"
 
-#: views/html/users/create.tpl:2
+#: views/html/users/create.tpl:5
 msgid "New user"
 msgstr "Neuer Benutzer"
 
-#: views/html/users/create.tpl:8 views/html/users/create.tpl:9
-#: views/html/users/edit.tpl:8 views/html/users/edit.tpl:9
-#: views/html/users/register.tpl:80 views/html/users/register.tpl:81
+#: views/html/users/create.tpl:11 views/html/users/create.tpl:12
+#: views/html/users/edit.tpl:11 views/html/users/register.tpl:83
+#: views/html/users/register.tpl:84
 msgid "Prename"
 msgstr "Vorname"
 
-#: views/html/users/create.tpl:10 views/html/users/create.tpl:11
-#: views/html/users/edit.tpl:10 views/html/users/edit.tpl:11
-#: views/html/users/register.tpl:82 views/html/users/register.tpl:83
+#: views/html/users/create.tpl:13 views/html/users/create.tpl:14
+#: views/html/users/edit.tpl:12 views/html/users/edit.tpl:13
+#: views/html/users/register.tpl:85 views/html/users/register.tpl:86
 msgid "Surname"
 msgstr "Nachname"
 
-#: views/html/users/create.tpl:12 views/html/users/create.tpl:13
-#: views/html/users/edit.tpl:12 views/html/users/edit.tpl:13
-#: views/html/users/register.tpl:84 views/html/users/register.tpl:85
-#: views/html/users/user.tpl:12
+#: views/html/users/create.tpl:15 views/html/users/create.tpl:16
+#: views/html/users/edit.tpl:14 views/html/users/edit.tpl:15
+#: views/html/users/register.tpl:87 views/html/users/register.tpl:88
+#: views/html/users/user.tpl:15
 msgid "E‑mail address"
 msgstr "E‑Mail-Adresse"
 
-#: views/html/users/delete.tpl:2 views/html/users/user.tpl:5
+#: views/html/users/delete.tpl:5 views/html/users/user.tpl:8
 msgid "Delete user"
 msgstr "Benutzer löschen"
 
-#: views/html/users/delete.tpl:4
+#: views/html/users/delete.tpl:7
 #, php-format
 msgid "Should the user “%s” (%s) really be deleted?"
 msgstr "Soll der Benutzer „%s“ (%s) wirklich gelöscht werden?"
 
-#: views/html/users/edit.tpl:2 views/html/users/user.tpl:4
+#: views/html/users/edit.tpl:5 views/html/users/user.tpl:7
 msgid "Edit user"
 msgstr "Benutzer bearbeiten"
 
-#: views/html/users/index.tpl:3
+#: views/html/users/index.tpl:6
 msgid "Create new user"
 msgstr "Neuen Benutzer erstellen"
 
-#: views/html/users/index.tpl:7 views/html/users/user.tpl:10
+#: views/html/users/index.tpl:10 views/html/users/user.tpl:13
 #, php-format
 msgid "registered on %s"
 msgstr "registriert am %s"
 
-#: views/html/users/login.tpl:5
+#: views/html/users/login.tpl:8
 msgid "Login failed"
 msgstr "Die Anmeldung war nicht korrekt"
 
-#: views/html/users/register.tpl:3
+#: views/html/users/register.tpl:6
 msgid "Registration"
 msgstr "Registrierung"
 
-#: views/html/users/register.tpl:14
+#: views/html/users/register.tpl:17
 #, php-format
 msgid "Username is too short (min. %d chars)"
 msgstr "Der Benutzername ist zu kurz (min. %d Zeichen)"
 
-#: views/html/users/register.tpl:16
+#: views/html/users/register.tpl:19
 #, php-format
 msgid "Username is too long (max. %d chars)"
 msgstr "Der Benutzername ist zu lang (max. %d Zeichen)"
 
-#: views/html/users/register.tpl:18
+#: views/html/users/register.tpl:21
 msgid "Username contains illegal characters"
 msgstr "Der Benutzername enthält ungültige Zeichen"
 
-#: views/html/users/register.tpl:20
+#: views/html/users/register.tpl:23
 msgid "Username already exists"
 msgstr "Der Benutzername existiert bereits"
 
-#: views/html/users/register.tpl:22
+#: views/html/users/register.tpl:25
 msgid "Username invalid"
 msgstr "Der Benutzername ist ungültig"
 
-#: views/html/users/register.tpl:27
+#: views/html/users/register.tpl:30
 #, php-format
 msgid "Prename is too short (min. %d chars)"
 msgstr "Der Vorname ist zu kurz (min. %d Zeichen)"
 
-#: views/html/users/register.tpl:29
+#: views/html/users/register.tpl:32
 #, php-format
 msgid "Prename is too long (max. %d chars)"
 msgstr "Der Vorname ist zu lang (max. %d Zeichen)"
 
-#: views/html/users/register.tpl:31
+#: views/html/users/register.tpl:34
 #, php-format
 msgid "Prename contains illegal characters"
 msgstr "Der Vorname enthält ungültige Zeichen"
 
-#: views/html/users/register.tpl:33
+#: views/html/users/register.tpl:36
 msgid "Prename invalid"
 msgstr "Der Vorname ist ungültig"
 
-#: views/html/users/register.tpl:38
+#: views/html/users/register.tpl:41
 #, php-format
 msgid "Surname is too short (min. %d chars)"
 msgstr "Der Nachname ist zu kurz (min. %d Zeichen)"
 
-#: views/html/users/register.tpl:40
+#: views/html/users/register.tpl:43
 #, php-format
 msgid "Surname is too long (max. %d chars)"
 msgstr "Der Nachname ist zu lang (max. %d Zeichen)"
 
-#: views/html/users/register.tpl:42
+#: views/html/users/register.tpl:45
 #, php-format
 msgid "Surname contains illegal characters"
 msgstr "Der Nachname enthält ungültige Zeichen"
 
-#: views/html/users/register.tpl:44
+#: views/html/users/register.tpl:47
 msgid "Surname invalid"
 msgstr "Der Nachname ist ungültig"
 
-#: views/html/users/register.tpl:49 views/html/users/register.tpl:53
+#: views/html/users/register.tpl:52 views/html/users/register.tpl:56
 msgid "E‑mail address invalid"
 msgstr "Die E‑Mail-Adresse ist ungültig"
 
-#: views/html/users/register.tpl:51
+#: views/html/users/register.tpl:54
 msgid "E‑mail address already exists"
 msgstr "E‑Mail-Adresse existiert bereits"
 
-#: views/html/users/register.tpl:58
+#: views/html/users/register.tpl:61
 #, php-format
 msgid "Password is too short (min. %d chars)"
 msgstr "Das Passwort ist zu kurz (min. %d Zeichen)"
 
-#: views/html/users/register.tpl:60
+#: views/html/users/register.tpl:63
 #, php-format
 msgid "Password is too long (max. %d chars)"
 msgstr "Das Passwort ist zu lang (max. %d Zeichen)"
 
-#: views/html/users/register.tpl:62
+#: views/html/users/register.tpl:65
 msgid "Password invalid"
 msgstr "Das Passwort ist ungültig"
 
-#: views/html/users/register.tpl:89
+#: views/html/users/register.tpl:92
 msgid "Register"
 msgstr "Registrieren"
 
@@ -821,10 +956,6 @@ msgstr "Registrieren"
 
 #~ msgid "Go on"
 #~ msgstr "Hier geht es weiter"
-
-#, fuzzy
-#~ msgid "Character groups"
-#~ msgstr "Charaktergruppen"
 
 #~ msgid "locked"
 #~ msgstr "gesperrt"

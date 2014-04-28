@@ -134,6 +134,22 @@
 				'minlength'	=> 5,
 				'maxlength'	=> 12,
 				'regex'		=> '/^\w*$/'
+			),
+			'charactergroupsgroupname' => array(
+				'minlength'	=> 4,
+				'maxlength'	=> 32,
+				'regex'		=> '/^(\S| )*$/'
+			),
+			'preferred' => array(
+				'regex'		=> '/^(0|1)$/'
+			),
+			'charactergroupname' => array(
+				'minlength'	=> 4,
+				'maxlength'	=> 32,
+				'regex'		=> '/^(\S| )*$/'
+			),
+			'motto' => array(
+				'maxlength'	=> 128
 			)
 		);
 		
@@ -145,24 +161,27 @@
 		 * @var array
 		 */
 		public static $routes = array(
-			array('^users/([^/]+)/(edit|delete)/?$',				'users/$2/$1',			true),
-			array('^users/(?!(index|login|register|logout|create|edit|delete))/?',	'users/user/$1',		true),
-			array('^seminaries/([^/]+)/(edit|delete)/?$',				'seminaries/$2/$1',		true),
-			array('^seminaries/(?!(index|create|edit|delete))/?',			'seminaries/seminary/$1',	true),
-			array('^questgroups/([^/]+)/(create)/?$',				'questgroups/$2/$1',		true),
-			array('^questgroups/([^/]+)/([^/]+)/?$',				'questgroups/questgroup/$1/$2',	true),
-			array('^quests/([^/]+)/(create|createmedia)/?$',			'quests/$2/$1'	,		true),
-			array('^quests/([^/]+)/([^/]+)/([^/]+)/(submissions)/?$',		'quests/$4/$1/$2/$3',		true),
-			array('^quests/([^/]+)/([^/]+)/([^/]+)/(submission)/([^/]+)/?$',	'quests/$4/$1/$2/$3/$5',	true),
-			array('^quests/(?!(index|create|createmedia))/?',			'quests/quest/$1',		true),
-			array('^characters/([^/]+)/(register|manage)/?$',			'characters/$2/$1',		true),
-			array('^characters/([^/]+)/?$',						'characters/index/$1',		true),
-			array('^characters/([^/]+)/(?!(index|create|register|manage))/?',	'characters/character/$1/$2',	true),
-			array('^charactergroups/([^/]+)/?$',					'charactergroups/index/$1',	true),
-			array('^charactergroups/([^/]+)/([^/]+)/?$',				'charactergroups/groupsgroup/$1/$2',	true),
-			array('^charactergroups/([^/]+)/([^/]+)/(managegroup)/?$',		'charactergroups/$3/$1/$2',	true),
-			array('^charactergroups/([^/]+)/([^/]+)/(?!(managegroup))/?',		'charactergroups/group/$1/$2/$3',	true),
-			array('^charactergroupsquests/([^/]+)/([^/]+)/([^/]+)/?$',		'charactergroupsquests/quest/$1/$2/$3',	true),
+			array('^users/([^/]+)/(edit|delete)/?$',				'users/$2/$1',				true),
+			array('^users/(?!(index|login|register|logout|create|edit|delete))/?',	'users/user/$1',			true),
+			array('^seminaries/([^/]+)/(edit|delete)/?$',				'seminaries/$2/$1',			true),
+			array('^seminaries/(?!(index|create|edit|delete))/?',			'seminaries/seminary/$1',		true),
+			array('^questgroups/([^/]+)/(create)/?$',				'questgroups/$2/$1',			true),
+			array('^questgroups/([^/]+)/([^/]+)/?$',				'questgroups/questgroup/$1/$2',		true),
+			array('^quests/([^/]+)/(create|createmedia)/?$',			'quests/$2/$1'	,			true),
+			array('^quests/([^/]+)/([^/]+)/([^/]+)/(submissions)/?$',		'quests/$4/$1/$2/$3',			true),
+			array('^quests/([^/]+)/([^/]+)/([^/]+)/(submission)/([^/]+)/?$',	'quests/$4/$1/$2/$3/$5',		true),
+			array('^quests/(?!(index|create|createmedia))/?',			'quests/quest/$1',			true),
+			array('^characters/([^/]+)/(register|manage)/?$',			'characters/$2/$1',			true),
+			array('^characters/([^/]+)/?$',						'characters/index/$1',			true),
+			array('^characters/([^/]+)/(?!(index|create|register|manage))/?',	'characters/character/$1/$2',		true),
+			array('^charactergroups/([^/]+)/?$',						'charactergroups/index/$1',			true),
+			array('^charactergroups/([^/]+)/(create)/?$',					'charactergroups/creategroupsgroup/$1/$2',	true),
+			array('^charactergroups/([^/]+)/([^/]+)/?$',					'charactergroups/groupsgroup/$1/$2',		true),
+			array('^charactergroups/([^/]+)/([^/]+)/(edit|delete)/?$',			'charactergroups/$3groupsgroup/$1/$2',		true),
+			array('^charactergroups/([^/]+)/([^/]+)/(create)/?$',				'charactergroups/creategroup/$1/$2/$3',		true),
+			array('^charactergroups/([^/]+)/([^/]+)/([^/]+)/?$',				'charactergroups/group/$1/$2/$3',		true),
+			array('^charactergroups/([^/]+)/([^/]+)/([^/]+)/(manage|edit|delete)/?$',	'charactergroups/$4group/$1/$2/$3',		true),
+			array('^charactergroupsquests/([^/]+)/([^/]+)/([^/]+)/?$',		'charactergroupsquests/quest/$1/$2/$3',			true),
 			array('^achievements/([^/]+)/?$',					'achievements/index/$1',	true),
 			array('^library/([^/]+)/?$',						'library/index/$1',		true),
 			array('^library/([^/]+)/([^/]+)/?$',					'library/topic/$1/$2',		true),
@@ -189,9 +208,13 @@
 			array('^quests/(submission)/([^/]+)/([^/]+)/([^/]+)/([^/]+)$',	'quests/$2/$3/$4/$1/$5',	true),
 			array('^characters/(index|character)/(.*)$',	'characters/$2',		true),
 			array('^characters/(register|manage)/(.*)$',	'characters/$2/$1',		true),
-			array('^charactergroups/(index|group)/(.*)$',	'charactergroups/$2',		true),
-			array('^charactergroups/groupsgroup/(.*)$',	'charactergroups/$1',		true),
-			array('^charactergroups/(managegroup)/(.*)$',	'charactergroups/$2/$1',	true),
+			array('^charactergroups/index/([^/]+)$',					'charactergroups/$1',		true),
+			array('^charactergroups/creategroupsgroup/([^/]+)$',				'charactergroups/$1/create',	true),
+			array('^charactergroups/groupsgroup/([^/]+)/([^/]+)$',				'charactergroups/$1/$2',	true),
+			array('^charactergroups/(edit|delete)groupsgroup/([^/]+)/([^/]+)$',		'charactergroups/$2/$3/$1',	true),
+			array('^charactergroups/creategroup/([^/]+)/([^/]+)$',				'charactergroups/$1/$2/create',	true),
+			array('^charactergroups/group/([^/]+)/([^/]+)/([^/]+)$',			'charactergroups/$1/$2/$3',	true),
+			array('^charactergroups/(manage|edit|delete)group/([^/]+)/([^/]+)/([^/]+)$',	'charactergroups/$2/$3/$4/$1',	true),
 			array('^charactergroupsquests/quest/(.*)$',	'charactergroupsquests/$1',	true),
 			array('^achievements/index/(.*)$',		'achievements/$1',		true),
 			array('^library/(index|topic)/(.*)$',		'library/$2',			true)
