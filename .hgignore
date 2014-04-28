@@ -1,0 +1,8 @@
+syntax: regexp
+^media/*
+^tmp/*
+^uploads/*
+^seminarymedia/*
+^seminaryuploads/*
+^www/analytics/config/config.ini.php*
+^www/analytics/temp/*
