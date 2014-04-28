@@ -11,7 +11,7 @@
 <h1><?=$questgroup['title']?></h1>
 <?php endif ?>
 <?php if(count($texts) > 0): ?>
-<div id="qtextbox">
+<div class="qtextbox">
 <?php foreach($texts as &$text) : ?>
 <p class="qtext"><?=\hhu\z\Utils::t($text['text'])?></p>
 <?php endforeach ?>

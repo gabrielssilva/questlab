@@ -10,18 +10,19 @@
 <h1><?=_('Manage')?></h1>
 
 <form method="post">
-	<fieldset>
-		<legend><?=_('Properties')?></legend>
-		<input type="checkbox" id="username" name="properties[]" value="username" <?php if(in_array('username', $properties)) : ?>checked="checked"<?php endif ?> /><label for="username"><?=_('Username')?></label><br />
-		<input type="checkbox" id="xps" name="properties[]" value="xps" <?php if(in_array('xps', $properties)) : ?>checked="checked"<?php endif ?> /><label for="xps"><?=_('XPs')?></label><br />
-		<input type="checkbox" id="roles" name="properties[]" value="roles" <?php if(in_array('roles', $properties)) : ?>checked="checked"<?php endif ?> /><label for="roles"><?=_('Roles')?></label><br />
-		<?php foreach($characterfields as &$characterfield) : ?>
-		<input type="checkbox" id="characterfield-<?=$characterfield['url']?>" name="properties[characterfields][]" value="<?=$characterfield['url']?>" <?php if(array_key_exists('characterfields', $properties) && in_array($characterfield['url'], $properties['characterfields'])) : ?>checked="checked"<?php endif ?> /><label for="characterfield-<?=$characterfield['url']?>"><?=$characterfield['url']?></label><br />
-		<?php endforeach ?>
+	<fieldset class="filter">
+		<ul>
+			<li><input type="checkbox" id="username" name="properties[]" value="username" <?php if(in_array('username', $properties)) : ?>checked="checked"<?php endif ?> /><label for="username"><?=_('Username')?></label></li>
+			<li><input type="checkbox" id="xps" name="properties[]" value="xps" <?php if(in_array('xps', $properties)) : ?>checked="checked"<?php endif ?> /><label for="xps"><?=_('XPs')?></label></li>
+			<li><input type="checkbox" id="roles" name="properties[]" value="roles" <?php if(in_array('roles', $properties)) : ?>checked="checked"<?php endif ?> /><label for="roles"><?=_('Roles')?></label></li>
+			<?php foreach($characterfields as &$characterfield) : ?>
+			<li><input type="checkbox" id="characterfield-<?=$characterfield['url']?>" name="properties[characterfields][]" value="<?=$characterfield['url']?>" <?php if(array_key_exists('characterfields', $properties) && in_array($characterfield['url'], $properties['characterfields'])) : ?>checked="checked"<?php endif ?> /><label for="characterfield-<?=$characterfield['url']?>"><?=$characterfield['url']?></label></li>
+			<?php endforeach ?>
+		</ul>
 		<input type="submit" name="set-properties" value="<?=_('Set properties')?>" />
 	</fieldset>
 	<fieldset>
-		<legend><?=_('Selection')?>:</legend>
+		<legend class="fwb"><small><?=_('Selection')?>:</small></legend>
 		<ul class="gchars cf">
 			<?php foreach($characters as &$character) : ?>
 			<li>
