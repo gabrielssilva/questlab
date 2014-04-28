@@ -78,25 +78,7 @@
 		 */
 		public function matchAnswersOfCharacter($seminary, $questgroup, $quest, $character, $answers)
 		{
-			// Get Boss-Fight
-			$fight = $this->Bossfight->getBossFight($quest['id']);
-			
-			// Prepare session
-			$this->prepareSession($quest['id']);
-			
-			// Calculate lives
-			$lives = array(
-				'character'	=> $fight['lives_character'],
-				'boss'		=> $fight['lives_boss']
-			);
-			foreach($_SESSION['quests'][$quest['id']]['stages'] as &$stage)
-			{
-				$lives['character'] += $stage['livedrain_character'];
-				$lives['boss'] += $stage['livedrain_boss'];
-			}
-			
-			
-			return ($lives['boss'] == 0 && $lives['character'] > 0);
+			return true;
 		}
 		
 		
