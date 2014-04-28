@@ -168,6 +168,9 @@ input[type="submit"][disabled]{text-shadow:1px 2px #d48c4e;background:#f9ac69;bo
 .filter input[type=checkbox]{margin:0 8px 0 0}
 .filter label{margin-right:20px;font-size:.875em}
 
+.filter.add{margin-top:25px}
+.filter.add select,.filter.add input[type=text]{display:block;margin-bottom:10px}
+
 .avatar li{display:inline-block;margin-right:5px;text-align:center}
 .avatar img{border-radius:3px}
 

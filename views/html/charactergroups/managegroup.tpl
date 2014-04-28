@@ -25,31 +25,33 @@
 	<h1><i class="fa fa-users fa-fw"></i><?=_('Characters')?></h1>
 	<form method="post">
 		<fieldset>
-		<ul class="gchars cf">
-			<?php foreach($group['characters'] as &$character) : ?>
-			<li>
-				<input type="checkbox" id="characters-<?=$character['id']?>" name="characters[]" value="<?=$character['id']?>" <?php if($character['id'] == \hhu\z\controllers\SeminaryController::$character['id']) : ?>disabled="disabled"<?php endif ?>/>
-				<label for="characters-<?=$character['id']?>">
-					<?php if(array_key_exists('small_avatar', $character)) : ?>
-					<p><img src="<?=$linker->link(array('media','seminary',$seminary['url'],$character['small_avatar']['url']))?>"></p>
-					<?php endif ?>
-					<p><a href="<?=$linker->link(array('characters','character',$seminary['url'],$character['url']))?>"><?=$character['name']?></a></p>
-					<p><small><?=$character['xps']?> XP</small></p>
-				</label>
-			</li>
-			<?php endforeach ?>
-		</ul>
-		<input type="submit" name="actions[removecharacters]" value="<?=_('Remove Characters')?>" />
-	</fieldset>
-	<fieldset>
-		<input type="text" placeholder="<?=_('Filter Characters')?>" onkeyup="filter_characters(this)" /><br />
-		<select id="characters" name="characters[]" size="5" multiple="multiple">
-			<?php foreach($characters as &$character) : ?>
-			<option value="<?=$character['id']?>"><?=$character['name']?></option>
-			<?php endforeach ?>
-		</select>
-		<input type="submit" name="actions[addcharacters]" value="<?=_('Add Characters')?>" />
-	</fieldset>
+			<ul class="gchars cf">
+				<?php foreach($group['characters'] as &$character) : ?>
+				<li>
+					<input type="checkbox" id="characters-<?=$character['id']?>" name="characters[]" value="<?=$character['id']?>" <?php if($character['id'] == \hhu\z\controllers\SeminaryController::$character['id']) : ?>disabled="disabled"<?php endif ?>/>
+					<label for="characters-<?=$character['id']?>">
+						<?php if(array_key_exists('small_avatar', $character)) : ?>
+						<p><img src="<?=$linker->link(array('media','seminary',$seminary['url'],$character['small_avatar']['url']))?>"></p>
+						<?php endif ?>
+						<p><a href="<?=$linker->link(array('characters','character',$seminary['url'],$character['url']))?>"><?=$character['name']?></a></p>
+						<p><small><?=$character['xps']?> XP</small></p>
+					</label>
+				</li>
+				<?php endforeach ?>
+			</ul>
+			<input type="submit" name="actions[removecharacters]" value="<?=_('Remove Characters')?>" />
+		</fieldset>
+		<fieldset class="filter add">
+			<p class="fwb"><small>Charaktere der Gruppe hinzufügen:</small></p>
+			<input type="text" placeholder="<?=_('Filter Characters')?>" onkeyup="filter_characters(this)" />
+			<select id="characters" name="characters[]" size="5" multiple="multiple">
+				<?php foreach($characters as &$character) : ?>
+				<option value="<?=$character['id']?>"><?=$character['name']?></option>
+				<?php endforeach ?>
+			</select>
+			<input type="submit" name="actions[addcharacters]" value="<?=_('Add Characters')?>" />
+		</fieldset>
+	</form>
 </section>
 
 <section>
