@@ -111,7 +111,7 @@
 			$quests = array();
 			foreach($this->Quests->getQuestsForQuesttopic($questtopic['id']) as $quest)
 			{
-				if($this->Quests->hasCharacterEnteredQuest($quest['id'], $character['id']))
+				if($this->Quests->hasCharacterEnteredQuest($quest['id'], $character['id']) || count(array_intersect(array('admin', 'moderator'), self::$character['characterroles'])) > 0)
 				{
 					// Get Questgroup
 					$quest['questgroup'] = $this->Questgroups->getQuestgroupById($quest['questgroup_id']);

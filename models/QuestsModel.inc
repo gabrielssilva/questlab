@@ -355,8 +355,9 @@
 			return $this->db->query(
 				'SELECT DISTINCT quests.id, quests.questgroup_id, quests.questtype_id, quests.title, quests.url, quests.xps, quests.task, quests.wrong_text, quests.questsmedia_id '.
 				'FROM quests_questsubtopics '.
+				'INNER JOIN questsubtopics ON questsubtopics.id = quests_questsubtopics.questsubtopic_id '.
 				'INNER JOIN quests ON quests.id = quests_questsubtopics.quest_id '.
-				'WHERE quests_questsubtopics.questsubtopic_id = ?',
+				'WHERE questsubtopics.questtopic_id = ?',
 				'i',
 				$questtopicId
 			);
