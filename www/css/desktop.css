@@ -199,7 +199,7 @@ input[type="submit"][disabled]{text-shadow:1px 2px #d48c4e;background:#f9ac69;bo
 
 .cranks li{clear:both;padding:8px 0 8px 8px;border-radius:3px}
 .cranks li:nth-child(odd){background:#fff}
-.cranks img{float:left;margin-right:15px;width:50px;height:50px;border-radius:25px}
+.cranks img{float:left;margin-right:15px;width:50px;height:50px;border-radius:3px}
 .cranks p,.ctopics p{margin:0;padding:0}
 
 .ctopics .xpbar,.ltopics .xpbar{background:#e4e1dd}
