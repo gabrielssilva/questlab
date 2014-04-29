@@ -29,8 +29,8 @@
 				<p class="xpnumeric"><?=$seminary['usercharacter']['xps']?> / <?=sprintf(_('%d XPs'), $seminary['xps'])?></p>
 			</div>
 			<?php endif ?>
-			<p><small><?=sprintf(_('created by %s on %s'), $seminary['creator']['username'], $dateFormatter->format(new \DateTime($seminary['created'])))?></small></p>
 			<p><?=\hhu\z\Utils::t($seminary['description'])?></p>
+			<p><small><?=sprintf(_('created by %s on %s'), $seminary['creator']['username'], $dateFormatter->format(new \DateTime($seminary['created'])))?></small></p>
 			<?php if(!array_key_exists('usercharacter', $seminary)) : ?>
 			<a href="<?=$linker->link(array('characters','register',$seminary['url']))?>" class="cta orange"><?=_('Create a Character')?></a>
 			<?php elseif(count($seminary['usercharacter']['characterroles']) == 0) : ?>
