@@ -435,7 +435,7 @@
 		public function getRelatedQuestsgroupsOfQuestgroup($questgroupId)
 		{
 			return $this->db->query(
-				'SELECT questgroups_questtexts.questgroup_id AS id '.
+				'SELECT DISTINCT questgroups_questtexts.questgroup_id AS id '.
 				'FROM questgroups '.
 				'INNER JOIN quests ON quests.questgroup_id = questgroups.id '.
 				'INNER JOIN questtexts ON questtexts.quest_id = quests.id '.
