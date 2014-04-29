@@ -25,7 +25,7 @@
 <ul class="gdata cf">
 	<li><?=$group['rank']?>. <?=_('Rank')?></li>
 	<li><?=$group['xps']?> XP</li>
-	<li><?=count($group['characters'])?> <?=(count($group['characters']) > 1) ? _('Members') : _('Member')?></li>
+	<li><?=count($group['characters'])?> <?=(count($group['characters']) == 0 || count($group['characters']) > 1) ? _('Members') : _('Member')?></li>
 </ul>
 
 <section>
