@@ -16,7 +16,8 @@
 
 <form method="get">
 	<fieldset class="filter">
-		<select name="sortorder">
+		<p><small>Sortierung:</small></p>
+		<select name="sortorder" onchange="this.form.submit();">
 			<option value="charactername" <?php if($sortorder == 'charactername') : ?>selected="selected"<?php endif ?>><?=_('Character name')?></option>
 			<option value="xps" <?php if($sortorder == 'xps') : ?>selected="selected"<?php endif ?>><?=_('XPs')?></option>
 			<option value="role" <?php if($sortorder == 'role') : ?>selected="selected"<?php endif ?>><?=_('Role')?></option>
@@ -24,7 +25,7 @@
 			<option value="<?=$characterfield['url']?>" <?php if($sortorder == $characterfield['url']) : ?>selected="selected"<?php endif ?>><?=$characterfield['title']?></option>
 			<?php endforeach ?>
 		</select>
-		<input type="submit" value="<?=_('Sort list')?>" />
+		<noscript><input type="submit" value="<?=_('Sort list')?>" /></noscript>
 	</fieldset>
 </form>
 
