@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: The Legend of Z\n"
-"POT-Creation-Date: 2014-04-30 00:43+0100\n"
-"PO-Revision-Date: 2014-04-30 00:45+0100\n"
+"POT-Creation-Date: 2014-04-30 01:43+0100\n"
+"PO-Revision-Date: 2014-04-30 01:43+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de_DE\n"
@@ -23,7 +23,7 @@ msgstr ""
 msgid "lost"
 msgstr "verloren"
 
-#: questtypes/bossfight/html/quest.tpl:41
+#: questtypes/bossfight/html/quest.tpl:41 views/html/quests/quest.tpl:121
 msgid "Choose"
 msgstr "Wählen"
 
@@ -401,7 +401,6 @@ msgid "Quests"
 msgstr "Quests"
 
 #: views/html/charactergroupsquests/create.tpl:12
-#: views/html/charactergroupsquests/edit.tpl:12
 #, php-format
 msgid "New %s-Quest"
 msgstr "Neue %s-Quest"
@@ -463,7 +462,7 @@ msgstr "Titel"
 #: views/html/charactergroupsquests/create.tpl:59
 #: views/html/charactergroupsquests/edit.tpl:58
 #: views/html/charactergroupsquests/edit.tpl:59
-#: views/html/characters/index.tpl:21 views/html/characters/manage.tpl:16
+#: views/html/characters/index.tpl:22 views/html/characters/manage.tpl:17
 #: views/html/quests/create.tpl:29 views/html/quests/create.tpl:30
 msgid "XPs"
 msgstr "XP"
@@ -516,6 +515,7 @@ msgstr "%s-Quest löschen"
 msgid "Should the %s-Quest “%s” really be deleted?"
 msgstr "Soll die %s-Quest „%s“ wirklich gelöscht werden?"
 
+#: views/html/charactergroupsquests/edit.tpl:12
 #: views/html/charactergroupsquests/quest.tpl:14
 #, php-format
 msgid "Edit %s-Quest"
@@ -575,39 +575,39 @@ msgstr "Thematischer Fortschritt"
 msgid "Manage"
 msgstr "Verwalten"
 
-#: views/html/characters/index.tpl:20 views/html/characters/manage.tpl:15
+#: views/html/characters/index.tpl:21 views/html/characters/manage.tpl:16
 #: views/html/characters/register.tpl:42 views/html/characters/register.tpl:43
 msgid "Character name"
 msgstr "Charaktername"
 
-#: views/html/characters/index.tpl:22 views/html/characters/manage.tpl:17
+#: views/html/characters/index.tpl:23 views/html/characters/manage.tpl:18
 msgid "Role"
 msgstr "Rolle"
 
-#: views/html/characters/index.tpl:27 views/html/characters/manage.tpl:22
+#: views/html/characters/index.tpl:28 views/html/characters/manage.tpl:23
 msgid "Sort list"
 msgstr "Liste sortieren"
 
-#: views/html/characters/index.tpl:37 views/html/characters/manage.tpl:33
-#: views/html/characters/manage.tpl:48 views/html/characters/manage.tpl:56
+#: views/html/characters/index.tpl:38 views/html/characters/manage.tpl:34
+#: views/html/characters/manage.tpl:49 views/html/characters/manage.tpl:57
 msgid "Admin"
 msgstr "Administrator"
 
-#: views/html/characters/index.tpl:38 views/html/characters/manage.tpl:34
-#: views/html/characters/manage.tpl:49 views/html/characters/manage.tpl:57
+#: views/html/characters/index.tpl:39 views/html/characters/manage.tpl:35
+#: views/html/characters/manage.tpl:50 views/html/characters/manage.tpl:58
 msgid "Moderator"
 msgstr "Moderator"
 
-#: views/html/characters/index.tpl:39 views/html/characters/manage.tpl:35
-#: views/html/characters/manage.tpl:51 views/html/characters/manage.tpl:59
+#: views/html/characters/index.tpl:40 views/html/characters/manage.tpl:36
+#: views/html/characters/manage.tpl:52 views/html/characters/manage.tpl:60
 msgid "User"
 msgstr "Benutzer"
 
-#: views/html/characters/manage.tpl:46
+#: views/html/characters/manage.tpl:47
 msgid "Add role"
 msgstr "Füge Rolle hinzu"
 
-#: views/html/characters/manage.tpl:54
+#: views/html/characters/manage.tpl:55
 msgid "Remove role"
 msgstr "Entferne Rolle"
 
@@ -806,11 +806,16 @@ msgstr "Epilog"
 
 #: views/html/quests/quest.tpl:100
 msgid "Continuation"
-msgstr "Fortsetzung"
+msgstr "Setze deine Reise fort"
 
-#: views/html/quests/quest.tpl:107 views/html/quests/quest.tpl:122
+#: views/html/quests/quest.tpl:107 views/html/quests/quest.tpl:124
 msgid "Quest"
 msgstr "Quest"
+
+#: views/html/quests/quest.tpl:126 views/html/quests/quest.tpl:137
+#: views/html/seminaries/seminary.tpl:35
+msgid "Let’s go"
+msgstr "Auf ins Abenteuer!"
 
 #: views/html/quests/submission.tpl:9
 #, php-format

@@ -32,7 +32,7 @@
 			<?php if(array_key_exists('text', $group)) : ?>
 			<p><?=$group['text']?></p>
 			<?php endif ?>
-			<a href="<?=$linker->link(array('questgroups','questgroup',$seminary['url'],$group['url']))?>" class="cta orange">Auf ins Abenteuer!</a>
+			<a href="<?=$linker->link(array('questgroups','questgroup',$seminary['url'],$group['url']))?>" class="cta orange"><?=_('Let’s go')?></a>
 		</section>
 	</li>
 	<?php endforeach?>

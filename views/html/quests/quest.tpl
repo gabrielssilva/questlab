@@ -115,27 +115,27 @@
 		<?php else : ?>
 		<li>
 			<p>
-			<?php if($nextquest['entered'] || !$charactedHasChoosenNextQuest) : ?>
-			<?php if(!empty($nextquest['entry_text'])) : ?>
-			<a href="<?=$linker->link(array($nextquest['questgroup_url'],$nextquest['url']),3)?>"><?=$nextquest['entry_text']?></a>
-			<?php else : ?>
-			<?=_('Quest')?>:
-			<a href="<?=$linker->link(array($nextquest['questgroup_url'],$nextquest['url']),3)?>"><?=$nextquest['title']?></a>
-			<?php endif ?>
-			<?php else : ?>
-			<?php if(!empty($nextquest['entry_text'])) : ?>
-			<?=$nextquest['entry_text']?>
-			<?php else : ?>
-			<?=$nextquest['title']?>
-			<?php endif ?>
-			<?php endif ?>
+				<?php if(!empty($nextquest['entry_text'])) : ?>
+				<i><?=$nextquest['entry_text']?></i>
+				<?php if($nextquest['entered'] || !$charactedHasChoosenNextQuest) : ?>
+				<a class="cta orange" href="<?=$linker->link(array($nextquest['questgroup_url'],$nextquest['url']),3)?>"><?=_('Choose')?></a>
+				<?php endif ?>
+				<?php else : ?>
+				<?=_('Quest')?>: <a href="<?=$linker->link(array($nextquest['questgroup_url'],$nextquest['url']),3)?>"><?=$nextquest['title']?></a>
+				<?php if($nextquest['entered'] || !$charactedHasChoosenNextQuest) : ?>
+				<a class="cta orange" href="<?=$linker->link(array($nextquest['questgroup_url'],$nextquest['url']),3)?>"><?=_('Let’s go')?></a>
+				<?php endif ?>
+				<?php endif ?>
 			</p>
 		</li>
 		<?php endif ?>
 		<?php endforeach ?>
 	</ul>
 	<?php elseif(!is_null($nextquestgroup)) : ?>
-	<a href="<?=$linker->link(array('questgroups','questgroup',$seminary['url'],$nextquestgroup['url']))?>"><?=$nextquestgroup['hierarchy']['title_singular']?> <?=$nextquestgroup['hierarchy']['questgroup_pos']?>: <?=$nextquestgroup['title']?></a>
+	<p>
+		<?=$nextquestgroup['hierarchy']['title_singular']?> <?=$nextquestgroup['hierarchy']['questgroup_pos']?>: <a href="<?=$linker->link(array('questgroups','questgroup',$seminary['url'],$nextquestgroup['url']))?>"><?=$nextquestgroup['title']?></a>
+		<a class="cta orange" href="<?=$linker->link(array('questgroups','questgroup',$seminary['url'],$nextquestgroup['url']))?>"><?=_('Let’s go')?></a>
+	</p>
 	<?php endif ?>
 </section>
 <?php endif ?>
