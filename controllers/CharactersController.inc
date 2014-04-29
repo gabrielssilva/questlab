@@ -69,40 +69,46 @@
 			// Get Seminary
 			$seminary = $this->Seminaries->getSeminaryByUrl($seminaryUrl);
 			
-			// Set default properties to show
-			$properties = array(
-				'username',
-				'xps'
-			);
-			
-			// Select proprties to show
-			if($this->request->getRequestMethod() == 'POST')
-			{
-				$properties = $this->request->getPostParam('properties');
-				if(!is_array($properties)) {
-					$properties = array();
-				}
-			}
+			// Get Seminarycharacterfields
+			$characterfields = $this->Seminarycharacterfields->getFieldsForSeminary($seminary['id']);
 			
 			// Get registered Characters
 			$characters = $this->Characters->getCharactersForSeminary($seminary['id']);
 			foreach($characters as &$character)
 			{
 				$character['xplevel'] = $this->Characters->getXPLevelOfCharacters($character['id']);
-				$character['characterroles'] = array_map(function($r) { return $r['name']; }, $this->Characterroles->getCharacterrolesForCharacterById($character['id']));
 				$character['user'] = $this->Users->getUserById($character['user_id']);
-				$character['characterfields'] = $this->Seminarycharacterfields->getFieldsForCharacter($character['id']);
+				$character['characterroles'] = array_map(function($r) { return $r['name']; }, $this->Characterroles->getCharacterrolesForCharacterById($character['id']));
+				$character['characterfields'] = array();
+				foreach($this->Seminarycharacterfields->getFieldsForCharacter($character['id']) as &$value) {
+					$character['characterfields'][$value['url']] = $value;
+				}
 			}
 			
-			// Get Seminarycharacterfields
-			$characterfields = $this->Seminarycharacterfields->getFieldsForSeminary($seminary['id']);
+			// Sort Characters
+			global $sortorder;
+			$sortorder = ($this->request->getRequestMethod() == 'GET') ? $this->request->getGetParam('sortorder') : null;
+			$sortorder = (!is_null($sortorder)) ? $sortorder : 'xps';
+			$sortMethod = 'sortCharactersBy'.ucfirst(strtolower($sortorder));
+			if(method_exists($this, $sortMethod)) {
+				usort($characters, array($this, $sortMethod));
+			}
+			elseif(in_array($sortorder, array_map(function($f) { return $f['title']; }, $characterfields))) {
+				usort($characters, function($a, $b) {
+					global $sortorder;
+					return $this->sortCharactersByField($a, $b, $sortorder);
+				});
+			}
+			else {
+				throw new \nre\exceptions\ParamsNotValidException($sortorder);
+			}
 			
 			
 			// Pass data to view
 			$this->set('seminary', $seminary);
 			$this->set('characters', $characters);
 			$this->set('characterfields', $characterfields);
-			$this->set('properties', $properties);
+			$this->set('sortorder', $sortorder);
 		}
 		
 		
@@ -316,14 +322,18 @@
 			);
 			
 			$selectedCharacters = array();
+			global $sortorder;
 			if($this->request->getRequestMethod() == 'POST')
 			{
+				// Set sortorder
+				$sortorder = $this->request->getPostParam('sortorder');
+				
 				// Do action
+				$selectedCharacters = $this->request->getPostParam('characters');
 				if(!is_null($this->request->getPostParam('actions')) && count($this->request->getPostParam('actions')) > 0 && !is_null($this->request->getPostParam('characters')) && count($this->request->getPostParam('characters')) > 0)
 				{
 					$actions = $this->request->getPostParam('actions');
 					$action = array_keys($actions)[0];
-					$selectedCharacters = $this->request->getPostParam('characters');
 				
 					switch($action)
 					{
@@ -369,34 +379,47 @@
 						break;
 					}
 				}
-				
-				// Properties to show
-				$properties = $this->request->getPostParam('properties');
-				if(!is_array($properties)) {
-					$properties = array();
-				}
 			}
+			
+			// Get Seminarycharacterfields
+			$characterfields = $this->Seminarycharacterfields->getFieldsForSeminary($seminary['id']);
 			
 			// Get registered Characters
 			$characters = $this->Characters->getCharactersForSeminary($seminary['id']);
 			foreach($characters as &$character)
 			{
 				$character['xplevel'] = $this->Characters->getXPLevelOfCharacters($character['id']);
-				$character['characterroles'] = array_map(function($r) { return $r['name']; }, $this->Characterroles->getCharacterrolesForCharacterById($character['id']));
 				$character['user'] = $this->Users->getUserById($character['user_id']);
-				$character['characterfields'] = $this->Seminarycharacterfields->getFieldsForCharacter($character['id']);
+				$character['characterroles'] = array_map(function($r) { return $r['name']; }, $this->Characterroles->getCharacterrolesForCharacterById($character['id']));
+				$character['characterfields'] = array();
+				foreach($this->Seminarycharacterfields->getFieldsForCharacter($character['id']) as &$value) {
+					$character['characterfields'][$value['url']] = $value;
+				}
 			}
 			
-			// Get Seminarycharacterfields
-			$characterfields = $this->Seminarycharacterfields->getFieldsForSeminary($seminary['id']);
+			// Sort Characters
+			$sortorder = (!is_null($sortorder)) ? $sortorder : 'xps';
+			$sortMethod = 'sortCharactersBy'.ucfirst(strtolower($sortorder));
+			if(method_exists($this, $sortMethod)) {
+				usort($characters, array($this, $sortMethod));
+			}
+			elseif(in_array($sortorder, array_map(function($f) { return $f['title']; }, $characterfields))) {
+				usort($characters, function($a, $b) {
+					global $sortorder;
+					return $this->sortCharactersByField($a, $b, $sortorder);
+				});
+			}
+			else {
+				throw new \nre\exceptions\ParamsNotValidException($sortorder);
+			}
 			
 			
 			// Pass data to view
 			$this->set('seminary', $seminary);
 			$this->set('characters', $characters);
 			$this->set('characterfields', $characterfields);
-			$this->set('properties', $properties);
 			$this->set('selectedCharacters', $selectedCharacters);
+			$this->set('sortorder', $sortorder);
 		}
 		
 		
@@ -423,6 +446,115 @@
 				$moderator = $this->Users->getUserById($character['user_id']);
 				\hhu\z\Utils::sendMail($sender, $moderator['email'], $subject, $message);
 			}
+		}
+		
+		
+		/**
+		 * Compare two Characters by their name.
+		 * 
+		 * @param	array	$a	Character a
+		 * @param	array	$b	Character b
+		 * @return	int		Result of comparison
+		 */
+		private function sortCharactersByCharactername($a, $b)
+		{
+			if($a['name'] == $b['name']) {
+				return 0;
+			}
+			
+			
+			return ($a['name'] < $b['name']) ? -1 : 1;
+		}
+		
+		
+		/**
+		 * Compare two Characters by their XPs.
+		 * 
+		 * @param	array	$a	Character a
+		 * @param	array	$b	Character b
+		 * @return	int		Result of comparison
+		 */
+		private function sortCharactersByXps($a, $b)
+		{
+			if($a['xps'] == $b['xps']) {
+				return 0;
+			}
+			
+			
+			return ($a['xps'] > $b['xps']) ? -1 : 1;
+		}
+		
+		
+		/**
+		 * Compare two Characters by their Character roles.
+		 * 
+		 * @param	array	$a	Character a
+		 * @param	array	$b	Character b
+		 * @return	int		Result of comparison
+		 */
+		private function sortCharactersByRole($a, $b)
+		{
+			$roles = array('admin', 'moderator', 'user', 'guest');
+			
+			if(in_array('admin', $a['characterroles']))
+			{
+				if(in_array('admin', $b['characterroles'])) {
+					return 0;
+				}
+				return -1;
+			}
+			if(in_array('moderator', $a['characterroles']))
+			{
+				if(in_array('admin', $b['characterroles'])) {
+					return 1;
+				}
+				if(in_array('moderator', $b['characterroles'])) {
+					return 0;
+				}
+				return -1;
+			}
+			if(in_array('user', $a['characterroles']))
+			{
+				if(in_array('admin', $b['characterroles']) || in_array('moderator', $b['characterroles'])) {
+					return 1;
+				}
+				if(in_array('user', $b['characterroles'])) {
+					return 0;
+				}
+				return -1;
+			}
+			if(in_array('guest', $a['characterroles']))
+			{
+				if(in_array('admin', $b['characterroles']) || in_array('moderator', $b['characterroles'])  || in_array('user', $b['characterroles'])) {
+					return 1;
+				}
+				if(in_array('guest', $b['characterroles'])) {
+					return 0;
+				}
+				return -1;
+			}
+			
+			
+			return 1;
+		}
+		
+		
+		/**
+		 * Compare two Characters by one of their Seminary fields.
+		 * 
+		 * @param	array	$a	Character a
+		 * @param	array	$b	Character b
+		 * @param	string	$field	Field to compare
+		 * @return	int		Result of comparison
+		 */
+		private function sortCharactersByField($a, $b, $field)
+		{
+			if($a['characterfields'][$field] == $b['characterfields'][$field]) {
+				return 0;
+			}
+			
+			
+			return ($a['characterfields'][$field] < $b['characterfields'][$field]) ? -1 : 1;
 		}
 		
 	}

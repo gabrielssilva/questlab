@@ -14,16 +14,17 @@
 </nav>
 <?php endif ?>
 
-<form method="post">
+<form method="get">
 	<fieldset class="filter">
-		<select name="">
-			<option value="">Charaktername</option>
-			<option value="">XP</option>
-			<option value="">Rolle</option>
-			<option value="">Matrikelnummer</option>
-			<option value="">Studiengang</option>
+		<select name="sortorder">
+			<option value="charactername" <?php if($sortorder == 'charactername') : ?>selected="selected"<?php endif ?>><?=_('Character name')?></option>
+			<option value="xps" <?php if($sortorder == 'xps') : ?>selected="selected"<?php endif ?>><?=_('XPs')?></option>
+			<option value="role" <?php if($sortorder == 'role') : ?>selected="selected"<?php endif ?>><?=_('Role')?></option>
+			<?php foreach($characterfields as &$characterfield) : ?>
+			<option value="<?=$characterfield['url']?>" <?php if($sortorder == $characterfield['url']) : ?>selected="selected"<?php endif ?>><?=$characterfield['title']?></option>
+			<?php endforeach ?>
 		</select>
-		<input type="submit" name="" value="Liste sortieren" />
+		<input type="submit" value="<?=_('Sort list')?>" />
 	</fieldset>
 </form>
 
