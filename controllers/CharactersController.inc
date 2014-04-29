@@ -330,6 +330,9 @@
 				
 				// Do action
 				$selectedCharacters = $this->request->getPostParam('characters');
+				if(!is_array($selectedCharacters)) {
+					$selectedCharacters = array();
+				}
 				if(!is_null($this->request->getPostParam('actions')) && count($this->request->getPostParam('actions')) > 0 && !is_null($this->request->getPostParam('characters')) && count($this->request->getPostParam('characters')) > 0)
 				{
 					$actions = $this->request->getPostParam('actions');
