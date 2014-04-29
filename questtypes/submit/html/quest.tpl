@@ -17,7 +17,7 @@
 	<p><?=_('Allowed file types')?>:</p>
 	<ul>
 		<?php foreach($mimetypes as &$mimetype) : ?>
-		<li><?=sprintf(_('%s-files'), strtoupper(explode('/',$mimetype['mimetype'])[1]))?> <?php if($mimetype['size'] > 0) : ?>(<?=_('max.')?> <?=$numberFormatter->format(round($mimetype['size']/(1024*1024),2))?> MiB)<?php endif ?></li>
+		<li><?=sprintf(_('%s-files'), strtoupper(explode('/',$mimetype['mimetype'])[1]))?> <?php if($mimetype['size'] > 0) : ?>(<?=_('max.')?> <?=round($mimetype['size']/(1024*1024),2)?> MiB)<?php endif ?></li>
 		<?php endforeach ?>
 	</ul>
 	<input type="submit" name="submit" value="<?=_('solve')?>" />
