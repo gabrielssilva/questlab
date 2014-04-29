@@ -11,7 +11,11 @@
 
 <h1><?=_('Manage Character group')?></h1>
 <div class="gbanner cf">
-	<img src="http://s1.directupload.net/images/140325/3eqybn4i.png" class="gbanner">
+	<?php if(!is_null($group['seminaryupload_id'])) : ?>
+	<img src="<?=$linker->link(array('uploads','charactergroup',$seminary['url'],$groupsgroup['url'],$group['url']))?>" class="gbanner">
+	<?php else : ?>
+	<img src="<?=$linker->link(array('grafics','charactergroup.jpg'))?>" class="gbanner">
+	<?php endif ?>
 	<h1><?=$group['name']?></h1>
 	<p>"<?=$group['motto']?>"</p>
 </div>
