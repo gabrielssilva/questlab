@@ -179,6 +179,7 @@ input[type="submit"][disabled]{text-shadow:1px 2px #d48c4e;background:#f9ac69;bo
 .filter label,input,select{display:inline;vertical-align:middle}
 .filter input[type=checkbox]{margin:0 8px 0 0}
 .filter label{margin-right:20px;font-size:.875em}
+.filter p{display:inline-block;margin:0 10px 10px 0}
 
 .filter.add{margin-top:25px}
 .filter.add select,.filter.add input[type=text]{display:block;margin-bottom:10px}
