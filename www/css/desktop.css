@@ -136,6 +136,11 @@ input[type="submit"][disabled]{text-shadow:1px 2px #d48c4e;background:#f9ac69;bo
 .admnql li{background:#fff;margin-bottom:8px;padding:5px 10px;border-radius:3px}
 .admnql p{margin:0}
 .admnql span{font-size:.875em;font-weight:normal;display:block}
+.admnql img{float:left;width:60px;height:60px;border-radius:30px;margin:5px 10px 0 0}
+.admnql .chrflds{display:inline-block;font-size:.875em}
+.admnql .chrflds:after{content:", "}
+.admnql .chrflds:last-child:after{content: ""}
+.admnql input{float:left;margin:6px 10px 0 0}
 
 .admnqf label{margin:10px 0 5px}
 .admnqf select{font-size:0.875em}
@@ -171,7 +176,7 @@ input[type="submit"][disabled]{text-shadow:1px 2px #d48c4e;background:#f9ac69;bo
 .filter{margin:10px 0 20px;display:block;width:auto;padding:15px 20px;background:#eae8e4;border-radius:3px}
 .filter ul{margin:0}
 .filter li{display:inline-block;margin-bottom:8px}
-.filter label,input{display:inline;vertical-align:middle}
+.filter label,input,select{display:inline;vertical-align:middle}
 .filter input[type=checkbox]{margin:0 8px 0 0}
 .filter label{margin-right:20px;font-size:.875em}
 
