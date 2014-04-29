@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: The Legend of Z\n"
 "POT-Creation-Date: 2014-04-29 21:29+0100\n"
-"PO-Revision-Date: 2014-04-29 21:29+0100\n"
+"PO-Revision-Date: 2014-04-29 22:03+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de_DE\n"
@@ -159,7 +159,7 @@ msgstr "Deine Achievements"
 #: views/html/achievements/index.tpl:47
 #, php-format
 msgid "Own progress: %d %%"
-msgstr "Persönlicher Fortschritt: %d %%"
+msgstr "Persönlicher Fortschritt: %d%%"
 
 #: views/html/achievements/index.tpl:52
 #: views/html/charactergroups/group.tpl:30
@@ -432,7 +432,7 @@ msgstr "Ranking"
 #: views/html/seminarybar/index.tpl:42
 #, php-format
 msgid "%d XPs"
-msgstr "%d XP"
+msgstr "%d XP"
 
 #: views/html/characters/character.tpl:106 views/html/seminarybar/index.tpl:14
 msgid "Last Quest"
@@ -592,7 +592,7 @@ msgstr ""
 #: views/html/library/index.tpl:12
 #, php-format
 msgid "Total progress: %d %%"
-msgstr "Gesamtfortschritt: %d %%"
+msgstr "Gesamtfortschritt: %d%%"
 
 #: views/html/menu/index.tpl:2 views/html/users/create.tpl:4
 #: views/html/users/delete.tpl:4 views/html/users/edit.tpl:4
