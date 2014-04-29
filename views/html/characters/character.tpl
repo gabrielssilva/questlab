@@ -64,19 +64,19 @@
 			<li>
 				<a href="<?=$linker->link($rankCharacter['url'],3)?>"><img src="<?=$linker->link(array('media','avatar',$seminary['url'],$rankCharacter['charactertype_url'],$rankCharacter['xplevel'],'portrait'))?>"></a>
 				<p><?=$character['rank']-count($ranking['superior'])+$index?>. <a href="<?=$linker->link($rankCharacter['url'],3)?>"><?=$rankCharacter['name']?></a></p>
-				<p><small><?=_('Level')?> <?=$rankCharacter['xplevel']?> (<?=sprintf(_('%d XPs'), $rankCharacter['xps'])?>)</small></p>
+				<p><small><?=_('Level')?> <?=$rankCharacter['xplevel']?> (<?=sprintf(_('%d XPs'), $rankCharacter['xps'])?>)</small></p>
 			</li>
 			<?php endforeach ?>
 			<li>
 				<img src="<?=$linker->link(array('media','avatar',$seminary['url'],$character['charactertype_url'],$character['xplevel']['level'],'portrait'))?>">
 				<p class="fwb"><?=$character['rank']?>. <?=$character['name']?></p>
-				<p><small><?=_('Level')?> <?=$character['xplevel']['level']?> (<?=sprintf(_('%d XPs'), $character['xps'])?>)</small></p>
+				<p><small><?=_('Level')?> <?=$character['xplevel']['level']?> (<?=sprintf(_('%d XPs'), $character['xps'])?>)</small></p>
 			</li>
 			<?php foreach($ranking['inferior'] as $index => &$rankCharacter) : ?>
 			<li>
 				<a href="<?=$linker->link($rankCharacter['url'],3)?>"><img src="<?=$linker->link(array('media','avatar',$seminary['url'],$rankCharacter['charactertype_url'],$rankCharacter['xplevel'],'portrait'))?>"></a>
 				<p><?=$character['rank']+$index+1?>. <a href="<?=$linker->link($rankCharacter['url'],3)?>"><?=$rankCharacter['name']?></a></p>
-				<p><small><?=_('Level')?> <?=$rankCharacter['xplevel']?> (<?=sprintf(_('%d XPs'), $rankCharacter['xps'])?>)</small></p>
+				<p><small><?=_('Level')?> <?=$rankCharacter['xplevel']?> (<?=sprintf(_('%d XPs'), $rankCharacter['xps'])?>)</small></p>
 			</li>
 			<?php endforeach ?>
 		</ul>
@@ -88,7 +88,7 @@
 			<li>
 				<a href="<?=$linker->link(array('charactergroups','group',$seminary['url'],$group['charactergroupsgroup_url'],$group['url']))?>"><img src="http://s1.directupload.net/images/140325/3eqybn4i.png"></a>
 				<p><a href="<?=$linker->link(array('charactergroups','group',$seminary['url'],$group['charactergroupsgroup_url'],$group['url']))?>"><?=$group['name']?></a></p>
-				<p><small><?=sprintf(_('%d XPs'), $group['xps'])?></small></p>
+				<p><small><?=sprintf(_('%d XPs'), $group['xps'])?></small></p>
 			</li>
 			<?php endforeach ?>
 		</ul>

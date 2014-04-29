@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: The Legend of Z\n"
-"POT-Creation-Date: 2014-04-28 10:08+0100\n"
-"PO-Revision-Date: 2014-04-28 10:08+0100\n"
+"POT-Creation-Date: 2014-04-29 13:33+0100\n"
+"PO-Revision-Date: 2014-04-29 13:33+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de_DE\n"
@@ -134,14 +134,14 @@ msgstr ""
 msgid "Seldom Achievements"
 msgstr "Die seltensten Achievements"
 
-#: views/html/achievements/index.tpl:26
+#: views/html/achievements/index.tpl:26 views/html/achievements/index.tpl:68
+msgid "Secret Achievement"
+msgstr "Geheimes Achievement"
+
+#: views/html/achievements/index.tpl:27
 #, php-format
 msgid "Achievement has been achieved only %d times"
 msgstr "wurde erst %d mal gefunden"
-
-#: views/html/achievements/index.tpl:27 views/html/achievements/index.tpl:68
-msgid "Secret Achievement"
-msgstr "Geheimes Achievement"
 
 #: views/html/achievements/index.tpl:33
 msgid "Most successful collectors"
@@ -374,15 +374,15 @@ msgstr "Neue Gruppengruppe"
 msgid "Remove Characters"
 msgstr "Entferne Charaktere"
 
-#: views/html/charactergroups/managegroup.tpl:45
+#: views/html/charactergroups/managegroup.tpl:46
 msgid "Filter Characters"
 msgstr "Filtere Charaktere"
 
-#: views/html/charactergroups/managegroup.tpl:51
+#: views/html/charactergroups/managegroup.tpl:52
 msgid "Add Characters"
 msgstr "Füge Charaktere hinzu"
 
-#: views/html/charactergroups/managegroup.tpl:56
+#: views/html/charactergroups/managegroup.tpl:58
 #: views/html/questgroups/questgroup.tpl:57 views/html/quests/create.tpl:9
 #: views/html/quests/index.tpl:9
 msgid "Quests"
@@ -427,17 +427,18 @@ msgstr "Ranking"
 #: views/html/characters/character.tpl:67
 #: views/html/characters/character.tpl:73
 #: views/html/characters/character.tpl:79
-#: views/html/characters/character.tpl:90 views/html/quests/index.tpl:37
-#: views/html/seminarybar/index.tpl:6 views/html/seminarybar/index.tpl:42
+#: views/html/characters/character.tpl:91 views/html/quests/index.tpl:37
+#: views/html/seminaries/index.tpl:29 views/html/seminarybar/index.tpl:6
+#: views/html/seminarybar/index.tpl:42
 #, php-format
 msgid "%d XPs"
 msgstr "%d XP"
 
-#: views/html/characters/character.tpl:99 views/html/seminarybar/index.tpl:14
+#: views/html/characters/character.tpl:100 views/html/seminarybar/index.tpl:14
 msgid "Last Quest"
 msgstr "Letzter Speicherpunkt"
 
-#: views/html/characters/character.tpl:105
+#: views/html/characters/character.tpl:106
 msgid "Topic progress"
 msgstr "Thematischer Fortschritt"
 
@@ -445,17 +446,13 @@ msgstr "Thematischer Fortschritt"
 msgid "Manage"
 msgstr "Verwalten"
 
-#: views/html/characters/index.tpl:19 views/html/characters/manage.tpl:14
-msgid "Properties"
-msgstr "Eigenschaften"
-
 #: views/html/characters/index.tpl:20 views/html/characters/manage.tpl:15
 #: views/html/error/index.tpl:8 views/html/error/index.tpl:9
-#: views/html/introduction/index.tpl:9 views/html/introduction/index.tpl:10
-#: views/html/users/create.tpl:9 views/html/users/create.tpl:10
-#: views/html/users/edit.tpl:9 views/html/users/edit.tpl:10
-#: views/html/users/login.tpl:12 views/html/users/login.tpl:13
-#: views/html/users/register.tpl:81 views/html/users/register.tpl:82
+#: views/html/introduction/index.tpl:7 views/html/users/create.tpl:9
+#: views/html/users/create.tpl:10 views/html/users/edit.tpl:9
+#: views/html/users/edit.tpl:10 views/html/users/login.tpl:12
+#: views/html/users/login.tpl:13 views/html/users/register.tpl:81
+#: views/html/users/register.tpl:82
 msgid "Username"
 msgstr "Benutzername"
 
@@ -469,34 +466,34 @@ msgstr "XP"
 msgid "Roles"
 msgstr "Rollen"
 
-#: views/html/characters/index.tpl:26 views/html/characters/manage.tpl:21
+#: views/html/characters/index.tpl:27 views/html/characters/manage.tpl:22
 msgid "Set properties"
 msgstr "Setze Eigenschaften"
 
-#: views/html/characters/index.tpl:38 views/html/characters/manage.tpl:35
-#: views/html/characters/manage.tpl:52 views/html/characters/manage.tpl:60
+#: views/html/characters/index.tpl:39 views/html/characters/manage.tpl:36
+#: views/html/characters/manage.tpl:53 views/html/characters/manage.tpl:61
 msgid "Admin"
 msgstr "Administrator"
 
-#: views/html/characters/index.tpl:39 views/html/characters/manage.tpl:36
-#: views/html/characters/manage.tpl:53 views/html/characters/manage.tpl:61
+#: views/html/characters/index.tpl:40 views/html/characters/manage.tpl:37
+#: views/html/characters/manage.tpl:54 views/html/characters/manage.tpl:62
 msgid "Moderator"
 msgstr "Moderator"
 
-#: views/html/characters/index.tpl:40 views/html/characters/manage.tpl:37
-#: views/html/characters/manage.tpl:55 views/html/characters/manage.tpl:63
+#: views/html/characters/index.tpl:41 views/html/characters/manage.tpl:38
+#: views/html/characters/manage.tpl:56 views/html/characters/manage.tpl:64
 msgid "User"
 msgstr "Benutzer"
 
-#: views/html/characters/manage.tpl:24
+#: views/html/characters/manage.tpl:25
 msgid "Selection"
 msgstr "Auswahl"
 
-#: views/html/characters/manage.tpl:50
+#: views/html/characters/manage.tpl:51
 msgid "Add role"
 msgstr "Füge Rolle hinzu"
 
-#: views/html/characters/manage.tpl:58
+#: views/html/characters/manage.tpl:59
 msgid "Remove role"
 msgstr "Entferne Rolle"
 
@@ -544,26 +541,25 @@ msgid "Seminary fields"
 msgstr "Kursfelder"
 
 #: views/html/error/index.tpl:5 views/html/error/index.tpl:14
-#: views/html/introduction/index.tpl:6 views/html/introduction/index.tpl:14
-#: views/html/menu/index.tpl:6 views/html/users/login.tpl:6
-#: views/html/users/login.tpl:20
+#: views/html/introduction/index.tpl:9 views/html/menu/index.tpl:6
+#: views/html/users/login.tpl:6 views/html/users/login.tpl:20
 msgid "Login"
 msgstr "Login"
 
 #: views/html/error/index.tpl:10 views/html/error/index.tpl:11
-#: views/html/introduction/index.tpl:11 views/html/introduction/index.tpl:12
-#: views/html/users/create.tpl:17 views/html/users/create.tpl:18
-#: views/html/users/edit.tpl:16 views/html/users/edit.tpl:17
-#: views/html/users/login.tpl:14 views/html/users/login.tpl:15
-#: views/html/users/register.tpl:89 views/html/users/register.tpl:90
+#: views/html/introduction/index.tpl:8 views/html/users/create.tpl:17
+#: views/html/users/create.tpl:18 views/html/users/edit.tpl:16
+#: views/html/users/edit.tpl:17 views/html/users/login.tpl:14
+#: views/html/users/login.tpl:15 views/html/users/register.tpl:89
+#: views/html/users/register.tpl:90
 msgid "Password"
 msgstr "Passwort"
 
-#: views/html/error/index.tpl:15 views/html/introduction/index.tpl:15
+#: views/html/error/index.tpl:15 views/html/introduction/index.tpl:11
 msgid "or"
 msgstr "oder"
 
-#: views/html/error/index.tpl:15 views/html/introduction/index.tpl:15
+#: views/html/error/index.tpl:15 views/html/introduction/index.tpl:11
 msgid "register yourself"
 msgstr "registriere dich"
 
@@ -580,7 +576,7 @@ msgstr "Levelaufstieg"
 msgid "You have reached level %d"
 msgstr "Du hast Level %d erreicht"
 
-#: views/html/introduction/index.tpl:4
+#: views/html/introduction/index.tpl:15
 msgid "Introduction"
 msgstr "Einführung"
 
@@ -685,7 +681,7 @@ msgstr "Quest abgeschlossen."
 #: views/html/quests/quest.tpl:46
 #, php-format
 msgid "You have earned %d XPs."
-msgstr "Du hast %d XPs erhalten."
+msgstr "Du hast %d XP erhalten."
 
 #: views/html/quests/quest.tpl:62
 msgid "Task already successfully solved"
@@ -741,16 +737,16 @@ msgstr "speichern"
 msgid "Create new seminary"
 msgstr "Neuen Kurs erstellen"
 
-#: views/html/seminaries/index.tpl:24
+#: views/html/seminaries/index.tpl:32
 #, php-format
 msgid "created by %s on %s"
 msgstr "erstellt von %s am %s"
 
-#: views/html/seminaries/index.tpl:27
+#: views/html/seminaries/index.tpl:35
 msgid "Create a Character"
 msgstr "Erstelle einen Charakter"
 
-#: views/html/seminaries/index.tpl:29
+#: views/html/seminaries/index.tpl:37
 #, php-format
 msgid "Your Character “%s” has not been activated yet"
 msgstr "Dein Charakter „%s“ wurde noch nicht aktiviert"
@@ -906,6 +902,13 @@ msgstr "Das Passwort ist ungültig"
 #: views/html/users/register.tpl:92
 msgid "Register"
 msgstr "Registrieren"
+
+#, fuzzy
+#~ msgid "%d XPs"
+#~ msgstr "%d XP"
+
+#~ msgid "Properties"
+#~ msgstr "Eigenschaften"
 
 #, fuzzy
 #~ msgid "%stQuests"
