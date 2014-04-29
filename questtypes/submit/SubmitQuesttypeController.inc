@@ -157,6 +157,11 @@
 				}
 			}
 			
+			// Show answer of Character
+			if($this->request->getGetParam('show-answer') == 'true') {
+				$this->redirect($this->linker->link(array('uploads','seminary',$seminary['url'], $characterSubmissions[count($characterSubmissions)-1]['upload']['url'])));
+			}
+			
 			// Has Character already solved Quest?
 			$solved = $this->Quests->hasCharacterSolvedQuest($quest['id'], $character['id']);
 			
