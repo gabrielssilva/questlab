@@ -200,7 +200,8 @@
 			return $this->db->query(
 				'SELECT id, name, url, xps, motto, seminaryupload_id '.
 				'FROM v_charactergroups '.
-				'WHERE charactergroupsgroup_id = ?',
+				'WHERE charactergroupsgroup_id = ? '.
+				'ORDER BY name',
 				'i',
 				$groupsgroupId
 			);
@@ -275,6 +276,33 @@
 			
 			
 			return $data[0];
+		}
+		
+		
+		/**
+		 * Get the Character groups for a Quest.
+		 * 
+		 * @param	int	$questId	ID of the Character groups Quest
+		 * @return	array			Character groups
+		 */
+		public function getGroupsForQuest($questId)
+		{
+			$groups = $this->db->query(
+				'SELECT charactergroups.id, charactergroups.name, charactergroups.url, charactergroupsquests_groups.created, charactergroupsquests_groups.xps_factor, charactergroupsquests.xps '.
+				'FROM charactergroupsquests_groups '.
+				'LEFT JOIN charactergroups ON charactergroups.id = charactergroupsquests_groups.charactergroup_id '.
+				'LEFT JOIN charactergroupsquests ON charactergroupsquests.id = charactergroupsquests_groups.charactergroupsquest_id '.
+				'WHERE charactergroupsquests_groups.charactergroupsquest_id = ? '.
+				'ORDER BY xps_factor DESC',
+				'i',
+				$questId
+			);
+			foreach($groups as &$group) {
+				$group['xps'] = round($group['xps'] * $group['xps_factor'], 1);
+			}
+			
+			
+			return $groups;
 		}
 		
 		

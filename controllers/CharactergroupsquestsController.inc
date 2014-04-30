@@ -79,7 +79,78 @@
 			$questgroup['entered'] = $this->Questgroups->hasCharacterEnteredQuestgroup($questgroup['id'], self::$character['id']);
 			
 			// Get Character groups-groups
-			$groups = $this->Charactergroupsquests->getGroupsForQuest($quest['id']);
+			$groups = $this->Charactergroups->getGroupsForQuest($quest['id']);
+			
+			// Media
+			$questmedia = null;
+			if(!is_null($quest['questsmedia_id'])) {
+				$questmedia = $this->Media->getSeminaryMediaById($quest['questsmedia_id']);
+			}
+			
+			
+			// Pass data to view
+			$this->set('seminary', $seminary);
+			$this->set('groupsgroup', $groupsgroup);
+			$this->set('quest', $quest);
+			$this->set('questgroup', $questgroup);
+			$this->set('groups', $groups);
+			$this->set('media', $questmedia);
+		}
+		
+		
+		/**
+		 * Action: manage.
+		 * 
+		 * Manage a Character groups Quest for a Character groups-group
+		 * of a Seminary.
+		 * 
+		 * @throws	IdNotFoundException
+		 * @param	string	$seminaryUrl		URL-Title of a Seminary
+		 * @param	string	$groupsgroupUrl		URL-Title of a Character groups-group
+		 * @param	string	$questUrl		URL-Title of a Character groups Quest
+		 */
+		public function manage($seminaryUrl, $groupsgroupUrl, $questUrl)
+		{
+			// Get seminary
+			$seminary = $this->Seminaries->getSeminaryByUrl($seminaryUrl);
+			
+			// Get Character groups-group
+			$groupsgroup = $this->Charactergroups->getGroupsgroupByUrl($seminary['id'], $groupsgroupUrl);
+			
+			// Get Character groups-group Quests
+			$quest = $this->Charactergroupsquests->getQuestByUrl($groupsgroup['id'], $questUrl);
+			
+			// Get Questgroup
+			$questgroup = $this->Questgroups->getQuestgroupById($quest['questgroups_id']);
+			$questgroup['entered'] = $this->Questgroups->hasCharacterEnteredQuestgroup($questgroup['id'], self::$character['id']);
+			
+			// Get Character groups
+			$groups = $this->Charactergroups->getGroupsForGroupsgroup($groupsgroup['id']);
+			
+			// Set XPs of Character groups for this Character groups Quest
+			if($this->request->getRequestMethod() == 'POST' && !is_null($this->request->getPostParam('setxps')))
+			{
+				$xps = $this->request->getPostParam('xps');
+				foreach($groups as &$group)
+				{
+					if(array_key_exists($group['url'], $xps) && $xps[$group['url']] != 'null')
+					{
+						$xpsFactor = intval($xps[$group['url']]) / $quest['xps'];
+						$this->Charactergroupsquests->setXPsOfGroupForQuest($quest['id'], $group['id'], $xpsFactor);
+					}
+					else {
+						$this->Charactergroupsquests->deleteGroupForQuest($quest['id'], $group['id']);
+					}
+				}
+				
+				// Redirect to Quest page
+				$this->redirect($this->linker->link(array('quest', $seminary['url'], $groupsgroup['url'], $quest['url']), 1));
+			}
+			
+			// Set XPs for Groups
+			foreach($groups as &$group) {
+				$group['quest_group'] = $this->Charactergroupsquests->getXPsOfGroupForQuest($quest['id'], $group['id']);
+			}
 			
 			// Media
 			$questmedia = null;

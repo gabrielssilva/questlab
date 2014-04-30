@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: The Legend of Z\n"
-"POT-Creation-Date: 2014-04-30 01:43+0100\n"
-"PO-Revision-Date: 2014-04-30 01:43+0100\n"
+"POT-Creation-Date: 2014-05-01 01:48+0100\n"
+"PO-Revision-Date: 2014-05-01 01:48+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de_DE\n"
@@ -195,6 +195,7 @@ msgstr "Spiele weiter, um diesen geheimen Erfolg freizuschalten"
 #: views/html/charactergroupsquests/create.tpl:8
 #: views/html/charactergroupsquests/delete.tpl:8
 #: views/html/charactergroupsquests/edit.tpl:8
+#: views/html/charactergroupsquests/manage.tpl:8
 #: views/html/charactergroupsquests/quest.tpl:8
 #: views/html/characters/character.tpl:85 views/html/seminarymenu/index.tpl:3
 msgid "Character Groups"
@@ -344,6 +345,22 @@ msgstr "Gruppengruppe bearbeiten"
 msgid "Manage Character group"
 msgstr "Gruppe verwalten"
 
+#: views/html/charactergroups/group.tpl:31
+#: views/html/charactergroups/group.tpl:44
+#: views/html/charactergroupsquests/manage.tpl:21
+#: views/html/charactergroupsquests/manage.tpl:36
+#: views/html/charactergroupsquests/quest.tpl:29
+#: views/html/charactergroupsquests/quest.tpl:62
+#: views/html/characters/character.tpl:67
+#: views/html/characters/character.tpl:73
+#: views/html/characters/character.tpl:79
+#: views/html/characters/character.tpl:97 views/html/quests/index.tpl:37
+#: views/html/seminaries/index.tpl:29 views/html/seminarybar/index.tpl:6
+#: views/html/seminarybar/index.tpl:42
+#, php-format
+msgid "%d XPs"
+msgstr "%d XP"
+
 #: views/html/charactergroups/group.tpl:32
 #: views/html/charactergroups/managegroup.tpl:25
 msgid "Members"
@@ -368,6 +385,16 @@ msgstr "Charaktere"
 #, php-format
 msgid "%s-Quests"
 msgstr "%squests"
+
+#: views/html/charactergroups/group.tpl:58
+#: views/html/charactergroupsquests/create.tpl:58
+#: views/html/charactergroupsquests/create.tpl:59
+#: views/html/charactergroupsquests/edit.tpl:58
+#: views/html/charactergroupsquests/edit.tpl:59
+#: views/html/characters/index.tpl:22 views/html/characters/manage.tpl:17
+#: views/html/quests/create.tpl:29 views/html/quests/create.tpl:30
+msgid "XPs"
+msgstr "XP"
 
 #: views/html/charactergroups/groupsgroup.tpl:21
 msgid "Create new Character group"
@@ -458,18 +485,8 @@ msgstr "Die XP-Angabe ist ungültig"
 msgid "Title"
 msgstr "Titel"
 
-#: views/html/charactergroupsquests/create.tpl:58
-#: views/html/charactergroupsquests/create.tpl:59
-#: views/html/charactergroupsquests/edit.tpl:58
-#: views/html/charactergroupsquests/edit.tpl:59
-#: views/html/characters/index.tpl:22 views/html/characters/manage.tpl:17
-#: views/html/quests/create.tpl:29 views/html/quests/create.tpl:30
-msgid "XPs"
-msgstr "XP"
-
 #: views/html/charactergroupsquests/create.tpl:60
 #: views/html/charactergroupsquests/edit.tpl:60
-#: views/html/charactergroupsquests/quest.tpl:21
 #: views/html/quests/create.tpl:17 views/html/quests/index.tpl:14
 msgid "Questgroup"
 msgstr "Questgruppe"
@@ -478,7 +495,7 @@ msgstr "Questgruppe"
 #: views/html/charactergroupsquests/create.tpl:67
 #: views/html/charactergroupsquests/edit.tpl:66
 #: views/html/charactergroupsquests/edit.tpl:67
-#: views/html/charactergroupsquests/quest.tpl:24
+#: views/html/charactergroupsquests/quest.tpl:34
 msgid "Description"
 msgstr "Beschreibung"
 
@@ -486,7 +503,7 @@ msgstr "Beschreibung"
 #: views/html/charactergroupsquests/create.tpl:69
 #: views/html/charactergroupsquests/edit.tpl:68
 #: views/html/charactergroupsquests/edit.tpl:69
-#: views/html/charactergroupsquests/quest.tpl:32
+#: views/html/charactergroupsquests/quest.tpl:37
 msgid "Rules"
 msgstr "Regeln"
 
@@ -521,15 +538,24 @@ msgstr "Soll die %s-Quest „%s“ wirklich gelöscht werden?"
 msgid "Edit %s-Quest"
 msgstr "%s-Quest bearbeiten"
 
-#: views/html/charactergroupsquests/quest.tpl:20
-msgid "Maximum reward"
-msgstr "Maximale Belohnung"
+#: views/html/charactergroupsquests/manage.tpl:34
+msgid "Not attended"
+msgstr "Nicht teilgenommen"
 
-#: views/html/charactergroupsquests/quest.tpl:39
+#: views/html/charactergroupsquests/manage.tpl:43
+msgid "Set XPs"
+msgstr "Setze XP"
+
+#: views/html/charactergroupsquests/quest.tpl:16
+#, php-format
+msgid "Manage %s-Quest"
+msgstr "%s-Quest Verwalten"
+
+#: views/html/charactergroupsquests/quest.tpl:44
 msgid "Won Quest"
 msgstr "Gewonnene Quest"
 
-#: views/html/charactergroupsquests/quest.tpl:45
+#: views/html/charactergroupsquests/quest.tpl:50
 msgid "Lost Quest"
 msgstr "Verlorene Quest"
 
@@ -552,16 +578,6 @@ msgstr "Meilensteine"
 #: views/html/characters/character.tpl:61
 msgid "Ranking"
 msgstr "Ranking"
-
-#: views/html/characters/character.tpl:67
-#: views/html/characters/character.tpl:73
-#: views/html/characters/character.tpl:79
-#: views/html/characters/character.tpl:97 views/html/quests/index.tpl:37
-#: views/html/seminaries/index.tpl:29 views/html/seminarybar/index.tpl:6
-#: views/html/seminarybar/index.tpl:42
-#, php-format
-msgid "%d XPs"
-msgstr "%d XP"
 
 #: views/html/characters/character.tpl:106 views/html/seminarybar/index.tpl:14
 msgid "Last Quest"
@@ -1021,15 +1037,14 @@ msgstr "Registrieren"
 msgid "Roles"
 msgstr "Rollen"
 
+#~ msgid "Maximum reward"
+#~ msgstr "Maximale Belohnung"
+
 #~ msgid "Set properties"
 #~ msgstr "Setze Eigenschaften"
 
 #~ msgid "Selection"
 #~ msgstr "Auswahl"
-
-#, fuzzy
-#~ msgid "%d XPs"
-#~ msgstr "%d XP"
 
 #~ msgid "Properties"
 #~ msgstr "Eigenschaften"

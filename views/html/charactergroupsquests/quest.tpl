@@ -13,21 +13,26 @@
 <nav class="admin">
 	<li><a href="<?=$linker->link(array('edit',$seminary['url'],$groupsgroup['url'],$quest['url']),1)?>"><?=sprintf(_('Edit %s-Quest'), $groupsgroup['name'])?></a></li>
 	<li><a href="<?=$linker->link(array('delete',$seminary['url'],$groupsgroup['url'],$quest['url']),1)?>"><?=sprintf(_('Delete %s-Quest'), $groupsgroup['name'])?></a></li>
+	<li><a href="<?=$linker->link(array('manage',$seminary['url'],$groupsgroup['url'],$quest['url']),1)?>"><?=sprintf(_('Manage %s-Quest'), $groupsgroup['name'])?></a></li>
 </nav>
 <?php endif ?>
 
-<h1><?=$quest['title']?></h1>
-<small><?=_('Maximum reward')?>: <span class="fwb"><?=$quest['xps']?> XP</span></small><br />
-<small><?=_('Questgroup')?>: <?php if($questgroup['entered']) : ?><a href="<?=$linker->link(array('questgroups','questgroup',$seminary['url'],$questgroup['url']))?>"><?=$questgroup['title']?></a><?php else : ?><?=$questgroup['title']?><?php endif ?></small>
+<div class="gbanner cf">
+	<?php if(!is_null($media)) : ?>
+	<img src="<?=$linker->link(array('media','seminary',$seminary['url'],$media['url']))?>" class="grpqimg" />
+	<?php else : ?>
+	<img src="<?=$linker->link(array('grafics','charactergroup.jpg'))?>" class="gbanner">
+	<?php endif ?>
+	<h1><?=$quest['title']?></h1>
+</div>
+<ul class="gdata cf">
+	<li><span class="fwb"><?=sprintf(_('%d XPs'), $quest['xps'])?></span></li>
+	<li><?php if($questgroup['entered']) : ?><a href="<?=$linker->link(array('questgroups','questgroup',$seminary['url'],$questgroup['url']))?>"><?=$questgroup['title']?></a><?php else : ?><?=$questgroup['title']?><?php endif ?></li>
+</ul>
 
 <section>
 	<h1><i class="fa fa-envelope fa-fw"></i><?=_('Description')?></h1>
-	<p>
-	<?php if(!is_null($media)) : ?>
-	<img src="<?=$linker->link(array('media','seminary',$seminary['url'],$media['url']))?>" class="grpqimg" />
-	<?php endif ?>
-	<?=\hhu\z\Utils::t($quest['description'])?>
-	</p>
+	<p><?=\hhu\z\Utils::t($quest['description'])?></p>
 	<?php if(!empty($quest['rules'])) : ?>
 	<h1><i class="fa fa-exclamation-triangle fa-fw"></i><?=_('Rules')?></h1>
 	<p><?=\hhu\z\Utils::t($quest['rules'])?></p>
@@ -54,7 +59,7 @@
 		<li>
 			<span class="date"><?=$dateFormatter->format(new \DateTime($group['created']))?></span>
 			<span class="group"><a href="<?=$linker->link(array('charactergroups','group',$seminary['url'],$groupsgroup['url'],$group['url']))?>"><?=$group['name']?></a></span>
-			<span class="xp"><?=$group['xps']?> XP</span>
+			<span class="xp"><?=sprintf(_('%d XPs'), $group['xps'])?></span>
 		</li>
 		<?php endforeach ?>
 	</ul>

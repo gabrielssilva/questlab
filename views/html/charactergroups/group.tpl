@@ -28,7 +28,7 @@
 </div>
 <ul class="gdata cf">
 	<li><?=$group['rank']?>. <?=_('Rank')?></li>
-	<li><?=$group['xps']?> XP</li>
+	<li><?=sprintf(_('%d XPs'), $group['xps'])?></li>
 	<li><?=count($group['characters'])?> <?=(count($group['characters']) == 0 || count($group['characters']) > 1) ? _('Members') : _('Member')?></li>
 </ul>
 
@@ -41,7 +41,7 @@
 			<p><img src="<?=$linker->link(array('media','seminary',$seminary['url'],$character['small_avatar']['url']))?>"></p>
 			<?php endif ?>
 			<p><a href="<?=$linker->link(array('characters','character',$seminary['url'],$character['url']))?>"><?=$character['name']?></a></p>
-			<p><small><?=$character['xps']?> XP</small></p>
+			<p><small><?=sprintf(_('%d XPs'), $character['xps'])?></small></p>
 		</li>
 		<?php endforeach ?>
 	</ul>
@@ -55,7 +55,7 @@
 			<p>
 				<span class="date"><?=$dateFormatter->format(new \DateTime($quest['created']))?></span>
 				<a href="<?=$linker->link(array('charactergroupsquests','quest',$seminary['url'],$groupsgroup['url'],$quest['url']))?>" class="fwb"><?=$quest['title']?></a>
-				<span class="xp"><?=$quest['group_xps']?> / <?=$quest['xps']?> XP</span>
+				<span class="xp"><?=$quest['group_xps']?> / <?=$quest['xps']?> <?=_('XPs')?></span>
 			</p>
 		</li>
 		<?php endforeach ?>

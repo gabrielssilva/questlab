@@ -106,32 +106,6 @@
 		
 		
 		/**
-		 * Get the Character groups for a Quest.
-		 * 
-		 * @param	int	$questId	ID of the Character groups Quest
-		 * @return	array			Character groups
-		 */
-		public function getGroupsForQuest($questId)
-		{
-			$groups = $this->db->query(
-				'SELECT charactergroups.id, charactergroups.name, charactergroups.url, charactergroupsquests_groups.created, charactergroupsquests_groups.xps_factor, charactergroupsquests.xps '.
-				'FROM charactergroupsquests_groups '.
-				'LEFT JOIN charactergroups ON charactergroups.id = charactergroupsquests_groups.charactergroup_id '.
-				'LEFT JOIN charactergroupsquests ON charactergroupsquests.id = charactergroupsquests_groups.charactergroupsquest_id '.
-				'WHERE charactergroupsquests_groups.charactergroupsquest_id = ?',
-				'i',
-				$questId
-			);
-			foreach($groups as &$group) {
-				$group['xps'] = round($group['xps'] * $group['xps_factor'], 1);
-			}
-			
-			
-			return $groups;
-		}
-		
-		
-		/**
 		 * Get Character groups Quests for a Character group.
 		 * 
 		 * @param	int	$groupId	ID of the Character group
@@ -153,6 +127,78 @@
 			
 			
 			return $quests;
+		}
+		
+		
+		/**
+		 * Get XPs of a Character group for a Character groups Quest.
+		 * 
+		 * @param	int	$questId	ID of Character groups Quest
+		 * @param	int	$groupId	ID of Character group to get XPs of
+		 * @return	array			XP-record
+		 */
+		public function getXPsOfGroupForQuest($questId, $groupId)
+		{
+			$data = $this->db->query(
+				'SELECT charactergroupsquests_groups.created, charactergroupsquests_groups.xps_factor, charactergroupsquests.xps '.
+				'FROM charactergroupsquests_groups '.
+				'LEFT JOIN charactergroupsquests ON charactergroupsquests.id = charactergroupsquests_groups.charactergroupsquest_id '.
+				'WHERE charactergroupsquests_groups.charactergroupsquest_id = ? AND charactergroupsquests_groups.charactergroup_id = ?',
+				'ii',
+				$questId,
+				$groupId
+			);
+			if(empty($data)) {
+				return null;
+			}
+			
+			$data = $data[0];
+			$data['xps'] = round($data['xps'] * $data['xps_factor'], 1);
+			
+			
+			return $data;
+		} 
+		
+		
+		/**
+		 * Set XPs of a Character group for a Character groups Quest.
+		 * 
+		 * @param	int	$questId	ID of Character groups Quest
+		 * @param	int	$groupId	ID of Character group to set XPs of
+		 * @param	float	$xpsFactor	XPs-factor
+		 */
+		public function setXPsOfGroupForQuest($questId, $groupId, $xpsFactor)
+		{
+			$this->db->query(
+				'INSERT INTO charactergroupsquests_groups '.
+				'(charactergroupsquest_id, charactergroup_id, xps_factor) '.
+				'VALUES '.
+				'(?, ?, ?) '.
+				'ON DUPLICATE KEY UPDATE '.
+				'xps_factor = ?',
+				'iidd',
+				$questId,
+				$groupId,
+				$xpsFactor,
+				$xpsFactor
+			);
+		}
+		
+		
+		/**
+		 * Remove a Character group from a Character groups Quest.
+		 * 
+		 * @param	int	$questId	ID of Character groups Quest
+		 * @param	int	$groupId	ID of Character group to remove
+		 */
+		public function deleteGroupForQuest($questId, $groupId)
+		{
+			$this->db->query(
+				'DELETE FROM charactergroupsquests_groups '.
+				'WHERE charactergroupsquest_id = ? AND charactergroup_id = ?',
+				'ii',
+				$questId, $groupId
+			);
 		}
 		
 		
