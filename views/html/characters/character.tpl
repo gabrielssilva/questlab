@@ -8,7 +8,7 @@
 	<li>
 		<i class="fa fa-chevron-right fa-fw"></i>
 		<?php if(count(array_intersect(array('admin','moderator'), \hhu\z\controllers\SeminaryController::$character['characterroles'])) > 0) : ?>
-		<a href="<?=$linker->link(array('characters','index',$seminary['url']))?>"><?=_('Characters')?></a>
+		<a href="<?=$linker->link(array('index',$seminary['url']), 1)?>"><?=_('Characters')?></a>
 		<?php else : ?>
 		<?=_('Characters')?>
 		<?php endif ?>
