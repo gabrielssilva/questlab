@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: The Legend of Z\n"
-"POT-Creation-Date: 2014-05-01 01:48+0100\n"
-"PO-Revision-Date: 2014-05-01 01:48+0100\n"
+"POT-Creation-Date: 2014-05-01 13:08+0100\n"
+"PO-Revision-Date: 2014-05-01 13:08+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de_DE\n"
@@ -164,7 +164,7 @@ msgstr "Persönlicher Fortschritt: %d%%"
 #: views/html/achievements/index.tpl:52
 #: views/html/charactergroups/group.tpl:30
 #: views/html/charactergroups/managegroup.tpl:23
-#: views/html/characters/character.tpl:36 views/html/seminarybar/index.tpl:7
+#: views/html/characters/character.tpl:46 views/html/seminarybar/index.tpl:7
 msgid "Rank"
 msgstr "Platz"
 
@@ -197,7 +197,7 @@ msgstr "Spiele weiter, um diesen geheimen Erfolg freizuschalten"
 #: views/html/charactergroupsquests/edit.tpl:8
 #: views/html/charactergroupsquests/manage.tpl:8
 #: views/html/charactergroupsquests/quest.tpl:8
-#: views/html/characters/character.tpl:85 views/html/seminarymenu/index.tpl:3
+#: views/html/characters/character.tpl:95 views/html/seminarymenu/index.tpl:3
 msgid "Character Groups"
 msgstr "Gruppen"
 
@@ -262,7 +262,7 @@ msgstr "Das Motto ist ungültig"
 #: views/html/charactergroups/editgroupsgroup.tpl:46
 #: views/html/charactergroups/editgroupsgroup.tpl:47
 #: views/html/quests/create.tpl:15 views/html/quests/create.tpl:16
-#: views/html/users/user.tpl:14
+#: views/html/users/user.tpl:23
 msgid "Name"
 msgstr "Name"
 
@@ -276,8 +276,8 @@ msgstr "Motto"
 #: views/html/charactergroups/creategroup.tpl:59
 #: views/html/charactergroups/creategroupsgroup.tpl:50
 #: views/html/charactergroupsquests/create.tpl:75
-#: views/html/characters/register.tpl:87 views/html/seminaries/create.tpl:12
-#: views/html/users/create.tpl:20
+#: views/html/characters/register.tpl:94 views/html/seminaries/create.tpl:12
+#: views/html/users/create.tpl:96
 msgid "create"
 msgstr "erstellen"
 
@@ -303,14 +303,16 @@ msgstr "Soll die Gruppe „%s“ wirklich gelöscht werden?"
 #: views/html/charactergroups/deletegroup.tpl:15
 #: views/html/charactergroups/deletegroupsgroup.tpl:14
 #: views/html/charactergroupsquests/delete.tpl:15
-#: views/html/seminaries/delete.tpl:11 views/html/users/delete.tpl:9
+#: views/html/characters/delete.tpl:17 views/html/seminaries/delete.tpl:11
+#: views/html/users/delete.tpl:11
 msgid "delete"
 msgstr "löschen"
 
 #: views/html/charactergroups/deletegroup.tpl:16
 #: views/html/charactergroups/deletegroupsgroup.tpl:15
 #: views/html/charactergroupsquests/delete.tpl:16
-#: views/html/seminaries/delete.tpl:12 views/html/users/delete.tpl:10
+#: views/html/characters/delete.tpl:18 views/html/seminaries/delete.tpl:12
+#: views/html/users/delete.tpl:12
 msgid "cancel"
 msgstr "abbrechen"
 
@@ -332,6 +334,7 @@ msgstr "Gruppe bearbeiten"
 #: views/html/charactergroups/editgroup.tpl:59
 #: views/html/charactergroups/editgroupsgroup.tpl:50
 #: views/html/charactergroupsquests/edit.tpl:75
+#: views/html/characters/edit.tpl:94
 msgid "edit"
 msgstr "bearbeiten"
 
@@ -351,10 +354,10 @@ msgstr "Gruppe verwalten"
 #: views/html/charactergroupsquests/manage.tpl:36
 #: views/html/charactergroupsquests/quest.tpl:29
 #: views/html/charactergroupsquests/quest.tpl:62
-#: views/html/characters/character.tpl:67
-#: views/html/characters/character.tpl:73
-#: views/html/characters/character.tpl:79
-#: views/html/characters/character.tpl:97 views/html/quests/index.tpl:37
+#: views/html/characters/character.tpl:77
+#: views/html/characters/character.tpl:83
+#: views/html/characters/character.tpl:89
+#: views/html/characters/character.tpl:107 views/html/quests/index.tpl:37
 #: views/html/seminaries/index.tpl:29 views/html/seminarybar/index.tpl:6
 #: views/html/seminarybar/index.tpl:42
 #, php-format
@@ -374,9 +377,10 @@ msgstr "Mitglied"
 #: views/html/charactergroups/group.tpl:36
 #: views/html/charactergroups/managegroup.tpl:29
 #: views/html/characters/character.tpl:11
-#: views/html/characters/character.tpl:13 views/html/characters/index.tpl:9
-#: views/html/characters/manage.tpl:8 views/html/seminarymenu/index.tpl:2
-#: views/html/users/user.tpl:18
+#: views/html/characters/character.tpl:13 views/html/characters/delete.tpl:10
+#: views/html/characters/edit.tpl:8 views/html/characters/index.tpl:9
+#: views/html/characters/manage.tpl:8 views/html/characters/register.tpl:8
+#: views/html/seminarymenu/index.tpl:2 views/html/users/user.tpl:27
 msgid "Characters"
 msgstr "Charaktere"
 
@@ -559,42 +563,92 @@ msgstr "Gewonnene Quest"
 msgid "Lost Quest"
 msgstr "Verlorene Quest"
 
-#: views/html/characters/character.tpl:24
+#: views/html/characters/character.tpl:21 views/html/characters/edit.tpl:11
+msgid "Edit Character"
+msgstr "Charakter bearbeiten"
+
+#: views/html/characters/character.tpl:24 views/html/characters/delete.tpl:14
+msgid "Delete Character"
+msgstr "Charakter löschen"
+
+#: views/html/characters/character.tpl:34
 msgid "Total progress"
 msgstr "Fortschritt"
 
-#: views/html/characters/character.tpl:28
-#: views/html/characters/character.tpl:67
-#: views/html/characters/character.tpl:73
-#: views/html/characters/character.tpl:79 views/html/seminarybar/index.tpl:42
-#: views/html/users/user.tpl:32
+#: views/html/characters/character.tpl:38
+#: views/html/characters/character.tpl:77
+#: views/html/characters/character.tpl:83
+#: views/html/characters/character.tpl:89 views/html/seminarybar/index.tpl:42
+#: views/html/users/user.tpl:41
 msgid "Level"
 msgstr "Level"
 
-#: views/html/characters/character.tpl:38
+#: views/html/characters/character.tpl:48
 msgid "Milestones"
 msgstr "Meilensteine"
 
-#: views/html/characters/character.tpl:61
+#: views/html/characters/character.tpl:71
 msgid "Ranking"
 msgstr "Ranking"
 
-#: views/html/characters/character.tpl:106 views/html/seminarybar/index.tpl:14
+#: views/html/characters/character.tpl:116 views/html/seminarybar/index.tpl:14
 msgid "Last Quest"
 msgstr "Letzter Speicherpunkt"
 
-#: views/html/characters/character.tpl:112
+#: views/html/characters/character.tpl:122
 msgid "Topic progress"
 msgstr "Thematischer Fortschritt"
+
+#: views/html/characters/delete.tpl:15
+#, php-format
+msgid "Should the Character “%s” of user “%s” (%s) really be deleted?"
+msgstr "Soll der Charakter „%s“ von Benutzer %s (%s) wirklich gelöscht werden?"
+
+#: views/html/characters/edit.tpl:23 views/html/characters/register.tpl:22
+#, php-format
+msgid "Character name is too short (min. %d chars)"
+msgstr "Der Charaktername ist zu kurz (min. %d Zeichen)"
+
+#: views/html/characters/edit.tpl:25 views/html/characters/register.tpl:24
+#, php-format
+msgid "Character name is too long (max. %d chars)"
+msgstr "Der Charaktername ist zu lang (max. %d Zeichen)"
+
+#: views/html/characters/edit.tpl:27 views/html/characters/register.tpl:26
+msgid "Character name contains illegal characters"
+msgstr "Der Charaktername enthält ungültige Zeichen"
+
+#: views/html/characters/edit.tpl:29 views/html/characters/register.tpl:28
+msgid "Character name already exists"
+msgstr "Der Charaktername existiert bereits"
+
+#: views/html/characters/edit.tpl:31 views/html/characters/register.tpl:30
+msgid "Character name invalid"
+msgstr "Der Charaktername ist ungültig"
+
+#: views/html/characters/edit.tpl:43 views/html/characters/register.tpl:48
+msgid "Character properties"
+msgstr "Charaktereigenschaften"
+
+#: views/html/characters/edit.tpl:44 views/html/characters/edit.tpl:46
+#: views/html/characters/edit.tpl:48 views/html/characters/index.tpl:21
+#: views/html/characters/manage.tpl:16 views/html/characters/register.tpl:49
+#: views/html/characters/register.tpl:50
+msgid "Character name"
+msgstr "Charaktername"
+
+#: views/html/characters/edit.tpl:67 views/html/characters/register.tpl:67
+#, php-format
+msgid "The Seminary field “%s” is invalid"
+msgstr "Das Kursfeld „%s“ ist ungültig"
+
+#: views/html/characters/edit.tpl:72 views/html/characters/register.tpl:72
+msgid "Seminary fields"
+msgstr "Kursfelder"
 
 #: views/html/characters/index.tpl:13 views/html/characters/manage.tpl:10
 msgid "Manage"
 msgstr "Verwalten"
-
-#: views/html/characters/index.tpl:21 views/html/characters/manage.tpl:16
-#: views/html/characters/register.tpl:42 views/html/characters/register.tpl:43
-msgid "Character name"
-msgstr "Charaktername"
 
 #: views/html/characters/index.tpl:23 views/html/characters/manage.tpl:18
 msgid "Role"
@@ -627,44 +681,13 @@ msgstr "Füge Rolle hinzu"
 msgid "Remove role"
 msgstr "Entferne Rolle"
 
-#: views/html/characters/register.tpl:9
+#: views/html/characters/register.tpl:10
 msgid "Create Character"
 msgstr "Charakter erstellen"
 
-#: views/html/characters/register.tpl:21
-#, php-format
-msgid "Character name is too short (min. %d chars)"
-msgstr "Der Charaktername ist zu kurz (min. %d Zeichen)"
-
-#: views/html/characters/register.tpl:23
-#, php-format
-msgid "Character name is too long (max. %d chars)"
-msgstr "Der Charaktername ist zu lang (max. %d Zeichen)"
-
-#: views/html/characters/register.tpl:25
-msgid "Character name contains illegal characters"
-msgstr "Der Charaktername enthält ungültige Zeichen"
-
-#: views/html/characters/register.tpl:27
-msgid "Character name already exists"
-msgstr "Der Charaktername existiert bereits"
-
-#: views/html/characters/register.tpl:29
-msgid "Character name invalid"
-msgstr "Der Charaktername ist ungültig"
-
-#: views/html/characters/register.tpl:41
-msgid "Character properties"
-msgstr "Charaktereigenschaften"
-
-#: views/html/characters/register.tpl:60
-#, php-format
-msgid "The Seminary field “%s” is invalid"
-msgstr "Das Kursfeld „%s“ ist ungültig"
-
-#: views/html/characters/register.tpl:65
-msgid "Seminary fields"
-msgstr "Kursfelder"
+#: views/html/characters/register.tpl:35
+msgid "Please choose an avatar"
+msgstr "Bitte wähle einen Avatar aus"
 
 #: views/html/error/index.tpl:5 views/html/error/index.tpl:14
 #: views/html/introduction/index.tpl:9 views/html/menu/index.tpl:6
@@ -673,20 +696,20 @@ msgid "Login"
 msgstr "Login"
 
 #: views/html/error/index.tpl:8 views/html/error/index.tpl:9
-#: views/html/introduction/index.tpl:7 views/html/users/create.tpl:9
-#: views/html/users/create.tpl:10 views/html/users/edit.tpl:9
-#: views/html/users/edit.tpl:10 views/html/users/login.tpl:12
-#: views/html/users/login.tpl:13 views/html/users/register.tpl:81
-#: views/html/users/register.tpl:82
+#: views/html/introduction/index.tpl:7 views/html/users/create.tpl:84
+#: views/html/users/create.tpl:85 views/html/users/edit.tpl:87
+#: views/html/users/edit.tpl:89 views/html/users/edit.tpl:91
+#: views/html/users/login.tpl:12 views/html/users/login.tpl:13
+#: views/html/users/register.tpl:83 views/html/users/register.tpl:84
 msgid "Username"
 msgstr "Benutzername"
 
 #: views/html/error/index.tpl:10 views/html/error/index.tpl:11
-#: views/html/introduction/index.tpl:8 views/html/users/create.tpl:17
-#: views/html/users/create.tpl:18 views/html/users/edit.tpl:16
-#: views/html/users/edit.tpl:17 views/html/users/login.tpl:14
-#: views/html/users/login.tpl:15 views/html/users/register.tpl:89
-#: views/html/users/register.tpl:90
+#: views/html/introduction/index.tpl:8 views/html/users/create.tpl:92
+#: views/html/users/create.tpl:93 views/html/users/edit.tpl:100
+#: views/html/users/edit.tpl:101 views/html/users/login.tpl:14
+#: views/html/users/login.tpl:15 views/html/users/register.tpl:91
+#: views/html/users/register.tpl:92
 msgid "Password"
 msgstr "Passwort"
 
@@ -734,10 +757,11 @@ msgstr ""
 msgid "Total progress: %d %%"
 msgstr "Gesamtfortschritt: %d%%"
 
-#: views/html/menu/index.tpl:2 views/html/users/create.tpl:4
-#: views/html/users/delete.tpl:4 views/html/users/edit.tpl:4
-#: views/html/users/index.tpl:4 views/html/users/login.tpl:4
-#: views/html/users/register.tpl:4 views/html/users/user.tpl:4
+#: views/html/menu/index.tpl:2 views/html/users/create.tpl:5
+#: views/html/users/delete.tpl:5 views/html/users/edit.tpl:6
+#: views/html/users/edit.tpl:8 views/html/users/index.tpl:4
+#: views/html/users/login.tpl:4 views/html/users/register.tpl:5
+#: views/html/users/user.tpl:6 views/html/users/user.tpl:8
 msgid "Users"
 msgstr "Benutzer"
 
@@ -859,7 +883,7 @@ msgstr "Soll der Kurs „%s“ wirklich gelöscht werden?"
 msgid "Edit seminary"
 msgstr "Kurs bearbeiten"
 
-#: views/html/seminaries/edit.tpl:14 views/html/users/edit.tpl:19
+#: views/html/seminaries/edit.tpl:14 views/html/users/edit.tpl:103
 msgid "save"
 msgstr "speichern"
 
@@ -894,39 +918,140 @@ msgstr "Letztes Achievement"
 msgid "Show %s-Profile"
 msgstr "%s-Profil anzeigen"
 
-#: views/html/users/create.tpl:5
+#: views/html/users/create.tpl:8
 msgid "New user"
 msgstr "Neuer Benutzer"
 
-#: views/html/users/create.tpl:11 views/html/users/create.tpl:12
-#: views/html/users/edit.tpl:11 views/html/users/register.tpl:83
-#: views/html/users/register.tpl:84
+#: views/html/users/create.tpl:19 views/html/users/edit.tpl:23
+#: views/html/users/register.tpl:19
+#, php-format
+msgid "Username is too short (min. %d chars)"
+msgstr "Der Benutzername ist zu kurz (min. %d Zeichen)"
+
+#: views/html/users/create.tpl:21 views/html/users/edit.tpl:25
+#: views/html/users/register.tpl:21
+#, php-format
+msgid "Username is too long (max. %d chars)"
+msgstr "Der Benutzername ist zu lang (max. %d Zeichen)"
+
+#: views/html/users/create.tpl:23 views/html/users/edit.tpl:27
+#: views/html/users/register.tpl:23
+msgid "Username contains illegal characters"
+msgstr "Der Benutzername enthält ungültige Zeichen"
+
+#: views/html/users/create.tpl:25 views/html/users/edit.tpl:29
+#: views/html/users/register.tpl:25
+msgid "Username already exists"
+msgstr "Der Benutzername existiert bereits"
+
+#: views/html/users/create.tpl:27 views/html/users/edit.tpl:31
+#: views/html/users/register.tpl:27
+msgid "Username invalid"
+msgstr "Der Benutzername ist ungültig"
+
+#: views/html/users/create.tpl:32 views/html/users/edit.tpl:36
+#: views/html/users/register.tpl:32
+#, php-format
+msgid "Prename is too short (min. %d chars)"
+msgstr "Der Vorname ist zu kurz (min. %d Zeichen)"
+
+#: views/html/users/create.tpl:34 views/html/users/edit.tpl:38
+#: views/html/users/register.tpl:34
+#, php-format
+msgid "Prename is too long (max. %d chars)"
+msgstr "Der Vorname ist zu lang (max. %d Zeichen)"
+
+#: views/html/users/create.tpl:36 views/html/users/edit.tpl:40
+#: views/html/users/register.tpl:36
+#, php-format
+msgid "Prename contains illegal characters"
+msgstr "Der Vorname enthält ungültige Zeichen"
+
+#: views/html/users/create.tpl:38 views/html/users/edit.tpl:42
+#: views/html/users/register.tpl:38
+msgid "Prename invalid"
+msgstr "Der Vorname ist ungültig"
+
+#: views/html/users/create.tpl:43 views/html/users/edit.tpl:47
+#: views/html/users/register.tpl:43
+#, php-format
+msgid "Surname is too short (min. %d chars)"
+msgstr "Der Nachname ist zu kurz (min. %d Zeichen)"
+
+#: views/html/users/create.tpl:45 views/html/users/edit.tpl:49
+#: views/html/users/register.tpl:45
+#, php-format
+msgid "Surname is too long (max. %d chars)"
+msgstr "Der Nachname ist zu lang (max. %d Zeichen)"
+
+#: views/html/users/create.tpl:47 views/html/users/edit.tpl:51
+#: views/html/users/register.tpl:47
+#, php-format
+msgid "Surname contains illegal characters"
+msgstr "Der Nachname enthält ungültige Zeichen"
+
+#: views/html/users/create.tpl:49 views/html/users/edit.tpl:53
+#: views/html/users/register.tpl:49
+msgid "Surname invalid"
+msgstr "Der Nachname ist ungültig"
+
+#: views/html/users/create.tpl:54 views/html/users/create.tpl:58
+#: views/html/users/edit.tpl:58 views/html/users/edit.tpl:62
+#: views/html/users/register.tpl:54 views/html/users/register.tpl:58
+msgid "E‑mail address invalid"
+msgstr "Die E‑Mail-Adresse ist ungültig"
+
+#: views/html/users/create.tpl:56 views/html/users/edit.tpl:60
+#: views/html/users/register.tpl:56
+msgid "E‑mail address already exists"
+msgstr "E‑Mail-Adresse existiert bereits"
+
+#: views/html/users/create.tpl:63 views/html/users/edit.tpl:67
+#: views/html/users/register.tpl:63
+#, php-format
+msgid "Password is too short (min. %d chars)"
+msgstr "Das Passwort ist zu kurz (min. %d Zeichen)"
+
+#: views/html/users/create.tpl:65 views/html/users/edit.tpl:69
+#: views/html/users/register.tpl:65
+#, php-format
+msgid "Password is too long (max. %d chars)"
+msgstr "Das Passwort ist zu lang (max. %d Zeichen)"
+
+#: views/html/users/create.tpl:67 views/html/users/edit.tpl:71
+#: views/html/users/register.tpl:67
+msgid "Password invalid"
+msgstr "Das Passwort ist ungültig"
+
+#: views/html/users/create.tpl:86 views/html/users/create.tpl:87
+#: views/html/users/edit.tpl:94 views/html/users/edit.tpl:95
+#: views/html/users/register.tpl:85 views/html/users/register.tpl:86
 msgid "Prename"
 msgstr "Vorname"
 
-#: views/html/users/create.tpl:13 views/html/users/create.tpl:14
-#: views/html/users/edit.tpl:12 views/html/users/edit.tpl:13
-#: views/html/users/register.tpl:85 views/html/users/register.tpl:86
+#: views/html/users/create.tpl:88 views/html/users/create.tpl:89
+#: views/html/users/edit.tpl:96 views/html/users/edit.tpl:97
+#: views/html/users/register.tpl:87 views/html/users/register.tpl:88
 msgid "Surname"
 msgstr "Nachname"
 
-#: views/html/users/create.tpl:15 views/html/users/create.tpl:16
-#: views/html/users/edit.tpl:14 views/html/users/edit.tpl:15
-#: views/html/users/register.tpl:87 views/html/users/register.tpl:88
-#: views/html/users/user.tpl:15
+#: views/html/users/create.tpl:90 views/html/users/create.tpl:91
+#: views/html/users/edit.tpl:98 views/html/users/edit.tpl:99
+#: views/html/users/register.tpl:89 views/html/users/register.tpl:90
+#: views/html/users/user.tpl:24
 msgid "E‑mail address"
 msgstr "E‑Mail-Adresse"
 
-#: views/html/users/delete.tpl:5 views/html/users/user.tpl:8
+#: views/html/users/delete.tpl:8 views/html/users/user.tpl:18
 msgid "Delete user"
 msgstr "Benutzer löschen"
 
-#: views/html/users/delete.tpl:7
+#: views/html/users/delete.tpl:9
 #, php-format
 msgid "Should the user “%s” (%s) really be deleted?"
 msgstr "Soll der Benutzer „%s“ (%s) wirklich gelöscht werden?"
 
-#: views/html/users/edit.tpl:5 views/html/users/user.tpl:7
+#: views/html/users/edit.tpl:12 views/html/users/user.tpl:15
 msgid "Edit user"
 msgstr "Benutzer bearbeiten"
 
@@ -934,7 +1059,7 @@ msgstr "Benutzer bearbeiten"
 msgid "Create new user"
 msgstr "Neuen Benutzer erstellen"
 
-#: views/html/users/index.tpl:10 views/html/users/user.tpl:13
+#: views/html/users/index.tpl:10 views/html/users/user.tpl:22
 #, php-format
 msgid "registered on %s"
 msgstr "registriert am %s"
@@ -943,97 +1068,15 @@ msgstr "registriert am %s"
 msgid "Login failed"
 msgstr "Die Anmeldung war nicht korrekt"
 
-#: views/html/users/register.tpl:6
+#: views/html/users/register.tpl:8
 msgid "Registration"
 msgstr "Registrierung"
 
-#: views/html/users/register.tpl:17
-#, php-format
-msgid "Username is too short (min. %d chars)"
-msgstr "Der Benutzername ist zu kurz (min. %d Zeichen)"
-
-#: views/html/users/register.tpl:19
-#, php-format
-msgid "Username is too long (max. %d chars)"
-msgstr "Der Benutzername ist zu lang (max. %d Zeichen)"
-
-#: views/html/users/register.tpl:21
-msgid "Username contains illegal characters"
-msgstr "Der Benutzername enthält ungültige Zeichen"
-
-#: views/html/users/register.tpl:23
-msgid "Username already exists"
-msgstr "Der Benutzername existiert bereits"
-
-#: views/html/users/register.tpl:25
-msgid "Username invalid"
-msgstr "Der Benutzername ist ungültig"
-
-#: views/html/users/register.tpl:30
-#, php-format
-msgid "Prename is too short (min. %d chars)"
-msgstr "Der Vorname ist zu kurz (min. %d Zeichen)"
-
-#: views/html/users/register.tpl:32
-#, php-format
-msgid "Prename is too long (max. %d chars)"
-msgstr "Der Vorname ist zu lang (max. %d Zeichen)"
-
-#: views/html/users/register.tpl:34
-#, php-format
-msgid "Prename contains illegal characters"
-msgstr "Der Vorname enthält ungültige Zeichen"
-
-#: views/html/users/register.tpl:36
-msgid "Prename invalid"
-msgstr "Der Vorname ist ungültig"
-
-#: views/html/users/register.tpl:41
-#, php-format
-msgid "Surname is too short (min. %d chars)"
-msgstr "Der Nachname ist zu kurz (min. %d Zeichen)"
-
-#: views/html/users/register.tpl:43
-#, php-format
-msgid "Surname is too long (max. %d chars)"
-msgstr "Der Nachname ist zu lang (max. %d Zeichen)"
-
-#: views/html/users/register.tpl:45
-#, php-format
-msgid "Surname contains illegal characters"
-msgstr "Der Nachname enthält ungültige Zeichen"
-
-#: views/html/users/register.tpl:47
-msgid "Surname invalid"
-msgstr "Der Nachname ist ungültig"
-
-#: views/html/users/register.tpl:52 views/html/users/register.tpl:56
-msgid "E‑mail address invalid"
-msgstr "Die E‑Mail-Adresse ist ungültig"
-
-#: views/html/users/register.tpl:54
-msgid "E‑mail address already exists"
-msgstr "E‑Mail-Adresse existiert bereits"
-
-#: views/html/users/register.tpl:61
-#, php-format
-msgid "Password is too short (min. %d chars)"
-msgstr "Das Passwort ist zu kurz (min. %d Zeichen)"
-
-#: views/html/users/register.tpl:63
-#, php-format
-msgid "Password is too long (max. %d chars)"
-msgstr "Das Passwort ist zu lang (max. %d Zeichen)"
-
-#: views/html/users/register.tpl:65
-msgid "Password invalid"
-msgstr "Das Passwort ist ungültig"
-
-#: views/html/users/register.tpl:92
+#: views/html/users/register.tpl:94
 msgid "Register"
 msgstr "Registrieren"
 
-#: views/html/users/user.tpl:37
+#: views/html/users/user.tpl:46
 msgid "Roles"
 msgstr "Rollen"
 

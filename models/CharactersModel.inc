@@ -425,27 +425,48 @@
 		
 		
 		/**
+		 * Get Characters with the given Character role.
+		 * 
+		 * @param	int	$seminaryId		ID of Seminary
+		 * @param	string	$characterrole		Character role
+		 * @return	array				List of users
+		 */
+		public function getCharactersWithCharacterRole($seminaryId, $characterrole)
+		{
+			return $this->db->query(
+				'SELECT characters.id, characters.created, characters.charactertype_id, characters.name, characters.url, characters.user_id, characters.xps, characters.xplevel, characters.avatar_id, charactertypes.name AS charactertype_name, charactertypes.url AS charactertype_url, seminaries.id AS seminary_url, seminaries.title AS seminary_title, seminaries.url AS seminary_url '.
+				'FROM v_characters AS characters '.
+				'LEFT JOIN charactertypes ON charactertypes.id = characters.charactertype_id '.
+				'LEFT JOIN seminaries ON seminaries.id = charactertypes.seminary_id '.
+				'LEFT JOIN characters_characterroles ON characters_characterroles.character_id = characters.id '.
+				'LEFT JOIN characterroles ON characterroles.id = characters_characterroles.characterrole_id '.
+				'WHERE seminaries.id = ? AND characterroles.name = ?',
+				'is',
+				$seminaryId, $characterrole
+			);
+		}
+		
+		
+		/**
 		 * Check if a Character name already exists.
 		 * 
-		 * @param	string	$name	Character name to check
-		 * @return	boolean		Whether Character name exists or not
+		 * @param	string	$name		Character name to check
+		 * @param	int	$characterId	Do not check this ID (for editing)
+		 * @return	boolean			Whether Character name exists or not
 		 */
-		public function characterNameExists($name)
+		public function characterNameExists($name, $characterId=null)
 		{
 			$data = $this->db->query(
-				'SELECT count(id) AS c '.
+				'SELECT id '.
 				'FROM characters '.
 				'WHERE name = ? OR url = ?',
 				'ss',
 				$name,
 				\nre\core\Linker::createLinkParam($name)
 			);
-			if(!empty($data)) {
-				return ($data[0]['c'] > 0);
-			}
 			
 			
-			return false;
+			return (!empty($data) && (is_null($characterId) || $characterId != $data[0]['id']));
 		}
 		
 		
@@ -477,50 +498,35 @@
 		
 		
 		/**
-		 * Set the value of a Seminary field for a Character.
+		 * Edit a new Character.
 		 * 
-		 * @param	int	$characterId			ID of Character
-		 * @param	int	$seminarycharacterfieldId	ID of seminarycharacterfield to set value of
-		 * @param	string	$value				Value to set
+		 * @param	int	$characterId		ID of the Character to edit
+		 * @param	int	$charactertypeId	ID of new type of Character
+		 * @param	string	$characterName		New name for Character
 		 */
-		public function setSeminaryFieldOfCharacter($characterId, $seminarycharacterfieldId, $value)
+		public function  editCharacter($characterId, $charactertypeId, $characterName)
 		{
 			$this->db->query(
-				'INSERT INTO characters_seminarycharacterfields '.
-				'(character_id, seminarycharacterfield_id, value) '.
-				'VALUES '.
-				'(?, ?, ?) '.
-				'ON DUPLICATE KEY UPDATE '.
-				'value = ?',
-				'iiss',
-				$characterId,
-				$seminarycharacterfieldId,
-				$value,
-				$value
+				'UPDATE characters '.
+				'SET charactertype_id = ?, name = ?, url = ? '.
+				'WHERE id = ?',
+				'issi',
+				$charactertypeId,
+				$characterName,
+				\nre\core\Linker::createLinkParam($characterName),
+				$characterId
 			);
 		}
 		
 		
 		/**
-		 * Get Characters with the given Character role.
+		 * Delete a Character.
 		 * 
-		 * @param	int	$seminaryId		ID of Seminary
-		 * @param	string	$characterrole		Character role
-		 * @return	array				List of users
+		 * @param	int	$characterId	ID of the Character to delete
 		 */
-		public function getCharactersWithCharacterRole($seminaryId, $characterrole)
+		public function deleteCharacter($characterId)
 		{
-			return $this->db->query(
-				'SELECT characters.id, characters.created, characters.charactertype_id, characters.name, characters.url, characters.user_id, characters.xps, characters.xplevel, characters.avatar_id, charactertypes.name AS charactertype_name, charactertypes.url AS charactertype_url, seminaries.id AS seminary_url, seminaries.title AS seminary_title, seminaries.url AS seminary_url '.
-				'FROM v_characters AS characters '.
-				'LEFT JOIN charactertypes ON charactertypes.id = characters.charactertype_id '.
-				'LEFT JOIN seminaries ON seminaries.id = charactertypes.seminary_id '.
-				'LEFT JOIN characters_characterroles ON characters_characterroles.character_id = characters.id '.
-				'LEFT JOIN characterroles ON characterroles.id = characters_characterroles.characterrole_id '.
-				'WHERE seminaries.id = ? AND characterroles.name = ?',
-				'is',
-				$seminaryId, $characterrole
-			);
+			$this->db->query('DELETE FROM characters WHERE id = ?', 'i', $characterId);
 		}
 		
 	}

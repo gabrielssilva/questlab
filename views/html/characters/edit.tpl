@@ -4,10 +4,11 @@
 </div>
 <?php endif ?>
 <ul class="breadcrumbs">
-	<li><?=$seminary['title']?></li>
-	<li><i class="fa fa-chevron-right fa-fw"></i><?=_('Characters')?></li>
+	<li><a href="<?=$linker->link(array('seminaries',$seminary['url']))?>"><?=$seminary['title']?></a></li>
+	<li><i class="fa fa-chevron-right fa-fw"></i><a href="<?=$linker->link(array('characters','index',$seminary['url']))?>"><?=_('Characters')?></a></li>
 </ul>
-<h1><?=_('Create Character')?></h1>
+
+<h1><?=_('Edit Character')?></h1>
 <form method="post" action="" class="logreg">
 	<?php if($validation !== true) : ?>
 	<ul>
@@ -30,12 +31,6 @@
 								default: echo _('Character name invalid');
 							}
 						break;
-						case 'type':
-							switch($setting) {
-								case 'exist': echo _('Please choose an avatar');
-								break;
-							}
-						break;
 					} ?>
 				</li>
 				<?php endforeach ?>
@@ -47,7 +42,12 @@
 	<fieldset>
 		<legend class="fwb"><?=_('Character properties')?></legend>
 		<label for="charactername"><?=_('Character name')?>:</label>
-		<input type="text" name="charactername" placeholder="<?=_('Character name')?>" required="required" value="<?=$charactername?>" /><br />
+		<?php if(count(array_intersect(array('admin','moderator'), \hhu\z\controllers\SeminaryController::$character['characterroles'])) > 0) : ?>
+		<input type="text" name="charactername" placeholder="<?=_('Character name')?>" required="required" value="<?=$charactername?>" maxlength="<?=$validationSettings['charactername']['maxlength']?>" <?=(array_key_exists('charactername', $validation)) ? 'class="invalid"' : null ?>/>
+		<?php else : ?>
+		<input type="text" name="charactername" placeholder="<?=_('Character name')?>" disabled="disabled" value="<?=$charactername?>" />
+		<input type="hidden" name="charactername" value="<?=$charactername?>" />
+		<?php endif ?><br />
 		<ul class="avatar">
 			<?php foreach($types as &$type) : ?>
 			<li>
@@ -91,5 +91,5 @@
 		<br />
 		<?php endforeach ?>
 	</fieldset>
-	<input type="submit" name="create" value="<?=_('create')?>" />
+	<input type="submit" name="edit" value="<?=_('edit')?>" />
 </form>

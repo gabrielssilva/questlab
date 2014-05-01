@@ -14,7 +14,17 @@
 		<?php endif ?>
 	</li>
 </ul>
+
 <h1><i class="fa fa-user fa-fw"></i><?=$character['name']?></h1>
+<nav class="admin">
+	<?php if(count(array_intersect(array('admin','moderator'), \hhu\z\controllers\SeminaryController::$character['characterroles'])) > 0 || $character['id'] == \hhu\z\controllers\SeminaryController::$character['id']) : ?>
+	<li><a href="<?=$linker->link(array('edit',$seminary['url'],$character['url']),1)?>"><?=_('Edit Character')?></a></li>
+	<?php endif ?>
+	<?php if(count(array_intersect(array('admin', 'moderator'), \hhu\z\controllers\SeminaryController::$character['characterroles'])) > 0) : ?>
+	<li><a href="<?=$linker->link(array('delete',$seminary['url'],$character['url']),1)?>"><?=_('Delete Character')?></a></li>
+	<?php endif ?>
+</nav>
+
 <section class="cf">
 	<div class="cinfo">
 		<div class="cdata">

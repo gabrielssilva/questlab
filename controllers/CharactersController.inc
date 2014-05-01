@@ -40,7 +40,9 @@
 			'index' => array('admin', 'moderator', 'user'),
 			'character' => array('admin', 'moderator', 'user'),
 			'register' => array('admin', 'moderator', 'user'),
-			'manage' => array('admin', 'moderator', 'user')
+			'manage' => array('admin', 'moderator', 'user'),
+			'edit' => array('admin', 'moderator', 'user'),
+			'delete' => array('admin', 'moderator', 'user')
 		);
 		/**
 		 * User seminary permissions
@@ -50,7 +52,9 @@
 		public $seminaryPermissions = array(
 			'index' => array('admin', 'moderator'),
 			'character' => array('admin', 'moderator', 'user'),
-			'manage' => array('admin', 'moderator')
+			'manage' => array('admin', 'moderator'),
+			'edit' => array('admin', 'moderator', 'user'),
+			'delete' => array('admin', 'moderator')
 		);
 		
 		
@@ -242,7 +246,7 @@
 					}
 				}
 				if(is_null($typeIndex)) {
-					throw new \nre\exceptions\ParamsNotValidException($typeIndex);
+					$validation = $this->Validation->addValidationResult($validation, 'type', 'exist', false);
 				}
 				
 				// Validate fields
@@ -274,7 +278,7 @@
 					// Add Seminary fields
 					foreach($fields as &$field) {
 						if(!empty($fieldsValues[$field['url']])) {
-							$this->Characters->setSeminaryFieldOfCharacter($characterId, $field['id'], $fieldsValues[$field['url']]);
+							$this->Seminarycharacterfield->setSeminaryFieldOfCharacter($field['id'], $characterId, $fieldsValues[$field['url']]);
 						}
 					}
 					
@@ -423,6 +427,178 @@
 			$this->set('characterfields', $characterfields);
 			$this->set('selectedCharacters', $selectedCharacters);
 			$this->set('sortorder', $sortorder);
+		}
+		
+		
+		/**
+		 * Acton: edit.
+		 * 
+		 * Edit a new character for a Seminary.
+		 * 
+		 * @throws	IdNotFoundException
+		 * @throws	ParamsNotValidException
+		 * @param	string	$seminaryUrl	URL-Title of a Seminary
+		 * @param	string	$characterUrl	URL-name of a Charater
+		 */
+		public function edit($seminaryUrl, $characterUrl)
+		{
+			// Get Seminary
+			$seminary = $this->Seminaries->getSeminaryByUrl($seminaryUrl);
+			
+			// Get Character
+			$character = $this->Characters->getCharacterByUrl($seminary['id'], $characterUrl);
+			
+			// Check permissions
+			if(count(array_intersect(array('admin','moderator'), \hhu\z\controllers\SeminaryController::$character['characterroles'])) == 0 && $character['id'] != \hhu\z\controllers\SeminaryController::$character['id']) {
+				throw new \nre\exceptions\AccessDeniedException();
+			}
+			
+			// Get User
+			$user = $this->Users->getUserById($character['user_id']);
+			
+			// Character types
+			$types = $this->Charactertypes->getCharacterTypesForSeminary($seminary['id']);
+			foreach($types as &$type) {
+				$type['selected'] = ($type['url'] == $character['charactertype_url']);
+			}
+			
+			// Character fields
+			$fields = $this->Seminarycharacterfields->getFieldsForSeminary($seminary['id']);
+			foreach($fields as &$field)
+			{
+				$userValue = $this->Seminarycharacterfields->getSeminaryFieldOfCharacter($field['id'], $character['id']);
+				if(!empty($userValue)) {
+					$field['uservalue'] = $userValue['value'];
+				}
+			}
+			
+			// Values
+			$charactername = $character['name'];
+			$validation = array();
+			$fieldsValidation = true;
+			
+			// Edit Character
+			if($this->request->getRequestMethod() == 'POST' && !is_null($this->request->getPostParam('edit')))
+			{
+				// Validate Character properties
+				$validation = $this->Validation->validateParams($this->request->getPostParams(), array('charactername'));
+				$charactername = (count(array_intersect(array('admin','moderator'), \hhu\z\controllers\SeminaryController::$character['characterroles'])) > 0) ? $this->request->getPostParam('charactername') : $character['name'];
+				if($this->Characters->characterNameExists($charactername, $character['id'])) {
+					$validation = $this->Validation->addValidationResult($validation, 'charactername', 'exist', true);
+				}
+				
+				// Validate type
+				$typeIndex = null;
+				foreach($types as $index => &$type)
+				{
+					$type['selected'] = ($type['url'] == $this->request->getPostParam('type'));
+					if($type['selected']) {
+						$typeIndex = $index;
+					}
+				}
+				if(is_null($typeIndex)) {
+					$validation = $this->Validation->addValidationResult($validation, 'type', 'exist', false);
+				}
+				
+				// Validate fields
+				$fieldsValues = $this->request->getPostParam('fields');
+				foreach($fields as &$field)
+				{
+					if(!array_key_exists($field['url'], $fieldsValues)) {
+						throw new \nre\exceptions\ParamsNotValidException($index);
+					}
+					$field['uservalue'] = $fieldsValues[$field['url']];
+					if($field['required'])
+					{
+						$fieldValidation = $this->Validation->validate($fieldsValues[$field['url']], array('regex'=>$field['regex']));
+						if($fieldValidation !== true)
+						{
+							if(!is_array($fieldsValidation)) {
+								$fieldsValidation = array();
+							}
+							$fieldsValidation[$field['url']] = $fieldValidation;
+						}
+					}
+				}
+				
+				// Edit
+				if($validation === true && $fieldsValidation === true)
+				{
+					$this->Characters->editCharacter(
+						$character['id'],
+						$types[$typeIndex]['id'],
+						$charactername
+					);
+					
+					// Set Seminary fields
+					foreach($fields as &$field) {
+						if(!empty($fieldsValues[$field['url']])) {
+							$this->Seminarycharacterfields->setSeminaryFieldOfCharacter($field['id'], $character['id'], $fieldsValues[$field['url']]);
+						}
+					}
+					
+					// Redirect
+					$character = $this->Characters->getCharacterById($character['id']);
+					$this->redirect($this->linker->link(array('character', $seminary['url'], $character['url']), 1));
+				}
+			}
+			
+			// Get XP-levels
+			$xplevels = $this->Characters->getXPLevelsForSeminary($seminary['id']);
+			
+			// Pass data to view
+			$this->set('seminary', $seminary);
+			$this->set('types', $types);
+			$this->set('fields', $fields);
+			$this->set('charactername', $charactername);
+			$this->set('validation', $validation);
+			$this->set('fieldsValidation', $fieldsValidation);
+			$this->set('xplevels', $xplevels);
+		}
+		
+		
+		/**
+		 * Action: delete.
+		 * 
+		 * Delete a Character.
+		 * 
+		 * @throws	IdNotFoundException
+		 * @param	string	$seminaryUrl	URL-Title of a Seminary
+		 * @param	string	$characterUrl	URL-name of a Charater
+		 */
+		public function delete($seminaryUrl, $characterUrl)
+		{
+			// Get Seminary
+			$seminary = $this->Seminaries->getSeminaryByUrl($seminaryUrl);
+			
+			// Get Character
+			$character = $this->Characters->getCharacterByUrl($seminary['id'], $characterUrl);
+			
+			// Get User
+			$user = $this->Users->getUserById($character['user_id']);
+			
+			// Check request method
+			if($this->request->getRequestMethod() == 'POST')
+			{
+				// Check confirmation
+				if(!is_null($this->request->getPostParam('delete')))
+				{
+					// Delete Character
+					$this->Characters->deleteCharacter($character['id']);
+					
+					// Redirect to overview
+					$this->redirect($this->linker->link(array('index', $seminary['url']), 1));
+				}
+				
+				// Redirect to entry
+				$this->redirect($this->linker->link(array('index', $seminary['url'], $character['url']), 1));
+			}
+			
+			
+			// Pass data to view
+			$this->set('seminary', $seminary);
+			$this->set('character', $character);
+			$this->set('user', $user);
 		}
 		
 		
