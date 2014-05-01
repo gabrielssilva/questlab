@@ -9,7 +9,7 @@
 			<?php foreach($submission['comments'] as &$comment) : ?>
 			<li>
 				<?php if(array_key_exists('user', $comment) && array_key_exists('character', $comment['user'])) : ?>
-				<p class="fwb"><?=sprintf(_('Comment from %s on %s at %s'), $comment['user']['character']['name'], $dateFormatter->format(new \DateTime($comment['created'])), $timeFormatter->format(new \DateTime($comment['created'])))?>:</p>
+				<p class="fwb"><?=sprintf(_('Approved by %s on %s at %s'), $comment['user']['character']['name'], $dateFormatter->format(new \DateTime($comment['created'])), $timeFormatter->format(new \DateTime($comment['created'])))?></p>
 				<?php endif ?>
 				<p><?=\hhu\z\Utils::t($comment['comment'])?></p>
 			</li>
