@@ -433,7 +433,8 @@
 				if($this->Users->usernameExists($username, $user['id'])) {
 					$validation = $this->Validation->addValidationResult($validation, 'username', 'exist', true);
 				}
-				if(!empty($this->request->getPostParam('password'))) {
+				$password = $this->request->getPostParam('password');
+				if(!empty($password)) {
 					$validation = $this->Validation->addValidationResults($validation,
 						'password',
 						$this->Validation->validateParam(
