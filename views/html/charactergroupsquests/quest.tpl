@@ -39,7 +39,7 @@
 	<?php endif ?>
 </section>
 
-<?php if(!empty($quest['von_text'])) : ?>
+<?php if(!empty($quest['won_text'])) : ?>
 <section>	
 	<h1><i class="fa fa-thumbs-up fa-fw"></i><?=_('Won Quest')?></h1>
 	<p><?=\hhu\z\Utils::t($quest['won_text'])?></p>
