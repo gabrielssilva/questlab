@@ -13,6 +13,7 @@
 		<select name="sortorder" onchange="this.form.submit();">
 			<option value="username" <?php if($sortorder == 'username') : ?>selected="selected"<?php endif ?>><?=_('Username')?></option>
 			<option value="role" <?php if($sortorder == 'role') : ?>selected="selected"<?php endif ?>><?=_('Role')?></option>
+			<option value="date" <?php if($sortorder == 'date') : ?>selected="selected"<?php endif ?>><?=_('Date of registration')?></option>
 		</select>
 		<noscript><input type="submit" value="<?=_('Sort list')?>" /></noscript>
 	</fieldset>

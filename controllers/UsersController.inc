@@ -568,8 +568,8 @@
 		/**
 		 * Compare two users by their userroles.
 		 * 
-		 * @param	array	$a	Character a
-		 * @param	array	$b	Character b
+		 * @param	array	$a	User a
+		 * @param	array	$b	User b
 		 * @return	int		Result of comparison
 		 */
 		private function sortUsersByRole($a, $b)
@@ -614,6 +614,24 @@
 			
 			
 			return 1;
+		}
+		
+		
+		/**
+		 * Compare two users by their registration date.
+		 * 
+		 * @param	array	$a	User a
+		 * @param	array	$b	User b
+		 * @return	int		Result of comparison
+		 */
+		private function sortUsersByDate($a, $b)
+		{
+			if($a['created'] == $b['created']) {
+				return 0;
+			}
+			
+			
+			return ($a['created'] > $b['created']) ? -1 : 1;
 		}
 		
 	}

@@ -717,6 +717,24 @@
 		
 		
 		/**
+		 * Compare two Characters by their registration date.
+		 * 
+		 * @param	array	$a	Character a
+		 * @param	array	$b	Character b
+		 * @return	int		Result of comparison
+		 */
+		private function sortCharactersByDate($a, $b)
+		{
+			if($a['created'] == $b['created']) {
+				return 0;
+			}
+			
+			
+			return ($a['created'] > $b['created']) ? -1 : 1;
+		}
+		
+		
+		/**
 		 * Compare two Characters by one of their Seminary fields.
 		 * 
 		 * @param	array	$a	Character a

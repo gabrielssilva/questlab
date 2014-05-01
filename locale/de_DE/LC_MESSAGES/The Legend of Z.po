@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: The Legend of Z\n"
-"POT-Creation-Date: 2014-05-01 13:08+0100\n"
-"PO-Revision-Date: 2014-05-01 13:08+0100\n"
+"POT-Creation-Date: 2014-05-01 14:29+0100\n"
+"PO-Revision-Date: 2014-05-01 14:29+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de_DE\n"
@@ -334,7 +334,7 @@ msgstr "Gruppe bearbeiten"
 #: views/html/charactergroups/editgroup.tpl:59
 #: views/html/charactergroups/editgroupsgroup.tpl:50
 #: views/html/charactergroupsquests/edit.tpl:75
-#: views/html/characters/edit.tpl:94
+#: views/html/characters/edit.tpl:101
 msgid "edit"
 msgstr "bearbeiten"
 
@@ -378,9 +378,10 @@ msgstr "Mitglied"
 #: views/html/charactergroups/managegroup.tpl:29
 #: views/html/characters/character.tpl:11
 #: views/html/characters/character.tpl:13 views/html/characters/delete.tpl:10
-#: views/html/characters/edit.tpl:8 views/html/characters/index.tpl:9
-#: views/html/characters/manage.tpl:8 views/html/characters/register.tpl:8
-#: views/html/seminarymenu/index.tpl:2 views/html/users/user.tpl:27
+#: views/html/characters/edit.tpl:11 views/html/characters/edit.tpl:13
+#: views/html/characters/index.tpl:9 views/html/characters/manage.tpl:8
+#: views/html/characters/register.tpl:8 views/html/seminarymenu/index.tpl:2
+#: views/html/users/user.tpl:27
 msgid "Characters"
 msgstr "Charaktere"
 
@@ -563,7 +564,7 @@ msgstr "Gewonnene Quest"
 msgid "Lost Quest"
 msgstr "Verlorene Quest"
 
-#: views/html/characters/character.tpl:21 views/html/characters/edit.tpl:11
+#: views/html/characters/character.tpl:21 views/html/characters/edit.tpl:18
 msgid "Edit Character"
 msgstr "Charakter bearbeiten"
 
@@ -604,80 +605,94 @@ msgstr "Thematischer Fortschritt"
 msgid "Should the Character “%s” of user “%s” (%s) really be deleted?"
 msgstr "Soll der Charakter „%s“ von Benutzer %s (%s) wirklich gelöscht werden?"
 
-#: views/html/characters/edit.tpl:23 views/html/characters/register.tpl:22
+#: views/html/characters/edit.tpl:30 views/html/characters/register.tpl:22
 #, php-format
 msgid "Character name is too short (min. %d chars)"
 msgstr "Der Charaktername ist zu kurz (min. %d Zeichen)"
 
-#: views/html/characters/edit.tpl:25 views/html/characters/register.tpl:24
+#: views/html/characters/edit.tpl:32 views/html/characters/register.tpl:24
 #, php-format
 msgid "Character name is too long (max. %d chars)"
 msgstr "Der Charaktername ist zu lang (max. %d Zeichen)"
 
-#: views/html/characters/edit.tpl:27 views/html/characters/register.tpl:26
+#: views/html/characters/edit.tpl:34 views/html/characters/register.tpl:26
 msgid "Character name contains illegal characters"
 msgstr "Der Charaktername enthält ungültige Zeichen"
 
-#: views/html/characters/edit.tpl:29 views/html/characters/register.tpl:28
+#: views/html/characters/edit.tpl:36 views/html/characters/register.tpl:28
 msgid "Character name already exists"
 msgstr "Der Charaktername existiert bereits"
 
-#: views/html/characters/edit.tpl:31 views/html/characters/register.tpl:30
+#: views/html/characters/edit.tpl:38 views/html/characters/register.tpl:30
 msgid "Character name invalid"
 msgstr "Der Charaktername ist ungültig"
 
-#: views/html/characters/edit.tpl:43 views/html/characters/register.tpl:48
+#: views/html/characters/edit.tpl:50 views/html/characters/register.tpl:48
 msgid "Character properties"
 msgstr "Charaktereigenschaften"
 
-#: views/html/characters/edit.tpl:44 views/html/characters/edit.tpl:46
-#: views/html/characters/edit.tpl:48 views/html/characters/index.tpl:21
+#: views/html/characters/edit.tpl:51 views/html/characters/edit.tpl:53
+#: views/html/characters/edit.tpl:55 views/html/characters/index.tpl:21
 #: views/html/characters/manage.tpl:16 views/html/characters/register.tpl:49
 #: views/html/characters/register.tpl:50
 msgid "Character name"
 msgstr "Charaktername"
 
-#: views/html/characters/edit.tpl:67 views/html/characters/register.tpl:67
+#: views/html/characters/edit.tpl:74 views/html/characters/register.tpl:67
 #, php-format
 msgid "The Seminary field “%s” is invalid"
 msgstr "Das Kursfeld „%s“ ist ungültig"
 
-#: views/html/characters/edit.tpl:72 views/html/characters/register.tpl:72
+#: views/html/characters/edit.tpl:79 views/html/characters/register.tpl:72
 msgid "Seminary fields"
 msgstr "Kursfelder"
 
 #: views/html/characters/index.tpl:13 views/html/characters/manage.tpl:10
+#: views/html/users/index.tpl:7 views/html/users/manage.tpl:8
 msgid "Manage"
 msgstr "Verwalten"
 
 #: views/html/characters/index.tpl:23 views/html/characters/manage.tpl:18
+#: views/html/users/manage.tpl:15
 msgid "Role"
 msgstr "Rolle"
 
-#: views/html/characters/index.tpl:28 views/html/characters/manage.tpl:23
+#: views/html/characters/index.tpl:24 views/html/characters/manage.tpl:19
+#: views/html/users/manage.tpl:16
+msgid "Date of registration"
+msgstr "Registrierungsdatum"
+
+#: views/html/characters/index.tpl:29 views/html/characters/manage.tpl:24
+#: views/html/users/manage.tpl:18
 msgid "Sort list"
 msgstr "Liste sortieren"
 
-#: views/html/characters/index.tpl:38 views/html/characters/manage.tpl:34
-#: views/html/characters/manage.tpl:49 views/html/characters/manage.tpl:57
+#: views/html/characters/index.tpl:39 views/html/characters/manage.tpl:35
+#: views/html/characters/manage.tpl:50 views/html/characters/manage.tpl:58
+#: views/html/users/manage.tpl:27 views/html/users/manage.tpl:39
+#: views/html/users/manage.tpl:47
 msgid "Admin"
 msgstr "Administrator"
 
-#: views/html/characters/index.tpl:39 views/html/characters/manage.tpl:35
-#: views/html/characters/manage.tpl:50 views/html/characters/manage.tpl:58
+#: views/html/characters/index.tpl:40 views/html/characters/manage.tpl:36
+#: views/html/characters/manage.tpl:51 views/html/characters/manage.tpl:59
+#: views/html/users/manage.tpl:28 views/html/users/manage.tpl:40
+#: views/html/users/manage.tpl:48
 msgid "Moderator"
 msgstr "Moderator"
 
-#: views/html/characters/index.tpl:40 views/html/characters/manage.tpl:36
-#: views/html/characters/manage.tpl:52 views/html/characters/manage.tpl:60
+#: views/html/characters/index.tpl:41 views/html/characters/manage.tpl:37
+#: views/html/characters/manage.tpl:53 views/html/characters/manage.tpl:61
+#: views/html/users/manage.tpl:29 views/html/users/manage.tpl:42
+#: views/html/users/manage.tpl:50
 msgid "User"
 msgstr "Benutzer"
 
-#: views/html/characters/manage.tpl:47
+#: views/html/characters/manage.tpl:48 views/html/users/manage.tpl:37
 msgid "Add role"
 msgstr "Füge Rolle hinzu"
 
-#: views/html/characters/manage.tpl:55
+#: views/html/characters/manage.tpl:56 views/html/users/manage.tpl:45
 msgid "Remove role"
 msgstr "Entferne Rolle"
 
@@ -700,7 +715,8 @@ msgstr "Login"
 #: views/html/users/create.tpl:85 views/html/users/edit.tpl:87
 #: views/html/users/edit.tpl:89 views/html/users/edit.tpl:91
 #: views/html/users/login.tpl:12 views/html/users/login.tpl:13
-#: views/html/users/register.tpl:83 views/html/users/register.tpl:84
+#: views/html/users/manage.tpl:14 views/html/users/register.tpl:83
+#: views/html/users/register.tpl:84
 msgid "Username"
 msgstr "Benutzername"
 
@@ -760,8 +776,9 @@ msgstr "Gesamtfortschritt: %d%%"
 #: views/html/menu/index.tpl:2 views/html/users/create.tpl:5
 #: views/html/users/delete.tpl:5 views/html/users/edit.tpl:6
 #: views/html/users/edit.tpl:8 views/html/users/index.tpl:4
-#: views/html/users/login.tpl:4 views/html/users/register.tpl:5
-#: views/html/users/user.tpl:6 views/html/users/user.tpl:8
+#: views/html/users/login.tpl:4 views/html/users/manage.tpl:5
+#: views/html/users/register.tpl:5 views/html/users/user.tpl:6
+#: views/html/users/user.tpl:8
 msgid "Users"
 msgstr "Benutzer"
 
@@ -1059,7 +1076,7 @@ msgstr "Benutzer bearbeiten"
 msgid "Create new user"
 msgstr "Neuen Benutzer erstellen"
 
-#: views/html/users/index.tpl:10 views/html/users/user.tpl:22
+#: views/html/users/index.tpl:11 views/html/users/user.tpl:22
 #, php-format
 msgid "registered on %s"
 msgstr "registriert am %s"
