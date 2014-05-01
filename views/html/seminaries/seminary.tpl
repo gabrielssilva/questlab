@@ -3,7 +3,7 @@
 	<img src="<?=$linker->link(array('media','seminarymoodpic',$seminary['url']))?>">
 </div>
 <?php endif ?>
-<h1><a href="<?=$linker->link(array('seminaries',$seminary['url']))?>"><?=$seminary['title']?></a></h1>
+<h1><?=$seminary['title']?></h1>
 <?php if(count(array_intersect(array('admin', 'moderator'), \hhu\z\controllers\SeminaryController::$character['characterroles'])) > 0) : ?>
 <nav class="admin">
 	<?php if(in_array('admin', \hhu\z\controllers\SeminaryController::$character['characterroles'])) : ?><li><a href="<?=$linker->link('edit', 3)?>"><?=_('Edit seminary')?></a></li><?php endif ?>
