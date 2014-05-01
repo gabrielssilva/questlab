@@ -76,7 +76,7 @@ header a:hover .fa{color:#7fb0b4}
 #profile .lvlname{font-size:.875em;color:#889da0;margin-top:-4px;display:block}
 
 #mainmenu{display:none;opacity:0;position:absolute;background:#0f373c;margin:0;left:0;right:0}
-#mainmenu a{padding:6px 0;letter-spacing:1px}
+#mainmenu a{padding:10px 0;letter-spacing:1px}
 #mainmenu .active{color:#fff}
 #mainmenu .active .fa,.crewards .unlocked .fa{color:#bcd75e}
 #smnry a{font-size:0.875em;font-family:"Open sans",sans-serif;text-transform:none;letter-spacing:0;margin:0 5% 2px;padding:8px 0 8px 12px;background:#0c2e32;border-radius:3px}
@@ -85,7 +85,7 @@ header a:hover .fa{color:#7fb0b4}
 
 #toggle,.toggle{display:none}
 .toggle{color:#d9e5e7;display:inline-block;padding:15px 15px 15px 0;position:relative;cursor:pointer;-webkit-touch-callout:none;-moz-user-select:none;-ms-user-select:none;-webkit-user-select:none;user-select:none}
-#toggle:checked ~ #mainmenu{display:block;position:fixed;top:56px;bottom:0;overflow-y:auto;opacity:1}
+#toggle:checked ~ #mainmenu{display:block;position:fixed;top:54px;bottom:0;overflow-y:auto;opacity:1}
 
 article{padding:70px 0 30px}
 aside{display:none}
@@ -390,6 +390,7 @@ header a{margin-left:40px}
 #profile span{display:block}
 #profile .lvlname{margin-top:0}
 #mainmenu{display:block;opacity:1;position:relative}
+#mainmenu a{padding-top:6px;padding-bottom:6px}
 #mainmenu li:first-child{display:none;opacity:0}
 #smnry li:first-child{display:block;opacity:1}
 #smnry a{margin:0 40px 2px}
