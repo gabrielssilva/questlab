@@ -76,6 +76,30 @@
 		
 		
 		/**
+		 * Validate an user input parameter.
+		 * 
+		 * @param	array	$params	User input parameters
+		 * @param	array	$index	Names of parameter to validate and to validate against
+		 * @return	mixed		True or the parameter with settings the validation failed on
+		 */
+		public function validateParam($params, $index)
+		{
+			// Check parameter
+			if(!array_key_exists($index, $params)) {
+				throw new \nre\exceptions\ParamsNotValidException($index);
+			}
+			// Check settings
+			if(!array_key_exists($index, $this->config)) {
+				return true;
+			}
+			
+			
+			// Validate parameter and return result
+			return $this->validate($params[$index], $this->config[$index]);
+		}
+		
+		
+		/**
 		 * Validate user input parameters.
 		 * 
 		 * @param	array	$params		User input parameters
@@ -84,54 +108,73 @@
 		 */
 		public function validateParams($params, $indices)
 		{
-			$validation = array();
-			foreach($indices as $index)
-			{
-				if(!array_key_exists($index, $params)) {
-					throw new \nre\exceptions\ParamsNotValidException($index);
-				}
-				
-				// Check parameter
-				if(array_key_exists($index, $this->config))
-				{
-					$param = $params[$index];
-					$check = $this->validate($param, $this->config[$index]);
-					if($check !== true) {
-						$validation[$index] = $check;
-					}
-				}
+			// Validate parameters
+			$validation = true;
+			foreach($indices as $index) {
+				$validation = $this->addValidationResults($validation, $index, $this->validateParam($params, $index));
 			}
 			
 			
-			// Return true or the failed parameters with failed settings
-			if(empty($validation)) {
-				return true;
-			}
+			// Return validation results
 			return $validation;
 		}
 		
 		
 		/**
 		 * Add a custom determined validation result to a validation
-		 * store.
+		 * array.
 		 * 
-		 * @param	mixed	$validation	Validation store to add result to
-		 * @param	string	$param		Name of parameter of the custom validation result
+		 * @param	mixed	$validation	Validation array to add result to
+		 * @param	string	$index		Name of parameter of the custom validation result
 		 * @param	string	$setting	Name of setting of the custom validation result
 		 * @param	mixed	$result		Validation result
-		 * @return	mixed			The altered validation store
+		 * @return	mixed			The altered validation array
 		 */
-		public function addValidationResult($validation, $param, $setting, $result)
+		public function addValidationResult($validation, $index, $setting, $result)
 		{
+			// Create validation array
 			if(!is_array($validation)) {
 				$validation = array();
 			}
-			if(!array_key_exists($param, $validation)) {
-				$validation[$param] = array();
+			
+			// Add validation results
+			if(!array_key_exists($index, $validation)) {
+				$validation[$index] = array();
 			}
-			$validation[$param][$setting] = $result;
+			$validation[$index][$setting] = $result;
 			
 			
+			// Return new validation result
+			return $validation;
+		}
+		
+		
+		/**
+		 * Add custom determined validation results to a validation
+		 * arary.
+		 * 
+		 * @param	mixed	$validation	Validation array to add result to
+		 * @param	string	$index		Name of parameter of the custom validation result
+		 * @param	mixed	$result		Validation result
+		 * @return	mixed			The altered validation array
+		 */
+		public function addValidationResults($validation, $index, $results)
+		{
+			// Create validation array
+			if(!is_array($validation)) {
+				$validation = array();
+			}
+			
+			// Add validation results
+			if($results !== true) {
+				$validation[$index] = $results;
+			}
+			
+			
+			// Return new validation result
+			if(empty($validation)) {
+				return true;
+			}
 			return $validation;
 		}
 		
