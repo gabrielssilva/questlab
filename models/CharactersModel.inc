@@ -292,7 +292,7 @@
 		 */
 		public function getSuperiorCharacters($seminaryId, $xps, $count)
 		{
-			return $this->db->query(
+			$data = $this->db->query(
 				'SELECT characters.id, characters.created, characters.charactertype_id, characters.name, characters.url, characters.xps, characters.xplevel, characters.avatar_id, charactertypes.name AS charactertype_name, charactertypes.url AS charactertype_url '.
 				'FROM v_characters AS characters  '.
 				'INNER JOIN charactertypes ON charactertypes.id = characters.charactertype_id '.
@@ -305,6 +305,10 @@
 				'user',
 				$seminaryId, $xps, $count
 			);
+			$data = array_reverse($data);
+			
+			
+			return $data;
 		}
 		
 		
