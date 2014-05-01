@@ -72,6 +72,49 @@
 			);
 		}
 		
+		
+		/**
+		 * Add a role to a user.
+		 * 
+		 * @param	int	$userId		ID of user to add role to
+		 * @param	string	$userrole	Role to add
+		 */
+		public function addUserroleToUser($userId, $userrole)
+		{
+			$this->db->query(
+				'INSERT IGNORE INTO users_userroles '.
+				'(user_id, userrole_id) '.
+				'SELECT ?, id '.
+				'FROM userroles '.
+				'WHERE name = ?',
+				'is',
+				$userId,
+				$userrole
+			);
+		}
+		
+		
+		/**
+		 * Remove a role from a user.
+		 * 
+		 * @param	int	$userId		ID of user to remove role from
+		 * @param	string	$userrole	Role to remove
+		 */
+		public function removeUserroleFromUser($userId, $userrole)
+		{
+			$this->db->query(
+				'DELETE FROM users_userroles '.
+				'WHERE user_id = ? AND userrole_id = ('.
+					'SELECT id '.
+					'FROM userroles '.
+					'WHERE name = ?'.
+				')',
+				'is',
+				$userId,
+				$userrole
+			);
+		}
+		
 	}
 
 ?>

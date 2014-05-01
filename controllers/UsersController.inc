@@ -36,7 +36,7 @@
 		 * 
 		 * @var array
 		 */
-		public $models = array('users', 'characters', 'avatars', 'media', 'characterroles');
+		public $models = array('users', 'userroles', 'characters', 'characterroles', 'avatars', 'media');
 		/**
 		 * Required components
 		 * 
@@ -235,6 +235,101 @@
 			
 			// Redirect
 			$this->redirect($this->linker->link(array()));
+		}
+		
+		
+		/**
+		 * Action: manage.
+		 * 
+		 * Manage users.
+		 */
+		public function manage()
+		{
+			$selectedUsers = array();
+			global $sortorder;
+			
+			if($this->request->getRequestMethod() == 'POST')
+			{
+				// Set sortorder
+				$sortorder = $this->request->getPostParam('sortorder');
+				
+				// Do action
+				$selectedUsers = $this->request->getPostParam('users');
+				if(!is_array($selectedUsers)) {
+					$selectedUsers = array();
+				}
+				if(!is_null($this->request->getPostParam('actions')) && count($this->request->getPostParam('actions')) > 0 && !is_null($this->request->getPostParam('users')) && count($this->request->getPostParam('users')) > 0)
+				{
+					$actions = $this->request->getPostParam('actions');
+					$action = array_keys($actions)[0];
+				
+					switch($action)
+					{
+						// Add/remove role to/from Characters
+						case 'addrole':
+						case 'removerole':
+							// Determine role and check permissions
+							$role = null;
+							switch($actions[$action])
+							{
+								case _('Admin'):
+									if(!in_array('admin', \hhu\z\controllers\IntermediateController::$user['roles'])) {
+										throw new \nre\exceptions\AccessDeniedException();
+									}
+									$role = 'admin';
+								break;
+								case _('Moderator'):
+									if(!in_array('admin', \hhu\z\controllers\IntermediateController::$user['roles'])) {
+										throw new \nre\exceptions\AccessDeniedException();
+									}
+									$role = 'moderator';
+								break;
+								case _('User'):
+									if(count(array_intersect(array('admin', 'moderator'), \hhu\z\controllers\IntermediateController::$user['roles'])) <= 0) {
+										throw new \nre\exceptions\AccessDeniedException();
+									}
+									$role = 'user';
+								break;
+							}
+							
+							// Add role
+							if($action == 'addrole') {
+								foreach($selectedUsers as &$userId) {
+									$this->Userroles->addUserroleToUser($userId, $role);
+								}
+							}
+							// Remove role
+							else {
+								foreach($selectedUsers as &$userId) {
+									$this->Userroles->removeUserroleFromUser($userId, $role);
+								}
+							}
+						break;
+					}
+				}
+			}
+			
+			// Get registered users
+			$users = $this->Users->getUsers();
+			foreach($users as &$user) {
+				$user['roles'] = array_map(function($r) { return $r['name']; }, $this->Userroles->getUserrolesForUserById($user['id']));
+			}
+			
+			// Sort users
+			$sortorder = (!is_null($sortorder)) ? $sortorder : 'username';
+			$sortMethod = 'sortUsersBy'.ucfirst(strtolower($sortorder));
+			if(method_exists($this, $sortMethod)) {
+				usort($users, array($this, $sortMethod));
+			}
+			else {
+				throw new \nre\exceptions\ParamsNotValidException($sortorder);
+			}
+			
+			
+			// Pass data to view
+			$this->set('users', $users);
+			$this->set('selectedUsers', $selectedUsers);
+			$this->set('sortorder', $sortorder);
 		}
 		
 		
@@ -449,6 +544,76 @@
 			{
 				\hhu\z\Utils::sendMail($sender, $moderator['email'], $subject, $message);
 			}
+		}
+		
+		
+		/**
+		 * Compare two users by their username.
+		 * 
+		 * @param	array	$a	User a
+		 * @param	array	$b	User b
+		 * @return	int		Result of comparison
+		 */
+		private function sortUsersByUsername($a, $b)
+		{
+			if($a['username'] == $b['username']) {
+				return 0;
+			}
+			
+			
+			return ($a['username'] < $b['username']) ? -1 : 1;
+		}
+		
+		
+		/**
+		 * Compare two users by their userroles.
+		 * 
+		 * @param	array	$a	Character a
+		 * @param	array	$b	Character b
+		 * @return	int		Result of comparison
+		 */
+		private function sortUsersByRole($a, $b)
+		{
+			if(in_array('admin', $a['roles']))
+			{
+				if(in_array('admin', $b['roles'])) {
+					return 0;
+				}
+				return -1;
+			}
+			if(in_array('moderator', $a['roles']))
+			{
+				if(in_array('admin', $b['roles'])) {
+					return 1;
+				}
+				if(in_array('moderator', $b['roles'])) {
+					return 0;
+				}
+				return -1;
+			}
+			if(in_array('user', $a['roles']))
+			{
+				if(in_array('admin', $b['roles']) || in_array('moderator', $b['roles'])) {
+					return 1;
+				}
+				if(in_array('user', $b['roles'])) {
+					return 0;
+				}
+				return -1;
+			}
+			if(in_array('guest', $a['roles']))
+			{
+				if(in_array('admin', $b['roles']) || in_array('moderator', $b['roles'])  || in_array('user', $b['roles'])) {
+					return 1;
+				}
+				if(in_array('guest', $b['roles'])) {
+					return 0;
+				}
+				return -1;
+			}
+			
+			
+			return 1;
 		}
 		
 	}

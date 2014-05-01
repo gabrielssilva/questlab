@@ -170,8 +170,8 @@
 		 * @var array
 		 */
 		public static $routes = array(
-			array('^users/([^/]+)/(edit|delete)/?$',				'users/$2/$1',				true),
-			array('^users/(?!(index|login|register|logout|create|edit|delete))/?',	'users/user/$1',			true),
+			array('^users/([^/]+)/(edit|delete)/?$',					'users/$2/$1',			true),
+			array('^users/(?!(index|login|register|logout|manage|create|edit|delete))/?',	'users/user/$1',		true),
 			array('^seminaries/([^/]+)/(edit|delete)/?$',				'seminaries/$2/$1',			true),
 			array('^seminaries/(?!(index|create|edit|delete))/?',			'seminaries/seminary/$1',		true),
 			array('^questgroups/([^/]+)/(create)/?$',				'questgroups/$2/$1',			true),

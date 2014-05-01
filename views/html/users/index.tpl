@@ -4,6 +4,7 @@
 <h1><?=_('Users')?></h1>
 <nav class="admin">
 	<li><a href="<?=$linker->link('create', 1)?>"><?=_('Create new user')?></a></li>
+	<li><a href="<?=$linker->link('manage',1)?>"><?=_('Manage')?></a></li>
 </nav>
 <ol class="cglist">
 	<?php foreach($users as &$user) : ?>
