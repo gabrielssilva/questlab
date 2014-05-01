@@ -84,7 +84,7 @@
 				$character['user'] = $this->Users->getUserById($character['user_id']);
 				$character['characterroles'] = array_map(function($r) { return $r['name']; }, $this->Characterroles->getCharacterrolesForCharacterById($character['id']));
 				$character['characterfields'] = array();
-				foreach($this->Seminarycharacterfields->getFieldsForCharacter($character['id']) as &$value) {
+				foreach($this->Seminarycharacterfields->getFieldsForCharacter($character['id']) as $value) {
 					$character['characterfields'][$value['url']] = $value;
 				}
 			}
@@ -399,7 +399,7 @@
 				$character['user'] = $this->Users->getUserById($character['user_id']);
 				$character['characterroles'] = array_map(function($r) { return $r['name']; }, $this->Characterroles->getCharacterrolesForCharacterById($character['id']));
 				$character['characterfields'] = array();
-				foreach($this->Seminarycharacterfields->getFieldsForCharacter($character['id']) as &$value) {
+				foreach($this->Seminarycharacterfields->getFieldsForCharacter($character['id']) as $value) {
 					$character['characterfields'][$value['url']] = $value;
 				}
 			}
