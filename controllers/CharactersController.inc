@@ -673,8 +673,6 @@
 		 */
 		private function sortCharactersByRole($a, $b)
 		{
-			$roles = array('admin', 'moderator', 'user', 'guest');
-			
 			if(in_array('admin', $a['characterroles']))
 			{
 				if(in_array('admin', $b['characterroles'])) {
