@@ -343,15 +343,18 @@
 		public function getCharactersSolvedQuest($questId)
 		{
 			return $data = $this->db->query(
-				'SELECT characters.id, characters.created, characters.charactertype_id, characters.name, characters.url, characters.user_id, characters.xps, characters.xplevel, charactertypes.name AS charactertype_name, charactertypes.url AS charactertype_url '.
-				'FROM v_characters AS characters '.
-				'LEFT JOIN charactertypes ON charactertypes.id = characters.charactertype_id '.
-				'WHERE EXISTS ('.
-					'SELECT character_id FROM quests_characters WHERE character_id = characters.id AND quest_id = ? AND status = ?'.
-				')',
+				'SELECT characters.id, characters.created, characters.charactertype_id, characters.name, characters.url, characters.user_id, characters.xps, characters.xplevel, charactertypes.name AS charactertype_name, charactertypes.url AS charactertype_url, quests_characters.created AS submission_created '.
+				'FROM quests_characters '.
+				'INNER JOIN v_characters AS characters ON characters.id = quests_characters.character_id '.
+				'INNER JOIN charactertypes ON charactertypes.id = characters.charactertype_id '.
+				'WHERE quests_characters.quest_id = ? AND quests_characters.status = ? AND NOT EXISTS ('.
+					'SELECT id '.
+					'FROM quests_characters AS qc '.
+					'WHERE qc.character_id = quests_characters.character_id AND qc.created > quests_characters.created'.
+				') '.
+				'ORDER BY quests_characters.created ASC',
 				'ii',
-				$questId,
-				QuestsModel::QUEST_STATUS_SOLVED
+				$questId, QuestsModel::QUEST_STATUS_SOLVED
 			);
 		}
 		
@@ -365,17 +368,18 @@
 		public function getCharactersUnsolvedQuest($questId)
 		{
 			return $data = $this->db->query(
-				'SELECT characters.id, characters.created, characters.charactertype_id, characters.name, characters.url, characters.user_id, characters.xps, characters.xplevel, charactertypes.name AS charactertype_name, charactertypes.url AS charactertype_url '.
-				'FROM v_characters AS characters '.
-				'LEFT JOIN charactertypes ON charactertypes.id = characters.charactertype_id '.
-				'WHERE EXISTS ('.
-					'SELECT character_id FROM quests_characters WHERE character_id = characters.id AND quest_id = ? AND status = ?'.
-				') AND NOT EXISTS ('.
-					'SELECT character_id FROM quests_characters WHERE character_id = characters.id AND quest_id = ? AND status = ?'.
-				')',
-				'iiii',
-				$questId, QuestsModel::QUEST_STATUS_UNSOLVED,
-				$questId, QuestsModel::QUEST_STATUS_SOLVED
+				'SELECT characters.id, characters.created, characters.charactertype_id, characters.name, characters.url, characters.user_id, characters.xps, characters.xplevel, charactertypes.name AS charactertype_name, charactertypes.url AS charactertype_url, quests_characters.created AS submission_created '.
+				'FROM quests_characters '.
+				'INNER JOIN v_characters AS characters ON characters.id = quests_characters.character_id '.
+				'INNER JOIN charactertypes ON charactertypes.id = characters.charactertype_id '.
+				'WHERE quests_characters.quest_id = ? AND quests_characters.status = ? AND NOT EXISTS ('.
+					'SELECT id '.
+					'FROM quests_characters AS qc '.
+					'WHERE qc.character_id = quests_characters.character_id AND qc.created > quests_characters.created'.
+				') '.
+				'ORDER BY quests_characters.created ASC',
+				'ii',
+				$questId, QuestsModel::QUEST_STATUS_UNSOLVED
 			);
 		}
 		
@@ -389,16 +393,16 @@
 		public function getCharactersSubmittedQuest($questId)
 		{
 			return $data = $this->db->query(
-				'SELECT characters.id, characters.created, characters.charactertype_id, characters.name, characters.url, characters.user_id, characters.xps, characters.xplevel, charactertypes.name AS charactertype_name, charactertypes.url AS charactertype_url '.
-				'FROM v_characters AS characters '.
-				'LEFT JOIN charactertypes ON charactertypes.id = characters.charactertype_id '.
-				'WHERE ('.
-					'SELECT status '.
-					'FROM quests_characters '.
-					'WHERE quest_id = ? AND character_id = characters.id '.
-					'ORDER BY created DESC '.
-					'LIMIT 1'.
-				') = ?',
+				'SELECT characters.id, characters.created, characters.charactertype_id, characters.name, characters.url, characters.user_id, characters.xps, characters.xplevel, charactertypes.name AS charactertype_name, charactertypes.url AS charactertype_url, quests_characters.created AS submission_created '.
+				'FROM quests_characters '.
+				'INNER JOIN v_characters AS characters ON characters.id = quests_characters.character_id '.
+				'INNER JOIN charactertypes ON charactertypes.id = characters.charactertype_id '.
+				'WHERE quests_characters.quest_id = ? AND quests_characters.status = ? AND NOT EXISTS ('.
+					'SELECT id '.
+					'FROM quests_characters AS qc '.
+					'WHERE qc.character_id = quests_characters.character_id AND qc.created > quests_characters.created'.
+				') '.
+				'ORDER BY quests_characters.created ASC',
 				'ii',
 				$questId, QuestsModel::QUEST_STATUS_SUBMITTED
 			);
