@@ -149,24 +149,22 @@
 		 * Check if an username already exists.
 		 * 
 		 * @param	string	$username	Username to check
+		 * @param	int	$userId		Do not check this ID (for editing)
 		 * @return	boolean			Whether username exists or not
 		 */
-		public function usernameExists($username)
+		public function usernameExists($username, $userId=null)
 		{
 			$data = $this->db->query(
-				'SELECT count(id) AS c '.
+				'SELECT id '.
 				'FROM users '.
 				'WHERE username = ? OR url = ?',
 				'ss',
 				$username,
 				\nre\core\Linker::createLinkParam($username)
 			);
-			if(!empty($data)) {
-				return ($data[0]['c'] > 0);
-			}
 			
 			
-			return false;
+			return (!empty($data) && (is_null($userId) || $userId != $data[0]['id']));
 		}
 		
 		
@@ -174,23 +172,21 @@
 		 * Check if an e‑mail address already exists.
 		 * 
 		 * @param	string	$email	E‑mail address to check
+		 * @param	int	$userId	Do not check this ID (for editing)
 		 * @return	boolean		Whether e‑mail address exists or not
 		 */
-		public function emailExists($email)
+		public function emailExists($email, $userId=null)
 		{
 			$data = $this->db->query(
-				'SELECT count(id) AS c '.
+				'SELECT id '.
 				'FROM users '.
 				'WHERE email = ?',
 				's',
 				$email
 			);
-			if(!empty($data)) {
-				return ($data[0]['c'] > 0);
-			}
 			
 			
-			return false;
+			return (!empty($data) && (is_null($userId) || $userId != $data[0]['id']));
 		}
 		
 		

@@ -1,14 +1,23 @@
 <div class="moodpic">
 	<img src="<?=$linker->link(array('grafics','questlab.jpg'))?>" />
 </div>
-<h1><?=_('Users')?></h1>
-<?php if(count(array_intersect(array('admin','moderator'),\hhu\z\controllers\IntermediateController::$user['roles'])) > 0) : ?>
+<ul class="breadcrumbs">
+	<?php if(count(array_intersect(array('admin','moderator'),\hhu\z\controllers\IntermediateController::$user['roles'])) > 0) : ?>
+	<li><a href="<?=$linker->link('index',1)?>"><?=_('Users')?></a></li>
+	<?php else : ?>
+	<li><?=_('Users')?></li>
+	<?php endif ?>
+</ul>
+
+<h1><?=$user['username']?></h1>
 <nav class="admin">
+	<?php if(count(array_intersect(array('admin','moderator'),\hhu\z\controllers\IntermediateController::$user['roles'])) > 0 || $user['id'] == \hhu\z\controllers\IntermediateController::$user['id']) : ?>
 	<li><a href="<?=$linker->link('edit', 3)?>"><?=_('Edit user')?></a></li>
+	<?php endif ?>
+	<?php if(count(array_intersect(array('admin','moderator'),\hhu\z\controllers\IntermediateController::$user['roles'])) > 0) : ?>
 	<li><a href="<?=$linker->link('delete', 3)?>"><?=_('Delete user')?></a></li>
+	<?php endif ?>
 </nav>
-<?php endif ?>
-<h2><?=$user['username']?></h2>
 <p>
 	<?=sprintf(_('registered on %s'), $dateFormatter->format(new \DateTime($user['created'])))?><br />
 	<?=_('Name')?>: <?=$user['prename']?> <?=$user['surname']?><br />

@@ -28,7 +28,7 @@
 			'index' => array('admin', 'moderator'),
 			'user' => array('admin', 'moderator', 'user'),
 			'create' => array('admin', 'moderator'),
-			'edit' => array('admin', 'moderator'),
+			'edit' => array('admin', 'moderator', 'user'),
 			'delete' => array('admin')
 		);
 		/**
@@ -245,21 +245,61 @@
 		 */
 		public function create()
 		{
+			// Values
+			$username = '';
+			$prename = '';
+			$surname = '';
+			$email = '';
+			$fields = array('username', 'prename', 'surname', 'email', 'password');
+			$validation = array();
+			
+			// Create new user
 			if($this->request->getRequestMethod() == 'POST' && !is_null($this->request->getPostParam('create')))
 			{
-				// Create new user
-				$userId = $this->Users->createUser(
-					$this->request->getPostParam('username'),
-					$this->request->getPostParam('prename'),
-					$this->request->getPostParam('surname'),
-					$this->request->getPostParam('email'),
-					$this->request->getPostParam('password')
-				);
+				// Get params and validate them
+				$validation = $this->Validation->validateParams($this->request->getPostParams(), $fields);
+				$username = $this->request->getPostParam('username');
+				if($this->Users->usernameExists($username)) {
+					$validation = $this->Validation->addValidationResult($validation, 'username', 'exist', true);
+				}
+				$prename = $this->request->getPostParam('prename');
+				$surname = $this->request->getPostParam('surname');
+				$email = $this->request->getPostParam('email');
+				if($this->Users->emailExists($email)) {
+					$validation = $this->Validation->addValidationResult($validation, 'email', 'exist', true);
+				}
 				
-				// Redirect to user
-				$user = $this->Users->getUserById($userId);
-				$this->redirect($this->linker->link(array($user['url']), 1));
+				// Create
+				if($validation === true)
+				{
+					$userId = $this->Users->createUser(
+						$this->request->getPostParam('username'),
+						$this->request->getPostParam('prename'),
+						$this->request->getPostParam('surname'),
+						$this->request->getPostParam('email'),
+						$this->request->getPostParam('password')
+					);
+				
+					// Redirect to user
+					$user = $this->Users->getUserById($userId);
+					$this->redirect($this->linker->link(array($user['url']), 1));
+				}
 			}
+			
+			// Get validation settings
+			$validationSettings = array();
+			foreach($fields as &$field) {
+				$validationSettings[$field] = \nre\configs\AppConfig::$validation[$field];
+			}
+			
+			
+			// Pass data to view
+			$this->set('username', $username);
+			$this->set('prename', $prename);
+			$this->set('surname', $surname);
+			$this->set('email', $email);
+			$this->set('validation', $validation);
+			$this->set('validationSettings', $validationSettings);
 		}
 		
 		
@@ -276,32 +316,77 @@
 			// User
 			$user = $this->Users->getUserByUrl($userUrl);
 			
-			// Check request method
-			if($this->request->getRequestMethod() == 'POST')
+			// Check permissions
+			if(count(array_intersect(array('admin','moderator'), \hhu\z\controllers\IntermediateController::$user['roles'])) == 0 && $user['id'] != \hhu\z\controllers\IntermediateController::$user['id']) {
+				throw new \nre\exceptions\AccessDeniedException();
+			}
+			
+			// Values
+			$username = $user['username'];
+			$prename = $user['prename'];
+			$surname = $user['surname'];
+			$email = $user['email'];
+			$fields = array('username', 'prename', 'surname', 'email');
+			$validation = array();
+			
+			// Edit user
+			if($this->request->getRequestMethod() == 'POST' && !is_null($this->request->getPostParam('save')))
 			{
+				// Get params and validate them
+				$validation = $this->Validation->validateParams($this->request->getPostParams(), $fields);
+				$username = $this->request->getPostParam('username');
+				if($this->Users->usernameExists($username, $user['id'])) {
+					$validation = $this->Validation->addValidationResult($validation, 'username', 'exist', true);
+				}
+				if(!empty($this->request->getPostParam('password'))) {
+					$validation = $this->Validation->addValidationResults($validation,
+						'password',
+						$this->Validation->validateParam(
+							$this->request->getPostParams(),
+							'password'
+						)
+					);
+				}
+				$prename = $this->request->getPostParam('prename');
+				$surname = $this->request->getPostParam('surname');
+				$email = $this->request->getPostParam('email');
+				if($this->Users->emailExists($email, $user['id'])) {
+					$validation = $this->Validation->addValidationResult($validation, 'email', 'exist', true);
+				}
+				
 				// Save changes
-				if(!is_null($this->request->getPostParam('save')))
+				if($validation === true)
 				{
 					// Edit user
 					$this->Users->editUser(
 						$user['id'],
-						$this->request->getPostParam('username'),
+						(count(array_intersect(array('admin','moderator'),\hhu\z\controllers\IntermediateController::$user['roles'])) > 0) ? $this->request->getPostParam('username') : $user['username'],
 						$this->request->getPostParam('prename'),
 						$this->request->getPostParam('surname'),
 						$this->request->getPostParam('email'),
 						$this->request->getPostParam('password')
 					);
+					
+					// Redirect to entry
 					$user = $this->Users->getUserById($user['id']);
+					$this->redirect($this->linker->link(array('user', $user['url']), 1));
 				}
-				
-				
-				// Redirect to entry
-				$this->redirect($this->linker->link(array($user['url']), 1));
+			}
+			
+			// Get validation settings
+			$validationSettings = array();
+			foreach($fields as &$field) {
+				$validationSettings[$field] = \nre\configs\AppConfig::$validation[$field];
 			}
 			
 			
 			// Pass data to view
-			$this->set('user', $user);
+			$this->set('username', $username);
+			$this->set('prename', $prename);
+			$this->set('surname', $surname);
+			$this->set('email', $email);
+			$this->set('validation', $validation);
+			$this->set('validationSettings', $validationSettings);
 		}
 		
 		

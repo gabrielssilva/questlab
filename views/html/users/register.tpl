@@ -1,9 +1,11 @@
 <div class="moodpic">
 	<img src="<?=$linker->link(array('grafics','questlab.jpg'))?>" />
 </div>
-<h1><?=_('Users')?></h1>
+<ul class="breadcrumbs">
+	<li><?=_('Users')?></li>
+</ul>
 
-<h2><?=_('Registration')?></h2>
+<h1><?=_('Registration')?></h1>
 <?php if($validation !== true) : ?>
 <ul>
 	<?php foreach($validation as $field => &$settings) : ?>
@@ -76,7 +78,7 @@
 	<?php endforeach ?>
 </ul>
 <?php endif ?>
-<form method="post" action="<?=$linker->link(array(), 2)?>" class="logreg">
+<form method="post" class="logreg">
 	<fieldset>
 		<label for="username"><?=_('Username')?>:</label>
 		<input name="username" type="text" placeholder="<?=_('Username')?>" title="<?=_('Username')?>" required="required" maxlength="<?=$validationSettings['username']['maxlength']?>" value="<?=$username?>" <?=(array_key_exists('username', $validation)) ? 'class="invalid"' : null?> /><br />
