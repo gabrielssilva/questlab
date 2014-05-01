@@ -62,7 +62,14 @@
 					<p><?=$type['name']?></p>
 					<img id="avatar" src="<?=$linker->link(array('media','avatar',$seminary['url'],$type['url'],$xplevels[0]['level'],'portrait'))?>" />
 				</label>
+				<?php if(count(array_intersect(array('admin','moderator'), \hhu\z\controllers\SeminaryController::$character['characterroles'])) > 0) : ?>
 				<input id="type-<?=$type['id']?>" name="type" type="radio" value="<?=$type['url']?>" <?php if(array_key_exists('selected', $type) && $type['selected']) : ?>checked="checked"<?php endif ?> />
+				<?php else : ?>
+				<input id="type-<?=$type['id']?>" name="type" type="radio" disabled="disabled" value="<?=$type['url']?>" <?php if(array_key_exists('selected', $type) && $type['selected']) : ?>checked="checked"<?php endif ?> />
+				<?php if(array_key_exists('selected', $type) && $type['selected']) : ?>
+				<input name="type" type="hidden" value="<?=$type['url']?>" />
+				<?php endif ?>
+				<?php endif ?>
 			</li>
 			<?php endforeach ?>
 		</ul>

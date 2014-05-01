@@ -491,7 +491,7 @@
 				$typeIndex = null;
 				foreach($types as $index => &$type)
 				{
-					$type['selected'] = ($type['url'] == $this->request->getPostParam('type'));
+					$type['selected'] = (count(array_intersect(array('admin','moderator'), \hhu\z\controllers\SeminaryController::$character['characterroles'])) > 0) ? ($type['url'] == $this->request->getPostParam('type')) : ($type['url'] == $character['charactertype_url']);
 					if($type['selected']) {
 						$typeIndex = $index;
 					}
