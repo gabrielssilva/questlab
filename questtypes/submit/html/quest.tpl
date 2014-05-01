@@ -27,11 +27,11 @@
 <?php if(count($submissions) > 0) : ?>
 <h2><?=_('Past submissions')?></h2>
 <ol>
-	<?php foreach($submissions as &$submission) : ?>
+	<?php foreach($submissions as $index => &$submission) : ?>
 	<li>
 		<a href="<?=$linker->link(array('uploads','seminary',$seminary['url'], $submission['upload']['url']))?>"><?=$submission['upload']['name']?></a><br />
 		<?=sprintf(_('submitted at %s on %s h'), $dateFormatter->format(new \DateTime($submission['created'])), $timeFormatter->format(new \DateTime($submission['created'])))?><br />
-		<?php if($lastStatus['status'] == 1) : ?>
+		<?php if($lastStatus['status'] == 1 && $index > 0) : ?>
 		<?=_('This submission is waiting for approval')?>
 		<?php endif ?>
 		<?php if(count($submission['comments']) >  0) : ?>
@@ -39,9 +39,11 @@
 			<?php foreach($submission['comments'] as &$comment) : ?>
 			<li>
 				<?php if(array_key_exists('user', $comment) && array_key_exists('character', $comment['user'])) : ?>
-				<?=sprintf(_('Comment from %s on %s at %s'), $comment['user']['character']['name'], $dateFormatter->format(new \DateTime($comment['created'])), $timeFormatter->format(new \DateTime($comment['created'])))?>:<br />
+				<p class="fwb"><?=sprintf(_('Approved on %s at %s'), $dateFormatter->format(new \DateTime($comment['created'])), $timeFormatter->format(new \DateTime($comment['created'])))?></p>
 				<?php endif ?>
+				<?php if(!empty($comment['comment'])) : ?>
 				<?=\hhu\z\Utils::t($comment['comment'])?>
+				<?php endif ?>
 			</li>
 			<?php endforeach ?>
 		</ol>
