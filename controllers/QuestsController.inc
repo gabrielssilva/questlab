@@ -334,6 +334,13 @@
 			
 			// Get submitted Character submissions waiting for approval
 			$submittedSubmissionCharacters = $this->Characters->getCharactersSubmittedQuest($quest['id']);
+			foreach($submittedSubmissionCharacters as &$submissionCharacter) {
+				$submissionCharacter['submission'] = $this->Quests->getLastQuestStatus($quest['id'], $submissionCharacter['id']);
+			}
+			usort($submittedSubmissionCharacters, function($a, $b) {
+				if($a['created'] == $b['created']) { return 0; }
+				return ($a['created'] > $b['created']) ? -1 : 1;
+			});
 			
 			// Get unsolved Character submissions
 			$unsolvedSubmissionCharacters = $this->Characters->getCharactersUnsolvedQuest($quest['id']);

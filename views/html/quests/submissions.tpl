@@ -12,6 +12,7 @@
 		<?php foreach($submittedSubmissionCharacters as &$character) : ?>
 		<li>
 			<a href="<?=$linker->link(array('submission',$seminary['url'],$questgroup['url'],$quest['url'],$character['url']),1)?>"><?=$character['name']?></a>
+			<?=sprintf(_('submitted at %s on %s h'), $dateFormatter->format(new \DateTime($character['submission']['created'])), $timeFormatter->format(new \DateTime($character['submission']['created'])))?><br />
 		</li>
 		<?php endforeach?>
 	</ol>
