@@ -50,9 +50,12 @@
 			<?php if(!is_null($loggedUser)) : ?>
 			<div id="profile" class="cf">
 				<?php if(!is_null($loggedCharacter)) : ?>
-				<a href="<?=$linker->link(array('characters','character',$loggedSeminary['url'],$loggedCharacter['url']))?>"><img src="http://s1.directupload.net/images/140501/z6ni4yk8.png"><span><?=$loggedCharacter['name']?></span><span class="lvlname">Level <?=$loggedCharacter['xplevel']?></span></a>
+				<a href="<?=$linker->link(array('characters','character',$loggedSeminary['url'],$loggedCharacter['url']))?>">
+					<img src="<?=$linker->link(array('media','avatar',$loggedSeminary['url'],$loggedCharacter['charactertype_url'],$loggedCharacter['xplevel'],'portrait'))?>" />
+					<span><?=$loggedCharacter['name']?></span><span class="lvlname">Level <?=$loggedCharacter['xplevel']?></span>
+				</a>
 				<?php else : ?>
-				<a href="<?=$linker->link(array('users',$loggedUser['url']))?>"><?=$loggedUser['username']?><span class="lvlname">Martina Mustermann</span></a>
+				<a href="<?=$linker->link(array('users',$loggedUser['url']))?>"><?=$loggedUser['username']?><span class="lvlname"><?=$loggedUser['prename']?> <?=$loggedUser['surname']?></span></a>
 				<?php endif ?>
 			</div>
 			<?php endif ?>
