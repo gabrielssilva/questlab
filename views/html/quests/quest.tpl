@@ -122,7 +122,7 @@
 			<?php else : ?>
 			<p><?=_('Quest')?>: <a href="<?=$linker->link(array($nextquest['questgroup_url'],$nextquest['url']),3)?>"><?=$nextquest['title']?></a></p>
 			<?php if($nextquest['entered'] || !$charactedHasChoosenNextQuest) : ?>
-			<p><a class="cta orange" href="<?=$linker->link(array($nextquest['questgroup_url'],$nextquest['url']),3)?>"><?=_('Let’s go')?></a></p>
+			<p><a class="cta orange" href="<?=$linker->link(array($nextquest['questgroup_url'],$nextquest['url']),3)?>"><?=_('Go on')?></a></p>
 			<?php endif ?>
 			<?php endif ?>
 		</li>
