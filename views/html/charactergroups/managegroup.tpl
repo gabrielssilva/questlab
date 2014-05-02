@@ -9,7 +9,6 @@
 	<li><i class="fa fa-chevron-right fa-fw"></i><a href="<?=$linker->link(array('groupsgroup',$seminary['url'],$groupsgroup['url']),1)?>"><?=$groupsgroup['name']?></a></li>
 </ul>
 
-<h1><?=_('Manage Character group')?></h1>
 <div class="gbanner cf">
 	<?php if(!is_null($group['seminaryupload_id'])) : ?>
 	<img src="<?=$linker->link(array('uploads','charactergroup',$seminary['url'],$groupsgroup['url'],$group['url']))?>" class="gbanner">

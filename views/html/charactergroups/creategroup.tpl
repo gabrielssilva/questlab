@@ -9,7 +9,7 @@
 	<li><i class="fa fa-chevron-right fa-fw"></i><a href="<?=$linker->link(array('groupsgroup',$seminary['url'],$groupsgroup['url']),1)?>"><?=$groupsgroup['name']?></a></li>
 </ul>
 
-<h1><?=_('New Character group')?></h1>
+<h1><?=sprintf(_('New %s Character group'), $groupsgroup['name'])?></h1>
 <?php if($validation !== true) : ?>
 <ul>
 	<?php foreach($validation as $field => &$settings) : ?>

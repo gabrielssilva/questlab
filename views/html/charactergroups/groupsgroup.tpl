@@ -18,7 +18,7 @@
 <h1><?=$groupsgroup['name']?></h1>
 <?php if(count(array_intersect(array('admin', 'moderator'), \hhu\z\controllers\SeminaryController::$character['characterroles'])) > 0) : ?>
 <nav class="admin">
-	<li><a href="<?=$linker->link(array('creategroup',$seminary['url'],$groupsgroup['url']), 1)?>"><?=_('Create new Character group')?></a></li>
+	<li><a href="<?=$linker->link(array('creategroup',$seminary['url'],$groupsgroup['url']), 1)?>"><?=sprintf(_('Create new %s Character group'), $groupsgroup['name'])?></a></li>
 </nav>
 <?php endif ?>
 <ol class="cglist">
