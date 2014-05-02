@@ -90,6 +90,22 @@
 		
 		
 		/**
+		 * Allowed mimetypes with sizes
+		 * 
+		 * @static
+		 * @var array
+		 */
+		public static $mimetypes = array(
+			'charactergroupsquests' => array(
+				array(
+					'mimetype'	=> 'image/jpeg',
+					'size'		=> 1048576,
+				)
+			)
+		);
+		
+		
+		/**
 		 * Miscellaneous settings
 		 * 
 		 * @static

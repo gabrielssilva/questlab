@@ -23,6 +23,56 @@
 </ul>
 
 <section>
+	<h1><?=_('Media')?></h1>
+	<?php if($validation !== true) : ?>
+	<ul>
+		<?php foreach($validation as $field => &$settings) : ?>
+		<li>
+			<ul>
+				<?php foreach($settings as $setting => $value) : ?>
+				<li>
+					<?php switch($field) {
+						case 'media':
+							switch($setting) {
+								case 'error': printf(_('Error during file upload: %s'), $value);
+								break;
+								case 'mimetype': printf(_('File has wrong type “%s”'), $value);
+								break;
+								case 'size': echo _('File exceeds size maximum');
+								break;
+								default: echo _('File invalid');
+							}
+						break;
+					} ?>
+				</li>
+				<?php endforeach ?>
+			</ul>
+		</li>
+		<?php endforeach ?>
+	</ul>
+	<?php endif ?>
+	<ul>
+		<?php foreach($uploads as &$upload) : ?>
+		<li>
+			<a href="<?=$linker->link(array('uploads','seminary',$seminary['url'],$upload['upload']['url']))?>">
+				<img src="<?=$linker->link(array('uploads','seminary',$seminary['url'],$upload['upload']['url'],'thumbnail'))?>" />
+			</a>
+		</li>
+		<?php endforeach ?>
+	</ul>
+	<p><?=_('Allowed file types')?>:</p>
+	<ul>
+		<?php foreach($mimetypes as &$mimetype) : ?>
+		<li><?=sprintf(_('%s-files'), strtoupper(explode('/',$mimetype['mimetype'])[1]))?> <?php if($mimetype['size'] > 0) : ?>(<?=_('max.')?> <?=round($mimetype['size']/(1024*1024),2)?> MiB)<?php endif ?></li>
+		<?php endforeach ?>
+	</ul>
+	<form method="post" enctype="multipart/form-data">
+		<input type="file" name="media" /><br />
+		<input type="submit" name="setmedia" value="<?=_('save')?>" />
+	</form>
+</section>
+
+<section>
 	<h1><i class="fa fa-users fa-fw"></i><?=$groupsgroup['name']?></h1>
 	<form method="post">
 		<ul class="grpqlist">

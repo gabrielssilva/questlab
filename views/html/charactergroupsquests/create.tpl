@@ -54,9 +54,9 @@
 <form method="post" action="" class="logreg">
 	<fieldset>
 		<label for="title"><?=_('Title')?>:</label>
-		<input type="text" id="title" name="title" placeholder="<?=_('Title')?>" title="<?=_('Title')?>" maxlength="<?=$validationSettings['title']['maxlength']?>" value="<?=$title?>" />
+		<input type="text" id="title" name="title" placeholder="<?=_('Title')?>" title="<?=_('Title')?>" maxlength="<?=$validationSettings['title']['maxlength']?>" value="<?=$title?>" <?=(array_key_exists('title', $validation)) ? 'class="invalid"' : null?> />
 		<label for="xps"><?=_('XPs')?>:</label>
-		<input type="xps" id="xps" name="xps" placeholder="<?=_('XPs')?>" title="<?=_('XPs')?>" pattern="<?=substr($validationSettings['xps']['regex'],1,strrpos($validationSettings['xps']['regex'],$validationSettings['xps']['regex'][0])-1)?>" value="<?=$xps?>" <?=(array_key_exists('title', $validation)) ? 'class="invalid"' : null?> />
+		<input type="xps" id="xps" name="xps" placeholder="<?=_('XPs')?>" title="<?=_('XPs')?>" pattern="<?=substr($validationSettings['xps']['regex'],1,strrpos($validationSettings['xps']['regex'],$validationSettings['xps']['regex'][0])-1)?>" value="<?=$xps?>" <?=(array_key_exists('xps', $validation)) ? 'class="invalid"' : null?> />
 		<label for="questgroup"><?=_('Questgroup')?></label>
 		<select id="questgroup" name="questgroup">
 			<?php foreach($questgroups as &$questgroup) : ?>
