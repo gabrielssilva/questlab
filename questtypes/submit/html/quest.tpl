@@ -26,13 +26,12 @@
 
 <?php if(count($submissions) > 0) : ?>
 <h2><?=_('Past submissions')?></h2>
-<ol>
+<ol class="admnql">
 	<?php foreach($submissions as $index => &$submission) : ?>
 	<li>
-		<a href="<?=$linker->link(array('uploads','seminary',$seminary['url'], $submission['upload']['url']))?>"><?=$submission['upload']['name']?></a><br />
-		<?=sprintf(_('submitted at %s on %s h'), $dateFormatter->format(new \DateTime($submission['created'])), $timeFormatter->format(new \DateTime($submission['created'])))?><br />
+		<a href="<?=$linker->link(array('uploads','seminary',$seminary['url'], $submission['upload']['url']))?>"><?=$submission['upload']['name']?></a><span><?=sprintf(_('submitted at %s on %s h'), $dateFormatter->format(new \DateTime($submission['created'])), $timeFormatter->format(new \DateTime($submission['created'])))?></span>
 		<?php if($lastStatus['status'] == 1 && $index > 0) : ?>
-		<?=_('This submission is waiting for approval')?>
+		<p><?=_('This submission is waiting for approval')?></p>
 		<?php endif ?>
 		<?php if(count($submission['comments']) >  0) : ?>
 		<ol>
@@ -42,7 +41,7 @@
 				<p class="fwb"><?=sprintf(_('Approved on %s at %s'), $dateFormatter->format(new \DateTime($comment['created'])), $timeFormatter->format(new \DateTime($comment['created'])))?></p>
 				<?php endif ?>
 				<?php if(!empty($comment['comment'])) : ?>
-				<?=\hhu\z\Utils::t($comment['comment'])?>
+				<p><?=\hhu\z\Utils::t($comment['comment'])?></p>
 				<?php endif ?>
 			</li>
 			<?php endforeach ?>
