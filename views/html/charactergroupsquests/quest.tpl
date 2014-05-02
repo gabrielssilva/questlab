@@ -30,6 +30,21 @@
 	<li><?php if($questgroup['entered']) : ?><a href="<?=$linker->link(array('questgroups','questgroup',$seminary['url'],$questgroup['url']))?>"><?=$questgroup['title']?></a><?php else : ?><?=$questgroup['title']?><?php endif ?></li>
 </ul>
 
+<?php if(count($uploads) > 0) : ?>
+<section>
+	<h1><?=_('Media')?></h1>
+	<ul>
+		<?php foreach($uploads as &$upload) : ?>
+		<li>
+			<a href="<?=$linker->link(array('uploads','seminary',$seminary['url'],$upload['upload']['url']))?>">
+				<img src="<?=$linker->link(array('uploads','seminary',$seminary['url'],$upload['upload']['url'],'thumbnail'))?>" />
+			</a>
+		</li>
+		<?php endforeach ?>
+	</ul>
+</section>
+<?php endif ?>
+
 <section>
 	<h1><i class="fa fa-envelope fa-fw"></i><?=_('Description')?></h1>
 	<p><?=\hhu\z\Utils::t($quest['description'])?></p>

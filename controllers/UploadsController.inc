@@ -75,7 +75,7 @@
 		 * @param	string	$seminaryUrl	URL-title of Seminary
 		 * @param	string	$uploadUrl	URL-name of the upload
 		 */
-		public function seminary($seminaryUrl, $uploadUrl)
+		public function seminary($seminaryUrl, $uploadUrl, $action=null)
 		{
 			// Get Seminary
 			$seminary = $this->Seminaries->getSeminaryByUrl($seminaryUrl);
@@ -105,7 +105,18 @@
 			}
 			
 			// Get file
-			$file = $this->getUploadFile($upload);
+			switch($action)
+			{
+				case null:
+					$file = $this->getUploadFile($upload);
+				break;
+				case 'thumbnail':
+					$file = $this->createThumbnail($upload);
+				break;
+				default:
+					throw new \nre\exceptions\ParamsNotValidException($action);
+				break;
+			}
 			if(is_null($file)) {
 				return;
 			}
@@ -181,6 +192,82 @@
 			
 			
 			return file_get_contents($upload['filename']);
+		}
+		
+		
+		/**
+		 * Create a thumbnail from an upload.
+		 * 
+		 * @param	array	$upload	Upload to create thumbnail for
+		 * @return	object		Thumbnail for the upload (or null if thumbnail is cached)
+		 */
+		private function createThumbnail($upload)
+		{
+			// Set filename
+			$upload['filename'] = ROOT.DS.\nre\configs\AppConfig::$dirs['seminaryuploads'].DS.$upload['url'];
+			
+			// Set content-type
+			$this->response->addHeader("Content-type: image/jpeg");
+			
+			// Cache
+			if($this->setCacheHeaders($upload['filename'])) {
+				return null;
+			}
+			
+			// Set geometry
+			$width = 100;
+			$height = 100;
+			
+			switch($upload['mimetype'])
+			{
+				case 'image/jpeg':
+				case 'image/png':
+					// Read image from cache
+					$tempFileName = ROOT.DS.\nre\configs\AppConfig::$dirs['temporary'].DS.$upload['url'].'-'.$width.'x'.$height;
+					if(file_exists($tempFileName))
+					{
+						// Check age of file
+						if(date('r', filemtime($tempFileName)+(60*60*24)) > date('r', time())) {
+							// Too old, delete
+							unlink($tempFileName);
+						}
+						else {
+							// Valid, read and return
+							return file_get_contents($tempFileName);
+						}
+					}
+					
+					// ImageMagick
+					$im = new \Imagick($upload['filename']);
+			
+					// Calculate new size
+					$geometry = $im->getImageGeometry();
+					if($geometry['width'] < $width) {
+						$width = $geometry['width'];
+					}
+					if($geometry['height'] < $height) {
+						$height = $geometry['width'];
+					}
+			
+					// Process 
+					$im->thumbnailImage($width, $height, true);
+					$im->contrastImage(1);
+					$im->setImageFormat('jpeg');
+			
+					// Save temporary file
+					$im->writeImage($tempFileName);
+			
+			
+					// Return resized image
+					return $im;
+				break;
+				default:
+					throw new \nre\exceptions\ParamsNotValidException('thumbnail');
+				break;
+			}
+			
+			
+			return $this->getUploadFile($upload);
 		}
 		
 		

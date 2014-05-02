@@ -20,6 +20,12 @@
 	 */
 	class CharactergroupsquestsModel extends \hhu\z\Model
 	{
+		/**
+		 * Required models
+		 * 
+		 * @var array
+		 */
+		public $models = array('uploads');
 		
 		
 		
@@ -221,6 +227,57 @@
 			);
 			
 			return (!empty($data) && (is_null($questId) || $questId != $data[0]['id']));
+		}
+		
+		
+		/**
+		 * Upload a media for a Character groups Quest.
+		 * 
+		 * @param	int	$userId		ID of user that does the upload
+		 * @param	int	$seminaryId	ID of Seminary
+		 * @param	int	$questId	ID of Quest to upload media for
+		 * @param	array	$file		File-array of file to upload
+		 * @param	string	$filename	Filename for media
+		 * @return	boolean			Whether upload succeeded or not
+		 */
+		public function uploadMediaForQuest($userId, $seminaryId, $questId, $file, $filename)
+		{
+			// Save file on harddrive
+			$uploadId = $this->Uploads->uploadSeminaryFile($userId, $seminaryId, $file['name'], $filename, $file['tmp_name'], $file['type']);
+			if($uploadId === false) {
+				return false;
+			}
+			
+			// Create database record
+			$this->db->query(
+				'INSERT INTO charactergroupsquests_seminaryuploads '.
+				'(seminaryupload_id, charactergroupsquest_id, created_user_id) '.
+				'VALUES '.
+				'(?, ?, ?) ',
+				'iii',
+				$uploadId, $questId, $uploadId
+			);
+			
+			
+			return true;
+		}
+		
+		
+		/**
+		 * Get uploaded Medai for a Character groups Quest.
+		 * 
+		 * @param	int	$questId	ID of Quest to get media for
+		 * @return	array			Seminary uploads
+		 */
+		public function getMediaForQuest($questId)
+		{
+			return $this->db->query(
+				'SELECT seminaryupload_id, created, created_user_id '.
+				'FROM charactergroupsquests_seminaryuploads '.
+				'WHERE charactergroupsquest_id = ?',
+				'i',
+				$questId
+			);
 		}
 		
 		

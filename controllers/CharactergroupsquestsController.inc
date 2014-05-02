@@ -25,7 +25,7 @@
 		 * 
 		 * @var array
 		 */
-		public $models = array('seminaries', 'charactergroups', 'charactergroupsquests', 'media', 'questgroups');
+		public $models = array('seminaries', 'charactergroups', 'charactergroupsquests', 'media', 'questgroups', 'uploads');
 		/**
 		 * Required components
 		 * 
@@ -87,6 +87,12 @@
 				$questmedia = $this->Media->getSeminaryMediaById($quest['questsmedia_id']);
 			}
 			
+			// Get uploads
+			$uploads = $this->Charactergroupsquests->getMediaForQuest($quest['id']);
+			foreach($uploads as &$upload) {
+				$upload['upload'] = $this->Uploads->getSeminaryuploadById($upload['seminaryupload_id']);
+			}
+			
 			
 			// Pass data to view
 			$this->set('seminary', $seminary);
@@ -95,6 +101,7 @@
 			$this->set('questgroup', $questgroup);
 			$this->set('groups', $groups);
 			$this->set('media', $questmedia);
+			$this->set('uploads', $uploads);
 		}
 		
 		
@@ -127,45 +134,109 @@
 			// Get Character groups
 			$groups = $this->Charactergroups->getGroupsForGroupsgroup($groupsgroup['id']);
 			
-			// Set XPs of Character groups for this Character groups Quest
-			if($this->request->getRequestMethod() == 'POST' && !is_null($this->request->getPostParam('setxps')))
+			// Get allowed mimetypes
+			$mimetypes = \nre\configs\AppConfig::$mimetypes['charactergroupsquests'];
+			
+			// Manage
+			$validation = array();
+			if($this->request->getRequestMethod() == 'POST')
 			{
-				$xps = $this->request->getPostParam('xps');
-				foreach($groups as &$group)
+				// Upload media
+				if(!is_null($this->request->getPostParam('setmedia')))
 				{
-					if(array_key_exists($group['url'], $xps) && $xps[$group['url']] != 'null')
-					{
-						$xpsFactor = intval($xps[$group['url']]) / $quest['xps'];
-						$this->Charactergroupsquests->setXPsOfGroupForQuest($quest['id'], $group['id'], $xpsFactor);
+					$file = $_FILES['media'];
+					
+					// Check error
+					if($file['error'] !== 0 || empty($file['tmp_name'])) {
+						$validation = $this->Validation->addValidationResult($validation, 'media', 'error', $file['error']);
 					}
-					else {
-						$this->Charactergroupsquests->deleteGroupForQuest($quest['id'], $group['id']);
+					
+					// Check mimetype
+					$mediaMimetype = null;
+					foreach($mimetypes as &$mimetype) {
+						if($mimetype['mimetype'] == $file['type']) {
+							$mediaMimetype = $mimetype;
+							break;
+						}
+					}
+					if(is_null($mediaMimetype)) {
+						$validation = $this->Validation->addValidationResult($validation, 'media', 'mimetype', $file['type']);
+					}
+					elseif($file['size'] > $mediaMimetype['size']) {
+						$validation = $this->Validation->addValidationResult($validation, 'media', 'size', $mediaMimetype['size']);
+					}
+					
+					// Upload media
+					if($validation === true)
+					{
+						// Create filename
+						$filename = sprintf(
+							'%s-%d-%s.%s',
+							'charactergroupsquest',
+							$quest['id'],
+							date('Ymd-His'),
+							mb_substr($file['name'], strrpos($file['name'], '.')+1)
+						);
+				
+						// Upload file
+						$this->Charactergroupsquests->uploadMediaForQuest($this->Auth->getUserId(), $seminary['id'], $quest['id'], $file, $filename);
+					}
+				}
+				
+				// Set XPs of Character groups for this Character groups Quest
+				if(!is_null($this->request->getPostParam('setxps')))
+				{
+					$xps = $this->request->getPostParam('xps');
+					foreach($groups as &$group)
+					{
+						if(array_key_exists($group['url'], $xps) && $xps[$group['url']] != 'null')
+						{
+							$xpsFactor = intval($xps[$group['url']]) / $quest['xps'];
+							$this->Charactergroupsquests->setXPsOfGroupForQuest($quest['id'], $group['id'], $xpsFactor);
+						}
+						else {
+							$this->Charactergroupsquests->deleteGroupForQuest($quest['id'], $group['id']);
+						}
 					}
 				}
 				
 				// Redirect to Quest page
-				$this->redirect($this->linker->link(array('quest', $seminary['url'], $groupsgroup['url'], $quest['url']), 1));
+				if($validation === true || empty($validation)) {
+					$this->redirect($this->linker->link(array('quest', $seminary['url'], $groupsgroup['url'], $quest['url']), 1));
+				}
 			}
+			
+			// Get icon
+			$questmedia = null;
+			if(!is_null($quest['questsmedia_id'])) {
+				$questmedia = $this->Media->getSeminaryMediaById($quest['questsmedia_id']);
+			}
+			
+			// Get uploads
+			$uploads = $this->Charactergroupsquests->getMediaForQuest($quest['id']);
+			foreach($uploads as &$upload) {
+				$upload['upload'] = $this->Uploads->getSeminaryuploadById($upload['seminaryupload_id']);
+			}
+			
 			
 			// Set XPs for Groups
 			foreach($groups as &$group) {
 				$group['quest_group'] = $this->Charactergroupsquests->getXPsOfGroupForQuest($quest['id'], $group['id']);
 			}
 			
-			// Media
-			$questmedia = null;
-			if(!is_null($quest['questsmedia_id'])) {
-				$questmedia = $this->Media->getSeminaryMediaById($quest['questsmedia_id']);
-			}
+			
 			
 			
 			// Pass data to view
 			$this->set('seminary', $seminary);
 			$this->set('groupsgroup', $groupsgroup);
 			$this->set('quest', $quest);
+			$this->set('uploads', $uploads);
+			$this->set('mimetypes', $mimetypes);
 			$this->set('questgroup', $questgroup);
 			$this->set('groups', $groups);
 			$this->set('media', $questmedia);
+			$this->set('validation', $validation);
 		}
 		
 		
