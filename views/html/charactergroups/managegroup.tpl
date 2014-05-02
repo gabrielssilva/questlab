@@ -47,7 +47,7 @@
 		<fieldset class="filter add">
 			<p class="fwb"><small>Charaktere der Gruppe hinzufügen:</small></p>
 			<input type="text" placeholder="<?=_('Filter Characters')?>" onkeyup="filter_characters(this)" />
-			<select id="characters" name="characters[]" size="5" multiple="multiple">
+			<select id="characters" name="characters[]" size="10" multiple="multiple">
 				<?php foreach($characters as &$character) : ?>
 				<option value="<?=$character['id']?>"><?=$character['name']?></option>
 				<?php endforeach ?>
