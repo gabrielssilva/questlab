@@ -201,7 +201,7 @@
 			// Get Questtexts
 			$questtexts = array();
 			$questtexts['Prolog'] = $this->Questtexts->getQuesttextsOfQuest($quest['id'], 'Prolog');
-			if($solved) {
+			if($solved || count(array_intersect(array('admin','moderator'), SeminaryController::$character['characterroles'])) > 0) {
 				$questtexts['Epilog'] = $this->Questtexts->getQuesttextsOfQuest($quest['id'], 'Epilog');
 			}
 			foreach($questtexts as &$questtextList)
@@ -253,7 +253,7 @@
 			$nextQuests = null;
 			$charactedHasChoosenNextQuest = false;
 			$nextQuestgroup = null;
-			if($solved)
+			if($solved || count(array_intersect(array('admin','moderator'), SeminaryController::$character['characterroles'])) > 0)
 			{
 				// Next Quest
 				$nextQuests = $this->Quests->getNextQuests($quest['id']);
@@ -288,9 +288,7 @@
 			// Pass data to view
 			$this->set('seminary', $seminary);
 			$this->set('questgroup', $questgroup);
-			//$this->set('questtexttype', $questtexttype);
 			$this->set('questtexts', $questtexts);
-			//$this->set('hasEpilog', $hasEpilog);
 			$this->set('quest', $quest);
 			$this->set('queststatus', $questStatus);
 			$this->set('relatedquesttext', $relatedQuesttext);
