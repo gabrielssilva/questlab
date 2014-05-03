@@ -32,8 +32,8 @@
 
 <?php if(count($uploads) > 0) : ?>
 <section>
-	<h1><?=_('Media')?></h1>
-	<ul>
+	<h1><i class="fa fa-picture-o fa-fw"></i><?=_('Media')?></h1>
+	<ul class="gqgllry">
 		<?php foreach($uploads as &$upload) : ?>
 		<li>
 			<a href="<?=$linker->link(array('uploads','seminary',$seminary['url'],$upload['upload']['url']))?>">

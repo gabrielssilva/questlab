@@ -23,7 +23,7 @@
 </ul>
 
 <section>
-	<h1><?=_('Media')?></h1>
+	<h1><i class="fa fa-picture-o fa-fw"></i><?=_('Media')?></h1>
 	<?php if($validation !== true) : ?>
 	<ul>
 		<?php foreach($validation as $field => &$settings) : ?>
@@ -51,7 +51,7 @@
 		<?php endforeach ?>
 	</ul>
 	<?php endif ?>
-	<ul>
+	<ul class="gqgllry">
 		<?php foreach($uploads as &$upload) : ?>
 		<li>
 			<a href="<?=$linker->link(array('uploads','seminary',$seminary['url'],$upload['upload']['url']))?>">
@@ -60,12 +60,7 @@
 		</li>
 		<?php endforeach ?>
 	</ul>
-	<p><?=_('Allowed file types')?>:</p>
-	<ul>
-		<?php foreach($mimetypes as &$mimetype) : ?>
-		<li><?=sprintf(_('%s-files'), strtoupper(explode('/',$mimetype['mimetype'])[1]))?> <?php if($mimetype['size'] > 0) : ?>(<?=_('max.')?> <?=round($mimetype['size']/(1024*1024),2)?> MiB)<?php endif ?></li>
-		<?php endforeach ?>
-	</ul>
+	<p><?=_('Allowed file types')?>: <?php foreach($mimetypes as &$mimetype) : ?><?=sprintf(_('%s-files'), strtoupper(explode('/',$mimetype['mimetype'])[1]))?> <?php if($mimetype['size'] > 0) : ?>(<?=_('max.')?> <?=round($mimetype['size']/(1024*1024),2)?> MiB) <?php endif ?><?php endforeach ?></p>
 	<form method="post" enctype="multipart/form-data">
 		<input type="file" name="media" /><br />
 		<input type="submit" name="setmedia" value="<?=_('save')?>" />
