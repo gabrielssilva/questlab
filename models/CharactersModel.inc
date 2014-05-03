@@ -355,7 +355,7 @@
 				'WHERE quests_characters.quest_id = ? AND quests_characters.status = ? AND NOT EXISTS ('.
 					'SELECT id '.
 					'FROM quests_characters AS qc '.
-					'WHERE qc.character_id = quests_characters.character_id AND qc.created > quests_characters.created'.
+					'WHERE qc.quest_id = quests_characters.quest_id AND qc.character_id = quests_characters.character_id AND qc.created > quests_characters.created'.
 				') '.
 				'ORDER BY quests_characters.created ASC',
 				'ii',
@@ -380,7 +380,7 @@
 				'WHERE quests_characters.quest_id = ? AND quests_characters.status = ? AND NOT EXISTS ('.
 					'SELECT id '.
 					'FROM quests_characters AS qc '.
-					'WHERE qc.character_id = quests_characters.character_id AND qc.created > quests_characters.created'.
+					'WHERE qc.quest_id = quests_characters.quest_id AND qc.character_id = quests_characters.character_id AND qc.created > quests_characters.created'.
 				') '.
 				'ORDER BY quests_characters.created ASC',
 				'ii',
@@ -405,7 +405,7 @@
 				'WHERE quests_characters.quest_id = ? AND quests_characters.status = ? AND NOT EXISTS ('.
 					'SELECT id '.
 					'FROM quests_characters AS qc '.
-					'WHERE qc.character_id = quests_characters.character_id AND qc.created > quests_characters.created'.
+					'WHERE qc.quest_id = quests_characters.quest_id AND qc.character_id = quests_characters.character_id AND qc.created > quests_characters.created'.
 				') '.
 				'ORDER BY quests_characters.created ASC',
 				'ii',
