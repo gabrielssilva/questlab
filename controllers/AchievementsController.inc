@@ -158,6 +158,10 @@
 			$character['rank'] = $this->Achievements->getCountRank($seminary['id'], count($achievedAchievements));
 			
 			
+			// Set title
+			$this->addTitleLocalized('Achievements');
+			$this->addTitle($seminary['title']);
+			
 			// Pass data to view
 			$this->set('seminary', $seminary);
 			$this->set('character', $character);

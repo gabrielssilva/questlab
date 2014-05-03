@@ -185,6 +185,15 @@
 			}
 			
 			
+			// Set titile
+			if(!is_null($questgroup['hierarchy'])) {
+				$this->addTitle(sprintf('%s %d: %s', $questgroup['hierarchy']['title_singular'], $questgroup['hierarchy']['questgroup_pos'], $questgroup['title']));
+			}
+			else {
+				$this->addTitle($questgroup['title']);
+			}
+			$this->addTitle($seminary['title']);
+			
 			// Pass data to view
 			$this->set('seminary', $seminary);
 			$this->set('questgroup', $questgroup);
@@ -228,6 +237,10 @@
 				}
 			}
 			
+			
+			// Set titile
+			$this->addTitleLocalized('Create Questgroup');
+			$this->addTitle($seminary['title']);
 			
 			// Pass data to view
 			$this->set('seminary', $seminary);

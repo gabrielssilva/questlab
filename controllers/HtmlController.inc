@@ -45,6 +45,19 @@
 		
 		
 		/**
+		 * Postfilter that is executed after running the Controller.
+		 * 
+		 * @param	Request		$request	Current request
+		 * @param	Response	$response	Current response
+		 */
+		public function postFilter(\nre\core\Request $request, \nre\core\Response $response)
+		{
+			// Get title
+			$this->set('title', $this->getTitle());
+		}
+		
+		
+		/**
 		 * Action: index.
 		 * 
 		 * Create the HTML-structure.
@@ -61,6 +74,36 @@
 			
 			// Set notifications
 			$this->set('notifications', $this->Notification->getNotifications());
+		}
+		
+		
+		
+		
+		/**
+		 * Get title information from IntermediateController if possible
+		 * and create a title.
+		 * 
+		 * @return	string	Title for the current page
+		 */
+		private function getTitle()
+		{
+			$title = array();
+			
+			// Get title of IntermediateController
+			$intermediateController = $this->agent->getIntermediateAgent()->controller;
+			if($intermediateController instanceof \hhu\z\controllers\IntermediateController) {
+				$title = $intermediateController->getTitle();
+			}
+			if(!is_array($title)) {
+				$title = array($title);
+			}
+			
+			// Add application name
+			$title[] = \nre\configs\AppConfig::$app['name'];
+			
+			
+			// Return title with delimiter
+			return implode(\nre\configs\AppConfig::$misc['title_delimiter'], $title);
 		}
 		
 	}

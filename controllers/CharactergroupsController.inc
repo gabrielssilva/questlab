@@ -86,6 +86,10 @@
 			$groupsgroups = $this->Charactergroups->getGroupsroupsForSeminary($seminary['id']);
 			
 			
+			// Set titile
+			$this->addTitleLocalized('Character Groups');
+			$this->addTitle($seminary['title']);
+			
 			// Pass data to view
 			$this->set('seminary', $seminary);
 			$this->set('groupsgroups', $groupsgroups);
@@ -116,6 +120,11 @@
 			// Get Character groups-group Quests
 			$quests = $this->Charactergroupsquests->getQuestsForCharactergroupsgroup($groupsgroup['id']);
 			
+			
+			// Set titile
+			$this->addTitle($groupsgroup['name']);
+			$this->addTitleLocalized('Character Groups');
+			$this->addTitle($seminary['title']);
 			
 			// Pass data to view
 			$this->set('seminary', $seminary);
@@ -177,6 +186,10 @@
 				$validationSettings[$field] = \nre\configs\AppConfig::$validation[$field];
 			}
 			
+			
+			// Set titile
+			$this->addTitleLocalized('New Character groups-group');
+			$this->addTitle($seminary['title']);
 			
 			// Pass data to view
 			$this->set('seminary', $seminary);
@@ -243,6 +256,10 @@
 			}
 			
 			
+			// Set titile
+			$this->addTitleLocalized('Edit Character groups-group');
+			$this->addTitle($seminary['title']);
+			
 			// Pass data to view
 			$this->set('seminary', $seminary);
 			$this->set('charactergroupsgroupname', $charactergroupsgroupname);
@@ -287,6 +304,10 @@
 			}
 			
 			
+			// Set titile
+			$this->addTitleLocalized('Delete Character groups-group');
+			$this->addTitle($seminary['title']);
+			
 			// Pass data to view
 			$this->set('seminary', $seminary);
 			$this->set('groupsgroup', $groupsgroup);
@@ -329,6 +350,11 @@
 			// Get Character groups Quests
 			$quests = $this->Charactergroupsquests->getQuestsForGroup($group['id']);
 			
+			
+			// Set titile
+			$this->addTitle($group['name']);
+			$this->addTitle($groupsgroup['name']);
+			$this->addTitle($seminary['title']);
 			
 			// Pass data to view
 			$this->set('seminary', $seminary);
@@ -411,6 +437,11 @@
 			}
 			
 			
+			// Set titile
+			$this->addTitle($group['name']);
+			$this->addTitle($groupsgroup['name']);
+			$this->addTitle($seminary['title']);
+			
 			// Pass data to view
 			$this->set('seminary', $seminary);
 			$this->set('groupsgroup', $groupsgroup);
@@ -477,6 +508,11 @@
 				$validationSettings[$field] = \nre\configs\AppConfig::$validation[$field];
 			}
 			
+			
+			// Set title
+			$this->addTitleLocalized('New %s Character group', $groupsgroup['name']);
+			$this->addTitle($groupsgroup['name']);
+			$this->addTitle($seminary['title']);
 			
 			// Pass data to view
 			$this->set('seminary', $seminary);
@@ -549,6 +585,11 @@
 			}
 			
 			
+			// Set title
+			$this->addTitleLocalized('Edit %s Character group', $groupsgroup['name']);
+			$this->addTitle($groupsgroup['name']);
+			$this->addTitle($seminary['title']);
+			
 			// Pass data to view
 			$this->set('seminary', $seminary);
 			$this->set('groupsgroup', $groupsgroup);
@@ -598,6 +639,11 @@
 				$this->redirect($this->linker->link(array('group', $seminary['url'], $groupsgroup['url'], $group['url']), 1));
 			}
 			
+			
+			// Set title
+			$this->addTitleLocalized('Delete %s Character group', $groupsgroup['name']);
+			$this->addTitle($groupsgroup['name']);
+			$this->addTitle($seminary['title']);
 			
 			// Pass data to view
 			$this->set('seminary', $seminary);

@@ -56,6 +56,9 @@
 			$users = $this->Users->getUsers();
 			
 			
+			// Set titile
+			$this->addTitleLocalized('Users');
+			
 			// Pass data to view
 			$this->set('users', $users);
 		}
@@ -103,6 +106,10 @@
 			}
 			
 			
+			// Set titile
+			$this->addTitleLocalized($user['username']);
+			$this->addTitleLocalized('Users');
+			
 			// Pass data to view
 			$this->set('user', $user);
 			$this->set('characters', $characters);
@@ -143,6 +150,9 @@
 				}
 			}
 			
+			
+			// Set titile
+			$this->addTitleLocalized('Login');
 			
 			// Pass data to view
 			$this->set('username', $username);
@@ -212,6 +222,9 @@
 				$validationSettings[$field] = \nre\configs\AppConfig::$validation[$field];
 			}
 			
+			
+			// Set titile
+			$this->addTitleLocalized('Registration');
 			
 			// Pass data to view
 			$this->set('username', $username);
@@ -326,6 +339,9 @@
 			}
 			
 			
+			// Set titile
+			$this->addTitleLocalized('Manage users');
+			
 			// Pass data to view
 			$this->set('users', $users);
 			$this->set('selectedUsers', $selectedUsers);
@@ -387,6 +403,9 @@
 				$validationSettings[$field] = \nre\configs\AppConfig::$validation[$field];
 			}
 			
+			
+			// Set titile
+			$this->addTitleLocalized('New user');
 			
 			// Pass data to view
 			$this->set('username', $username);
@@ -476,6 +495,9 @@
 			}
 			
 			
+			// Set titile
+			$this->addTitleLocalized('Edit user');
+			
 			// Pass data to view
 			$this->set('username', $username);
 			$this->set('prename', $prename);
@@ -516,6 +538,9 @@
 				$this->redirect($this->linker->link(array('user', $user['url']), 1));
 			}
 			
+			
+			// Set titile
+			$this->addTitleLocalized('Delete user');
 			
 			// Show confirmation
 			$this->set('user', $user);

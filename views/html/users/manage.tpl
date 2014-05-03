@@ -5,7 +5,7 @@
 	<li><a href="<?=$linker->link('index',1)?>"><?=_('Users')?></a></li>
 </ul>
 
-<h1><?=_('Manage')?></h1>
+<h1><?=_('Manage users')?></h1>
 
 <form method="post">
 	<fieldset class="filter">

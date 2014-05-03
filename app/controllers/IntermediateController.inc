@@ -31,6 +31,12 @@
 		 * @var array
 		 */
 		public static $user = null;
+		/**
+		 * Title information
+		 * 
+		 * @var array
+		 */
+		private $title = array();
 		
 		
 		
@@ -89,6 +95,56 @@
 		public function postFilter(\nre\core\Request $request, \nre\core\Response $response)
 		{
 			parent::postFilter($request, $response);
+		}
+		
+		
+		/**
+		 * Return current title information.
+		 * 
+		 * @return	string	Title information
+		 */
+		public function getTitle()
+		{
+			return $this->title;
+		}
+		
+		
+		
+		
+		/**
+		 * Add a piece of information to the current title.
+		 * 
+		 * @param	string	$title Title information
+		 */
+		protected function addTitle($title)
+		{
+			$this->title[] = $title;
+		}
+		
+		
+		/**
+		 * Add a piece of information to the current title and localize
+		 * it.
+		 * 
+		 * @param	string	$title Title information
+		 */
+		protected function addTitleLocalized($title)
+		{
+			$title = gettext($title);
+			
+			$args = func_get_args();
+			if(count($args) > 0) {
+				$title = call_user_func_array(
+					'sprintf',
+					array_merge(
+						array($title),
+						array_slice($args, 1)
+					)
+				);
+			}
+			
+			
+			$this->title[] = $title;
 		}
 		
 		

@@ -113,7 +113,8 @@
 		 */
 		public static $misc = array(
 			'ranking_range'		=> 2,
-			'achievements_range'	=> 3
+			'achievements_range'	=> 3,
+			'title_delimiter'	=> ' – '
 		);
 		
 		

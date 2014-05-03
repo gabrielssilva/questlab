@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: The Legend of Z\n"
-"POT-Creation-Date: 2014-05-03 22:40+0100\n"
-"PO-Revision-Date: 2014-05-03 22:41+0100\n"
+"POT-Creation-Date: 2014-05-04 01:22+0100\n"
+"PO-Revision-Date: 2014-05-04 01:22+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de_DE\n"
@@ -89,7 +89,7 @@ msgid "max."
 msgstr "max."
 
 #: questtypes/submit/html/quest.tpl:28
-msgid "Submissions"
+msgid "Your submissions"
 msgstr "Deine Lösungsvorschläge"
 
 #: questtypes/submit/html/quest.tpl:32 questtypes/submit/html/submission.tpl:6
@@ -289,7 +289,7 @@ msgstr "Motto"
 #: views/html/charactergroups/creategroup.tpl:59
 #: views/html/charactergroups/creategroupsgroup.tpl:50
 #: views/html/charactergroupsquests/create.tpl:75
-#: views/html/characters/register.tpl:94 views/html/seminaries/create.tpl:12
+#: views/html/characters/register.tpl:94 views/html/seminaries/create.tpl:14
 #: views/html/users/create.tpl:96
 msgid "create"
 msgstr "erstellen"
@@ -317,7 +317,7 @@ msgstr "Soll die %s-Gruppen „%s“ wirklich gelöscht werden?"
 #: views/html/charactergroups/deletegroup.tpl:15
 #: views/html/charactergroups/deletegroupsgroup.tpl:14
 #: views/html/charactergroupsquests/delete.tpl:15
-#: views/html/characters/delete.tpl:17 views/html/seminaries/delete.tpl:11
+#: views/html/characters/delete.tpl:17 views/html/seminaries/delete.tpl:13
 #: views/html/users/delete.tpl:11
 msgid "delete"
 msgstr "löschen"
@@ -325,7 +325,7 @@ msgstr "löschen"
 #: views/html/charactergroups/deletegroup.tpl:16
 #: views/html/charactergroups/deletegroupsgroup.tpl:15
 #: views/html/charactergroupsquests/delete.tpl:16
-#: views/html/characters/delete.tpl:18 views/html/seminaries/delete.tpl:12
+#: views/html/characters/delete.tpl:18 views/html/seminaries/delete.tpl:14
 #: views/html/users/delete.tpl:12
 msgid "cancel"
 msgstr "abbrechen"
@@ -501,8 +501,8 @@ msgstr "Die XP-Angabe ist ungültig"
 #: views/html/charactergroupsquests/edit.tpl:56
 #: views/html/charactergroupsquests/edit.tpl:57
 #: views/html/questgroups/create.tpl:14 views/html/questgroups/create.tpl:15
-#: views/html/seminaries/create.tpl:9 views/html/seminaries/create.tpl:10
-#: views/html/seminaries/edit.tpl:11 views/html/seminaries/edit.tpl:12
+#: views/html/seminaries/create.tpl:11 views/html/seminaries/create.tpl:12
+#: views/html/seminaries/edit.tpl:13 views/html/seminaries/edit.tpl:14
 msgid "Title"
 msgstr "Titel"
 
@@ -569,7 +569,7 @@ msgid "File invalid"
 msgstr "Die Datei ist ungültig"
 
 #: views/html/charactergroupsquests/manage.tpl:66
-#: views/html/seminaries/edit.tpl:14 views/html/users/edit.tpl:103
+#: views/html/seminaries/edit.tpl:16 views/html/users/edit.tpl:103
 msgid "save"
 msgstr "speichern"
 
@@ -677,8 +677,7 @@ msgstr "Das Kursfeld „%s“ ist ungültig"
 msgid "Seminary fields"
 msgstr "Kursfelder"
 
-#: views/html/characters/index.tpl:13 views/html/characters/manage.tpl:10
-#: views/html/users/index.tpl:7 views/html/users/manage.tpl:8
+#: views/html/characters/index.tpl:13 views/html/users/index.tpl:7
 msgid "Manage"
 msgstr "Verwalten"
 
@@ -717,6 +716,10 @@ msgstr "Moderator"
 #: views/html/users/manage.tpl:52
 msgid "User"
 msgstr "Benutzer"
+
+#: views/html/characters/manage.tpl:10
+msgid "Manage Characters"
+msgstr "Charaktere verwalten"
 
 #: views/html/characters/manage.tpl:48 views/html/users/manage.tpl:39
 msgid "Add role"
@@ -767,15 +770,15 @@ msgstr "oder"
 msgid "register yourself"
 msgstr "registriere dich"
 
-#: views/html/html.tpl:76
+#: views/html/html.tpl:77
 msgid "Achievement"
 msgstr "Achievement"
 
-#: views/html/html.tpl:86
+#: views/html/html.tpl:87
 msgid "Level-up"
 msgstr "Levelaufstieg"
 
-#: views/html/html.tpl:88 views/html/html.tpl:90
+#: views/html/html.tpl:89 views/html/html.tpl:91
 #, php-format
 msgid "You have reached level %d"
 msgstr "Du hast Level %d erreicht"
@@ -812,8 +815,8 @@ msgstr "Gesamtfortschritt: %d%%"
 msgid "Users"
 msgstr "Benutzer"
 
-#: views/html/menu/index.tpl:3 views/html/seminaries/create.tpl:4
-#: views/html/seminaries/delete.tpl:6 views/html/seminaries/edit.tpl:6
+#: views/html/menu/index.tpl:3 views/html/seminaries/create.tpl:5
+#: views/html/seminaries/delete.tpl:7 views/html/seminaries/edit.tpl:7
 #: views/html/seminaries/index.tpl:4
 msgid "Seminaries"
 msgstr "Kurse"
@@ -912,24 +915,28 @@ msgstr "Auf ins Abenteuer!"
 msgid "Submission of %s"
 msgstr "Lösung von %s"
 
+#: views/html/quests/submissions.tpl:7
+msgid "Submissions"
+msgstr "Lösungen"
+
 #: views/html/quests/submissions.tpl:10
 msgid "submitted"
 msgstr "eingereicht"
 
-#: views/html/seminaries/create.tpl:5
+#: views/html/seminaries/create.tpl:8
 msgid "New seminary"
 msgstr "Neuer Kurs"
 
-#: views/html/seminaries/delete.tpl:7 views/html/seminaries/seminary.tpl:10
+#: views/html/seminaries/delete.tpl:10 views/html/seminaries/seminary.tpl:10
 msgid "Delete seminary"
 msgstr "Kurs löschen"
 
-#: views/html/seminaries/delete.tpl:9
+#: views/html/seminaries/delete.tpl:11
 #, php-format
 msgid "Should the seminary “%s” really be deleted?"
 msgstr "Soll der Kurs „%s“ wirklich gelöscht werden?"
 
-#: views/html/seminaries/edit.tpl:7 views/html/seminaries/seminary.tpl:9
+#: views/html/seminaries/edit.tpl:10 views/html/seminaries/seminary.tpl:9
 msgid "Edit seminary"
 msgstr "Kurs bearbeiten"
 
@@ -1115,6 +1122,10 @@ msgstr "registriert am %s"
 msgid "Login failed"
 msgstr "Die Anmeldung war nicht korrekt"
 
+#: views/html/users/manage.tpl:8
+msgid "Manage users"
+msgstr "Benutzer verwalten"
+
 #: views/html/users/register.tpl:8
 msgid "Registration"
 msgstr "Registrierung"
@@ -1127,14 +1138,8 @@ msgstr "Registrieren"
 msgid "Roles"
 msgstr "Rollen"
 
-#~ msgid "Past submissions"
-#~ msgstr "Vorherige Lösungen"
-
 #~ msgid "Edit Character group"
 #~ msgstr "Gruppe bearbeiten"
-
-#~ msgid "Manage Character group"
-#~ msgstr "Gruppe verwalten"
 
 #~ msgid "Delete Character group"
 #~ msgstr "Gruppe löschen"

@@ -25,7 +25,7 @@
 <?php endif ?>
 
 <?php if(count($submissions) > 0) : ?>
-<h2><?=_('Submissions')?></h2>
+<h2><?=_('Your submissions')?></h2>
 <ol class="admnql">
 	<?php foreach($submissions as $index => &$submission) : ?>
 	<li>

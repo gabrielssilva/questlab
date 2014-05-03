@@ -108,6 +108,10 @@
 			}
 			
 			
+			// Set titile
+			$this->addTitleLocalized('Characters');
+			$this->addTitle($seminary['title']);
+			
 			// Pass data to view
 			$this->set('seminary', $seminary);
 			$this->set('characters', $characters);
@@ -179,6 +183,11 @@
 				}
 			}
 			
+			
+			// Set titile
+			$this->addTitle($character['name']);
+			$this->addTitleLocalized('Characters');
+			$this->addTitle($seminary['title']);
 			
 			// Pass data to view
 			$this->set('seminary', $seminary);
@@ -293,6 +302,10 @@
 			// Get XP-levels
 			$xplevels = $this->Characters->getXPLevelsForSeminary($seminary['id']);
 			
+			
+			// Set titile
+			$this->addTitleLocalized('Create Character');
+			$this->addTitle($seminary['title']);
 			
 			// Pass data to view
 			$this->set('seminary', $seminary);
@@ -421,6 +434,10 @@
 			}
 			
 			
+			// Set titile
+			$this->addTitleLocalized('Manage Characters');
+			$this->addTitle($seminary['title']);
+			
 			// Pass data to view
 			$this->set('seminary', $seminary);
 			$this->set('characters', $characters);
@@ -546,6 +563,11 @@
 			// Get XP-levels
 			$xplevels = $this->Characters->getXPLevelsForSeminary($seminary['id']);
 			
+			
+			// Set titile
+			$this->addTitleLocalized('Edit Character');
+			$this->addTitle($seminary['title']);
+			
 			// Pass data to view
 			$this->set('seminary', $seminary);
 			$this->set('types', $types);
@@ -594,6 +616,10 @@
 				$this->redirect($this->linker->link(array('index', $seminary['url'], $character['url']), 1));
 			}
 			
+			
+			// Set titile
+			$this->addTitleLocalized('Delete Character');
+			$this->addTitle($seminary['title']);
 			
 			// Pass data to view
 			$this->set('seminary', $seminary);

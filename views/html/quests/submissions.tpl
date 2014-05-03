@@ -4,7 +4,7 @@
 </div>
 <?php endif ?>
 <?=$questgroupshierarchypath?>
-<h1><?=$quest['title']?></h1>
+<h1><?=$quest['title']?> (<?=_('Submissions')?>)</h1>
 
 <section>
 	<h1><?=_('submitted')?></h1>

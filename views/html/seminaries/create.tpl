@@ -1,9 +1,11 @@
 <div class="moodpic">
 	<img src="<?=$linker->link(array('grafics','questlab.jpg'))?>" />
 </div>
-<h1><?=_('Seminaries')?></h1>
-<h2><?=_('New seminary')?></h2>
+<ul class="breadcrumbs">
+	<li><a href="<?=$linker->link('index',1)?>"><?=_('Seminaries')?></a></li>
+</ul>
 
+<h1><?=_('New seminary')?></h1>
 <form method="post" action="<?=$linker->link('create', 1)?>" class="logreg">
 	<fieldset>
 		<label for="title"><?=_('Title')?>:</label>

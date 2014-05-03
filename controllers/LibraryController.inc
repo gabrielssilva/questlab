@@ -77,6 +77,10 @@
 			}
 			
 			
+			// Set title
+			$this->addTitleLocalized('Library');
+			$this->addTitle($seminary['title']);
+			
 			// Pass data to view
 			$this->set('seminary', $seminary);
 			$this->set('totalQuestcount', $totalQuestcount);
@@ -123,6 +127,11 @@
 				}
 			}
 			
+			
+			// Set title
+			$this->addTitle($questtopic['title']);
+			$this->addTitleLocalized('Library');
+			$this->addTitle($seminary['title']);
 			
 			// Pass data to view
 			$this->set('seminary', $seminary);

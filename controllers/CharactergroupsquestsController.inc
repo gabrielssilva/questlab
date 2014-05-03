@@ -94,6 +94,11 @@
 			}
 			
 			
+			// Set title
+			$this->addTitle($quest['title']);
+			$this->addTitle($groupsgroup['name']);
+			$this->addTitle($seminary['title']);
+			
 			// Pass data to view
 			$this->set('seminary', $seminary);
 			$this->set('groupsgroup', $groupsgroup);
@@ -226,7 +231,10 @@
 			}
 			
 			
-			
+			// Set title
+			$this->addTitle($quest['title']);
+			$this->addTitle($groupsgroup['name']);
+			$this->addTitle($seminary['title']);
 			
 			// Pass data to view
 			$this->set('seminary', $seminary);
@@ -326,6 +334,11 @@
 				$validationSettings[$field] = \nre\configs\AppConfig::$validation[$field];
 			}
 			
+			
+			// Set title
+			$this->addTitleLocalized('New %s-Quest', $groupsgroup['name']);
+			$this->addTitle($groupsgroup['name']);
+			$this->addTitle($seminary['title']);
 			
 			// Pass data to view
 			$this->set('seminary', $seminary);
@@ -436,6 +449,11 @@
 			}
 			
 			
+			// Set title
+			$this->addTitleLocalized('Edit %s-Quest', $groupsgroup['name']);
+			$this->addTitle($groupsgroup['name']);
+			$this->addTitle($seminary['title']);
+			
 			// Pass data to view
 			$this->set('seminary', $seminary);
 			$this->set('groupsgroup', $groupsgroup);
@@ -491,6 +509,11 @@
 				$this->redirect($this->linker->link(array('quest', $seminary['url'], $groupsgroup['url'], $quest['url']), 1));
 			}
 			
+			
+			// Set title
+			$this->addTitleLocalized('Delete %s-Quest', $groupsgroup['name']);
+			$this->addTitle($groupsgroup['name']);
+			$this->addTitle($seminary['title']);
 			
 			// Pass data to view
 			$this->set('seminary', $seminary);

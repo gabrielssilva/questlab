@@ -80,6 +80,9 @@
 			}
 			
 			
+			// Set titile
+			$this->addTitleLocalized('Seminaries');
+			
 			// Pass data to view
 			$this->set('seminaries', $seminaries);
 		}
@@ -147,6 +150,9 @@
 			}
 			
 			
+			// Set titile
+			$this->addTitle($seminary['title']);
+			
 			// Pass data to view
 			$this->set('seminary', $seminary);
 			$this->set('questgroupshierarchy', $questgroupshierarchy);
@@ -172,6 +178,10 @@
 				$user = $this->Seminaries->getSeminaryById($seminaryId);
 				$this->redirect($this->linker->link(array($seminary['url']), 1));
 			}
+			
+			
+			// Set titile
+			$this->addTitleLocalized('New seminary');
 		}
 		
 		
@@ -208,6 +218,9 @@
 			}
 			
 			
+			// Set titile
+			$this->addTitleLocalized('Edit seminary');
+			
 			// Pass data to view
 			$this->set('seminary', $seminary);
 		}
@@ -243,6 +256,9 @@
 				$this->redirect($this->linker->link(array('seminary', $seminary['url']), 1));
 			}
 			
+			
+			// Set titile
+			$this->addTitleLocalized('Delete seminary');
 			
 			// Show confirmation
 			$this->set('seminary', $seminary);

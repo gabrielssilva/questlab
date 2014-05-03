@@ -3,9 +3,11 @@
 	<img src="<?=$linker->link(array('media','seminarymoodpic',$seminary['url']))?>">
 </div>
 <?php endif ?>
-<h1><?=_('Seminaries')?></h1>
-<h2><?=_('Delete seminary')?></h2>
+<ul class="breadcrumbs">
+	<li><a href="<?=$linker->link('index',1)?>"><?=_('Seminaries')?></a></li>
+</ul>
 
+<h1><?=_('Delete seminary')?></h1>
 <?=sprintf(_('Should the seminary “%s” really be deleted?'), $seminary['title'])?>
 <form method="post">
 	<input type="submit" name="delete" value="<?=_('delete')?>" />

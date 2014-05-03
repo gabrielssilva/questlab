@@ -107,6 +107,10 @@
 			}
 			
 			
+			// Set titile
+			$this->addTitleLocalized('Quests');
+			$this->addTitle($seminary['title']);
+			
 			// Pass data to view
 			$this->set('seminary', $seminary);
 			$this->set('quests', $quests);
@@ -285,6 +289,10 @@
 			}
 			
 			
+			// Set titile
+			$this->addTitle($quest['title']);
+			$this->addTitle($seminary['title']);
+			
 			// Pass data to view
 			$this->set('seminary', $seminary);
 			$this->set('questgroup', $questgroup);
@@ -340,6 +348,11 @@
 			$solvedSubmissionCharacters = $this->Characters->getCharactersSolvedQuest($quest['id']);
 			
 			
+			// Set titile
+			$this->addTitleLocalized('Submissions');
+			$this->addTitle($quest['title']);
+			$this->addTitle($seminary['title']);
+			
 			// Pass data to view
 			$this->set('seminary', $seminary);
 			$this->set('questgroup', $questgroup);
@@ -390,6 +403,11 @@
 			// Render Questtype output
 			$output = $this->renderTaskSubmission($questtype['classname'], $seminary, $questgroup, $quest, $character);
 			
+			
+			// Set titile
+			$this->addTitleLocalized('Submission of %s', $character['name']);
+			$this->addTitle($quest['title']);
+			$this->addTitle($seminary['title']);
 			
 			// Pass data to view
 			$this->set('seminary', $seminary);
@@ -509,6 +527,10 @@
 				}
 			}
 			
+			
+			// Set titile
+			$this->addTitleLocalized('Create Quest');
+			$this->addTitle($seminary['title']);
 			
 			// Pass data to view
 			$this->set('seminary', $seminary);
