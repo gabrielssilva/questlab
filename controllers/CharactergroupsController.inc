@@ -402,7 +402,7 @@
 			
 			// Get all Characters of Seminary
 			$groupCharacterIds = array_map(function($c) { return $c['id']; }, $group['characters']);
-			$seminaryCharacters = $this->Characters->getCharactersForSeminary($seminary['id']);
+			$seminaryCharacters = $this->Characters->getCharactersForSeminary($seminary['id'], true);
 			$characters = array();
 			foreach($seminaryCharacters as &$character) {
 				if(!in_array($character['id'], $groupCharacterIds)) {
