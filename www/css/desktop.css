@@ -257,6 +257,7 @@ input[type="submit"][disabled]{text-shadow:1px 2px #d48c4e;background:#f9ac69;bo
 .grpqlist .date{padding:0 15px;border-right:1px solid #dad8d5}
 .grpqlist .group{padding:0 15px}
 .grpqlist .xp{float:right}
+.gqgllry li{display:inline-block}
 
 
 /** Achievements **/
