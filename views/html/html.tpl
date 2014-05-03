@@ -37,6 +37,7 @@
 	<script type="text/javascript" src="/js/dnd.js"></script>
 	<meta name="description" content="">
 	<meta name="robots" content="noindex,follow">
+	<link rel="icon" href="favicon.ico" type="image/x-icon">
 </head>
 
 <body>
