@@ -167,7 +167,7 @@
 					}
 					
 					// Upload media
-					if($validation === true)
+					if($validation === true || empty($valiadion))
 					{
 						// Create filename
 						$filename = sprintf(
