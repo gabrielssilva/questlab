@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: The Legend of Z\n"
-"POT-Creation-Date: 2014-05-02 16:11+0100\n"
-"PO-Revision-Date: 2014-05-02 16:11+0100\n"
+"POT-Creation-Date: 2014-05-03 22:40+0100\n"
+"PO-Revision-Date: 2014-05-03 22:41+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de_DE\n"
@@ -78,32 +78,32 @@ msgid "Allowed file types"
 msgstr "Erlaubte Dateiformate"
 
 #: questtypes/submit/html/quest.tpl:20
-#: views/html/charactergroupsquests/manage.tpl:66
+#: views/html/charactergroupsquests/manage.tpl:63
 #, php-format
 msgid "%s-files"
 msgstr "%s-Dateien"
 
 #: questtypes/submit/html/quest.tpl:20
-#: views/html/charactergroupsquests/manage.tpl:66
+#: views/html/charactergroupsquests/manage.tpl:63
 msgid "max."
 msgstr "max."
 
 #: questtypes/submit/html/quest.tpl:28
-msgid "Past submissions"
-msgstr "Vorherige Lösungen"
+msgid "Submissions"
+msgstr "Deine Lösungsvorschläge"
 
-#: questtypes/submit/html/quest.tpl:33 questtypes/submit/html/submission.tpl:6
+#: questtypes/submit/html/quest.tpl:32 questtypes/submit/html/submission.tpl:6
 #: views/html/quests/submissions.tpl:15 views/html/quests/submissions.tpl:25
 #: views/html/quests/submissions.tpl:35
 #, php-format
 msgid "submitted at %s on %s h"
 msgstr "eingereicht am %s um %s Uhr"
 
-#: questtypes/submit/html/quest.tpl:35
+#: questtypes/submit/html/quest.tpl:34
 msgid "This submission is waiting for approval"
 msgstr "Die Lösung wartet auf Bewertung"
 
-#: questtypes/submit/html/quest.tpl:42
+#: questtypes/submit/html/quest.tpl:41
 #, php-format
 msgid "Approved on %s at %s"
 msgstr "Bewertet am %s um %s Uhr"
@@ -366,7 +366,7 @@ msgstr "%s-Gruppe verwalten"
 #: views/html/charactergroups/group.tpl:31
 #: views/html/charactergroups/group.tpl:44
 #: views/html/charactergroupsquests/manage.tpl:21
-#: views/html/charactergroupsquests/manage.tpl:86
+#: views/html/charactergroupsquests/manage.tpl:81
 #: views/html/charactergroupsquests/quest.tpl:29
 #: views/html/charactergroupsquests/quest.tpl:77
 #: views/html/characters/character.tpl:77
@@ -568,16 +568,16 @@ msgstr "Medien"
 msgid "File invalid"
 msgstr "Die Datei ist ungültig"
 
-#: views/html/charactergroupsquests/manage.tpl:71
+#: views/html/charactergroupsquests/manage.tpl:66
 #: views/html/seminaries/edit.tpl:14 views/html/users/edit.tpl:103
 msgid "save"
 msgstr "speichern"
 
-#: views/html/charactergroupsquests/manage.tpl:84
+#: views/html/charactergroupsquests/manage.tpl:79
 msgid "Not attended"
 msgstr "Nicht teilgenommen"
 
-#: views/html/charactergroupsquests/manage.tpl:93
+#: views/html/charactergroupsquests/manage.tpl:88
 msgid "Set XPs"
 msgstr "Setze XP"
 
@@ -1126,6 +1126,9 @@ msgstr "Registrieren"
 #: views/html/users/user.tpl:46
 msgid "Roles"
 msgstr "Rollen"
+
+#~ msgid "Past submissions"
+#~ msgstr "Vorherige Lösungen"
 
 #~ msgid "Edit Character group"
 #~ msgstr "Gruppe bearbeiten"
