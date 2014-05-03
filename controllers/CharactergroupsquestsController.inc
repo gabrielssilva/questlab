@@ -153,14 +153,15 @@
 					
 					// Check mimetype
 					$mediaMimetype = null;
+					$file['mimetype'] = \hhu\z\Utils::getMimetype($file['tmp_name']);
 					foreach($mimetypes as &$mimetype) {
-						if($mimetype['mimetype'] == $file['type']) {
+						if($mimetype['mimetype'] == $file['mimetype']) {
 							$mediaMimetype = $mimetype;
 							break;
 						}
 					}
 					if(is_null($mediaMimetype)) {
-						$validation = $this->Validation->addValidationResult($validation, 'media', 'mimetype', $file['type']);
+						$validation = $this->Validation->addValidationResult($validation, 'media', 'mimetype', $file['mimetype']);
 					}
 					elseif($file['size'] > $mediaMimetype['size']) {
 						$validation = $this->Validation->addValidationResult($validation, 'media', 'size', $mediaMimetype['size']);

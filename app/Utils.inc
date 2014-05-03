@@ -107,6 +107,34 @@
 			return mail($to, $subject, $message, $header);
 		}
 		
+		
+		/**
+		 * Detect Mimetype of a file.
+		 * 
+		 * @param	string	$filename		Name of file to detect Mimetype of
+		 * @param	string	$defaultMimetype	Default Mimetype to use
+		 * @return	string				Detected Mimetype of file
+		 */
+		public static function getMimetype($filename, $defaultMimetype=null)
+		{
+			$mimetype = (!is_null($defaultMimetype)) ? $defaultMimetype : 'application/octet-stream';
+			// Use Fileinfo
+			if(class_exists('\finfo'))
+			{
+				$finfo = new \finfo(FILEINFO_MIME_TYPE);
+				if(!is_null($finfo)) {
+					$mimetype = $finfo->file($filename);
+				}
+			}
+			// Use deprecated mime_content_type()
+			elseif(function_exists('mime_content_type')) {
+				$mimetype = mime_content_type($filename);
+			}
+			
+			
+			return $mimetype;
+		}
+		
 	}
 
 ?>

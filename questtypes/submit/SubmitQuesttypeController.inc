@@ -56,15 +56,16 @@
 				// Check mimetype
 				$mimetypes = $this->Submit->getAllowedMimetypes($seminary['id']);
 				$answerMimetype = null;
+				$answer['mimetype'] = \hhu\z\Utils::getMimetype($answer['tmp_name']);
 				foreach($mimetypes as &$mimetype) {
-					if($mimetype['mimetype'] == $answer['type']) {
+					if($mimetype['mimetype'] == $answer['mimetype']) {
 						$answerMimetype = $mimetype;
 						break;
 					}
 				}
 				if(is_null($answerMimetype)) {
 					throw new \hhu\z\exceptions\SubmissionNotValidException(
-						new \hhu\z\exceptions\WrongFiletypeException($answer['type'])
+						new \hhu\z\exceptions\WrongFiletypeException($answer['mimetype'])
 					);
 				}
 				
