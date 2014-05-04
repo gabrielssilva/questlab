@@ -284,7 +284,7 @@
 			$data = $this->db->query(
 				"SELECT ($field >= $value) AS got ".
 				'FROM v_characters '.
-				'WHERE user_id = ?',
+				'WHERE id = ?',
 				'i',
 				$characterId
 			);
@@ -310,7 +310,7 @@
 			$data = $this->db->query(
 				"SELECT $field AS field ".
 				'FROM v_characters '.
-				'WHERE user_id = ?',
+				'WHERE id = ?',
 				'i',
 				$characterId
 			);
