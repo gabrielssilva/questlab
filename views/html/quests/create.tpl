@@ -40,5 +40,5 @@
 		<label for="task"><?=_('Task')?>:</label><br />
 		<textarea name="task" placeholder="<?=('Task')?>" style="width:100%; height:10em;"></textarea><br />
 	</fieldset>
-	<input type="submit" name="create" value="<?=_('Create')?>" />
+	<input type="submit" name="create" value="<?=_('create')?>" />
 </form>

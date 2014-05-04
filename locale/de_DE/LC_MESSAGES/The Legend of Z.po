@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: The Legend of Z\n"
-"POT-Creation-Date: 2014-05-04 01:22+0100\n"
-"PO-Revision-Date: 2014-05-04 01:22+0100\n"
+"POT-Creation-Date: 2014-05-04 01:43+0100\n"
+"PO-Revision-Date: 2014-05-04 01:44+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de_DE\n"
@@ -289,7 +289,8 @@ msgstr "Motto"
 #: views/html/charactergroups/creategroup.tpl:59
 #: views/html/charactergroups/creategroupsgroup.tpl:50
 #: views/html/charactergroupsquests/create.tpl:75
-#: views/html/characters/register.tpl:94 views/html/seminaries/create.tpl:14
+#: views/html/characters/register.tpl:94 views/html/questgroups/create.tpl:17
+#: views/html/quests/create.tpl:43 views/html/seminaries/create.tpl:14
 #: views/html/users/create.tpl:96
 msgid "create"
 msgstr "erstellen"
@@ -833,10 +834,6 @@ msgstr "Questgruppen"
 msgid "Create Questgroup"
 msgstr "Questgruppe erstellen"
 
-#: views/html/questgroups/create.tpl:17 views/html/quests/create.tpl:43
-msgid "Create"
-msgstr "Erstellen"
-
 #: views/html/questgroups/questgroup.tpl:45
 msgid "Found optional Questline"
 msgstr "Optionale Questline gefunden"
@@ -1137,6 +1134,9 @@ msgstr "Registrieren"
 #: views/html/users/user.tpl:46
 msgid "Roles"
 msgstr "Rollen"
+
+#~ msgid "Create"
+#~ msgstr "Erstellen"
 
 #~ msgid "Edit Character group"
 #~ msgstr "Gruppe bearbeiten"

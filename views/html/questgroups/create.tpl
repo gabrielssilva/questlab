@@ -14,5 +14,5 @@
 		<label for="title"><?=_('Title')?>:</label>
 		<input type="text" name="title" value="" placeholder="<?=_('Title')?>" /><br />
 	</fieldset>
-	<input type="submit" name="create" value="<?=_('Create')?>" />
+	<input type="submit" name="create" value="<?=_('create')?>" />
 </form>
