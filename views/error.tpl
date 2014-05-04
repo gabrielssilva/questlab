@@ -3,10 +3,11 @@
 
 <head>
 	<meta charset="utf-8" />
-	<title>Service Unavailable</title>
+	<title>Questlab</title>
 </head>
 
 <body>
+	<h1>Service Unavailable</h1>
 	<p>Die Anwendung steht zur Zeit leider nicht zur Verfügung.</p>
 </body>
 
