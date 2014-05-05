@@ -195,13 +195,26 @@
 		 * @param	int	$groupsgroupId	ID of the Character groups-group
 		 * @return	array			Character groups
 		 */
-		public function getGroupsForGroupsgroup($groupsgroupId)
+		public function getGroupsForGroupsgroup($groupsgroupId, $sortorder='name')
 		{
+			// Set sort order
+			switch($sortorder)
+			{
+				case 'xps':
+					$sortorder = 'xps DESC';
+				break;
+				case 'name':
+				default:
+					$sortorder = 'name ASC';
+				break;
+			}
+			
+			// Get and return Character groups
 			return $this->db->query(
 				'SELECT id, name, url, xps, motto, seminaryupload_id '.
 				'FROM v_charactergroups '.
 				'WHERE charactergroupsgroup_id = ? '.
-				'ORDER BY name',
+				"ORDER BY $sortorder",
 				'i',
 				$groupsgroupId
 			);

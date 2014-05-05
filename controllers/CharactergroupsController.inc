@@ -115,7 +115,7 @@
 			$groupsgroup = $this->Charactergroups->getGroupsgroupByUrl($seminary['id'], $groupsgroupUrl);
 			
 			// Get Character groups
-			$groups = $this->Charactergroups->getGroupsForGroupsgroup($groupsgroup['id']);
+			$groups = $this->Charactergroups->getGroupsForGroupsgroup($groupsgroup['id'], 'xps');
 			
 			// Get Character groups-group Quests
 			$quests = $this->Charactergroupsquests->getQuestsForCharactergroupsgroup($groupsgroup['id']);
