@@ -172,9 +172,16 @@
 		
 		
 		
+		/**
+		 * Check if an Character answer matches a Regex.
+		 * 
+		 * @param	string	$regex	Regex to match against
+		 * @param	string	$answer	Character answer to match
+		 * @return	boolean		Whether answer matches Regex or not
+		 */
 		private function isMatching($regex, $answer)
 		{
-			$score = preg_match($regex, $answer);
+			$score = preg_match($regex, trim($answer));
 			
 			
 			return ($score !== false && $score > 0);
