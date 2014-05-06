@@ -62,7 +62,7 @@
 			'group' => array('admin', 'moderator', 'user'),
 			'managegroup' => array('admin', 'moderator'),
 			'creategroup' => array('admin', 'moderator'),
-			'editgroup' => array('admin', 'moderator'),
+			'editgroup' => array('admin', 'moderator', 'user'),
 			'deletegroup' => array('admin', 'moderator')
 		);
 		
@@ -545,6 +545,15 @@
 			
 			// Get Character group
 			$group = $this->Charactergroups->getGroupByUrl($groupsgroup['id'], $groupUrl);
+			$group['characters'] = $this->Characters->getCharactersForGroup($group['id']);
+			
+			// Check permission
+			if(count(array_intersect(array('admin', 'moderator'), \hhu\z\controllers\SeminaryController::$character['characterroles'])) == 0 && !in_array(\hhu\z\controllers\SeminaryController::$character['id'], array_map(function($c) { return $c['id']; }, $group['characters']))) {
+				throw new \nre\exceptions\AccessDeniedException();
+			}
+			
+			// Get allowed mimetypes
+			$mimetypes = \nre\configs\AppConfig::$mimetypes['images'];
 			
 			// Values
 			$charactergroupname = $group['name'];
@@ -557,11 +566,56 @@
 			{
 				// Get params and validate them
 				$validation = $this->Validation->validateParams($this->request->getPostParams(), $fields);
-				$charactergroupname = $this->request->getPostParam('charactergroupname');
+				$charactergroupname = (count(array_intersect(array('admin','moderator'), \hhu\z\controllers\SeminaryController::$character['characterroles'])) > 0) ? $this->request->getPostParam('charactergroupname') : $group['name'];
 				if($this->Charactergroups->characterGroupNameExists($charactergroupname, $group['id'])) {
 					$validation = $this->Validation->addValidationResult($validation, 'charactergroupname', 'exist', true);
 				}
 				$motto = $this->request->getPostParam('motto');
+				
+				// Upload icon
+				if(!empty($_FILES) && array_key_exists('icon', $_FILES))
+				{
+					$file = $_FILES['icon'];
+					
+					// Check error
+					if($file['error'] !== 0 || empty($file['tmp_name'])) {
+						$validation = $this->Validation->addValidationResult($validation, 'icon', 'error', $file['error']);
+					}
+					
+					// Check mimetype
+					$mediaMimetype = null;
+					$file['mimetype'] = \hhu\z\Utils::getMimetype($file['tmp_name'], $file['type']);
+					foreach($mimetypes as &$mimetype) {
+						if($mimetype['mimetype'] == $file['mimetype']) {
+							$mediaMimetype = $mimetype;
+							break;
+						}
+					}
+					if(is_null($mediaMimetype)) {
+						$validation = $this->Validation->addValidationResult($validation, 'icon', 'mimetype', $file['mimetype']);
+					}
+					elseif($file['size'] > $mediaMimetype['size']) {
+						$validation = $this->Validation->addValidationResult($validation, 'icon', 'size', $mediaMimetype['size']);
+					}
+					
+					// Create filename
+					$filename = sprintf('charactergroup-%s', $group['url']);
+					
+					// Upload icon
+					if($validation === true || empty($valiadion)) {
+						$mediaId = $this->Media->createCharactergroupMedia(
+							$this->Auth->getUserId(),
+							$seminary['id'],
+							$filename,
+							'',
+							$file['mimetype'],
+							$file['tmp_name']
+						);
+						if($mediaId !== false) {
+							$this->Charactergroups->setMediaForGroup($group['id'], $mediaId);
+						}
+					}
+				}
 				
 				// Edit group
 				if($validation === true)
@@ -593,6 +647,7 @@
 			// Pass data to view
 			$this->set('seminary', $seminary);
 			$this->set('groupsgroup', $groupsgroup);
+			$this->set('group', $group);
 			$this->set('charactergroupname', $charactergroupname);
 			$this->set('motto', $motto);
 			$this->set('validation', $validation);

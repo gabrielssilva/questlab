@@ -45,7 +45,7 @@
 		 * 
 		 * @var array
 		 */
-		public $models = array('seminaries', 'achievements', 'media', 'avatars');
+		public $models = array('seminaries', 'achievements', 'media', 'avatars', 'charactergroups');
 		
 		
 		
@@ -276,6 +276,48 @@
 		}
 		
 		
+		/**
+		 * Action: charactergroup
+		 * 
+		 * Display the icon for a Character group of a Seminary.
+		 * 
+		 * @throws	IdNotFoundException
+		 * @param	string	$seminaryUrl	URL-Title of a Seminary
+		 * @param	string	$groupsgroupUrl	URL-Title of a Character groups-group
+		 * @param	string	$groupUrl	URL-Title of a Character group
+		 */
+		public function charactergroup($seminaryUrl, $groupsgroupUrl, $groupUrl)
+		{
+			// Get seminary
+			$seminary = $this->Seminaries->getSeminaryByUrl($seminaryUrl);
+			
+			// Get Character groups-group
+			$groupsgroup = $this->Charactergroups->getGroupsgroupByUrl($seminary['id'], $groupsgroupUrl);
+			
+			// Get Character group
+			$group = $this->Charactergroups->getGroupByUrl($groupsgroup['id'], $groupUrl);
+			
+			// Check media
+			if(is_null($group['charactergroupsmedia_id'])) {
+				$this->redirect($this->linker->link(array('grafics','charactergroup.jpg')));
+			}
+			
+			// Get media
+			$media = $this->Media->getSeminaryMediaById($group['charactergroupsmedia_id']);
+			
+			// Get file
+			$file = $this->getMediaFile($media, 'charactergroup');
+			if(is_null($file)) {
+				return;
+			}
+			
+			
+			// Pass data to view
+			$this->set('media', $media);
+			$this->set('file', $file);
+		}
+		
+		
 		
 		
 		/**
@@ -373,6 +415,14 @@
 						$format,
 						\nre\configs\AppConfig::$media['avatar']['width'],
 						\nre\configs\AppConfig::$media['avatar']['height']
+					);
+				break;
+				case 'charactergroup':
+					$file = self::resizeImage(
+						$media['filename'],
+						$format,
+						\nre\configs\AppConfig::$media['charactergroup']['width'],
+						\nre\configs\AppConfig::$media['charactergroup']['height']
 					);
 				break;
 				default:

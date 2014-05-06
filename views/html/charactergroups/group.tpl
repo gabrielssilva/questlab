@@ -9,20 +9,20 @@
 	<li><i class="fa fa-chevron-right fa-fw"></i><a href="<?=$linker->link(array('groupsgroup',$seminary['url'],$groupsgroup['url']),1)?>"><?=$groupsgroup['name']?></a></li>
 </ul>
 
-<?php if(count(array_intersect(array('admin', 'moderator'), \hhu\z\controllers\SeminaryController::$character['characterroles'])) > 0) : ?>
+<?php if(count(array_intersect(array('admin', 'moderator'), \hhu\z\controllers\SeminaryController::$character['characterroles'])) > 0 || in_array(\hhu\z\controllers\SeminaryController::$character['id'], array_map(function($c) { return $c['id']; }, $group['characters']))) : ?>
 <nav class="admin">
+	<?php if(count(array_intersect(array('admin', 'moderator'), \hhu\z\controllers\SeminaryController::$character['characterroles'])) > 0 || in_array(\hhu\z\controllers\SeminaryController::$character['id'], array_map(function($c) { return $c['id']; }, $group['characters']))) : ?>
 	<li><a href="<?=$linker->link(array('editgroup',$seminary['url'],$groupsgroup['url'],$group['url']),1)?>"><?=sprintf(_('Edit %s Character group'), $groupsgroup['name'])?></a></li>
+	<?php endif ?>
+	<?php if(count(array_intersect(array('admin', 'moderator'), \hhu\z\controllers\SeminaryController::$character['characterroles'])) > 0) : ?>
 	<li><a href="<?=$linker->link(array('deletegroup',$seminary['url'],$groupsgroup['url'],$group['url']),1)?>"><?=sprintf(_('Delete %s Character group'), $groupsgroup['name'])?></a></li>
 	<li><a href="<?=$linker->link(array('managegroup',$seminary['url'],$groupsgroup['url'],$group['url']),1)?>"><?=sprintf(_('Manage %s Character group'), $groupsgroup['name'])?></a></li>
+	<?php endif ?>
 </nav>
 <?php endif ?>
 
 <div class="gbanner cf">
-	<?php if(!is_null($group['seminaryupload_id'])) : ?>
-	<img src="<?=$linker->link(array('uploads','charactergroup',$seminary['url'],$groupsgroup['url'],$group['url']))?>" class="gbanner">
-	<?php else : ?>
-	<img src="<?=$linker->link(array('grafics','charactergroup.jpg'))?>" class="gbanner">
-	<?php endif ?>
+	<img src="<?=$linker->link(array('media','charactergroup',$seminary['url'],$groupsgroup['url'],$group['url']))?>" class="gbanner">
 	<h1><?=$group['name']?></h1>
 	<p>"<?=$group['motto']?>"</p>
 </div>

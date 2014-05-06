@@ -190,6 +190,88 @@
 			return $uploadId;
 		}
 		
+		
+		/**
+		 * Create a new Character groups media by creating a new Seminarymedia and
+		 * adding it to the list of media for Character groups.
+		 * 
+		 * @param	int	$userId
+		 * @param	int	$seminaryId
+		 * @param	string	$filename
+		 * @param	string	$description
+		 * @param	string	$mimetype
+		 * @param	string	$tmpFilename
+		 * @return
+		 */
+		public function createCharactergroupMedia($userId, $seminaryId, $filename, $description, $mimetype, $tmpFilename)
+		{
+			$mediaId = false;
+			$this->db->setAutocommit(false);
+			
+			try {
+				// Check for existing database record
+				$data = $this->db->query(
+					'SELECT id '.
+					'FROM seminarymedia '.
+					'WHERE url = ?',
+					's',
+					\nre\core\Linker::createLinkParam($filename)
+				);
+				if(!empty($data)) {
+					$mediaId = $data[0]['id'];
+				}
+				
+				// Create database record
+				if($mediaId === false)
+				{
+					$this->db->query(
+						'INSERT INTO seminarymedia '.
+						'(created_user_id, seminary_id, name, url, description, mimetype) '.
+						'VALUES '.
+						'(?, ? ,? ,?, ?, ?)',
+						'iissss',
+						$userId,
+						$seminaryId,
+						$filename,
+						\nre\core\Linker::createLinkParam($filename),
+						$description,
+						$mimetype
+					);
+					$mediaId = $this->db->getInsertId();
+				}
+				
+				// Add media to Character groups media
+				$this->db->query(
+					'INSERT INTO charactergroupsmedia '.
+					'(seminarymedia_id, created_user_id) '.
+					'VALUES '.
+					'(?, ?) '.
+					'ON DUPLICATE KEY UPDATE '.
+					'created_user_id = ?',
+					'iii',
+					$mediaId,
+					$userId,
+					$userId
+				);
+			
+				// Create filename
+				$filename = ROOT.DS.'seminarymedia'.DS.$mediaId;
+				if(!move_uploaded_file($tmpFilename, $filename))
+				{
+					$this->db->rollback();
+					$mediaId = false;
+				}
+			}
+			catch(\nre\exceptions\DatamodelException $e) {
+				$this->db->rollback();
+				$this->db->setAutocommit(true);
+			}
+			
+			
+			$this->db->setAutocommit(true);
+			return $mediaId;
+		}
+		
 	}
 
 ?>

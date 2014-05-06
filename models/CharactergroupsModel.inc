@@ -211,7 +211,7 @@
 			
 			// Get and return Character groups
 			return $this->db->query(
-				'SELECT id, name, url, xps, motto, seminaryupload_id '.
+				'SELECT id, name, url, xps, motto, charactergroupsmedia_id '.
 				'FROM v_charactergroups '.
 				'WHERE charactergroupsgroup_id = ? '.
 				"ORDER BY $sortorder",
@@ -230,7 +230,7 @@
 		public function getGroupsForCharacter($characterId)
 		{
 			return $this->db->query(
-				'SELECT charactergroups.id, charactergroups.charactergroupsgroup_id, charactergroups.name, charactergroups.url, charactergroups.seminaryupload_id, charactergroups.xps, charactergroupsgroups.id AS charactergroupsgroup_id, charactergroupsgroups.name AS charactergroupsgroup_name, charactergroupsgroups.url AS charactergroupsgroup_url '.
+				'SELECT charactergroups.id, charactergroups.charactergroupsgroup_id, charactergroups.name, charactergroups.url, charactergroups.charactergroupsmedia_id, charactergroups.xps, charactergroupsgroups.id AS charactergroupsgroup_id, charactergroupsgroups.name AS charactergroupsgroup_name, charactergroupsgroups.url AS charactergroupsgroup_url '.
 				'FROM characters_charactergroups '.
 				'LEFT JOIN v_charactergroups AS charactergroups ON charactergroups.id = characters_charactergroups.charactergroup_id '.
 				'LEFT JOIN charactergroupsgroups ON charactergroupsgroups.id = charactergroups.charactergroupsgroup_id '.
@@ -252,7 +252,7 @@
 		public function getGroupByUrl($groupsgroupId, $groupUrl)
 		{
 			$data = $this->db->query(
-				'SELECT id, name, url, xps, motto, seminaryupload_id '.
+				'SELECT id, name, url, xps, motto, charactergroupsmedia_id '.
 				'FROM v_charactergroups '.
 				'WHERE charactergroupsgroup_id = ? AND url = ?',
 				'is',
@@ -277,7 +277,7 @@
 		public function getGroupById($groupId)
 		{
 			$data = $this->db->query(
-				'SELECT id, name, url, xps, motto, seminaryupload_id '.
+				'SELECT id, name, url, xps, motto, charactergroupsmedia_id '.
 				'FROM v_charactergroups '.
 				'WHERE id = ?',
 				'i',
@@ -368,6 +368,25 @@
 			
 			
 			return $this->db->getInsertId();
+		}
+		
+		
+		/**
+		 * Set the media for a Character group.
+		 * 
+		 * @param	int	$groupId	ID of Character group to set media for
+		 * @param	int	$mediaId	ID of Character groups media
+		 */
+		public function setMediaForGroup($groupId, $mediaId)
+		{
+			$this->db->query(
+				'UPDATE charactergroups '.
+				'SET charactergroupsmedia_id = ? '.
+				'WHERE id = ?',
+				'ii',
+				$mediaId,
+				$groupId
+			);
 		}
 		
 		

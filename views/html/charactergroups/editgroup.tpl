@@ -49,10 +49,17 @@
 	<?php endforeach ?>
 </ul>
 <?php endif ?>
-<form method="post" action="" class="logreg">
+<form method="post" class="logreg" enctype="multipart/form-data">
+	<img src="<?=$linker->link(array('media','charactergroup',$seminary['url'],$groupsgroup['url'],$group['url']))?>" class="gbanner">
+	<input type="file" name="icon" />
 	<fieldset>
 		<label for="charactergroupname"><?=_('Name')?>:</label>
+		<?php if(count(array_intersect(array('admin','moderator'), \hhu\z\controllers\SeminaryController::$character['characterroles'])) > 0) : ?>
 		<input type="text" id="charactergroupname" name="charactergroupname" placeholder="<?=_('Name')?>" title="<?=_('Name')?>" required="required" maxlength="<?=$validationSettings['charactergroupname']['maxlength']?>" value="<?=$charactergroupname?>" <?=(array_key_exists('charactergroupname', $validation)) ? 'class="invalid"' : null?> /><br />
+		<?php else : ?>
+		<input type="text" id="charactergroupname" name="charactergroupname" disabled="disabled" value="<?=$charactergroupname?>" <?=(array_key_exists('charactergroupname', $validation)) ? 'class="invalid"' : null?> /><br />
+		<input type="hidden" name="charactergroupname" value="<?=$charactergroupname?>" />
+		<?php endif ?>
 		<label for="motto"><?=_('Motto')?>:</label>
 		<input type="text" id="motto" name="motto" placeholder="<?=_('Motto')?>" title="<?=_('Motto')?>" maxlength="<?=$validationSettings['motto']['maxlength']?>" value="<?=$motto?>" <?=(array_key_exists('motto', $validation)) ? 'class="invalid"' : null?> /><br />
 	</fieldset>

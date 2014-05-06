@@ -97,11 +97,7 @@
 			<?php foreach($groups as &$group) : ?>
 			<li>
 				<a href="<?=$linker->link(array('charactergroups','group',$seminary['url'],$group['charactergroupsgroup_url'],$group['url']))?>">
-					<?php if(!is_null($group['seminaryupload_id'])) : ?>
-					<img src="<?=$linker->link(array('uploads','charactergroup',$seminary['url'],$group['groupsgroup']['url'],$group['url']))?>" class="gbanner">
-					<?php else : ?>
-					<img src="<?=$linker->link(array('grafics','charactergroup.jpg'))?>" class="gbanner">
-					<?php endif ?>
+					<img src="<?=$linker->link(array('media','charactergroup',$seminary['url'],$group['groupsgroup']['url'],$group['url']))?>" class="gbanner">
 				</a>
 				<p><a href="<?=$linker->link(array('charactergroups','group',$seminary['url'],$group['charactergroupsgroup_url'],$group['url']))?>"><?=$group['name']?></a></p>
 				<p><small><?=sprintf(_('%d XPs'), $group['xps'])?></small></p>

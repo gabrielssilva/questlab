@@ -10,11 +10,7 @@
 </ul>
 
 <div class="gbanner cf">
-	<?php if(!is_null($group['seminaryupload_id'])) : ?>
-	<img src="<?=$linker->link(array('uploads','charactergroup',$seminary['url'],$groupsgroup['url'],$group['url']))?>" class="gbanner">
-	<?php else : ?>
-	<img src="<?=$linker->link(array('grafics','charactergroup.jpg'))?>" class="gbanner">
-	<?php endif ?>
+	<img src="<?=$linker->link(array('media','charactergroup',$seminary['url'],$groupsgroup['url'],$group['url']))?>" class="gbanner">
 	<h1><?=$group['name']?></h1>
 	<p>"<?=$group['motto']?>"</p>
 </div>

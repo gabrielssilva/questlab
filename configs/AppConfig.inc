@@ -85,6 +85,10 @@
 			'avatar' => array(
 				'width'		=> 500,
 				'height'	=> 500
+			),
+			'charactergroup' => array(
+				'width'		=> 80,
+				'height'	=> 80
 			)
 		);
 		
@@ -96,10 +100,20 @@
 		 * @var array
 		 */
 		public static $mimetypes = array(
+			'images' => array(
+				array(
+					'mimetype'	=> 'image/jpeg',
+					'size'		=> 1048576
+				),
+				array(
+					'mimetype'	=> 'image/png',
+					'size'		=> 1048576
+				)
+			),
 			'charactergroupsquests' => array(
 				array(
 					'mimetype'	=> 'image/jpeg',
-					'size'		=> 1048576,
+					'size'		=> 1048576
 				)
 			)
 		);
