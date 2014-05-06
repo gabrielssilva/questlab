@@ -62,8 +62,7 @@
 			
 			// Set headers for caching control
 			$response->addHeader("Pragma: public");
-			$response->addHeader("Cache-control: public, max-age=".(60*60*24));
-			$response->addHeader("Expires: ".gmdate('r', time()+(60*60*24)));
+			$response->addHeader("Cache-control: must-revalidate");
 			$response->addHeader("Date: ".gmdate(\DateTime::RFC822));
 		}
 		
@@ -302,7 +301,7 @@
 			$headerModifiedSince = $this->request->getServerParam('HTTP_IF_MODIFIED_SINCE');
 			$headerNoneMatch = $this->request->getServerParam('HTTP_IF_NONE_MATCH');
 			if(
-				!is_null($headerModifiedSince) && $fileLastModified < strtotime($headerModifiedSince) &&
+				!is_null($headerModifiedSince) && strtotime($fileLastModified) <= strtotime($headerModifiedSince) &&
 				!is_null($headerNoneMatch) && $headerNoneMatch == $fileEtag
 			) {
 				$this->response->setExit(true);
