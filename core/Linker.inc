@@ -75,7 +75,7 @@
 			foreach($params as $param)
 			{
 				// Delete critical signs
-				$specials = array('/', '?', '&');
+				$specials = array('/', '?', '&', '#');
 				foreach($specials as &$special) {
 					$param = str_replace($special, '', $param);
 				}
