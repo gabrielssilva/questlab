@@ -520,7 +520,7 @@
 			if(file_exists($tempFileName))
 			{
 				// Check age of file
-				if(date('r', filemtime($tempFileName)+(60*60*24)) > date('r', time())) {
+				if(filemtime($fileName) > filemtime($tempFileName)) {
 					// Too old, delete
 					unlink($tempFileName);
 				}
