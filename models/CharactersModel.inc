@@ -88,7 +88,8 @@
 				'FROM v_characters AS characters '.
 				'LEFT JOIN characters_charactergroups ON characters_charactergroups.character_id = characters.id '.
 				'LEFT JOIN charactertypes ON charactertypes.id = characters.charactertype_id '.
-				'WHERE characters_charactergroups.charactergroup_id = ?',
+				'WHERE characters_charactergroups.charactergroup_id = ? '.
+				'ORDER BY characters.xps DESC',
 				'i',
 				$groupId
 			);
