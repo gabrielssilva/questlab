@@ -1,4 +1,5 @@
 syntax: regexp
+^logs/*
 ^media/*
 ^tmp/*
 ^uploads/*
