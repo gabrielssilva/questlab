@@ -70,7 +70,7 @@
 		public function getUnachievedOnlyOnceAchievementsForSeminary($seminaryId)
 		{
 			return $this->db->query(
-				'SELECT achievements.id, achievementconditions.condition, title, url, description, progress, hidden, only_once, all_conditions, deadline, unachieved_achievementsmedia_id, achieved_achievementsmedia_id '.
+				'SELECT achievements.id, achievements.pos, achievementconditions.condition, title, url, description, progress, hidden, only_once, all_conditions, deadline, unachieved_achievementsmedia_id, achieved_achievementsmedia_id '.
 				'FROM achievements '.
 				'LEFT JOIN achievementconditions ON achievementconditions.id = achievements.achievementcondition_id '.
 				'WHERE achievements.seminary_id = ? AND only_once = 1 AND NOT EXISTS ('.
@@ -93,7 +93,7 @@
 		public function getDeadlineAchievements($seminaryId)
 		{
 			return $this->db->query(
-				'SELECT achievements.id, achievementconditions.condition, title, url, description, progress, hidden, only_once, all_conditions, deadline, unachieved_achievementsmedia_id, achieved_achievementsmedia_id '.
+				'SELECT achievements.id, achievements.pos, achievementconditions.condition, title, url, description, progress, hidden, only_once, all_conditions, deadline, unachieved_achievementsmedia_id, achieved_achievementsmedia_id '.
 				'FROM achievements '.
 				'LEFT JOIN achievementconditions ON achievementconditions.id = achievements.achievementcondition_id '.
 				'WHERE achievements.seminary_id = ? AND deadline IS NOT NULL '.
@@ -114,7 +114,7 @@
 		public function getSeldomAchievements($seminaryId, $count, $alsoWithDeadline=true)
 		{
 			return $this->db->query(
-				'SELECT achievements.id, achievements.title, achievements.url, achievements.description, achievements.progress, achievements.hidden, achievements.unachieved_achievementsmedia_id, achievements.achieved_achievementsmedia_id, count(DISTINCT achievements_characters.character_id) AS c '.
+				'SELECT achievements.id, achievements.pos, achievements.title, achievements.url, achievements.description, achievements.progress, achievements.hidden, achievements.unachieved_achievementsmedia_id, achievements.achieved_achievementsmedia_id, count(DISTINCT achievements_characters.character_id) AS c '.
 				'FROM achievements_characters '.
 				'INNER JOIN characters_characterroles ON characters_characterroles.character_id = achievements_characters.character_id '.
 				'INNER JOIN characterroles ON characterroles.id = characters_characterroles.characterrole_id AND characterroles.name = ? '. 
@@ -141,7 +141,7 @@
 		public function getAchievedAchievementsForCharacter($characterId, $alsoWithDeadline=true)
 		{
 			return $this->db->query(
-				'SELECT achievements.id, achievements_characters.created, achievements.title, achievements.url, achievements.description, achievements.progress, unachieved_achievementsmedia_id, achieved_achievementsmedia_id '.
+				'SELECT achievements.id, achievements.pos, achievements_characters.created, achievements.title, achievements.url, achievements.description, achievements.progress, unachieved_achievementsmedia_id, achieved_achievementsmedia_id '.
 				'FROM achievements '.
 				'INNER JOIN achievements_characters ON achievements_characters.achievement_id = achievements.id '.
 				'WHERE achievements_characters.character_id = ? '.
@@ -163,7 +163,7 @@
 		public function getUnachhievedAchievementsForCharacter($seminaryId, $characterId, $includeOnlyOnce=false, $alsoWithDeadline=true)
 		{
 			return $this->db->query(
-				'SELECT achievements.id, achievementconditions.condition, title, url, description, progress, hidden, only_once, all_conditions, deadline, unachieved_achievementsmedia_id, achieved_achievementsmedia_id '.
+				'SELECT achievements.id, achievements.pos, achievementconditions.condition, title, url, description, progress, hidden, only_once, all_conditions, deadline, unachieved_achievementsmedia_id, achieved_achievementsmedia_id '.
 				'FROM achievements '.
 				'LEFT JOIN achievementconditions ON achievementconditions.id = achievements.achievementcondition_id '.
 				'WHERE achievements.seminary_id = ? AND only_once <= ? AND NOT EXISTS ('.

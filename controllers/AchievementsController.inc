@@ -74,7 +74,16 @@
 			$achievedAchievements = $this->Achievements->getAchievedAchievementsForCharacter($character['id'], false);
 			
 			// Get unachieved Achievements
-			$unachievedAchievements = $this->Achievements->getUnachhievedAchievementsForCharacter($seminary['id'], $character['id'], true, false);
+			$unachievedAchievements = array_merge(
+				$this->Achievements->getUnachhievedAchievementsForCharacter($seminary['id'], $character['id'], false, false),
+				$this->Achievements->getUnachievedOnlyOnceAchievementsForSeminary($seminary['id'])
+			);
+			usort($unachievedAchievements, function($a, $b) {
+				if($a['pos'] == $b['pos']) {
+					return 0;
+				}
+				return ($a['pos'] > $b['pos']) ? 1 : -1;
+			});
 			foreach($unachievedAchievements as &$achievement)
 			{
 				// Get Character progress
