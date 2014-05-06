@@ -12,7 +12,9 @@
 <div class="gbanner cf">
 	<img src="<?=$linker->link(array('media','charactergroup',$seminary['url'],$groupsgroup['url'],$group['url']))?>" class="gbanner">
 	<h1><?=$group['name']?></h1>
+	<?php if(!empty($group['motto'])) : ?>
 	<p>"<?=$group['motto']?>"</p>
+	<?php endif ?>
 </div>
 <ul class="gdata cf">
 	<li><?=$group['rank']?>. <?=_('Rank')?></li>
