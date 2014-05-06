@@ -38,9 +38,6 @@
 							default: echo _('Motto invalid');
 						}
 					break;
-					default:
-						echo $exception->getMessage();
-					break;
 				} ?>
 			</li>
 			<?php endforeach ?>
@@ -49,7 +46,17 @@
 	<?php endforeach ?>
 </ul>
 <?php endif ?>
-<form method="post" action="" class="logreg">
+<form method="post" action="" class="logreg" enctype="multipart/form-data">
+	<fieldset>
+		<legend><?=_('Icon')?></legend>
+		<input type="file" name="icon" />
+		<p><?=_('Allowed file types')?>:</p>
+		<ul>
+			<?php foreach($mimetypes as &$mimetype) : ?>
+			<li><?=sprintf(_('%s-files'), strtoupper(explode('/',$mimetype['mimetype'])[1]))?> <?php if($mimetype['size'] > 0) : ?>(<?=_('max.')?> <?=round($mimetype['size']/(1024*1024),2)?> MiB)<?php endif ?></li>
+			<?php endforeach ?>
+		</ul>
+	</fieldset>
 	<fieldset>
 		<label for="charactergroupname"><?=_('Name')?>:</label>
 		<input type="text" id="charactergroupname" name="charactergroupname" placeholder="<?=_('Name')?>" title="<?=_('Name')?>" required="required" maxlength="<?=$validationSettings['charactergroupname']['maxlength']?>" value="<?=$charactergroupname?>" <?=(array_key_exists('charactergroupname', $validation)) ? 'class="invalid"' : null?> /><br />

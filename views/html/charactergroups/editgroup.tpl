@@ -38,9 +38,6 @@
 							default: echo _('Motto invalid');
 						}
 					break;
-					default:
-						echo $exception->getMessage();
-					break;
 				} ?>
 			</li>
 			<?php endforeach ?>
@@ -50,8 +47,17 @@
 </ul>
 <?php endif ?>
 <form method="post" class="logreg" enctype="multipart/form-data">
-	<img src="<?=$linker->link(array('media','charactergroup',$seminary['url'],$groupsgroup['url'],$group['url']))?>" class="gbanner">
-	<input type="file" name="icon" />
+	<fieldset>
+		<legend><?=_('Icon')?></legend>
+		<img src="<?=$linker->link(array('media','charactergroup',$seminary['url'],$groupsgroup['url'],$group['url']))?>" class="gbanner"><br />
+		<input type="file" name="icon" />
+		<p><?=_('Allowed file types')?>:</p>
+		<ul>
+			<?php foreach($mimetypes as &$mimetype) : ?>
+			<li><?=sprintf(_('%s-files'), strtoupper(explode('/',$mimetype['mimetype'])[1]))?> <?php if($mimetype['size'] > 0) : ?>(<?=_('max.')?> <?=round($mimetype['size']/(1024*1024),2)?> MiB)<?php endif ?></li>
+			<?php endforeach ?>
+		</ul>
+	</fieldset>
 	<fieldset>
 		<label for="charactergroupname"><?=_('Name')?>:</label>
 		<?php if(count(array_intersect(array('admin','moderator'), \hhu\z\controllers\SeminaryController::$character['characterroles'])) > 0) : ?>

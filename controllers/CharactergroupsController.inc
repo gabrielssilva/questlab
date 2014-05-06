@@ -469,6 +469,9 @@
 			// Get Character groups-group
 			$groupsgroup = $this->Charactergroups->getGroupsgroupByUrl($seminary['id'], $groupsgroupUrl);
 			
+			// Get allowed mimetypes
+			$mimetypes = \nre\configs\AppConfig::$mimetypes['images'];
+			
 			// Values
 			$charactergroupname = '';
 			$motto = '';
@@ -486,6 +489,34 @@
 				}
 				$motto = $this->request->getPostParam('motto');
 				
+				// Upload icon
+				$icon = null;
+				if(!empty($_FILES) && array_key_exists('icon', $_FILES) && $_FILES['icon']['error'] != UPLOAD_ERR_NO_FILE)
+				{
+					$icon = $_FILES['icon'];
+					
+					// Check error
+					if($icon['error'] !== UPLOAD_ERR_OK) {
+						$validation = $this->Validation->addValidationResult($validation, 'icon', 'error', $icon['error']);
+					}
+					
+					// Check mimetype
+					$mediaMimetype = null;
+					$icon['mimetype'] = \hhu\z\Utils::getMimetype($icon['tmp_name'], $icon['type']);
+					foreach($mimetypes as &$mimetype) {
+						if($mimetype['mimetype'] == $icon['mimetype']) {
+							$mediaMimetype = $mimetype;
+							break;
+						}
+					}
+					if(is_null($mediaMimetype)) {
+						$validation = $this->Validation->addValidationResult($validation, 'icon', 'mimetype', $icon['mimetype']);
+					}
+					elseif($icon['size'] > $mediaMimetype['size']) {
+						$validation = $this->Validation->addValidationResult($validation, 'icon', 'size', $mediaMimetype['size']);
+					}
+				}
+				
 				// Create group
 				if($validation === true)
 				{
@@ -495,9 +526,25 @@
 						$charactergroupname,
 						$motto
 					);
+					$group = $this->Charactergroups->getGroupById($groupId);
+					
+					// Upload icon
+					if(!is_null($icon))
+					{
+						$mediaId = $this->Media->createCharactergroupMedia(
+							$this->Auth->getUserId(),
+							$seminary['id'],
+							sprintf('charactergroup-%s', $group['url']),
+							'',
+							$icon['mimetype'],
+							$icon['tmp_name']
+						);
+						if($mediaId !== false) {
+							$this->Charactergroups->setMediaForGroup($group['id'], $mediaId);
+						}
+					}
 					
 					// Redirect to group page
-					$group = $this->Charactergroups->getGroupById($groupId);
 					$this->redirect($this->linker->link(array('group', $seminary['url'], $groupsgroup['url'], $group['url']), 1));
 				}
 			}
@@ -519,6 +566,7 @@
 			$this->set('groupsgroup', $groupsgroup);
 			$this->set('charactergroupname', $charactergroupname);
 			$this->set('motto', $motto);
+			$this->set('mimetypes', $mimetypes);
 			$this->set('validation', $validation);
 			$this->set('validationSettings', $validationSettings);
 		}
@@ -573,47 +621,30 @@
 				$motto = $this->request->getPostParam('motto');
 				
 				// Upload icon
-				if(!empty($_FILES) && array_key_exists('icon', $_FILES))
+				$icon = null;
+				if(!empty($_FILES) && array_key_exists('icon', $_FILES) && $_FILES['icon']['error'] != UPLOAD_ERR_NO_FILE)
 				{
-					$file = $_FILES['icon'];
+					$icon = $_FILES['icon'];
 					
 					// Check error
-					if($file['error'] !== 0 || empty($file['tmp_name'])) {
-						$validation = $this->Validation->addValidationResult($validation, 'icon', 'error', $file['error']);
+					if($icon['error'] !== UPLOAD_ERR_OK) {
+						$validation = $this->Validation->addValidationResult($validation, 'icon', 'error', $icon['error']);
 					}
 					
 					// Check mimetype
 					$mediaMimetype = null;
-					$file['mimetype'] = \hhu\z\Utils::getMimetype($file['tmp_name'], $file['type']);
+					$icon['mimetype'] = \hhu\z\Utils::getMimetype($icon['tmp_name'], $icon['type']);
 					foreach($mimetypes as &$mimetype) {
-						if($mimetype['mimetype'] == $file['mimetype']) {
+						if($mimetype['mimetype'] == $icon['mimetype']) {
 							$mediaMimetype = $mimetype;
 							break;
 						}
 					}
 					if(is_null($mediaMimetype)) {
-						$validation = $this->Validation->addValidationResult($validation, 'icon', 'mimetype', $file['mimetype']);
+						$validation = $this->Validation->addValidationResult($validation, 'icon', 'mimetype', $icon['mimetype']);
 					}
-					elseif($file['size'] > $mediaMimetype['size']) {
+					elseif($icon['size'] > $mediaMimetype['size']) {
 						$validation = $this->Validation->addValidationResult($validation, 'icon', 'size', $mediaMimetype['size']);
-					}
-					
-					// Create filename
-					$filename = sprintf('charactergroup-%s', $group['url']);
-					
-					// Upload icon
-					if($validation === true || empty($valiadion)) {
-						$mediaId = $this->Media->createCharactergroupMedia(
-							$this->Auth->getUserId(),
-							$seminary['id'],
-							$filename,
-							'',
-							$file['mimetype'],
-							$file['tmp_name']
-						);
-						if($mediaId !== false) {
-							$this->Charactergroups->setMediaForGroup($group['id'], $mediaId);
-						}
 					}
 				}
 				
@@ -625,9 +656,25 @@
 						$charactergroupname,
 						$motto
 					);
+					$group = $this->Charactergroups->getGroupById($group['id']);
+					
+					// Upload icon
+					if(!is_null($icon))
+					{
+						$mediaId = $this->Media->createCharactergroupMedia(
+							$this->Auth->getUserId(),
+							$seminary['id'],
+							sprintf('charactergroup-%s', $group['url']),
+							'',
+							$icon['mimetype'],
+							$icon['tmp_name']
+						);
+						if($mediaId !== false) {
+							$this->Charactergroups->setMediaForGroup($group['id'], $mediaId);
+						}
+					}
 					
 					// Redirect to user page
-					$group = $this->Charactergroups->getGroupById($group['id']);
 					$this->redirect($this->linker->link(array('group', $seminary['url'], $groupsgroup['url'], $group['url']), 1));
 				}
 			}
@@ -650,6 +697,7 @@
 			$this->set('group', $group);
 			$this->set('charactergroupname', $charactergroupname);
 			$this->set('motto', $motto);
+			$this->set('mimetypes', $mimetypes);
 			$this->set('validation', $validation);
 			$this->set('validationSettings', $validationSettings);
 		}
