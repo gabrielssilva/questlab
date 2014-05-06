@@ -231,6 +231,25 @@
 		
 		
 		/**
+		 * Set the media for a Character groups Quest.
+		 * 
+		 * @param	int	$questId	ID of Quest to upload media for
+		 * @param	int	$mediaId	ID of Quests media
+		 */
+		public function setMediaForQuest($questId, $mediaId)
+		{
+			$this->db->query(
+				'UPDATE charactergroupsquests '.
+				'SET questsmedia_id = ? '.
+				'WHERE id = ?',
+				'ii',
+				$mediaId,
+				$questId
+			);
+		}
+		
+		
+		/**
 		 * Upload a media for a Character groups Quest.
 		 * 
 		 * @param	int	$userId		ID of user that does the upload

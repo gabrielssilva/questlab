@@ -81,12 +81,6 @@
 			// Get Character groups-groups
 			$groups = $this->Charactergroups->getGroupsForQuest($quest['id']);
 			
-			// Media
-			$questmedia = null;
-			if(!is_null($quest['questsmedia_id'])) {
-				$questmedia = $this->Media->getSeminaryMediaById($quest['questsmedia_id']);
-			}
-			
 			// Get uploads
 			$uploads = $this->Charactergroupsquests->getMediaForQuest($quest['id']);
 			foreach($uploads as &$upload) {
@@ -105,7 +99,6 @@
 			$this->set('quest', $quest);
 			$this->set('questgroup', $questgroup);
 			$this->set('groups', $groups);
-			$this->set('media', $questmedia);
 			$this->set('uploads', $uploads);
 		}
 		
@@ -269,6 +262,9 @@
 			// Get Questgroups
 			$questgroups = $this->Questgroups->getQuestgroupsForSeminary($seminary['id']);
 			
+			// Get allowed mimetypes
+			$mimetypes = \nre\configs\AppConfig::$mimetypes['icons'];
+			
 			// Values
 			$title = '';
 			$xps = 0;
@@ -293,6 +289,34 @@
 				$rules = $this->request->getPostParam('rules');
 				$wonText = $this->request->getPostParam('wonText');
 				$lostText = $this->request->getPostParam('lostText');
+				
+				// Validate icon
+				$icon = null;
+				if(!empty($_FILES) && array_key_exists('icon', $_FILES) && $_FILES['icon']['error'] != UPLOAD_ERR_NO_FILE)
+				{
+					$icon = $_FILES['icon'];
+					
+					// Check error
+					if($icon['error'] !== UPLOAD_ERR_OK) {
+						$validation = $this->Validation->addValidationResult($validation, 'icon', 'error', $icon['error']);
+					}
+					
+					// Check mimetype
+					$mediaMimetype = null;
+					$icon['mimetype'] = \hhu\z\Utils::getMimetype($icon['tmp_name'], $icon['type']);
+					foreach($mimetypes as &$mimetype) {
+						if($mimetype['mimetype'] == $icon['mimetype']) {
+							$mediaMimetype = $mimetype;
+							break;
+						}
+					}
+					if(is_null($mediaMimetype)) {
+						$validation = $this->Validation->addValidationResult($validation, 'icon', 'mimetype', $icon['mimetype']);
+					}
+					elseif($icon['size'] > $mediaMimetype['size']) {
+						$validation = $this->Validation->addValidationResult($validation, 'icon', 'size', $mediaMimetype['size']);
+					}
+				}
 				
 				// Validate Questgroup
 				$questgroupIndex = null;
@@ -321,9 +345,25 @@
 						$wonText,
 						$lostText
 					);
+					$quest = $this->Charactergroupsquests->getQuestById($questId);
+					
+					// Upload icon
+					if(!is_null($icon))
+					{
+						$mediaId = $this->Media->createQuestMedia(
+							$this->Auth->getUserId(),
+							$seminary['id'],
+							sprintf('charactergroupsquest-%s', $quest['url']),
+							'',
+							$icon['mimetype'],
+							$icon['tmp_name']
+						);
+						if($mediaId !== false) {
+							$this->Charactergroupsquests->setMediaForQuest($quest['id'], $mediaId);
+						}
+					}
 					
 					// Redirect to Quest page
-					$quest = $this->Charactergroupsquests->getQuestById($questId);
 					$this->redirect($this->linker->link(array('quest', $seminary['url'], $groupsgroup['url'], $quest['url']), 1));
 				}
 			}
@@ -350,6 +390,7 @@
 			$this->set('rules', $rules);
 			$this->set('wonText', $wonText);
 			$this->set('lostText', $lostText);
+			$this->set('mimetypes', $mimetypes);
 			$this->set('validation', $validation);
 			$this->set('validationSettings', $validationSettings);
 		}
@@ -383,6 +424,9 @@
 				$questgroup['selected'] = ($questgroup['id'] == $quest['questgroups_id']);
 			}
 			
+			// Get allowed mimetypes
+			$mimetypes = \nre\configs\AppConfig::$mimetypes['icons'];
+			
 			// Values
 			$title = $quest['title'];
 			$xps = $quest['xps'];
@@ -407,6 +451,34 @@
 				$rules = $this->request->getPostParam('rules');
 				$wonText = $this->request->getPostParam('wonText');
 				$lostText = $this->request->getPostParam('lostText');
+				
+				// Validate icon
+				$icon = null;
+				if(!empty($_FILES) && array_key_exists('icon', $_FILES) && $_FILES['icon']['error'] != UPLOAD_ERR_NO_FILE)
+				{
+					$icon = $_FILES['icon'];
+					
+					// Check error
+					if($icon['error'] !== UPLOAD_ERR_OK) {
+						$validation = $this->Validation->addValidationResult($validation, 'icon', 'error', $icon['error']);
+					}
+					
+					// Check mimetype
+					$mediaMimetype = null;
+					$icon['mimetype'] = \hhu\z\Utils::getMimetype($icon['tmp_name'], $icon['type']);
+					foreach($mimetypes as &$mimetype) {
+						if($mimetype['mimetype'] == $icon['mimetype']) {
+							$mediaMimetype = $mimetype;
+							break;
+						}
+					}
+					if(is_null($mediaMimetype)) {
+						$validation = $this->Validation->addValidationResult($validation, 'icon', 'mimetype', $icon['mimetype']);
+					}
+					elseif($icon['size'] > $mediaMimetype['size']) {
+						$validation = $this->Validation->addValidationResult($validation, 'icon', 'size', $mediaMimetype['size']);
+					}
+				}
 				
 				// Validate Questgroup
 				$questgroupIndex = null;
@@ -435,9 +507,25 @@
 						$wonText,
 						$lostText
 					);
+					$quest = $this->Charactergroupsquests->getQuestById($quest['id']);
+					
+					// Upload icon
+					if(!is_null($icon))
+					{
+						$mediaId = $this->Media->createQuestMedia(
+							$this->Auth->getUserId(),
+							$seminary['id'],
+							sprintf('charactergroupsquest-%s', $quest['url']),
+							'',
+							$icon['mimetype'],
+							$icon['tmp_name']
+						);
+						if($mediaId !== false) {
+							$this->Charactergroupsquests->setMediaForQuest($quest['id'], $mediaId);
+						}
+					}
 					
 					// Redirect to Quest page
-					$quest = $this->Charactergroupsquests->getQuestById($quest['id']);
 					$this->redirect($this->linker->link(array('quest', $seminary['url'], $groupsgroup['url'], $quest['url']), 1));
 				}
 			}
@@ -465,6 +553,7 @@
 			$this->set('rules', $rules);
 			$this->set('wonText', $wonText);
 			$this->set('lostText', $lostText);
+			$this->set('mimetypes', $mimetypes);
 			$this->set('validation', $validation);
 			$this->set('validationSettings', $validationSettings);
 		}

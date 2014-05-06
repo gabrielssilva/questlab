@@ -18,6 +18,17 @@
 			<?php foreach($settings as $setting => $value) : ?>
 			<li>
 				<?php switch($field) {
+					case 'icon':
+						switch($setting) {
+							case 'error': printf(_('Error during icon upload: %s'), $value);
+							break;
+							case 'mimetype': printf(_('Icon has wrong type “%s”'), $value);
+							break;
+							case 'size': echo _('Icon exceeds size maximum');
+							break;
+							default: echo _('Icon invalid');
+						}
+					break;
 					case 'title':
 						switch($setting) {
 							case 'minlength': printf(_('Title is too short (min. %d chars)'), $value);
@@ -40,9 +51,6 @@
 							default: echo _('XPs invalid');
 						}
 					break;
-					default:
-						echo $exception->getMessage();
-					break;
 				} ?>
 			</li>
 			<?php endforeach ?>
@@ -51,7 +59,17 @@
 	<?php endforeach ?>
 </ul>
 <?php endif ?>
-<form method="post" action="" class="logreg">
+<form method="post" action="" class="logreg" enctype="multipart/form-data">
+	<fieldset>
+		<legend><?=_('Icon')?></legend>
+		<input type="file" name="icon" />
+		<p><?=_('Allowed file types')?>:</p>
+		<ul>
+			<?php foreach($mimetypes as &$mimetype) : ?>
+			<li><?=sprintf(_('%s-files'), strtoupper(explode('/',$mimetype['mimetype'])[1]))?> <?php if($mimetype['size'] > 0) : ?>(<?=_('max.')?> <?=round($mimetype['size']/(1024*1024),2)?> MiB)<?php endif ?></li>
+			<?php endforeach ?>
+		</ul>
+	</fieldset>
 	<fieldset>
 		<label for="title"><?=_('Title')?>:</label>
 		<input type="text" id="title" name="title" placeholder="<?=_('Title')?>" title="<?=_('Title')?>" maxlength="<?=$validationSettings['title']['maxlength']?>" value="<?=$title?>" <?=(array_key_exists('title', $validation)) ? 'class="invalid"' : null?> />

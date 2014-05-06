@@ -470,7 +470,7 @@
 			$groupsgroup = $this->Charactergroups->getGroupsgroupByUrl($seminary['id'], $groupsgroupUrl);
 			
 			// Get allowed mimetypes
-			$mimetypes = \nre\configs\AppConfig::$mimetypes['images'];
+			$mimetypes = \nre\configs\AppConfig::$mimetypes['icons'];
 			
 			// Values
 			$charactergroupname = '';
@@ -489,7 +489,7 @@
 				}
 				$motto = $this->request->getPostParam('motto');
 				
-				// Upload icon
+				// Validate icon
 				$icon = null;
 				if(!empty($_FILES) && array_key_exists('icon', $_FILES) && $_FILES['icon']['error'] != UPLOAD_ERR_NO_FILE)
 				{
@@ -601,7 +601,7 @@
 			}
 			
 			// Get allowed mimetypes
-			$mimetypes = \nre\configs\AppConfig::$mimetypes['images'];
+			$mimetypes = \nre\configs\AppConfig::$mimetypes['icons'];
 			
 			// Values
 			$charactergroupname = $group['name'];
@@ -620,7 +620,7 @@
 				}
 				$motto = $this->request->getPostParam('motto');
 				
-				// Upload icon
+				// Validate icon
 				$icon = null;
 				if(!empty($_FILES) && array_key_exists('icon', $_FILES) && $_FILES['icon']['error'] != UPLOAD_ERR_NO_FILE)
 				{

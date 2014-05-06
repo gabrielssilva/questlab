@@ -136,48 +136,46 @@
 		
 		
 		/**
-		 * Create a new Questsmedia by creating a new Seminarymedia and
-		 * adding it to the list of Questsmedia.
-		 * TODO Currently only temporary for easier data import.
+		 * Create a new Quests media by creating a new Seminarymedia and
+		 * adding it to the list of Quests media.
+		 * 
+		 * @param	int	$userId		ID of user that does the upload
+		 * @param	int	$seminaryId	ID of Seminary
+		 * @param	string	$filename	Filename of uploading media
+		 * @param	string	$description	Description for media
+		 * @param	string	$mimetype	Mimetype of media
+		 * @param	string	$tmpFilename	Name of temporary uploaded file
+		 * @return	mixed			ID of media record or false if upload failed
 		 */
 		public function createQuestMedia($userId, $seminaryId, $filename, $description, $mimetype, $tmpFilename)
 		{
-			$uploadId = false;
+			$mediaId = false;
 			$this->db->setAutocommit(false);
 			
 			try {
-				// Create database record
-				$this->db->query(
-					'INSERT INTO seminarymedia '.
-					'(created_user_id, seminary_id, name, url, description, mimetype) '.
-					'VALUES '.
-					'(?, ? ,? ,?, ?, ?)',
-					'iissss',
-					$userId,
-					$seminaryId,
-					$filename,
-					\nre\core\Linker::createLinkParam($filename),
-					$description,
-					$mimetype
-				);
-				$uploadId = $this->db->getInsertId();
+				// Create Seminary media record
+				$mediaId = $this->createSeminaryMedia($userId, $seminaryId, $filename, $description, $mimetype);
 				
+				// Add media to Quests media
 				$this->db->query(
 					'INSERT INTO questsmedia '.
 					'(media_id, created_user_id) '.
 					'VALUES '.
-					'(?, ?)',
-					'ii',
-					$uploadId,
+					'(?, ?) '.
+					'ON DUPLICATE KEY UPDATE '.
+					'created_user_id = ?',
+					'iii',
+					$mediaId,
+					$userId,
 					$userId
 				);
 			
 				// Create filename
-				$filename = ROOT.DS.'seminarymedia'.DS.$uploadId;
+				$filename = ROOT.DS.\nre\configs\AppConfig::$dirs['seminarymedia'].DS.$mediaId;
 				if(!move_uploaded_file($tmpFilename, $filename))
 				{
 					$this->db->rollback();
-					$uploadId = false;
+					$mediaId = false;
 				}
 			}
 			catch(\nre\exceptions\DatamodelException $e) {
@@ -187,7 +185,7 @@
 			
 			
 			$this->db->setAutocommit(true);
-			return $uploadId;
+			return $mediaId;
 		}
 		
 		
@@ -195,13 +193,13 @@
 		 * Create a new Character groups media by creating a new Seminarymedia and
 		 * adding it to the list of media for Character groups.
 		 * 
-		 * @param	int	$userId
-		 * @param	int	$seminaryId
-		 * @param	string	$filename
-		 * @param	string	$description
-		 * @param	string	$mimetype
-		 * @param	string	$tmpFilename
-		 * @return
+		 * @param	int	$userId		ID of user that does the upload
+		 * @param	int	$seminaryId	ID of Seminary
+		 * @param	string	$filename	Filename of uploading media
+		 * @param	string	$description	Description for media
+		 * @param	string	$mimetype	Mimetype of media
+		 * @param	string	$tmpFilename	Name of temporary uploaded file
+		 * @return	mixed			ID of media record or false if upload failed
 		 */
 		public function createCharactergroupMedia($userId, $seminaryId, $filename, $description, $mimetype, $tmpFilename)
 		{
@@ -209,36 +207,8 @@
 			$this->db->setAutocommit(false);
 			
 			try {
-				// Check for existing database record
-				$data = $this->db->query(
-					'SELECT id '.
-					'FROM seminarymedia '.
-					'WHERE url = ?',
-					's',
-					\nre\core\Linker::createLinkParam($filename)
-				);
-				if(!empty($data)) {
-					$mediaId = $data[0]['id'];
-				}
-				
-				// Create database record
-				if($mediaId === false)
-				{
-					$this->db->query(
-						'INSERT INTO seminarymedia '.
-						'(created_user_id, seminary_id, name, url, description, mimetype) '.
-						'VALUES '.
-						'(?, ? ,? ,?, ?, ?)',
-						'iissss',
-						$userId,
-						$seminaryId,
-						$filename,
-						\nre\core\Linker::createLinkParam($filename),
-						$description,
-						$mimetype
-					);
-					$mediaId = $this->db->getInsertId();
-				}
+				// Create Seminary media record
+				$mediaId = $this->createSeminaryMedia($userId, $seminaryId, $filename, $description, $mimetype);
 				
 				// Add media to Character groups media
 				$this->db->query(
@@ -255,7 +225,7 @@
 				);
 			
 				// Create filename
-				$filename = ROOT.DS.'seminarymedia'.DS.$mediaId;
+				$filename = ROOT.DS.\nre\configs\AppConfig::$dirs['seminarymedia'].DS.$mediaId;
 				if(!move_uploaded_file($tmpFilename, $filename))
 				{
 					$this->db->rollback();
@@ -270,6 +240,52 @@
 			
 			$this->db->setAutocommit(true);
 			return $mediaId;
+		}
+		
+		
+		
+		
+		/**
+		 * Create a new Seminary media.
+		 * 
+		 * @param	int	$userId		ID of user that does the upload
+		 * @param	int	$seminaryId	ID of Seminary
+		 * @param	string	$filename	Filename of uploading media
+		 * @param	string	$description	Description for media
+		 * @param	string	$mimetype	Mimetype of media
+		 * @return	mixed			ID of media record or false if upload failed
+		 */
+		private function createSeminaryMedia($userId, $seminaryId, $filename, $description, $mimetype)
+		{
+			// Check for existing database record
+			$data = $this->db->query(
+				'SELECT id '.
+				'FROM seminarymedia '.
+				'WHERE url = ?',
+				's',
+				\nre\core\Linker::createLinkParam($filename)
+			);
+			if(!empty($data)) {
+				return $data[0]['id'];
+			}
+			
+			// Create database record
+			$this->db->query(
+				'INSERT INTO seminarymedia '.
+				'(created_user_id, seminary_id, name, url, description, mimetype) '.
+				'VALUES '.
+				'(?, ? ,? ,?, ?, ?)',
+				'iissss',
+				$userId,
+				$seminaryId,
+				$filename,
+				\nre\core\Linker::createLinkParam($filename),
+				$description,
+				$mimetype
+			);
+			
+			
+			return $this->db->getInsertId();
 		}
 		
 	}

@@ -18,11 +18,7 @@
 <?php endif ?>
 
 <div class="gbanner cf">
-	<?php if(!is_null($media)) : ?>
-	<img src="<?=$linker->link(array('media','seminary',$seminary['url'],$media['url']))?>" class="grpqimg" />
-	<?php else : ?>
-	<img src="<?=$linker->link(array('grafics','charactergroup.jpg'))?>" class="gbanner">
-	<?php endif ?>
+	<img src="<?=$linker->link(array('media','charactergroupsquest',$seminary['url'],$groupsgroup['url'],$quest['url']))?>" class="grpqimg" />
 	<h1><?=$quest['title']?></h1>
 </div>
 <ul class="gdata cf">

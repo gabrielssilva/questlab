@@ -18,6 +18,17 @@
 			<?php foreach($settings as $setting => $value) : ?>
 			<li>
 				<?php switch($field) {
+					case 'icon':
+						switch($setting) {
+							case 'error': printf(_('Error during icon upload: %s'), $value);
+							break;
+							case 'mimetype': printf(_('Icon has wrong type “%s”'), $value);
+							break;
+							case 'size': echo _('Icon exceeds size maximum');
+							break;
+							default: echo _('Icon invalid');
+						}
+					break;
 					case 'charactergroupname':
 						switch($setting) {
 							case 'minlength': printf(_('Name is too short (min. %d chars)'), $value);
