@@ -36,7 +36,13 @@
 			<li class="cf">
 				<img src="<?=$linker->link(array('media','avatar',$seminary['url'],$successfulCharacter['charactertype_url'],$successfulCharacter['xplevel'],'portrait'))?>" />
 				<p class="fwb"><?=$successfulCharacter['name']?></p>
-				<p><small><?=sprintf(_('Character has achieved %d Achievements'), $successfulCharacter['c'])?></small></p>
+				<p><small>
+					<?php if($successfulCharacter['c'] == 1) : ?>
+					<?=sprintf(_('Character has achieved %d Achievement'), $successfulCharacter['c'])?>
+					<?php else : ?>
+					<?=sprintf(_('Character has achieved %d Achievements'), $successfulCharacter['c'])?>
+					<?php endif ?>
+				</small></p>
 			</li>
 			<?php endforeach ?>
 		</ol>

@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: The Legend of Z\n"
-"POT-Creation-Date: 2014-05-07 21:42+0100\n"
-"PO-Revision-Date: 2014-05-07 21:43+0100\n"
+"POT-Creation-Date: 2014-05-07 21:52+0100\n"
+"PO-Revision-Date: 2014-05-07 21:52+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de_DE\n"
@@ -158,7 +158,7 @@ msgstr ""
 msgid "Seldom Achievements"
 msgstr "Die seltensten Achievements"
 
-#: views/html/achievements/index.tpl:26 views/html/achievements/index.tpl:68
+#: views/html/achievements/index.tpl:26 views/html/achievements/index.tpl:74
 msgid "Secret Achievement"
 msgstr "Geheimes Achievement"
 
@@ -171,38 +171,43 @@ msgstr "wurde erst %d mal gefunden"
 msgid "Most successful collectors"
 msgstr "Die erfolgreichsten Sammler"
 
-#: views/html/achievements/index.tpl:39
+#: views/html/achievements/index.tpl:41
 #, php-format
-msgid "Character has achieved %d Achievements"
+msgid "Character has achieved %d Achievement"
 msgstr "hat %d Achievement erhalten"
 
-#: views/html/achievements/index.tpl:45
+#: views/html/achievements/index.tpl:43
+#, php-format
+msgid "Character has achieved %d Achievements"
+msgstr "hat %d Achievements erhalten"
+
+#: views/html/achievements/index.tpl:51
 msgid "Personal Achievements"
 msgstr "Deine Achievements"
 
-#: views/html/achievements/index.tpl:47
+#: views/html/achievements/index.tpl:53
 #, php-format
 msgid "Own progress: %d %%"
 msgstr "Persönlicher Fortschritt: %d%%"
 
-#: views/html/achievements/index.tpl:52
+#: views/html/achievements/index.tpl:58
 #: views/html/charactergroups/group.tpl:32
 #: views/html/charactergroups/managegroup.tpl:20
 #: views/html/characters/character.tpl:46 views/html/seminarybar/index.tpl:7
 msgid "Rank"
 msgstr "Platz"
 
-#: views/html/achievements/index.tpl:52
+#: views/html/achievements/index.tpl:58
 #, php-format
 msgid "You achieved %d of %d Achievements so far"
 msgstr "Du hast bislang %d von insgesamt %d Achievements erreicht"
 
-#: views/html/achievements/index.tpl:59 views/html/seminarybar/index.tpl:28
+#: views/html/achievements/index.tpl:65 views/html/seminarybar/index.tpl:28
 #, php-format
 msgid "achieved at: %s"
 msgstr "erhalten am: %s"
 
-#: views/html/achievements/index.tpl:72
+#: views/html/achievements/index.tpl:78
 msgid "Continue playing to unlock this secret Achievement"
 msgstr "Spiele weiter, um diesen geheimen Erfolg freizuschalten"
 
