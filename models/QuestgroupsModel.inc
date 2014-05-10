@@ -533,13 +533,17 @@
 			);
 			foreach($nextQuests as &$nextQuest)
 			{
-				if(!in_array($nextQuest['id'], $calculatedQuests))
+				if(!array_key_exists($nextQuest['id'], $calculatedQuests))
 				{
 					$nextData = $this->getCumulatedDataForQuest($nextQuest, $characterId, $calculatedQuests);
-					$allNextData['xps'][] = $nextData['xps'];
-					$allNextData['character_xps'][] = $nextData['character_xps'];
-					$calculatedQuests[] = $nextQuest['id'];
+					$calculatedQuests[$nextQuest['id']] = array(
+						'xps'		=> $nextData['xps'],
+						'character_xps'	=> $nextData['character_xps']
+					);
 				}
+				
+				$allNextData['xps'][] = $calculatedQuests[$nextQuest['id']]['xps'];
+				$allNextData['character_xps'][] = $calculatedQuests[$nextQuest['id']]['character_xps'];
 			}
 			$data['xps'] += max($allNextData['xps']);
 			$data['character_xps'] += max($allNextData['character_xps']);
