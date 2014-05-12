@@ -72,7 +72,7 @@
 			
 			// Create links
 			$string = preg_replace('!(^|\s)"([^"]+)":(https?://[^\s]+)(\s|$)!i', '$1<a href="$3">$2</a>$4', $string);
-			$string = preg_replace('!(^|\s)(https?://[^\s]+)(\s|$)!i', '$1<a href="$2">$2</a>$4', $string);
+			$string = preg_replace('!(^|\s)(https?://[^\s]+)(\s|$)!i', '$1<a href="$2">$2</a>$3', $string);
 			
 			// Handle Seminarymedia
 			$seminarymedia = array();
