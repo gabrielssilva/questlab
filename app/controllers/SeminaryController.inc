@@ -151,7 +151,8 @@
 		private function checkAchievements(\nre\core\Request $request, \nre\core\Response $response)
 		{
 			// Do not check MediaController
-			if($this->request->getParam('layout') != \nre\configs\AppConfig::$defaults['toplevel']) {
+			$layout = $this->request->getParam('layout');
+			if(!empty($layout) && $layout != \nre\configs\AppConfig::$defaults['toplevel']) {
 				return;
 			}
 			
