@@ -114,7 +114,6 @@
 		
 		
 		
-		
 		/**
 		 * Check user permissions.
 		 * 
@@ -151,6 +150,11 @@
 		 */
 		private function checkAchievements(\nre\core\Request $request, \nre\core\Response $response)
 		{
+			// Do not check MediaController
+			if($this->request->getParam('layout') != \nre\configs\AppConfig::$defaults['toplevel']) {
+				return;
+			}
+			
 			// Check if Character is present
 			if(is_null(self::$character)) {
 				return;
