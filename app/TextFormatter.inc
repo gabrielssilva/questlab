@@ -60,6 +60,10 @@
 			// Remove chars
 			$string = htmlspecialchars($string, ENT_NOQUOTES);
 			
+			// Important text
+			$string = str_replace('[strong]', '<strong>', $string);
+			$string = str_replace('[/strong]', '</strong>', $string);
+			
 			// Create tables
 			$string = str_replace('[table]', '</p><table>', $string);
 			$string = str_replace('[/table]', '</table><p>', $string);
