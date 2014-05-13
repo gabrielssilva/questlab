@@ -1,3 +1,4 @@
+<?php if($render) : ?>
 <section class="cf">
 	<h1><?=$character['name']?></h1>
 	<img src="<?=$linker->link(array('media','avatar',$seminary['url'],$character['charactertype_url'],$character['xplevel']['level']))?>" class="char">
@@ -46,3 +47,4 @@
 	<p><i class="fa fa-users fa-fw"></i><a href="<?=$linker->link(array('charactergroups','group',$seminary['url'],$group['charactergroupsgroup_url'],$group['url']))?>"><?=sprintf(_('Show %s-Profile'),$group['charactergroupsgroup_name'])?></a></p>
 	<?php endforeach ?>
 </section>
+<?php endif ?>

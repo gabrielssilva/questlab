@@ -35,12 +35,14 @@
 		 */
 		public function index()
 		{
-			if(is_null(SeminaryController::$seminary)) {
-				return;
-			}
+			// Do not render at first
+			$this->set('render', false);
 			
 			// Get Seminary
 			$seminary = SeminaryController::$seminary;
+			if(is_null($seminary)) {
+				return;
+			}
 			
 			// Get Character
 			$character = SeminaryController::$character;
@@ -79,6 +81,8 @@
 			$this->set('lastQuest', $lastQuest);
 			$this->set('lastAchievement', $lastAchievement);
 			$this->set('characterGroups', $characterGroups);
+			// Render now
+			$this->set('render', true);
 		}
 		
 	}
