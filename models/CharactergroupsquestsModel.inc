@@ -274,7 +274,7 @@
 				'VALUES '.
 				'(?, ?, ?) ',
 				'iii',
-				$uploadId, $questId, $uploadId
+				$uploadId, $questId, $userId
 			);
 			
 			
