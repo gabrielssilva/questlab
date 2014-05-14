@@ -34,8 +34,12 @@
 	<li><a href="<?=$linker->link(array('charactergroupsquests','create',$seminary['url'],$groupsgroup['url']))?>"><?=sprintf(_('Create new %s-Quest'), $groupsgroup['name'])?></a></li>
 </nav>
 <?php endif ?>
-<ul class="cgqlist">
+
+<ul class="cgqlist cf">
 	<?php foreach($quests as &$quest) : ?>
-	<li><a href="<?=$linker->link(array('charactergroupsquests','quest',$seminary['url'],$groupsgroup['url'],$quest['url']))?>"><?=$quest['title']?></a></li>
+	<li class="cf">
+		<img src="http://questlab.hhu.de/media/charactergroupsquest/Die-Legende-von-Zyren/Gilden/Denn-Plopp-hei%C3%9Ft-Stopp">
+		<p><a href="<?=$linker->link(array('charactergroupsquests','quest',$seminary['url'],$groupsgroup['url'],$quest['url']))?>"><?=$quest['title']?></a></p>
+	</li>
 	<?php endforeach ?>
 </ul>
