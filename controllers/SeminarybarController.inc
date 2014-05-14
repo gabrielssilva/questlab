@@ -59,7 +59,7 @@
 			}
 			
 			// Get last achieved Achievement
-			$achievements = $this->Achievements->getAchievedAchievementsForCharacter($character['id']);
+			$achievements = $this->Achievements->getAchievedAchievementsForCharacter($character['id'], false);
 			$lastAchievement = array_shift($achievements);
 			
 			// Get Character group members
