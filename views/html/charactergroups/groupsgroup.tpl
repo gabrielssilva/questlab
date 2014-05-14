@@ -22,8 +22,13 @@
 </nav>
 <?php endif ?>
 <ol class="cglist">
-	<?php foreach($groups as &$group) : ?>
-	<li><a href="<?=$linker->link(array('group',$seminary['url'],$groupsgroup['url'],$group['url']),1)?>"><?=$group['name']?></a><span class="xp"><?=$group['xps']?> XP</span></li>
+	<?php foreach($groups as $index => &$group) : ?>
+	<li>
+		<?php if($index < 3) : ?>
+		<img src="<?=$linker->link(array('media','charactergroup',$seminary['url'],$groupsgroup['url'],$group['url']))?>" class="gbanner">
+		<?php endif ?>
+		<a href="<?=$linker->link(array('group',$seminary['url'],$groupsgroup['url'],$group['url']),1)?>"><?=$group['name']?></a><span class="xp"><?=$group['xps']?> XP</span>
+	</li>
 	<?php endforeach ?>
 </ol>
 
