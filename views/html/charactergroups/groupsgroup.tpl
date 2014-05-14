@@ -38,7 +38,7 @@
 <ul class="cgqlist cf">
 	<?php foreach($quests as &$quest) : ?>
 	<li class="cf">
-		<img src="http://questlab.hhu.de/media/charactergroupsquest/Die-Legende-von-Zyren/Gilden/Denn-Plopp-hei%C3%9Ft-Stopp">
+		<img src="<?=$linker->link(array('media','charactergroupsquest',$seminary['url'],$groupsgroup['url'],$quest['url']))?>" />
 		<p><a href="<?=$linker->link(array('charactergroupsquests','quest',$seminary['url'],$groupsgroup['url'],$quest['url']))?>"><?=$quest['title']?></a></p>
 	</li>
 	<?php endforeach ?>
