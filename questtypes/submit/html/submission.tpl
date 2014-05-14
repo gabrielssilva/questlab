@@ -21,7 +21,7 @@
 </ol>
 <?php endif ?>
 
-<form method="post">
+<form method="post" class="logreg">
 	<?php $submission = array_pop($submissions); ?>
 	<?php if(!$solved) : ?>
 	<?=_('Comment')?><br />
