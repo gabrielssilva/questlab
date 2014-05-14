@@ -151,6 +151,9 @@ input[type="submit"][disabled]{text-shadow:1px 2px #d48c4e;background:#f9ac69;bo
 
 .task img{max-width:100%}
 .task strong{font-style:italic;font-weight:400}
+.task table{max-width:800px}
+.task td{background:#fff;padding:1px 5px;border:1px solid #d7d4cf}
+
 
 /** Popup Notification **/
 
@@ -316,8 +319,8 @@ input[type="submit"][disabled]{text-shadow:1px 2px #d48c4e;background:#f9ac69;bo
 
 .textinput input[type=text]{height:16px;font-size:.875em}
 
-.crossword table{max-width:800px;border-spacing:2px;border-collapse:separate}
-.crossword td{background:#d7d4cf;padding:1px}
+.crossword table{border-spacing:2px;border-collapse:separate}
+.crossword td{background:#d7d4cf;padding:1px;border:0}
 .crossword input[type=text]{text-align:center;height:26px;width:100%;min-width:8px;max-width:40px;margin:0;padding:0;border:none;text-transform:uppercase}
 .crossword ol{list-style-type:decimal;margin-left:25px}
 .crossword li{margin-top:20px}
