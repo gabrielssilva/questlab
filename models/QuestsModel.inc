@@ -354,13 +354,16 @@
 		 * @param	int	$seminaryId	ID of Seminary
 		 * @return	array			Quests for this Seminary
 		 */
-		public function getQuestsForSeminary($seminaryId)
+		public function getQuestsForSeminary($seminaryId, $questgroupId=null, $questtypeId=null, $limit=null)
 		{
 			return $this->db->query(
 				'SELECT DISTINCT quests.id, quests.questgroup_id, quests.questtype_id, quests.title, quests.url, quests.xps, quests.task, quests.wrong_text, quests.questsmedia_id '.
 				'FROM questgroups '.
 				'INNER JOIN quests ON quests.questgroup_id = questgroups.id '.
-				'WHERE questgroups.seminary_id = ?',
+				'WHERE questgroups.seminary_id = ?'.
+				(!empty($questgroupId) ? ' AND questgroups.id = '.intval($questgroupId) : null).
+				(!empty($questtypeId) ? ' AND quests.questtype_id = '.intval($questtypeId) : null).
+				(!empty($limit) ? ' LIMIT '.intval($limit) : null),
 				'i',
 				$seminaryId
 			);

@@ -8,34 +8,73 @@
 </ul>
 <h1><?=_('Quests')?></h1>
 
-<form method="post" class="logreg admnqf">
+<form method="get" class="logreg admnqf">
 	<fieldset>
 		<legend>Filter</legend>
-		<label for="filters[questgroup]"><?=_('Questgroup')?>:</label>
-		<select name="filters[questgroup]">
-			<option value="0">alle</option>
-			<?php foreach($filters['questgroups'] as &$filter) : ?>
-			<option value="<?=$filter['id']?>" <?php if($filter['id'] == $selectedFilters['questgroup']) : ?>selected="selected"<?php endif ?>><?=$filter['title']?></option>
+		<label for="questgroup"><?=_('Questgroup')?>:</label>
+		<select id="questgroup" name="questgroup">
+			<option value=""><?=_('all')?></option>
+			<?php foreach($questgroups as &$questgroup) : ?>
+			<option value="<?=$questgroup['id']?>" <?php if($questgroup['id'] == $selectedQuestgroup) : ?>selected="selected"<?php endif ?>><?=$questgroup['title']?></option>
 			<?php endforeach ?>
 		</select><br />
-		<label for="filters[questtype]"><?=_('Questtype')?>:</label>
-		<select name="filters[questtype]">
-			<option value="">alle</option>
-			<?php foreach($filters['questtypes'] as &$filter) : ?>
-			<option value="<?=$filter['classname']?>" <?php if($filter['classname'] == $selectedFilters['questtype']) : ?>selected="selected"<?php endif ?>><?=$filter['title']?></option>
+		<label for="questtype"><?=_('Questtype')?>:</label>
+		<select id="questtype" name="questtype">
+			<option value=""><?=_('all')?></option>
+			<?php foreach($questtypes as &$questtype) : ?>
+			<option value="<?=$questtype['id']?>" <?php if($questtype['id'] == $selectedQuesttype) : ?>selected="selected"<?php endif ?>>
+				<?php switch($questtype['classname']) {
+					case null: echo _('Questtype Empty');
+					break;
+					case 'bossfight': echo _('Questtype bossfight');
+					break;
+					case 'choiceinput': echo _('Questtype choiceinput');
+					break;
+					case 'crossword': echo _('Questtype crossword');
+					break;
+					case 'dragndrop': echo _('Questtype dragndrop');
+					break;
+					case 'multiplechoice': echo _('Questtype multiplechoice');
+					break;
+					case 'submit': echo _('Questtype submit');
+					break;
+					case 'textinput': echo _('Questtype textinput');
+					break;
+				} ?>
+			</option>
 			<?php endforeach ?>
 		</select>
 	</fieldset>
-	<input type="submit" name="filter" value="<?=_('Apply filters')?>" />
-	<input type="submit" name="reset" value="<?=_('Reset filters')?>" />
+	<input type="submit" value="<?=_('Apply filters')?>" />
 </form>
 
 <ul class="admnql">
 	<?php foreach($quests as &$quest) : ?>
 	<li>
-		<p class="fwb"><a href="<?=$linker->link(array('quest',$seminary['url'],$quest['questgroup']['url'],$quest['url']),1)?>"><?=$quest['title']?></a><span><a href="<?=$linker->link(array('submissions',$seminary['url'],$quest['questgroup']['url'],$quest['url']),1)?>"><?=$quest['opensubmissionscount']?> open submissions</a></span></p>
-		<p><small><?=$quest['questtype']['title']?>, <?=sprintf(_('%d XPs'), $quest['xps'])?></small></p>
+		<p class="fwb"><a href="<?=$linker->link(array('quest',$seminary['url'],$quest['questgroup']['url'],$quest['url']),1)?>"><?=$quest['title']?></a><span><a href="<?=$linker->link(array('submissions',$seminary['url'],$quest['questgroup']['url'],$quest['url']),1)?>"><?=$quest['opensubmissionscount']?> <?=_('open submissions')?></a></span></p>
+		<p><small>
+			<?php switch($quest['questtype']['classname']) {
+				case null: echo _('Questtype Empty');
+				break;
+				case 'bossfight': echo _('Questtype bossfight');
+				break;
+				case 'choiceinput': echo _('Questtype choiceinput');
+				break;
+				case 'crossword': echo _('Questtype crossword');
+				break;
+				case 'dragndrop': echo _('Questtype dragndrop');
+				break;
+				case 'multiplechoice': echo _('Questtype multiplechoice');
+				break;
+				case 'submit': echo _('Questtype submit');
+				break;
+				case 'textinput': echo _('Questtype textinput');
+				break;
+			} ?>, <?=sprintf(_('%d XPs'), $quest['xps'])?></small></p>
 		<p><small><a href="<?=$linker->link(array('questgroups','questgroup',$seminary['url'],$quest['questgroup']['url']))?>"><?=$quest['questgroup']['title']?></a></small></p>
 	</li>
 	<?php endforeach ?>
 </ul>
+<?php if(!is_null($limit)) : ?>
+<p><a href="<?=$linker->link('all',3)?>"><?=_('Show all')?></a></p>
+<?php endif ?>

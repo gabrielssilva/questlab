@@ -74,52 +74,48 @@
 		 * List all Quests for a Seminary.
 		 * 
 		 * @param	string	$seminaryUrl	URL-Title of Seminary
+		 * @param	string	$all		Show all Quests
 		 */
-		public function index($seminaryUrl)
+		public function index($seminaryUrl, $all=null)
 		{
 			// Get seminary
 			$seminary = $this->Seminaries->getSeminaryByUrl($seminaryUrl);
 			
-			// Prepare filters
-			$filters = array(	
-				'questgroups'	=> array(),
-				'questtypes'	=> array()
-			);
-			
-			// Get selected filters
-			$selectedFilters = array(
-				'questgroup'	=> "0",
-				'questtype'	=> ""
-			);
-			if($this->request->getRequestMethod() == 'POST' && !is_null($this->request->getPostParam('filters'))) {
-				$selectedFilters = $this->request->getPostParam('filters');
+			// Set filters
+			$selectedQuestgroup = null;
+			$selectedQuesttype = null;
+			if($this->request->getRequestMethod() == 'GET')
+			{
+				$selectedQuestgroup = !empty($this->request->getGetParam('questgroup')) ? $this->request->getGetParam('questgroup') : null;
+				$selectedQuesttype = !empty($this->request->getGetParam('questtype')) ? $this->request->getGetParam('questtype') : null;
 			}
 			
 			// Get Quests
-			$quests = array();
-			foreach($this->Quests->getQuestsForSeminary($seminary['id']) as $quest)
+			$limit = (is_null($all) && is_null($selectedQuestgroup) && is_null($selectedQuesttype)) ? \nre\configs\AppConfig::$misc['questlist_limit'] : null;
+			$quests = $this->Quests->getQuestsForSeminary($seminary['id'], $selectedQuestgroup, $selectedQuesttype, $limit);
+			foreach($quests as &$quest)
 			{
 				// Get Questgroup
 				$quest['questgroup'] = $this->Questgroups->getQuestgroupById($quest['questgroup_id']);
-				if($selectedFilters['questgroup'] != "0" && $selectedFilters['questgroup'] != $quest['questgroup']['id']) {
-					continue;
-				}
 				
 				// Get Questtype
 				$quest['questtype'] = $this->Questtypes->getQuesttypeById($quest['questtype_id']);
-				if($selectedFilters['questtype'] != "" && $selectedFilters['questtype'] != $quest['questtype']['classname']) {
-					continue;
-				}
-				
-				// Add filter values
-				$filters['questgroups'][$quest['questgroup']['id']] = $quest['questgroup'];
-				$filters['questtypes'][$quest['questtype']['classname']] = $quest['questtype'];
 				
 				// Add open submissions count
 				$quest['opensubmissionscount'] = count($this->Characters->getCharactersSubmittedQuest($quest['id']));
-				
-				$quests[] = $quest;
 			}
+			
+			// Sort Quests
+			usort($quests, function($a, $b) {
+				if($a['opensubmissionscount'] == $b['opensubmissionscount']) {
+					return 0;
+				}
+				return ($a['opensubmissionscount'] < $b['opensubmissionscount']) ? 1 : -1;
+			});
+			
+			// Get filter values
+			$questgroups = $this->Questgroups->getQuestgroupsForSeminary($seminary['id']);
+			$questtypes = $this->Questtypes->getQuesttypes();
 			
 			
 			// Set titile
@@ -128,9 +124,12 @@
 			
 			// Pass data to view
 			$this->set('seminary', $seminary);
+			$this->set('questgroups', $questgroups);
+			$this->set('questtypes', $questtypes);
+			$this->set('selectedQuestgroup', $selectedQuestgroup);
+			$this->set('selectedQuesttype', $selectedQuesttype);
 			$this->set('quests', $quests);
-			$this->set('filters', $filters);
-			$this->set('selectedFilters', $selectedFilters);
+			$this->set('limit', $limit);
 		}
 		
 		

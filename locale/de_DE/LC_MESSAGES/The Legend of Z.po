@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: The Legend of Z\n"
-"POT-Creation-Date: 2014-05-15 18:15+0100\n"
-"PO-Revision-Date: 2014-05-15 18:15+0100\n"
+"POT-Creation-Date: 2014-05-15 23:32+0100\n"
+"PO-Revision-Date: 2014-05-15 23:33+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de_DE\n"
@@ -427,7 +427,7 @@ msgstr "%s-Gruppe verwalten"
 #: views/html/characters/character.tpl:77
 #: views/html/characters/character.tpl:83
 #: views/html/characters/character.tpl:89
-#: views/html/characters/character.tpl:103 views/html/quests/index.tpl:37
+#: views/html/characters/character.tpl:103 views/html/quests/index.tpl:73
 #: views/html/seminaries/index.tpl:29 views/html/seminarybar/index.tpl:7
 #: views/html/seminarybar/index.tpl:43
 #, php-format
@@ -908,17 +908,57 @@ msgstr "Text für falsche Antwort"
 msgid "Task"
 msgstr "Aufgabe"
 
+#: views/html/quests/index.tpl:16 views/html/quests/index.tpl:23
+msgid "all"
+msgstr "alle"
+
 #: views/html/quests/index.tpl:21
 msgid "Questtype"
 msgstr "Questtyp"
 
-#: views/html/quests/index.tpl:29
+#: views/html/quests/index.tpl:27 views/html/quests/index.tpl:57
+msgid "Questtype Empty"
+msgstr "Leere Aufgabe"
+
+#: views/html/quests/index.tpl:29 views/html/quests/index.tpl:59
+msgid "Questtype bossfight"
+msgstr "Boss-Fight"
+
+#: views/html/quests/index.tpl:31 views/html/quests/index.tpl:61
+msgid "Questtype choiceinput"
+msgstr "Auswahleingabe"
+
+#: views/html/quests/index.tpl:33 views/html/quests/index.tpl:63
+msgid "Questtype crossword"
+msgstr "Kreuzworträtsel"
+
+#: views/html/quests/index.tpl:35 views/html/quests/index.tpl:65
+msgid "Questtype dragndrop"
+msgstr "Drag&Drop"
+
+#: views/html/quests/index.tpl:37 views/html/quests/index.tpl:67
+msgid "Questtype multiplechoice"
+msgstr "Multiple Choice"
+
+#: views/html/quests/index.tpl:39 views/html/quests/index.tpl:69
+msgid "Questtype submit"
+msgstr "Abgabeaufgabe"
+
+#: views/html/quests/index.tpl:41 views/html/quests/index.tpl:71
+msgid "Questtype textinput"
+msgstr "Texteingabe"
+
+#: views/html/quests/index.tpl:48
 msgid "Apply filters"
 msgstr "Filter anwenden"
 
-#: views/html/quests/index.tpl:30
-msgid "Reset filters"
-msgstr "Filter zurücksetzen"
+#: views/html/quests/index.tpl:54
+msgid "open submissions"
+msgstr "offene Lösungsvorschläge"
+
+#: views/html/quests/index.tpl:79
+msgid "Show all"
+msgstr "Alle anzeigen"
 
 #: views/html/quests/quest.tpl:11
 msgid "Prolog"
@@ -1192,6 +1232,9 @@ msgstr "Registrieren"
 #: views/html/users/user.tpl:46
 msgid "Roles"
 msgstr "Rollen"
+
+#~ msgid "Reset filters"
+#~ msgstr "Filter zurücksetzen"
 
 #~ msgid "Create"
 #~ msgstr "Erstellen"

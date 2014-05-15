@@ -132,7 +132,8 @@
 		public static $misc = array(
 			'ranking_range'		=> 2,
 			'achievements_range'	=> 3,
-			'title_delimiter'	=> ' – '
+			'title_delimiter'	=> ' – ',
+			'questlist_limit'	=> 10
 		);
 		
 		
@@ -212,6 +213,7 @@
 			array('^questgroups/([^/]+)/(create)/?$',				'questgroups/$2/$1',			true),
 			array('^questgroups/([^/]+)/([^/]+)/?$',				'questgroups/questgroup/$1/$2',		true),
 			array('^quests/([^/]+)/?$',						'quests/index/$1',			true),
+			array('^quests/([^/]+)/all/?$',						'quests/index/$1/all',			true),
 			array('^quests/([^/]+)/(create|createmedia)/?$',			'quests/$2/$1'	,			true),
 			array('^quests/([^/]+)/([^/]+)/([^/]+)/(submissions)/?$',		'quests/$4/$1/$2/$3',			true),
 			array('^quests/([^/]+)/([^/]+)/([^/]+)/(submission)/([^/]+)/?$',	'quests/$4/$1/$2/$3/$5',		true),
@@ -250,7 +252,7 @@
 			array('^seminaries/seminary/(.*)$',		'seminaries/$1',		false),
 			array('^questgroups/create/(.*)$',		'questgroups/$2/$1',		true),
 			array('^questgroups/questgroup/(.*)$',		'questgroups/$1',		true),
-			array('^quests/index/([^/]+)$',					'quests/$1',			true),
+			array('^quests/index/(.+)$',					'quests/$1',			true),
 			array('^quests/quest/(.*)$',					'quests/$1',			true),
 			array('^quests/(create|createmedia)/(.*)$',			'quests/$2/$1'	,		true),
 			array('^quests/(submissions)/(.*)$',				'quests/$2/$1',			true),
