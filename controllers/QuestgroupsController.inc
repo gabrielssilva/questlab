@@ -73,10 +73,14 @@
 			// Check permission
 			if(count(array_intersect(array('admin','moderator'), SeminaryController::$character['characterroles'])) == 0)
 			{
-				$previousQuestgroup = $this->Questgroups->getPreviousQuestgroup($questgroup['id']);
-				if(!is_null($previousQuestgroup)) {
-					if(!$this->Questgroups->hasCharacterSolvedQuestgroup($previousQuestgroup['id'], $character['id'])) {
-						throw new \nre\exceptions\AccessDeniedException();
+				// Only check permissions if Character has not entered Quest before
+				if(!$this->Questgroups->hasCharacterEnteredQuestgroup($questgroup['id'], $character['id']))
+				{
+					$previousQuestgroup = $this->Questgroups->getPreviousQuestgroup($questgroup['id']);
+					if(!is_null($previousQuestgroup)) {
+						if(!$this->Questgroups->hasCharacterSolvedQuestgroup($previousQuestgroup['id'], $character['id'])) {
+							throw new \nre\exceptions\AccessDeniedException();
+						}
 					}
 				}
 			}
