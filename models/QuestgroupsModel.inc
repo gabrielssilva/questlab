@@ -318,8 +318,7 @@
 		
 		
 		/**
-		 * Determine if the given Character has solved the Quests form
-		 * this Questgroup.
+		 * Determine if the given Character has solved a Questgroup.
 		 * 
 		 * @param	int	$questgroupId	ID of Questgroup to check
 		 * @param	int	$characterId	ID of Character to check
@@ -330,38 +329,19 @@
 			// Get data of Questgroup
 			$questgroup = $this->getQuestgroupById($questgroupId);
 			
-			// Chack all Quests
-			$currentQuest = $this->Quests->getFirstQuestOfQuestgroup($questgroup['id']);
-			if(!is_null($currentQuest))
+			// Check last Quest(s)
+			$solvedLastQuest = false;
+			$lastQuests = $this->Quests->getLastQuestsOfQuestgroup($questgroup['id']);
+			foreach($lastQuests as &$lastQuest)
 			{
-				if(!$this->Quests->hasCharacterSolvedQuest($currentQuest['id'], $characterId)) {
-					return false;
-				}
-				
-				// Get next Quests
-				$nextQuests = !is_null($currentQuest) ? $this->Quests->getNextQuests($currentQuest['id']) : null;
-				while(!is_null($currentQuest) && !empty($nextQuests))
+				if($this->Quests->hasCharacterSolvedQuest($lastQuest['id'], $characterId))
 				{
-					// Get choosed Quest
-					$currentQuest = null;
-					foreach($nextQuests as &$nextQuest) {
-						if($this->Quests->hasCharacterEnteredQuest($nextQuest['id'], $characterId)) {
-							$currentQuest = $nextQuest;
-						}
-					}
-					
-					// Check Quest
-					if(is_null($currentQuest)) {
-						return false;
-					}
-					
-					// Check status
-					if(!$this->Quests->hasCharacterSolvedQuest($currentQuest['id'], $characterId)) {
-						return false;
-					}
-					
-					$nextQuests = !is_null($currentQuest) ? $this->Quests->getNextQuests($currentQuest['id']) : null;
+					$solvedLastQuest = true;
+					break;
 				}
+			}
+			if(!$solvedLastQuest) {
+				return false;
 			}
 			
 			// Check all child Questgroups
