@@ -54,6 +54,21 @@
 		
 		
 		/**
+		 * Prefilter that is executed before running the Controller.
+		 * 
+		 * @param	Request		$request	Current request
+		 * @param	Response	$response	Current response
+		 */
+		public function preFilter(\nre\core\Request $request, \nre\core\Response $response)
+		{
+			parent::preFilter($request, $response);
+			
+			$this->checkAchievements($request, $response, array('character', 'quest'));
+			$this->checkAchievements($request, $response, 'achievement');
+		}
+		
+		
+		/**
 		 * Action: index.
 		 * 
 		 * List all Quests for a Seminary.

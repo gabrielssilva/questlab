@@ -138,6 +138,29 @@
 		
 		
 		/**
+		 * Get all Quests a Qusetgroup that do not have a following
+		 * Quest.
+		 * 
+		 * @param	int	$questId	ID of Questgroup
+		 * @return	array			List of last Quests
+		 */
+		public function getLastQuestsOfQuestgroup($questgroupId)
+		{
+			return $this->db->query(
+				'SELECT id, questtype_id, title, url, xps, task '.
+				'FROM quests '.
+				'WHERE questgroup_id = ? AND NOT EXISTS ('.
+					'SELECT quest_id '.
+					'FROM quests_previousquests '.
+					'WHERE quests_previousquests.previous_quest_id = quests.id'.
+				')',
+				'i',
+				$questgroupId
+			);
+		}
+		
+		
+		/**
 		 * Get Quests that follow-up a Quest.
 		 * 
 		 * @param	int	$questId	ID of Quest to get next Quests of

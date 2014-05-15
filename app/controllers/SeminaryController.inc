@@ -93,7 +93,8 @@
 			$this->checkPermission($request, $response);
 			
 			// Check achievements
-			$this->checkAchievements($request, $response);
+			$this->checkAchievements($request, $response, 'date');
+			$this->checkAchievements($request, $response, 'achievement');
 			
 			// Set Seminary and Character data
 			$this->set('loggedSeminary', self::$seminary);
@@ -148,7 +149,7 @@
 		/**
 		 * Check for newly achieved Achievements.
 		 */
-		private function checkAchievements(\nre\core\Request $request, \nre\core\Response $response)
+		protected function checkAchievements(\nre\core\Request $request, \nre\core\Response $response, $checkConditions=null)
 		{
 			// Do not check MediaController
 			if($this->request->getParam(0, 'toplevel') != \nre\configs\AppConfig::$defaults['toplevel']) {
@@ -160,6 +161,11 @@
 				return;
 			}
 			
+			// Set conditions to check
+			if(!is_null($checkConditions) && !is_array($checkConditions)) {
+				$checkConditions = array($checkConditions);
+			}
+			
 			// Get unachieved Achievments
 			$achievements = $this->Achievements->getUnachhievedAchievementsForCharacter(self::$seminary['id'], self::$character['id']);
 			if(in_array('user', self::$character['characterroles'])) {
@@ -169,6 +175,11 @@
 			// Check conditions
 			foreach($achievements as &$achievement)
 			{
+				// Check condition to test
+				if(!is_null($checkConditions) && !in_array($achievement['condition'], $checkConditions)) {
+					continue;
+				}
+				
 				// Check deadline
 				if(!is_null($achievement['deadline']) && $achievement['deadline'] < date('Y-m-d H:i:s')) {
 					continue;
