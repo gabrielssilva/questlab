@@ -266,7 +266,6 @@
 				$characterId,
 				self::QUEST_STATUS_ENTERED, self::QUEST_STATUS_SOLVED, self::QUEST_STATUS_UNSOLVED
 			);
-			//debug_print_backtrace();
 			
 			
 			return (!empty($count) && intval($count[0]['c']) > 0);
