@@ -156,9 +156,11 @@
 		/**
 		 * Get all not yet achieved Achievements for a Character.
 		 * 
-		 * @param	int	$seminaryId	ID of Seminary
-		 * @param	int	$characterId	ID of Character
-		 * @return	array			Achievements data
+		 * @param	int	$seminaryId		ID of Seminary
+		 * @param	int	$characterId		ID of Character
+		 * @param	boolean	$includeOnlyOnce	Include Achievements that can only be achieved by one Character
+		 * @param	boolean	$alsoWithDeadline	Include milestone Achievements
+		 * @return	array				Achievements data
 		 */
 		public function getUnachhievedAchievementsForCharacter($seminaryId, $characterId, $includeOnlyOnce=false, $alsoWithDeadline=true)
 		{
@@ -180,6 +182,34 @@
 				$includeOnlyOnce,
 				$characterId
 			);
+		}
+		
+		
+		/**
+		 * Get the amount of Achievement for a Seminary.
+		 * 
+		 * @param	int	$seminaryId		ID of Seminary
+		 * @param	boolean	$includeOnlyOnce	Include Achievements that can only be achieved by one Character
+		 * @param	boolean	$alsoWithDeadline	Include milestone Achievements
+		 * @return	int				Count of Achievements
+		 */
+		public function getAchievementsCountForSeminary($seminaryId, $includeOnlyOnce=false, $alsoWithDeadline=true)
+		{
+			$data = $this->db->query(
+				'SELECT count(id) AS c '.
+				'FROM achievements '.
+				'WHERE seminary_id = ? AND only_once <= ?'.
+				(!$alsoWithDeadline ? ' AND achievements.deadline IS NULL ' : null),
+				'ii',
+				$seminaryId,
+				$includeOnlyOnce
+			);
+			if(!empty($data)) {
+				return $data[0]['c'];
+			}
+			
+			
+			return 0;
 		}
 		
 		

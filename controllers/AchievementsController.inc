@@ -70,8 +70,11 @@
 			// Get Characters with the most Achievements
 			$successfulCharacters = $this->Characters->getCharactersWithMostAchievements($seminary['id'], \nre\configs\AppConfig::$misc['achievements_range'], false);
 			
+			// Get total count of Achievements for Seminary
+			$achievementsCount = $this->Achievements->getAchievementsCountForSeminary($seminary['id'], false);
+			
 			// Get achieved Achievements
-			$achievedAchievements = $this->Achievements->getAchievedAchievementsForCharacter($character['id'], false);
+			$achievedAchievements = $this->Achievements->getAchievedAchievementsForCharacter($character['id']);
 			
 			// Get unachieved Achievements
 			$unachievedAchievements = array_merge(
@@ -176,6 +179,7 @@
 			$this->set('character', $character);
 			$this->set('seldomAchievements', $seldomAchievements);
 			$this->set('successfulCharacters', $successfulCharacters);
+			$this->set('achievementsCount', $achievementsCount);
 			$this->set('achievedAchievements', $achievedAchievements);
 			$this->set('unachievedAchievements', $unachievedAchievements);
 		}

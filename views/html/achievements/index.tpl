@@ -50,12 +50,12 @@
 </div>
 <h2><?=_('Personal Achievements')?></h2>
 <div class="libindxpr cf">
-	<p><small><?=sprintf(_('Own progress: %d %%'), round(count($achievedAchievements) / (count($achievedAchievements)+count($unachievedAchievements)) * 100))?></small></p>
+	<p><small><?=sprintf(_('Own progress: %d %%'), round(count($achievedAchievements) / $achievementsCount * 100))?></small></p>
 	<div class="xpbar">
-		<span style="width:<?=round(count($achievedAchievements) / (count($achievedAchievements)+count($unachievedAchievements)) * 100)?>%"></span>
+		<span style="width:<?=round(count($achievedAchievements) / $achievementsCount * 100)?>%"></span>
 	</div>
 </div>
-<p><small><b><?=$character['rank']?>. <?=_('Rank')?>:</b> <?=sprintf(_('You achieved %d of %d Achievements so far'), count($achievedAchievements), count($achievedAchievements)+count($unachievedAchievements))?>.</small></p>
+<p><small><b><?=$character['rank']?>. <?=_('Rank')?>:</b> <?=sprintf(_('You achieved %d of %d Achievements so far'), count($achievedAchievements), $achievementsCount)?>.</small></p>
 <ul class="achmnts">
 	<?php foreach($achievedAchievements as &$achievement) : ?>
 	<li class="cf">
