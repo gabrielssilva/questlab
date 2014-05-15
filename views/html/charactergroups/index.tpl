@@ -14,7 +14,7 @@
 </nav>
 <?php endif ?>
 
-<ul class="cgqlist">
+<ul class="cglist">
 	<?php foreach($groupsgroups as &$group) : ?>
 	<li><a href="<?=$linker->link(array('groupsgroup',$seminary['url'],$group['url']),1)?>"><?=$group['name']?></a></li>
 	<?php endforeach ?>
