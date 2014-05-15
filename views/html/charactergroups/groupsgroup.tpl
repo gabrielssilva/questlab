@@ -21,7 +21,7 @@
 	<li><a href="<?=$linker->link(array('creategroup',$seminary['url'],$groupsgroup['url']), 1)?>"><?=sprintf(_('Create new %s Character group'), $groupsgroup['name'])?></a></li>
 </nav>
 <?php endif ?>
-<ol class="cglist">
+<ol class="cglist rnkng">
 	<?php foreach($groups as $index => &$group) : ?>
 	<li>
 		<?php if($index < 3) : ?>
