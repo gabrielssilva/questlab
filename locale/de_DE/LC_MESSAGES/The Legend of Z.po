@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: The Legend of Z\n"
-"POT-Creation-Date: 2014-05-15 23:32+0100\n"
-"PO-Revision-Date: 2014-05-15 23:33+0100\n"
+"POT-Creation-Date: 2014-05-16 00:20+0100\n"
+"PO-Revision-Date: 2014-05-16 00:21+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de_DE\n"
@@ -732,7 +732,8 @@ msgstr "Das Kursfeld „%s“ ist ungültig"
 msgid "Seminary fields"
 msgstr "Kursfelder"
 
-#: views/html/characters/index.tpl:13 views/html/users/index.tpl:7
+#: views/html/characters/index.tpl:13 views/html/library/managetopic.tpl:26
+#: views/html/users/index.tpl:7
 msgid "Manage"
 msgstr "Verwalten"
 
@@ -842,8 +843,8 @@ msgstr "Du hast Level %d erreicht"
 msgid "Introduction"
 msgstr "Einführung"
 
-#: views/html/library/index.tpl:9 views/html/library/topic.tpl:8
-#: views/html/seminarymenu/index.tpl:7
+#: views/html/library/index.tpl:9 views/html/library/managetopic.tpl:8
+#: views/html/library/topic.tpl:8 views/html/seminarymenu/index.tpl:7
 msgid "Library"
 msgstr "Bibliothek"
 
@@ -860,6 +861,10 @@ msgstr ""
 #, php-format
 msgid "Total progress: %d %%"
 msgstr "Gesamtfortschritt: %d%%"
+
+#: views/html/library/topic.tpl:13
+msgid "Manage topic"
+msgstr "Thema verwalten"
 
 #: views/html/menu/index.tpl:2 views/html/users/create.tpl:5
 #: views/html/users/delete.tpl:5 views/html/users/edit.tpl:6

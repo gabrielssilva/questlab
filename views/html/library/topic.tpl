@@ -8,6 +8,11 @@
 	<li><i class="fa fa-chevron-right fa-fw"></i><a href="<?=$linker->link(array('index',$seminary['url']),1)?>"><?=_('Library')?></a></li>
 </ul>
 <h1><i class="fa fa-book fa-fw"></i><?=$questtopic['title']?></h1>
+<?php if(count(array_intersect(array('admin', 'moderator'), \hhu\z\controllers\SeminaryController::$character['characterroles'])) > 0) : ?>
+<nav class="admin">
+	<li><a href="<?=$linker->link(array('managetopic',$seminary['url'],$questtopic['url']),1)?>"><?=_('Manage topic')?></a></li>
+</nav>
+<?php endif ?>
 <div class="libindxpr cf">
 	<p><small>Themenfortschritt: <?=$questtopic['characterQuestcount']?> / <?=$questtopic['questcount']?></small></p>
 	<div class="xpbar">

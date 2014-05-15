@@ -132,6 +132,25 @@
 		
 		
 		/**
+		 * Get alle Questsubtopics for a Questtopic.
+		 * 
+		 * @param	int	$questtopicId	ID of Questtopic
+		 * @return	array			List of Questsubtopics for this Questtopic
+		 */
+		public function getSubtopicsForQuesttopic($questtopicId)
+		{
+			return $this->db->query(
+				'SELECT id, questtopic_id, title, url '.
+				'FROM questsubtopics '.
+				'WHERE questsubtopics.questtopic_id = ? '.
+				'ORDER BY title ASC',
+				'i',
+				$questtopicId
+			);
+		}
+		
+		
+		/**
 		 * Get all Questsubtopics for a Quest.
 		 * 
 		 * @param	int	$questId	ID of Quest
@@ -147,6 +166,47 @@
 				'i',
 				$questId
 			);
+		}
+		
+		
+		/**
+		 * Set Questsubtopics for a Quest.
+		 * 
+		 * @param	int	$questId		ID of Quest to set subtopics for
+		 * @param	array	$questsubtopicIds	List of IDs of subtopics to set
+		 */
+		public function setQuestsubtopicsForQuest($questId, $questsubtopicIds)
+		{
+			$this->db->setAutocommit(false);
+			try {
+				// Remove Questsubtopics
+				$this->db->query(
+					'DELETE FROM quests_questsubtopics '.
+					'WHERE quest_id = ?',
+					'i',
+					$questId
+				);
+			
+				// Add Questsubtopics
+				foreach($questsubtopicIds as &$questsubtopicId)
+				{
+					$this->db->query(
+						'INSERT INTO quests_questsubtopics '.
+						'(quest_id, questsubtopic_id) '.
+						'VALUES '.
+						'(?, ?)',
+						'ii',
+						$questId, $questsubtopicId
+					);
+				}
+			}
+			catch(\nre\exceptions\DatamodelException $e) {
+				$this->db->rollback();
+				$this->db->setAutocommit(true);
+				throw $e;
+			}
+			
+			$this->db->setAutocommit(true);
 		}
 		
 	}

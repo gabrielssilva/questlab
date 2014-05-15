@@ -31,7 +31,9 @@
 		 * @var array
 		 */
 		public $permissions = array(
-			'index' => array('admin', 'moderator', 'user')
+			'index'		=> array('admin', 'moderator', 'user'),
+			'topic'		=> array('admin', 'moderator', 'user'),
+			'managetopic'	=> array('admin', 'moderator', 'user')
 		);
 		/**
 		 * User seminary permissions
@@ -39,7 +41,9 @@
 		 * @var array
 		 */
 		public $seminaryPermissions = array(
-			'index' => array('admin', 'moderator', 'user')
+			'index' 	=> array('admin', 'moderator', 'user', 'guest'),
+			'topic'		=> array('admin', 'moderator', 'user', 'guest'),
+			'managetopic'	=> array('admin', 'moderator')
 		);
 		
 		
@@ -136,6 +140,64 @@
 			// Pass data to view
 			$this->set('seminary', $seminary);
 			$this->set('questtopic', $questtopic);
+			$this->set('quests', $quests);
+		}
+		
+		
+		/**
+		 * Action: managetopic.
+		 * 
+		 * Manage a Questtopic and its Quests with Questsubtopics.
+		 * 
+		 * @throws	IdNotFoundException
+		 * @param	string	$eminaryUrl	URL-Title of Seminary
+		 * @param	string	$questtopicUrl	URL-Title of Questtopic
+		 */
+		public function managetopic($seminaryUrl, $questtopicUrl)
+		{
+			// Get Seminary
+			$seminary = $this->Seminaries->getSeminaryByUrl($seminaryUrl);
+			
+			// Get Questtopic
+			$questtopic = $this->Questtopics->getQuesttopicByUrl($seminary['id'], $questtopicUrl);
+			
+			// Get Questsubtopics
+			$questsubtopics = $this->Questtopics->getSubtopicsForQuesttopic($questtopic['id']);
+			
+			// Set Questsubtopics for Quests
+			if($this->request->getRequestMethod() == 'POST' && !is_null($this->request->getPostParam('questsubtopics')))
+			{
+				$quests = $this->Quests->getQuestsForQuesttopic($questtopic['id']);
+				$selectedSubtopics = $this->request->getPostParam('questsubtopics');
+				foreach($quests as &$quest)
+				{
+					$subtopics = (array_key_exists($quest['id'], $selectedSubtopics)) ? $selectedSubtopics[$quest['id']] : array();
+					$this->Questtopics->setQuestsubtopicsForQuest($quest['id'], array_keys($subtopics));
+				}
+			}
+			
+			// Get Quests
+			$quests = $this->Quests->getQuestsForQuesttopic($questtopic['id']);
+			foreach($quests as &$quest)
+			{
+				// Get Questgroup
+				$quest['questgroup'] = $this->Questgroups->getQuestgroupById($quest['questgroup_id']);
+				
+				// Get Subtopics
+				$quest['subtopics'] = $this->Questtopics->getQuestsubtopicsForQuest($quest['id']);
+				$quest['subtopics'] = array_map(function($t) { return $t['id']; }, $quest['subtopics']);
+			}
+			
+			
+			// Set title
+			$this->addTitle($questtopic['title']);
+			$this->addTitleLocalized('Library');
+			$this->addTitle($seminary['title']);
+			
+			// Pass data to view
+			$this->set('seminary', $seminary);
+			$this->set('questtopic', $questtopic);
+			$this->set('questsubtopics', $questsubtopics);
 			$this->set('quests', $quests);
 		}
 		
