@@ -121,9 +121,6 @@
 			{
 				if($this->Quests->hasCharacterEnteredQuest($quest['id'], $character['id']) || count(array_intersect(array('admin', 'moderator'), self::$character['characterroles'])) > 0)
 				{
-					// Get Questgroup
-					$quest['questgroup'] = $this->Questgroups->getQuestgroupById($quest['questgroup_id']);
-					
 					// Get Subtopics
 					$quest['subtopics'] = $this->Questtopics->getQuestsubtopicsForQuest($quest['id']);
 					
@@ -167,26 +164,41 @@
 			// Set Questsubtopics for Quests
 			if($this->request->getRequestMethod() == 'POST' && !is_null($this->request->getPostParam('questsubtopics')))
 			{
-				$quests = $this->Quests->getQuestsForQuesttopic($questtopic['id']);
 				$selectedSubtopics = $this->request->getPostParam('questsubtopics');
+				
+				// Set subtopics of Quests
+				$quests = $this->Quests->getQuestsForQuesttopic($questtopic['id']);
 				foreach($quests as &$quest)
 				{
 					$subtopics = (array_key_exists($quest['id'], $selectedSubtopics)) ? $selectedSubtopics[$quest['id']] : array();
 					$this->Questtopics->setQuestsubtopicsForQuest($quest['id'], array_keys($subtopics));
 				}
+				
+				// Add Quest
+				$addQuestId = $this->request->getPostParam('addquest');
+				if(!empty($addQuestId))
+				{
+					$subtopics = (array_key_exists('addquest', $selectedSubtopics)) ? $selectedSubtopics['addquest'] : array();
+					if(!empty($subtopics)) {
+						$this->Questtopics->setQuestsubtopicsForQuest($addQuestId, array_keys($subtopics));
+					}
+				}
+				
+				// Redirect
+				$this->redirect($this->linker->link(array('topic', $seminary['url'], $questtopic['url']), 1));
 			}
 			
 			// Get Quests
 			$quests = $this->Quests->getQuestsForQuesttopic($questtopic['id']);
 			foreach($quests as &$quest)
 			{
-				// Get Questgroup
-				$quest['questgroup'] = $this->Questgroups->getQuestgroupById($quest['questgroup_id']);
-				
 				// Get Subtopics
 				$quest['subtopics'] = $this->Questtopics->getQuestsubtopicsForQuest($quest['id']);
 				$quest['subtopics'] = array_map(function($t) { return $t['id']; }, $quest['subtopics']);
 			}
+			
+			// Get all Quests
+			$allQuests = $this->Quests->getQuestsForSeminary($seminary['id']);
 			
 			
 			// Set title
@@ -199,6 +211,7 @@
 			$this->set('questtopic', $questtopic);
 			$this->set('questsubtopics', $questsubtopics);
 			$this->set('quests', $quests);
+			$this->set('allQuests', $allQuests);
 		}
 		
 	}

@@ -24,7 +24,7 @@
 <ul class="libtop">
 	<?php foreach($quests as &$quest) : ?>
 	<li>
-		<p><a href="<?=$linker->link(array('quests','quest',$seminary['url'],$quest['questgroup']['url'],$quest['url']))?>"><?=$quest['title']?></a></p>
+		<p><a href="<?=$linker->link(array('quests','quest',$seminary['url'],$quest['questgroup_url'],$quest['url']))?>"><?=$quest['title']?></a></p>
 		<ul class="addon">
 			<?php foreach($quest['subtopics'] as &$subtopic) : ?>
 			<li><?=$subtopic['title']?></li>

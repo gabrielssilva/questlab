@@ -379,11 +379,13 @@
 		public function getQuestsForQuesttopic($questtopicId)
 		{
 			return $this->db->query(
-				'SELECT DISTINCT quests.id, quests.questgroup_id, quests.questtype_id, quests.title, quests.url, quests.xps, quests.task, quests.wrong_text, quests.questsmedia_id '.
+				'SELECT DISTINCT quests.id, quests.questgroup_id, quests.questtype_id, quests.title, quests.url, quests.xps, quests.task, quests.wrong_text, quests.questsmedia_id, questgroups.url AS questgroup_url '.
 				'FROM quests_questsubtopics '.
 				'INNER JOIN questsubtopics ON questsubtopics.id = quests_questsubtopics.questsubtopic_id '.
 				'INNER JOIN quests ON quests.id = quests_questsubtopics.quest_id '.
-				'WHERE questsubtopics.questtopic_id = ?',
+				'INNER JOIN questgroups ON questgroups.id = quests.questgroup_id '.
+				'WHERE questsubtopics.questtopic_id = ? '.
+				'ORDER BY quests.title ASC',
 				'i',
 				$questtopicId
 			);
