@@ -354,17 +354,52 @@
 		 * @param	int	$seminaryId	ID of Seminary
 		 * @return	array			Quests for this Seminary
 		 */
-		public function getQuestsForSeminary($seminaryId, $questgroupId=null, $questtypeId=null, $limit=null)
+		public function getQuestsForSeminary($seminaryId)
 		{
 			return $this->db->query(
-				'SELECT DISTINCT quests.id, quests.questgroup_id, quests.questtype_id, quests.title, quests.url, quests.xps, quests.task, quests.wrong_text, quests.questsmedia_id '.
+				'SELECT DISTINCT quests.id, quests.questgroup_id, quests.questtype_id, quests.title, quests.url, quests.xps, quests.task, quests.wrong_text, quests.questsmedia_id, questgroups.title AS questgroup_title, questgroups.url AS questgroup_url '.
 				'FROM questgroups '.
 				'INNER JOIN quests ON quests.questgroup_id = questgroups.id '.
-				'WHERE questgroups.seminary_id = ?'.
-				(!empty($questgroupId) ? ' AND questgroups.id = '.intval($questgroupId) : null).
-				(!empty($questtypeId) ? ' AND quests.questtype_id = '.intval($questtypeId) : null).
-				(!empty($limit) ? ' LIMIT '.intval($limit) : null),
+				'WHERE questgroups.seminary_id = ? '.
+				'ORDER BY quests.title ASC',
 				'i',
+				$seminaryId
+			);
+		}
+		
+		
+		/**
+		 * Get all Quests for a Seminary order by their count of open
+		 * submissions.
+		 * 
+		 * @param	int	$seminaryId	ID of Seminary
+		 * @param	int	$questgroupId	ID of Questgroup (optional)
+		 * @param	int	$questtypeId	ID of Questtype (optional)
+		 * @param	int	$limit		Limit amount of Quests (optional)
+		 * @param	int	$offset		Offset (optional)
+		 * @return	array			Quests for this Seminary
+		 */
+		public function getQuestsForSeminaryByOpenSubmissions($seminaryId, $questgroupId=null, $questtypeId=null, $limit=null, $offset=0)
+		{
+			return $this->db->query(
+				'SELECT DISTINCT quests.id, quests.questgroup_id, quests.questtype_id, quests.title, quests.url, quests.xps, quests.task, quests.wrong_text, quests.questsmedia_id, questgroups.title AS questgroup_title, questgroups.url AS questgroup_url, ('.
+					'SELECT count(DISTINCT quests_characters.character_id) '.
+					'FROM quests_characters '.
+					'WHERE quests_characters.quest_id = quests.id AND quests_characters.status = ? AND NOT EXISTS ('.
+						'SELECT id '.
+						'FROM quests_characters AS qc '.
+						'WHERE qc.quest_id = quests_characters.quest_id AND qc.character_id = quests_characters.character_id AND qc.created > quests_characters.created'.
+					')'.
+				') AS opensubmissionscount '.
+				'FROM questgroups '.
+				'INNER JOIN quests ON quests.questgroup_id = questgroups.id '.
+				'WHERE questgroups.seminary_id = ? '.
+				(!empty($questgroupId) ? sprintf('AND questgroups.id = %d ', $questgroupId) : null).
+				(!empty($questtypeId) ? sprintf('AND quests.questtype_id = %d ', $questtypeId) : null).
+				'ORDER BY opensubmissionscount DESC '.
+				(!empty($limit) ? sprintf('LIMIT %d, %d', $offset, $limit) : null),
+				'ii',
+				self::QUEST_STATUS_SUBMITTED,
 				$seminaryId
 			);
 		}

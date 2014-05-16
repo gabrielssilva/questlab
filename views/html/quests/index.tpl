@@ -51,7 +51,7 @@
 <ul class="admnql">
 	<?php foreach($quests as &$quest) : ?>
 	<li>
-		<p class="fwb"><a href="<?=$linker->link(array('quest',$seminary['url'],$quest['questgroup']['url'],$quest['url']),1)?>"><?=$quest['title']?></a><span><a href="<?=$linker->link(array('submissions',$seminary['url'],$quest['questgroup']['url'],$quest['url']),1)?>"><?=$quest['opensubmissionscount']?> <?=_('open submissions')?></a></span></p>
+		<p class="fwb"><a href="<?=$linker->link(array('quest',$seminary['url'],$quest['questgroup_url'],$quest['url']),1)?>"><?=$quest['title']?></a><span><a href="<?=$linker->link(array('submissions',$seminary['url'],$quest['questgroup_url'],$quest['url']),1)?>"><?=$quest['opensubmissionscount']?> <?=_('open submissions')?></a></span></p>
 		<p><small>
 			<?php switch($quest['questtype']['classname']) {
 				case null: echo _('Questtype Empty');
@@ -71,7 +71,7 @@
 				case 'textinput': echo _('Questtype textinput');
 				break;
 			} ?>, <?=sprintf(_('%d XPs'), $quest['xps'])?></small></p>
-		<p><small><a href="<?=$linker->link(array('questgroups','questgroup',$seminary['url'],$quest['questgroup']['url']))?>"><?=$quest['questgroup']['title']?></a></small></p>
+		<p><small><a href="<?=$linker->link(array('questgroups','questgroup',$seminary['url'],$quest['questgroup_url']))?>"><?=$quest['questgroup_title']?></a></small></p>
 	</li>
 	<?php endforeach ?>
 </ul>

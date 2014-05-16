@@ -92,26 +92,12 @@
 			
 			// Get Quests
 			$limit = (is_null($all) && is_null($selectedQuestgroup) && is_null($selectedQuesttype)) ? \nre\configs\AppConfig::$misc['questlist_limit'] : null;
-			$quests = $this->Quests->getQuestsForSeminary($seminary['id'], $selectedQuestgroup, $selectedQuesttype, $limit);
+			$quests = $this->Quests->getQuestsForSeminaryByOpenSubmissions($seminary['id'], $selectedQuestgroup, $selectedQuesttype, $limit);
 			foreach($quests as &$quest)
 			{
-				// Get Questgroup
-				$quest['questgroup'] = $this->Questgroups->getQuestgroupById($quest['questgroup_id']);
-				
 				// Get Questtype
 				$quest['questtype'] = $this->Questtypes->getQuesttypeById($quest['questtype_id']);
-				
-				// Add open submissions count
-				$quest['opensubmissionscount'] = count($this->Characters->getCharactersSubmittedQuest($quest['id']));
 			}
-			
-			// Sort Quests
-			usort($quests, function($a, $b) {
-				if($a['opensubmissionscount'] == $b['opensubmissionscount']) {
-					return 0;
-				}
-				return ($a['opensubmissionscount'] < $b['opensubmissionscount']) ? 1 : -1;
-			});
 			
 			// Get filter values
 			$questgroups = $this->Questgroups->getQuestgroupsForSeminary($seminary['id']);
