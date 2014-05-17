@@ -86,8 +86,10 @@
 			$selectedQuesttype = null;
 			if($this->request->getRequestMethod() == 'GET')
 			{
-				$selectedQuestgroup = !empty($this->request->getGetParam('questgroup')) ? $this->request->getGetParam('questgroup') : null;
-				$selectedQuesttype = !empty($this->request->getGetParam('questtype')) ? $this->request->getGetParam('questtype') : null;
+				$selectedQuestgroup = $this->request->getGetParam('questgroup');
+				$selectedQuestgroup = !empty($selectedQuestgroup) ? $selectedQuestgroup : null;
+				$selectedQuesttype = $this->request->getGetParam('questtype');
+				$selectedQuesttype = !empty($selectedQuesttype) ? $selectedQuesttype : null;
 			}
 			
 			// Get Quests
