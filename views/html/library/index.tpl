@@ -7,6 +7,11 @@
 	<li><a href="<?=$linker->link(array('seminaries',$seminary['url']))?>"><?=$seminary['title']?></a></li>
 </ul>
 <h1><i class="fa fa-book fa-fw"></i><?=_('Library')?></h1>
+<?php if(count(array_intersect(array('admin', 'moderator'), \hhu\z\controllers\SeminaryController::$character['characterroles'])) > 0) : ?>
+<nav class="admin">
+	<li><a href="<?=$linker->link(array('create',$seminary['url']),1)?>"><?=_('Create new Questtopic')?></a></li>
+</nav>
+<?php endif ?>
 <p><?=sprintf(_('Library description, %s, %s'), $seminary['course'], $seminary['title'])?></p>
 <div class="libindxpr cf">
 	<p><small><?=sprintf(_('Total progress: %d %%'), ($totalQuestcount > 0) ? round($totalCharacterQuestcount/$totalQuestcount*100) : 0) ?></small></p>

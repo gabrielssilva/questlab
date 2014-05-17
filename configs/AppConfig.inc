@@ -234,8 +234,9 @@
 			array('^charactergroupsquests/([^/]+)/([^/]+)/([^/]+)/(edit|delete|manage)/?$',	'charactergroupsquests/$4/$1/$2/$3',	true),
 			array('^achievements/([^/]+)/?$',					'achievements/index/$1',	true),
 			array('^library/([^/]+)/?$',						'library/index/$1',		true),
+			array('^library/([^/]+)/create/?$',					'library/create/$1',		true),
 			array('^library/([^/]+)/([^/]+)/?$',					'library/topic/$1/$2',		true),
-			array('^library/([^/]+)/([^/]+)/manage/?$',				'library/managetopic/$1/$2',	true),
+			array('^library/([^/]+)/([^/]+)/(edit|delete|manage)/?$',		'library/$3/$1/$2',		true),
 			array('^media/(.*)$',							'media/$1?layout=binary',	false),
 			array('^uploads/(.*)$',							'uploads/$1?layout=binary',	false)
 		);
@@ -272,8 +273,10 @@
 			array('^charactergroupsquests/quest/(.*)$',					'charactergroupsquests/$1',		true),
 			array('^charactergroupsquests/(edit|delete|manage)/([^/]+)/([^/]+)/([^/]+)$',	'charactergroupsquests/$2/$3/$4/$1',	true),
 			array('^achievements/index/(.*)$',		'achievements/$1',		true),
-			array('^library/(index|topic)/(.*)$',		'library/$2',			true),
-			array('^library/managetopic/(.*)$',		'library/$1/manage',		true)
+			array('^library/index/([^/]+)/?$',					'library/$1',		true),
+			array('^library/create/([^/]+)/?$',					'library/$1/create',	true),
+			array('^library/topic/([^/]+)/([^/]+)/?$',				'library/$1/$2',	true),
+			array('^library/(edit|delete|manage)/([^/]+)/([^/]+)/?$',		'library/$2/$3/$1',	true)
 		);
 		
 		

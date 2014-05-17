@@ -60,6 +60,30 @@
 		
 		
 		/**
+		 * Get a Questtopic by its ID.
+		 * 
+		 * @param	int	$questtopicId	ID of Questtopic
+		 * @return	array			Questtopic data
+		 */
+		public function getQuesttopicById($questtopicId)
+		{
+			$data = $this->db->query(
+				'SELECT id, title, url '.
+				'FROM questtopics '.
+				'WHERE id = ?',
+				'i',
+				$questtopicId
+			);
+			if(empty($data)) {
+				throw new \nre\exceptions\IdNotFoundException($questtopicId);
+			}
+			
+			
+			return $data[0];
+		}
+		
+		
+		/**
 		 * Get all Questtopics for a Seminary.
 		 * 
 		 * @param	int	$seminaryId	ID of Seminary
@@ -70,7 +94,8 @@
 			return $this->db->query(
 				'SELECT id, title, url '.
 				'FROM questtopics '.
-				'WHERE seminary_id = ?',
+				'WHERE seminary_id = ? '.
+				'ORDER BY title ASC',
 				'i',
 				$seminaryId
 			);
@@ -162,7 +187,8 @@
 				'SELECT DISTINCT id, questtopic_id, title, url '.
 				'FROM quests_questsubtopics '.
 				'INNER JOIN questsubtopics ON questsubtopics.id = quests_questsubtopics.questsubtopic_id '.
-				'WHERE quests_questsubtopics.quest_id = ?',
+				'WHERE quests_questsubtopics.quest_id = ? '.
+				'ORDER BY questsubtopics.title ASC',
 				'i',
 				$questId
 			);
@@ -207,6 +233,166 @@
 			}
 			
 			$this->db->setAutocommit(true);
+		}
+		
+		
+		/**
+		 * Check if a Questtopic title already exists.
+		 * 
+		 * @param	string	$title		Questtopic title to check
+		 * @param	int	$questtopicId	Do not check this ID (for editing)
+		 * @return	boolean			Whether Questtopic title exists or not
+		 */
+		public function questtopicTitleExists($title, $questtopicId=null)
+		{
+			$data = $this->db->query(
+				'SELECT id '.
+				'FROM questtopics '.
+				'WHERE title = ? OR url = ?',
+				'ss',
+				$title,
+				\nre\core\Linker::createLinkParam($title)
+			);
+			
+			return (!empty($data) && (is_null($questtopicId) || $questtopicId != $data[0]['id']));
+		}
+		
+		
+		/**
+		 * Create a new Questtopic for a Seminary.
+		 * 
+		 * @param	int	$userId		ID of creating user
+		 * @param	int	$seminaryId	ID of Seminary
+		 * @param	string	$title		Title for new Questtopic
+		 * @return	int			ID of newly created Questtopic
+		 */
+		public function createQuesttopic($userId, $seminaryId, $title)
+		{
+			$this->db->query(
+				'INSERT INTO questtopics '.
+				'(created_user_id, seminary_id, title, url) '.
+				'VALUES '.
+				'(?, ?, ?, ?) ',
+				'iiss',
+				$userId,
+				$seminaryId,
+				$title,
+				\nre\core\Linker::createLinkParam($title)
+			);
+			
+			return $this->db->getInsertId();
+		}
+		
+		
+		/**
+		 * Edit a Questtopic.
+		 * 
+		 * @param	int	$questtopicId	ID of Questtopic to edit
+		 * @param	string	$title		New title of Questtopic
+		 */
+		public function editQuesttopic($questtopicId, $title)
+		{
+			$this->db->query(
+				'UPDATE questtopics '.
+				'SET title = ?, url = ? '.
+				'WHERE id = ?',
+				'ssi',
+				$title,
+				\nre\core\Linker::createLinkParam($title),
+				$questtopicId
+			);
+		}
+		
+		
+		/**
+		 * Delete a Questtopic.
+		 * 
+		 * @param	int	$questtopicId	ID of Questtopic to delete
+		 */
+		public function deleteQuesttopic($questtopicId)
+		{
+			$this->db->query('DELETE FROM questtopics WHERE id = ?', 'i', $questtopicId);
+		}
+		
+		
+		/**
+		 * Check if a Questsubtopic title already exists.
+		 * 
+		 * @param	int	$questtopicId		ID of Questtopic
+		 * @param	string	$title			Questsubtopic title to check
+		 * @param	int	$questsubtopicId	Do not check this ID (for editing)
+		 * @return	boolean				Whether Questsubtopic title exists or not
+		 */
+		public function questsubtopicTitleExists($questtopicId, $title, $questsubtopicId=null)
+		{
+			$data = $this->db->query(
+				'SELECT id '.
+				'FROM questsubtopics '.
+				'WHERE questtopic_id = ? AND (title = ? OR url = ?)',
+				'iss',
+				$questtopicId,
+				$title,
+				\nre\core\Linker::createLinkParam($title)
+			);
+			
+			return (!empty($data) && (is_null($questsubtopicId) || $questsubtopicId != $data[0]['id']));
+		}
+		
+		
+		/**
+		 * Create a new Questsubtopic for a Questtopic.
+		 * 
+		 * @param	int	$userId		ID of creating user
+		 * @param	int	$questtopicId	ID of Qusttopic
+		 * @param	string	$title		Title for new Questtopic
+		 * @return	int			ID of newly created Questsubtopic
+		 */
+		public function createQuestsubtopic($userId, $questtopicId, $title)
+		{
+			$this->db->query(
+				'INSERT INTO questsubtopics '.
+				'(created_user_id, questtopic_id, title, url) '.
+				'VALUES '.
+				'(?, ?, ?, ?) ',
+				'iiss',
+				$userId,
+				$questtopicId,
+				$title,
+				\nre\core\Linker::createLinkParam($title)
+			);
+			
+			return $this->db->getInsertId();
+		}
+		
+		
+		/**
+		 * Edit a Questsubtopic.
+		 * 
+		 * @param	int	$questsubtopicId	ID of Questsubtopic to edit
+		 * @param	string	$title			New title of Questsubtopic
+		 */
+		public function editQuestsubtopic($questsubtopicId, $title)
+		{
+			$this->db->query(
+				'UPDATE questsubtopics '.
+				'SET title = ?, url = ? '.
+				'WHERE id = ?',
+				'ssi',
+				$title,
+				\nre\core\Linker::createLinkParam($title),
+				$questsubtopicId
+			);
+		}
+		
+		
+		/**
+		 * Delete a Questsubtopic.
+		 * 
+		 * @param	int	$questsubtopicId	ID of Questsubtopic to delete
+		 */
+		public function deleteQuestsubtopic($questtopicId)
+		{
+			$this->db->query('DELETE FROM questsubtopics WHERE id = ?', 'i', $questtopicId);
 		}
 		
 	}

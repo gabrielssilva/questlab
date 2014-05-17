@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: The Legend of Z\n"
-"POT-Creation-Date: 2014-05-16 00:20+0100\n"
-"PO-Revision-Date: 2014-05-16 00:21+0100\n"
+"POT-Creation-Date: 2014-05-17 13:42+0100\n"
+"PO-Revision-Date: 2014-05-17 13:43+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de_DE\n"
@@ -343,7 +343,8 @@ msgstr "Motto"
 #: views/html/charactergroups/creategroup.tpl:77
 #: views/html/charactergroups/creategroupsgroup.tpl:50
 #: views/html/charactergroupsquests/create.tpl:93
-#: views/html/characters/register.tpl:94 views/html/questgroups/create.tpl:17
+#: views/html/characters/register.tpl:94 views/html/library/create.tpl:46
+#: views/html/library/edit.tpl:124 views/html/questgroups/create.tpl:17
 #: views/html/quests/create.tpl:43 views/html/seminaries/create.tpl:14
 #: views/html/users/create.tpl:96
 msgid "create"
@@ -372,7 +373,8 @@ msgstr "Soll die %s-Gruppen „%s“ wirklich gelöscht werden?"
 #: views/html/charactergroups/deletegroup.tpl:15
 #: views/html/charactergroups/deletegroupsgroup.tpl:14
 #: views/html/charactergroupsquests/delete.tpl:15
-#: views/html/characters/delete.tpl:17 views/html/seminaries/delete.tpl:13
+#: views/html/characters/delete.tpl:17 views/html/library/delete.tpl:14
+#: views/html/library/edit.tpl:83 views/html/seminaries/delete.tpl:13
 #: views/html/users/delete.tpl:11
 msgid "delete"
 msgstr "löschen"
@@ -380,8 +382,8 @@ msgstr "löschen"
 #: views/html/charactergroups/deletegroup.tpl:16
 #: views/html/charactergroups/deletegroupsgroup.tpl:15
 #: views/html/charactergroupsquests/delete.tpl:16
-#: views/html/characters/delete.tpl:18 views/html/seminaries/delete.tpl:14
-#: views/html/users/delete.tpl:12
+#: views/html/characters/delete.tpl:18 views/html/library/delete.tpl:15
+#: views/html/seminaries/delete.tpl:14 views/html/users/delete.tpl:12
 msgid "cancel"
 msgstr "abbrechen"
 
@@ -510,28 +512,38 @@ msgstr "Neue %s-Quest"
 
 #: views/html/charactergroupsquests/create.tpl:34
 #: views/html/charactergroupsquests/edit.tpl:34
+#: views/html/library/create.tpl:22 views/html/library/edit.tpl:22
+#: views/html/library/edit.tpl:62 views/html/library/edit.tpl:100
 #, php-format
 msgid "Title is too short (min. %d chars)"
 msgstr "Der Titel ist zu kurz (min. %d Zeichen)"
 
 #: views/html/charactergroupsquests/create.tpl:36
 #: views/html/charactergroupsquests/edit.tpl:36
+#: views/html/library/create.tpl:24 views/html/library/edit.tpl:24
+#: views/html/library/edit.tpl:64 views/html/library/edit.tpl:102
 #, php-format
 msgid "Title is too long (max. %d chars)"
 msgstr "Der Titel ist zu lang (max. %d Zeichen)"
 
 #: views/html/charactergroupsquests/create.tpl:38
 #: views/html/charactergroupsquests/edit.tpl:38
+#: views/html/library/create.tpl:26 views/html/library/edit.tpl:26
+#: views/html/library/edit.tpl:66 views/html/library/edit.tpl:104
 msgid "Title contains illegal characters"
 msgstr "Der Titel enthält ungültige Zeichen"
 
 #: views/html/charactergroupsquests/create.tpl:40
 #: views/html/charactergroupsquests/edit.tpl:40
+#: views/html/library/create.tpl:28 views/html/library/edit.tpl:28
+#: views/html/library/edit.tpl:68 views/html/library/edit.tpl:106
 msgid "Title already exists"
 msgstr "Der Titel existiert bereits"
 
 #: views/html/charactergroupsquests/create.tpl:42
 #: views/html/charactergroupsquests/edit.tpl:42
+#: views/html/library/create.tpl:30 views/html/library/edit.tpl:30
+#: views/html/library/edit.tpl:70 views/html/library/edit.tpl:108
 msgid "Title invalid"
 msgstr "Der Titel ist ungültig"
 
@@ -555,6 +567,9 @@ msgstr "Die XP-Angabe ist ungültig"
 #: views/html/charactergroupsquests/create.tpl:75
 #: views/html/charactergroupsquests/edit.tpl:75
 #: views/html/charactergroupsquests/edit.tpl:76
+#: views/html/library/create.tpl:43 views/html/library/create.tpl:44
+#: views/html/library/edit.tpl:43 views/html/library/edit.tpl:44
+#: views/html/library/edit.tpl:121 views/html/library/edit.tpl:122
 #: views/html/questgroups/create.tpl:14 views/html/questgroups/create.tpl:15
 #: views/html/seminaries/create.tpl:11 views/html/seminaries/create.tpl:12
 #: views/html/seminaries/edit.tpl:13 views/html/seminaries/edit.tpl:14
@@ -624,6 +639,7 @@ msgid "File invalid"
 msgstr "Die Datei ist ungültig"
 
 #: views/html/charactergroupsquests/manage.tpl:66
+#: views/html/library/edit.tpl:46 views/html/library/edit.tpl:86
 #: views/html/seminaries/edit.tpl:16 views/html/users/edit.tpl:103
 msgid "save"
 msgstr "speichern"
@@ -732,7 +748,7 @@ msgstr "Das Kursfeld „%s“ ist ungültig"
 msgid "Seminary fields"
 msgstr "Kursfelder"
 
-#: views/html/characters/index.tpl:13 views/html/library/managetopic.tpl:26
+#: views/html/characters/index.tpl:13 views/html/library/manage.tpl:39
 #: views/html/users/index.tpl:7
 msgid "Manage"
 msgstr "Verwalten"
@@ -843,12 +859,43 @@ msgstr "Du hast Level %d erreicht"
 msgid "Introduction"
 msgstr "Einführung"
 
-#: views/html/library/index.tpl:9 views/html/library/managetopic.tpl:8
-#: views/html/library/topic.tpl:8 views/html/seminarymenu/index.tpl:7
+#: views/html/library/create.tpl:8 views/html/library/delete.tpl:8
+#: views/html/library/edit.tpl:8 views/html/library/index.tpl:9
+#: views/html/library/manage.tpl:8 views/html/library/topic.tpl:8
+#: views/html/seminarymenu/index.tpl:7
 msgid "Library"
 msgstr "Bibliothek"
 
-#: views/html/library/index.tpl:10
+#: views/html/library/create.tpl:10
+msgid "New Questtopic"
+msgstr "Neues Thema"
+
+#: views/html/library/delete.tpl:11 views/html/library/topic.tpl:14
+msgid "Delete Questtopic"
+msgstr "Thema löschen"
+
+#: views/html/library/delete.tpl:12
+#, php-format
+msgid "Should the Questtopic “%s” really be deleted?"
+msgstr "Soll das Thema „%s“ wirklich gelöscht werden?"
+
+#: views/html/library/edit.tpl:11 views/html/library/topic.tpl:13
+msgid "Edit Questtopic"
+msgstr "Thema bearbeiten"
+
+#: views/html/library/edit.tpl:49
+msgid "Edit Questsubtopics"
+msgstr "Unterthemen bearbeiten"
+
+#: views/html/library/edit.tpl:89
+msgid "Create new Questsubtopic"
+msgstr "Neues Unterthema erstellen"
+
+#: views/html/library/index.tpl:12
+msgid "Create new Questtopic"
+msgstr "Neues Thema erstellen"
+
+#: views/html/library/index.tpl:15
 #, php-format
 msgid "Library description, %s, %s"
 msgstr ""
@@ -857,13 +904,17 @@ msgstr ""
 "Umfang der Bibliothek, spiele also regelmäßig weiter und schalte so Quest "
 "für Quest alle Inhalte frei."
 
-#: views/html/library/index.tpl:12
+#: views/html/library/index.tpl:17
 #, php-format
 msgid "Total progress: %d %%"
 msgstr "Gesamtfortschritt: %d%%"
 
-#: views/html/library/topic.tpl:13
-msgid "Manage topic"
+#: views/html/library/manage.tpl:27
+msgid "Add Quest"
+msgstr "Quest hinzufügen"
+
+#: views/html/library/topic.tpl:15
+msgid "Manage Questtopic"
 msgstr "Thema verwalten"
 
 #: views/html/menu/index.tpl:2 views/html/users/create.tpl:5
@@ -1277,9 +1328,6 @@ msgstr "Rollen"
 
 #~ msgid "Character type"
 #~ msgstr "Charaktertyp"
-
-#~ msgid "Questtopics"
-#~ msgstr "Themen"
 
 #~ msgid "Questname"
 #~ msgstr "Questname"

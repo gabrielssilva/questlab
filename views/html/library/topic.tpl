@@ -10,7 +10,9 @@
 <h1><i class="fa fa-book fa-fw"></i><?=$questtopic['title']?></h1>
 <?php if(count(array_intersect(array('admin', 'moderator'), \hhu\z\controllers\SeminaryController::$character['characterroles'])) > 0) : ?>
 <nav class="admin">
-	<li><a href="<?=$linker->link(array('managetopic',$seminary['url'],$questtopic['url']),1)?>"><?=_('Manage topic')?></a></li>
+	<li><a href="<?=$linker->link(array('edit',$seminary['url'],$questtopic['url']),1)?>"><?=_('Edit Questtopic')?></a></li>
+	<li><a href="<?=$linker->link(array('delete',$seminary['url'],$questtopic['url']),1)?>"><?=_('Delete Questtopic')?></a></li>
+	<li><a href="<?=$linker->link(array('manage',$seminary['url'],$questtopic['url']),1)?>"><?=_('Manage Questtopic')?></a></li>
 </nav>
 <?php endif ?>
 <div class="libindxpr cf">
