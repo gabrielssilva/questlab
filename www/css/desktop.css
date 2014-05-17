@@ -265,10 +265,9 @@ input[type="submit"][disabled]{text-shadow:1px 2px #d48c4e;background:#f9ac69;bo
 
 /** Charactergroup Quest **/
 
-.grpqlist li{background:#fff;margin-bottom:6px;padding:5px 15px 5px 0;font-size:.875em;border-radius:3px}
-.grpqlist .date{padding:0 15px;border-right:1px solid #dad8d5}
-.grpqlist .group{padding:0 15px}
-.grpqlist .xp{float:right}
+.grpqlist li{list-style-type:decimal;background:#fff;margin:0 0 6px 30px;padding:5px 15px;font-size:.875em;border-radius:3px}
+.grpqlist .date{padding:0 15px 0 0;display:block}
+.grpqlist .xp{display:block}
 .gqgllry li{display:inline-block}
 
 
@@ -364,6 +363,9 @@ input[type="submit"][disabled]{text-shadow:1px 2px #d48c4e;background:#f9ac69;bo
 .gbanner h1{margin:25px 0 2px}
 
 .gchars li{width:32%}
+
+.grpqlist .date{float:left}
+.grpqlist .xp{float:right}
 
 .achmnts .xpbar{width:89%}
 

@@ -65,7 +65,7 @@
 
 <section>
 	<h1><i class="fa fa-users fa-fw"></i><?=$groupsgroup['name']?></h1>
-	<ul class="grpqlist">
+	<ol class="grpqlist">
 		<?php foreach($groups as &$group) : ?>
 		<li>
 			<span class="date"><?=$dateFormatter->format(new \DateTime($group['created']))?></span>
@@ -73,5 +73,5 @@
 			<span class="xp"><?=sprintf(_('%d XPs'), $group['xps'])?></span>
 		</li>
 		<?php endforeach ?>
-	</ul>
+	</ol>
 </section>
