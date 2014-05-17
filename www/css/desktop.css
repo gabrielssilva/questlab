@@ -153,6 +153,7 @@ input[type="submit"][disabled]{text-shadow:1px 2px #d48c4e;background:#f9ac69;bo
 .task strong{font-style:italic;font-weight:400}
 .task table{max-width:800px}
 .task td{background:#fff;padding:1px 5px;border:1px solid #d7d4cf}
+.task table option{font-size:0.675em}
 .task input[type="text"].small{width:40px}
 .task input[type="text"].medium{width:90px}
 
