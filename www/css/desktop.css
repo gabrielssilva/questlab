@@ -234,9 +234,7 @@ input[type="submit"][disabled]{text-shadow:1px 2px #d48c4e;background:#f9ac69;bo
 .cglist li p{margin:0;display:inline}
 .cglist .gbanner{width:40px;height:40px;border-radius:3px;display:inline;margin:5px 5px 0 0}
 .cglist .xp{display:block}
-.cglist.rnkng li:nth-child(-n+3){border:3px solid #cd7f32;border-width:0 0 2px}
-.cglist.rnkng li:nth-child(-n+2){border-color:#c0c0c0}
-.cglist.rnkng li:nth-child(-n+1){border-color:#ffd700}
+.cglist.rnkng li:nth-child(3){margin-bottom:16px}
 .cglist.rnkng li:nth-child(-n+3) a{display:inline-block;vertical-align:top;margin-top:10px}
 
 .cgqlist li{background:#fff;margin-bottom:5px;padding:3px}
