@@ -10,8 +10,11 @@
 			$posEnd = $posStart + mb_strlen('[textinput]', 'UTF-8');
 			
 			// Create field for Character answer
-			$answerField = '<span style="background-color:grey">'.$field['answer'].'</span>';
-			$answerField .= ($field['right']) ? '✓' : '✕';
+			$answerField = sprintf(
+				'<span style="background-color:grey">%s</span>%s',
+				$field['answer'],
+				($field['right']) ? '✓' : '✕'
+			);
 			
 			// Insert input field
 			$text = mb_substr($text, 0, $posStart, 'UTF-8') . $answerField . mb_substr($text, $posEnd, mb_strlen($text)-$posEnd, 'UTF-8');

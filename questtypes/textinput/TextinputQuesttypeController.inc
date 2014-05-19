@@ -76,26 +76,20 @@
 			$fields = $this->Textinput->getTextinputFields($quest['id']);
 			
 			// Match regexs with user answers
-			$allSolved = true;
 			foreach($fields as &$field)
 			{
 				$pos = intval($field['number']) - 1;
-				
-				if(!array_key_exists($pos, $answers))
-				{
-					$allSolved = false;
-					break;
+				if(!array_key_exists($pos, $answers)) {
+					return false;
 				}
-				if(!$this->isMatching($field['regex'], $answers[$pos]))
-				{
-					$allSolved = false;
-					break;
+				if(!$this->isMatching($field['regex'], $answers[$pos])) {
+					return false;
 				}
 			}
 			
 			
-			// Set status
-			return $allSolved;
+			// All answers right
+			return true;
 		}
 		
 		
