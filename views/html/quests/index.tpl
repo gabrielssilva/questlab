@@ -76,5 +76,9 @@
 	<?php endforeach ?>
 </ul>
 <?php if(!is_null($limit)) : ?>
-<p><a href="<?=$linker->link('all',3)?>"><?=_('Show all')?></a></p>
+<nav class="admin">
+	<li>
+		<a href="<?=$linker->link('all',3)?>"><?=_('Show all')?></a>
+	</li>
+</nav>
 <?php endif ?>
