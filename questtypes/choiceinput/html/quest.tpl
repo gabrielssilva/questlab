@@ -1,15 +1,32 @@
 <form method="post">
-	<?php foreach($texts as $i => &$text) : ?>
-	<?php if($i > 0) : ?>
-	<select name="answers[<?=$i-1?>]">
-		<?php foreach($choiceLists[$i-1]['values'] as &$choice) : ?>
-		<option value="<?=$choice['id']?>" <?php if(array_key_exists('answer', $choiceLists[$i-1]) && $choiceLists[$i-1]['answer'] == $choice['id']) : ?>selected="selected"<?php endif ?>><?=$choice['text']?></option>
-		<?php endforeach ?>
-	</select>
-	<?php endif ?>
-	<?=$t->t($text)?>
-	<?php endforeach ?>
-	
-	<br /><br />
+	<p>
+		<?php
+			$text = $t->t($task['text']);
+			
+			// Insert comboboxes
+			foreach(array_reverse($choiceLists) as &$list)
+			{
+				// Get positions
+				$posStart = mb_strrpos($text, '[choiceinput]', 0, 'UTF-8');
+				$posEnd = $posStart + mb_strlen('[choiceinput]', 'UTF-8');
+				
+				// Create combobox
+				$combobox = '<select name="answers[]">';
+				foreach($list['values'] as &$choice) {
+					$combobox .= sprintf(
+						'<option value="%s" %s>%s</option>',
+						$choice['id'],
+						(array_key_exists('answer', $list) && $list['answer'] == $choice['id']) ? 'selected="selected"' : null,
+						$choice['text']
+					);
+				}
+				$combobox .= '</select>';
+				
+				// Insert input field
+				$text = mb_substr($text, 0, $posStart, 'UTF-8') . $combobox . mb_substr($text, $posEnd, mb_strlen($text)-$posEnd, 'UTF-8');
+			}
+		?>
+		<?=$text?>
+	</p>
 	<input type="submit" name="submit" value="<?=_('solve')?>" />
 </form>

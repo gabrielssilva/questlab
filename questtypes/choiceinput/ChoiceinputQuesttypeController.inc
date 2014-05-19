@@ -77,18 +77,19 @@
 			$choiceLists = $this->Choiceinput->getChoiceinputLists($quest['id']);
 			
 			// Match lists with user answers
-			foreach($choiceLists as $i => &$list)
+			foreach($choiceLists as &$list)
 			{
-				if(!array_key_exists($i, $answers)) {
+				$pos = intval($list['number']) - 1;
+				if(!array_key_exists($pos, $answers)) {
 					return false;
 				}
-				if($list['questtypes_choiceinput_choice_id'] != $answers[$i]) {
+				if($list['questtypes_choiceinput_choice_id'] != $answers[$pos]) {
 					return false;
 				}
 			}
 			
 			
-			// All answer right
+			// All answers right
 			return true;
 		}
 		
@@ -109,9 +110,6 @@
 			// Get Task
 			$task = $this->Choiceinput->getChoiceinputQuest($quest['id']);
 			
-			// Process text
-			$textParts = preg_split('/(\$\$)/', ' '.$task['text'].' ');
-			
 			// Get lists
 			$choiceLists = $this->Choiceinput->getChoiceinputLists($quest['id']);
 			foreach($choiceLists as &$list) {
@@ -119,8 +117,7 @@
 			}
 			
 			// Get Character answers
-			if($this->request->getGetParam('show-answer') == 'true' || !$this->Quests->hasCharacterSolvedQuest($quest['id'], $character['id'])  || $this->request->getGetParam('status') == 'solved')
-			{
+			if($this->request->getGetParam('show-answer') == 'true' || !$this->Quests->hasCharacterSolvedQuest($quest['id'], $character['id'])  || $this->request->getGetParam('status') == 'solved') {
 				foreach($choiceLists as &$list) {
 					$list['answer'] = $this->Choiceinput->getCharacterSubmission($list['id'], $character['id']);
 				}
@@ -128,7 +125,7 @@
 			
 			
 			// Pass data to view
-			$this->set('texts', $textParts);
+			$this->set('task', $task);
 			$this->set('choiceLists', $choiceLists);
 		}
 		
@@ -148,9 +145,6 @@
 			// Get Task
 			$task = $this->Choiceinput->getChoiceinputQuest($quest['id']);
 			
-			// Process text
-			$textParts = preg_split('/(\$\$)/', ' '.$task['text'].' ');
-			
 			// Get lists
 			$choiceLists = $this->Choiceinput->getChoiceinputLists($quest['id']);
 			foreach($choiceLists as &$list)
@@ -162,7 +156,7 @@
 			
 			
 			// Pass data to view
-			$this->set('texts', $textParts);
+			$this->set('task', $task);
 			$this->set('choiceLists', $choiceLists);
 		}
 		
