@@ -65,7 +65,8 @@
 			parent::preFilter($request, $response);
 			
 			// Create linker
-			$this->linker = new \nre\core\Linker($this->request);
+			$this->linker = new \nre\core\Linker($request);
+			$this->set('linker', $this->linker);
 			
 			// Create text formatter
 			$this->set('t', new \hhu\z\TextFormatter($this->linker));

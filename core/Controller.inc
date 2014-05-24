@@ -165,10 +165,6 @@
 			// Response speichern
 			$this->response = $response;
 			
-			
-			// Linker erstellen
-			$this->set('linker', new \nre\core\Linker($request));
-			
 		}
 		
 		
