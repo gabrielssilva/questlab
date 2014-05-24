@@ -123,7 +123,8 @@
 				'SELECT charactergroupsquests.id, charactergroupsquests_groups.created, charactergroupsquests.title, charactergroupsquests.url, charactergroupsquests.xps, charactergroupsquests_groups.xps_factor '.
 				'FROM charactergroupsquests_groups '.
 				'LEFT JOIN charactergroupsquests ON charactergroupsquests.id = charactergroupsquests_groups.charactergroupsquest_id '.
-				'WHERE charactergroupsquests_groups.charactergroup_id = ?',
+				'WHERE charactergroupsquests_groups.charactergroup_id = ? '.
+				'ORDER BY charactergroupsquests.created DESC',
 				'i',
 				$groupId
 			);
