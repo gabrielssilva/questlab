@@ -328,10 +328,26 @@
 		{
 			// Get data of Questgroup
 			$questgroup = $this->getQuestgroupById($questgroupId);
+			$questgroup['hierarchy'] = $this->Questgroupshierarchy->getHierarchyForQuestgroup($questgroup['id']);
 			
-			// Check last Quest(s)
+			// Check last Quest(s) of this Questgroup
 			$solvedLastQuest = false;
 			$lastQuests = $this->Quests->getLastQuestsOfQuestgroup($questgroup['id']);
+			// Check last Quest(s) of last child Questgroup
+			if(empty($lastQuests) && !empty($questgroup['hierarchy']))
+			{
+				$childQuestgroupshierarchy = $this->Questgroupshierarchy->getChildQuestgroupshierarchy($questgroup['hierarchy']['id']);
+				if(!empty($childQuestgroupshierarchy))
+				{
+					$childQuestgroupshierarchy = array_pop($childQuestgroupshierarchy);
+					$childQuestgroups = $this->getQuestgroupsForHierarchy($childQuestgroupshierarchy['id'], $questgroupId);
+					if(!empty($childQuestgroups))
+					{
+						$childQuestgroup = array_pop($childQuestgroups);
+						$lastQuests = $this->Quests->getLastQuestsOfQuestgroup($childQuestgroup['id']);
+					}
+				}
+			}
 			foreach($lastQuests as &$lastQuest)
 			{
 				if($this->Quests->hasCharacterSolvedQuest($lastQuest['id'], $characterId))
@@ -345,7 +361,6 @@
 			}
 			
 			// Check all child Questgroups
-			$questgroup['hierarchy'] = $this->Questgroupshierarchy->getHierarchyForQuestgroup($questgroup['id']);
 			if(!empty($questgroup['hierarchy']))
 			{
 				$childQuestgroupshierarchy = $this->Questgroupshierarchy->getChildQuestgroupshierarchy($questgroup['hierarchy']['id']);
