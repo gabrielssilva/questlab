@@ -48,7 +48,7 @@
 	<input type="submit" value="<?=_('Apply filters')?>" />
 </form>
 
-<ul class="admnql">
+<ul id="questlist" class="admnql">
 	<?php foreach($quests as &$quest) : ?>
 	<li>
 		<p class="fwb"><a href="<?=$linker->link(array('quest',$seminary['url'],$quest['questgroup_url'],$quest['url']),1)?>"><?=$quest['title']?></a><span><a href="<?=$linker->link(array('submissions',$seminary['url'],$quest['questgroup_url'],$quest['url']),1)?>"><?=$quest['opensubmissionscount']?> <?=_('open submissions')?></a></span></p>
@@ -75,10 +75,59 @@
 	</li>
 	<?php endforeach ?>
 </ul>
-<?php if(!is_null($limit)) : ?>
+<?php if(is_null($all) && ($page*$limit) < $questsCount) : ?>
 <nav class="admin">
-	<li>
-		<a href="<?=$linker->link('all',3)?>"><?=_('Show all')?></a>
-	</li>
+	<li><a id="show-more" href="<?=$linker->link(null,3,true,array('page'=>$page+1,'questgroup'=>$selectedQuestgroup,'questtype'=>$selectedQuesttype))?>"><?=_('Show more')?></a></li>
+	<li><a id="show-all" href="<?=$linker->link('all',3,true,array('questgroup'=>$selectedQuestgroup,'questtype'=>$selectedQuesttype))?>"><?=_('Show all')?></a></li>
 </nav>
 <?php endif ?>
+
+<script>
+	var page = 1;
+	var request;
+	var linkSubmissions = "<?=$linker->link(array('submissions','SEMINARY','QUESTGROUP','QUEST'),1)?>";
+	var linkQuestgroup = "<?=$linker->link(array('questgroups','questgroup','SEMINARY','QUESTGROUP'))?>";
+	var linkQuest = "<?=$linker->link(array('quest','SEMINARY','QUESTGROUP','QUEST'),1)?>";
+	var linkPage = "<?=$linker->link(null,3,true,array('page'=>'PAGE','questgroup'=>$selectedQuestgroup,'questtype'=>$selectedQuesttype))?>";
+	
+	$("#show-more").click(function(event) {
+		if(request) {
+			request.abort();
+		}
+		
+		page++;
+		request = $.getJSON(linkPage.replace('PAGE', page), function(data) {
+			linkSubmissions = linkSubmissions.replace('SEMINARY', data['seminary']['url']);
+			linkQuestgroup = linkQuestgroup.replace('SEMINARY', data['seminary']['url']);
+			linkQuest = linkQuest.replace('SEMINARY', data['seminary']['url']);
+			$.each(data['quests'], function(key, val) {
+				var urlSubmissions = linkSubmissions.replace('QUESTGROUP', val['questgroup_url']).replace('QUEST', val['url']);
+				var urlQuestgroup = linkQuestgroup.replace('QUESTGROUP', val['questgroup_url']);
+				var urlQuest = linkQuest.replace('QUESTGROUP', val['questgroup_url']).replace('QUEST', val['url']);
+				$("#questlist").append(
+					"<li>" + 
+					"<p class=\"fwb\"><a href=\"" + urlQuest + "\">" + val['title'] + "</a><span><a href=\"" + urlSubmissions + "\">" + val['opensubmissionscount'] + " <?=_('open submissions')?></a></span></p>" +
+					"<p><small>" + val['questtype']['title'] + ", " + val['xps'] + "</small></p>" +
+					"<p><small><a href=\"" + urlQuestgroup + "\">" + val['questgroup_title'] + "</a></small></p>" +
+					"</li>"
+				);
+				
+				
+			});
+			if(data['more']) {
+				$("#show-more").attr('href', linkPage.replace('PAGE', page+1));
+			}
+			else {
+				$("#show-more").remove();
+				$("#show-all").remove();
+			}
+		});
+		request.fail(function (jqXHR, textStatus, errorThrown) {
+			alert("fail: " + textStatus + ": " +errorThrown);
+		});
+		
+		
+		event.preventDefault();
+		return false;
+	});
+</script>

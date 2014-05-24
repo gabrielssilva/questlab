@@ -369,6 +369,35 @@
 		
 		
 		/**
+		 * Get count of all Quests for a Seminary.
+		 * 
+		 * @param	int	$seminaryId	ID of Seminary
+		 * @param	int	$questgroupId	ID of Questgroup (optional)
+		 * @param	int	$questtypeId	ID of Questtype (optional)
+		 * @return	int			Count of Quests for this Seminary
+		 */
+		public function getCountForQuestsForSeminaryByOpenSubmissions($seminaryId, $questgroupId=null, $questtypeId=null)
+		{
+			$data = $this->db->query(
+				'SELECT count(DISTINCT quests.id) AS c '.
+				'FROM questgroups '.
+				'INNER JOIN quests ON quests.questgroup_id = questgroups.id '.
+				'WHERE questgroups.seminary_id = ? '.
+				(!empty($questgroupId) ? sprintf('AND questgroups.id = %d ', $questgroupId) : null).
+				(!empty($questtypeId) ? sprintf('AND quests.questtype_id = %d ', $questtypeId) : null),
+				'i',
+				$seminaryId
+			);
+			if(!empty($data)) {
+				return $data[0]['c'];
+			}
+			
+			
+			return 0;
+		}
+		
+		
+		/**
 		 * Get all Quests for a Seminary order by their count of open
 		 * submissions.
 		 * 

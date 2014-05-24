@@ -84,17 +84,22 @@
 			// Set filters
 			$selectedQuestgroup = null;
 			$selectedQuesttype = null;
+			$page = 1;
 			if($this->request->getRequestMethod() == 'GET')
 			{
 				$selectedQuestgroup = $this->request->getGetParam('questgroup');
 				$selectedQuestgroup = !empty($selectedQuestgroup) ? $selectedQuestgroup : null;
 				$selectedQuesttype = $this->request->getGetParam('questtype');
 				$selectedQuesttype = !empty($selectedQuesttype) ? $selectedQuesttype : null;
+				$page = $this->request->getGetParam('page');
+				$page = !empty($page) ? intval($page) : 1;
 			}
 			
 			// Get Quests
-			$limit = (is_null($all) && is_null($selectedQuestgroup) && is_null($selectedQuesttype)) ? \nre\configs\AppConfig::$misc['questlist_limit'] : null;
-			$quests = $this->Quests->getQuestsForSeminaryByOpenSubmissions($seminary['id'], $selectedQuestgroup, $selectedQuesttype, $limit);
+			$limit = ($all != 'all') ? \nre\configs\AppConfig::$misc['questlist_limit'] : null;
+			$offset = ($all != 'all') ? max((intval($page) - 1), 0) * $limit : 0;
+			$questsCount = $this->Quests->getCountForQuestsForSeminaryByOpenSubmissions($seminary['id'], $selectedQuestgroup, $selectedQuesttype);
+			$quests = $this->Quests->getQuestsForSeminaryByOpenSubmissions($seminary['id'], $selectedQuestgroup, $selectedQuesttype, $limit, $offset);
 			foreach($quests as &$quest)
 			{
 				// Get Questtype
@@ -117,6 +122,9 @@
 			$this->set('selectedQuestgroup', $selectedQuestgroup);
 			$this->set('selectedQuesttype', $selectedQuesttype);
 			$this->set('quests', $quests);
+			$this->set('questsCount', $questsCount);
+			$this->set('all', $all);
+			$this->set('page', $page);
 			$this->set('limit', $limit);
 		}
 		
