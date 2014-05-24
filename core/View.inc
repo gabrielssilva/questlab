@@ -63,7 +63,7 @@
 			// LayoutName
 			$fileName = ROOT.DS. \nre\configs\CoreConfig::getClassDir('views').DS. strtolower($layoutName).DS;
 			// AgentName and Action
-			if(strtolower($agentName) != $layoutName || !$isToplevel) {
+			if(strtolower($agentName) != strtolower($layoutName) || !$isToplevel) {
 				$fileName .= strtolower($agentName).DS.strtolower($action);
 			}
 			else {
