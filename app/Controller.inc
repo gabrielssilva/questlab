@@ -25,6 +25,13 @@
 		 * @var array
 		 */
 		public $components = array('auth');
+		
+		/**
+		 * Logger instance
+		 * 
+		 * @var Logger
+		 */
+		protected $log = null;
 		/**
 		 * Linker instance
 		 * 
@@ -50,6 +57,9 @@
 		public function __construct($layoutName, $action, $agent)
 		{
 			parent::__construct($layoutName, $action, $agent);
+			
+			// Create logger
+			$this->log = new \nre\core\Logger();
 		}
 		
 		
@@ -100,6 +110,20 @@
 		public function postFilter(\nre\core\Request $request, \nre\core\Response $response)
 		{
 			parent::postFilter($request, $response);
+		}
+		
+		
+		
+		
+		/**
+		 * Log an error.
+		 * 
+		 * @param	string	$message	Error message to log
+		 * @param	int	$logMode	Log mode (optional)
+		 */
+		protected function log($message, $logMode=\nre\core\Logger::LOGMODE_AUTO)
+		{
+			$this->log->log($message, $logMode);
 		}
 		
 	}
