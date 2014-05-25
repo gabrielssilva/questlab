@@ -34,7 +34,7 @@
 			'genericname'		=>	'The Legend of Z',
 			'namespace'		=>	'hhu\\z\\',
 			'timeZone'		=>	'Europe/Berlin',
-			'mailsender'		=>	'noreply@zyren.inf-d.de'
+			'mailsender'		=>	'questlab@hhu.de'
 		);
 		
 		
@@ -47,8 +47,11 @@
 		public static $defaults = array(
 			'toplevel'		=>	'html',
 			'toplevel-error'	=>	'fault',
+			'toplevel-mail'		=>	'textmail',
+			'toplevel-htmlmail'	=>	'htmlmail',
 			'intermediate'		=>	'introduction',
 			'intermediate-error'	=>	'error',
+			'intermediate-mail'	=>	'mail',
 			'language'		=>	'de_DE.utf8',
 			'locale'		=>	'de-DE'
 		);
