@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: The Legend of Z\n"
-"POT-Creation-Date: 2014-05-17 13:42+0100\n"
-"PO-Revision-Date: 2014-05-17 13:43+0100\n"
+"POT-Creation-Date: 2014-05-25 22:38+0100\n"
+"PO-Revision-Date: 2014-05-25 22:41+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de_DE\n"
@@ -15,6 +15,45 @@ msgstr ""
 "X-Poedit-SourceCharset: UTF-8\n"
 "X-Poedit-SearchPath-0: views\n"
 "X-Poedit-SearchPath-1: questtypes\n"
+"X-Poedit-SearchPath-2: controllers\n"
+
+#: controllers/CharactersController.inc:368
+#: controllers/UsersController.inc:289 views/html/characters/index.tpl:39
+#: views/html/characters/manage.tpl:35 views/html/characters/manage.tpl:50
+#: views/html/characters/manage.tpl:58 views/html/users/manage.tpl:28
+#: views/html/users/manage.tpl:41 views/html/users/manage.tpl:49
+msgid "Admin"
+msgstr "Administrator"
+
+#: controllers/CharactersController.inc:374
+#: controllers/UsersController.inc:295 views/html/characters/index.tpl:40
+#: views/html/characters/manage.tpl:36 views/html/characters/manage.tpl:51
+#: views/html/characters/manage.tpl:59 views/html/users/manage.tpl:29
+#: views/html/users/manage.tpl:42 views/html/users/manage.tpl:50
+msgid "Moderator"
+msgstr "Moderator"
+
+#: controllers/CharactersController.inc:380
+#: controllers/UsersController.inc:301 views/html/characters/index.tpl:41
+#: views/html/characters/manage.tpl:37 views/html/characters/manage.tpl:53
+#: views/html/characters/manage.tpl:61 views/html/users/manage.tpl:30
+#: views/html/users/manage.tpl:44 views/html/users/manage.tpl:52
+msgid "User"
+msgstr "Benutzer"
+
+#: controllers/MailController.inc:53
+msgid "New user registration"
+msgstr "Neue Benutzerregistrierung"
+
+#: controllers/MailController.inc:74
+msgid "New Character registration"
+msgstr "Neue Charakterregistrierung"
+
+#: controllers/QuestsController.inc:732
+#: questtypes/submit/html/submission.tpl:30 views/html/quests/quest.tpl:45
+#: views/html/quests/submissions.tpl:30
+msgid "solved"
+msgstr "Richtig!"
 
 #: questtypes/bossfight/html/quest.tpl:11
 #: questtypes/bossfight/html/quest.tpl:24
@@ -28,11 +67,11 @@ msgid "Choose"
 msgstr "Wählen"
 
 #: questtypes/bossfight/html/quest.tpl:47
-#: questtypes/choiceinput/html/quest.tpl:14
+#: questtypes/choiceinput/html/quest.tpl:16
 #: questtypes/crossword/html/quest.tpl:30
 #: questtypes/dragndrop/html/quest.tpl:16
 #: questtypes/multiplechoice/html/quest.tpl:19
-#: questtypes/submit/html/quest.tpl:23 questtypes/textinput/html/quest.tpl:10
+#: questtypes/submit/html/quest.tpl:23 questtypes/textinput/html/quest.tpl:12
 msgid "solve"
 msgstr "lösen"
 
@@ -129,15 +168,66 @@ msgstr "Bewertet von %s am %s um %s Uhr"
 msgid "Comment"
 msgstr "Kommentar"
 
-#: questtypes/submit/html/submission.tpl:30 views/html/quests/quest.tpl:45
-#: views/html/quests/submissions.tpl:30
-msgid "solved"
-msgstr "Richtig!"
-
 #: questtypes/submit/html/submission.tpl:31 views/html/quests/quest.tpl:50
 #: views/html/quests/submissions.tpl:20
 msgid "unsolved"
 msgstr "Leider falsch!"
+
+#: views/ajax/quests/index.tpl:9 views/html/quests/index.tpl:27
+#: views/html/quests/index.tpl:57
+msgid "Questtype Empty"
+msgstr "Leere Aufgabe"
+
+#: views/ajax/quests/index.tpl:11 views/html/quests/index.tpl:29
+#: views/html/quests/index.tpl:59
+msgid "Questtype bossfight"
+msgstr "Boss-Fight"
+
+#: views/ajax/quests/index.tpl:13 views/html/quests/index.tpl:31
+#: views/html/quests/index.tpl:61
+msgid "Questtype choiceinput"
+msgstr "Auswahleingabe"
+
+#: views/ajax/quests/index.tpl:15 views/html/quests/index.tpl:33
+#: views/html/quests/index.tpl:63
+msgid "Questtype crossword"
+msgstr "Kreuzworträtsel"
+
+#: views/ajax/quests/index.tpl:17 views/html/quests/index.tpl:35
+#: views/html/quests/index.tpl:65
+msgid "Questtype dragndrop"
+msgstr "Drag&Drop"
+
+#: views/ajax/quests/index.tpl:19 views/html/quests/index.tpl:37
+#: views/html/quests/index.tpl:67
+msgid "Questtype multiplechoice"
+msgstr "Multiple Choice"
+
+#: views/ajax/quests/index.tpl:21 views/html/quests/index.tpl:39
+#: views/html/quests/index.tpl:69
+msgid "Questtype submit"
+msgstr "Abgabeaufgabe"
+
+#: views/ajax/quests/index.tpl:23 views/html/quests/index.tpl:41
+#: views/html/quests/index.tpl:71
+msgid "Questtype textinput"
+msgstr "Texteingabe"
+
+#: views/ajax/quests/index.tpl:29 views/html/charactergroups/group.tpl:33
+#: views/html/charactergroups/group.tpl:46
+#: views/html/charactergroupsquests/manage.tpl:21
+#: views/html/charactergroupsquests/manage.tpl:81
+#: views/html/charactergroupsquests/quest.tpl:25
+#: views/html/charactergroupsquests/quest.tpl:73
+#: views/html/characters/character.tpl:77
+#: views/html/characters/character.tpl:83
+#: views/html/characters/character.tpl:89
+#: views/html/characters/character.tpl:103 views/html/quests/index.tpl:73
+#: views/html/seminaries/index.tpl:29 views/html/seminarybar/index.tpl:7
+#: views/html/seminarybar/index.tpl:43
+#, php-format
+msgid "%d XPs"
+msgstr "%d XP"
 
 #: views/binary/error/index.tpl:1 views/html/error/index.tpl:1
 msgid "Error"
@@ -419,22 +509,6 @@ msgstr "Gruppenart bearbeiten"
 #, php-format
 msgid "Manage %s Character group"
 msgstr "%s-Gruppe verwalten"
-
-#: views/html/charactergroups/group.tpl:33
-#: views/html/charactergroups/group.tpl:46
-#: views/html/charactergroupsquests/manage.tpl:21
-#: views/html/charactergroupsquests/manage.tpl:81
-#: views/html/charactergroupsquests/quest.tpl:25
-#: views/html/charactergroupsquests/quest.tpl:73
-#: views/html/characters/character.tpl:77
-#: views/html/characters/character.tpl:83
-#: views/html/characters/character.tpl:89
-#: views/html/characters/character.tpl:103 views/html/quests/index.tpl:73
-#: views/html/seminaries/index.tpl:29 views/html/seminarybar/index.tpl:7
-#: views/html/seminarybar/index.tpl:43
-#, php-format
-msgid "%d XPs"
-msgstr "%d XP"
 
 #: views/html/charactergroups/group.tpl:34
 #: views/html/charactergroups/managegroup.tpl:22
@@ -768,27 +842,6 @@ msgstr "Registrierungsdatum"
 msgid "Sort list"
 msgstr "Liste sortieren"
 
-#: views/html/characters/index.tpl:39 views/html/characters/manage.tpl:35
-#: views/html/characters/manage.tpl:50 views/html/characters/manage.tpl:58
-#: views/html/users/manage.tpl:28 views/html/users/manage.tpl:41
-#: views/html/users/manage.tpl:49
-msgid "Admin"
-msgstr "Administrator"
-
-#: views/html/characters/index.tpl:40 views/html/characters/manage.tpl:36
-#: views/html/characters/manage.tpl:51 views/html/characters/manage.tpl:59
-#: views/html/users/manage.tpl:29 views/html/users/manage.tpl:42
-#: views/html/users/manage.tpl:50
-msgid "Moderator"
-msgstr "Moderator"
-
-#: views/html/characters/index.tpl:41 views/html/characters/manage.tpl:37
-#: views/html/characters/manage.tpl:53 views/html/characters/manage.tpl:61
-#: views/html/users/manage.tpl:30 views/html/users/manage.tpl:44
-#: views/html/users/manage.tpl:52
-msgid "User"
-msgstr "Benutzer"
-
 #: views/html/characters/manage.tpl:10
 msgid "Manage Characters"
 msgstr "Charaktere verwalten"
@@ -972,47 +1025,19 @@ msgstr "alle"
 msgid "Questtype"
 msgstr "Questtyp"
 
-#: views/html/quests/index.tpl:27 views/html/quests/index.tpl:57
-msgid "Questtype Empty"
-msgstr "Leere Aufgabe"
-
-#: views/html/quests/index.tpl:29 views/html/quests/index.tpl:59
-msgid "Questtype bossfight"
-msgstr "Boss-Fight"
-
-#: views/html/quests/index.tpl:31 views/html/quests/index.tpl:61
-msgid "Questtype choiceinput"
-msgstr "Auswahleingabe"
-
-#: views/html/quests/index.tpl:33 views/html/quests/index.tpl:63
-msgid "Questtype crossword"
-msgstr "Kreuzworträtsel"
-
-#: views/html/quests/index.tpl:35 views/html/quests/index.tpl:65
-msgid "Questtype dragndrop"
-msgstr "Drag&Drop"
-
-#: views/html/quests/index.tpl:37 views/html/quests/index.tpl:67
-msgid "Questtype multiplechoice"
-msgstr "Multiple Choice"
-
-#: views/html/quests/index.tpl:39 views/html/quests/index.tpl:69
-msgid "Questtype submit"
-msgstr "Abgabeaufgabe"
-
-#: views/html/quests/index.tpl:41 views/html/quests/index.tpl:71
-msgid "Questtype textinput"
-msgstr "Texteingabe"
-
 #: views/html/quests/index.tpl:48
 msgid "Apply filters"
 msgstr "Filter anwenden"
 
-#: views/html/quests/index.tpl:54
+#: views/html/quests/index.tpl:54 views/html/quests/index.tpl:109
 msgid "open submissions"
 msgstr "offene Lösungsvorschläge"
 
-#: views/html/quests/index.tpl:79
+#: views/html/quests/index.tpl:80
+msgid "Show more"
+msgstr "Weitere anzeigen"
+
+#: views/html/quests/index.tpl:81
 msgid "Show all"
 msgstr "Alle anzeigen"
 
@@ -1288,6 +1313,36 @@ msgstr "Registrieren"
 #: views/html/users/user.tpl:46
 msgid "Roles"
 msgstr "Rollen"
+
+#: views/htmlmail/mail/characterregistration.tpl:1
+#: views/textmail/mail/characterregistration.tpl:1
+#, php-format
+msgid "User “%s” has registered a new Character for the Seminary “%s”"
+msgstr ""
+"Der Benutzer „%s“ hat einen neuen Charakter für das Seminar „%s“ erstellt"
+
+#: views/htmlmail/mail/userregistration.tpl:1
+#: views/textmail/mail/userregistration.tpl:1
+msgid "A new user has been registered"
+msgstr "Ein neuer Benutzer wurde registriert"
+
+#: views/htmlmail/mailreceiver/index.tpl:1
+#: views/textmail/mailreceiver/index.tpl:1
+#, php-format
+msgid "Hello %s"
+msgstr "Hallo %s"
+
+#, fuzzy
+#~ msgid "New Character submission"
+#~ msgstr "Neue Gruppengruppe"
+
+#, fuzzy
+#~ msgid "Character submission solved"
+#~ msgstr "gelöst"
+
+#, fuzzy
+#~ msgid "Dear %s"
+#~ msgstr "erstellt von %s am %s um %s Uhr"
 
 #~ msgid "Reset filters"
 #~ msgstr "Filter zurücksetzen"
