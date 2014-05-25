@@ -36,8 +36,8 @@
 			);
 			
 			// Set ToplevelAgent
-			$this->response->addParam(\nre\configs\AppConfig::$defaults['toplevel-mail']);
-			$this->response->addParam(\nre\configs\AppConfig::$defaults['intermediate-mail']);
+			$this->request->addParam(\nre\configs\AppConfig::$defaults['toplevel-mail']);
+			$this->request->addParam(\nre\configs\AppConfig::$defaults['intermediate-mail']);
 		}
 		
 		
@@ -46,11 +46,24 @@
 		/**
 		 * Use a ToplevelAgent for HTML-mail
 		 */
-		public function setHTML()
+		public function setHTML($html=true)
 		{
-			$this->response->clearParams();
-			$this->response->addParam(\nre\configs\AppConfig::$defaults['toplevel-htmlmail']);
-			$this->response->addParam(\nre\configs\AppConfig::$defaults['intermediate-mail']);
+			// Save params
+			$params = $this->request->getParams(1);
+			
+			// Set ToplevelAgent
+			$this->request->clearParams();
+			if($html) {
+				$this->request->addParam(\nre\configs\AppConfig::$defaults['toplevel-htmlmail']);
+			}
+			else {
+				$this->request->addParam(\nre\configs\AppConfig::$defaults['toplevel-mail']);
+			}
+			
+			// Restore params
+			if(!empty($params)) {
+				$this->addParams($params);
+			}
 		}
 		
 		
@@ -59,8 +72,17 @@
 		 */
 		public function setMessage($messageAgent)
 		{
-			$this->response->clearParams(2);
-			$this->response->addParam($messageAgent);
+			// Save params
+			$params = $this->request->getParams(3);
+			
+			// Set messageAgent
+			$this->request->clearParams(2);
+			$this->request->addParam($messageAgent);
+			
+			// Restore params
+			if(!empty($params)) {
+				$this->addParams($params);
+			}
 		}
 		
 		
@@ -71,7 +93,19 @@
 		 */
 		public function setParams($params)
 		{
-			$this->response->addParams($params);
+			// Add placeholder params
+			for($i=3; $i<count($this->request->getParams()); $i++) {
+				$this->request->addParam(null);
+			}
+			
+			// Set params
+			call_user_func_array(
+				array(
+					$this->request,
+					'addParams'
+				),
+				$params
+			);
 		}
 		
 		
@@ -95,6 +129,13 @@
 		 */
 		public function run()
 		{
+			// Set response
+			$this->response->clearParams();
+			foreach($this->request->getParams() as &$param) {
+				$this->response->addParam($param);
+			}
+			
+			// Run
 			try {
 				$exception = parent::run();
 				
@@ -120,6 +161,25 @@
 			
 			// Return output
 			return $this->response->getOutput();
+		}
+		
+		
+		
+		
+		/**
+		 * Add multiple request params.
+		 * 
+		 * @param	array	$params	Request params to add
+		 */
+		private function addParams($params)
+		{
+			call_user_func_array(
+				array(
+					$this->request,
+					'addParams'
+				),
+				$params
+			);
 		}
 		
 	}
