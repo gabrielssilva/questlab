@@ -283,16 +283,17 @@
 				if($validation === true && $fieldsValidation === true)
 				{
 					$characterId = $this->Characters->createCharacter($this->Auth->getUserId(), $types[$typeIndex]['id'], $charactername);
+					$character = $this->Characters->getCharacterById($characterId);
 					
 					// Add Seminary fields
 					foreach($fields as &$field) {
 						if(!empty($fieldsValues[$field['url']])) {
-							$this->Seminarycharacterfield->setSeminaryFieldOfCharacter($field['id'], $characterId, $fieldsValues[$field['url']]);
+							$this->Seminarycharacterfields->setSeminaryFieldOfCharacter($field['id'], $characterId, $fieldsValues[$field['url']]);
 						}
 					}
 					
 					// Send mail
-					$this->sendRegistrationMail($charactername);
+					$this->sendRegistrationMail($character);
 					
 					// Redirect
 					$this->redirect($this->linker->link(array('seminaries')));
@@ -633,23 +634,34 @@
 		/**
 		 * Send mail for new Character registration.
 		 * 
-		 * @param	string	$charactername	Name of newly registered Character
+		 * @param	arary	$newCharacter	Newly registered Character
 		 */
-		private function sendRegistrationMail($charactername)
+		private function sendRegistrationMail($newCharacter)
 		{
-			$sender = \nre\configs\AppConfig::$app['mailsender'];
-			if(empty($sender)) {
-				return;
-			}
-			
-			// Send notification mail to system moderators
-			$subject = sprintf('new Character registration: %s', $charactername);
-			$message = sprintf('User “%s” <%s> has registered a new Character “%s” for the Seminary “%s”', self::$user['username'], self::$user['email'], $charactername, self::$seminary['title']);
+			// Get Seminary moderators
 			$characters = $this->Characters->getCharactersWithCharacterRole(self::$seminary['id'], 'moderator');
-			foreach($characters as &$character)
-			{
-				$moderator = $this->Users->getUserById($character['user_id']);
-				\hhu\z\Utils::sendMail($sender, $moderator['email'], $subject, $message);
+			
+			// Send notification mail
+			try {
+				foreach($characters as &$character)
+				{
+					$moderator = $this->Users->getUserById($character['user_id']);
+					\hhu\z\Utils::sendMail(
+						$moderator['email'],
+						'characterregistration',
+						true,
+						array(
+							$moderator,
+							\hhu\z\controllers\SeminaryController::$seminary,
+							\hhu\z\controllers\IntermediateController::$user,
+							$newCharacter
+						),
+						$this->linker
+					);
+				}
+			}
+			catch(\hhu\z\exceptions\MailingException $e) {
+				$this->log($e->getMessage());
 			}
 		}
 		

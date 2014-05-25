@@ -203,14 +203,15 @@
 						$email,
 						$this->request->getPostParam('password')
 					);
+					$user = $this->Users->getUserById($userId);
 					
 					// Send mail
-					$this->sendRegistrationMail($username, $email);
+					$this->sendRegistrationMail($user);
 					
 					// Login
 					$this->Auth->setUserId($userId);
-					$user = $this->Users->getUserById($userId);
-			
+					
+					
 					// Redirect to user page
 					$this->redirect($this->linker->link(array($user['url']), 1));
 				}
@@ -555,20 +556,29 @@
 		 * @param	string	$username	Name of newly registered user
 		 * @param	string	$email		E‑mail address of newly registered user
 		 */
-		private function sendRegistrationMail($username, $email)
+		private function sendRegistrationMail($user)
 		{
-			$sender = \nre\configs\AppConfig::$app['mailsender'];
-			if(empty($sender)) {
-				return;
-			}
-			
-			// Send notification mail to system moderators
-			$subject = sprintf('new user registration: %s', $username);
-			$message = sprintf('User “%s” <%s> has registered themself to %s', $username, $email, \nre\configs\AppConfig::$app['name']);
+			// Get system moderators
 			$moderators = $this->Users->getUsersWithRole('moderator');
-			foreach($moderators as &$moderator)
-			{
-				\hhu\z\Utils::sendMail($sender, $moderator['email'], $subject, $message);
+			
+			// Send notification mail
+			try {
+				foreach($moderators as &$moderator)
+				{
+					\hhu\z\Utils::sendMail(
+						$moderator['email'],
+						'userregistration',
+						true,
+						array(
+							$moderator,
+							$user
+						),
+						$this->linker
+					);
+				}
+			}
+			catch(\hhu\z\exceptions\MailingException $e) {
+				$this->log($e->getMessage());
 			}
 		}
 		
