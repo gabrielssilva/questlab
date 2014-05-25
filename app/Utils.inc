@@ -82,29 +82,94 @@
 		/**
 		 * Send an e‑mail.
 		 * 
+		 * @throws	MailingException
 		 * @param	string	$from		Sender of mail
 		 * @param	mixed	$to		One (string) or many (array) receivers
 		 * @param	string	$subject	Subject of mail
 		 * @param	string	$message	Message of mail
 		 * @param	boolean	$html		Whether mail should be formatted as HTML or not
-		 * @return				Whether mail has been send or not
 		 */
-		public static function sendMail($from, $to, $subject, $message, $html=false)
+		public static function sendMail($to, $messageAction, $html=false, $params=null, $linker=null)
 		{
-			// Set receivers
-			$to = is_array($to) ? implode(',', $to) : $to;
+			// Load classes
+			\hhu\z\lib\PHPMailerAutoload::load();
+			\hhu\z\lib\PHPMailer::load();
+			\hhu\z\lib\SMTP::load();
 			
-			// Set header
-			$headers = array();
-			$headers[] = 'Content-type: text/'.($html ? 'html' : 'plain').'; charset=UTF-8';
-			if(!is_null($from)) {
-				$headers[] = "From: $from";
+			// Create mailer
+			$mail = new \PHPMailer();
+			
+			// Configure mailer
+			$mail->isSMTP();
+			$mail->Host = \nre\configs\AppConfig::$mail['host'];
+			$mail->Port = \nre\configs\AppConfig::$mail['port'];
+			$mail->SMTPAuth = true;
+			$mail->Username = \nre\configs\AppConfig::$mail['username'];
+			$mail->Password = \nre\configs\AppConfig::$mail['password'];
+			$mail->SMTPSecure = \nre\configs\AppConfig::$mail['secure'];
+			
+			// Set properties
+			$mail->CharSet = 'UTF-8';
+			$mail->From = \nre\configs\AppConfig::$app['mailsender'];
+			$mail->FromName = \nre\configs\AppConfig::$app['name'];
+			if(!is_array($to)) {
+				$to = array($to);
 			}
-			$header = implode("\r\n", $headers)."\r\n";
+			foreach($to as &$receiver) {
+				$mail->addAddress($receiver);
+			}
+			if($html) {
+				$mail->isHTML(true);
+			}
+			
+			// Create message
+			try {
+				// Create MailApi
+				$mailApi = new \hhu\z\apis\MailApi();
+				if(!is_null($linker)) {
+					$mailApi->setLinker($linker);
+				}
+				$mailApi->setMessage($messageAction);
+				$mailApi->setParams($params);
+				if($html) {
+					$mailApi->setHTML();
+				}
+				
+				// Render message
+				$exception = $mailApi->run();
+				if(!is_null($exception)) {
+					return $exception;
+				}
+				$mail->Subject = $mailApi->getSubject();
+				$mail->Body = $mailApi->render();
+				
+				// Try to render alternativ plaintext message
+				if($html)
+				{
+					$mailApi->setHTML(false);
+					
+					// Render message
+					$exception = $mailApi->run();
+					if(is_null($exception))
+					{
+						try {
+							$mail->AltBody = $mailApi->render();
+						}
+						catch(\nre\core\Exception $e) {
+							// No alternative plaintext available
+						}
+					}
+				}
+			}
+			catch(\nre\core\Exception $e) {
+				throw new \hhu\z\exceptions\MailingException($e->getMessage());
+			}
 			
 			
-			// Send mail
-			return mail($to, $subject, $message, $header);
+			// Return status
+			if(!$mail->send()) {
+				throw new \hhu\z\exceptions\MailingException($mail->ErrorInfo);
+			}
 		}
 		
 		

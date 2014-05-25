@@ -296,6 +296,22 @@
 			'db'		=> 'z'
 		);
 		
+		
+		/**
+		 * Mailserver connection settings
+		 * 
+		 * @static
+		 * @var array
+		 */
+		public static $mail = array(
+			'host'		=> 'mail.uni-duesseldorf.de',
+			'port'		=> 465,
+			'username'	=> 'questlab',
+			'password'	=> 'vn0yy2*z',
+			'secure'	=> 'ssl',
+			'charset'	=> 'UTF-8'
+		);
+		
 	}
 
 ?>
