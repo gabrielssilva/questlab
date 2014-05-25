@@ -34,6 +34,7 @@
 			'genericname'		=>	'The Legend of Z',
 			'namespace'		=>	'hhu\\z\\',
 			'timeZone'		=>	'Europe/Berlin',
+			'url'			=>	'http://zyren.inf-d.de',
 			'mailsender'		=>	'questlab@hhu.de'
 		);
 		

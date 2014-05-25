@@ -1,0 +1,8 @@
+<?=$mailreceiver?>,
+
+<?=$intermediate?>
+
+
+– <?=$appname?>
+
+<?=$url?>

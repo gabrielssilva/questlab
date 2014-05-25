@@ -1,0 +1,54 @@
+<?php
+
+	/**
+	 * The Legend of Z
+	 *
+	 * @author	Oliver Hanraths <oliver.hanraths@uni-duesseldorf.de>
+	 * @copyright	2014 Heinrich-Heine-Universität Düsseldorf
+	 * @license	http://www.gnu.org/licenses/gpl.html
+	 * @link	https://bitbucket.org/coderkun/the-legend-of-z
+	 */
+	
+	namespace hhu\z\controllers;
+	
+	
+	/**
+	 * Controller of the HtmlmailAgent for generating a HTML-mail message.
+	 * 
+	 * @author	Oliver Hanraths <oliver.hanraths@uni-duesseldorf.de>
+	 */
+	class HtmlmailController extends \nre\core\Controller
+	{
+		
+		
+		
+		
+		/**
+		 * Prefilter.
+		 * 
+		 * @param	Request		$request	Current request
+		 * @param	Response	$response	Current response
+		 */
+		public function preFilter(\nre\core\Request $request, \nre\core\Response $response)
+		{
+			parent::preFilter($request, $response);
+			
+			
+			// Set application URL
+			$this->set('url', \nre\configs\AppConfig::$app['url']);
+		}
+		
+		
+		/**
+		 * Action: index.
+		 * 
+		 * Create HTML-structure of mail message.
+		 */
+		public function index()
+		{
+			$this->set('appname', \nre\configs\AppConfig::$app['name']);
+		}
+		
+	}
+
+?>
