@@ -304,11 +304,11 @@
 		 * @var array
 		 */
 		public static $mail = array(
-			'host'		=> 'mail.uni-duesseldorf.de',
+			'host'		=> '',
 			'port'		=> 465,
-			'username'	=> 'questlab',
-			'password'	=> 'vn0yy2*z',
-			'secure'	=> 'ssl',
+			'username'	=> '',
+			'password'	=> '',
+			'secure'	=> '',
 			'charset'	=> 'UTF-8'
 		);
 		
