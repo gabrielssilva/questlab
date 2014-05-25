@@ -35,8 +35,8 @@
 			parent::preFilter($request, $response);
 			
 			
-			// Set application URL
-			$this->set('url', \nre\configs\AppConfig::$app['url']);
+			// Set linker
+			$this->set('linker', ($request instanceof \hhu\z\requests\MailRequest && !is_null($request->getLinker())) ? $request->getLinker() : null);
 		}
 		
 		
