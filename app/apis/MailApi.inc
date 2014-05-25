@@ -44,6 +44,17 @@
 		
 		
 		/**
+		 * Set linker instance for creating links.
+		 * 
+		 * @param	Linker	$linker	Linker instance for creating links
+		 */
+		public function setLinker(\nre\core\Linker $linker)
+		{
+			$this->request->setLinker($linker);
+		}
+		
+		
+		/**
 		 * Use a ToplevelAgent for HTML-mail
 		 */
 		public function setHTML($html=true)
