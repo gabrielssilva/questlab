@@ -68,7 +68,7 @@
 		 * @throws	IdNotFoundException
 		 * @param	string	$seminaryUrl	URL-Title of a Seminary
 		 */
-		public function index($seminaryUrl)
+		public function index($seminaryUrl, $all=null)
 		{
 			// Get Seminary
 			$seminary = $this->Seminaries->getSeminaryByUrl($seminaryUrl);
@@ -76,8 +76,22 @@
 			// Get Seminarycharacterfields
 			$characterfields = $this->Seminarycharacterfields->getFieldsForSeminary($seminary['id']);
 			
+			// Set sort order and page
+			$sortorder = 'name';
+			$page = 1;
+			if($this->request->getRequestMethod() == 'GET')
+			{
+				$sortorder = $this->request->getGetParam('sortorder');
+				$sortorder = !empty($sortorder) ? $sortorder : 'name';
+				$page = $this->request->getGetParam('page');
+				$page = !empty($page) ? intval($page) : 1;
+			}
+			
 			// Get registered Characters
-			$characters = $this->Characters->getCharactersForSeminary($seminary['id']);
+			$limit = ($all != 'all') ? \nre\configs\AppConfig::$misc['lists_limit'] : null;
+			$offset = ($all != 'all') ? max((intval($page) - 1), 0) * $limit : 0;
+			$charactersCount = $this->Characters->getCharactersForSeminaryCount($seminary['id']);
+			$characters = $this->Characters->getCharactersForSeminarySorted($seminary['id'], $sortorder, $limit, $offset);
 			foreach($characters as &$character)
 			{
 				$character['xplevel'] = $this->Characters->getXPLevelOfCharacters($character['id']);
@@ -89,24 +103,6 @@
 				}
 			}
 			
-			// Sort Characters
-			global $sortorder;
-			$sortorder = ($this->request->getRequestMethod() == 'GET') ? $this->request->getGetParam('sortorder') : null;
-			$sortorder = (!is_null($sortorder)) ? $sortorder : 'xps';
-			$sortMethod = 'sortCharactersBy'.ucfirst(strtolower($sortorder));
-			if(method_exists($this, $sortMethod)) {
-				usort($characters, array($this, $sortMethod));
-			}
-			elseif(in_array($sortorder, array_map(function($f) { return $f['title']; }, $characterfields))) {
-				usort($characters, function($a, $b) {
-					global $sortorder;
-					return $this->sortCharactersByField($a, $b, $sortorder);
-				});
-			}
-			else {
-				throw new \nre\exceptions\ParamsNotValidException($sortorder);
-			}
-			
 			
 			// Set titile
 			$this->addTitleLocalized('Characters');
@@ -115,8 +111,12 @@
 			// Pass data to view
 			$this->set('seminary', $seminary);
 			$this->set('characters', $characters);
+			$this->set('charactersCount', $charactersCount);
 			$this->set('characterfields', $characterfields);
 			$this->set('sortorder', $sortorder);
+			$this->set('all', $all);
+			$this->set('page', $page);
+			$this->set('limit', $limit);
 		}
 		
 		
@@ -663,131 +663,6 @@
 			catch(\hhu\z\exceptions\MailingException $e) {
 				$this->log($e->getMessage());
 			}
-		}
-		
-		
-		/**
-		 * Compare two Characters by their name.
-		 * 
-		 * @param	array	$a	Character a
-		 * @param	array	$b	Character b
-		 * @return	int		Result of comparison
-		 */
-		private function sortCharactersByCharactername($a, $b)
-		{
-			if($a['name'] == $b['name']) {
-				return 0;
-			}
-			
-			
-			return ($a['name'] < $b['name']) ? -1 : 1;
-		}
-		
-		
-		/**
-		 * Compare two Characters by their XPs.
-		 * 
-		 * @param	array	$a	Character a
-		 * @param	array	$b	Character b
-		 * @return	int		Result of comparison
-		 */
-		private function sortCharactersByXps($a, $b)
-		{
-			if($a['xps'] == $b['xps']) {
-				return 0;
-			}
-			
-			
-			return ($a['xps'] > $b['xps']) ? -1 : 1;
-		}
-		
-		
-		/**
-		 * Compare two Characters by their Character roles.
-		 * 
-		 * @param	array	$a	Character a
-		 * @param	array	$b	Character b
-		 * @return	int		Result of comparison
-		 */
-		private function sortCharactersByRole($a, $b)
-		{
-			if(in_array('admin', $a['characterroles']))
-			{
-				if(in_array('admin', $b['characterroles'])) {
-					return 0;
-				}
-				return -1;
-			}
-			if(in_array('moderator', $a['characterroles']))
-			{
-				if(in_array('admin', $b['characterroles'])) {
-					return 1;
-				}
-				if(in_array('moderator', $b['characterroles'])) {
-					return 0;
-				}
-				return -1;
-			}
-			if(in_array('user', $a['characterroles']))
-			{
-				if(in_array('admin', $b['characterroles']) || in_array('moderator', $b['characterroles'])) {
-					return 1;
-				}
-				if(in_array('user', $b['characterroles'])) {
-					return 0;
-				}
-				return -1;
-			}
-			if(in_array('guest', $a['characterroles']))
-			{
-				if(in_array('admin', $b['characterroles']) || in_array('moderator', $b['characterroles'])  || in_array('user', $b['characterroles'])) {
-					return 1;
-				}
-				if(in_array('guest', $b['characterroles'])) {
-					return 0;
-				}
-				return -1;
-			}
-			
-			
-			return 1;
-		}
-		
-		
-		/**
-		 * Compare two Characters by their registration date.
-		 * 
-		 * @param	array	$a	Character a
-		 * @param	array	$b	Character b
-		 * @return	int		Result of comparison
-		 */
-		private function sortCharactersByDate($a, $b)
-		{
-			if($a['created'] == $b['created']) {
-				return 0;
-			}
-			
-			
-			return ($a['created'] > $b['created']) ? -1 : 1;
-		}
-		
-		
-		/**
-		 * Compare two Characters by one of their Seminary fields.
-		 * 
-		 * @param	array	$a	Character a
-		 * @param	array	$b	Character b
-		 * @param	string	$field	Field to compare
-		 * @return	int		Result of comparison
-		 */
-		private function sortCharactersByField($a, $b, $field)
-		{
-			if($a['characterfields'][$field] == $b['characterfields'][$field]) {
-				return 0;
-			}
-			
-			
-			return ($a['characterfields'][$field] < $b['characterfields'][$field]) ? -1 : 1;
 		}
 		
 	}

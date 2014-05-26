@@ -55,6 +55,32 @@
 		
 		
 		/**
+		 * Get count of Characters for a Seminary.
+		 * 
+		 * @param	int	$seminaryId	ID of the Seminary
+		 * @return	int			Count of Characters
+		 */
+		public function getCharactersForSeminaryCount($seminaryId)
+		{
+			$data = $this->db->query(
+				'SELECT count(DISTINCT characters.id) AS c '.
+				'FROM v_characters AS characters '.
+				'LEFT JOIN charactertypes ON charactertypes.id = characters.charactertype_id '.
+				'LEFT JOIN seminaries ON seminaries.id = charactertypes.seminary_id '.
+				'WHERE seminaries.id = ?',
+				'i',
+				$seminaryId
+			);
+			if(!empty($data)) {
+				return $data[0]['c'];
+			}
+			
+			
+			return 0;
+		}
+		
+		
+		/**
 		 * Get Characters for a Seminary.
 		 * 
 		 * @param	int	$seminaryId	ID of the Seminary
@@ -72,6 +98,79 @@
 				'i',
 				$seminaryId
 			);
+		}
+		
+		
+		/**
+		 * Get Characters for a Seminary sorted and optionally limited.
+		 * 
+		 * @param	int	$seminaryId	ID of the Seminary
+		 * @param	string	$sort		Field to sort by
+		 * @param	int	$limit		Limit amount of Characters (optional)
+		 * @param	int	$offset		Offset (optional)
+		 * @return	array			Characters
+		 */
+		public function getCharactersForSeminarySorted($seminaryId, $sort, $limit=null, $offset=0)
+		{
+			switch($sort)
+			{
+				case 'name':
+				case 'created':
+				case 'xps':
+					$orders = array(
+						'name'		=> 'ASC',
+						'created'	=> 'DESC',
+						'xps'		=> 'DESC'
+					);
+					
+					return $this->db->query(
+						sprintf(
+							'SELECT characters.id, characters.created, characters.charactertype_id, characters.name, characters.url, characters.user_id, characters.xps, characters.xplevel, characters.avatar_id, charactertypes.name AS charactertype_name, charactertypes.url AS charactertype_url, seminaries.id AS seminary_url, seminaries.title AS seminary_title, seminaries.url AS seminary_url '.
+							'FROM v_characters AS characters '.
+							'LEFT JOIN charactertypes ON charactertypes.id = characters.charactertype_id '.
+							'LEFT JOIN seminaries ON seminaries.id = charactertypes.seminary_id '.
+							'WHERE seminaries.id = ? '.
+							'ORDER BY characters.%s %s '.
+							(!empty($limit) ? sprintf('LIMIT %d, %d', $offset, $limit) : null),
+							$sort,
+							$orders[$sort]
+						),
+						'i',
+						$seminaryId
+					);
+				break;
+				case 'role':
+					return $this->db->query(
+						'SELECT characters.id, characters.created, characters.charactertype_id, characters.name, characters.url, characters.user_id, characters.xps, characters.xplevel, characters.avatar_id, charactertypes.name AS charactertype_name, charactertypes.url AS charactertype_url, seminaries.id AS seminary_url, seminaries.title AS seminary_title, seminaries.url AS seminary_url '.
+						'FROM v_characters AS characters '.
+						'LEFT JOIN charactertypes ON charactertypes.id = characters.charactertype_id '.
+						'LEFT JOIN seminaries ON seminaries.id = charactertypes.seminary_id '.
+						'LEFT JOIN characters_characterroles ON characters_characterroles.character_id = characters.id '.
+						'LEFT JOIN characterroles ON characterroles.id = characters_characterroles.characterrole_id '.
+						'WHERE seminaries.id = ? '.
+						'ORDER BY characterroles.id IS NULL, characterroles.id ASC '.
+						(!empty($limit) ? sprintf('LIMIT %d, %d', $offset, $limit) : null),
+						'i',
+						$seminaryId
+					);
+				break;
+				default:
+					return $this->db->query(
+						'SELECT characters.id, characters.created, characters.charactertype_id, characters.name, characters.url, characters.user_id, characters.xps, characters.xplevel, characters.avatar_id, charactertypes.name AS charactertype_name, charactertypes.url AS charactertype_url, seminaries.id AS seminary_url, seminaries.title AS seminary_title, seminaries.url AS seminary_url '.
+						'FROM v_characters AS characters '.
+						'LEFT JOIN charactertypes ON charactertypes.id = characters.charactertype_id '.
+						'LEFT JOIN seminaries ON seminaries.id = charactertypes.seminary_id '.
+						'LEFT JOIN characters_seminarycharacterfields ON characters_seminarycharacterfields.character_id = characters.id '.
+						'LEFT JOIN seminarycharacterfields ON seminarycharacterfields.id = characters_seminarycharacterfields.seminarycharacterfield_id AND seminarycharacterfields.url = ? '.
+						'WHERE seminaries.id = ? '.
+						'ORDER BY characters_seminarycharacterfields.value ASC '.
+						(!empty($limit) ? sprintf('LIMIT %d, %d', $offset, $limit) : null),
+						'si',
+						$sort,
+						$seminaryId
+					);
+				break;
+			}
 		}
 		
 		
