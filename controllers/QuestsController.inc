@@ -96,7 +96,7 @@
 			}
 			
 			// Get Quests
-			$limit = ($all != 'all') ? \nre\configs\AppConfig::$misc['questlist_limit'] : null;
+			$limit = ($all != 'all') ? \nre\configs\AppConfig::$misc['lists_limit'] : null;
 			$offset = ($all != 'all') ? max((intval($page) - 1), 0) * $limit : 0;
 			$questsCount = $this->Quests->getCountForQuestsForSeminaryByOpenSubmissions($seminary['id'], $selectedQuestgroup, $selectedQuesttype);
 			$quests = $this->Quests->getQuestsForSeminaryByOpenSubmissions($seminary['id'], $selectedQuestgroup, $selectedQuesttype, $limit, $offset);

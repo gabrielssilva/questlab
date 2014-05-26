@@ -136,7 +136,7 @@
 			'ranking_range'		=> 2,
 			'achievements_range'	=> 3,
 			'title_delimiter'	=> ' – ',
-			'questlist_limit'	=> 10
+			'lists_limit'		=> 10
 		);
 		
 		
@@ -223,6 +223,7 @@
 			array('^quests/(?!(index|create|createmedia))/?',			'quests/quest/$1',			true),
 			array('^characters/([^/]+)/(register|manage)/?$',			'characters/$2/$1',			true),
 			array('^characters/([^/]+)/?$',						'characters/index/$1',			true),
+			array('^characters/([^/]+)/all/?$',					'characters/index/$1/all',		true),
 			array('^characters/([^/]+)/([^/]+)/(edit|delete)/?$',			'characters/$3/$1/$2',			true),
 			array('^characters/([^/]+)/(?!(index|register|manage))/?',		'characters/character/$1/$2',		true),
 			array('^charactergroups/([^/]+)/?$',						'charactergroups/index/$1',			true),

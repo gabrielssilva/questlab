@@ -123,7 +123,7 @@
 			}
 		});
 		request.fail(function (jqXHR, textStatus, errorThrown) {
-			alert("fail: " + textStatus + ": " +errorThrown);
+			window.location.href = linkPage.replace('PAGE', page);
 		});
 		
 		
