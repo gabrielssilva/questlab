@@ -1,5 +1,5 @@
 <form method="post" class="crossword">
-	<table>
+	<table id="matrix">
 		<tbody>
 			<?php foreach(range(0, $maxY) as $y) : ?>
 			<tr>
@@ -30,20 +30,107 @@
 	<input type="submit" name="submit" value="<?=_('solve')?>" />
 </form>
 <script type="text/javascript">
-$('input:text').bind("keyup", function(e) {
-	var n = $("input:text").length;
-	if(e.which == 8 || e.which == 46) {
-		var nextIndex = $('input:text').index(this) - 1;
-		var del = 1;
+// Last position
+var posX = 0;
+var posX = 0;
+
+// Handle key input
+$('input:text').keyup(function(event) {
+	// Determine current position
+	var row = $(this).closest('tr');
+	var y = $('#matrix tr').index(row);
+	var col = $(this).closest('td');
+	var x = row.children().index(col);
+	
+	// Determine current direction
+	var horizontal = (x != posX);
+	
+	// Set current position
+	posX = x;
+	posY = y;
+	
+	// Next input field
+	var nextInput = null;
+	
+	// Hanlde keys
+	switch(event.keyCode)
+	{
+		case 37: // Left
+			nextInput = getColumnInput(row, x-1);
+		break;
+		case 38: // Up
+			nextInput = getRowInput(x, y-1);
+		break;
+		case 39: // Right
+			nextInput = getColumnInput(row, x+1);
+		break;
+		case 40: // Down
+			nextInput = getRowInput(x, y+1);
+		break;
+		default:
+			// Only handy character input
+			if(event.key.length != 1) {
+				break;
+			}
+			
+			// Set new character
+			$(this).val(event.key);
+			
+			// Go to next input field
+			if(horizontal) {
+				nextInput = getColumnInput(row, x+1);
+			}
+			else {
+				nextInput = getRowInput(x, y+1);
+			}
+			
+			event.preventDefault();
+		break;
 	}
-	else {
-		var nextIndex = $('input:text').index(this) + 1;
-	}
-	if(nextIndex < n) {
-		$('input:text')[nextIndex].focus();
-		if(del == 1) {
-			$('input:text')[nextIndex].value = '';
-		}
+	
+	// Select input field
+	if(nextInput != null) {
+		nextInput.focus();
 	}
 });
+
+
+/**
+ * Get the input field of the column x of the given row.
+ */
+function getColumnInput(row, x)
+{
+	nextCol = $('td', row)[x];
+	if(nextCol != null) {
+		return $('input:text', nextCol)[0];
+	}
+	else {
+		// TODO get next number
+	}
+	
+	
+	return null;
+}
+
+
+/**
+ * Get the input field of the column y of row x.
+ */
+function getRowInput(x, y)
+{
+	nextRow = $('#matrix tr')[y];
+	if(nextRow != null)
+	{
+		nextCol = $('td', nextRow)[x];
+		if(nextCol != null) {
+			return $('input:text', nextCol)[0];
+		}
+	}
+	else {
+		// TODO get nextnumber
+	}
+	
+	
+	return null;
+}
 </script>
