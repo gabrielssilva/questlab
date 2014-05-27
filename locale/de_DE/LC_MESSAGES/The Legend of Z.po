@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: The Legend of Z\n"
-"POT-Creation-Date: 2014-05-27 10:48+0100\n"
-"PO-Revision-Date: 2014-05-27 10:52+0100\n"
+"POT-Creation-Date: 2014-05-27 11:27+0100\n"
+"PO-Revision-Date: 2014-05-27 11:28+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de_DE\n"
@@ -58,6 +58,10 @@ msgstr "Neue Charakterregistrierung"
 #: controllers/MailController.inc:99
 msgid "New Character submission"
 msgstr "Neuer Lösungsvorschlag"
+
+#: controllers/MailController.inc:124
+msgid "Character submission approved"
+msgstr "Lösungsvorschlag bewertet"
 
 #: controllers/QuestsController.inc:735
 #: questtypes/submit/html/submission.tpl:30 views/html/quests/quest.tpl:45
@@ -1344,6 +1348,13 @@ msgstr ""
 "Der Charakter „%s“ hat einen neuen Lösungsvorschlag für die Quest „%s“ des "
 "Seminars „%s“ eingereicht"
 
+#: views/htmlmail/mail/charactersubmissionapproved.tpl:1
+#: views/textmail/mail/charactersubmissionapproved.tpl:1
+#, php-format
+msgid ""
+"Your submission for the Quest “%s” of the Seminary “%s” has been approved"
+msgstr "Deine Lösung für die Quest „%s“ des Seminars „%s“ wurde bewertet"
+
 #: views/htmlmail/mail/userregistration.tpl:1
 #: views/textmail/mail/userregistration.tpl:1
 msgid "A new user has been registered"
@@ -1354,10 +1365,6 @@ msgstr "Ein neuer Benutzer wurde registriert"
 #, php-format
 msgid "Hello %s"
 msgstr "Hallo %s"
-
-#, fuzzy
-#~ msgid "Character submission solved"
-#~ msgstr "gelöst"
 
 #, fuzzy
 #~ msgid "Dear %s"

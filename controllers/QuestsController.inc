@@ -746,6 +746,9 @@
 					// Save additional data for Character answers
 					$questtypeAgent->controller->saveDataForCharacterAnswers($seminary, $questgroup, $quest, $character, $this->request->getPostParam('characterdata'));
 					
+					// Send notification
+					$this->sendSubmissionApprovedMail($character, $seminary, $questgroup, $quest);
+					
 					// Redirect
 					$this->redirect($this->linker->link(array('submissions', $seminary['url'], $questgroup['url'], $quest['url']), 1));
 				}
@@ -884,6 +887,40 @@
 						$this->linker
 					);
 				}
+			}
+			catch(\hhu\z\exceptions\MailingException $e) {
+				$this->log($e->getMessage());
+			}
+		}
+		
+		
+		/**
+		 * Send mail for approval of a Character submission.
+		 * 
+		 * @param	array	$character	Character of submission that has been approved
+		 * @param	array	$seminary	Seminary which the Quest belongs to
+		 * @param	array	$questgroup	Questgroup of Quest
+		 * @param	array	$quest		Quest the submission has been approved for
+		 */
+		private function sendSubmissionApprovedMail($character, $seminary, $questgroup, $quest)
+		{
+			// Get user
+			$user = $this->Users->getUserById($character['user_id']);
+			
+			// Send notification mail
+			try {
+				\hhu\z\Utils::sendMail(
+					$user['email'],
+					'charactersubmissionapproved',
+					true,
+					array(
+						$user,
+						$seminary,
+						$questgroup,
+						$quest
+					),
+					$this->linker
+				);
 			}
 			catch(\hhu\z\exceptions\MailingException $e) {
 				$this->log($e->getMessage());

@@ -106,6 +106,30 @@
 			$this->set('character', $character);
 		}
 		
+		
+		/**
+		 * Action: charactersubmissionapproved.
+		 * 
+		 * Generate a mail message to notify a Character that its
+		 * submission has been approved.
+		 * 
+		 * @param	array	$receiver	User that the message will be send to
+		 * @param	array	$seminary	Seminary which the Quest belongs to
+		 * @param	array	$questgroup	Questgroup of Quest
+		 * @param	array	$quest		Quest the answer has been submitted for
+		 */
+		public function charactersubmissionapproved($receiver, $seminary, $questgroup, $quest)
+		{
+			// Set subject
+			$this->response->setSubject(_('Character submission approved'));
+			
+			
+			// Pass data to view
+			$this->set('seminary', $seminary);
+			$this->set('questgroup', $questgroup);
+			$this->set('quest', $quest);
+		}
+		
 	}
 
 ?>
