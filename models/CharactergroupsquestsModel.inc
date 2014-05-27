@@ -52,7 +52,8 @@
 			return $this->db->query(
 				'SELECT id, questgroups_id, title, url, xps '.
 				'FROM charactergroupsquests '.
-				'WHERE charactergroupsgroup_id = ?',
+				'WHERE charactergroupsgroup_id = ? '.
+				'ORDER BY created ASC',
 				'i',
 				$groupsgroupId
 			);
@@ -124,7 +125,7 @@
 				'FROM charactergroupsquests_groups '.
 				'LEFT JOIN charactergroupsquests ON charactergroupsquests.id = charactergroupsquests_groups.charactergroupsquest_id '.
 				'WHERE charactergroupsquests_groups.charactergroup_id = ? '.
-				'ORDER BY charactergroupsquests.created DESC',
+				'ORDER BY charactergroupsquests.created ASC',
 				'i',
 				$groupId
 			);
