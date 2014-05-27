@@ -209,6 +209,7 @@
 		 * @var array
 		 */
 		public static $routes = array(
+			array('^users/all/?$',								'users/index/all',		true),
 			array('^users/([^/]+)/(edit|delete)/?$',					'users/$2/$1',			true),
 			array('^users/(?!(index|login|register|logout|manage|create|edit|delete))/?',	'users/user/$1',		true),
 			array('^seminaries/([^/]+)/(edit|delete)/?$',				'seminaries/$2/$1',			true),
@@ -253,6 +254,7 @@
 		 * @var array
 		 */
 		public static $reverseRoutes = array(
+			array('^users/index/all$',			'users/all',			true),
 			array('^users/user/(.*)$',			'users/$1',			true),
 			array('^users/([^/]+)/(.*)$',			'users/$2/$1',			true),
 			array('^seminaries/seminary/(.*)$',		'seminaries/$1',		false),

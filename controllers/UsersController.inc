@@ -50,10 +50,27 @@
 		/**
 		 * Action: index.
 		 */
-		public function index()
+		public function index($all=null)
 		{
+			// Set filters
+			$sortorder = 'username';
+			$page = 1;
+			if($this->request->getRequestMethod() == 'GET')
+			{
+				$sortorder = $this->request->getGetParam('sortorder');
+				$sortorder = !empty($sortorder) ? $sortorder : 'username';
+				$page = $this->request->getGetParam('page');
+				$page = !empty($page) ? intval($page) : 1;
+			}
+			
 			// Get registered users
-			$users = $this->Users->getUsers();
+			$limit = ($all != 'all') ? \nre\configs\AppConfig::$misc['lists_limit'] : null;
+			$offset = ($all != 'all') ? max((intval($page) - 1), 0) * $limit : 0;
+			$usersCount = $this->Users->getUsersCount();
+			$users = $this->Users->getUsers($sortorder, $limit, $offset);
+			foreach($users as &$user) {
+				$user['roles'] = array_map(function($r) { return $r['name']; }, $this->Userroles->getUserrolesForUserById($user['id']));
+			}
 			
 			
 			// Set titile
@@ -61,6 +78,11 @@
 			
 			// Pass data to view
 			$this->set('users', $users);
+			$this->set('usersCount', $usersCount);
+			$this->set('sortorder', $sortorder);
+			$this->set('all', $all);
+			$this->set('page', $page);
+			$this->set('limit', $limit);
 		}
 		
 		
@@ -260,7 +282,8 @@
 		public function manage()
 		{
 			$selectedUsers = array();
-			global $sortorder;
+			//global $sortorder;
+			$sortorder = 'username';
 			
 			if($this->request->getRequestMethod() == 'POST')
 			{
@@ -324,19 +347,9 @@
 			}
 			
 			// Get registered users
-			$users = $this->Users->getUsers();
+			$users = $this->Users->getUsers($sortorder);
 			foreach($users as &$user) {
 				$user['roles'] = array_map(function($r) { return $r['name']; }, $this->Userroles->getUserrolesForUserById($user['id']));
-			}
-			
-			// Sort users
-			$sortorder = (!is_null($sortorder)) ? $sortorder : 'username';
-			$sortMethod = 'sortUsersBy'.ucfirst(strtolower($sortorder));
-			if(method_exists($this, $sortMethod)) {
-				usort($users, array($this, $sortMethod));
-			}
-			else {
-				throw new \nre\exceptions\ParamsNotValidException($sortorder);
 			}
 			
 			
@@ -580,94 +593,6 @@
 			catch(\hhu\z\exceptions\MailingException $e) {
 				$this->log($e->getMessage());
 			}
-		}
-		
-		
-		/**
-		 * Compare two users by their username.
-		 * 
-		 * @param	array	$a	User a
-		 * @param	array	$b	User b
-		 * @return	int		Result of comparison
-		 */
-		private function sortUsersByUsername($a, $b)
-		{
-			if($a['username'] == $b['username']) {
-				return 0;
-			}
-			
-			
-			return ($a['username'] < $b['username']) ? -1 : 1;
-		}
-		
-		
-		/**
-		 * Compare two users by their userroles.
-		 * 
-		 * @param	array	$a	User a
-		 * @param	array	$b	User b
-		 * @return	int		Result of comparison
-		 */
-		private function sortUsersByRole($a, $b)
-		{
-			if(in_array('admin', $a['roles']))
-			{
-				if(in_array('admin', $b['roles'])) {
-					return 0;
-				}
-				return -1;
-			}
-			if(in_array('moderator', $a['roles']))
-			{
-				if(in_array('admin', $b['roles'])) {
-					return 1;
-				}
-				if(in_array('moderator', $b['roles'])) {
-					return 0;
-				}
-				return -1;
-			}
-			if(in_array('user', $a['roles']))
-			{
-				if(in_array('admin', $b['roles']) || in_array('moderator', $b['roles'])) {
-					return 1;
-				}
-				if(in_array('user', $b['roles'])) {
-					return 0;
-				}
-				return -1;
-			}
-			if(in_array('guest', $a['roles']))
-			{
-				if(in_array('admin', $b['roles']) || in_array('moderator', $b['roles'])  || in_array('user', $b['roles'])) {
-					return 1;
-				}
-				if(in_array('guest', $b['roles'])) {
-					return 0;
-				}
-				return -1;
-			}
-			
-			
-			return 1;
-		}
-		
-		
-		/**
-		 * Compare two users by their registration date.
-		 * 
-		 * @param	array	$a	User a
-		 * @param	array	$b	User b
-		 * @return	int		Result of comparison
-		 */
-		private function sortUsersByDate($a, $b)
-		{
-			if($a['created'] == $b['created']) {
-				return 0;
-			}
-			
-			
-			return ($a['created'] > $b['created']) ? -1 : 1;
 		}
 		
 	}

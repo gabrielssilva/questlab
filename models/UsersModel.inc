@@ -35,17 +35,70 @@
 		
 		
 		/**
+		 * Get count of registered users.
+		 * 
+		 * @return	int	Count of users
+		 */
+		public function getUsersCount()
+		{
+			$data = $this->db->query(
+				'SELECT count(DISTINCT id) AS c '.
+				'FROM users '
+			);
+			if(!empty($data)) {
+				return $data[0]['c'];
+			}
+			
+			
+			return 0;
+		}
+		
+		
+		/**
 		 * Get registered users.
 		 * 
-		 * @return	array	Users
+		 * @throws	ParamsNotValidException
+		 * @param	string	$sort	Field to sort by
+		 * @param	int	$limit	Limit amount of Characters (optional)
+		 * @param	int	$offset	Offset (optional)
+		 * @return	array		Users
 		 */
-		public function getUsers()
+		public function getUsers($sort, $limit=null, $offset=0)
 		{
-			return $this->db->query(
-				'SELECT id, created, username, url, surname, prename, email '.
-				'FROM users '.
-				'ORDER BY username ASC'
-			);
+			switch($sort)
+			{
+				case 'username':
+				case 'created':
+					$orders = array(
+						'username'	=> 'ASC',
+						'created'	=> 'DESC'
+					);
+					
+					return $this->db->query(
+						sprintf(
+							'SELECT id, created, username, url, surname, prename, email '.
+							'FROM users '.
+							'ORDER BY %s %s '.
+							(!empty($limit) ? sprintf('LIMIT %d, %d', $offset, $limit) : null),
+							$sort,
+							$orders[$sort]
+						)
+					);
+				break;
+				case 'role':
+					return $this->db->query(
+						'SELECT DISTINCT users.id, users.created, users.username, users.url, users.surname, users.prename, users.email '.
+						'FROM users '.
+						'LEFT JOIN users_userroles ON users_userroles.user_id = users.id '.
+						'LEFT JOIN userroles ON userroles.id = users_userroles.user_id '.
+						'ORDER BY userroles.id IS NULL, userroles.id ASC '.
+						(!empty($limit) ? sprintf('LIMIT %d, %d', $offset, $limit) : null)
+					);
+				break;
+				default:
+					throw new \nre\exceptions\ParamsNotValidException($sort);
+				break;
+			}
 		}
 		
 		

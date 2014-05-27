@@ -13,7 +13,7 @@
 		<select name="sortorder" onchange="this.form.submit();">
 			<option value="username" <?php if($sortorder == 'username') : ?>selected="selected"<?php endif ?>><?=_('Username')?></option>
 			<option value="role" <?php if($sortorder == 'role') : ?>selected="selected"<?php endif ?>><?=_('Role')?></option>
-			<option value="date" <?php if($sortorder == 'date') : ?>selected="selected"<?php endif ?>><?=_('Date of registration')?></option>
+			<option value="created" <?php if($sortorder == 'created') : ?>selected="selected"<?php endif ?>><?=_('Date of registration')?></option>
 		</select>
 		<noscript><input type="submit" value="<?=_('Sort list')?>" /></noscript>
 	</fieldset>
@@ -24,11 +24,11 @@
 				<input type="checkbox" id="users-<?=$user['id']?>" name="users[]" value="<?=$user['id']?>" <?php if(in_array($user['id'], $selectedUsers)) : ?>checked="checked"<?php endif ?> <?php if($user['id'] == \hhu\z\controllers\SeminaryController::$user['id']) : ?>disabled="disabled"<?php endif ?>/>
 				<label for="users-<?=$user['id']?>">
 					<p>
-					<a href="<?=$linker->link(array('users','user',$user['url']))?>"><?=$user['username']?></a>
-					<?php if(in_array('admin', $user['roles'])) : ?><small>(<?=_('Admin')?>)</small><?php endif ?>
-					<?php if(in_array('moderator', $user['roles'])) : ?><small>(<?=_('Moderator')?>)</small><?php endif ?>
-					<?php if(in_array('user', $user['roles'])) : ?><small>(<?=_('User')?>)</small><?php endif ?>
-					<span class="xp"><small><?=sprintf(_('registered on %s'),  $dateFormatter->format(new \DateTime($user['created'])))?></small></span>
+						<a href="<?=$linker->link(array('users','user',$user['url']))?>"><?=$user['username']?></a>
+						<?php if(in_array('admin', $user['roles'])) : ?><small>(<?=_('Admin')?>)</small><?php endif ?>
+						<?php if(in_array('moderator', $user['roles'])) : ?><small>(<?=_('Moderator')?>)</small><?php endif ?>
+						<?php if(in_array('user', $user['roles'])) : ?><small>(<?=_('User')?>)</small><?php endif ?>
+						<span class="xp"><small><?=sprintf(_('registered on %s'),  $dateFormatter->format(new \DateTime($user['created'])))?></small></span>
 					</p>
 				</label>
 			</li>
