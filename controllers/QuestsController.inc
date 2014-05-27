@@ -660,6 +660,9 @@
 						else {
 							// Mark Quest as submitted
 							$this->Quests->setQuestSubmitted($quest['id'], $character['id']);
+							
+							// Send notification mail
+							$this->sendSubmissionMail($seminary, $questgroup, $quest, $character);
 						
 							// Redirect
 							$this->redirect($this->linker->link(array(), 5, true, null, false, 'task'));
@@ -847,6 +850,44 @@
 			
 			// Render and return output
 			return $questtypeAgent->render();
+		}
+		
+		
+		/**
+		 * Send mail for new Character submission.
+		 * 
+		 * @param	array	$seminary	Seminary which the Quest belongs to
+		 * @param	array	$questgroup	Questgroup of Quest
+		 * @param	array	$quest		Quest the answer has been submitted for
+		 * @param	array	$character	Character that send the submission
+		 */
+		private function sendSubmissionMail($seminary, $questgroup, $quest, $character)
+		{
+			// Get system moderators
+			$moderators = $this->Users->getUsersWithRole('moderator');
+			
+			// Send notification mail
+			try {
+				foreach($moderators as &$moderator)
+				{
+					\hhu\z\Utils::sendMail(
+						$moderator['email'],
+						'charactersubmission',
+						true,
+						array(
+							$moderator,
+							$seminary,
+							$questgroup,
+							$quest,
+							$character
+						),
+						$this->linker
+					);
+				}
+			}
+			catch(\hhu\z\exceptions\MailingException $e) {
+				$this->log($e->getMessage());
+			}
 		}
 		
 	}

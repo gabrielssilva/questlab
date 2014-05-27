@@ -1,0 +1,2 @@
+<?=sprintf(_('Character “%s” has submitted a new submission for the Quest “%s” of the Seminary “%s”'), $character['name'], $quest['title'], $seminary['title'])?>:
+<?php if(!is_null($linker)) : ?><a href="<?=$linker->link(array('quests','submission',$seminary['url'],$questgroup['url'],$quest['url'],$character['url']),0,false,null,false,null,true)?>"><?=$questgroup['title']?>/<?=$quest['title']?>/<?=$character['name']?></a><?php else : ?><?=$questgroup['title']?>/<?=$quest['title']?>/<?=$character['name']?><?php endif ?>

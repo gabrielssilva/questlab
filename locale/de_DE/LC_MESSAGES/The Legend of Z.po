@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: The Legend of Z\n"
-"POT-Creation-Date: 2014-05-25 22:38+0100\n"
-"PO-Revision-Date: 2014-05-25 22:41+0100\n"
+"POT-Creation-Date: 2014-05-27 10:48+0100\n"
+"PO-Revision-Date: 2014-05-27 10:52+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de_DE\n"
@@ -18,26 +18,32 @@ msgstr ""
 "X-Poedit-SearchPath-2: controllers\n"
 
 #: controllers/CharactersController.inc:368
-#: controllers/UsersController.inc:289 views/html/characters/index.tpl:39
+#: controllers/UsersController.inc:312 views/ajax/characters/index.tpl:10
+#: views/ajax/users/index.tpl:10 views/html/characters/index.tpl:39
 #: views/html/characters/manage.tpl:35 views/html/characters/manage.tpl:50
-#: views/html/characters/manage.tpl:58 views/html/users/manage.tpl:28
-#: views/html/users/manage.tpl:41 views/html/users/manage.tpl:49
+#: views/html/characters/manage.tpl:58 views/html/users/index.tpl:26
+#: views/html/users/manage.tpl:28 views/html/users/manage.tpl:41
+#: views/html/users/manage.tpl:49
 msgid "Admin"
 msgstr "Administrator"
 
 #: controllers/CharactersController.inc:374
-#: controllers/UsersController.inc:295 views/html/characters/index.tpl:40
+#: controllers/UsersController.inc:318 views/ajax/characters/index.tpl:12
+#: views/ajax/users/index.tpl:12 views/html/characters/index.tpl:40
 #: views/html/characters/manage.tpl:36 views/html/characters/manage.tpl:51
-#: views/html/characters/manage.tpl:59 views/html/users/manage.tpl:29
-#: views/html/users/manage.tpl:42 views/html/users/manage.tpl:50
+#: views/html/characters/manage.tpl:59 views/html/users/index.tpl:27
+#: views/html/users/manage.tpl:29 views/html/users/manage.tpl:42
+#: views/html/users/manage.tpl:50
 msgid "Moderator"
 msgstr "Moderator"
 
 #: controllers/CharactersController.inc:380
-#: controllers/UsersController.inc:301 views/html/characters/index.tpl:41
+#: controllers/UsersController.inc:324 views/ajax/characters/index.tpl:14
+#: views/ajax/users/index.tpl:14 views/html/characters/index.tpl:41
 #: views/html/characters/manage.tpl:37 views/html/characters/manage.tpl:53
-#: views/html/characters/manage.tpl:61 views/html/users/manage.tpl:30
-#: views/html/users/manage.tpl:44 views/html/users/manage.tpl:52
+#: views/html/characters/manage.tpl:61 views/html/users/index.tpl:28
+#: views/html/users/manage.tpl:30 views/html/users/manage.tpl:44
+#: views/html/users/manage.tpl:52
 msgid "User"
 msgstr "Benutzer"
 
@@ -49,7 +55,11 @@ msgstr "Neue Benutzerregistrierung"
 msgid "New Character registration"
 msgstr "Neue Charakterregistrierung"
 
-#: controllers/QuestsController.inc:732
+#: controllers/MailController.inc:99
+msgid "New Character submission"
+msgstr "Neuer Lösungsvorschlag"
+
+#: controllers/QuestsController.inc:735
 #: questtypes/submit/html/submission.tpl:30 views/html/quests/quest.tpl:45
 #: views/html/quests/submissions.tpl:30
 msgid "solved"
@@ -228,6 +238,12 @@ msgstr "Texteingabe"
 #, php-format
 msgid "%d XPs"
 msgstr "%d XP"
+
+#: views/ajax/users/index.tpl:20 views/html/users/index.tpl:25
+#: views/html/users/manage.tpl:31 views/html/users/user.tpl:22
+#, php-format
+msgid "registered on %s"
+msgstr "registriert am %s"
 
 #: views/binary/error/index.tpl:1 views/html/error/index.tpl:1
 msgid "Error"
@@ -542,8 +558,9 @@ msgstr "%squests"
 #: views/html/charactergroupsquests/create.tpl:77
 #: views/html/charactergroupsquests/edit.tpl:77
 #: views/html/charactergroupsquests/edit.tpl:78
-#: views/html/characters/index.tpl:22 views/html/characters/manage.tpl:17
-#: views/html/quests/create.tpl:29 views/html/quests/create.tpl:30
+#: views/html/characters/index.tpl:22 views/html/characters/index.tpl:81
+#: views/html/characters/manage.tpl:17 views/html/quests/create.tpl:29
+#: views/html/quests/create.tpl:30
 msgid "XPs"
 msgstr "XP"
 
@@ -828,19 +845,29 @@ msgid "Manage"
 msgstr "Verwalten"
 
 #: views/html/characters/index.tpl:23 views/html/characters/manage.tpl:18
-#: views/html/users/manage.tpl:15
+#: views/html/users/index.tpl:15 views/html/users/manage.tpl:15
 msgid "Role"
 msgstr "Rolle"
 
 #: views/html/characters/index.tpl:24 views/html/characters/manage.tpl:19
-#: views/html/users/manage.tpl:16
+#: views/html/users/index.tpl:16 views/html/users/manage.tpl:16
 msgid "Date of registration"
 msgstr "Registrierungsdatum"
 
 #: views/html/characters/index.tpl:29 views/html/characters/manage.tpl:24
-#: views/html/users/manage.tpl:18
+#: views/html/users/index.tpl:18 views/html/users/manage.tpl:18
 msgid "Sort list"
 msgstr "Liste sortieren"
+
+#: views/html/characters/index.tpl:52 views/html/quests/index.tpl:80
+#: views/html/users/index.tpl:36
+msgid "Show more"
+msgstr "Weitere anzeigen"
+
+#: views/html/characters/index.tpl:53 views/html/quests/index.tpl:81
+#: views/html/users/index.tpl:37
+msgid "Show all"
+msgstr "Alle anzeigen"
 
 #: views/html/characters/manage.tpl:10
 msgid "Manage Characters"
@@ -872,9 +899,9 @@ msgstr "Login"
 #: views/html/introduction/index.tpl:7 views/html/users/create.tpl:84
 #: views/html/users/create.tpl:85 views/html/users/edit.tpl:87
 #: views/html/users/edit.tpl:89 views/html/users/edit.tpl:91
-#: views/html/users/login.tpl:12 views/html/users/login.tpl:13
-#: views/html/users/manage.tpl:14 views/html/users/register.tpl:83
-#: views/html/users/register.tpl:84
+#: views/html/users/index.tpl:14 views/html/users/login.tpl:12
+#: views/html/users/login.tpl:13 views/html/users/manage.tpl:14
+#: views/html/users/register.tpl:83 views/html/users/register.tpl:84
 msgid "Username"
 msgstr "Benutzername"
 
@@ -1032,14 +1059,6 @@ msgstr "Filter anwenden"
 #: views/html/quests/index.tpl:54 views/html/quests/index.tpl:109
 msgid "open submissions"
 msgstr "offene Lösungsvorschläge"
-
-#: views/html/quests/index.tpl:80
-msgid "Show more"
-msgstr "Weitere anzeigen"
-
-#: views/html/quests/index.tpl:81
-msgid "Show all"
-msgstr "Alle anzeigen"
 
 #: views/html/quests/quest.tpl:11
 msgid "Prolog"
@@ -1288,12 +1307,6 @@ msgstr "Benutzer bearbeiten"
 msgid "Create new user"
 msgstr "Neuen Benutzer erstellen"
 
-#: views/html/users/index.tpl:11 views/html/users/manage.tpl:31
-#: views/html/users/user.tpl:22
-#, php-format
-msgid "registered on %s"
-msgstr "registriert am %s"
-
 #: views/html/users/login.tpl:8
 msgid "Login failed"
 msgstr "Die Anmeldung war nicht korrekt"
@@ -1321,6 +1334,16 @@ msgid "User “%s” has registered a new Character for the Seminary “%s”"
 msgstr ""
 "Der Benutzer „%s“ hat einen neuen Charakter für das Seminar „%s“ erstellt"
 
+#: views/htmlmail/mail/charactersubmission.tpl:1
+#: views/textmail/mail/charactersubmission.tpl:1
+#, php-format
+msgid ""
+"Character “%s” has submitted a new submission for the Quest “%s” of the "
+"Seminary “%s”"
+msgstr ""
+"Der Charakter „%s“ hat einen neuen Lösungsvorschlag für die Quest „%s“ des "
+"Seminars „%s“ eingereicht"
+
 #: views/htmlmail/mail/userregistration.tpl:1
 #: views/textmail/mail/userregistration.tpl:1
 msgid "A new user has been registered"
@@ -1331,10 +1354,6 @@ msgstr "Ein neuer Benutzer wurde registriert"
 #, php-format
 msgid "Hello %s"
 msgstr "Hallo %s"
-
-#, fuzzy
-#~ msgid "New Character submission"
-#~ msgstr "Neue Gruppengruppe"
 
 #, fuzzy
 #~ msgid "Character submission solved"

@@ -80,6 +80,32 @@
 			$this->set('character', $newCharacter);
 		}
 		
+		
+		/**
+		 * Action: charactersubmission.
+		 * 
+		 * Generate a mail message to notify of a new Character
+		 * submission for a Quest that needs to be valuated.
+		 * 
+		 * @param	array	$receiver	User that the message will be send to
+		 * @param	array	$seminary	Seminary which the Quest belongs to
+		 * @param	array	$questgroup	Questgroup of Quest
+		 * @param	array	$quest		Quest the answer has been submitted for
+		 * @param	array	$character	Character that send the submission
+		 */
+		public function charactersubmission($receiver, $seminary, $questgroup, $quest, $character)
+		{
+			// Set subject
+			$this->response->setSubject(_('New Character submission'));
+			
+			
+			// Pass data to view
+			$this->set('seminary', $seminary);
+			$this->set('questgroup', $questgroup);
+			$this->set('quest', $quest);
+			$this->set('character', $character);
+		}
+		
 	}
 
 ?>
