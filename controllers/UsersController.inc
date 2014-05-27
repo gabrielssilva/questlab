@@ -566,8 +566,7 @@
 		/**
 		 * Send mail for new user registration.
 		 * 
-		 * @param	string	$username	Name of newly registered user
-		 * @param	string	$email		E‑mail address of newly registered user
+		 * @param	array	$user	Newly registered user
 		 */
 		private function sendRegistrationMail($user)
 		{
