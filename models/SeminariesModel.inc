@@ -133,23 +133,49 @@
 		
 		
 		/**
-		 * Create a new seminary.
+		 * Check if a Seminary title already exists.
 		 * 
-		 * @param	string	$title		Title of seminary to create
-		 * @param	int	$userId		ID of creating user
-		 * @return	int			ID of the newly created seminary
+		 * @param	string	$title		Seminary title to check
+		 * @param	int	$seminaryId	Do not check this ID (for editing)
+		 * @return	boolean			Whether Seminary title exists or not
 		 */
-		public function createSeminary($title, $userId)
+		public function seminaryTitleExists($title, $seminaryId=null)
+		{
+			$data = $this->db->query(
+				'SELECT id '.
+				'FROM seminaries '.
+				'WHERE title = ? OR url = ?',
+				'ss',
+				$title,
+				\nre\core\Linker::createLinkParam($title)
+			);
+			
+			return (!empty($data) && (is_null($seminaryId) || $seminaryId != $data[0]['id']));
+		}
+		
+		
+		/**
+		 * Create a new Seminary.
+		 * 
+		 * @param	int	$userId		ID of creating user
+		 * @param	string	$title		Title of Seminary to create
+		 * @param	string	$course		Course of Seminary
+		 * @param	string	$description	Description of new Seminary
+		 * @return	int			ID of the newly created Seminary
+		 */
+		public function createSeminary($userId, $title, $course, $description)
 		{
 			$this->db->query(
 				'INSERT INTO seminaries '.
-				'(created_user_id, title, url) '.
+				'(created_user_id, title, url, course, description) '.
 				'VALUES '.
-				'(?, ?, ?)',
-				'iss',
+				'(?, ?, ?, ?, ?)',
+				'issss',
 				$userId,
 				$title,
-				\nre\core\Linker::createLinkParam($title)
+				\nre\core\Linker::createLinkParam($title),
+				$course,
+				$description
 			);
 			
 			
@@ -158,21 +184,44 @@
 		
 		
 		/**
-		 * Edit a seminary.
+		 * Set the moodpic for a Seminary.
 		 * 
-		 * @throws	DatamodelException
-		 * @param	int	$seminaryId	ID of the seminary to delete
-		 * @param	string	$title		New title of seminary
+		 * @param	int	$seminaryId	ID of Seminary to set moodpic for
+		 * @param	int	$mediaId	ID of moodpic media
 		 */
-		public function editSeminary($seminaryId, $title)
+		public function setMoodpicForSeminary($seminaryId, $mediaId)
 		{
 			$this->db->query(
 				'UPDATE seminaries '.
-				'SET title = ?, url = ? '.
+				'SET seminarymedia_id = ? '.
 				'WHERE id = ?',
-				'ssi',
+				'ii',
+				$mediaId,
+				$seminaryId
+			);
+		}
+		
+		
+		/**
+		 * Edit a seminary.
+		 * 
+		 * @throws	DatamodelException
+		 * @param	int	$seminaryId	ID of Seminary to delete
+		 * @param	string	$title		New title of Seminary
+		 * @param	string	$course		New course of Seminary
+		 * @param	string	$description	New description of Seminary
+		 */
+		public function editSeminary($seminaryId, $title, $course, $description)
+		{
+			$this->db->query(
+				'UPDATE seminaries '.
+				'SET title = ?, url = ?, course = ?, description = ? '.
+				'WHERE id = ?',
+				'ssssi',
 				$title,
 				\nre\core\Linker::createLinkParam($title),
+				$course,
+				$description,
 				$seminaryId
 			);
 		}

@@ -136,6 +136,45 @@
 		
 		
 		/**
+		 * Create a new moodpic.
+		 * 
+		 * @param	int	$userId		ID of user that does the upload
+		 * @param	int	$seminaryId	ID of Seminary
+		 * @param	string	$filename	Filename of uploading media
+		 * @param	string	$description	Description for media
+		 * @param	string	$mimetype	Mimetype of media
+		 * @param	string	$tmpFilename	Name of temporary uploaded file
+		 * @return	mixed			ID of media record or false if upload failed
+		 */
+		public function createMoodpic($userId, $seminaryId, $filename, $description, $mimetype, $tmpFilename)
+		{
+			$mediaId = false;
+			$this->db->setAutocommit(false);
+			
+			try {
+				// Create Seminary media record
+				$mediaId = $this->createSeminaryMedia($userId, $seminaryId, $filename, $description, $mimetype);
+				
+				// Upload file
+				$filename = ROOT.DS.\nre\configs\AppConfig::$dirs['seminarymedia'].DS.$mediaId;
+				if(!move_uploaded_file($tmpFilename, $filename))
+				{
+					$this->db->rollback();
+					$mediaId = false;
+				}
+			}
+			catch(\nre\exceptions\DatamodelException $e) {
+				$this->db->rollback();
+				$this->db->setAutocommit(true);
+			}
+			
+			
+			$this->db->setAutocommit(true);
+			return $mediaId;
+		}
+		
+		
+		/**
 		 * Create a new Quests media by creating a new Seminarymedia and
 		 * adding it to the list of Quests media.
 		 * 

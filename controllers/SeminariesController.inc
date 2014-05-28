@@ -26,6 +26,12 @@
 		 */
 		public $models = array('seminaries', 'users', 'characterroles', 'questgroupshierarchy', 'questgroups', 'media');
 		/**
+		 * Required components
+		 * 
+		 * @var array
+		 */
+		public $components = array('validation');
+		/**
 		 * User permissions
 		 * 
 		 * @var array
@@ -162,26 +168,109 @@
 		/**
 		 * Action: create.
 		 * 
-		 * Create a new seminary.
+		 * Create a new Seminary.
 		 */
 		public function create()
 		{
+			// Get allowed mimetypes
+			$mimetypes = \nre\configs\AppConfig::$mimetypes['moodpics'];
+			
+			// Values
+			$title = '';
+			$course = '';
+			$description = '';
+			$fields = array('title', 'course');
+			$validation = array();
+			
+			// Create a new Seminary
 			if($this->request->getRequestMethod() == 'POST' && !is_null($this->request->getPostParam('create')))
 			{
-				// Create new seminary
-				$seminaryId = $this->Seminaries->createSeminary(
-					$this->request->getPostParam('title'),
-					$this->Auth->getUserId()
-				);
+				// Get params and validate them
+				$validation = $this->Validation->validateParams($this->request->getPostParams(), $fields);
+				$title = $this->request->getPostParam('title');
+				if($this->Seminaries->seminaryTitleExists($title)) {
+					$validation = $this->Validation->addValidationResult($validation, 'title', 'exist', true);
+				}
+				$course = $this->request->getPostParam('course');
+				$description = $this->request->getPostParam('description');
 				
-				// Redirect to seminary
-				$user = $this->Seminaries->getSeminaryById($seminaryId);
-				$this->redirect($this->linker->link(array($seminary['url']), 1));
+				// Validate moodpic
+				$moodpic = null;
+				if(!empty($_FILES) && array_key_exists('moodpic', $_FILES) && $_FILES['moodpic']['error'] != UPLOAD_ERR_NO_FILE)
+				{
+					$moodpic = $_FILES['moodpic'];
+					
+					// Check error
+					if($moodpic['error'] !== UPLOAD_ERR_OK) {
+						$validation = $this->Validation->addValidationResult($validation, 'moodpic', 'error', $moodpic['error']);
+					}
+					
+					// Check mimetype
+					$mediaMimetype = null;
+					$moodpic['mimetype'] = \hhu\z\Utils::getMimetype($moodpic['tmp_name'], $moodpic['type']);
+					foreach($mimetypes as &$mimetype) {
+						if($mimetype['mimetype'] == $moodpic['mimetype']) {
+							$mediaMimetype = $mimetype;
+							break;
+						}
+					}
+					if(is_null($mediaMimetype)) {
+						$validation = $this->Validation->addValidationResult($validation, 'moodpic', 'mimetype', $moodpic['mimetype']);
+					}
+					elseif($moodpic['size'] > $mediaMimetype['size']) {
+						$validation = $this->Validation->addValidationResult($validation, 'moodpic', 'size', $mediaMimetype['size']);
+					}
+				}
+				
+				// Create new Seminary
+				if($validation === true)
+				{
+					$seminaryId = $this->Seminaries->createSeminary(
+						$this->Auth->getUserId(),
+						$title,
+						$course,
+						$description
+					);
+					$seminary = $this->Seminaries->getSeminaryById($seminaryId);
+					
+					// Upload moodpic
+					if(!is_null($moodpic))
+					{
+						$mediaId = $this->Media->createMoodpic(
+							$this->Auth->getUserId(),
+							$seminary['id'],
+							sprintf('seminarymoodpic-%s', $seminary['url']),
+							'',
+							$moodpic['mimetype'],
+							$moodpic['tmp_name']
+						);
+						if($mediaId !== false) {
+							$this->Seminaries->setMoodpicForSeminary($seminary['id'], $mediaId);
+						}
+					}
+				
+					// Redirect to Seminary overview
+					$this->redirect($this->linker->link('index', 1));
+				}
+			}
+			
+			// Get validation settings
+			$validationSettings = array();
+			foreach($fields as &$field) {
+				$validationSettings[$field] = \nre\configs\AppConfig::$validation[$field];
 			}
 			
 			
 			// Set titile
 			$this->addTitleLocalized('New seminary');
+			
+			// Pass data to view
+			$this->set('title', $title);
+			$this->set('course', $course);
+			$this->set('description', $description);
+			$this->set('mimetypes', $mimetypes);
+			$this->set('validation', $validation);
+			$this->set('validationSettings', $validationSettings);
 		}
 		
 		
@@ -198,23 +287,92 @@
 			// Get seminary
 			$seminary = $this->Seminaries->getSeminaryByUrl($seminaryUrl);
 			
+			// Get allowed mimetypes
+			$mimetypes = \nre\configs\AppConfig::$mimetypes['moodpics'];
+			
+			// Values
+			$title = $seminary['title'];
+			$course = $seminary['course'];
+			$description = $seminary['description'];
+			$fields = array('title', 'course');
+			$validation = array();
+			
 			// Check request method
-			if($this->request->getRequestMethod() == 'POST')
+			if($this->request->getRequestMethod() == 'POST' && !is_null($this->request->getPostParam('edit')))
 			{
-				// Save changes
-				if(!is_null($this->request->getPostParam('save')))
+				// Get params and validate them
+				$validation = $this->Validation->validateParams($this->request->getPostParams(), $fields);
+				$title = $this->request->getPostParam('title');
+				if($this->Seminaries->seminaryTitleExists($title, $seminary['id'])) {
+					$validation = $this->Validation->addValidationResult($validation, 'title', 'exist', true);
+				}
+				$course = $this->request->getPostParam('course');
+				$description = $this->request->getPostParam('description');
+				
+				// Validate moodpic
+				$moodpic = null;
+				if(!empty($_FILES) && array_key_exists('moodpic', $_FILES) && $_FILES['moodpic']['error'] != UPLOAD_ERR_NO_FILE)
 				{
-					// Edit seminary
-					$this->Seminaries->editSeminary(
-						$seminary['id'],
-						$this->request->getPostParam('title')
-					);
-					$seminary = $this->Seminaries->getSeminaryById($seminary['id']);
+					$moodpic = $_FILES['moodpic'];
+					
+					// Check error
+					if($moodpic['error'] !== UPLOAD_ERR_OK) {
+						$validation = $this->Validation->addValidationResult($validation, 'moodpic', 'error', $moodpic['error']);
+					}
+					
+					// Check mimetype
+					$mediaMimetype = null;
+					$moodpic['mimetype'] = \hhu\z\Utils::getMimetype($moodpic['tmp_name'], $moodpic['type']);
+					foreach($mimetypes as &$mimetype) {
+						if($mimetype['mimetype'] == $moodpic['mimetype']) {
+							$mediaMimetype = $mimetype;
+							break;
+						}
+					}
+					if(is_null($mediaMimetype)) {
+						$validation = $this->Validation->addValidationResult($validation, 'moodpic', 'mimetype', $moodpic['mimetype']);
+					}
+					elseif($moodpic['size'] > $mediaMimetype['size']) {
+						$validation = $this->Validation->addValidationResult($validation, 'moodpic', 'size', $mediaMimetype['size']);
+					}
 				}
 				
-				
-				// Redirect to entry
-				$this->redirect($this->linker->link(array($seminary['url']), 1));
+				// Edit Seminary
+				if($validation === true)
+				{
+					$this->Seminaries->editSeminary(
+						$seminary['id'],
+						$title,
+						$course,
+						$description
+					);
+					$seminary = $this->Seminaries->getSeminaryById($seminary['id']);
+					
+					// Update moodpic
+					if(!is_null($moodpic))
+					{
+						$mediaId = $this->Media->createMoodpic(
+							$this->Auth->getUserId(),
+							$seminary['id'],
+							sprintf('seminarymoodpic-%s', $seminary['url']),
+							'',
+							$moodpic['mimetype'],
+							$moodpic['tmp_name']
+						);
+						if($mediaId !== false) {
+							$this->Seminaries->setMoodpicForSeminary($seminary['id'], $mediaId);
+						}
+					}
+					
+					// Redirect to entry
+					$this->redirect($this->linker->link(array('seminary', $seminary['url']), 1));
+				}
+			}
+			
+			// Get validation settings
+			$validationSettings = array();
+			foreach($fields as &$field) {
+				$validationSettings[$field] = \nre\configs\AppConfig::$validation[$field];
 			}
 			
 			
@@ -223,6 +381,12 @@
 			
 			// Pass data to view
 			$this->set('seminary', $seminary);
+			$this->set('title', $title);
+			$this->set('course', $course);
+			$this->set('description', $description);
+			$this->set('mimetypes', $mimetypes);
+			$this->set('validation', $validation);
+			$this->set('validationSettings', $validationSettings);
 		}
 		
 		

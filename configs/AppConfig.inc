@@ -117,6 +117,16 @@
 					'size'		=> 204800
 				)
 			),
+			'moodpics' => array(
+				array(
+					'mimetype'	=> 'image/jpeg',
+					'size'		=> 524288
+				),
+				array(
+					'mimetype'	=> 'image/png',
+					'size'		=> 1048576
+				)
+			),
 			'charactergroupsquests' => array(
 				array(
 					'mimetype'	=> 'image/jpeg',
@@ -198,6 +208,9 @@
 			'xps' => array(
 				'minlength'	=> 1,
 				'regex'		=> '/^(\d*)$/'
+			),
+			'course' => array(
+				'maxlength'	=> 128
 			)
 		);
 		

@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: The Legend of Z\n"
-"POT-Creation-Date: 2014-05-27 11:27+0100\n"
-"PO-Revision-Date: 2014-05-27 11:28+0100\n"
+"POT-Creation-Date: 2014-05-28 10:27+0100\n"
+"PO-Revision-Date: 2014-05-28 10:29+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de_DE\n"
@@ -17,7 +17,7 @@ msgstr ""
 "X-Poedit-SearchPath-1: questtypes\n"
 "X-Poedit-SearchPath-2: controllers\n"
 
-#: controllers/CharactersController.inc:368
+#: controllers/CharactersController.inc:373
 #: controllers/UsersController.inc:312 views/ajax/characters/index.tpl:10
 #: views/ajax/users/index.tpl:10 views/html/characters/index.tpl:39
 #: views/html/characters/manage.tpl:35 views/html/characters/manage.tpl:50
@@ -27,7 +27,7 @@ msgstr ""
 msgid "Admin"
 msgstr "Administrator"
 
-#: controllers/CharactersController.inc:374
+#: controllers/CharactersController.inc:379
 #: controllers/UsersController.inc:318 views/ajax/characters/index.tpl:12
 #: views/ajax/users/index.tpl:12 views/html/characters/index.tpl:40
 #: views/html/characters/manage.tpl:36 views/html/characters/manage.tpl:51
@@ -37,7 +37,7 @@ msgstr "Administrator"
 msgid "Moderator"
 msgstr "Moderator"
 
-#: controllers/CharactersController.inc:380
+#: controllers/CharactersController.inc:385
 #: controllers/UsersController.inc:324 views/ajax/characters/index.tpl:14
 #: views/ajax/users/index.tpl:14 views/html/characters/index.tpl:41
 #: views/html/characters/manage.tpl:37 views/html/characters/manage.tpl:53
@@ -131,6 +131,7 @@ msgstr "Fehler beim Dateiupload: %s"
 #: views/html/charactergroupsquests/create.tpl:66
 #: views/html/charactergroupsquests/edit.tpl:67
 #: views/html/charactergroupsquests/manage.tpl:63
+#: views/html/seminaries/create.tpl:60 views/html/seminaries/edit.tpl:62
 msgid "Allowed file types"
 msgstr "Erlaubte Dateiformate"
 
@@ -140,6 +141,7 @@ msgstr "Erlaubte Dateiformate"
 #: views/html/charactergroupsquests/create.tpl:69
 #: views/html/charactergroupsquests/edit.tpl:70
 #: views/html/charactergroupsquests/manage.tpl:63
+#: views/html/seminaries/create.tpl:63 views/html/seminaries/edit.tpl:65
 #, php-format
 msgid "%s-files"
 msgstr "%s-Dateien"
@@ -150,6 +152,7 @@ msgstr "%s-Dateien"
 #: views/html/charactergroupsquests/create.tpl:69
 #: views/html/charactergroupsquests/edit.tpl:70
 #: views/html/charactergroupsquests/manage.tpl:63
+#: views/html/seminaries/create.tpl:63 views/html/seminaries/edit.tpl:65
 msgid "max."
 msgstr "max."
 
@@ -455,7 +458,7 @@ msgstr "Motto"
 #: views/html/charactergroupsquests/create.tpl:93
 #: views/html/characters/register.tpl:94 views/html/library/create.tpl:46
 #: views/html/library/edit.tpl:124 views/html/questgroups/create.tpl:17
-#: views/html/quests/create.tpl:43 views/html/seminaries/create.tpl:14
+#: views/html/quests/create.tpl:43 views/html/seminaries/create.tpl:75
 #: views/html/users/create.tpl:96
 msgid "create"
 msgstr "erstellen"
@@ -516,7 +519,7 @@ msgstr "%s-Gruppe bearbeiten"
 #: views/html/charactergroups/editgroup.tpl:83
 #: views/html/charactergroups/editgroupsgroup.tpl:50
 #: views/html/charactergroupsquests/edit.tpl:94
-#: views/html/characters/edit.tpl:108
+#: views/html/characters/edit.tpl:108 views/html/seminaries/edit.tpl:77
 msgid "edit"
 msgstr "bearbeiten"
 
@@ -609,6 +612,7 @@ msgstr "Neue %s-Quest"
 #: views/html/charactergroupsquests/edit.tpl:34
 #: views/html/library/create.tpl:22 views/html/library/edit.tpl:22
 #: views/html/library/edit.tpl:62 views/html/library/edit.tpl:100
+#: views/html/seminaries/create.tpl:30 views/html/seminaries/edit.tpl:32
 #, php-format
 msgid "Title is too short (min. %d chars)"
 msgstr "Der Titel ist zu kurz (min. %d Zeichen)"
@@ -617,6 +621,7 @@ msgstr "Der Titel ist zu kurz (min. %d Zeichen)"
 #: views/html/charactergroupsquests/edit.tpl:36
 #: views/html/library/create.tpl:24 views/html/library/edit.tpl:24
 #: views/html/library/edit.tpl:64 views/html/library/edit.tpl:102
+#: views/html/seminaries/create.tpl:32 views/html/seminaries/edit.tpl:34
 #, php-format
 msgid "Title is too long (max. %d chars)"
 msgstr "Der Titel ist zu lang (max. %d Zeichen)"
@@ -625,6 +630,7 @@ msgstr "Der Titel ist zu lang (max. %d Zeichen)"
 #: views/html/charactergroupsquests/edit.tpl:38
 #: views/html/library/create.tpl:26 views/html/library/edit.tpl:26
 #: views/html/library/edit.tpl:66 views/html/library/edit.tpl:104
+#: views/html/seminaries/create.tpl:34 views/html/seminaries/edit.tpl:36
 msgid "Title contains illegal characters"
 msgstr "Der Titel enthält ungültige Zeichen"
 
@@ -632,6 +638,7 @@ msgstr "Der Titel enthält ungültige Zeichen"
 #: views/html/charactergroupsquests/edit.tpl:40
 #: views/html/library/create.tpl:28 views/html/library/edit.tpl:28
 #: views/html/library/edit.tpl:68 views/html/library/edit.tpl:106
+#: views/html/seminaries/create.tpl:36 views/html/seminaries/edit.tpl:38
 msgid "Title already exists"
 msgstr "Der Titel existiert bereits"
 
@@ -639,6 +646,7 @@ msgstr "Der Titel existiert bereits"
 #: views/html/charactergroupsquests/edit.tpl:42
 #: views/html/library/create.tpl:30 views/html/library/edit.tpl:30
 #: views/html/library/edit.tpl:70 views/html/library/edit.tpl:108
+#: views/html/seminaries/create.tpl:38 views/html/seminaries/edit.tpl:40
 msgid "Title invalid"
 msgstr "Der Titel ist ungültig"
 
@@ -666,8 +674,8 @@ msgstr "Die XP-Angabe ist ungültig"
 #: views/html/library/edit.tpl:43 views/html/library/edit.tpl:44
 #: views/html/library/edit.tpl:121 views/html/library/edit.tpl:122
 #: views/html/questgroups/create.tpl:14 views/html/questgroups/create.tpl:15
-#: views/html/seminaries/create.tpl:11 views/html/seminaries/create.tpl:12
-#: views/html/seminaries/edit.tpl:13 views/html/seminaries/edit.tpl:14
+#: views/html/seminaries/create.tpl:68 views/html/seminaries/create.tpl:69
+#: views/html/seminaries/edit.tpl:70 views/html/seminaries/edit.tpl:71
 msgid "Title"
 msgstr "Titel"
 
@@ -682,6 +690,8 @@ msgstr "Questgruppe"
 #: views/html/charactergroupsquests/edit.tpl:85
 #: views/html/charactergroupsquests/edit.tpl:86
 #: views/html/charactergroupsquests/quest.tpl:45
+#: views/html/seminaries/create.tpl:72 views/html/seminaries/create.tpl:73
+#: views/html/seminaries/edit.tpl:74 views/html/seminaries/edit.tpl:75
 msgid "Description"
 msgstr "Beschreibung"
 
@@ -735,7 +745,7 @@ msgstr "Die Datei ist ungültig"
 
 #: views/html/charactergroupsquests/manage.tpl:66
 #: views/html/library/edit.tpl:46 views/html/library/edit.tpl:86
-#: views/html/seminaries/edit.tpl:16 views/html/users/edit.tpl:103
+#: views/html/users/edit.tpl:103
 msgid "save"
 msgstr "speichern"
 
@@ -1121,6 +1131,42 @@ msgstr "eingereicht"
 #: views/html/seminaries/create.tpl:8
 msgid "New seminary"
 msgstr "Neuer Kurs"
+
+#: views/html/seminaries/create.tpl:19 views/html/seminaries/edit.tpl:21
+#, php-format
+msgid "Error during moodpic upload: %s"
+msgstr "Fehler beim Upload des Stimmungsbildes: %s"
+
+#: views/html/seminaries/create.tpl:21 views/html/seminaries/edit.tpl:23
+#, php-format
+msgid "Moodpic has wrong type “%s”"
+msgstr "Der Dateityp „%s“ ist für Stimmungsbilder nicht erlaubt"
+
+#: views/html/seminaries/create.tpl:23 views/html/seminaries/edit.tpl:25
+msgid "Moodpic exceeds size maximum"
+msgstr "Das Stimmungsbild ist zu groß"
+
+#: views/html/seminaries/create.tpl:25 views/html/seminaries/edit.tpl:27
+msgid "Moodpic invalid"
+msgstr "Das Stimmungsbild ist ungültig"
+
+#: views/html/seminaries/create.tpl:43 views/html/seminaries/edit.tpl:45
+#, php-format
+msgid "Course is too long (max. %d chars)"
+msgstr "Der Kurs ist zu lang (max. %d Zeichen)"
+
+#: views/html/seminaries/create.tpl:45 views/html/seminaries/edit.tpl:47
+msgid "Course invalid"
+msgstr "Das Kurs ist ungültig"
+
+#: views/html/seminaries/create.tpl:58 views/html/seminaries/edit.tpl:60
+msgid "Moodpic"
+msgstr "Stimmungsbild"
+
+#: views/html/seminaries/create.tpl:70 views/html/seminaries/create.tpl:71
+#: views/html/seminaries/edit.tpl:72 views/html/seminaries/edit.tpl:73
+msgid "Course"
+msgstr "Kurs"
 
 #: views/html/seminaries/delete.tpl:10 views/html/seminaries/seminary.tpl:10
 msgid "Delete seminary"

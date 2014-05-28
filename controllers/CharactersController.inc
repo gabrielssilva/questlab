@@ -292,6 +292,11 @@
 						}
 					}
 					
+					// Set roles for owners and admins
+					if(in_array('admin', \hhu\z\controllers\IntermediateController::$user['roles']) || $seminary['created_user_id'] == \hhu\z\controllers\IntermediateController::$user['id']) {
+						$this->Characterroles->addCharacterroleToCharacter($characterId, 'admin');
+					}
+					
 					// Send mail
 					$this->sendRegistrationMail($character);
 					
