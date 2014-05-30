@@ -53,7 +53,9 @@
 			<li>
 				<label for="type-<?=$type['id']?>">
 					<p><?=$type['name']?></p>
+					<?php if(array_key_exists('avatar', $type)) : ?>
 					<img id="avatar" src="<?=$linker->link(array('media','avatar',$seminary['url'],$type['url'],$xplevels[0]['level'],'portrait'))?>" />
+					<?php endif ?>
 				</label>
 				<input id="type-<?=$type['id']?>" name="type" type="radio" value="<?=$type['url']?>" <?php if(array_key_exists('selected', $type) && $type['selected']) : ?>checked="checked"<?php endif ?> />
 			</li>

@@ -32,10 +32,16 @@
 			<p><?=\hhu\z\Utils::t($seminary['description'])?></p>
 			<p><small><?=sprintf(_('created by %s on %s'), $seminary['creator']['username'], $dateFormatter->format(new \DateTime($seminary['created'])))?></small></p>
 			<?php if(!array_key_exists('usercharacter', $seminary)) : ?>
-			<a href="<?=$linker->link(array('characters','register',$seminary['url']))?>" class="cta orange"><?=_('Create a Character')?></a>
+			<?php if(count($seminary['charactertypes']) > 0) : ?>
+			<a class="cta orange" href="<?=$linker->link(array('characters','register',$seminary['url']))?>"><?=_('Create a Character')?></a>
+			<?php elseif(count(array_intersect(array('admin', 'moderator'), \hhu\z\controllers\IntermediateController::$user['roles'])) > 0) : ?>
+			<a class="cta orange" href="<?=$linker->link(array('charactertypes','manage',$seminary['url']))?>"><?=_('Manage Charactertypes')?></a>
+			<?php endif ?>
 			<?php elseif(count($seminary['usercharacter']['characterroles']) == 0) : ?>
 			<p><?=sprintf(_('Your Character “%s” has not been activated yet'), $seminary['usercharacter']['name'])?></p>
 			<?php endif ?>
+			
+			
 		</section>		
 	</li>
 	<?php endforeach ?>

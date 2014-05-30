@@ -222,7 +222,7 @@
 				throw new \nre\exceptions\AccessDeniedException();
 			}
 			catch(\nre\exceptions\IdNotFoundException $e) {
-				// The should be the case
+				// This should be the case
 			}
 				
 			
@@ -307,6 +307,20 @@
 			
 			// Get XP-levels
 			$xplevels = $this->Characters->getXPLevelsForSeminary($seminary['id']);
+			
+			// Get Avatars
+			if(count($xplevels) > 0)
+			{
+				foreach($types as &$type)
+				{
+					try {
+						$type['avatar'] = $this->Avatars->getAvatarByTypeAndLevel($seminary['id'], $type['url'], $xplevels[0]['level']);
+					}
+					catch(\nre\exceptions\IdNotFoundException $e) {
+						// No Avatar available
+					}
+				}
+			}
 			
 			
 			// Set titile

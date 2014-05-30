@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: The Legend of Z\n"
-"POT-Creation-Date: 2014-05-28 10:27+0100\n"
-"PO-Revision-Date: 2014-05-28 10:29+0100\n"
+"POT-Creation-Date: 2014-05-30 10:44+0100\n"
+"PO-Revision-Date: 2014-05-30 10:46+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de_DE\n"
@@ -17,7 +17,7 @@ msgstr ""
 "X-Poedit-SearchPath-1: questtypes\n"
 "X-Poedit-SearchPath-2: controllers\n"
 
-#: controllers/CharactersController.inc:373
+#: controllers/CharactersController.inc:387
 #: controllers/UsersController.inc:312 views/ajax/characters/index.tpl:10
 #: views/ajax/users/index.tpl:10 views/html/characters/index.tpl:39
 #: views/html/characters/manage.tpl:35 views/html/characters/manage.tpl:50
@@ -27,7 +27,7 @@ msgstr ""
 msgid "Admin"
 msgstr "Administrator"
 
-#: controllers/CharactersController.inc:379
+#: controllers/CharactersController.inc:393
 #: controllers/UsersController.inc:318 views/ajax/characters/index.tpl:12
 #: views/ajax/users/index.tpl:12 views/html/characters/index.tpl:40
 #: views/html/characters/manage.tpl:36 views/html/characters/manage.tpl:51
@@ -37,7 +37,7 @@ msgstr "Administrator"
 msgid "Moderator"
 msgstr "Moderator"
 
-#: controllers/CharactersController.inc:385
+#: controllers/CharactersController.inc:399
 #: controllers/UsersController.inc:324 views/ajax/characters/index.tpl:14
 #: views/ajax/users/index.tpl:14 views/html/characters/index.tpl:41
 #: views/html/characters/manage.tpl:37 views/html/characters/manage.tpl:53
@@ -382,6 +382,8 @@ msgstr "Das Icon ist ungültig"
 #: views/html/charactergroups/creategroupsgroup.tpl:22
 #: views/html/charactergroups/editgroup.tpl:34
 #: views/html/charactergroups/editgroupsgroup.tpl:22
+#: views/html/charactertypes/manage.tpl:29
+#: views/html/charactertypes/manage.tpl:69
 #, php-format
 msgid "Name is too short (min. %d chars)"
 msgstr "Der Name ist zu kurz (min. %d Zeichen)"
@@ -390,6 +392,8 @@ msgstr "Der Name ist zu kurz (min. %d Zeichen)"
 #: views/html/charactergroups/creategroupsgroup.tpl:24
 #: views/html/charactergroups/editgroup.tpl:36
 #: views/html/charactergroups/editgroupsgroup.tpl:24
+#: views/html/charactertypes/manage.tpl:31
+#: views/html/charactertypes/manage.tpl:71
 #, php-format
 msgid "Name is too long (max. %d chars)"
 msgstr "Der Name ist zu lang (max. %d Zeichen)"
@@ -405,6 +409,8 @@ msgstr "Der Name enthält ungültige Zeichen"
 #: views/html/charactergroups/creategroupsgroup.tpl:28
 #: views/html/charactergroups/editgroup.tpl:40
 #: views/html/charactergroups/editgroupsgroup.tpl:28
+#: views/html/charactertypes/manage.tpl:33
+#: views/html/charactertypes/manage.tpl:73
 msgid "Name already exists"
 msgstr "Der Name existiert bereits"
 
@@ -412,6 +418,8 @@ msgstr "Der Name existiert bereits"
 #: views/html/charactergroups/creategroupsgroup.tpl:30
 #: views/html/charactergroups/editgroup.tpl:42
 #: views/html/charactergroups/editgroupsgroup.tpl:30
+#: views/html/charactertypes/manage.tpl:35
+#: views/html/charactertypes/manage.tpl:75
 msgid "Name invalid"
 msgstr "Der Name ist ungültig"
 
@@ -441,8 +449,9 @@ msgstr "Icon"
 #: views/html/charactergroups/editgroup.tpl:75
 #: views/html/charactergroups/editgroupsgroup.tpl:46
 #: views/html/charactergroups/editgroupsgroup.tpl:47
-#: views/html/quests/create.tpl:15 views/html/quests/create.tpl:16
-#: views/html/users/user.tpl:23
+#: views/html/charactertypes/manage.tpl:88
+#: views/html/charactertypes/manage.tpl:89 views/html/quests/create.tpl:15
+#: views/html/quests/create.tpl:16 views/html/users/user.tpl:23
 msgid "Name"
 msgstr "Name"
 
@@ -456,7 +465,8 @@ msgstr "Motto"
 #: views/html/charactergroups/creategroup.tpl:77
 #: views/html/charactergroups/creategroupsgroup.tpl:50
 #: views/html/charactergroupsquests/create.tpl:93
-#: views/html/characters/register.tpl:94 views/html/library/create.tpl:46
+#: views/html/characters/register.tpl:96
+#: views/html/charactertypes/manage.tpl:91 views/html/library/create.tpl:46
 #: views/html/library/edit.tpl:124 views/html/questgroups/create.tpl:17
 #: views/html/quests/create.tpl:43 views/html/seminaries/create.tpl:75
 #: views/html/users/create.tpl:96
@@ -486,9 +496,9 @@ msgstr "Soll die %s-Gruppen „%s“ wirklich gelöscht werden?"
 #: views/html/charactergroups/deletegroup.tpl:15
 #: views/html/charactergroups/deletegroupsgroup.tpl:14
 #: views/html/charactergroupsquests/delete.tpl:15
-#: views/html/characters/delete.tpl:17 views/html/library/delete.tpl:14
-#: views/html/library/edit.tpl:83 views/html/seminaries/delete.tpl:13
-#: views/html/users/delete.tpl:11
+#: views/html/characters/delete.tpl:17 views/html/charactertypes/manage.tpl:48
+#: views/html/library/delete.tpl:14 views/html/library/edit.tpl:83
+#: views/html/seminaries/delete.tpl:13 views/html/users/delete.tpl:11
 msgid "delete"
 msgstr "löschen"
 
@@ -744,8 +754,8 @@ msgid "File invalid"
 msgstr "Die Datei ist ungültig"
 
 #: views/html/charactergroupsquests/manage.tpl:66
-#: views/html/library/edit.tpl:46 views/html/library/edit.tpl:86
-#: views/html/users/edit.tpl:103
+#: views/html/charactertypes/manage.tpl:52 views/html/library/edit.tpl:46
+#: views/html/library/edit.tpl:86 views/html/users/edit.tpl:103
 msgid "save"
 msgstr "speichern"
 
@@ -844,12 +854,12 @@ msgstr "Charaktereigenschaften"
 msgid "Character name"
 msgstr "Charaktername"
 
-#: views/html/characters/edit.tpl:81 views/html/characters/register.tpl:67
+#: views/html/characters/edit.tpl:81 views/html/characters/register.tpl:69
 #, php-format
 msgid "The Seminary field “%s” is invalid"
 msgstr "Das Kursfeld „%s“ ist ungültig"
 
-#: views/html/characters/edit.tpl:86 views/html/characters/register.tpl:72
+#: views/html/characters/edit.tpl:86 views/html/characters/register.tpl:74
 msgid "Seminary fields"
 msgstr "Kursfelder"
 
@@ -902,6 +912,19 @@ msgstr "Charakter erstellen"
 #: views/html/characters/register.tpl:35
 msgid "Please choose an avatar"
 msgstr "Bitte wähle einen Avatar aus"
+
+#: views/html/charactertypes/manage.tpl:9 views/html/seminaries/index.tpl:38
+#: views/html/seminaries/seminary.tpl:14
+msgid "Manage Charactertypes"
+msgstr "Charakterrassen verwalten"
+
+#: views/html/charactertypes/manage.tpl:14
+msgid "Edit Charactertypes"
+msgstr "Characterrassen bearbeiten"
+
+#: views/html/charactertypes/manage.tpl:58
+msgid "Create new Charactertype"
+msgstr "Neue Characterrasse erstellen"
 
 #: views/html/error/index.tpl:5 views/html/error/index.tpl:14
 #: views/html/introduction/index.tpl:9 views/html/menu/index.tpl:6
@@ -1111,7 +1134,7 @@ msgstr "Quest"
 msgid "Go on"
 msgstr "Fortfahren"
 
-#: views/html/quests/quest.tpl:134 views/html/seminaries/seminary.tpl:36
+#: views/html/quests/quest.tpl:134 views/html/seminaries/seminary.tpl:43
 msgid "Let’s go"
 msgstr "Auf ins Abenteuer!"
 
@@ -1168,7 +1191,7 @@ msgstr "Stimmungsbild"
 msgid "Course"
 msgstr "Kurs"
 
-#: views/html/seminaries/delete.tpl:10 views/html/seminaries/seminary.tpl:10
+#: views/html/seminaries/delete.tpl:10 views/html/seminaries/seminary.tpl:11
 msgid "Delete seminary"
 msgstr "Kurs löschen"
 
@@ -1177,7 +1200,7 @@ msgstr "Kurs löschen"
 msgid "Should the seminary “%s” really be deleted?"
 msgstr "Soll der Kurs „%s“ wirklich gelöscht werden?"
 
-#: views/html/seminaries/edit.tpl:10 views/html/seminaries/seminary.tpl:9
+#: views/html/seminaries/edit.tpl:10 views/html/seminaries/seminary.tpl:10
 msgid "Edit seminary"
 msgstr "Kurs bearbeiten"
 
@@ -1190,20 +1213,20 @@ msgstr "Neuen Kurs erstellen"
 msgid "created by %s on %s"
 msgstr "erstellt von %s am %s"
 
-#: views/html/seminaries/index.tpl:35
+#: views/html/seminaries/index.tpl:36
 msgid "Create a Character"
 msgstr "Erstelle einen Charakter"
 
-#: views/html/seminaries/index.tpl:37
+#: views/html/seminaries/index.tpl:41
 #, php-format
 msgid "Your Character “%s” has not been activated yet"
 msgstr "Dein Charakter „%s“ wurde noch nicht aktiviert"
 
-#: views/html/seminaries/seminary.tpl:11
+#: views/html/seminaries/seminary.tpl:18
 msgid "Show Quests"
 msgstr "Quests anzeigen"
 
-#: views/html/seminaries/seminary.tpl:12
+#: views/html/seminaries/seminary.tpl:19
 msgid "Recalculate XPs"
 msgstr "XP neuberechnen"
 

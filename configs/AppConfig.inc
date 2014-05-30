@@ -211,7 +211,11 @@
 			),
 			'course' => array(
 				'maxlength'	=> 128
-			)
+			),
+			'charactertypename' => array(
+				'minlength'	=> 1,
+				'maxlength'	=> 32
+			),
 		);
 		
 		

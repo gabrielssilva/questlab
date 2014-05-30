@@ -5,11 +5,18 @@
 <?php endif ?>
 <h1><?=$seminary['title']?></h1>
 <?php if(count(array_intersect(array('admin', 'moderator'), \hhu\z\controllers\SeminaryController::$character['characterroles'])) > 0) : ?>
+<?php if(in_array('admin', \hhu\z\controllers\SeminaryController::$character['characterroles'])) : ?>
 <nav class="admin">
-	<?php if(in_array('admin', \hhu\z\controllers\SeminaryController::$character['characterroles'])) : ?><li><a href="<?=$linker->link('edit', 3)?>"><?=_('Edit seminary')?></a></li><?php endif ?>
-	<?php if(in_array('admin', \hhu\z\controllers\SeminaryController::$character['characterroles'])) : ?><li><a href="<?=$linker->link('delete', 3)?>"><?=_('Delete seminary')?></a></li><?php endif ?>
-	<?php if(count(array_intersect(array('admin','moderator'), \hhu\z\controllers\SeminaryController::$character['characterroles'])) > 0) : ?><li><a href="<?=$linker->link(array('quests','index',$seminary['url']))?>"><?=_('Show Quests')?></a></li><?php endif ?>
-	<?php if(count(array_intersect(array('admin','moderator'), \hhu\z\controllers\SeminaryController::$character['characterroles'])) > 0) : ?><li><a href="<?=$linker->link(array('calculatexps',$seminary['url']),1)?>"><?=_('Recalculate XPs')?></a></li><?php endif ?>
+	<li><a href="<?=$linker->link('edit', 3)?>"><?=_('Edit seminary')?></a></li>
+	<li><a href="<?=$linker->link('delete', 3)?>"><?=_('Delete seminary')?></a></li>
+</nav>
+<nav class="admin">
+	<li><a href="<?=$linker->link(array('charactertypes','manage',$seminary['url']))?>"><?=_('Manage Charactertypes')?></a></li>
+</nav>
+<?php endif ?>
+<nav class="admin">
+	<li><a href="<?=$linker->link(array('quests','index',$seminary['url']))?>"><?=_('Show Quests')?></a></li>
+	<li><a href="<?=$linker->link(array('calculatexps',$seminary['url']),1)?>"><?=_('Recalculate XPs')?></a></li>
 </nav>
 <?php endif ?>
 <p><?=\hhu\z\Utils::t($seminary['description'])?></p>
