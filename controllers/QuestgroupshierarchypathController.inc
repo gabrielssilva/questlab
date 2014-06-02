@@ -57,7 +57,8 @@
 			if(is_null($questgroup['hierarchy']))
 			{
 				// Get related Questgroup
-				$questtext = $this->Questtexts->getRelatedQuesttextForQuestgroup($currentQuestgroup['id']);
+				$questtexts = $this->Questtexts->getRelatedQuesttextsForQuestgroup($currentQuestgroup['id']);
+				$questtext = $this->Questtexts->pickQuesttextLastEnteredByCharacter(\hhu\z\controllers\SeminaryController::$character['id'], $questtexts);
 				$quest = $this->Quests->getQuestById($questtext['quest_id']);
 				$currentQuestgroup = $this->Questgroups->getQuestgroupById($quest['questgroup_id']);
 				$currentQuestgroup['hierarchy'] = $this->Questgroupshierarchy->getHierarchyForQuestgroup($currentQuestgroup['id']);

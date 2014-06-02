@@ -129,15 +129,15 @@
 		
 		
 		/**
-		 * Get corresponding Questtext for a Sidequest.
+		 * Get corresponding Questtexts for a Questgroup.
 		 * 
 		 * @throws	IdNotFoundException
-		 * @param	int	$sidequestId	ID of the Sidequest to get the Questtext for
-		 * @param	array			Questtext data
+		 * @param	int	$questgroupId	ID of Questgroup to get the Questtexst for
+		 * @param	array			List of Questtexts
 		 */
-		public function getRelatedQuesttextForQuestgroup($questgroupId)
+		public function getRelatedQuesttextsForQuestgroup($questgroupId)
 		{
-			$data = $this->db->query(
+			return $this->db->query(
 				'SELECT questtexts.id, questtexts.text, questtexts.pos, questtexts.quest_id, questtexttypes.id AS type_id, questtexttypes.type, questtexttypes.url AS type_url '.
 				'FROM questgroups_questtexts '.
 				'LEFT JOIN questtexts ON questtexts.id = questgroups_questtexts.questtext_id '.
@@ -146,8 +146,31 @@
 				'i',
 				$questgroupId
 			);
-			if(!empty($data)) {
-				return $data[0];
+		}
+		
+		
+		public function pickQuesttextLastEnteredByCharacter($characterId, $questtexts)
+		{
+			if(count($questtexts) == 0) {
+				return null;
+			}
+			$data = $this->db->query(
+				sprintf(
+					'SELECT quest_id '.
+					'FROM quests_characters '.
+					'WHERE character_id = ? AND quest_id IN (%s) AND status = ? '.
+					'ORDER BY created DESC '.
+					'LIMIT 1',
+					implode(',', array_map(function($q) { return intval($q['quest_id']); }, $questtexts))
+				),
+				'ii',
+				$characterId,
+				\hhu\z\models\QuestsModel::QUEST_STATUS_ENTERED
+			);
+			foreach($questtexts as &$questtext) {
+				if($questtext['quest_id'] == $data[0]['quest_id']) {
+					return $questtext;
+				}
 			}
 			
 			

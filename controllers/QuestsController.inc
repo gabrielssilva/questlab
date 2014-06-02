@@ -259,9 +259,10 @@
 				$solved = true;
 			}
 			
-			// Get (related) Questtext
-			$relatedQuesttext = $this->Questtexts->getRelatedQuesttextForQuestgroup($questgroup['id']);
-			if(!empty($relatedQuesttext)) {
+			// Get (related) Questtexts
+			$relatedQuesttexts = $this->Questtexts->getRelatedQuesttextsForQuestgroup($questgroup['id']);
+			$relatedQuesttext = $this->Questtexts->pickQuesttextLastEnteredByCharacter($character['id'], $relatedQuesttexts);
+			if(!is_null($relatedQuesttext)) {
 				$relatedQuesttext['quest'] = $this->Quests->getQuestById($relatedQuesttext['quest_id']);
 				if(!empty($relatedQuesttext['quest'])) {
 					$relatedQuesttext['quest']['questgroup_url'] = $this->Questgroups->getQuestgroupById($relatedQuesttext['quest']['questgroup_id'])['url'];
