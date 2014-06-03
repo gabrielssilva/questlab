@@ -167,6 +167,9 @@
 				$characterId,
 				\hhu\z\models\QuestsModel::QUEST_STATUS_ENTERED
 			);
+			if(count($data) == 0) {
+				return $questtexts[0];
+			}
 			foreach($questtexts as &$questtext) {
 				if($questtext['quest_id'] == $data[0]['quest_id']) {
 					return $questtext;
