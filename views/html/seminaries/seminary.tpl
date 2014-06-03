@@ -22,7 +22,7 @@
 <p><?=\hhu\z\Utils::t($seminary['description'])?></p>
 <?php foreach($questgroupshierarchy as $hierarchyIndex => &$hierarchy) : ?>
 <h2 id="<?=$hierarchy['url']?>"><?=$hierarchy['title_plural']?></h2>
-<?php if(count(array_intersect(array('admin', 'moderator'), \hhu\z\controllers\SeminaryController::$character['characterroles'])) > 0) : ?>
+<?php if(in_array('admin', \hhu\z\controllers\SeminaryController::$character['characterroles'])) : ?>
 <nav class="admin">
 	<li><a href="<?=$linker->link(array('questgroupshierarchy','edit',$seminary['url'],$hierarchy['url']))?>"><?=_('Edit Questgrouphierarchy')?></a></li>
 	<li><a href="<?=$linker->link(array('questgroupshierarchy','delete',$seminary['url'],$hierarchy['url']))?>"><?=_('Delete Questgrouphierarchy')?></a></li>
@@ -56,9 +56,11 @@
 </ul>
 <?php endforeach ?>
 
+<?php if(in_array('admin', \hhu\z\controllers\SeminaryController::$character['characterroles'])) : ?>
 <form method="post" action="<?=$linker->link(array('questgroupshierarchy','create',$seminary['url']))?>">
 	<h2><?=_('New Questgroupshierarchy')?></h2>
 	<?=_('Title (singular)')?>: <input type="text" name="title_singular" placeholder="<?=_('Title (singular)')?>" /></h2>
 	<?=_('Title (plural)')?>: <input type="text" name="title_plural" placeholder="<?=_('Title (plural)')?>" /></h2>
 	<input type="submit" name="create" value="<?=_('Add new Questgroupshierarchy')?>" />
 </form>
+<?php endif ?>

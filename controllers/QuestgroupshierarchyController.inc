@@ -39,6 +39,8 @@
 		public $permissions = array(
 			'create'	=> array('admin', 'moderator', 'user'),
 			'edit'		=> array('admin', 'moderator', 'user'),
+			'moveup'	=> array('admin', 'moderator', 'user'),
+			'movedown'	=> array('admin', 'moderator', 'user'),
 			'delete'	=> array('admin', 'moderator', 'user')
 		);
 		/**
@@ -47,8 +49,10 @@
 		 * @var array
 		 */
 		public $seminaryPermissions = array(
-			'create'	=> array('admin', 'moderator'),
-			'edit'		=> array('admin', 'moderator'),
+			'create'	=> array('admin'),
+			'edit'		=> array('admin'),
+			'moveup'	=> array('admin'),
+			'movedown'	=> array('admin'),
 			'delete'	=> array('admin')
 		);
 		
