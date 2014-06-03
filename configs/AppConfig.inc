@@ -216,6 +216,10 @@
 				'minlength'	=> 1,
 				'maxlength'	=> 32
 			),
+			'questgroupshierarchytitle' => array(
+				'minlength'	=> 1,
+				'maxlength'	=> 64
+			)
 		);
 		
 		
@@ -231,6 +235,8 @@
 			array('^users/(?!(index|login|register|logout|manage|create|edit|delete))/?',	'users/user/$1',		true),
 			array('^seminaries/([^/]+)/(edit|delete)/?$',				'seminaries/$2/$1',			true),
 			array('^seminaries/(?!(index|create|edit|delete|calculatexps))/?',	'seminaries/seminary/$1',		true),
+			array('^questgroupshierarchy/([^/]+)/create/?$',				'questgroupshierarchy/create/$1',	true),
+			array('^questgroupshierarchy/([^/]+)/([^/]+)/(edit|delete|moveup|movedown)/?$',	'questgroupshierarchy/$3/$1/$2',	true),
 			array('^questgroups/([^/]+)/(create)/?$',				'questgroups/$2/$1',			true),
 			array('^questgroups/([^/]+)/([^/]+)/?$',				'questgroups/questgroup/$1/$2',		true),
 			array('^quests/([^/]+)/?$',						'quests/index/$1',			true),
@@ -275,6 +281,8 @@
 			array('^users/user/(.*)$',			'users/$1',			true),
 			array('^users/([^/]+)/(.*)$',			'users/$2/$1',			true),
 			array('^seminaries/seminary/(.*)$',		'seminaries/$1',		false),
+			array('^questgroupshierarchy/create/(.*)$',	'questgroupshierarchy/$1/create',		true),
+			array('^questgroupshierarchy/([^/]+)/(.*)$',	'questgroupshierarchy/$2/$1',			true),
 			array('^questgroups/create/(.*)$',		'questgroups/$2/$1',		true),
 			array('^questgroups/questgroup/(.*)$',		'questgroups/$1',		true),
 			array('^quests/index/(.+)$',					'quests/$1',			true),

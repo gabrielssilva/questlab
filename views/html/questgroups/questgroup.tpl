@@ -19,9 +19,17 @@
 <?php endif ?>
 
 <?php if(!is_null($childquestgroupshierarchy)) : ?>
-<?php foreach($childquestgroupshierarchy as &$hierarchy) : ?>
-<?php if(count($hierarchy['questgroups']) > 0) : ?>
+<?php foreach($childquestgroupshierarchy as $hierarchyIndex => &$hierarchy) : ?>
+<?php if(count($hierarchy['questgroups']) > 0 || count(array_intersect(array('admin', 'moderator'), \hhu\z\controllers\SeminaryController::$character['characterroles'])) > 0) : ?>
 <h3><?=$hierarchy['title_plural']?></h3>
+<?php if(count(array_intersect(array('admin', 'moderator'), \hhu\z\controllers\SeminaryController::$character['characterroles'])) > 0) : ?>
+<nav class="admin">
+	<li><a href="<?=$linker->link(array('questgroupshierarchy','edit',$seminary['url'],$hierarchy['url']))?>"><?=_('Edit Questgroupshierarchy')?></a></li>
+	<li><a href="<?=$linker->link(array('questgroupshierarchy','delete',$seminary['url'],$hierarchy['url']))?>"><?=_('Delete Questgroupshierarchy')?></a></li>
+	<?php if($hierarchyIndex > 0) : ?><li><a href="<?=$linker->link(array('questgroupshierarchy','moveup',$seminary['url'],$hierarchy['url']),0,true,array('referer'=>$questgroup['id']))?>">↑</a></li><?php endif ?>
+	<?php if($hierarchyIndex < count($childquestgroupshierarchy)-1) : ?><li><a href="<?=$linker->link(array('questgroupshierarchy','movedown',$seminary['url'],$hierarchy['url']),0,true,array('referer'=>$questgroup['id']))?>">↓</a></li><?php endif ?>
+</nav>
+<?php endif ?>
 <ul class="qg">
 	<?php foreach($hierarchy['questgroups'] as &$group) : ?>
 	<li class="cf">
@@ -51,6 +59,13 @@
 </ul>
 <?php endif ?>
 <?php endforeach ?>
+<form method="post" action="<?=$linker->link(array('questgroupshierarchy','create',$seminary['url']))?>">
+	<h2><?=_('New Questgroupshierarchy')?></h2>
+	<?=_('Title (singular)')?>: <input type="text" name="title_singular" placeholder="<?=_('Title (singular)')?>" />
+	<?=_('Title (plural)')?>: <input type="text" name="title_plural" placeholder="<?=_('Title (plural)')?>" />
+	<input type="hidden" name="parent" value="<?=$questgroup['hierarchy']['url']?>" />
+	<input type="submit" name="create" value="<?=_('Add new Questgroupshierarchy')?>" />
+</form>
 <?php endif ?>
 
 <?php if(isset($quests) && !is_null($quests) && count($quests) > 0) : ?>
