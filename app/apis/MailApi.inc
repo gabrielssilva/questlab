@@ -142,7 +142,7 @@
 		{
 			// Set response
 			$this->response->clearParams();
-			foreach($this->request->getParams() as &$param) {
+			foreach($this->request->getParams() as $param) {
 				$this->response->addParam($param);
 			}
 			
