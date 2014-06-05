@@ -351,19 +351,15 @@
 			// Get seminary
 			$seminary = $this->Seminaries->getSeminaryByUrl($seminaryUrl);
 			
-			// Set default properties to show
-			$properties = array(
-				'username',
-				'xps',
-				'roles'
-			);
+			// Set sort order and page
 			
 			$selectedCharacters = array();
-			global $sortorder;
+			$sortorder = 'name';
 			if($this->request->getRequestMethod() == 'POST')
 			{
 				// Set sortorder
 				$sortorder = $this->request->getPostParam('sortorder');
+				$sortorder = !empty($sortorder) ? $sortorder : 'name';
 				
 				// Do action
 				$selectedCharacters = $this->request->getPostParam('characters');
@@ -425,7 +421,7 @@
 			$characterfields = $this->Seminarycharacterfields->getFieldsForSeminary($seminary['id']);
 			
 			// Get registered Characters
-			$characters = $this->Characters->getCharactersForSeminary($seminary['id']);
+			$characters = $this->Characters->getCharactersForSeminarySorted($seminary['id'], $sortorder);
 			foreach($characters as &$character)
 			{
 				$character['xplevel'] = $this->Characters->getXPLevelOfCharacters($character['id']);
@@ -435,22 +431,6 @@
 				foreach($this->Seminarycharacterfields->getFieldsForCharacter($character['id']) as $value) {
 					$character['characterfields'][$value['url']] = $value;
 				}
-			}
-			
-			// Sort Characters
-			$sortorder = (!is_null($sortorder)) ? $sortorder : 'xps';
-			$sortMethod = 'sortCharactersBy'.ucfirst(strtolower($sortorder));
-			if(method_exists($this, $sortMethod)) {
-				usort($characters, array($this, $sortMethod));
-			}
-			elseif(in_array($sortorder, array_map(function($f) { return $f['title']; }, $characterfields))) {
-				usort($characters, function($a, $b) {
-					global $sortorder;
-					return $this->sortCharactersByField($a, $b, $sortorder);
-				});
-			}
-			else {
-				throw new \nre\exceptions\ParamsNotValidException($sortorder);
 			}
 			
 			
