@@ -24,7 +24,7 @@
 		 * 
 		 * @var array
 		 */
-		public $models = array('seminaries', 'questgroups', 'quests', 'questtexts', 'media', 'questtypes', 'questgroupshierarchy');
+		public $models = array('seminaries', 'questgroups', 'quests', 'questtexts', 'media', 'questtypes', 'questgroupshierarchy', 'xplevels');
 		/**
 		 * User permissions
 		 * 
@@ -638,7 +638,7 @@
 							$this->Quests->setQuestSolved($quest['id'], $character['id']);
 							
 							// Notify of XP-level change
-							$newXPLevel = $this->Characters->getXPLevelOfCharacters($character['id']);
+							$newXPLevel = $this->Xplevels->getXPLevelById($character['xplevel_id']);
 							if($newXPLevel['level'] > $character['xplevel']) {
 								$this->Notification->addNotification(
 									\hhu\z\controllers\components\NotificationComponent::TYPE_LEVELUP,
@@ -868,12 +868,13 @@
 		private function sendSubmissionMail($seminary, $questgroup, $quest, $character)
 		{
 			// Get system moderators
-			$moderators = $this->Users->getUsersWithRole('moderator');
+			$moderators = $this->Characters->getCharactersWithRole('moderator');
 			
 			// Send notification mail
 			try {
 				foreach($moderators as &$moderator)
 				{
+					$user = $this->Users->getUserById($moderator['user_id']);
 					\hhu\z\Utils::sendMail(
 						$moderator['email'],
 						'charactersubmission',

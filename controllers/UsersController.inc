@@ -36,7 +36,7 @@
 		 * 
 		 * @var array
 		 */
-		public $models = array('users', 'userroles', 'characters', 'characterroles', 'avatars', 'media');
+		public $models = array('users', 'userroles', 'characters', 'characterroles', 'avatars', 'media', 'xplevels');
 		/**
 		 * Required components
 		 * 
@@ -116,7 +116,7 @@
 				$character['characterroles'] = array_map(function($a) { return $a['name']; }, $character['characterroles']);
 				
 				// Level
-				$character['xplevel'] = $this->Characters->getXPLevelOfCharacters($character['id']);
+				$character['xplevel'] = $this->Xplevels->getXPLevelById($character['xplevel_id']);
 				
 				// Avatar
 				$avatar = $this->Avatars->getAvatarById($character['avatar_id']);

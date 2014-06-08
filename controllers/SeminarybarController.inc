@@ -25,7 +25,7 @@
 		 * 
 		 * @var array
 		 */
-		public $models = array('characters', 'quests', 'questgroups', 'achievements', 'charactergroups', 'avatars', 'media');
+		public $models = array('characters', 'quests', 'questgroups', 'achievements', 'charactergroups', 'avatars', 'media', 'xplevels');
 		
 		
 		
@@ -49,7 +49,7 @@
 			if(is_null($character)) {
 				return;
 			}
-			$character['xplevel'] = $this->Characters->getXPLevelOfCharacters($character['id']);
+			$character['xplevel'] = $this->Xplevels->getXPLevelById($character['xplevel_id']);
 			$character['rank'] = $this->Characters->getXPRank($seminary['id'], $character['xps']);
 			
 			// Get “last” Quest

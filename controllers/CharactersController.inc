@@ -24,7 +24,7 @@
 		 * 
 		 * @var array
 		 */
-		public $models = array('seminaries', 'characters', 'users', 'charactergroups', 'charactertypes', 'seminarycharacterfields', 'avatars', 'media', 'quests', 'questgroups', 'questtopics');
+		public $models = array('seminaries', 'characters', 'users', 'charactergroups', 'charactertypes', 'seminarycharacterfields', 'avatars', 'media', 'quests', 'questgroups', 'questtopics', 'xplevels');
 		/**
 		 * Required components
 		 * 
@@ -94,7 +94,7 @@
 			$characters = $this->Characters->getCharactersForSeminarySorted($seminary['id'], $sortorder, $limit, $offset);
 			foreach($characters as &$character)
 			{
-				$character['xplevel'] = $this->Characters->getXPLevelOfCharacters($character['id']);
+				$character['xplevel'] = $this->Xplevels->getXPLevelById($character['xplevel_id']);
 				$character['user'] = $this->Users->getUserById($character['user_id']);
 				$character['characterroles'] = array_map(function($r) { return $r['name']; }, $this->Characterroles->getCharacterrolesForCharacterById($character['id']));
 				$character['characterfields'] = array();
@@ -137,8 +137,7 @@
 			
 			// Get Character
 			$character = $this->Characters->getCharacterByUrl($seminary['id'], $characterUrl);
-			$character['quest_xps'] = $this->Characters->getQuestXPsOfCharacter($character['id']);
-			$character['xplevel'] = $this->Characters->getXPLevelOfCharacters($character['id']);
+			$character['xplevel'] = $this->Xplevels->getXPLevelById($character['xplevel_id']);
 			$character['rank'] = $this->Characters->getXPRank($seminary['id'], $character['xps']);
 			
 			// Get User
@@ -424,7 +423,7 @@
 			$characters = $this->Characters->getCharactersForSeminarySorted($seminary['id'], $sortorder);
 			foreach($characters as &$character)
 			{
-				$character['xplevel'] = $this->Characters->getXPLevelOfCharacters($character['id']);
+				$character['xplevel'] = $this->Xplevels->getXPLevelById($character['xplevel_id']);
 				$character['user'] = $this->Users->getUserById($character['user_id']);
 				$character['characterroles'] = array_map(function($r) { return $r['name']; }, $this->Characterroles->getCharacterrolesForCharacterById($character['id']));
 				$character['characterfields'] = array();

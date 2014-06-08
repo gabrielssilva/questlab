@@ -43,11 +43,17 @@
 		public function getCharactersForUser($userId)
 		{
 			return $this->db->query(
-				'SELECT characters.id, characters.created, characters.charactertype_id, characters.name, characters.url, characters.xps, characters.xplevel, characters.avatar_id, charactertypes.name AS charactertype_name, charactertypes.url AS charactertype_url, seminaries.id AS seminary_id, seminaries.url AS seminary_url, seminaries.title AS seminary_title, seminaries.url AS seminary_url '.
-				'FROM v_characters AS characters '.
+				'SELECT '.
+					'characters.id, characters.created, characters.user_id, characters.name, characters.url, cache_characters.xps, cache_characters.quest_xps, cache_characters.avatar_id, '.
+					'charactertypes.id AS charactertype_id, charactertypes.name AS charactertype_name, charactertypes.url AS charactertype_url, '.
+					'xplevels.id AS xplevel_id, xplevels.level AS xplevel, '.
+					'seminaries.id AS seminary_id, seminaries.url AS seminary_url, seminaries.title AS seminary_title, seminaries.url AS seminary_url '.
+				'FROM characters '.
+				'LEFT JOIN cache_characters ON cache_characters.character_id = characters.id '.
 				'LEFT JOIN charactertypes ON charactertypes.id = characters.charactertype_id '.
+				'LEFT JOIN xplevels ON xplevels.id = cache_characters.xplevel_id '.
 				'LEFT JOIN seminaries ON seminaries.id = charactertypes.seminary_id '.
-				'WHERE user_id = ?',
+				'WHERE characters.user_id = ?',
 				'i',
 				$userId
 			);
@@ -64,7 +70,7 @@
 		{
 			$data = $this->db->query(
 				'SELECT count(DISTINCT characters.id) AS c '.
-				'FROM v_characters AS characters '.
+				'FROM characters '.
 				'LEFT JOIN charactertypes ON charactertypes.id = characters.charactertype_id '.
 				'LEFT JOIN seminaries ON seminaries.id = charactertypes.seminary_id '.
 				'WHERE seminaries.id = ?',
@@ -89,9 +95,15 @@
 		public function getCharactersForSeminary($seminaryId, $onlyWithRole=false)
 		{
 			return $this->db->query(
-				'SELECT characters.id, characters.created, characters.charactertype_id, characters.name, characters.url, characters.user_id, characters.xps, characters.xplevel, characters.avatar_id, charactertypes.name AS charactertype_name, charactertypes.url AS charactertype_url, seminaries.id AS seminary_url, seminaries.title AS seminary_title, seminaries.url AS seminary_url '.
-				'FROM v_characters AS characters '.
+				'SELECT '.
+					'characters.id, characters.created, characters.user_id, characters.name, characters.url, cache_characters.xps, cache_characters.quest_xps, cache_characters.avatar_id, '.
+					'charactertypes.id AS charactertype_id, charactertypes.name AS charactertype_name, charactertypes.url AS charactertype_url, '.
+					'xplevels.id AS xplevel_id, xplevels.level AS xplevel, '.
+					'seminaries.id AS seminary_id, seminaries.url AS seminary_url, seminaries.title AS seminary_title, seminaries.url AS seminary_url '.
+				'FROM characters '.
+				'LEFT JOIN cache_characters ON cache_characters.character_id = characters.id '.
 				'LEFT JOIN charactertypes ON charactertypes.id = characters.charactertype_id '.
+				'LEFT JOIN xplevels ON xplevels.id = cache_characters.xplevel_id '.
 				'LEFT JOIN seminaries ON seminaries.id = charactertypes.seminary_id '.
 				'WHERE seminaries.id = ?'.
 				($onlyWithRole ? ' AND EXISTS (SELECT character_id FROM characters_characterroles WHERE character_id = characters.id)' : null),
@@ -125,13 +137,20 @@
 					
 					return $this->db->query(
 						sprintf(
-							'SELECT characters.id, characters.created, characters.charactertype_id, characters.name, characters.url, characters.user_id, characters.xps, characters.xplevel, characters.avatar_id, charactertypes.name AS charactertype_name, charactertypes.url AS charactertype_url, seminaries.id AS seminary_url, seminaries.title AS seminary_title, seminaries.url AS seminary_url '.
-							'FROM v_characters AS characters '.
+							'SELECT '.
+								'characters.id, characters.created, characters.user_id, characters.name, characters.url, cache_characters.xps, cache_characters.quest_xps, cache_characters.avatar_id, '.
+								'charactertypes.id AS charactertype_id, charactertypes.name AS charactertype_name, charactertypes.url AS charactertype_url, '.
+								'xplevels.id AS xplevel_id, xplevels.level AS xplevel, '.
+								'seminaries.id AS seminary_id, seminaries.url AS seminary_url, seminaries.title AS seminary_title, seminaries.url AS seminary_url '.
+							'FROM characters '.
+							'LEFT JOIN cache_characters ON cache_characters.character_id = characters.id '.
 							'LEFT JOIN charactertypes ON charactertypes.id = characters.charactertype_id '.
+							'LEFT JOIN xplevels ON xplevels.id = cache_characters.xplevel_id '.
 							'LEFT JOIN seminaries ON seminaries.id = charactertypes.seminary_id '.
 							'WHERE seminaries.id = ? '.
-							'ORDER BY characters.%s %s '.
+							'ORDER BY %s.%s %s '.
 							(!empty($limit) ? sprintf('LIMIT %d, %d', $offset, $limit) : null),
+							($sort == 'xps' ? 'cache_characters' : 'characters'),
 							$sort,
 							$orders[$sort]
 						),
@@ -141,9 +160,15 @@
 				break;
 				case 'role':
 					return $this->db->query(
-						'SELECT characters.id, characters.created, characters.charactertype_id, characters.name, characters.url, characters.user_id, characters.xps, characters.xplevel, characters.avatar_id, charactertypes.name AS charactertype_name, charactertypes.url AS charactertype_url, seminaries.id AS seminary_url, seminaries.title AS seminary_title, seminaries.url AS seminary_url '.
-						'FROM v_characters AS characters '.
+						'SELECT '.
+							'characters.id, characters.created, characters.user_id, characters.name, characters.url, cache_characters.xps, cache_characters.quest_xps, cache_characters.avatar_id, '.
+							'charactertypes.id AS charactertype_id, charactertypes.name AS charactertype_name, charactertypes.url AS charactertype_url, '.
+							'xplevels.id AS xplevel_id, xplevels.level AS xplevel, '.
+							'seminaries.id AS seminary_id, seminaries.url AS seminary_url, seminaries.title AS seminary_title, seminaries.url AS seminary_url '.
+						'FROM characters '.
+						'LEFT JOIN cache_characters ON cache_characters.character_id = characters.id '.
 						'LEFT JOIN charactertypes ON charactertypes.id = characters.charactertype_id '.
+						'LEFT JOIN xplevels ON xplevels.id = cache_characters.xplevel_id '.
 						'LEFT JOIN seminaries ON seminaries.id = charactertypes.seminary_id '.
 						'LEFT JOIN characters_characterroles ON characters_characterroles.character_id = characters.id '.
 						'LEFT JOIN characterroles ON characterroles.id = characters_characterroles.characterrole_id '.
@@ -156,9 +181,15 @@
 				break;
 				default:
 					return $this->db->query(
-						'SELECT characters.id, characters.created, characters.charactertype_id, characters.name, characters.url, characters.user_id, characters.xps, characters.xplevel, characters.avatar_id, charactertypes.name AS charactertype_name, charactertypes.url AS charactertype_url, seminaries.id AS seminary_url, seminaries.title AS seminary_title, seminaries.url AS seminary_url '.
-						'FROM v_characters AS characters '.
+						'SELECT '.
+							'characters.id, characters.created, characters.user_id, characters.name, characters.url, cache_characters.xps, cache_characters.quest_xps, cache_characters.avatar_id, '.
+							'charactertypes.id AS charactertype_id, charactertypes.name AS charactertype_name, charactertypes.url AS charactertype_url, '.
+							'xplevels.id AS xplevel_id, xplevels.level AS xplevel, '.
+							'seminaries.id AS seminary_id, seminaries.url AS seminary_url, seminaries.title AS seminary_title, seminaries.url AS seminary_url '.
+						'FROM characters '.
+						'LEFT JOIN cache_characters ON cache_characters.character_id = characters.id '.
 						'LEFT JOIN charactertypes ON charactertypes.id = characters.charactertype_id '.
+						'LEFT JOIN xplevels ON xplevels.id = cache_characters.xplevel_id '.
 						'LEFT JOIN seminaries ON seminaries.id = charactertypes.seminary_id '.
 						'LEFT JOIN characters_seminarycharacterfields ON characters_seminarycharacterfields.character_id = characters.id '.
 						'LEFT JOIN seminarycharacterfields ON seminarycharacterfields.id = characters_seminarycharacterfields.seminarycharacterfield_id AND seminarycharacterfields.url = ? '.
@@ -183,12 +214,17 @@
 		public function getCharactersForGroup($groupId)
 		{
 			return $this->db->query(
-				'SELECT characters.id, characters.created, characters.charactertype_id, characters.name, characters.url, characters.user_id, characters.xps, characters.xplevel, characters.avatar_id, charactertypes.name AS charactertype_name, charactertypes.url AS charactertype_url '.
-				'FROM v_characters AS characters '.
+				'SELECT '.
+					'characters.id, characters.created, characters.user_id, characters.name, characters.url, cache_characters.xps, cache_characters.quest_xps, cache_characters.avatar_id, '.
+					'charactertypes.id AS charactertype_id, charactertypes.name AS charactertype_name, charactertypes.url AS charactertype_url, '.
+					'xplevels.id AS xplevel_id, xplevels.level AS xplevel '.
+				'FROM characters '.
 				'LEFT JOIN characters_charactergroups ON characters_charactergroups.character_id = characters.id '.
+				'LEFT JOIN cache_characters ON cache_characters.character_id = characters.id '.
 				'LEFT JOIN charactertypes ON charactertypes.id = characters.charactertype_id '.
+				'LEFT JOIN xplevels ON xplevels.id = cache_characters.xplevel_id '.
 				'WHERE characters_charactergroups.charactergroup_id = ? '.
-				'ORDER BY characters.xps DESC',
+				'ORDER BY cache_characters.xps DESC',
 				'i',
 				$groupId
 			);
@@ -206,9 +242,14 @@
 		public function getCharacterForUserAndSeminary($userId, $seminaryId)
 		{
 			$data = $this->db->query(
-				'SELECT characters.id, characters.created, characters.charactertype_id, characters.name, characters.url, characters.user_id, characters.xps, characters.xplevel, characters.avatar_id, charactertypes.name AS charactertype_name, charactertypes.url AS charactertype_url '.
-				'FROM v_characters AS characters '.
+				'SELECT '.
+					'characters.id, characters.created, characters.user_id, characters.name, characters.url, cache_characters.xps, cache_characters.quest_xps, cache_characters.avatar_id, '.
+					'charactertypes.id AS charactertype_id, charactertypes.name AS charactertype_name, charactertypes.url AS charactertype_url, '.
+					'xplevels.id AS xplevel_id, xplevels.level AS xplevel '.
+				'FROM characters '.
+				'LEFT JOIN cache_characters ON cache_characters.character_id = characters.id '.
 				'LEFT JOIN charactertypes ON charactertypes.id = characters.charactertype_id '.
+				'LEFT JOIN xplevels ON xplevels.id = cache_characters.xplevel_id '.
 				'WHERE characters.user_id = ? AND charactertypes.seminary_id = ?',
 				'ii',
 				$userId, $seminaryId
@@ -233,9 +274,14 @@
 		public function getCharacterByUrl($seminaryId, $characterUrl)
 		{
 			$data = $this->db->query(
-				'SELECT characters.id, characters.created, characters.charactertype_id, characters.name, characters.url, characters.user_id, characters.xps, characters.xplevel, characters.avatar_id, charactertypes.name AS charactertype_name, charactertypes.url AS charactertype_url '.
-				'FROM v_characters AS characters '.
+				'SELECT '.
+					'characters.id, characters.created, characters.user_id, characters.name, characters.url, cache_characters.xps, cache_characters.quest_xps, cache_characters.avatar_id, '.
+					'charactertypes.id AS charactertype_id, charactertypes.name AS charactertype_name, charactertypes.url AS charactertype_url, '.
+					'xplevels.id AS xplevel_id, xplevels.level AS xplevel '.
+				'FROM characters '.
+				'LEFT JOIN cache_characters ON cache_characters.character_id = characters.id '.
 				'LEFT JOIN charactertypes ON charactertypes.id = characters.charactertype_id '.
+				'LEFT JOIN xplevels ON xplevels.id = cache_characters.xplevel_id '.
 				'WHERE charactertypes.seminary_id = ? AND characters.url = ?',
 				'is',
 				$seminaryId, $characterUrl
@@ -259,9 +305,14 @@
 		public function getCharacterById($characterId)
 		{
 			$data = $this->db->query(
-				'SELECT characters.id, characters.created, characters.charactertype_id, characters.name, characters.url, characters.user_id, characters.xps, characters.xplevel, characters.avatar_id, charactertypes.name AS charactertype_name, charactertypes.url AS charactertype_url '.
-				'FROM v_characters AS characters '.
+				'SELECT '.
+					'characters.id, characters.created, characters.user_id, characters.name, characters.url, cache_characters.xps,cache_characters.quest_xps,  cache_characters.avatar_id, '.
+					'charactertypes.id AS charactertype_id, charactertypes.name AS charactertype_name, charactertypes.url AS charactertype_url, '.
+					'xplevels.id AS xplevel_id, xplevels.level AS xplevel '.
+				'FROM characters '.
+				'LEFT JOIN cache_characters ON cache_characters.character_id = characters.id '.
 				'LEFT JOIN charactertypes ON charactertypes.id = characters.charactertype_id '.
+				'LEFT JOIN xplevels ON xplevels.id = cache_characters.xplevel_id '.
 				'WHERE characters.id = ?',
 				'i',
 				$characterId
@@ -276,6 +327,27 @@
 		
 		
 		/**
+		 * Get Characters with the given Character role.
+		 * 
+		 * @param	string	$characterrole	Character role
+		 * @return	array			List of Characters
+		 */
+		public function getCharactersWithRole($characterrole)
+		{
+			return $this->db->query(
+				'SELECT characters.id, users.created, users.username, users.url, users.surname, users.prename, users.email '.
+				'FROM characters '.
+				'LEFT JOIN characters_characterroles ON characters_characterroles.character_id = characters.id '.
+				'LEFT JOIN characterroles ON characterroles.id = characters_characterroles.characterrole_id '.
+				'WHERE characterroles.name = ? '.
+				'ORDER BY name ASC',
+				's',
+				$userrole
+			);
+		}
+		
+		
+		/**
 		 * Get Characters with the most amount of Achievements.
 		 * 
 		 * @param	int	$seminaryId	ID of Seminary
@@ -285,13 +357,19 @@
 		public function getCharactersWithMostAchievements($seminaryId, $count, $alsoWithDeadline=true)
 		{
 			return $this->db->query(
-				'SELECT characters.id, characters.created, characters.charactertype_id, characters.name, characters.url, characters.user_id, characters.xps, characters.xplevel, characters.avatar_id, charactertypes.name AS charactertype_name, charactertypes.url AS charactertype_url, count(DISTINCT achievement_id) AS c '.
+				'SELECT '.
+					'characters.id, characters.created, characters.user_id, characters.name, characters.url, cache_characters.xps, cache_characters.quest_xps, cache_characters.avatar_id, '.
+					'charactertypes.id AS charactertype_id, charactertypes.name AS charactertype_name, charactertypes.url AS charactertype_url, '.
+					'xplevels.id AS xplevel_id, xplevels.level AS xplevel, '.
+					'count(DISTINCT achievement_id) AS c '.
 				'FROM achievements_characters '.
 				'INNER JOIN achievements ON achievements.id = achievements_characters.achievement_id '.
-				'INNER JOIN v_characters AS characters ON characters.id = achievements_characters.character_id '.
+				'INNER JOIN characters ON characters.id = achievements_characters.character_id '.
+				'INNER JOIN cache_characters ON cache_characters.character_id = characters.id '.
+				'INNER JOIN charactertypes ON charactertypes.id = characters.charactertype_id '.
+				'INNER JOIN xplevels ON xplevels.id = cache_characters.xplevel_id '.
 				'INNER JOIN characters_characterroles ON characters_characterroles.character_id = characters.id '.
 				'INNER JOIN characterroles ON characterroles.id = characters_characterroles.characterrole_id AND characterroles.name = ? '.
-				'INNER JOIN charactertypes ON charactertypes.id = characters.charactertype_id '.
 				'WHERE achievements.seminary_id = ? AND deadline IS NULL '.
 				(!$alsoWithDeadline ? 'AND achievements.deadline IS NULL ' : null).
 				'GROUP BY achievements_characters.character_id '.
@@ -302,55 +380,6 @@
 				$seminaryId,
 				$count
 			);
-		}
-		
-		
-		/**
-		 * Calculate only XPs for a Character achieved through Quests.
-		 * 
-		 * @param	int	$characterId	ID of Character
-		 * @return	int			Quest-XPs for Character
-		 */
-		public function getQuestXPsOfCharacter($characterId)
-		{
-			$data = $this->db->query(
-				'SELECT quest_xps '.
-				'FROM v_charactersxps '.
-				'WHERE character_id = ?',
-				'i',
-				$characterId
-			);
-			if(!empty($data)) {
-				return $data[0]['quest_xps'];
-			}
-			
-			
-			return 0;
-		}
-		
-		
-		/**
-		 * Get the XP-level of a Character.
-		 * 
-		 * @param	string	$characterId	ID of the Character
-		 * @return	array			XP-level of Character
-		 */
-		public function getXPLevelOfCharacters($characterId)
-		{
-			$data = $this->db->query(
-				'SELECT xplevels.xps, xplevels.level, xplevels.name '.
-				'FROM v_charactersxplevels '.
-				'INNER JOIN xplevels ON xplevels.id = v_charactersxplevels.xplevel_id '.
-				'WHERE v_charactersxplevels.character_id = ?',
-				'i',
-				$characterId
-			);
-			if(!empty($data)) {
-				return $data[0];
-			}
-			
-			
-			return null;
 		}
 		
 		
@@ -366,10 +395,11 @@
 			$data = $this->db->query(
 				'SELECT count(characters.id) AS c '.
 				'FROM charactertypes '.
-				'INNER JOIN v_characters AS characters ON characters.charactertype_id = charactertypes.id '.
+				'INNER JOIN characters ON characters.charactertype_id = charactertypes.id '.
+				'INNER JOIN cache_characters ON cache_characters.character_id = characters.id '.
 				'INNER JOIN characters_characterroles ON characters_characterroles.character_id = characters.id '.
 				'INNER JOIN characterroles ON characterroles.id = characters_characterroles.characterrole_id AND characterroles.name = ? '.
-				'WHERE seminary_id = ? AND characters.xps > ?',
+				'WHERE seminary_id = ? AND cache_characters.xps > ?',
 				'sid',
 				'user',
 				$seminaryId, $xps
@@ -394,13 +424,18 @@
 		public function getSuperiorCharacters($seminaryId, $xps, $count)
 		{
 			$data = $this->db->query(
-				'SELECT characters.id, characters.created, characters.charactertype_id, characters.name, characters.url, characters.xps, characters.xplevel, characters.avatar_id, charactertypes.name AS charactertype_name, charactertypes.url AS charactertype_url '.
-				'FROM v_characters AS characters  '.
-				'INNER JOIN charactertypes ON charactertypes.id = characters.charactertype_id '.
+				'SELECT '.
+					'characters.id, characters.created, characters.user_id, characters.name, characters.url, cache_characters.xps,cache_characters.quest_xps,  cache_characters.avatar_id, '.
+					'charactertypes.id AS charactertype_id, charactertypes.name AS charactertype_name, charactertypes.url AS charactertype_url, '.
+					'xplevels.id AS xplevel_id, xplevels.level AS xplevel '.
+				'FROM characters '.
 				'INNER JOIN characters_characterroles ON characters_characterroles.character_id = characters.id '.
 				'INNER JOIN characterroles ON characterroles.id = characters_characterroles.characterrole_id AND characterroles.name = ? '.
-				'WHERE charactertypes.seminary_id = ? AND characters.xps > ? '.
-				'ORDER BY characters.xps ASC, RAND() '.
+				'INNER JOIN cache_characters ON cache_characters.character_id = characters.id '.
+				'INNER JOIN charactertypes ON charactertypes.id = characters.charactertype_id '.
+				'INNER JOIN xplevels ON xplevels.id = cache_characters.xplevel_id '.
+				'WHERE charactertypes.seminary_id = ? AND cache_characters.xps > ? '.
+				'ORDER BY cache_characters.xps ASC, RAND() '.
 				'LIMIT ?',
 				'sidd',
 				'user',
@@ -424,13 +459,18 @@
 		public function getInferiorCharacters($seminaryId, $characterId, $xps, $count)
 		{
 			return $this->db->query(
-				'SELECT characters.id, characters.created, characters.charactertype_id, characters.name, characters.url, characters.xps, characters.xplevel, characters.avatar_id, charactertypes.name AS charactertype_name, charactertypes.url AS charactertype_url '.
-				'FROM v_characters AS characters  '.
-				'INNER JOIN charactertypes ON charactertypes.id = characters.charactertype_id '.
+				'SELECT '.
+					'characters.id, characters.created, characters.user_id, characters.name, characters.url, cache_characters.xps,cache_characters.quest_xps,  cache_characters.avatar_id, '.
+					'charactertypes.id AS charactertype_id, charactertypes.name AS charactertype_name, charactertypes.url AS charactertype_url, '.
+					'xplevels.id AS xplevel_id, xplevels.level AS xplevel '.
+				'FROM characters '.
 				'INNER JOIN characters_characterroles ON characters_characterroles.character_id = characters.id '.
 				'INNER JOIN characterroles ON characterroles.id = characters_characterroles.characterrole_id AND characterroles.name = ? '.
-				'WHERE charactertypes.seminary_id = ? AND characters.xps <= ? AND characters.id <> ? '.
-				'ORDER BY characters.xps DESC, RAND() '.
+				'INNER JOIN cache_characters ON cache_characters.character_id = characters.id '.
+				'INNER JOIN charactertypes ON charactertypes.id = characters.charactertype_id '.
+				'INNER JOIN xplevels ON xplevels.id = cache_characters.xplevel_id '.
+				'WHERE charactertypes.seminary_id = ? AND cache_characters.xps <= ? AND characters.id <> ? '.
+				'ORDER BY cache_characters.xps DESC, RAND() '.
 				'LIMIT ?',
 				'sidid',
 				'user',
@@ -448,10 +488,16 @@
 		public function getCharactersSolvedQuest($questId)
 		{
 			return $data = $this->db->query(
-				'SELECT characters.id, characters.created, characters.charactertype_id, characters.name, characters.url, characters.user_id, characters.xps, characters.xplevel, charactertypes.name AS charactertype_name, charactertypes.url AS charactertype_url, quests_characters.created AS submission_created '.
+				'SELECT '.
+					'characters.id, characters.created, characters.user_id, characters.name, characters.url, cache_characters.xps,cache_characters.quest_xps,  cache_characters.avatar_id, '.
+					'charactertypes.id AS charactertype_id, charactertypes.name AS charactertype_name, charactertypes.url AS charactertype_url, '.
+					'xplevels.id AS xplevel_id, xplevels.level AS xplevel, '.
+					'quests_characters.created AS submission_created '.
 				'FROM quests_characters '.
-				'INNER JOIN v_characters AS characters ON characters.id = quests_characters.character_id '.
+				'INNER JOIN characters ON characters.id = quests_characters.character_id '.
+				'INNER JOIN cache_characters ON cache_characters.character_id = characters.id '.
 				'INNER JOIN charactertypes ON charactertypes.id = characters.charactertype_id '.
+				'INNER JOIN xplevels ON xplevels.id = cache_characters.xplevel_id '.
 				'WHERE quests_characters.quest_id = ? AND quests_characters.status = ? AND NOT EXISTS ('.
 					'SELECT id '.
 					'FROM quests_characters AS qc '.
@@ -473,10 +519,16 @@
 		public function getCharactersUnsolvedQuest($questId)
 		{
 			return $data = $this->db->query(
-				'SELECT characters.id, characters.created, characters.charactertype_id, characters.name, characters.url, characters.user_id, characters.xps, characters.xplevel, charactertypes.name AS charactertype_name, charactertypes.url AS charactertype_url, quests_characters.created AS submission_created '.
+				'SELECT '.
+					'characters.id, characters.created, characters.user_id, characters.name, characters.url, cache_characters.xps,cache_characters.quest_xps,  cache_characters.avatar_id, '.
+					'charactertypes.id AS charactertype_id, charactertypes.name AS charactertype_name, charactertypes.url AS charactertype_url, '.
+					'xplevels.id AS xplevel_id, xplevels.level AS xplevel, '.
+					'quests_characters.created AS submission_created '.
 				'FROM quests_characters '.
-				'INNER JOIN v_characters AS characters ON characters.id = quests_characters.character_id '.
+				'INNER JOIN characters ON characters.id = quests_characters.character_id '.
+				'INNER JOIN cache_characters ON cache_characters.character_id = characters.id '.
 				'INNER JOIN charactertypes ON charactertypes.id = characters.charactertype_id '.
+				'INNER JOIN xplevels ON xplevels.id = cache_characters.xplevel_id '.
 				'WHERE quests_characters.quest_id = ? AND quests_characters.status = ? AND NOT EXISTS ('.
 					'SELECT id '.
 					'FROM quests_characters AS qc '.
@@ -498,10 +550,16 @@
 		public function getCharactersSubmittedQuest($questId)
 		{
 			return $data = $this->db->query(
-				'SELECT characters.id, characters.created, characters.charactertype_id, characters.name, characters.url, characters.user_id, characters.xps, characters.xplevel, charactertypes.name AS charactertype_name, charactertypes.url AS charactertype_url, quests_characters.created AS submission_created '.
+				'SELECT '.
+					'characters.id, characters.created, characters.user_id, characters.name, characters.url, cache_characters.xps,cache_characters.quest_xps,  cache_characters.avatar_id, '.
+					'charactertypes.id AS charactertype_id, charactertypes.name AS charactertype_name, charactertypes.url AS charactertype_url, '.
+					'xplevels.id AS xplevel_id, xplevels.level AS xplevel, '.
+					'quests_characters.created AS submission_created '.
 				'FROM quests_characters '.
-				'INNER JOIN v_characters AS characters ON characters.id = quests_characters.character_id '.
+				'INNER JOIN characters ON characters.id = quests_characters.character_id '.
+				'INNER JOIN cache_characters ON cache_characters.character_id = characters.id '.
 				'INNER JOIN charactertypes ON charactertypes.id = characters.charactertype_id '.
+				'INNER JOIN xplevels ON xplevels.id = cache_characters.xplevel_id '.
 				'WHERE quests_characters.quest_id = ? AND quests_characters.status = ? AND NOT EXISTS ('.
 					'SELECT id '.
 					'FROM quests_characters AS qc '.
@@ -543,9 +601,15 @@
 		public function getCharactersWithCharacterRole($seminaryId, $characterrole)
 		{
 			return $this->db->query(
-				'SELECT characters.id, characters.created, characters.charactertype_id, characters.name, characters.url, characters.user_id, characters.xps, characters.xplevel, characters.avatar_id, charactertypes.name AS charactertype_name, charactertypes.url AS charactertype_url, seminaries.id AS seminary_url, seminaries.title AS seminary_title, seminaries.url AS seminary_url '.
-				'FROM v_characters AS characters '.
+				'SELECT '.
+					'characters.id, characters.created, characters.user_id, characters.name, characters.url, cache_characters.xps, cache_characters.quest_xps, cache_characters.avatar_id, '.
+					'charactertypes.id AS charactertype_id, charactertypes.name AS charactertype_name, charactertypes.url AS charactertype_url, '.
+					'xplevels.id AS xplevel_id, xplevels.level AS xplevel, '.
+					'seminaries.id AS seminary_id, seminaries.url AS seminary_url, seminaries.title AS seminary_title, seminaries.url AS seminary_url '.
+				'FROM characters '.
+				'LEFT JOIN cache_characters ON cache_characters.character_id = characters.id '.
 				'LEFT JOIN charactertypes ON charactertypes.id = characters.charactertype_id '.
+				'LEFT JOIN xplevels ON xplevels.id = cache_characters.xplevel_id '.
 				'LEFT JOIN seminaries ON seminaries.id = charactertypes.seminary_id '.
 				'LEFT JOIN characters_characterroles ON characters_characterroles.character_id = characters.id '.
 				'LEFT JOIN characterroles ON characterroles.id = characters_characterroles.characterrole_id '.
