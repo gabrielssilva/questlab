@@ -138,7 +138,6 @@
 				return;
 			}
 			
-			
 			// Pass data to view
 			$this->set('media', $media);
 			$this->set('file', $file);
@@ -424,7 +423,7 @@
 			// Set filename
 			$media['filename'] = ROOT.DS.\nre\configs\AppConfig::$dirs['seminarymedia'].DS.$media['id'];
 			if(!file_exists($media['filename'])) {
-				throw new \nre\exceptions\IdNotFoundException($mediaUrl);
+				throw new \nre\exceptions\IdNotFoundException($media['url']);
 			}
 			
 			// Cache
