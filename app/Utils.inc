@@ -91,6 +91,15 @@
 		 */
 		public static function sendMail($to, $messageAction, $html=false, $params=null, $linker=null)
 		{
+			// Check configuration
+			if(
+				empty(\nre\configs\AppConfig::$mail['host']) ||
+				empty(\nre\configs\AppConfig::$mail['port']) ||
+				empty(\nre\configs\AppConfig::$mail['username'])
+			) {
+				return;
+			}
+			
 			// Load classes
 			\hhu\z\lib\PHPMailerAutoload::load();
 			\hhu\z\lib\PHPMailer::load();
