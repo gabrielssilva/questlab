@@ -335,14 +335,14 @@
 		public function getCharactersWithRole($characterrole)
 		{
 			return $this->db->query(
-				'SELECT characters.id, users.created, users.username, users.url, users.surname, users.prename, users.email '.
+				'SELECT characters.id, characters.created, characters.user_id, characters.name, characters.url '.
 				'FROM characters '.
 				'LEFT JOIN characters_characterroles ON characters_characterroles.character_id = characters.id '.
 				'LEFT JOIN characterroles ON characterroles.id = characters_characterroles.characterrole_id '.
 				'WHERE characterroles.name = ? '.
 				'ORDER BY name ASC',
 				's',
-				$userrole
+				$characterrole
 			);
 		}
 		

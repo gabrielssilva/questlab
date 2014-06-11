@@ -876,11 +876,11 @@
 				{
 					$user = $this->Users->getUserById($moderator['user_id']);
 					\hhu\z\Utils::sendMail(
-						$moderator['email'],
+						$user['email'],
 						'charactersubmission',
 						true,
 						array(
-							$moderator,
+							$user,
 							$seminary,
 							$questgroup,
 							$quest,
