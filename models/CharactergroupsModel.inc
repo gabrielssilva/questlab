@@ -211,9 +211,12 @@
 			
 			// Get and return Character groups
 			return $this->db->query(
-				'SELECT id, name, url, xps, motto, charactergroupsmedia_id '.
-				'FROM v_charactergroups '.
-				'WHERE charactergroupsgroup_id = ? '.
+				'SELECT '.
+					'charactergroups.id, charactergroups.name, charactergroups.url, charactergroups.motto, charactergroups.charactergroupsmedia_id, '.
+					'cache_charactergroups.xps '.
+				'FROM charactergroups '.
+				'LEFT JOIN cache_charactergroups ON cache_charactergroups.charactergroup_id = charactergroups.id '.
+				'WHERE charactergroups.charactergroupsgroup_id = ? '.
 				"ORDER BY $sortorder",
 				'i',
 				$groupsgroupId
@@ -230,9 +233,13 @@
 		public function getGroupsForCharacter($characterId)
 		{
 			return $this->db->query(
-				'SELECT charactergroups.id, charactergroups.charactergroupsgroup_id, charactergroups.name, charactergroups.url, charactergroups.charactergroupsmedia_id, charactergroups.xps, charactergroupsgroups.id AS charactergroupsgroup_id, charactergroupsgroups.name AS charactergroupsgroup_name, charactergroupsgroups.url AS charactergroupsgroup_url '.
+				'SELECT '.
+					'charactergroups.id, charactergroups.charactergroupsgroup_id, charactergroups.name, charactergroups.url, charactergroups.charactergroupsmedia_id, '.
+					'cache_charactergroups.xps, '.
+					'charactergroupsgroups.id AS charactergroupsgroup_id, charactergroupsgroups.name AS charactergroupsgroup_name, charactergroupsgroups.url AS charactergroupsgroup_url '.
 				'FROM characters_charactergroups '.
-				'LEFT JOIN v_charactergroups AS charactergroups ON charactergroups.id = characters_charactergroups.charactergroup_id '.
+				'LEFT JOIN charactergroups ON charactergroups.id = characters_charactergroups.charactergroup_id '.
+				'LEFT JOIN cache_charactergroups ON cache_charactergroups.charactergroup_id = charactergroups.id '.
 				'LEFT JOIN charactergroupsgroups ON charactergroupsgroups.id = charactergroups.charactergroupsgroup_id '.
 				'WHERE characters_charactergroups.character_id = ?',
 				'i',
@@ -252,9 +259,12 @@
 		public function getGroupByUrl($groupsgroupId, $groupUrl)
 		{
 			$data = $this->db->query(
-				'SELECT id, name, url, xps, motto, charactergroupsmedia_id '.
-				'FROM v_charactergroups '.
-				'WHERE charactergroupsgroup_id = ? AND url = ?',
+				'SELECT '.
+					'charactergroups.id, charactergroups.name, charactergroups.url, charactergroups.motto, charactergroups.charactergroupsmedia_id, '.
+					'cache_charactergroups.xps '.
+				'FROM charactergroups '.
+				'LEFT JOIN cache_charactergroups ON cache_charactergroups.charactergroup_id = charactergroups.id '.
+				'WHERE charactergroups.charactergroupsgroup_id = ? AND url = ?',
 				'is',
 				$groupsgroupId, $groupUrl
 			);
@@ -277,9 +287,12 @@
 		public function getGroupById($groupId)
 		{
 			$data = $this->db->query(
-				'SELECT id, name, url, xps, motto, charactergroupsmedia_id '.
-				'FROM v_charactergroups '.
-				'WHERE id = ?',
+				'SELECT '.
+					'charactergroups.id, charactergroups.name, charactergroups.url, charactergroups.motto, charactergroups.charactergroupsmedia_id, '.
+					'cache_charactergroups.xps '.
+				'FROM charactergroups '.
+				'LEFT JOIN cache_charactergroups ON cache_charactergroups.charactergroup_id = charactergroups.id '.
+				'WHERE charactergroups.id = ?',
 				'i',
 				$groupId
 			);
@@ -433,9 +446,10 @@
 		public function getXPRank($groupsgroupId, $xps)
 		{
 			$data = $this->db->query(
-				'SELECT count(id) AS c '.
-				'FROM v_charactergroups '.
-				'WHERE charactergroupsgroup_id = ? AND xps > ?',
+				'SELECT count(charactergroups.id) AS c '.
+				'FROM charactergroups '.
+				'LEFT JOIN cache_charactergroups ON cache_charactergroups.charactergroup_id = charactergroups.id '.
+				'WHERE charactergroups.charactergroupsgroup_id = ? AND cache_charactergroups.xps > ?',
 				'id',
 				$groupsgroupId, $xps
 			);
