@@ -313,14 +313,26 @@
 		{
 			$data = $this->db->query(
 				"SELECT ($field >= $value) AS got ".
-				'FROM v_characters '.
-				'WHERE id = ?',
+				'FROM ('.
+					'SELECT '.
+						'characters.id, characters.created, characters.user_id, characters.name, characters.url, cache_characters.xps, cache_characters.quest_xps, cache_characters.avatar_id, '.
+						'charactertypes.id AS charactertype_id, charactertypes.name AS charactertype_name, charactertypes.url AS charactertype_url, '.
+						'xplevels.id AS xplevel_id, xplevels.level AS xplevel '.
+					'FROM characters '.
+					'LEFT JOIN cache_characters ON cache_characters.character_id = characters.id '.
+					'LEFT JOIN charactertypes ON charactertypes.id = characters.charactertype_id '.
+					'LEFT JOIN xplevels ON xplevels.id = cache_characters.xplevel_id '.
+				') AS c '.
+				'WHERE c.id = ?',
 				'i',
 				$characterId
 			);
 			if(!empty($data)) {
 				return ($data[0]['got'] == 1);
 			}
+			
+			
+			
 			
 			
 			return false;
@@ -339,8 +351,17 @@
 		{
 			$data = $this->db->query(
 				"SELECT $field AS field ".
-				'FROM v_characters '.
-				'WHERE id = ?',
+				'FROM ('.
+					'SELECT '.
+						'characters.id, characters.created, characters.user_id, characters.name, characters.url, cache_characters.xps, cache_characters.quest_xps, cache_characters.avatar_id, '.
+						'charactertypes.id AS charactertype_id, charactertypes.name AS charactertype_name, charactertypes.url AS charactertype_url, '.
+						'xplevels.id AS xplevel_id, xplevels.level AS xplevel '.
+					'FROM characters '.
+					'LEFT JOIN cache_characters ON cache_characters.character_id = characters.id '.
+					'LEFT JOIN charactertypes ON charactertypes.id = characters.charactertype_id '.
+					'LEFT JOIN xplevels ON xplevels.id = cache_characters.xplevel_id '.
+				') AS c '.
+				'WHERE c.id = ?',
 				'i',
 				$characterId
 			);
