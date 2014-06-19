@@ -12,6 +12,7 @@
 </nav>
 <nav class="admin">
 	<li><a href="<?=$linker->link(array('charactertypes','manage',$seminary['url']))?>"><?=_('Manage Charactertypes')?></a></li>
+	<li><a href="<?=$linker->link(array('questgroups','manage',$seminary['url']))?>"><?=_('Manage Questgroups')?></a></li>
 </nav>
 <?php endif ?>
 <nav class="admin">
@@ -24,8 +25,8 @@
 <h2 id="<?=$hierarchy['url']?>"><?=$hierarchy['title_plural']?></h2>
 <?php if(in_array('admin', \hhu\z\controllers\SeminaryController::$character['characterroles'])) : ?>
 <nav class="admin">
-	<li><a href="<?=$linker->link(array('questgroupshierarchy','edit',$seminary['url'],$hierarchy['url']))?>"><?=_('Edit Questgrouphierarchy')?></a></li>
-	<li><a href="<?=$linker->link(array('questgroupshierarchy','delete',$seminary['url'],$hierarchy['url']))?>"><?=_('Delete Questgrouphierarchy')?></a></li>
+	<li><a href="<?=$linker->link(array('questgroupshierarchy','edit',$seminary['url'],$hierarchy['url']))?>"><?=_('Edit Questgroupshierarchy')?></a></li>
+	<li><a href="<?=$linker->link(array('questgroupshierarchy','delete',$seminary['url'],$hierarchy['url']))?>"><?=_('Delete Questgroupshierarchy')?></a></li>
 	<?php if($hierarchyIndex > 0) : ?><li><a href="<?=$linker->link(array('questgroupshierarchy','moveup',$seminary['url'],$hierarchy['url']))?>">↑</a></li><?php endif ?>
 	<?php if($hierarchyIndex < count($questgroupshierarchy)-1) : ?><li><a href="<?=$linker->link(array('questgroupshierarchy','movedown',$seminary['url'],$hierarchy['url']))?>">↓</a></li><?php endif ?>
 </nav>
