@@ -480,6 +480,30 @@
 		
 		
 		/**
+		 * Check if a Questgroups title already exists for a Seminary.
+		 * 
+		 * @param	int	$seminaryId	ID of Seminary
+		 * @param	string	$title		Questgroup title to check
+		 * @param	int	$questgroupId	Do not check this ID (for editing)
+		 * @return	boolean			Whether Questgroup title exists or not
+		 */
+		public function questgroupTitleExists($seminaryId, $title, $questgroupId=null)
+		{
+			$data = $this->db->query(
+				'SELECT id '.
+				'FROM questgroups '.
+				'WHERE seminary_id = ? AND (title = ? OR url = ?)',
+				'iss',
+				$seminaryId,
+				$title,
+				\nre\core\Linker::createLinkParam($title)
+			);
+			
+			return (!empty($data) && (is_null($questgroupId) || $questgroupId != $data[0]['id']));
+		}
+		
+		
+		/**
 		 * Create a new Questgroup.
 		 * 
 		 * @param	int	$userId		User-ID that creates the new character
@@ -503,6 +527,160 @@
 			
 			
 			return $this->db->getInsertId();
+		}
+
+
+		/**
+		 * Set the moodpic for a Questgroup.
+		 * 
+		 * @param	int	$questgroupId	ID of Questgroup to set moodpic for
+		 * @param	int	$mediaId	ID of moodpic media
+		 */
+		public function setMoodpicForQuestgroup($questgroupId, $mediaId)
+		{
+			$this->db->query(
+				'UPDATE questgroups '.
+				'SET questgroupspicture_id = ? '.
+				'WHERE id = ?',
+				'ii',
+				$mediaId,
+				$questgroupId
+			);
+		}
+
+
+		/**
+		 * Add a Questgroup to a Questgroupshierarchy.
+		 * 
+		 * @param	int	$questgroupId		Id of Questgroup to add
+		 * @param	int	$hierarchyId		Id of Hierarchy to add Questgroup to
+		 * @param	int	$parentQuestgroupId	Id of parent Questgroup
+		 */
+		public function addQuestgroupToHierarchy($questgroupId, $hierarchyId, $parentQuestgroupId)
+		{
+			// Get last position
+			$pos = $this->db->query(
+				'SELECT COALESCE(MAX(pos),0) AS pos '.
+				'FROM questgroups_questgroupshierarchy '.
+				'WHERE  questgroupshierarchy_id = ? AND '.
+				'parent_questgroup_id '.(!is_null($parentQuestgroupId) ? sprintf('= %d', $parentQuestgroupId) : 'IS NULL'),
+				'i',
+				$hierarchyId
+			);
+			$pos = intval($pos[0]['pos']);
+			
+			// Add Questgroup to Hierarchy
+			$this->db->query(
+				'INSERT INTO questgroups_questgroupshierarchy '.
+				'(questgroup_id, questgroupshierarchy_id, parent_questgroup_id, pos) '.
+				'VALUES '.
+				'(?, ?, ?, ?)',
+				'iiii',
+				$questgroupId,
+				$hierarchyId,
+				$parentQuestgroupId,
+				$pos + 1
+			);
+		}
+
+
+		/**
+		 * Move a Questgroup up (decrement position) or down (increment
+		 * position).
+		 * 
+		 * @param	array	$questgroup	Questgroup to move
+		 * @param	boolean	$up		True for moving up, false for down
+		 */
+		public function moveQuestgroup($questgroup, $up)
+		{
+			$this->db->setAutocommit(false);
+			try {
+				// Set temporary position
+				$this->db->query(
+					'UPDATE questgroups_questgroupshierarchy '.
+					'SET pos = 0 '.
+					'WHERE questgroup_id = ?',
+					'i',
+					$questgroup['id']
+				);
+				// Switch entry
+				if(is_null($questgroup['hierarchy']['parent_questgroup_id'])) {
+					$this->db->query(
+						'UPDATE questgroups_questgroupshierarchy '.
+						'SET pos = ? '.
+						'WHERE questgroupshierarchy_id = ? AND parent_questgroup_id IS NULL AND pos = ?',
+						'iii',
+						$questgroup['hierarchy']['questgroup_pos'],
+						$questgroup['hierarchy']['id'],
+						$questgroup['hierarchy']['questgroup_pos'] + ($up ? -1 : 1)
+					);
+				}
+				else {
+					$this->db->query(
+						'UPDATE questgroups_questgroupshierarchy '.
+						'SET pos = ? '.
+						'WHERE questgroupshierarchy_id = ? AND parent_questgroup_id = ? AND pos = ?',
+						'iiii',
+						$questgroup['hierarchy']['questgroup_pos'],
+						$questgroup['hierarchy']['id'],
+						$questgroup['hierarchy']['parent_questgroup_id'],
+						$questgroup['hierarchy']['questgroup_pos'] + ($up ? -1 : 1)
+					);
+				}
+				// Set new position
+				$this->db->query(
+					'UPDATE questgroups_questgroupshierarchy '.
+					'SET pos = ? '.
+					'WHERE questgroup_id = ?',
+					'ii',
+					$questgroup['hierarchy']['questgroup_pos'] + ($up ? -1 : 1),
+					$questgroup['id']
+				);
+				
+				$this->db->commit();
+			}
+			catch(\nre\exceptions\DatamodelException $e) {
+				$this->db->rollback();
+				$this->db->setAutocommit(true);
+				throw $e;
+			}
+			$this->db->setAutocommit(true);
+		}
+
+
+		/**
+		 * Edit a Questgroup.
+		 * 
+		 * @throws	DatamodelException
+		 * @param	int	$questgroupId	ID of Questgroup to edit
+		 * @param	string	$title		New title of Questgroup
+		 */
+		public function editQuestgroup($questgroupId, $title)
+		{
+			$this->db->query(
+				'UPDATE questgroups '.
+				'SET title = ?, url = ? '.
+				'WHERE id = ?',
+				'ssi',
+				$title,
+				\nre\core\Linker::createLinkParam($title),
+				$questgroupId
+			);
+		}
+
+
+		/**
+		 * Delete a Questgroup.
+		 * 
+		 * @param	int	$questgroupId	ID of Questgroup to delete
+		 */
+		public function deleteQuestgroup($questgroupId)
+		{
+			$this->db->query(
+				'DELETE FROM questgroups WHERE id = ?',
+				'i',
+				$questgroupId
+			);
 		}
 		
 		

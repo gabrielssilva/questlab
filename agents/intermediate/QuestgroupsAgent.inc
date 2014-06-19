@@ -31,6 +31,24 @@
 			$this->addSubAgent('Questgroupshierarchypath', 'index', $request->getParam(3), $request->getParam(4));
 		}
 		
+
+		/**
+		 * Action: edit.
+		 */
+		public function edit(\nre\core\Request $request, \nre\core\Response $response)
+		{
+			$this->addSubAgent('Questgroupshierarchypath', 'index', $request->getParam(3), $request->getParam(4));
+		}
+		
+
+		/**
+		 * Action: delete.
+		 */
+		public function delete(\nre\core\Request $request, \nre\core\Response $response)
+		{
+			$this->addSubAgent('Questgroupshierarchypath', 'index', $request->getParam(3), $request->getParam(4));
+		}
+		
 	}
 
 ?>

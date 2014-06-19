@@ -28,11 +28,10 @@
 	<li><a href="<?=$linker->link(array('questgroupshierarchy','delete',$seminary['url'],$hierarchy['url']))?>"><?=_('Delete Questgrouphierarchy')?></a></li>
 	<?php if($hierarchyIndex > 0) : ?><li><a href="<?=$linker->link(array('questgroupshierarchy','moveup',$seminary['url'],$hierarchy['url']))?>">↑</a></li><?php endif ?>
 	<?php if($hierarchyIndex < count($questgroupshierarchy)-1) : ?><li><a href="<?=$linker->link(array('questgroupshierarchy','movedown',$seminary['url'],$hierarchy['url']))?>">↓</a></li><?php endif ?>
-	</div>
 </nav>
 <?php endif ?>
 <ul class="questgroups cf">
-	<?php foreach($hierarchy['questgroups'] as &$group) : ?>
+	<?php foreach($hierarchy['questgroups'] as $questgroupIndex => &$group) : ?>
 	<li>
 		<?php if(!is_null($group['picture'])) : ?>
 		<img src="<?=$linker->link(array('media','seminary',$seminary['url'],$group['picture']['url']))?>">
@@ -42,7 +41,7 @@
 			<a href="<?=$linker->link(array('questgroups','questgroup',$seminary['url'],$group['url']))?>"><?=$group['title']?></a></p>
 			<div class="cf">
 				<div class="xpbar">
-					<span style="width:<?=round($group['character_xps']*100/$group['achievable_xps'])?>%"></span>
+					<span style="width:<?=($group['achievable_xps'] > 0) ? round($group['character_xps']*100/$group['achievable_xps']) : 0?>%"></span>
 				</div>
 				<p class="xpnumeric"><?=$group['character_xps']?> / <?=$group['achievable_xps']?> XP</p>
 			</div>
@@ -50,17 +49,36 @@
 			<p><?=$group['text']?></p>
 			<?php endif ?>
 			<a href="<?=$linker->link(array('questgroups','questgroup',$seminary['url'],$group['url']))?>" class="cta orange"><?=_('Let’s go')?></a>
+			<?php if(in_array('admin', \hhu\z\controllers\SeminaryController::$character['characterroles'])) : ?>
+			<div>
+				<?php if($questgroupIndex > 0) : ?><a href="<?=$linker->link(array('questgroups','moveup',$seminary['url'],$group['url']))?>">↑</a><?php endif ?>
+				<?php if($questgroupIndex < count($hierarchy['questgroups'])-1) : ?><a href="<?=$linker->link(array('questgroups','movedown',$seminary['url'],$group['url']))?>">↓</a><?php endif ?>
+			</div>
+			<?php endif ?>
 		</section>
 	</li>
 	<?php endforeach?>
+	<?php if(in_array('admin', \hhu\z\controllers\SeminaryController::$character['characterroles'])) : ?>
+	<li>
+		<section>
+			<form method="post" action="<?=$linker->link(array('questgroups','create',$seminary['url']))?>" enctype="multipart/form-data">
+				<input type="hidden" name="questgroupshierarchy" value="<?=$hierarchy['url']?>" />
+				<input type="file" name="moodpic" />
+				<?=$hierarchy['title_singular']?> <?=count($hierarchy['questgroups'])+1?>:
+				<input type="text" name="title" value="" placeholder="<?=_('Title')?>" />
+				<input type="submit" name="create" value="<?=_('Add new Questgroup')?>" />
+			</form>
+		</section>
+	</li>
+	<?php endif ?>
 </ul>
 <?php endforeach ?>
 
 <?php if(in_array('admin', \hhu\z\controllers\SeminaryController::$character['characterroles'])) : ?>
 <form method="post" action="<?=$linker->link(array('questgroupshierarchy','create',$seminary['url']))?>">
 	<h2><?=_('New Questgroupshierarchy')?></h2>
-	<?=_('Title (singular)')?>: <input type="text" name="title_singular" placeholder="<?=_('Title (singular)')?>" /></h2>
-	<?=_('Title (plural)')?>: <input type="text" name="title_plural" placeholder="<?=_('Title (plural)')?>" /></h2>
+	<?=_('Title (singular)')?>: <input type="text" name="title_singular" placeholder="<?=_('Title (singular)')?>" />
+	<?=_('Title (plural)')?>: <input type="text" name="title_plural" placeholder="<?=_('Title (plural)')?>" />
 	<input type="submit" name="create" value="<?=_('Add new Questgroupshierarchy')?>" />
 </form>
 <?php endif ?>

@@ -1,14 +1,11 @@
-<?php if(!is_null($seminary['seminarymedia_id'])) : ?>
+<?php if(!is_null($picture)) : ?>
 <div class="moodpic">
-	<img src="<?=$linker->link(array('media','seminarymoodpic',$seminary['url']))?>" />
+	<img src="<?=$linker->link(array('media','seminary',$seminary['url'],$picture['url']))?>" />
 </div>
 <?php endif ?>
-<ul class="breadcrumbs">
-	<li><a href="<?=$linker->link(array('seminaries',$seminary['url']))?>"><?=$seminary['title']?></a></li>
-	<li><i class="fa fa-chevron-right fa-fw"></i><?=_('Questgroups')?></li>
-</ul>
+<?=$questgroupshierarchypath?>
 
-<h1><?=_('Create Questgroup')?></h1>
+<h1><?=_('Edit Questgroup')?></h1>
 <?php if($validation !== true) : ?>
 <ul>
 	<?php foreach($validation as $field => &$settings) : ?>
@@ -51,15 +48,6 @@
 <?php endif ?>
 <form method="post" class="logreg" enctype="multipart/form-data">
 	<fieldset>
-		<legend><?=_('Context')?></legend>
-		<?=_('Questgroupshierarchy')?>: <?=$questgroupshierarchy['title_singular']?><br />
-		<input type="hidden" name="questgroupshierarchy" value="<?=$questgroupshierarchy['url']?>" />
-		<?php if(!is_null($questgroup)) : ?>
-		<?=_('Questgroup')?>: <?=$questgroup['title']?>
-		<input type="hidden" name="questgroup" value="<?=$questgroup['url']?>" />
-		<?php endif ?>
-	</fieldset>
-	<fieldset>
 		<legend><?=_('Moodpic')?></legend>
 		<input type="file" name="moodpic" />
 		<p><?=_('Allowed file types')?>:</p>
@@ -73,5 +61,5 @@
 		<label for="title"><?=_('Title')?>:</label>
 		<input type="text" name="title" placeholder="<?=_('Title')?>" maxlength="<?=$validationSettings['title']['maxlength']?>" value="<?=$title?>" <?=(array_key_exists('title', $validation)) ? 'class="invalid"' : null?> /><br />
 	</fieldset>
-	<input type="submit" name="create" value="<?=_('create')?>" />
+	<input type="submit" name="edit" value="<?=_('edit')?>" />
 </form>

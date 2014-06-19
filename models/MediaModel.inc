@@ -172,6 +172,60 @@
 			$this->db->setAutocommit(true);
 			return $mediaId;
 		}
+
+		
+		/**
+		 * Create a new Questgroup picture (Moodpic).
+		 * 
+		 * @param	int	$userId		ID of user that does the upload
+		 * @param	int	$seminaryId	ID of Seminary
+		 * @param	int	$questgroupId	ID of Questgroup to create picture for
+		 * @param	string	$filename	Filename of uploading media
+		 * @param	string	$description	Description for media
+		 * @param	string	$mimetype	Mimetype of media
+		 * @param	string	$tmpFilename	Name of temporary uploaded file
+		 * @return	mixed			ID of media record or false if upload failed
+		 */
+		public function createQuestgrouppicture($userId, $seminaryId, $questgroupId, $filename, $description, $mimetype, $tmpFilename)
+		{
+			$mediaId = false;
+			$this->db->setAutocommit(false);
+			
+			try {
+				// Create Seminary media record
+				$mediaId = $this->createSeminaryMedia($userId, $seminaryId, $filename, $description, $mimetype);
+
+				// Add media to Questgroups pictures
+				$this->db->query(
+					'INSERT INTO questgroupspictures '.
+					'(media_id, created_user_id) '.
+					'VALUES '.
+					'(?, ?) '.
+					'ON DUPLICATE KEY UPDATE '.
+					'created_user_id = ?',
+					'iii',
+					$mediaId,
+					$userId,
+					$userId
+				);
+				
+				// Upload file
+				$filename = ROOT.DS.\nre\configs\AppConfig::$dirs['seminarymedia'].DS.$mediaId;
+				if(!move_uploaded_file($tmpFilename, $filename))
+				{
+					$this->db->rollback();
+					$mediaId = false;
+				}
+			}
+			catch(\nre\exceptions\DatamodelException $e) {
+				$this->db->rollback();
+				$this->db->setAutocommit(true);
+			}
+			
+			
+			$this->db->setAutocommit(true);
+			return $mediaId;
+		}
 		
 		
 		/**

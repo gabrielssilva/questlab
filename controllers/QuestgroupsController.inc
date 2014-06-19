@@ -26,13 +26,23 @@
 		 */
 		public $models = array('seminaries', 'questgroupshierarchy', 'questgroups', 'quests', 'questtexts', 'media');
 		/**
+		 * Required components
+		 * 
+		 * @var array
+		 */
+		public $components = array('validation');
+		/**
 		 * User permissions
 		 * 
 		 * @var array
 		 */
 		public $permissions = array(
 			'questgroup'	=> array('admin', 'moderator', 'user'),
-			'create'	=> array('admin', 'moderator', 'user')
+			'create'	=> array('admin', 'moderator', 'user'),
+			'edit'		=> array('admin', 'moderator', 'user'),
+			'moveup'	=> array('admin', 'moderator', 'user'),
+			'movedown'	=> array('admin', 'moderator', 'user'),
+			'delete'	=> array('admin', 'moderator', 'user')
 		);
 		/**
 		 * User seminary permissions
@@ -41,7 +51,11 @@
 		 */
 		public $seminaryPermissions = array(
 			'questgroup'	=> array('admin', 'moderator', 'user'),
-			'create'	=> array('admin', 'moderator')
+			'create'	=> array('admin'),
+			'edit'		=> array('admin'),
+			'moveup'	=> array('admin'),
+			'movedown'	=> array('admin'),
+			'delete'	=> array('admin')
 		);
 		
 		
@@ -216,13 +230,72 @@
 			// Get seminary
 			$seminary = $this->Seminaries->getSeminaryByUrl($seminaryUrl);
 			
-			// Create Questgroup
-			$validation = true;
+			// Get allowed mimetypes
+			$mimetypes = \nre\configs\AppConfig::$mimetypes['moodpics'];
+
+			// Values
+			$selectedQuestgroupshierarchy = null;
+			$selectedQuestgroup = null;
+			$title = '';
+			$fields = array('title');
+			$validation = array();
+			
+			// Check request method
 			if($this->request->getRequestMethod() == 'POST' && !is_null($this->request->getPostParam('create')))
 			{
-				// TODO Validation
+				// Get params and validate them
+				$validation = $this->Validation->validateParams($this->request->getPostParams(), $fields);
 				$title = $this->request->getPostParam('title');
+				if($this->Questgroups->questgroupTitleExists($seminary['id'], $title)) { 
+					$validation = $this->Validation->addValidationResult($validation, 'title', 'exist', true);
+				}
+
+				// Validate Questgroupshierarchy
+				try {
+					$selectedQuestgroupshierarchy = $this->Questgroupshierarchy->getHierarchyByUrl($seminary['id'], $this->request->getPostParam('questgroupshierarchy'));
+				}
+				catch(\nre\exceptions\IdNotFoundException $e) {
+					throw new \nre\exceptions\ParamsNotValidException($this->request->getPostParam('questgroupshierarchy'));
+				}
+
+				// Validate Questgroup
+				if(!is_null($selectedQuestgroupshierarchy['parent_questgroupshierarchy_id'])) {
+					try {
+						$selectedQuestgroup = $this->Questgroups->getQuestgroupByUrl($seminary['id'], $this->request->getPostParam('questgroup'));
+					}
+					catch(\nre\exceptions\IdNotFoundException $e) {
+						throw new \nre\exceptions\ParamsNotValidException($this->request->getPostParam('questgroups'));
+					}
+				}
+
+				// Validate moodpic
+				$moodpic = null;
+				if(!empty($_FILES) && array_key_exists('moodpic', $_FILES) && $_FILES['moodpic']['error'] != UPLOAD_ERR_NO_FILE)
+				{
+					$moodpic = $_FILES['moodpic'];
 				
+					// Check error
+					if($moodpic['error'] !== UPLOAD_ERR_OK) {
+						$validation = $this->Validation->addValidationResult($validation, 'moodpic', 'error', $moodpic['error']);
+					}
+				
+					// Check mimetype
+					$mediaMimetype = null;
+					$moodpic['mimetype'] = \hhu\z\Utils::getMimetype($moodpic['tmp_name'], $moodpic['type']);
+					foreach($mimetypes as &$mimetype) {
+						if($mimetype['mimetype'] == $moodpic['mimetype']) {
+							$mediaMimetype = $mimetype;
+							break;
+						}
+					}
+					if(is_null($mediaMimetype)) {
+						$validation = $this->Validation->addValidationResult($validation, 'moodpic', 'mimetype', $moodpic['mimetype']);
+					}
+					elseif($moodpic['size'] > $mediaMimetype['size']) {
+						$validation = $this->Validation->addValidationResult($validation, 'moodpic', 'size', $mediaMimetype['size']);
+					}
+				}
+
 				// Create new Questgroup
 				if($validation === true)
 				{
@@ -231,19 +304,329 @@
 						$seminary['id'],
 						$title
 					);
+					$questgroup = $this->Questgroups->getQuestgroupById($questgroupId);
+
+					// Add to Hierarchy
+					$this->Questgroups->addQuestgroupToHierarchy(
+						$questgroupId,
+						$selectedQuestgroupshierarchy['id'],
+						(!is_null($selectedQuestgroup)) ? $selectedQuestgroup['id'] : null
+					);
 					
-					// Redirect
-					$this->redirect($this->linker->link(array('seminaries', 'seminary', $seminary['url'])));
+					// Upload moodpic
+					var_dump($moodpic);
+					if(!is_null($moodpic))
+					{
+						$mediaId = $this->Media->createQuestgrouppicture(
+							$this->Auth->getUserId(),
+							$seminary['id'],
+							$questgroup['id'],
+							sprintf('questgroupmoodpic-%s', $questgroup['url']),
+							'',
+							$moodpic['mimetype'],
+							$moodpic['tmp_name']
+						);
+						if($mediaId !== false) {
+							$this->Questgroups->setMoodpicForQuestgroup($questgroup['id'], $mediaId);
+						}
+					}
+
+					
+					// Redirect to new Questgroup
+					$this->redirect($this->linker->link(array('questgroup', $seminary['url'], $questgroup['url']), 1));
 				}
 			}
+
+			// Get validation settings
+			$validationSettings = array();
+			foreach($fields as &$field) {
+				$validationSettings[$field] = \nre\configs\AppConfig::$validation[$field];
+			}
 			
-			
+
 			// Set titile
 			$this->addTitleLocalized('Create Questgroup');
 			$this->addTitle($seminary['title']);
 			
 			// Pass data to view
 			$this->set('seminary', $seminary);
+			$this->set('mimetypes', $mimetypes);
+			$this->set('questgroupshierarchy', $selectedQuestgroupshierarchy);
+			$this->set('questgroup', $selectedQuestgroup);
+			$this->set('title', $title);
+			$this->set('validation', $validation);
+			$this->set('validationSettings', $validationSettings);
+		}
+
+
+		/**
+		 * Action: edit.
+		 * 
+		 * Edit a Questgroup.
+		 * 
+		 * @throws	IdNotFoundException
+		 * @param	string	$seminaryUrl	URL-title of a Seminary
+		 * @param	string	$questgroupUrl	URL-title of Questgroup to edit
+		 */
+		public function edit($seminaryUrl, $questgroupUrl)
+		{
+			// Get seminary
+			$seminary = $this->Seminaries->getSeminaryByUrl($seminaryUrl);
+
+			// Get Questgroup
+			$questgroup = $this->Questgroups->getQuestgroupByUrl($seminary['id'], $questgroupUrl);
+
+			// Get allowed mimetypes
+			$mimetypes = \nre\configs\AppConfig::$mimetypes['moodpics'];
+
+			// Values
+			$title = $questgroup['title'];
+			$fields = array('title');
+			$validation = array();
+			
+			// Check request method
+			if($this->request->getRequestMethod() == 'POST' && !is_null($this->request->getPostParam('edit')))
+			{
+				// Get params and validate them
+				$validation = $this->Validation->validateParams($this->request->getPostParams(), $fields);
+				$title = $this->request->getPostParam('title');
+				if($this->Questgroups->questgroupTitleExists($seminary['id'], $title, $questgroup['id'])) { 
+					$validation = $this->Validation->addValidationResult($validation, 'title', 'exist', true);
+				}
+
+				// Validate moodpic
+				$moodpic = null;
+				if(!empty($_FILES) && array_key_exists('moodpic', $_FILES) && $_FILES['moodpic']['error'] != UPLOAD_ERR_NO_FILE)
+				{
+					$moodpic = $_FILES['moodpic'];
+				
+					// Check error
+					if($moodpic['error'] !== UPLOAD_ERR_OK) {
+						$validation = $this->Validation->addValidationResult($validation, 'moodpic', 'error', $moodpic['error']);
+					}
+				
+					// Check mimetype
+					$mediaMimetype = null;
+					$moodpic['mimetype'] = \hhu\z\Utils::getMimetype($moodpic['tmp_name'], $moodpic['type']);
+					foreach($mimetypes as &$mimetype) {
+						if($mimetype['mimetype'] == $moodpic['mimetype']) {
+							$mediaMimetype = $mimetype;
+							break;
+						}
+					}
+					if(is_null($mediaMimetype)) {
+						$validation = $this->Validation->addValidationResult($validation, 'moodpic', 'mimetype', $moodpic['mimetype']);
+					}
+					elseif($moodpic['size'] > $mediaMimetype['size']) {
+						$validation = $this->Validation->addValidationResult($validation, 'moodpic', 'size', $mediaMimetype['size']);
+					}
+				}
+
+				// Edit Questgroup
+				if($validation === true)
+				{
+					$this->Questgroups->editQuestgroup(
+						$questgroup['id'],
+						$title
+					);
+					$questgroup = $this->Questgroups->getQuestgroupById($questgroup['id']);
+					
+					// Upload moodpic
+					if(!is_null($moodpic))
+					{
+						$mediaId = $this->Media->createQuestgrouppicture(
+							$this->Auth->getUserId(),
+							$seminary['id'],
+							$questgroup['id'],
+							sprintf('questgroupmoodpic-%s', $questgroup['url']),
+							'',
+							$moodpic['mimetype'],
+							$moodpic['tmp_name']
+						);
+						if($mediaId !== false) {
+							$this->Questgroups->setMoodpicForQuestgroup($questgroup['id'], $mediaId);
+						}
+					}
+
+					
+					// Redirect to new Questgroup
+					$this->redirect($this->linker->link(array('questgroup', $seminary['url'], $questgroup['url']), 1));
+				}
+			}
+
+			// Media
+			$picture = null;
+			if(!is_null($questgroup['questgroupspicture_id'])) {
+				$picture = $this->Media->getSeminaryMediaById($questgroup['questgroupspicture_id']);
+			}
+
+			// Get validation settings
+			$validationSettings = array();
+			foreach($fields as &$field) {
+				$validationSettings[$field] = \nre\configs\AppConfig::$validation[$field];
+			}
+
+
+			// Set titile
+			$this->addTitleLocalized('Edit Questgroup');
+			$this->addTitle($seminary['title']);
+			
+			// Pass data to view
+			$this->set('seminary', $seminary);
+			$this->set('questgroup', $questgroup);
+			$this->set('picture', $picture);
+			$this->set('title', $title);
+			$this->set('mimetypes', $mimetypes);
+			$this->set('validation', $validation);
+			$this->set('validationSettings', $validationSettings);
+		}
+
+
+		/**
+		 * Action: moveup.
+		 * 
+		 * Move a Questgroup up (decrement position).
+		 * 
+		 * @throws	IdNotFoundException
+		 * @param	string	$seminaryUrl	URL-title of Seminary
+		 * @param	string	$questgroupUrl	URL-title of Questgroup
+		 */
+		public function moveup($seminaryUrl, $questgroupUrl)
+		{
+			// Get Seminary
+			$seminary = $this->Seminaries->getSeminaryByUrl($seminaryUrl);
+			
+			// Get Questgroup
+			$questgroup = $this->Questgroups->getQuestgroupByUrl($seminary['id'], $questgroupUrl);
+			$questgroup['hierarchy'] = $this->Questgroupshierarchy->getHierarchyForQuestgroup($questgroup['id']);
+			
+			// Set position
+			$this->Questgroups->moveQuestgroup($questgroup, true);
+
+
+			// Redirect
+			$referer = $this->request->getGetParam('referer');
+			if(!is_null($referer))
+			{
+				try {
+					$questgroup = $this->Questgroups->getQuestgroupById($referer);
+					$this->redirect($this->linker->link(array('questgroups', 'questgroup', $seminary['url'], $questgroup['url'])));
+				}
+				catch(IdNotFoundException $e) {
+				}
+			}
+			$this->redirect($this->linker->link(array('seminaries', 'seminary', $seminary['url'])));
+		}
+
+
+		/**
+		 * Action: movedown
+		 * 
+		 * Move a Questgroup down (increment position).
+		 * 
+		 * @throws	IdNotFoundException
+		 * @param	string	$seminaryUrl	URL-title of Seminary
+		 * @param	string	$questgroupUrl	URL-title of Questgroup
+		 */
+		public function movedown($seminaryUrl, $questgroupUrl)
+		{
+			// Get Seminary
+			$seminary = $this->Seminaries->getSeminaryByUrl($seminaryUrl);
+			
+			// Get Questgroup
+			$questgroup = $this->Questgroups->getQuestgroupByUrl($seminary['id'], $questgroupUrl);
+			$questgroup['hierarchy'] = $this->Questgroupshierarchy->getHierarchyForQuestgroup($questgroup['id']);
+			
+			// Set position
+			$this->Questgroups->moveQuestgroup($questgroup, false);
+
+
+			// Redirect
+			$referer = $this->request->getGetParam('referer');
+			if(!is_null($referer))
+			{
+				try {
+					$questgroup = $this->Questgroups->getQuestgroupById($referer);
+					$this->redirect($this->linker->link(array('questgroups', 'questgroup', $seminary['url'], $questgroup['url'])));
+				}
+				catch(IdNotFoundException $e) {
+				}
+			}
+			$this->redirect($this->linker->link(array('seminaries', 'seminary', $seminary['url'])));
+		}
+
+
+		/**
+		 * Action: delete.
+		 * 
+		 * Delete a Questgroup.
+		 * 
+		 * @throws	IdNotFoundException
+		 * @param	string	$seminaryUrl	URL-Title of a Seminary
+		 * @param	string	$questgroupUrl	URL-Title of a Questgroup
+		 */
+		public function delete($seminaryUrl, $questgroupUrl)
+		{
+			// Get Seminary
+			$seminary = $this->Seminaries->getSeminaryByUrl($seminaryUrl);
+			
+			// Get Questgroup
+			$questgroup = $this->Questgroups->getQuestgroupByUrl($seminary['id'], $questgroupUrl);
+			
+			// Get Questgrouphierarchy
+			$questgroup['hierarchy'] = $this->Questgroupshierarchy->getHierarchyForQuestgroup($questgroup['id']);
+
+			// Check request method
+			if($this->request->getRequestMethod() == 'POST')
+			{
+				// Check confirmation
+				if(!is_null($this->request->getPostParam('delete')))
+				{
+					// Delete Questgroup
+					$this->Questgroups->deleteQuestgroup($questgroup['id']);
+					
+					// Redirect
+					if(!is_null($questgroup['hierarchy']))
+					{
+						// Parent Questgroup
+						if(is_null($questgroup['hierarchy']['parent_questgroup_id'])) {
+							$this->redirect($this->linker->link(array('simenaries', 'seminary', $seminary['url'])));
+						}
+						else
+						{
+							$parentQuestgroup = $this->Questgroups->getQuestgroupById($questgroup['hierarchy']['parent_questgroup_id']);
+							$this->redirect($this->linker->link(array('questgroup', $seminary['url'], $parentQuestgroup['url']), 1));
+						}
+					}
+					else
+					{
+						// Related Questgroup
+						$questtexts = $this->Questtexts->getRelatedQuesttextsForQuestgroup($questgroup['id']);
+						$questtext = $this->Questtexts->pickQuesttextLastEnteredByCharacter(\hhu\z\controllers\SeminaryController::$character['id'], $questtexts);
+						$quest = $this->Quests->getQuestById($questtext['quest_id']);
+						$relatedQuestgroup = $this->Questgroups->getQuestgroupById($quest['questgroup_id']);
+						$this->redirect($this->linker->link(array('questgroup', $seminary['url'], $relatedQuestgroup['url']), 1));
+					}
+				}
+				
+				// Redirect to entry
+				$this->redirect($this->linker->link(array('questgroup', $seminary['url'], $questgroup['url']), 1));
+			}
+
+			// Media
+			$picture = null;
+			if(!is_null($questgroup['questgroupspicture_id'])) {
+				$picture = $this->Media->getSeminaryMediaById($questgroup['questgroupspicture_id']);
+			}
+			
+			
+			// Set titile
+			$this->addTitleLocalized('Delete Questgroup');
+			
+			// Show confirmation
+			$this->set('seminary', $seminary);
+			$this->set('questgroup', $questgroup);
+			$this->set('picture', $picture);
 		}
 		
 	}
