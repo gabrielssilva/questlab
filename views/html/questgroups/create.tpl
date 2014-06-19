@@ -61,7 +61,7 @@
 	</fieldset>
 	<fieldset>
 		<legend><?=_('Moodpic')?></legend>
-		<input type="file" name="moodpic" />
+		<input type="file" name="moodpic" accept="<?=implode(',', array_map(function($m) { return $m['mimetype']; }, $mimetypes))?>" />
 		<p><?=_('Allowed file types')?>:</p>
 		<ul>
 			<?php foreach($mimetypes as &$mimetype) : ?>
