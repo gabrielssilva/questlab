@@ -84,6 +84,7 @@
 			// Set filters
 			$selectedQuestgroup = null;
 			$selectedQuesttype = null;
+			$selectedTitle = null;
 			$page = 1;
 			if($this->request->getRequestMethod() == 'GET')
 			{
@@ -91,6 +92,8 @@
 				$selectedQuestgroup = !empty($selectedQuestgroup) ? $selectedQuestgroup : null;
 				$selectedQuesttype = $this->request->getGetParam('questtype');
 				$selectedQuesttype = !empty($selectedQuesttype) ? $selectedQuesttype : null;
+				$selectedTitle = $this->request->getGetParam('title');
+				$selectedTitle = !empty($selectedTitle) ? $selectedTitle : null;
 				$page = $this->request->getGetParam('page');
 				$page = !empty($page) ? intval($page) : 1;
 			}
@@ -98,8 +101,8 @@
 			// Get Quests
 			$limit = ($all != 'all') ? \nre\configs\AppConfig::$misc['lists_limit'] : null;
 			$offset = ($all != 'all') ? max((intval($page) - 1), 0) * $limit : 0;
-			$questsCount = $this->Quests->getCountForQuestsForSeminaryByOpenSubmissions($seminary['id'], $selectedQuestgroup, $selectedQuesttype);
-			$quests = $this->Quests->getQuestsForSeminaryByOpenSubmissions($seminary['id'], $selectedQuestgroup, $selectedQuesttype, $limit, $offset);
+			$questsCount = $this->Quests->getCountForQuestsForSeminaryByOpenSubmissions($seminary['id'], $selectedQuestgroup, $selectedQuesttype, $selectedTitle);
+			$quests = $this->Quests->getQuestsForSeminaryByOpenSubmissions($seminary['id'], $selectedQuestgroup, $selectedQuesttype, $selectedTitle, $limit, $offset);
 			foreach($quests as &$quest)
 			{
 				// Get Questtype
@@ -121,6 +124,7 @@
 			$this->set('questtypes', $questtypes);
 			$this->set('selectedQuestgroup', $selectedQuestgroup);
 			$this->set('selectedQuesttype', $selectedQuesttype);
+			$this->set('selectedTitle', $selectedTitle);
 			$this->set('quests', $quests);
 			$this->set('questsCount', $questsCount);
 			$this->set('all', $all);

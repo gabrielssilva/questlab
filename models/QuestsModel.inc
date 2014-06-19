@@ -376,7 +376,7 @@
 		 * @param	int	$questtypeId	ID of Questtype (optional)
 		 * @return	int			Count of Quests for this Seminary
 		 */
-		public function getCountForQuestsForSeminaryByOpenSubmissions($seminaryId, $questgroupId=null, $questtypeId=null)
+		public function getCountForQuestsForSeminaryByOpenSubmissions($seminaryId, $questgroupId=null, $questtypeId=null, $title=null)
 		{
 			$data = $this->db->query(
 				'SELECT count(DISTINCT quests.id) AS c '.
@@ -384,7 +384,8 @@
 				'INNER JOIN quests ON quests.questgroup_id = questgroups.id '.
 				'WHERE questgroups.seminary_id = ? '.
 				(!empty($questgroupId) ? sprintf('AND questgroups.id = %d ', $questgroupId) : null).
-				(!empty($questtypeId) ? sprintf('AND quests.questtype_id = %d ', $questtypeId) : null),
+				(!empty($questtypeId) ? sprintf('AND quests.questtype_id = %d ', $questtypeId) : null).
+				(!empty($title) ? sprintf('AND quests.title LIKE \'%%%s%%\' ', $title) : null),
 				'i',
 				$seminaryId
 			);
@@ -408,7 +409,7 @@
 		 * @param	int	$offset		Offset (optional)
 		 * @return	array			Quests for this Seminary
 		 */
-		public function getQuestsForSeminaryByOpenSubmissions($seminaryId, $questgroupId=null, $questtypeId=null, $limit=null, $offset=0)
+		public function getQuestsForSeminaryByOpenSubmissions($seminaryId, $questgroupId=null, $questtypeId=null, $title=null, $limit=null, $offset=0)
 		{
 			return $this->db->query(
 				'SELECT DISTINCT quests.id, quests.questgroup_id, quests.questtype_id, quests.title, quests.url, quests.xps, quests.task, quests.wrong_text, quests.questsmedia_id, questgroups.title AS questgroup_title, questgroups.url AS questgroup_url, ('.
@@ -425,6 +426,7 @@
 				'WHERE questgroups.seminary_id = ? '.
 				(!empty($questgroupId) ? sprintf('AND questgroups.id = %d ', $questgroupId) : null).
 				(!empty($questtypeId) ? sprintf('AND quests.questtype_id = %d ', $questtypeId) : null).
+				(!empty($title) ? sprintf('AND quests.title LIKE \'%%%s%%\' ', $title) : null).
 				'ORDER BY opensubmissionscount DESC '.
 				(!empty($limit) ? sprintf('LIMIT %d, %d', $offset, $limit) : null),
 				'ii',

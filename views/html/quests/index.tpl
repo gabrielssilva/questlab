@@ -10,7 +10,7 @@
 
 <form method="get" class="logreg admnqf">
 	<fieldset>
-		<legend>Filter</legend>
+		<legend><?=_('Filter')?></legend>
 		<label for="questgroup"><?=_('Questgroup')?>:</label>
 		<select id="questgroup" name="questgroup">
 			<option value=""><?=_('all')?></option>
@@ -44,6 +44,8 @@
 			</option>
 			<?php endforeach ?>
 		</select>
+		<label for="title"><?=_('Title')?>:</label>
+		<input type="text" id="title" name="title" placeholder="<?=_('Title')?>" value="<?=$selectedTitle?>" />
 	</fieldset>
 	<input type="submit" value="<?=_('Apply filters')?>" />
 </form>
@@ -77,8 +79,8 @@
 </ul>
 <?php if(is_null($all) && ($page*$limit) < $questsCount) : ?>
 <nav class="admin">
-	<li><a id="show-more" href="<?=$linker->link(null,3,true,array('page'=>$page+1,'questgroup'=>$selectedQuestgroup,'questtype'=>$selectedQuesttype))?>"><?=_('Show more')?></a></li>
-	<li><a id="show-all" href="<?=$linker->link('all',3,true,array('questgroup'=>$selectedQuestgroup,'questtype'=>$selectedQuesttype))?>"><?=_('Show all')?></a></li>
+	<li><a id="show-more" href="<?=$linker->link(null,3,true,array('page'=>$page+1,'questgroup'=>$selectedQuestgroup,'questtype'=>$selectedQuesttype,'title'=>$selectedTitle))?>"><?=_('Show more')?></a></li>
+	<li><a id="show-all" href="<?=$linker->link('all',3,true,array('questgroup'=>$selectedQuestgroup,'questtype'=>$selectedQuesttype,'title'=>$selectedTitle))?>"><?=_('Show all')?></a></li>
 </nav>
 <?php endif ?>
 
@@ -88,7 +90,7 @@
 	var linkSubmissions = "<?=$linker->link(array('submissions','SEMINARY','QUESTGROUP','QUEST'),1)?>";
 	var linkQuestgroup = "<?=$linker->link(array('questgroups','questgroup','SEMINARY','QUESTGROUP'))?>";
 	var linkQuest = "<?=$linker->link(array('quest','SEMINARY','QUESTGROUP','QUEST'),1)?>";
-	var linkPage = "<?=$linker->link(null,3,true,array('page'=>'PAGE','questgroup'=>$selectedQuestgroup,'questtype'=>$selectedQuesttype))?>";
+	var linkPage = "<?=$linker->link(null,3,true,array('page'=>'PAGE','questgroup'=>$selectedQuestgroup,'questtype'=>$selectedQuesttype,'title'=>$selectedTitle))?>";
 	
 	$("#show-more").click(function(event) {
 		if(request) {
