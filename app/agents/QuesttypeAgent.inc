@@ -99,7 +99,7 @@
 		 * @param	string	$agentType	Agent type of given Agent name
 		 * @return	string			Classname for the Questtype-name
 		 */
-		private static function getClassName($questtypeName, $agentType)
+		private static function getClassName($questtypeName, $agentType=null)
 		{
 			$className = \nre\core\ClassLoader::concatClassNames($questtypeName, \nre\core\ClassLoader::stripClassType(\nre\core\ClassLoader::stripNamespace(get_class())), 'agent');
 			
