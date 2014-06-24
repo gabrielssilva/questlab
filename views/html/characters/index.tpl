@@ -16,7 +16,8 @@
 
 <form method="get">
 	<fieldset class="filter">
-		<p><small>Sortierung:</small></p>
+		<legend><?=_('Filters')?></legend>
+		<p><small><?=_('Sortorder')?>:</small></p>
 		<select name="sortorder" onchange="this.form.submit();">
 			<option value="name" <?php if($sortorder == 'name') : ?>selected="selected"<?php endif ?>><?=_('Character name')?></option>
 			<option value="xps" <?php if($sortorder == 'xps') : ?>selected="selected"<?php endif ?>><?=_('XPs')?></option>
@@ -26,8 +27,10 @@
 			<option value="<?=$characterfield['url']?>" <?php if($sortorder == $characterfield['url']) : ?>selected="selected"<?php endif ?>><?=$characterfield['title']?></option>
 			<?php endforeach ?>
 		</select>
-		<noscript><input type="submit" value="<?=_('Sort list')?>" /></noscript>
+		<label for="charactername"><?=_('Character name')?></label>:
+		<input id="charactername" type="text" name="charactername" placeholder="<?=_('Character name')?>" value="<?=$charactername?>" />
 	</fieldset>
+	<input type="submit" value="<?=_('Apply filters')?>" />
 </form>
 
 <ul id="characterlist" class="admnql">

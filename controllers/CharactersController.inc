@@ -78,11 +78,13 @@
 			
 			// Set sort order and page
 			$sortorder = 'name';
+			$charactername = null;
 			$page = 1;
 			if($this->request->getRequestMethod() == 'GET')
 			{
 				$sortorder = $this->request->getGetParam('sortorder');
 				$sortorder = !empty($sortorder) ? $sortorder : 'name';
+				$charactername = (!is_null($this->request->getGetParam('charactername'))) ? $this->request->getGetParam('charactername') : $charactername;
 				$page = $this->request->getGetParam('page');
 				$page = !empty($page) ? intval($page) : 1;
 			}
@@ -90,8 +92,8 @@
 			// Get registered Characters
 			$limit = ($all != 'all') ? \nre\configs\AppConfig::$misc['lists_limit'] : null;
 			$offset = ($all != 'all') ? max((intval($page) - 1), 0) * $limit : 0;
-			$charactersCount = $this->Characters->getCharactersForSeminaryCount($seminary['id']);
-			$characters = $this->Characters->getCharactersForSeminarySorted($seminary['id'], $sortorder, $limit, $offset);
+			$charactersCount = $this->Characters->getCharactersForSeminaryCount($seminary['id'], $charactername);
+			$characters = $this->Characters->getCharactersForSeminarySorted($seminary['id'], $sortorder, $charactername, $limit, $offset);
 			foreach($characters as &$character)
 			{
 				$character['xplevel'] = $this->Xplevels->getXPLevelById($character['xplevel_id']);
@@ -114,6 +116,7 @@
 			$this->set('charactersCount', $charactersCount);
 			$this->set('characterfields', $characterfields);
 			$this->set('sortorder', $sortorder);
+			$this->set('charactername', $charactername);
 			$this->set('all', $all);
 			$this->set('page', $page);
 			$this->set('limit', $limit);

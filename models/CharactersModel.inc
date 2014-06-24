@@ -64,16 +64,18 @@
 		 * Get count of Characters for a Seminary.
 		 * 
 		 * @param	int	$seminaryId	ID of the Seminary
+		 * @param	string	$charactername	Only get Characters with the given name (optional)
 		 * @return	int			Count of Characters
 		 */
-		public function getCharactersForSeminaryCount($seminaryId)
+		public function getCharactersForSeminaryCount($seminaryId, $charactername=null)
 		{
 			$data = $this->db->query(
 				'SELECT count(DISTINCT characters.id) AS c '.
 				'FROM characters '.
 				'LEFT JOIN charactertypes ON charactertypes.id = characters.charactertype_id '.
 				'LEFT JOIN seminaries ON seminaries.id = charactertypes.seminary_id '.
-				'WHERE seminaries.id = ?',
+				'WHERE seminaries.id = ? '.
+				(!is_null($charactername) ? sprintf('AND characters.name LIKE \'%%%s%%\'', $charactername) : null),
 				'i',
 				$seminaryId
 			);
@@ -118,11 +120,12 @@
 		 * 
 		 * @param	int	$seminaryId	ID of the Seminary
 		 * @param	string	$sort		Field to sort by
+		 * @param	string	$charactername	Only get Characters with the given name (optional)
 		 * @param	int	$limit		Limit amount of Characters (optional)
 		 * @param	int	$offset		Offset (optional)
 		 * @return	array			Characters
 		 */
-		public function getCharactersForSeminarySorted($seminaryId, $sort, $limit=null, $offset=0)
+		public function getCharactersForSeminarySorted($seminaryId, $sort, $charactername, $limit=null, $offset=0)
 		{
 			switch($sort)
 			{
@@ -136,24 +139,25 @@
 					);
 					
 					return $this->db->query(
+						'SELECT '.
+							'characters.id, characters.created, characters.user_id, characters.name, characters.url, cache_characters.xps, cache_characters.quest_xps, cache_characters.avatar_id, '.
+							'charactertypes.id AS charactertype_id, charactertypes.name AS charactertype_name, charactertypes.url AS charactertype_url, '.
+							'xplevels.id AS xplevel_id, xplevels.level AS xplevel, '.
+							'seminaries.id AS seminary_id, seminaries.url AS seminary_url, seminaries.title AS seminary_title, seminaries.url AS seminary_url '.
+						'FROM characters '.
+						'LEFT JOIN cache_characters ON cache_characters.character_id = characters.id '.
+						'LEFT JOIN charactertypes ON charactertypes.id = characters.charactertype_id '.
+						'LEFT JOIN xplevels ON xplevels.id = cache_characters.xplevel_id '.
+						'LEFT JOIN seminaries ON seminaries.id = charactertypes.seminary_id '.
+						'WHERE seminaries.id = ? '.
+						(!is_null($charactername) ? sprintf(' AND characters.name LIKE \'%%%s%%\' ', $charactername) : null).
 						sprintf(
-							'SELECT '.
-								'characters.id, characters.created, characters.user_id, characters.name, characters.url, cache_characters.xps, cache_characters.quest_xps, cache_characters.avatar_id, '.
-								'charactertypes.id AS charactertype_id, charactertypes.name AS charactertype_name, charactertypes.url AS charactertype_url, '.
-								'xplevels.id AS xplevel_id, xplevels.level AS xplevel, '.
-								'seminaries.id AS seminary_id, seminaries.url AS seminary_url, seminaries.title AS seminary_title, seminaries.url AS seminary_url '.
-							'FROM characters '.
-							'LEFT JOIN cache_characters ON cache_characters.character_id = characters.id '.
-							'LEFT JOIN charactertypes ON charactertypes.id = characters.charactertype_id '.
-							'LEFT JOIN xplevels ON xplevels.id = cache_characters.xplevel_id '.
-							'LEFT JOIN seminaries ON seminaries.id = charactertypes.seminary_id '.
-							'WHERE seminaries.id = ? '.
-							'ORDER BY %s.%s %s '.
-							(!empty($limit) ? sprintf('LIMIT %d, %d', $offset, $limit) : null),
+							'ORDER BY %s.%s %s ',
 							($sort == 'xps' ? 'cache_characters' : 'characters'),
 							$sort,
 							$orders[$sort]
-						),
+						).
+						(!empty($limit) ? sprintf('LIMIT %d, %d', $offset, $limit) : null),
 						'i',
 						$seminaryId
 					);
@@ -173,6 +177,7 @@
 						'LEFT JOIN characters_characterroles ON characters_characterroles.character_id = characters.id '.
 						'LEFT JOIN characterroles ON characterroles.id = characters_characterroles.characterrole_id '.
 						'WHERE seminaries.id = ? '.
+						(!is_null($charactername) ? sprintf(' AND characters.name LIKE \'%%%s%%\' ', $charactername) : null).
 						'ORDER BY characterroles.id IS NULL, characterroles.id ASC '.
 						(!empty($limit) ? sprintf('LIMIT %d, %d', $offset, $limit) : null),
 						'i',
@@ -194,6 +199,7 @@
 						'LEFT JOIN characters_seminarycharacterfields ON characters_seminarycharacterfields.character_id = characters.id '.
 						'LEFT JOIN seminarycharacterfields ON seminarycharacterfields.id = characters_seminarycharacterfields.seminarycharacterfield_id AND seminarycharacterfields.url = ? '.
 						'WHERE seminaries.id = ? '.
+						(!is_null($charactername) ? sprintf(' AND characters.name LIKE \'%%%s%%\' ', $charactername) : null).
 						'ORDER BY characters_seminarycharacterfields.value ASC '.
 						(!empty($limit) ? sprintf('LIMIT %d, %d', $offset, $limit) : null),
 						'si',
