@@ -510,6 +510,7 @@
 			foreach($fields as &$field) {
 				$validationSettings[$field] = \nre\configs\AppConfig::$validation[$field];
 			}
+			$validationSettings['password'] = \nre\configs\AppConfig::$validation['password'];
 			
 			
 			// Set titile
