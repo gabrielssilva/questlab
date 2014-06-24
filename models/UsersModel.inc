@@ -37,13 +37,15 @@
 		/**
 		 * Get count of registered users.
 		 * 
-		 * @return	int	Count of users
+		 * @param	string	$username	Only get users with the given username (optional)
+		 * @return	int			Count of users
 		 */
-		public function getUsersCount()
+		public function getUsersCount($username=null)
 		{
 			$data = $this->db->query(
 				'SELECT count(DISTINCT id) AS c '.
-				'FROM users '
+				'FROM users '.
+				(!is_null($username) ? sprintf('WHERE username LIKE \'%%%s%%\'', $username) : null )
 			);
 			if(!empty($data)) {
 				return $data[0]['c'];

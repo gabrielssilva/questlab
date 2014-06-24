@@ -10,15 +10,14 @@
 <form method="get">
 	<fieldset class="filter">
 		<legend><?=_('Filters')?></legend>
-		<p><small>Sortierung:</small></p>
+		<p><small><?=_('Sortorder')?>:</small></p>
 		<select name="sortorder" onchange="this.form.submit();">
 			<option value="username" <?php if($sortorder == 'username') : ?>selected="selected"<?php endif ?>><?=_('Username')?></option>
 			<option value="role" <?php if($sortorder == 'role') : ?>selected="selected"<?php endif ?>><?=_('Role')?></option>
 			<option value="created" <?php if($sortorder == 'created') : ?>selected="selected"<?php endif ?>><?=_('Date of registration')?></option>
 		</select>
-		<noscript><input type="submit" value="<?=_('Sort list')?>" /></noscript>
 		<label for="username"><?=_('Username')?></label>:
-		<input id="username" type="text" name="username" placeholder="<?=_('Username')?>" value="" />
+		<input id="username" type="text" name="username" placeholder="<?=_('Username')?>" value="<?=$username?>" />
 	</fieldset>
 	<input type="submit" value="<?=_('Apply filters')?>" />
 </form>

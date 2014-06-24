@@ -68,7 +68,7 @@
 			// Get registered users
 			$limit = ($all != 'all') ? \nre\configs\AppConfig::$misc['lists_limit'] : null;
 			$offset = ($all != 'all') ? max((intval($page) - 1), 0) * $limit : 0;
-			$usersCount = $this->Users->getUsersCount();
+			$usersCount = $this->Users->getUsersCount($username);
 			$users = $this->Users->getUsers($sortorder, $username, $limit, $offset);
 			foreach($users as &$user) {
 				$user['roles'] = array_map(function($r) { return $r['name']; }, $this->Userroles->getUserrolesForUserById($user['id']));
@@ -82,6 +82,7 @@
 			$this->set('users', $users);
 			$this->set('usersCount', $usersCount);
 			$this->set('sortorder', $sortorder);
+			$this->set('username', $username);
 			$this->set('all', $all);
 			$this->set('page', $page);
 			$this->set('limit', $limit);
