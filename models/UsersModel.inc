@@ -58,12 +58,13 @@
 		 * Get registered users.
 		 * 
 		 * @throws	ParamsNotValidException
-		 * @param	string	$sort	Field to sort by
-		 * @param	int	$limit	Limit amount of Characters (optional)
-		 * @param	int	$offset	Offset (optional)
-		 * @return	array		Users
+		 * @param	string	$sort		Field to sort by
+		 * @param	string	$username	Only get users with the given username (optional)
+		 * @param	int	$limit		Limit amount of Characters (optional)
+		 * @param	int	$offset		Offset (optional)
+		 * @return	array			Users
 		 */
-		public function getUsers($sort, $limit=null, $offset=0)
+		public function getUsers($sort, $username=null, $limit=null, $offset=0)
 		{
 			switch($sort)
 			{
@@ -75,14 +76,11 @@
 					);
 					
 					return $this->db->query(
-						sprintf(
-							'SELECT id, created, username, url, surname, prename, email, mailing '.
-							'FROM users '.
-							'ORDER BY %s %s '.
-							(!empty($limit) ? sprintf('LIMIT %d, %d', $offset, $limit) : null),
-							$sort,
-							$orders[$sort]
-						)
+						'SELECT id, created, username, url, surname, prename, email, mailing '.
+						'FROM users '.
+						(!is_null($username) ? sprintf('WHERE username LIKE \'%%%s%%\' ', $username) : null).
+						sprintf('ORDER BY %s %s ', $sort, $orders[$sort]).
+						(!empty($limit) ? sprintf('LIMIT %d, %d', $offset, $limit) : null)
 					);
 				break;
 				case 'role':
@@ -91,6 +89,7 @@
 						'FROM users '.
 						'LEFT JOIN users_userroles ON users_userroles.user_id = users.id '.
 						'LEFT JOIN userroles ON userroles.id = users_userroles.user_id '.
+						(!is_null($username) ? sprintf('WHERE username LIKE \'%%%s%%\' ', $username) : null).
 						'ORDER BY userroles.id IS NULL, userroles.id ASC '.
 						(!empty($limit) ? sprintf('LIMIT %d, %d', $offset, $limit) : null)
 					);
