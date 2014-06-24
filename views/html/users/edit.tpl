@@ -99,6 +99,8 @@
 		<input name="email" type="email" placeholder="<?=_('E‑mail address')?>" title="<?=_('E‑mail address')?>" required="required" value="<?=$email?>" <?=(array_key_exists('email', $validation)) ? 'class="invalid"' : null?> /><br />
 		<label for="password"><?=_('Password')?>:</label>
 		<input name="password" type="password" placeholder="<?=_('Password')?>" title="<?=_('Password')?>" maxlength="<?=$validationSettings['password']['maxlength']?>" <?=(array_key_exists('password', $validation)) ? 'class="invalid"' : null?> /><br />
+		<input id="mailing" type="checkbox" name="mailing" <?php if($mailing) : ?>checked="checked"<?php endif ?> /> 
+		<label for="mailing"><?=_('Mail notifications')?></label>
 	</fieldset>
 	<input type="submit" name="save" value="<?=_('save')?>" />
 </form>
