@@ -879,19 +879,21 @@
 				foreach($moderators as &$moderator)
 				{
 					$user = $this->Users->getUserById($moderator['user_id']);
-					\hhu\z\Utils::sendMail(
-						$user['email'],
-						'charactersubmission',
-						true,
-						array(
-							$user,
-							$seminary,
-							$questgroup,
-							$quest,
-							$character
-						),
-						$this->linker
-					);
+					if($user['mailing']) {
+						\hhu\z\Utils::sendMail(
+							$user['email'],
+							'charactersubmission',
+							true,
+							array(
+								$user,
+								$seminary,
+								$questgroup,
+								$quest,
+								$character
+							),
+							$this->linker
+						);
+					}
 				}
 			}
 			catch(\hhu\z\exceptions\MailingException $e) {
@@ -912,6 +914,9 @@
 		{
 			// Get user
 			$user = $this->Users->getUserById($character['user_id']);
+			if(!$user['mailing']) {
+				return;
+			}
 			
 			// Send notification mail
 			try {

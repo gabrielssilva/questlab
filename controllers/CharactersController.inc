@@ -644,18 +644,20 @@
 				foreach($characters as &$character)
 				{
 					$moderator = $this->Users->getUserById($character['user_id']);
-					\hhu\z\Utils::sendMail(
-						$moderator['email'],
-						'characterregistration',
-						true,
-						array(
-							$moderator,
-							\hhu\z\controllers\SeminaryController::$seminary,
-							\hhu\z\controllers\IntermediateController::$user,
-							$newCharacter
-						),
-						$this->linker
-					);
+					if($moderator['mailing']) {
+						\hhu\z\Utils::sendMail(
+							$moderator['email'],
+							'characterregistration',
+							true,
+							array(
+								$moderator,
+								\hhu\z\controllers\SeminaryController::$seminary,
+								\hhu\z\controllers\IntermediateController::$user,
+								$newCharacter
+							),
+							$this->linker
+						);
+					}
 				}
 			}
 			catch(\hhu\z\exceptions\MailingException $e) {

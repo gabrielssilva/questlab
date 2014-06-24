@@ -454,6 +454,7 @@
 			$prename = $user['prename'];
 			$surname = $user['surname'];
 			$email = $user['email'];
+			$mailing = $user['mailing'];
 			$fields = array('username', 'prename', 'surname', 'email');
 			$validation = array();
 			
@@ -482,6 +483,7 @@
 				if($this->Users->emailExists($email, $user['id'])) {
 					$validation = $this->Validation->addValidationResult($validation, 'email', 'exist', true);
 				}
+				$mailing = !is_null($this->request->getPostParam('mailing'));
 				
 				// Save changes
 				if($validation === true)
@@ -490,10 +492,11 @@
 					$this->Users->editUser(
 						$user['id'],
 						(count(array_intersect(array('admin','moderator'),\hhu\z\controllers\IntermediateController::$user['roles'])) > 0) ? $this->request->getPostParam('username') : $user['username'],
-						$this->request->getPostParam('prename'),
-						$this->request->getPostParam('surname'),
-						$this->request->getPostParam('email'),
-						$this->request->getPostParam('password')
+						$prename,
+						$surname,
+						$email,
+						$password,
+						$mailing
 					);
 					
 					// Redirect to entry
@@ -517,6 +520,7 @@
 			$this->set('prename', $prename);
 			$this->set('surname', $surname);
 			$this->set('email', $email);
+			$this->set('mailing', $mailing);
 			$this->set('validation', $validation);
 			$this->set('validationSettings', $validationSettings);
 		}
@@ -577,16 +581,18 @@
 			try {
 				foreach($moderators as &$moderator)
 				{
-					\hhu\z\Utils::sendMail(
-						$moderator['email'],
-						'userregistration',
-						true,
-						array(
-							$moderator,
-							$user
-						),
-						$this->linker
-					);
+					if($moderator['mailing']) {
+						\hhu\z\Utils::sendMail(
+							$moderator['email'],
+							'userregistration',
+							true,
+							array(
+								$moderator,
+								$user
+							),
+							$this->linker
+						);
+					}
 				}
 			}
 			catch(\hhu\z\exceptions\MailingException $e) {

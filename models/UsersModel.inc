@@ -76,7 +76,7 @@
 					
 					return $this->db->query(
 						sprintf(
-							'SELECT id, created, username, url, surname, prename, email '.
+							'SELECT id, created, username, url, surname, prename, email, mailing '.
 							'FROM users '.
 							'ORDER BY %s %s '.
 							(!empty($limit) ? sprintf('LIMIT %d, %d', $offset, $limit) : null),
@@ -87,7 +87,7 @@
 				break;
 				case 'role':
 					return $this->db->query(
-						'SELECT DISTINCT users.id, users.created, users.username, users.url, users.surname, users.prename, users.email '.
+						'SELECT DISTINCT users.id, users.created, users.username, users.url, users.surname, users.prename, users.email, users.mailing '.
 						'FROM users '.
 						'LEFT JOIN users_userroles ON users_userroles.user_id = users.id '.
 						'LEFT JOIN userroles ON userroles.id = users_userroles.user_id '.
@@ -111,7 +111,7 @@
 		public function getUsersWithRole($userrole)
 		{
 			return $this->db->query(
-				'SELECT users.id, users.created, users.username, users.url, users.surname, users.prename, users.email '.
+				'SELECT users.id, users.created, users.username, users.url, users.surname, users.prename, users.email, users.mailing'.
 				'FROM users '.
 				'LEFT JOIN users_userroles ON users_userroles.user_id = users.id '.
 				'LEFT JOIN userroles ON userroles.id = users_userroles.userrole_id '.
@@ -134,7 +134,7 @@
 		{			
 			// Get user
 			$user = $this->db->query(
-				'SELECT id, created, username, url, surname, prename, email '.
+				'SELECT id, created, username, url, surname, prename, email, mailing '.
 				'FROM users '.
 				'WHERE id = ?',
 				'i',
@@ -160,7 +160,7 @@
 		{			
 			// Get user
 			$user = $this->db->query(
-				'SELECT id, created, username, url, surname, prename, email '.
+				'SELECT id, created, username, url, surname, prename, email, mailing '.
 				'FROM users '.
 				'WHERE url = ?',
 				's',
@@ -305,21 +305,22 @@
 		 * @param	string	$email		Changed e‑mail-address of user
 		 * @param	string	$password	Changed plaintext password of user
 		 */
-		public function editUser($userId, $username, $prename, $surname, $email, $password)
+		public function editUser($userId, $username, $prename, $surname, $email, $password, $mailing)
 		{
 			$this->db->setAutocommit(false);
 			try {
 				// Update user data
 				$this->db->query(
 					'UPDATE users '.
-					'SET username = ?, url = ?, prename = ?, surname = ?, email = ? '.
+					'SET username = ?, url = ?, prename = ?, surname = ?, email = ?, mailing = ? '.
 					'WHERE id = ?',
-					'sssssi',
+					'sssssii',
 					$username,
 					\nre\core\Linker::createLinkParam($username),
 					$prename,
 					$surname,
 					$email,
+					$mailing,
 					$userId
 				);
 				
