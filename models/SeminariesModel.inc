@@ -206,7 +206,7 @@
 		 * Edit a seminary.
 		 * 
 		 * @throws	DatamodelException
-		 * @param	int	$seminaryId	ID of Seminary to delete
+		 * @param	int	$seminaryId	ID of Seminary to edit
 		 * @param	string	$title		New title of Seminary
 		 * @param	string	$course		New course of Seminary
 		 * @param	string	$description	New description of Seminary

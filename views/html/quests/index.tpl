@@ -10,7 +10,7 @@
 
 <form method="get" class="logreg admnqf">
 	<fieldset>
-		<legend><?=_('Filter')?></legend>
+		<legend><?=_('Filters')?></legend>
 		<label for="questgroup"><?=_('Questgroup')?>:</label>
 		<select id="questgroup" name="questgroup">
 			<option value=""><?=_('all')?></option>
