@@ -198,6 +198,26 @@
 				$questId
 			);
 		}
+
+
+		/**
+		 * Set the previous Quest for a Quest.
+		 * 
+		 * @param	int	$questId		ID of Quest to set previous Quest for
+		 * @param	int	$previousQuestId	Id of previous Quest
+		 */
+		public function setPreviousQuest($questId, $previousQuestId)
+		{
+			$this->db->query(
+				'REPLACE INTO quests_previousquests '.
+				'(quest_id, previous_quest_id) '.
+				'VALUES '.
+				'(?, ?)',
+				'ii',
+				$questId,
+				$previousQuestId
+			);
+		}
 		
 		
 		/**
@@ -529,33 +549,79 @@
 		
 		
 		/**
+		 * Check if a Quest title already exists.
+		 * 
+		 * @param	string	$title		Quest title to check
+		 * @param	int	$seminaryId	ID of Seminary
+		 * @param	int	$questId	Do not check this ID (for editing)
+		 * @return	boolean			Whether Quest title exists or not
+		 */
+		public function questTitleExists($title, $seminaryId, $questId=null)
+		{
+			$data = $this->db->query(
+				'SELECT quests.id '.
+				'FROM quests '.
+				'INNER JOIN questgroups ON questgroups.id = quests.questgroup_id '.
+				'WHERE questgroups.seminary_id = ? AND (quests.title = ? OR quests.url = ?)',
+				'iss',
+				$seminaryId,
+				$title,
+				\nre\core\Linker::createLinkParam($title)
+			);
+			
+			return (!empty($data) && (is_null($questId) || $questId != $data[0]['id']));
+		}
+
+
+		/**
 		 * Create a new Quest.
 		 * 
 		 * @param	int	$userId		User-ID that creates the new character
-		 * @param	string	$name		Name for new Quest
 		 * @param	int	$questgroupId	ID of Questgroup
 		 * @param	int	$questtypeId	ID of Questtype
+		 * @param	string	$title		Title for new Quest
 		 * @param	int	$xps		XPs for new Quest
+		 * @param	string	$task		Task for new Quest
 		 * @param	string	$entrytext	Entrytext for new Quest
 		 * @param	string	$wrongtext	Wrongtext for new Quest
-		 * @param	string	$task		Task for new Quest
 		 * @return	int			ID of new Quest
 		 */
-		public function createQuest($userId, $name, $questgroupId, $questtypeId, $xps, $entrytext, $wrongtext, $task)
+		public function createQuest($userId, $questgroupId, $questtypeId, $title, $xps, $task, $entrytext, $wrongtext)
 		{
-			$this->db->query(
-				'INSERT INTO quests '.
-				'(created_user_id, questgroup_id, questtype_id, title, url, xps, entry_text, wrong_text, task) '.
-				'VALUES '.
-				'(?, ?, ?, ?, ?, ?, ?, ?, ?)',
-				'iiississs',
-				$userId, $questgroupId, $questtypeId,
-				$name, \nre\core\Linker::createLinkParam($name),
-				$xps, $entrytext, $wrongtext, $task
-			);
-			
-			
-			return $this->db->getInsertId();
+			$questId = null;
+			$this->db->setAutocommit(false);
+			try {
+				// Get last Quests of Questgroup
+				$lastQuests  = $this->getLastQuestsOfQuestgroup($questgroupId);
+
+				// Create Quest
+				$this->db->query(
+					'INSERT INTO quests '.
+					'(created_user_id, questgroup_id, questtype_id, title, url, xps, entry_text, wrong_text, task) '.
+					'VALUES '.
+					'(?, ?, ?, ?, ?, ?, ?, ?, ?)',
+					'iiississs',
+					$userId, $questgroupId, $questtypeId,
+					$title, \nre\core\Linker::createLinkParam($title),
+					$xps, $entrytext, $wrongtext, $task
+				);
+				$questId = $this->db->getInsertId();
+
+				// Set previous Quest
+				if(count($lastQuests) > 0) {
+					$this->setPreviousQuest($questId, $lastQuests[0]['id']);
+				}
+
+				$this->db->commit();
+			}
+			catch(\Exception $e) {
+				$this->db->rollback();
+				$this->db->setAutocommit(true);
+				throw $e;
+			}
+
+			$this->db->setAutocommit(true);
+			return $questId;
 		}
 		
 		
@@ -575,6 +641,69 @@
 				$questsmediaId,
 				$questId
 			);
+		}
+
+
+		/**
+		 * Edit a new Quest.
+		 * 
+		 * @param	int	$questId	ID of Quest to edit
+		 * @param	int	$questtypeId	ID of Questtype
+		 * @param	string	$title		New title for Quest
+		 * @param	int	$xps		XPs for Quest
+		 * @param	string	$task		New task for Quest
+		 * @param	string	$entrytext	New entrytext for Quest
+		 * @param	string	$wrongtext	New wrongtext for Quest
+		 */
+		public function editQuest($questId, $questtypeId, $title, $xps, $task, $entrytext, $wrongtext)
+		{
+			$this->db->query(
+				'UPDATE quests '.
+				'SET questtype_id = ?, title = ?, url = ?, xps = ?, entry_text = ?, wrong_text = ?, task = ? '.
+				'WHERE id = ?',
+				'ississsi',
+				$questtypeId,
+				$title,
+				\nre\core\Linker::createLinkParam($title),
+				$xps,
+				$entrytext,
+				$wrongtext,
+				$task,
+				$questId
+			);
+		}
+
+
+		/**
+		 * Delete a Quest of a Seminary.
+		 * 
+		 * @param	int	$questId	ID of Quest to delete
+		 */
+		public function deleteQuest($questId)
+		{
+			$this->db->setAutocommit(false);
+			try {
+				// Set previous Quests of following Quests
+				$previousQuests = $this->getPreviousQuests($questId);
+				$nextQuests = $this->getNextQuests($questId);
+				foreach($nextQuests as &$nextQuest) {
+					foreach($previousQuests as &$previousQuest) {
+						$this->setPreviousQuest($nextQuest['id'], $previousQuest['id']);
+					}
+				}
+
+				// Delete Quest
+				$this->db->query('DELETE FROM quests WHERE id = ?', 'i', $questId);
+
+				$this->db->commit();
+			}
+			catch(\Exception $e) {
+				$this->db->rollback();
+				$this->db->setAutocommit(true);
+				throw $e;
+			}
+
+			$this->db->setAutocommit(true);
 		}
 		
 	}

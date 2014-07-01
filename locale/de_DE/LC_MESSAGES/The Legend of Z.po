@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: The Legend of Z\n"
-"POT-Creation-Date: 2014-06-24 21:56+0100\n"
-"PO-Revision-Date: 2014-06-24 21:56+0100\n"
+"POT-Creation-Date: 2014-07-01 15:40+0100\n"
+"PO-Revision-Date: 2014-07-01 15:41+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de_DE\n"
@@ -63,8 +63,8 @@ msgstr "Neuer Lösungsvorschlag"
 msgid "Character submission approved"
 msgstr "Lösungsvorschlag bewertet"
 
-#: controllers/QuestsController.inc:740
-#: questtypes/submit/html/submission.tpl:30 views/html/quests/quest.tpl:45
+#: controllers/QuestsController.inc:1004
+#: questtypes/submit/html/submission.tpl:30 views/html/quests/quest.tpl:53
 #: views/html/quests/submissions.tpl:30
 msgid "solved"
 msgstr "Richtig!"
@@ -76,7 +76,7 @@ msgstr "Richtig!"
 msgid "lost"
 msgstr "verloren"
 
-#: questtypes/bossfight/html/quest.tpl:41 views/html/quests/quest.tpl:120
+#: questtypes/bossfight/html/quest.tpl:41 views/html/quests/quest.tpl:128
 msgid "Choose"
 msgstr "Wählen"
 
@@ -132,6 +132,7 @@ msgstr "Fehler beim Dateiupload: %s"
 #: views/html/charactergroupsquests/edit.tpl:67
 #: views/html/charactergroupsquests/manage.tpl:63
 #: views/html/questgroups/create.tpl:65 views/html/questgroups/edit.tpl:53
+#: views/html/quests/create.tpl:62 views/html/quests/edit.tpl:65
 #: views/html/seminaries/create.tpl:60 views/html/seminaries/edit.tpl:62
 msgid "Allowed file types"
 msgstr "Erlaubte Dateiformate"
@@ -143,6 +144,7 @@ msgstr "Erlaubte Dateiformate"
 #: views/html/charactergroupsquests/edit.tpl:70
 #: views/html/charactergroupsquests/manage.tpl:63
 #: views/html/questgroups/create.tpl:68 views/html/questgroups/edit.tpl:56
+#: views/html/quests/create.tpl:65 views/html/quests/edit.tpl:68
 #: views/html/seminaries/create.tpl:63 views/html/seminaries/edit.tpl:65
 #, php-format
 msgid "%s-files"
@@ -155,6 +157,7 @@ msgstr "%s-Dateien"
 #: views/html/charactergroupsquests/edit.tpl:70
 #: views/html/charactergroupsquests/manage.tpl:63
 #: views/html/questgroups/create.tpl:68 views/html/questgroups/edit.tpl:56
+#: views/html/quests/create.tpl:65 views/html/quests/edit.tpl:68
 #: views/html/seminaries/create.tpl:63 views/html/seminaries/edit.tpl:65
 msgid "max."
 msgstr "max."
@@ -188,47 +191,55 @@ msgstr "Bewertet von %s am %s um %s Uhr"
 msgid "Comment"
 msgstr "Kommentar"
 
-#: questtypes/submit/html/submission.tpl:31 views/html/quests/quest.tpl:50
+#: questtypes/submit/html/submission.tpl:31 views/html/quests/quest.tpl:58
 #: views/html/quests/submissions.tpl:20
 msgid "unsolved"
 msgstr "Leider falsch!"
 
-#: views/ajax/quests/index.tpl:9 views/html/quests/index.tpl:27
+#: views/ajax/quests/index.tpl:9 views/html/quests/create.tpl:79
+#: views/html/quests/edit.tpl:82 views/html/quests/index.tpl:27
 #: views/html/quests/index.tpl:59
 msgid "Questtype Empty"
 msgstr "Leere Aufgabe"
 
-#: views/ajax/quests/index.tpl:11 views/html/quests/index.tpl:29
+#: views/ajax/quests/index.tpl:11 views/html/quests/create.tpl:81
+#: views/html/quests/edit.tpl:84 views/html/quests/index.tpl:29
 #: views/html/quests/index.tpl:61
 msgid "Questtype bossfight"
 msgstr "Boss-Fight"
 
-#: views/ajax/quests/index.tpl:13 views/html/quests/index.tpl:31
+#: views/ajax/quests/index.tpl:13 views/html/quests/create.tpl:83
+#: views/html/quests/edit.tpl:86 views/html/quests/index.tpl:31
 #: views/html/quests/index.tpl:63
 msgid "Questtype choiceinput"
 msgstr "Auswahleingabe"
 
-#: views/ajax/quests/index.tpl:15 views/html/quests/index.tpl:33
+#: views/ajax/quests/index.tpl:15 views/html/quests/create.tpl:85
+#: views/html/quests/edit.tpl:88 views/html/quests/index.tpl:33
 #: views/html/quests/index.tpl:65
 msgid "Questtype crossword"
 msgstr "Kreuzworträtsel"
 
-#: views/ajax/quests/index.tpl:17 views/html/quests/index.tpl:35
+#: views/ajax/quests/index.tpl:17 views/html/quests/create.tpl:87
+#: views/html/quests/edit.tpl:90 views/html/quests/index.tpl:35
 #: views/html/quests/index.tpl:67
 msgid "Questtype dragndrop"
 msgstr "Drag&Drop"
 
-#: views/ajax/quests/index.tpl:19 views/html/quests/index.tpl:37
+#: views/ajax/quests/index.tpl:19 views/html/quests/create.tpl:89
+#: views/html/quests/edit.tpl:92 views/html/quests/index.tpl:37
 #: views/html/quests/index.tpl:69
 msgid "Questtype multiplechoice"
 msgstr "Multiple Choice"
 
-#: views/ajax/quests/index.tpl:21 views/html/quests/index.tpl:39
+#: views/ajax/quests/index.tpl:21 views/html/quests/create.tpl:91
+#: views/html/quests/edit.tpl:94 views/html/quests/index.tpl:39
 #: views/html/quests/index.tpl:71
 msgid "Questtype submit"
 msgstr "Abgabeaufgabe"
 
-#: views/ajax/quests/index.tpl:23 views/html/quests/index.tpl:41
+#: views/ajax/quests/index.tpl:23 views/html/quests/create.tpl:93
+#: views/html/quests/edit.tpl:96 views/html/quests/index.tpl:41
 #: views/html/quests/index.tpl:73
 msgid "Questtype textinput"
 msgstr "Texteingabe"
@@ -453,8 +464,7 @@ msgstr "Icon"
 #: views/html/charactergroups/editgroupsgroup.tpl:46
 #: views/html/charactergroups/editgroupsgroup.tpl:47
 #: views/html/charactertypes/manage.tpl:88
-#: views/html/charactertypes/manage.tpl:89 views/html/quests/create.tpl:15
-#: views/html/quests/create.tpl:16 views/html/users/user.tpl:23
+#: views/html/charactertypes/manage.tpl:89 views/html/users/user.tpl:23
 msgid "Name"
 msgstr "Name"
 
@@ -472,7 +482,7 @@ msgstr "Motto"
 #: views/html/charactertypes/manage.tpl:91 views/html/library/create.tpl:46
 #: views/html/library/edit.tpl:124 views/html/questgroups/create.tpl:76
 #: views/html/questgroupshierarchy/create.tpl:63
-#: views/html/quests/create.tpl:43 views/html/seminaries/create.tpl:75
+#: views/html/quests/create.tpl:110 views/html/seminaries/create.tpl:75
 #: views/html/users/create.tpl:96
 msgid "create"
 msgstr "erstellen"
@@ -504,7 +514,8 @@ msgstr "Soll die %s-Gruppen „%s“ wirklich gelöscht werden?"
 #: views/html/library/delete.tpl:14 views/html/library/edit.tpl:83
 #: views/html/questgroups/delete.tpl:17
 #: views/html/questgroupshierarchy/delete.tpl:14
-#: views/html/seminaries/delete.tpl:13 views/html/users/delete.tpl:11
+#: views/html/quests/delete.tpl:11 views/html/seminaries/delete.tpl:13
+#: views/html/users/delete.tpl:11
 msgid "delete"
 msgstr "löschen"
 
@@ -514,7 +525,8 @@ msgstr "löschen"
 #: views/html/characters/delete.tpl:18 views/html/library/delete.tpl:15
 #: views/html/questgroups/delete.tpl:18
 #: views/html/questgroupshierarchy/delete.tpl:15
-#: views/html/seminaries/delete.tpl:14 views/html/users/delete.tpl:12
+#: views/html/quests/delete.tpl:12 views/html/seminaries/delete.tpl:14
+#: views/html/users/delete.tpl:12
 msgid "cancel"
 msgstr "abbrechen"
 
@@ -538,7 +550,7 @@ msgstr "%s-Gruppe bearbeiten"
 #: views/html/charactergroups/editgroupsgroup.tpl:50
 #: views/html/charactergroupsquests/edit.tpl:94
 #: views/html/characters/edit.tpl:108 views/html/questgroups/edit.tpl:64
-#: views/html/questgroupshierarchy/edit.tpl:57
+#: views/html/questgroupshierarchy/edit.tpl:57 views/html/quests/edit.tpl:113
 #: views/html/seminaries/edit.tpl:77
 msgid "edit"
 msgstr "bearbeiten"
@@ -587,8 +599,9 @@ msgstr "%squests"
 #: views/html/charactergroupsquests/edit.tpl:78
 #: views/html/characters/index.tpl:23 views/html/characters/index.tpl:84
 #: views/html/characters/manage.tpl:17
-#: views/html/questgroups/questgroup.tpl:56 views/html/quests/create.tpl:29
-#: views/html/quests/create.tpl:30
+#: views/html/questgroups/questgroup.tpl:62 views/html/quests/create.tpl:72
+#: views/html/quests/create.tpl:73 views/html/quests/edit.tpl:75
+#: views/html/quests/edit.tpl:76
 msgid "XPs"
 msgstr "XP"
 
@@ -619,8 +632,8 @@ msgid "Add Characters"
 msgstr "Füge Charaktere hinzu"
 
 #: views/html/charactergroups/managegroup.tpl:59
-#: views/html/questgroups/questgroup.tpl:102 views/html/quests/create.tpl:9
-#: views/html/quests/index.tpl:9
+#: views/html/questgroups/questgroup.tpl:21
+#: views/html/questgroups/questgroup.tpl:108 views/html/quests/index.tpl:9
 msgid "Quests"
 msgstr "Quests"
 
@@ -634,6 +647,7 @@ msgstr "Neue %s-Quest"
 #: views/html/library/create.tpl:22 views/html/library/edit.tpl:22
 #: views/html/library/edit.tpl:62 views/html/library/edit.tpl:100
 #: views/html/questgroups/create.tpl:33 views/html/questgroups/edit.tpl:30
+#: views/html/quests/create.tpl:30 views/html/quests/edit.tpl:30
 #: views/html/seminaries/create.tpl:30 views/html/seminaries/edit.tpl:32
 #, php-format
 msgid "Title is too short (min. %d chars)"
@@ -644,6 +658,7 @@ msgstr "Der Titel ist zu kurz (min. %d Zeichen)"
 #: views/html/library/create.tpl:24 views/html/library/edit.tpl:24
 #: views/html/library/edit.tpl:64 views/html/library/edit.tpl:102
 #: views/html/questgroups/create.tpl:35 views/html/questgroups/edit.tpl:32
+#: views/html/quests/create.tpl:32 views/html/quests/edit.tpl:32
 #: views/html/seminaries/create.tpl:32 views/html/seminaries/edit.tpl:34
 #, php-format
 msgid "Title is too long (max. %d chars)"
@@ -654,6 +669,7 @@ msgstr "Der Titel ist zu lang (max. %d Zeichen)"
 #: views/html/library/create.tpl:26 views/html/library/edit.tpl:26
 #: views/html/library/edit.tpl:66 views/html/library/edit.tpl:104
 #: views/html/questgroups/create.tpl:37 views/html/questgroups/edit.tpl:34
+#: views/html/quests/create.tpl:34 views/html/quests/edit.tpl:34
 #: views/html/seminaries/create.tpl:34 views/html/seminaries/edit.tpl:36
 msgid "Title contains illegal characters"
 msgstr "Der Titel enthält ungültige Zeichen"
@@ -663,6 +679,7 @@ msgstr "Der Titel enthält ungültige Zeichen"
 #: views/html/library/create.tpl:28 views/html/library/edit.tpl:28
 #: views/html/library/edit.tpl:68 views/html/library/edit.tpl:106
 #: views/html/questgroups/create.tpl:39 views/html/questgroups/edit.tpl:36
+#: views/html/quests/create.tpl:36 views/html/quests/edit.tpl:36
 #: views/html/seminaries/create.tpl:36 views/html/seminaries/edit.tpl:38
 msgid "Title already exists"
 msgstr "Der Titel existiert bereits"
@@ -672,23 +689,27 @@ msgstr "Der Titel existiert bereits"
 #: views/html/library/create.tpl:30 views/html/library/edit.tpl:30
 #: views/html/library/edit.tpl:70 views/html/library/edit.tpl:108
 #: views/html/questgroups/create.tpl:41 views/html/questgroups/edit.tpl:38
+#: views/html/quests/create.tpl:38 views/html/quests/edit.tpl:38
 #: views/html/seminaries/create.tpl:38 views/html/seminaries/edit.tpl:40
 msgid "Title invalid"
 msgstr "Der Titel ist ungültig"
 
 #: views/html/charactergroupsquests/create.tpl:47
 #: views/html/charactergroupsquests/edit.tpl:47
+#: views/html/quests/create.tpl:43 views/html/quests/edit.tpl:43
 #, php-format
 msgid "XPs not set"
 msgstr "XP nicht angegeben"
 
 #: views/html/charactergroupsquests/create.tpl:49
 #: views/html/charactergroupsquests/edit.tpl:49
+#: views/html/quests/create.tpl:45 views/html/quests/edit.tpl:45
 msgid "XPs contain illegal characters"
 msgstr "Die XP-Angabe enthält ungültige Zeichen"
 
 #: views/html/charactergroupsquests/create.tpl:51
 #: views/html/charactergroupsquests/edit.tpl:51
+#: views/html/quests/create.tpl:47 views/html/quests/edit.tpl:47
 msgid "XPs invalid"
 msgstr "Die XP-Angabe ist ungültig"
 
@@ -701,7 +722,9 @@ msgstr "Die XP-Angabe ist ungültig"
 #: views/html/library/edit.tpl:121 views/html/library/edit.tpl:122
 #: views/html/questgroups/create.tpl:73 views/html/questgroups/create.tpl:74
 #: views/html/questgroups/edit.tpl:61 views/html/questgroups/edit.tpl:62
-#: views/html/questgroups/questgroup.tpl:82 views/html/quests/index.tpl:47
+#: views/html/questgroups/questgroup.tpl:88 views/html/quests/create.tpl:70
+#: views/html/quests/create.tpl:71 views/html/quests/edit.tpl:73
+#: views/html/quests/edit.tpl:74 views/html/quests/index.tpl:47
 #: views/html/quests/index.tpl:48 views/html/seminaries/create.tpl:68
 #: views/html/seminaries/create.tpl:69 views/html/seminaries/edit.tpl:70
 #: views/html/seminaries/edit.tpl:71 views/html/seminaries/seminary.tpl:69
@@ -710,8 +733,7 @@ msgstr "Titel"
 
 #: views/html/charactergroupsquests/create.tpl:78
 #: views/html/charactergroupsquests/edit.tpl:79
-#: views/html/questgroups/create.tpl:58 views/html/quests/create.tpl:17
-#: views/html/quests/index.tpl:14
+#: views/html/questgroups/create.tpl:58 views/html/quests/index.tpl:14
 msgid "Questgroup"
 msgstr "Questgruppe"
 
@@ -1148,33 +1170,37 @@ msgstr "Soll das die Questgruppe „%s“ wirklich gelöscht werden?"
 msgid "Edit Questgroup"
 msgstr "Questgruppe bearbeiten"
 
-#: views/html/questgroups/questgroup.tpl:34
+#: views/html/questgroups/questgroup.tpl:17
+msgid "Create new Quest"
+msgstr "Neue Quest erstellen"
+
+#: views/html/questgroups/questgroup.tpl:40
 #: views/html/questgroupshierarchy/edit.tpl:11
 #: views/html/seminaries/seminary.tpl:28
 msgid "Edit Questgroupshierarchy"
 msgstr "Hierarchie bearbeiten"
 
-#: views/html/questgroups/questgroup.tpl:35
+#: views/html/questgroups/questgroup.tpl:41
 #: views/html/questgroupshierarchy/delete.tpl:11
 #: views/html/seminaries/seminary.tpl:29
 msgid "Delete Questgroupshierarchy"
 msgstr "Hierarchie löschen"
 
-#: views/html/questgroups/questgroup.tpl:60
+#: views/html/questgroups/questgroup.tpl:66
 msgid "Found optional Questline"
 msgstr "Optionale Questline gefunden"
 
-#: views/html/questgroups/questgroup.tpl:83
+#: views/html/questgroups/questgroup.tpl:89
 #: views/html/seminaries/seminary.tpl:70
 msgid "Add new Questgroup"
 msgstr "Neue Questgruppe hinzufügen"
 
-#: views/html/questgroups/questgroup.tpl:92
+#: views/html/questgroups/questgroup.tpl:98
 #: views/html/seminaries/seminary.tpl:80
 msgid "New Questgroupshierarchy"
 msgstr "Neue Hierarchie"
 
-#: views/html/questgroups/questgroup.tpl:93
+#: views/html/questgroups/questgroup.tpl:99
 #: views/html/questgroupshierarchy/create.tpl:52
 #: views/html/questgroupshierarchy/create.tpl:53
 #: views/html/questgroupshierarchy/edit.tpl:52
@@ -1183,7 +1209,7 @@ msgstr "Neue Hierarchie"
 msgid "Title (singular)"
 msgstr "Titel (singular)"
 
-#: views/html/questgroups/questgroup.tpl:94
+#: views/html/questgroups/questgroup.tpl:100
 #: views/html/questgroupshierarchy/create.tpl:54
 #: views/html/questgroupshierarchy/create.tpl:55
 #: views/html/questgroupshierarchy/edit.tpl:54
@@ -1192,7 +1218,7 @@ msgstr "Titel (singular)"
 msgid "Title (plural)"
 msgstr "Titel (plural)"
 
-#: views/html/questgroups/questgroup.tpl:96
+#: views/html/questgroups/questgroup.tpl:102
 #: views/html/seminaries/seminary.tpl:83
 msgid "Add new Questgroupshierarchy"
 msgstr "Neue Hierarchy hinzufügen"
@@ -1250,21 +1276,57 @@ msgstr "Der Titel (plural) ist ungültig"
 msgid "Should the Questgroupshierarchy “%s” really be deleted?"
 msgstr "Soll die Hierarchie „%s“ wirklich gelöscht werden?"
 
-#: views/html/quests/create.tpl:11
+#: views/html/quests/create.tpl:8
 msgid "Create Quest"
 msgstr "Quest erstellen"
 
-#: views/html/quests/create.tpl:37
+#: views/html/quests/create.tpl:19 views/html/quests/edit.tpl:19
+#, php-format
+msgid "Error during picture upload: %s"
+msgstr "Fehler beim Bildupload: %s"
+
+#: views/html/quests/create.tpl:21 views/html/quests/edit.tpl:21
+#, php-format
+msgid "Picture has wrong type “%s”"
+msgstr "Der Bildtyp „%s“ ist nicht erlaubt"
+
+#: views/html/quests/create.tpl:23 views/html/quests/edit.tpl:23
+msgid "Picture exceeds size maximum"
+msgstr "Das Bild ist zu groß"
+
+#: views/html/quests/create.tpl:25 views/html/quests/edit.tpl:25
+msgid "Picture invalid"
+msgstr "Das Bild ist ungültig"
+
+#: views/html/quests/create.tpl:60 views/html/quests/edit.tpl:63
+msgid "Picture"
+msgstr "Bild"
+
+#: views/html/quests/create.tpl:103 views/html/quests/edit.tpl:106
 msgid "Entry text"
 msgstr "Einstiegstext"
 
-#: views/html/quests/create.tpl:39
+#: views/html/quests/create.tpl:105 views/html/quests/edit.tpl:108
+#: views/html/quests/quest.tpl:49
+msgid "Task"
+msgstr "Aufgabe"
+
+#: views/html/quests/create.tpl:108 views/html/quests/edit.tpl:111
 msgid "Wrong text"
 msgstr "Text für falsche Antwort"
 
-#: views/html/quests/create.tpl:40 views/html/quests/quest.tpl:41
-msgid "Task"
-msgstr "Aufgabe"
+#: views/html/quests/delete.tpl:8 views/html/quests/quest.tpl:13
+msgid "Delete Quest"
+msgstr "Quest löschen"
+
+#: views/html/quests/delete.tpl:9
+#, php-format
+msgid "Should the Quest “%s” really be deleted?"
+msgstr "Soll die Quest „%s“ wirklich gelöscht werden?"
+
+#: views/html/quests/edit.tpl:8 views/html/quests/quest.tpl:11
+msgid "Edit Quest"
+msgstr "Quest bearbeiten"
 
 #: views/html/quests/index.tpl:16 views/html/quests/index.tpl:23
 msgid "all"
@@ -1278,44 +1340,44 @@ msgstr "Questtyp"
 msgid "open submissions"
 msgstr "offene Lösungsvorschläge"
 
-#: views/html/quests/quest.tpl:11
+#: views/html/quests/quest.tpl:19
 msgid "Prolog"
 msgstr "Prolog"
 
-#: views/html/quests/quest.tpl:46
+#: views/html/quests/quest.tpl:54
 msgid "Quest completed."
 msgstr "Quest abgeschlossen."
 
-#: views/html/quests/quest.tpl:46
+#: views/html/quests/quest.tpl:54
 #, php-format
 msgid "You have earned %d XPs."
 msgstr "Du hast %d XP erhalten."
 
-#: views/html/quests/quest.tpl:62
+#: views/html/quests/quest.tpl:70
 msgid "Task already successfully solved"
 msgstr "Du hast die Aufgabe bereits erfolgreich gelöst"
 
-#: views/html/quests/quest.tpl:64
+#: views/html/quests/quest.tpl:72
 msgid "Show answer"
 msgstr "Lösung anzeigen"
 
-#: views/html/quests/quest.tpl:74
+#: views/html/quests/quest.tpl:82
 msgid "Epilog"
 msgstr "Epilog"
 
-#: views/html/quests/quest.tpl:100
+#: views/html/quests/quest.tpl:108
 msgid "Continuation"
 msgstr "Setze deine Reise fort"
 
-#: views/html/quests/quest.tpl:107 views/html/quests/quest.tpl:123
+#: views/html/quests/quest.tpl:115 views/html/quests/quest.tpl:131
 msgid "Quest"
 msgstr "Quest"
 
-#: views/html/quests/quest.tpl:125
+#: views/html/quests/quest.tpl:133
 msgid "Go on"
 msgstr "Fortfahren"
 
-#: views/html/quests/quest.tpl:134 views/html/seminaries/seminary.tpl:52
+#: views/html/quests/quest.tpl:142 views/html/seminaries/seminary.tpl:52
 msgid "Let’s go"
 msgstr "Auf ins Abenteuer!"
 

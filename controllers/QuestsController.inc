@@ -26,6 +26,12 @@
 		 */
 		public $models = array('seminaries', 'questgroups', 'quests', 'questtexts', 'media', 'questtypes', 'questgroupshierarchy', 'xplevels');
 		/**
+		 * Required components
+		 * 
+		 * @var array
+		 */
+		public $components = array('validation');
+		/**
 		 * User permissions
 		 * 
 		 * @var array
@@ -35,7 +41,9 @@
 			'quest'		=> array('admin', 'moderator', 'user'),
 			'submissions'	=> array('admin', 'moderator', 'user'),
 			'submission'	=> array('admin', 'moderator', 'user'),
-			'create'	=> array('admin', 'moderator', 'user')
+			'create'	=> array('admin', 'moderator', 'user'),
+			'edit'		=> array('admin', 'moderator', 'user'),
+			'delete'	=> array('admin', 'moderator', 'user')
 		);
 		/**
 		 * User seminary permissions
@@ -47,7 +55,9 @@
 			'quest'		=> array('admin', 'moderator', 'user'),
 			'submissions'	=> array('admin', 'moderator'),
 			'submission'	=> array('admin', 'moderator'),
-			'create'	=> array('admin', 'moderator')
+			'create'	=> array('admin', 'moderator'),
+			'edit'		=> array('admin', 'moderator'),
+			'delete'	=> array('admin')
 		);
 		
 		
@@ -445,42 +455,49 @@
 		 * Create a new Quest.
 		 * 
 		 * @param	string	$seminaryUrl	URL-Title of a Seminary
+		 * @param	string	$questgroupUrl	URL-Title of Questgroup
 		 */
-		public function create($seminaryUrl)
+		public function create($seminaryUrl, $questgroupUrl)
 		{
 			// Get seminary
 			$seminary = $this->Seminaries->getSeminaryByUrl($seminaryUrl);
+
+			// Get Questgroup
+			$questgroup = $this->Questgroups->getQuestgroupByUrl($seminary['id'], $questgroupUrl);
+			$questgroup['hierarchy'] = $this->Questgroupshierarchy->getHierarchyForQuestgroup($questgroup['id']);
+			$questgroup['picture'] = (!is_null($questgroup['questgroupspicture_id'])) ?  $this->Media->getSeminaryMediaById($questgroup['questgroupspicture_id']) : null;
 			
-			// Quest groups
-			$questgroups = $this->Questgroups->getQuestgroupsForSeminary($seminary['id']);
-			
-			// Quest types
+			// Get Quest types
 			$questtypes = $this->Questtypes->getQuesttypes();
+			foreach($questtypes as &$questtype) {
+				$questtype['selected'] = false;
+			}
+
+			// Get allowed mimetypes
+			$mimetypes = \nre\configs\AppConfig::$mimetypes['moodpics'];
+
+			// Values
+			$title = '';
+			$xps = 0;
+			$task = '';
+			$entryText = '';
+			$wrongText = '';
+			$fields = array('title', 'xps');
+			$validation = array();
 			
-			// Create Quest
-			$validation = true;
+			// Check request method
 			if($this->request->getRequestMethod() == 'POST' && !is_null($this->request->getPostParam('create')))
 			{
-				// TODO Validation
-				$name = $this->request->getPostParam('name');
+				// Get params and validate them
+				$validation = $this->Validation->validateParams($this->request->getPostParams(), $fields);
+				$title = $this->request->getPostParam('title');
+				if($this->Quests->questTitleExists($title, $seminary['id'])) {
+					$validation = $this->Validation->addValidationResult($validation, 'title', 'exist', true);
+				}
 				$xps = $this->request->getPostParam('xps');
-				$prolog = $this->request->getPostParam('prolog');
-				$entrytext = $this->request->getPostParam('entrytext');
-				$wrongtext = $this->request->getPostParam('wrongtext');
 				$task = $this->request->getPostParam('task');
-				
-				// Validate Questgroup
-				$questgroupIndex = null;
-				foreach($questgroups as $index => &$questgroup)
-				{
-					$questgroup['selected'] = ($questgroup['url'] == $this->request->getPostParam('questgroup'));
-					if($questgroup['selected']) {
-						$questgroupIndex = $index;
-					}
-				}
-				if(is_null($questgroupIndex)) {
-					throw new \nre\exceptions\ParamsNotValidException($questgroup);
-				}
+				$entryText = $this->request->getPostParam('entrytext');
+				$wrongText = $this->request->getPostParam('wrongtext');
 				
 				// Validate Questtype
 				$questtypeIndex = null;
@@ -495,15 +512,32 @@
 					throw new \nre\exceptions\ParamsNotValidException($questtype);
 				}
 				
-				// Questmedia
-				$questmedia = null;
-				if(array_key_exists('questmedia', $_FILES) && !empty($_FILES['questmedia']) && $_FILES['questmedia']['error'] == 0) {
-					$questmedia = $_FILES['questmedia'];
-				}
-				
-				// Process Prolog
-				if(!empty($prolog)) {
-					$prolog = preg_split('/\s*(_|=){5,}\s*/', $prolog, -1, PREG_SPLIT_NO_EMPTY);
+				// Validate media
+				$media = null;
+				if(!empty($_FILES) && array_key_exists('media', $_FILES) && $_FILES['media']['error'] != UPLOAD_ERR_NO_FILE)
+				{
+					$media = $_FILES['media'];
+					
+					// Check error
+					if($media['error'] !== UPLOAD_ERR_OK) {
+						$validation = $this->Validation->addValidationResult($validation, 'media', 'error', $media['error']);
+					}
+					
+					// Check mimetype
+					$mediaMimetype = null;
+					$media['mimetype'] = \hhu\z\Utils::getMimetype($media['tmp_name'], $media['type']);
+					foreach($mimetypes as &$mimetype) {
+						if($mimetype['mimetype'] == $media['mimetype']) {
+							$mediaMimetype = $mimetype;
+							break;
+						}
+					}
+					if(is_null($mediaMimetype)) {
+						$validation = $this->Validation->addValidationResult($validation, 'media', 'mimetype', $media['mimetype']);
+					}
+					elseif($media['size'] > $mediaMimetype['size']) {
+						$validation = $this->Validation->addValidationResult($validation, 'media', 'size', $mediaMimetype['size']);
+					}
 				}
 				
 				// Create new Quest
@@ -511,40 +545,41 @@
 				{
 					$questId = $this->Quests->createQuest(
 						$this->Auth->getUserId(),
-						$name,
-						$questgroups[$questgroupIndex]['id'],
+						$questgroup['id'],
 						$questtypes[$questtypeIndex]['id'],
+						$title,
 						$xps,
-						$entrytext,
-						$wrongtext,
-						$task
+						$task,
+						$entryText,
+						$wrongText
 					);
+					$quest = $this->Quests->getQuestById($questId);
 					
-					// Create Questmedia
-					if(!is_null($questmedia))
+					// Update picture
+					if(!is_null($media))
 					{
 						$questsmediaId = $this->Media->createQuestMedia(
 							$this->Auth->getUserId(),
 							$seminary['id'],
-							$questmedia['name'],
-							$name,
-							$questmedia['type'],
-							$questmedia['tmp_name']
+							$media['name'],
+							$title,
+							$media['type'],
+							$media['tmp_name']
 						);
 						if($questsmediaId > 0) {
-							$this->Quests->setQuestmedia($questId, $questsmediaId);
+							$this->Quests->setQuestmedia($quest['id'], $questsmediaId);
 						}
 					}
 					
-					// Add Prolog-texts
-					if(!empty($prolog)) {
-						$this->Questtexts->addQuesttextsToQuest($this->Auth->getUserId(), $questId, 'Prolog', $prolog);
-					}
-					
-					
 					// Redirect
-					$this->redirect($this->linker->link(array('quests', 'index', $seminary['url'])));
+					$this->redirect($this->linker->link(array('quest', $seminary['url'], $questgroup['url'], $quest['url']), 1));
 				}
+			}
+
+			// Get validation settings
+			$validationSettings = array();
+			foreach($fields as &$field) {
+				$validationSettings[$field] = \nre\configs\AppConfig::$validation[$field];
 			}
 			
 			
@@ -554,8 +589,237 @@
 			
 			// Pass data to view
 			$this->set('seminary', $seminary);
-			$this->set('questgroups', $questgroups);
+			$this->set('questgroup', $questgroup);
+			$this->set('mimetypes', $mimetypes);
 			$this->set('questtypes', $questtypes);
+			$this->set('title', $title);
+			$this->set('task', $task);
+			$this->set('entryText', $entryText);
+			$this->set('wrongText', $wrongText);
+			$this->set('xps', $xps);
+			$this->set('questtype_id', $questtype);
+			$this->set('validation', $validation);
+			$this->set('validationSettings', $validationSettings);
+		}
+
+
+		/**
+		 * Action: edit.
+		 * 
+		 * Edit a Quest of a Seminary.
+		 * 
+		 * @throws	IdNotFoundException
+		 * @param	string	$seminaryUrl		URL-Title of Seminary
+		 * @param	string	$questgroupUrl		URL-Title of Questgroup
+		 * @param	string	$questUrl		URL-Title of Quest
+		 */
+		public function edit($seminaryUrl, $questgroupUrl, $questUrl)
+		{
+			// Get Seminary
+			$seminary = $this->Seminaries->getSeminaryByUrl($seminaryUrl);
+
+			// Get Questgroup
+			$questgroup = $this->Questgroups->getQuestgroupByUrl($seminary['id'], $questgroupUrl);
+			$questgroup['hierarchy'] = $this->Questgroupshierarchy->getHierarchyForQuestgroup($questgroup['id']);
+			$questgroup['picture'] = (!is_null($questgroup['questgroupspicture_id'])) ?  $this->Media->getSeminaryMediaById($questgroup['questgroupspicture_id']) : null;
+			
+			// Get Quest
+			$quest = $this->Quests->getQuestByUrl($seminary['id'], $questgroup['id'], $questUrl);
+			
+			// Get Quest media
+			$questmedia = null;
+			if(!is_null($quest['questsmedia_id'])) {
+				$questmedia = $this->Media->getSeminaryMediaById($quest['questsmedia_id']);
+			}
+
+			// Get Quest types
+			$questtypes = $this->Questtypes->getQuesttypes();
+			foreach($questtypes as &$questtype) {
+				$questtype['selected'] = ($questtype['id'] == $quest['questtype_id']);
+			}
+
+			// Get allowed mimetypes
+			$mimetypes = \nre\configs\AppConfig::$mimetypes['moodpics'];
+
+			// Values
+			$title = $quest['title'];
+			$xps = $quest['xps'];
+			$task = $quest['task'];
+			$entryText = $quest['entry_text'];
+			$wrongText = $quest['wrong_text'];
+			$fields = array('title', 'xps');
+			$validation = array();
+
+			// Check request method
+			if($this->request->getRequestMethod() == 'POST' && !is_null($this->request->getPostParam('edit')))
+			{
+				// Get params and validate them
+				$validation = $this->Validation->validateParams($this->request->getPostParams(), $fields);
+				$title = $this->request->getPostParam('title');
+				if($this->Quests->questTitleExists($title, $seminary['id'], $quest['id'])) {
+					$validation = $this->Validation->addValidationResult($validation, 'title', 'exist', true);
+				}
+				$xps = $this->request->getPostParam('xps');
+				$task = $this->request->getPostParam('task');
+				$entryText = $this->request->getPostParam('entrytext');
+				$wrongText = $this->request->getPostParam('wrongtext');
+
+				// Validate Questtype
+				$questtypeIndex = null;
+				foreach($questtypes as $index => &$questtype)
+				{
+					$questtype['selected'] = ($questtype['url'] == $this->request->getPostParam('questtype'));
+					if($questtype['selected']) {
+						$questtypeIndex = $index;
+					}
+				}
+				if(is_null($questtypeIndex)) {
+					throw new \nre\exceptions\ParamsNotValidException($questtype);
+				}
+
+				// Validate media
+				$media = null;
+				if(!empty($_FILES) && array_key_exists('media', $_FILES) && $_FILES['media']['error'] != UPLOAD_ERR_NO_FILE)
+				{
+					$media = $_FILES['media'];
+					
+					// Check error
+					if($media['error'] !== UPLOAD_ERR_OK) {
+						$validation = $this->Validation->addValidationResult($validation, 'media', 'error', $media['error']);
+					}
+					
+					// Check mimetype
+					$mediaMimetype = null;
+					$media['mimetype'] = \hhu\z\Utils::getMimetype($media['tmp_name'], $media['type']);
+					foreach($mimetypes as &$mimetype) {
+						if($mimetype['mimetype'] == $media['mimetype']) {
+							$mediaMimetype = $mimetype;
+							break;
+						}
+					}
+					if(is_null($mediaMimetype)) {
+						$validation = $this->Validation->addValidationResult($validation, 'media', 'mimetype', $media['mimetype']);
+					}
+					elseif($media['size'] > $mediaMimetype['size']) {
+						$validation = $this->Validation->addValidationResult($validation, 'media', 'size', $mediaMimetype['size']);
+					}
+				}
+
+				// Edit Quest
+				if($validation === true)
+				{
+					$this->Quests->editQuest(
+						$quest['id'],
+						$questtypes[$questtypeIndex]['id'],
+						$title,
+						$xps,
+						$task,
+						$entryText,
+						$wrongText
+					);
+					$quest = $this->Quests->getQuestById($quest['id']);
+					
+					// Update picture
+					if(!is_null($media))
+					{
+						$questsmediaId = $this->Media->createQuestMedia(
+							$this->Auth->getUserId(),
+							$seminary['id'],
+							$media['name'],
+							$title,
+							$media['type'],
+							$media['tmp_name']
+						);
+						if($questsmediaId > 0) {
+							$this->Quests->setQuestmedia($quest['id'], $questsmediaId);
+						}
+					}
+					
+					// Redirect to entry
+					$this->redirect($this->linker->link(array('quest', $seminary['url'], $questgroup['url'], $quest['url']), 1));
+				}
+			}
+
+			// Get validation settings
+			$validationSettings = array();
+			foreach($fields as &$field) {
+				$validationSettings[$field] = \nre\configs\AppConfig::$validation[$field];
+			}
+
+
+			// Set titile
+			$this->addTitleLocalized('Edit Quest');
+			$this->addTitle($seminary['title']);
+			
+			// Pass data to view
+			$this->set('seminary', $seminary);
+			$this->set('questgroup', $questgroup);
+			$this->set('quest', $quest);
+			$this->set('media', $questmedia);
+			$this->set('mimetypes', $mimetypes);
+			$this->set('questtypes', $questtypes);
+			$this->set('title', $title);
+			$this->set('task', $task);
+			$this->set('entryText', $entryText);
+			$this->set('wrongText', $wrongText);
+			$this->set('xps', $xps);
+			$this->set('questtype_id', $questtype);
+			$this->set('validation', $validation);
+			$this->set('validationSettings', $validationSettings);
+		}
+
+
+		/**
+		 * Action: delete.
+		 * 
+		 * Delete a Quest of a Seminary.
+		 * 
+		 * @throws	IdNotFoundException
+		 * @param	string	$seminaryUrl		URL-Title of Seminary
+		 * @param	string	$questgroupUrl		URL-Title of Questgroup
+		 * @param	string	$questUrl		URL-Title of Quest
+		 */
+		public function delete($seminaryUrl, $questgroupUrl, $questUrl)
+		{
+			// Get Seminary
+			$seminary = $this->Seminaries->getSeminaryByUrl($seminaryUrl);
+
+			// Get Questgroup
+			$questgroup = $this->Questgroups->getQuestgroupByUrl($seminary['id'], $questgroupUrl);
+			$questgroup['picture'] = null;
+			if(!is_null($questgroup['questgroupspicture_id'])) {
+				$questgroup['picture'] = $this->Media->getSeminaryMediaById($questgroup['questgroupspicture_id']);
+			}
+			
+			// Get Quest
+			$quest = $this->Quests->getQuestByUrl($seminary['id'], $questgroup['id'], $questUrl);
+
+			// Check request method
+			if($this->request->getRequestMethod() == 'POST')
+			{
+				// Check confirmation
+				if(!is_null($this->request->getPostParam('delete')))
+				{
+					// Delete seminary
+					$this->Quests->deleteQuest($quest['id']);
+					
+					// Redirect to Questgroup
+					$this->redirect($this->linker->link(array('questgroups', 'questgroup', $seminary['url'], $questgroup['url'])));
+				}
+				
+				// Redirect to entry
+				$this->redirect($this->linker->link(array('seminary', $seminary['url']), 1));
+			}
+
+
+			// Set titile
+			$this->addTitleLocalized('Delete Quest');
+			$this->addTitle($seminary['title']);
+			
+			// Pass data to view
+			$this->set('seminary', $seminary);
+			$this->set('questgroup', $questgroup);
+			$this->set('quest', $quest);
 		}
 		
 		

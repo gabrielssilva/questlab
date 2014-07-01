@@ -6,6 +6,14 @@
 <?=$questgroupshierarchypath?>
 <h1><?=$quest['title']?></h1>
 
+<?php if(count(array_intersect(array('admin', 'moderator'), \hhu\z\controllers\SeminaryController::$character['characterroles'])) > 0) : ?>
+<nav class="admin">
+	<li><a href="<?=$linker->link('edit', 5)?>"><?=_('Edit Quest')?></a></li>
+	<?php if(in_array('admin', \hhu\z\controllers\SeminaryController::$character['characterroles'])) : ?>
+	<li><a href="<?=$linker->link('delete', 5)?>"><?=_('Delete Quest')?></a></li>
+	<?php endif ?>
+</nav>
+<?php endif ?>
 <?php if(array_key_exists('Prolog', $questtexts) && count($questtexts['Prolog']) > 0) : ?>
 <section>
 	<h1 id="questtext"><?=_('Prolog')?></h1>

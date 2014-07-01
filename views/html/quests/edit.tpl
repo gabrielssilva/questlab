@@ -5,7 +5,7 @@
 <?php endif ?>
 <?=$questgroupshierarchypath?>
 
-<h1><?=_('Create Quest')?></h1>
+<h1><?=_('Edit Quest')?></h1>
 <?php if($validation !== true) : ?>
 <ul>
 	<?php foreach($validation as $field => &$settings) : ?>
@@ -57,6 +57,9 @@
 <?php endif ?>
 <form method="post" enctype="multipart/form-data">
 	<fieldset>
+		<?php if(!is_null($media)) : ?>
+		<a href="<?=$linker->link(array('media','seminary',$seminary['url'],$media['url']))?>"><img style="width:10em; display:block;" src="<?=$linker->link(array('media','seminary',$seminary['url'],$media['url']))?>" /></a>
+		<?php endif ?>
 		<legend><?=_('Picture')?></legend>
 		<input type="file" name="media" accept="<?=implode(',', array_map(function($m) { return $m['mimetype']; }, $mimetypes))?>" />
 		<p><?=_('Allowed file types')?>:</p>
@@ -107,5 +110,5 @@
 		<label for="wrongtext"><?=('Wrong text')?>:</label><br />
 		<textarea name="wrongtext" placeholder="<?=_('Wrong text')?>" style="width:100%; height:10em;"><?=$wrongText?></textarea><br />
 	</fieldset>
-	<input type="submit" name="create" value="<?=_('create')?>" />
+	<input type="submit" name="edit" value="<?=_('edit')?>" />
 </form>
