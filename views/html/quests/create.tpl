@@ -98,10 +98,8 @@
 		</select>
 	</fieldset>
 	<fieldset>
-		<?php if(is_null($questgroup['hierarchy'])) : ?>
 		<label for="entrytext"><?=('Entry text')?>:</label><br />
 		<textarea name="entrytext" placeholder="<?=_('Entry text')?>" style="width:100%; height:10em;"><?=$entryText?></textarea><br />
-		<?php endif ?>
 		<label for="task"><?=_('Task')?>:</label><br />
 		<textarea name="task" placeholder="<?=('Task')?>" style="width:100%; height:10em;"><?=$task?></textarea><br />
 		<label for="wrongtext"><?=('Wrong text')?>:</label><br />

@@ -14,6 +14,7 @@
 <nav class="admin">
 	<li><a href="<?=$linker->link(array('edit',$seminary['url'],$questgroup['url']),1)?>"><?=_('Edit Questgroup')?></a></li>
 	<li><a href="<?=$linker->link(array('delete',$seminary['url'],$questgroup['url']),1)?>"><?=_('Delete Questgroup')?></a></li>
+	<li><a href="<?=$linker->link(array('quests','create',$seminary['url'],$questgroup['url']))?>"><?=_('Create new Quest')?></a></li>
 </nav>
 <?php endif ?>
 
