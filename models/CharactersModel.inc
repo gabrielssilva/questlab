@@ -125,7 +125,7 @@
 		 * @param	int	$offset		Offset (optional)
 		 * @return	array			Characters
 		 */
-		public function getCharactersForSeminarySorted($seminaryId, $sort, $charactername, $limit=null, $offset=0)
+		public function getCharactersForSeminarySorted($seminaryId, $sort, $charactername='', $limit=null, $offset=0)
 		{
 			switch($sort)
 			{
