@@ -31,7 +31,7 @@
 		 * 
 		 * @var array
 		 */
-		public $models = array('questgroupshierarchy', 'quests', 'questtexts');
+		public $models = array('questgroupshierarchy', 'quests');
 		
 		
 		
@@ -156,71 +156,6 @@
 			
 			
 			return $data[0];
-		}
-		
-		
-		/**
-		 * Get texts of a Questgroup.
-		 * 
-		 * @param	int	$questgroupId	ID of a Questgroup
-		 * @return	array			Texts of this Questgroup
-		 */
-		public function getQuestgroupTexts($questgroupId)
-		{
-			return $this->db->query(
-				'SELECT id, pos, text '.
-				'FROM questgrouptexts '.
-				'WHERE questgroup_id = ? '.
-				'ORDER BY pos ASC',
-				'i',
-				$questgroupId
-			);
-		}
-		
-		
-		/**
-		 * Get the first text of a Questgroup.
-		 * 
-		 * @param	int	$questgroupId	ID of a Questgroup
-		 * @return	string			First text of this Questgroup or NULL
-		 */
-		public function getFirstQuestgroupText($questgroupId)
-		{
-			// Text of Questgroup itself
-			$questgroupTexts = $this->getQuestgroupTexts($questgroupId);
-			if(!empty($questgroupTexts)) {
-				return $questgroupTexts[0]['text'];
-			}
-			
-			// Text of first Quest
-			$quest = $this->Quests->getFirstQuestOfQuestgroup($questgroupId);
-			if(!is_null($quest))
-			{
-				$questText = $this->Questtexts->getFirstQuestText($quest['id']);
-				if(!is_null($questText)) {
-					return $questText;
-				}
-			}
-			
-			// Text of ChildQuestgroups
-			$questgroupHierarchy = $this->Questgroupshierarchy->getHierarchyForQuestgroup($questgroupId);
-			$childQuestgroupshierarchy = $this->Questgroupshierarchy->getChildQuestgroupshierarchy($questgroupHierarchy['id']);
-			foreach($childQuestgroupshierarchy as &$hierarchy)
-			{
-				// Get Questgroups
-				$questgroups = $this->getQuestgroupsForHierarchy($hierarchy['id'], $questgroupId);
-				foreach($questgroups as &$group)
-				{
-					$childQuestgroupText = $this->getFirstQuestgroupText($group['id']);
-					if(!is_null($childQuestgroupText)) {
-						return $childQuestgroupText;
-					}
-				}
-			}
-			
-			
-			// No text found
-			return null;
 		}
 		
 		

@@ -24,7 +24,7 @@
 		 * 
 		 * @var array
 		 */
-		public $models = array('seminaries', 'questgroupshierarchy', 'questgroups', 'quests', 'questtexts', 'media');
+		public $models = array('seminaries', 'questgroupshierarchy', 'questgroups', 'questgrouptexts', 'quests', 'questtexts', 'media');
 		/**
 		 * Required components
 		 * 
@@ -144,7 +144,7 @@
 			}
 			
 			// Get texts
-			$questgroupTexts = $this->Questgroups->getQuestgroupTexts($questgroup['id']);
+			$questgroupTexts = $this->Questgrouptexts->getQuestgroupTexts($questgroup['id']);
 			
 			// Media
 			$picture = null;
@@ -479,6 +479,84 @@
 			$this->set('mimetypes', $mimetypes);
 			$this->set('validation', $validation);
 			$this->set('validationSettings', $validationSettings);
+		}
+
+
+		/**
+		 * Action: edittexts.
+		 * 
+		 * Edit a Questgroup.
+		 * 
+		 * @throws	IdNotFoundException
+		 * @param	string	$seminaryUrl	URL-title of a Seminary
+		 * @param	string	$questgroupUrl	URL-title of Questgroup to edit
+		 */
+		public function edittexts($seminaryUrl, $questgroupUrl)
+		{
+			// Get seminary
+			$seminary = $this->Seminaries->getSeminaryByUrl($seminaryUrl);
+
+			// Get Questgroup
+			$questgroup = $this->Questgroups->getQuestgroupByUrl($seminary['id'], $questgroupUrl);
+
+			// Get Questgroup texts
+			$questgroupTexts = $this->Questgrouptexts->getQuestgroupTexts($questgroup['id']); 
+
+			// Get allowed mimetypes
+			$mimetypes = \nre\configs\AppConfig::$mimetypes['moodpics'];
+
+			// Check request method
+			if($this->request->getRequestMethod() == 'POST' && !is_null($this->request->getPostParam('edit')))
+			{
+				$texts = $this->request->getPostParam('questgrouptexts');
+				$deleteTexts = $this->request->getPostParam('deletes');
+				if(!is_array($deleteTexts)) {
+					$deleteTexts = array();
+				}
+
+				// Edit or delete texts
+				foreach($questgroupTexts as $text)
+				{
+					if(array_key_exists($text['id'], $deleteTexts))
+					{
+						$this->Questgrouptexts->deleteQuestgrouptext($text);
+						unset($texts[$text['id']]);
+					}
+					elseif(array_key_exists($text['id'], $texts))
+					{
+						$this->Questgrouptexts->editQuestgrouptext($text['id'], $texts[$text['id']]);
+						unset($texts[$text['id']]);
+					}
+				}
+
+				// Add new texts
+				foreach($texts as $text) {
+					if(!empty($text)) {
+						$this->Questgrouptexts->addQuestgrouptextToQuestgroup($this->Auth->getUserId(), $questgroup['id'], $text);
+					}
+				}
+
+				// Redirect to Questgroup
+				$this->redirect($this->linker->link(array('questgroup', $seminary['url'], $questgroup['url']), 1));
+			}
+
+			// Media
+			$picture = null;
+			if(!is_null($questgroup['questgroupspicture_id'])) {
+				$picture = $this->Media->getSeminaryMediaById($questgroup['questgroupspicture_id']);
+			}
+
+
+			// Set titile
+			$this->addTitleLocalized('Edit Questgroup texts');
+			$this->addTitle($seminary['title']);
+			
+			// Pass data to view
+			$this->set('seminary', $seminary);
+			$this->set('questgroup', $questgroup);
+			$this->set('questgrouptexts', $questgroupTexts);
+			$this->set('picture', $picture);
+			$this->set('mimetypes', $mimetypes);
 		}
 
 

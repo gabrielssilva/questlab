@@ -13,7 +13,12 @@
 <?php if(count(array_intersect(array('admin', 'moderator'), \hhu\z\controllers\SeminaryController::$character['characterroles'])) > 0) : ?>
 <nav class="admin">
 	<li><a href="<?=$linker->link(array('edit',$seminary['url'],$questgroup['url']),1)?>"><?=_('Edit Questgroup')?></a></li>
+	<li><a href="<?=$linker->link(array('edittexts',$seminary['url'],$questgroup['url']),1)?>"><?=_('Edit Questgroup texts')?></a></li>
+	<?php if(in_array('admin', \hhu\z\controllers\SeminaryController::$character['characterroles'])) : ?>
 	<li><a href="<?=$linker->link(array('delete',$seminary['url'],$questgroup['url']),1)?>"><?=_('Delete Questgroup')?></a></li>
+	<?php endif ?>
+</nav>
+<nav class="admin">
 	<li><a href="<?=$linker->link(array('quests','create',$seminary['url'],$questgroup['url']))?>"><?=_('Create new Quest')?></a></li>
 </nav>
 <?php endif ?>

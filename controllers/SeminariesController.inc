@@ -24,7 +24,7 @@
 		 * 
 		 * @var array
 		 */
-		public $models = array('seminaries', 'users', 'characterroles', 'charactertypes', 'questgroupshierarchy', 'questgroups', 'media');
+		public $models = array('seminaries', 'users', 'characterroles', 'charactertypes', 'questgroupshierarchy', 'questgroups', 'questgrouptexts', 'media');
 		/**
 		 * Required components
 		 * 
@@ -137,7 +137,7 @@
 					}
 					
 					// Get first Questgroup text
-					$text = $this->Questgroups->getFirstQuestgroupText($questgroup['id']);
+					$text = $this->Questgrouptexts->getFirstQuestgroupText($questgroup['id']);
 					if(!is_null($text))
 					{
 						$questgroup['text'] = \hhu\z\Utils::shortenString($text, 100, 120).' …';
