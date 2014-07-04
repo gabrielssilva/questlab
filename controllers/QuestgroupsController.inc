@@ -40,6 +40,7 @@
 			'questgroup'	=> array('admin', 'moderator', 'user'),
 			'create'	=> array('admin', 'moderator', 'user'),
 			'edit'		=> array('admin', 'moderator', 'user'),
+			'edittexts'	=> array('admin', 'moderator', 'user'),
 			'moveup'	=> array('admin', 'moderator', 'user'),
 			'movedown'	=> array('admin', 'moderator', 'user'),
 			'delete'	=> array('admin', 'moderator', 'user')
@@ -52,9 +53,10 @@
 		public $seminaryPermissions = array(
 			'questgroup'	=> array('admin', 'moderator', 'user'),
 			'create'	=> array('admin'),
-			'edit'		=> array('admin'),
-			'moveup'	=> array('admin'),
-			'movedown'	=> array('admin'),
+			'edit'		=> array('admin', 'moderator'),
+			'edittexts'	=> array('admin', 'moderator'),
+			'moveup'	=> array('admin', 'moderator'),
+			'movedown'	=> array('admin', 'moderator'),
 			'delete'	=> array('admin')
 		);
 		
@@ -485,7 +487,7 @@
 		/**
 		 * Action: edittexts.
 		 * 
-		 * Edit a Questgroup.
+		 * Edit the texts of a Questgroup.
 		 * 
 		 * @throws	IdNotFoundException
 		 * @param	string	$seminaryUrl	URL-title of a Seminary
