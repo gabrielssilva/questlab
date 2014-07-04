@@ -23,7 +23,7 @@
 		<?php foreach($questtexts['Prolog'] as &$questtext) : ?>
 		<p class="qtext cf">
 			<?php if(array_key_exists('media', $questtext)) : ?>
-			<a href="<?=$linker->link(array('media','seminary',$seminary['url'],$media['url']))?>"><img src="<?=$linker->link(array('media','seminary',$seminary['url'],$questtext['media']['url']))?>" /></a>
+			<a href="<?=$linker->link(array('media','seminary',$seminary['url'],$questtext['media']['url']))?>"><img src="<?=$linker->link(array('media','seminary',$seminary['url'],$questtext['media']['url']))?>" /></a>
 			<?php elseif(!is_null($media) && !$mediaShown) : ?>
 			<?php $mediaShown = true; ?>
 			<a href="<?=$linker->link(array('media','seminary',$seminary['url'],$media['url']))?>"><img src="<?=$linker->link(array('media','seminary',$seminary['url'],$media['url']))?>" /></a>
