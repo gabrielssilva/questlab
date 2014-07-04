@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: The Legend of Z\n"
-"POT-Creation-Date: 2014-07-01 15:40+0100\n"
-"PO-Revision-Date: 2014-07-01 15:41+0100\n"
+"POT-Creation-Date: 2014-07-01 23:17+0100\n"
+"PO-Revision-Date: 2014-07-01 23:17+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de_DE\n"
@@ -63,8 +63,8 @@ msgstr "Neuer Lösungsvorschlag"
 msgid "Character submission approved"
 msgstr "Lösungsvorschlag bewertet"
 
-#: controllers/QuestsController.inc:1004
-#: questtypes/submit/html/submission.tpl:30 views/html/quests/quest.tpl:53
+#: controllers/QuestsController.inc:1107
+#: questtypes/submit/html/submission.tpl:30 views/html/quests/quest.tpl:54
 #: views/html/quests/submissions.tpl:30
 msgid "solved"
 msgstr "Richtig!"
@@ -76,7 +76,7 @@ msgstr "Richtig!"
 msgid "lost"
 msgstr "verloren"
 
-#: questtypes/bossfight/html/quest.tpl:41 views/html/quests/quest.tpl:128
+#: questtypes/bossfight/html/quest.tpl:41 views/html/quests/quest.tpl:129
 msgid "Choose"
 msgstr "Wählen"
 
@@ -191,7 +191,7 @@ msgstr "Bewertet von %s am %s um %s Uhr"
 msgid "Comment"
 msgstr "Kommentar"
 
-#: questtypes/submit/html/submission.tpl:31 views/html/quests/quest.tpl:58
+#: questtypes/submit/html/submission.tpl:31 views/html/quests/quest.tpl:59
 #: views/html/quests/submissions.tpl:20
 msgid "unsolved"
 msgstr "Leider falsch!"
@@ -482,7 +482,7 @@ msgstr "Motto"
 #: views/html/charactertypes/manage.tpl:91 views/html/library/create.tpl:46
 #: views/html/library/edit.tpl:124 views/html/questgroups/create.tpl:76
 #: views/html/questgroupshierarchy/create.tpl:63
-#: views/html/quests/create.tpl:110 views/html/seminaries/create.tpl:75
+#: views/html/quests/create.tpl:108 views/html/seminaries/create.tpl:75
 #: views/html/users/create.tpl:96
 msgid "create"
 msgstr "erstellen"
@@ -513,9 +513,10 @@ msgstr "Soll die %s-Gruppen „%s“ wirklich gelöscht werden?"
 #: views/html/characters/delete.tpl:17 views/html/charactertypes/manage.tpl:48
 #: views/html/library/delete.tpl:14 views/html/library/edit.tpl:83
 #: views/html/questgroups/delete.tpl:17
+#: views/html/questgroups/edittexts.tpl:16
 #: views/html/questgroupshierarchy/delete.tpl:14
-#: views/html/quests/delete.tpl:11 views/html/seminaries/delete.tpl:13
-#: views/html/users/delete.tpl:11
+#: views/html/quests/delete.tpl:11 views/html/quests/edittexts.tpl:22
+#: views/html/seminaries/delete.tpl:13 views/html/users/delete.tpl:11
 msgid "delete"
 msgstr "löschen"
 
@@ -550,8 +551,9 @@ msgstr "%s-Gruppe bearbeiten"
 #: views/html/charactergroups/editgroupsgroup.tpl:50
 #: views/html/charactergroupsquests/edit.tpl:94
 #: views/html/characters/edit.tpl:108 views/html/questgroups/edit.tpl:64
-#: views/html/questgroupshierarchy/edit.tpl:57 views/html/quests/edit.tpl:113
-#: views/html/seminaries/edit.tpl:77
+#: views/html/questgroups/edittexts.tpl:24
+#: views/html/questgroupshierarchy/edit.tpl:57 views/html/quests/edit.tpl:111
+#: views/html/quests/edittexts.tpl:32 views/html/seminaries/edit.tpl:77
 msgid "edit"
 msgstr "bearbeiten"
 
@@ -632,7 +634,6 @@ msgid "Add Characters"
 msgstr "Füge Charaktere hinzu"
 
 #: views/html/charactergroups/managegroup.tpl:59
-#: views/html/questgroups/questgroup.tpl:21
 #: views/html/questgroups/questgroup.tpl:108 views/html/quests/index.tpl:9
 msgid "Quests"
 msgstr "Quests"
@@ -1157,7 +1158,7 @@ msgid "Moodpic"
 msgstr "Stimmungsbild"
 
 #: views/html/questgroups/delete.tpl:14
-#: views/html/questgroups/questgroup.tpl:16
+#: views/html/questgroups/questgroup.tpl:18
 msgid "Delete Questgroup"
 msgstr "Questgruppe löschen"
 
@@ -1170,7 +1171,16 @@ msgstr "Soll das die Questgruppe „%s“ wirklich gelöscht werden?"
 msgid "Edit Questgroup"
 msgstr "Questgruppe bearbeiten"
 
-#: views/html/questgroups/questgroup.tpl:17
+#: views/html/questgroups/edittexts.tpl:8
+#: views/html/questgroups/questgroup.tpl:16
+msgid "Edit Questgroup texts"
+msgstr "Questgruppetexte bearbeiten"
+
+#: views/html/questgroups/edittexts.tpl:20 views/html/quests/edittexts.tpl:27
+msgid "New Questgroup text"
+msgstr "Neuer Questgruppentext"
+
+#: views/html/questgroups/questgroup.tpl:22
 msgid "Create new Quest"
 msgstr "Neue Quest erstellen"
 
@@ -1302,20 +1312,20 @@ msgstr "Das Bild ist ungültig"
 msgid "Picture"
 msgstr "Bild"
 
-#: views/html/quests/create.tpl:103 views/html/quests/edit.tpl:106
+#: views/html/quests/create.tpl:102 views/html/quests/edit.tpl:105
 msgid "Entry text"
 msgstr "Einstiegstext"
 
-#: views/html/quests/create.tpl:105 views/html/quests/edit.tpl:108
-#: views/html/quests/quest.tpl:49
+#: views/html/quests/create.tpl:103 views/html/quests/edit.tpl:106
+#: views/html/quests/quest.tpl:50
 msgid "Task"
 msgstr "Aufgabe"
 
-#: views/html/quests/create.tpl:108 views/html/quests/edit.tpl:111
+#: views/html/quests/create.tpl:106 views/html/quests/edit.tpl:109
 msgid "Wrong text"
 msgstr "Text für falsche Antwort"
 
-#: views/html/quests/delete.tpl:8 views/html/quests/quest.tpl:13
+#: views/html/quests/delete.tpl:8 views/html/quests/quest.tpl:14
 msgid "Delete Quest"
 msgstr "Quest löschen"
 
@@ -1327,6 +1337,10 @@ msgstr "Soll die Quest „%s“ wirklich gelöscht werden?"
 #: views/html/quests/edit.tpl:8 views/html/quests/quest.tpl:11
 msgid "Edit Quest"
 msgstr "Quest bearbeiten"
+
+#: views/html/quests/edittexts.tpl:8 views/html/quests/quest.tpl:12
+msgid "Edit Quest texts"
+msgstr "Questtexte bearbeiten"
 
 #: views/html/quests/index.tpl:16 views/html/quests/index.tpl:23
 msgid "all"
@@ -1340,44 +1354,44 @@ msgstr "Questtyp"
 msgid "open submissions"
 msgstr "offene Lösungsvorschläge"
 
-#: views/html/quests/quest.tpl:19
+#: views/html/quests/quest.tpl:20
 msgid "Prolog"
 msgstr "Prolog"
 
-#: views/html/quests/quest.tpl:54
+#: views/html/quests/quest.tpl:55
 msgid "Quest completed."
 msgstr "Quest abgeschlossen."
 
-#: views/html/quests/quest.tpl:54
+#: views/html/quests/quest.tpl:55
 #, php-format
 msgid "You have earned %d XPs."
 msgstr "Du hast %d XP erhalten."
 
-#: views/html/quests/quest.tpl:70
+#: views/html/quests/quest.tpl:71
 msgid "Task already successfully solved"
 msgstr "Du hast die Aufgabe bereits erfolgreich gelöst"
 
-#: views/html/quests/quest.tpl:72
+#: views/html/quests/quest.tpl:73
 msgid "Show answer"
 msgstr "Lösung anzeigen"
 
-#: views/html/quests/quest.tpl:82
+#: views/html/quests/quest.tpl:83
 msgid "Epilog"
 msgstr "Epilog"
 
-#: views/html/quests/quest.tpl:108
+#: views/html/quests/quest.tpl:109
 msgid "Continuation"
 msgstr "Setze deine Reise fort"
 
-#: views/html/quests/quest.tpl:115 views/html/quests/quest.tpl:131
+#: views/html/quests/quest.tpl:116 views/html/quests/quest.tpl:132
 msgid "Quest"
 msgstr "Quest"
 
-#: views/html/quests/quest.tpl:133
+#: views/html/quests/quest.tpl:134
 msgid "Go on"
 msgstr "Fortfahren"
 
-#: views/html/quests/quest.tpl:142 views/html/seminaries/seminary.tpl:52
+#: views/html/quests/quest.tpl:143 views/html/seminaries/seminary.tpl:52
 msgid "Let’s go"
 msgstr "Auf ins Abenteuer!"
 

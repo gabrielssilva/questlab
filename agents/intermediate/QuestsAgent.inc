@@ -69,6 +69,15 @@
 
 
 		/**
+		 * Action: edittexts.
+		 */
+		public function edittexts(\nre\core\Request $request, \nre\core\Response $response)
+		{
+			$this->addSubAgent('Questgroupshierarchypath', 'index', $request->getParam(3), $request->getParam(4), true);
+		}
+
+
+		/**
 		 * Action: delete.
 		 */
 		public function delete(\nre\core\Request $request, \nre\core\Response $response)

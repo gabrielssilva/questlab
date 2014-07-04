@@ -64,7 +64,7 @@
 			if(is_null($questtexttypeUrl))
 			{
 				return $this->db->query(
-					'SELECT questtexts.id, questtexts.text, questtexts.pos, questtexts.out_text, questtexts.abort_text, questtexts.questsmedia_id, questtexttypes.id AS type_id, questtexttypes.type, questtexttypes.url AS type_url '.
+					'SELECT questtexts.id, questtexts.quest_id, questtexts.text, questtexts.pos, questtexts.out_text, questtexts.abort_text, questtexts.questsmedia_id, questtexttypes.id AS type_id, questtexttypes.type, questtexttypes.url AS type_url '.
 					'FROM questtexts '.
 					'LEFT JOIN questtexttypes ON questtexttypes.id = questtexts.questtexttype_id '.
 					'WHERE questtexts.quest_id = ?',
@@ -75,7 +75,7 @@
 			else
 			{
 				return $this->db->query(
-					'SELECT questtexts.id, questtexts.text, questtexts.pos, questtexts.out_text, questtexts.abort_text, questtexts.questsmedia_id, questtexttypes.id AS type_id, questtexttypes.type, questtexttypes.url AS type_url '.
+					'SELECT questtexts.id, questtexts.quest_id, questtexts.text, questtexts.pos, questtexts.out_text, questtexts.abort_text, questtexts.questsmedia_id, questtexttypes.id AS type_id, questtexttypes.type, questtexttypes.url AS type_url '.
 					'FROM questtexts '.
 					'LEFT JOIN questtexttypes ON questtexttypes.id = questtexts.questtexttype_id '.
 					'WHERE questtexts.quest_id = ? and questtexttypes.url = ?',
@@ -220,44 +220,105 @@
 		
 		
 		/**
-		 * Add a list of Questtexts to a Quest.
+		 * Add a Questtexts to a Quest.
 		 * 
 		 * @param	int	$userId			ID of user
 		 * @param	int	$questId		ID of Quest to add texts to
 		 * @param	string	$questtexttypeUrl	URL-type of Questtexttype of texts
-		 * @param	array	$texts			List of texts to add.
+		 * @param	string	$text			Text to add.
 		 */
-		public function addQuesttextsToQuest($userId, $questId, $questtexttypeUrl, $texts)
+		public function addQuesttextToQuest($userId, $questId, $questtexttypeUrl, $text)
 		{
 			$questtexttype = $this->getQuesttexttypeByUrl($questtexttypeUrl);
 			if(is_null($questtexttype)) {
 				return;
 			}
-			foreach($texts as &$text)
-			{
-				$pos = $this->db->query(
-					'SELECT COALESCE(MAX(pos),0)+1 AS pos '.
-					'FROM questtexts '.
-					'WHERE quest_id = ?',
-					'i',
-					$questId
-				);
-				$pos = $pos[0]['pos'];
-				
-				$this->db->query(
-					'INSERT INTO questtexts '.
-					'(created_user_id, quest_id, questtexttype_id, pos, text) '.
-					'VALUES '.
-					'(?, ?, ?, ?, ?)',
-					'iiiis',
-					$userId, $questId, $questtexttype['id'], $pos,
-					$text
-				);
-			}
+
+			// Get position
+			$pos = $this->db->query(
+				'SELECT COALESCE(MAX(pos),0)+1 AS pos '.
+				'FROM questtexts '.
+				'WHERE quest_id = ?',
+				'i',
+				$questId
+			);
+			$pos = $pos[0]['pos'];
+			
+			// Add Questtext
+			$this->db->query(
+				'INSERT INTO questtexts '.
+				'(created_user_id, quest_id, questtexttype_id, pos, text) '.
+				'VALUES '.
+				'(?, ?, ?, ?, ?)',
+				'iiiis',
+				$userId, $questId, $questtexttype['id'], $pos,
+				$text
+			);
+
+
+			// Return ID
+			return $this->db->getInsertId();
+		}
+
+
+		/**
+		 * Set the media for a Quest text.
+		 * 
+		 * @param	int	$questtextId	ID of Quest text to set media for
+		 * @param	int	$questmediaId	ID of Questsmedia to set
+		 */
+		public function setQuestmedia($questtextId, $questsmediaId)
+		{
+			$this->db->query(
+				'UPDATE questtexts '.
+				'SET questsmedia_id = ? '.
+				'WHERE id = ?',
+				'ii',
+				$questsmediaId,
+				$questtextId
+			);
+		}
+		
+
+		/**
+		 * Edit a Quest text.
+		 * 
+		 * @param	int	$questtextId	ID of Quest text to edit
+		 * @param	string	$text		New text
+		 */
+		public function editQuesttext($questtextId, $text)
+		{
+			$this->db->query(
+				'UPDATE questtexts '.
+				'SET text = ? '.
+				'WHERE id = ?',
+				'si',
+				$text,
+				$questtextId
+			);
 		}
 		
 		
-		
+		/**
+		 * Delete a Quest text.
+		 * 
+		 * @param	array	$questtext	Data of Quest text to delete
+		 */
+		public function deleteQuesttext($questtext)
+		{
+			// Delete Quest text
+			$this->db->query('DELETE FROM questtexts WHERE id = ?', 'i', $questtext['id']);
+
+			// Adjust positions
+			$this->db->query(
+				'UPDATE questtexts '.
+				'SET pos = pos - 1 '.
+				'WHERE quest_id = ? AND pos > ?',
+				'ii',
+				$questtext['quest_id'],
+				$questtext['pos']
+			);
+		}
 		
 	}
 

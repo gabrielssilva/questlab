@@ -270,6 +270,9 @@
 					$this->db->rollback();
 					$mediaId = false;
 				}
+				else {
+					$this->db->commit();
+				}
 			}
 			catch(\nre\exceptions\DatamodelException $e) {
 				$this->db->rollback();

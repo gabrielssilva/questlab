@@ -43,6 +43,7 @@
 			'submission'	=> array('admin', 'moderator', 'user'),
 			'create'	=> array('admin', 'moderator', 'user'),
 			'edit'		=> array('admin', 'moderator', 'user'),
+			'edittexts'	=> array('admin', 'moderator', 'user'),
 			'delete'	=> array('admin', 'moderator', 'user')
 		);
 		/**
@@ -57,6 +58,7 @@
 			'submission'	=> array('admin', 'moderator'),
 			'create'	=> array('admin', 'moderator'),
 			'edit'		=> array('admin', 'moderator'),
+			'edittexts'	=> array('admin', 'moderator'),
 			'delete'	=> array('admin')
 		);
 		
@@ -767,6 +769,227 @@
 			$this->set('validation', $validation);
 			$this->set('validationSettings', $validationSettings);
 		}
+
+
+		/**
+		 * Action: edittexts.
+		 * 
+		 * Edit the texts of a Quest of a Seminary.
+		 * 
+		 * @throws	IdNotFoundException
+		 * @param	string	$seminaryUrl		URL-Title of Seminary
+		 * @param	string	$questgroupUrl		URL-Title of Questgroup
+		 * @param	string	$questUrl		URL-Title of Quest
+		 */
+		public function edittexts($seminaryUrl, $questgroupUrl, $questUrl)
+		{
+			// Get Seminary
+			$seminary = $this->Seminaries->getSeminaryByUrl($seminaryUrl);
+
+			// Get Questgroup
+			$questgroup = $this->Questgroups->getQuestgroupByUrl($seminary['id'], $questgroupUrl);
+			$questgroup['hierarchy'] = $this->Questgroupshierarchy->getHierarchyForQuestgroup($questgroup['id']);
+			$questgroup['picture'] = (!is_null($questgroup['questgroupspicture_id'])) ?  $this->Media->getSeminaryMediaById($questgroup['questgroupspicture_id']) : null;
+			
+			// Get Quest
+			$quest = $this->Quests->getQuestByUrl($seminary['id'], $questgroup['id'], $questUrl);
+
+			// Get Questtexts
+			$questtextTypes = $this->Questtexts->getQuesttexttypes();
+			foreach($questtextTypes as &$questtextType)
+			{
+				$questtextType['texts'] = $this->Questtexts->getQuesttextsOfQuest($quest['id'], $questtextType['url']);
+				foreach($questtextType['texts'] as &$questtext)
+				{
+					if(!is_null($questtext['questsmedia_id'])) {
+						$questtext['media'] = $this->Media->getSeminaryMediaById($questtext['questsmedia_id']);
+					}
+				}
+			}
+
+			// Get allowed mimetypes
+			$mimetypes = \nre\configs\AppConfig::$mimetypes['moodpics'];
+
+			// Check request method
+			$validations = array();
+			if($this->request->getRequestMethod() == 'POST' && !is_null($this->request->getPostParam('edit')))
+			{
+				$media = $_FILES['media'];
+				$texts = $this->request->getPostParam('questtexts');
+				$deleteTexts = $this->request->getPostParam('deletes');
+				if(!is_array($deleteTexts)) {
+					$deleteTexts = array();
+				}
+
+				foreach($questtextTypes as &$type)
+				{
+					// Edit or delete texts
+					if(!array_key_exists($type['url'], $texts)) {
+						continue;
+					}
+					foreach($type['texts'] as &$text)
+					{
+						if(array_key_exists($type['url'], $deleteTexts) && array_key_exists($text['id'], $deleteTexts[$type['url']]))
+						{
+							// Delete text
+							$this->Questtexts->deleteQuesttext($text);
+							//unset($texts[$type['url']][$text['id']]);
+						}
+						elseif(array_key_exists($type['url'], $texts) && array_key_exists($text['id'], $texts[$type['url']]))
+						{
+							// Edit text
+							$this->Questtexts->editQuesttext($text['id'], $texts[$type['url']][$text['id']]);
+
+							// Validate medium
+							$medium = null;
+							$validation = true;
+							if(!empty($media) && array_key_exists($type['url'], $media['error']) && array_key_exists($text['id'], $media['error'][$type['url']]) && $media['error'][$type['url']][$text['id']] != UPLOAD_ERR_NO_FILE)
+							{
+								$medium = array(
+									'name'		=> $media['name'][$type['url']][$text['id']],
+									'tmp_name'	=> $media['tmp_name'][$type['url']][$text['id']],
+									'type'		=> $media['type'][$type['url']][$text['id']],
+									'size'		=> $media['size'][$type['url']][$text['id']],
+									'error'		=> $media['error'][$type['url']][$text['id']]
+								);
+
+								// Check error
+								if($medium['error'] !== UPLOAD_ERR_OK) {
+									$validation = $this->Validation->addValidationResult($validation, 'media', 'error', $medium);
+								}
+								
+								// Check mimetype
+								$mediaMimetype = null;
+								$medium['mimetype'] = \hhu\z\Utils::getMimetype($medium['tmp_name'], $medium['type']);
+								foreach($mimetypes as &$mimetype) {
+									if($mimetype['mimetype'] == $medium['mimetype']) {
+										$mediaMimetype = $mimetype;
+										break;
+									}
+								}
+								if(is_null($mediaMimetype)) {
+									$validation = $this->Validation->addValidationResult($validation, 'media', 'mimetype', $medium['mimetype']);
+								}
+								elseif($medium['size'] > $mediaMimetype['size']) {
+									$validation = $this->Validation->addValidationResult($validation, 'media', 'size', $mediaMimetype['size']);
+								}
+							}
+							$validations[$type['url']][$text['id']] = $validation;
+
+							// Upload medium
+							if(!is_null($medium) && $validation === true)
+							{
+								$questsmediaId = $this->Media->createQuestMedia(
+									$this->Auth->getUserId(),
+									$seminary['id'],
+									sprintf('questtext-%d-%d', $quest['id'], $text['id']),
+									$medium['name'],
+									$medium['type'],
+									$medium['tmp_name']
+								);
+								if($questsmediaId > 0) {
+									$this->Questtexts->setQuestmedia($text['id'], $questsmediaId);
+								}
+							}
+
+							// Remove text from list
+							//unset($texts[$type['url']][$text['id']]);
+						}
+					}
+
+					// Add new text
+					if(array_key_exists($type['url'], $texts) && array_key_exists('new', $texts[$type['url']]))
+					{
+						$text = $texts[$type['url']]['new'];
+						if(!empty($text))
+						{
+							// Add text
+							$questtextId = $this->Questtexts->addQuesttextToQuest(
+								$this->Auth->getUserId(),
+								$quest['id'],
+								$type['url'],
+								$text
+							);
+
+							// Validate medium
+							$medium = null;
+							$validation = true;
+							if(!empty($media) && array_key_exists($type['url'], $media['error']) && array_key_exists('new', $media['error'][$type['url']]) && $media['error'][$type['url']]['new'] != UPLOAD_ERR_NO_FILE)
+							{
+								$medium = array(
+									'name'		=> $media['name'][$type['url']]['new'],
+									'tmp_name'	=> $media['tmp_name'][$type['url']]['new'],
+									'type'		=> $media['type'][$type['url']]['new'],
+									'size'		=> $media['size'][$type['url']]['new'],
+									'error'		=> $media['error'][$type['url']]['new']
+								);
+
+								// Check error
+								if($medium['error'] !== UPLOAD_ERR_OK) {
+									$validation = $this->Validation->addValidationResult($validation, 'media', 'error', $medium);
+								}
+								
+								// Check mimetype
+								$mediaMimetype = null;
+								$medium['mimetype'] = \hhu\z\Utils::getMimetype($medium['tmp_name'], $medium['type']);
+								foreach($mimetypes as &$mimetype) {
+									if($mimetype['mimetype'] == $medium['mimetype']) {
+										$mediaMimetype = $mimetype;
+										break;
+									}
+								}
+								if(is_null($mediaMimetype)) {
+									$validation = $this->Validation->addValidationResult($validation, 'media', 'mimetype', $medium['mimetype']);
+								}
+								elseif($medium['size'] > $mediaMimetype['size']) {
+									$validation = $this->Validation->addValidationResult($validation, 'media', 'size', $mediaMimetype['size']);
+								}
+							}
+							$validations[$type['url']]['new'] = $validation;
+							
+							// Upload medium
+							if(!is_null($medium) && $validation === true)
+							{
+								$questsmediaId = $this->Media->createQuestMedia(
+									$this->Auth->getUserId(),
+									$seminary['id'],
+									sprintf('questtext-%d-%d', $quest['id'], $questtextId),
+									$medium['name'],
+									$medium['type'],
+									$medium['tmp_name']
+								);
+								if($questsmediaId > 0) {
+									$this->Questtexts->setQuestmedia($questtextId, $questsmediaId);
+								}
+							}
+						}
+					}
+
+					// Reload texts
+					$type['texts'] = $this->Questtexts->getQuesttextsOfQuest($quest['id'], $type['url']);
+					foreach($type['texts'] as &$questtext)
+					{
+						if(!is_null($questtext['questsmedia_id'])) {
+							$questtext['media'] = $this->Media->getSeminaryMediaById($questtext['questsmedia_id']);
+						}
+					}
+				}
+			}
+
+
+			// Set titile
+			$this->addTitleLocalized('Edit Quest texts');
+			$this->addTitle($seminary['title']);
+			
+			// Pass data to view
+			$this->set('seminary', $seminary);
+			$this->set('questgroup', $questgroup);
+			$this->set('quest', $quest);
+			$this->set('questtexttypes', $questtextTypes);
+			$this->set('mimetypes', $mimetypes);
+			$this->set('validations', $validations);
+		}
+
 
 
 		/**

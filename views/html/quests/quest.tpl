@@ -9,6 +9,7 @@
 <?php if(count(array_intersect(array('admin', 'moderator'), \hhu\z\controllers\SeminaryController::$character['characterroles'])) > 0) : ?>
 <nav class="admin">
 	<li><a href="<?=$linker->link('edit', 5)?>"><?=_('Edit Quest')?></a></li>
+	<li><a href="<?=$linker->link('edittexts', 5)?>"><?=_('Edit Quest texts')?></a></li>
 	<?php if(in_array('admin', \hhu\z\controllers\SeminaryController::$character['characterroles'])) : ?>
 	<li><a href="<?=$linker->link('delete', 5)?>"><?=_('Delete Quest')?></a></li>
 	<?php endif ?>
