@@ -44,7 +44,7 @@
 		public function getAchievementByUrl($seminaryId, $achievementUrl)
 		{
 			$data = $this->db->query(
-				'SELECT achievements.id, achievementconditions.condition, title, url, description, progress, unachieved_achievementsmedia_id, achieved_achievementsmedia_id '.
+				'SELECT achievements.id, achievementconditions.condition, seminary_id, pos, title, url, description, progress, hidden, only_once, all_conditions, deadline, unachieved_achievementsmedia_id, achieved_achievementsmedia_id '.
 				'FROM achievements '.
 				'LEFT JOIN achievementconditions ON achievementconditions.id = achievements.achievementcondition_id '.
 				'WHERE seminary_id = ? AND url = ?',
@@ -53,6 +53,31 @@
 			);
 			if(empty($data)) {
 				throw new \nre\exceptions\IdNotFoundException($achievementUrl);
+			}
+			
+			
+			return $data[0];
+		}
+
+
+		/**
+		 * Get an Achievement by its ID.
+		 * 
+		 * @param	int	$achievementId	ID of Achievement
+		 * @return	array			Achievement data
+		 */
+		public function getAchievementById($achievementId)
+		{
+			$data = $this->db->query(
+				'SELECT achievements.id, achievementconditions.condition, seminary_id, pos, title, url, description, progress, hidden, only_once, all_conditions, deadline, unachieved_achievementsmedia_id, achieved_achievementsmedia_id '.
+				'FROM achievements '.
+				'LEFT JOIN achievementconditions ON achievementconditions.id = achievements.achievementcondition_id '.
+				'WHERE achievements.id = ?',
+				'i',
+				$achievementId
+			);
+			if(empty($data)) {
+				throw new \nre\exceptions\IdNotFoundException($achievementId);
 			}
 			
 			
@@ -211,6 +236,25 @@
 			
 			return 0;
 		}
+
+
+		/**
+		 * Get all Achievements for a Seminary.
+		 * 
+		 * @param	int	$seminaryId	ID of Seminary
+		 * @return	array			List of Achievements
+		 */
+		public function getAchievementsForSeminary($seminaryId)
+		{
+			return $this->db->query(
+				'SELECT id, created, created_user_id, achievementcondition_id, pos, title, url, description, progress, hidden, only_once, all_conditions, deadline, unachieved_achievementsmedia_id, achieved_achievementsmedia_id '.
+				'FROM achievements '.
+				'WHERE seminary_id = ? '.
+				'ORDER BY pos ASC',
+				'i',
+				$seminaryId
+			);
+		}
 		
 		
 		/**
@@ -254,7 +298,7 @@
 		public function getAchievementConditionsDate($achievementId)
 		{
 			return $this->db->query(
-				'SELECT `select` '.
+				'SELECT id, `select` '.
 				'FROM achievementconditions_date '.
 				'WHERE achievement_id = ?',
 				'i',
@@ -281,6 +325,59 @@
 			
 			return false;
 		}
+
+
+		/**
+		 * Add a new date condition.
+		 * 
+		 * @param	int	$userId		ID of creating user
+		 * @param	int	$achievementId	ID of Achievement to add condition to
+		 * @param	string	$select		SELECT-string for condition
+		 */
+		public function addAchievementConditionDate($userId, $achievementId, $select)
+		{
+			$this->db->query(
+				'INSERT INTO achievementconditions_date '.
+				'(created_user_id, achievement_id, `select`) '.
+				'VALUES '.
+				'(?, ?, ?)',
+				'iis',
+				$userId,
+				$achievementId,
+				$select
+			);
+
+		}
+
+
+		/**
+		 * Edit a date condition.
+		 * 
+		 * @param	int	$conditionId	ID of condition to edit
+		 * @param	string	$select		New SELECT-string for condition
+		 */
+		public function editAchievementConditionDate($conditionId, $select)
+		{
+			$this->db->query(
+				'UPDATE achievementconditions_date '.
+				'SET `select` = ? '.
+				'WHERE id = ?',
+				'si',
+				$select,
+				$conditionId
+			);
+		}
+
+
+		/**
+		 * Delete a date condition.
+		 * 
+		 * @param	int	$conditionId	ID of condition to delete
+		 */
+		public function deleteAchievementConditionDate($conditionId)
+		{
+			$this->db->query('DELETE FROM achievementconditions_date WHERE id = ?', 'i', $conditionId);
+		}
 		
 		
 		/**
@@ -292,7 +389,7 @@
 		public function getAchievementConditionsCharacter($achievementId)
 		{
 			return $this->db->query(
-				'SELECT field, value '.
+				'SELECT id, field, value '.
 				'FROM achievementconditions_character '.
 				'WHERE achievement_id = ?',
 				'i',
@@ -372,6 +469,63 @@
 			
 			return 0;
 		}
+
+
+		/**
+		 * Add a new Character condition.
+		 * 
+		 * @param	int	$userId		ID of creating user
+		 * @param	int	$achievementId	ID of Achievement to add condition to
+		 * @param	string	$field		Field to match
+		 * @param	string	$value		Value to match
+		 */
+		public function addAchievementConditionCharacter($userId, $achievementId, $field, $value)
+		{
+			$this->db->query(
+				'INSERT INTO achievementconditions_character '.
+				'(created_user_id, achievement_id, field, value) '.
+				'VALUES '.
+				'(?, ?, ?, ?)',
+				'iiss',
+				$userId,
+				$achievementId,
+				$field,
+				$value
+			);
+
+		}
+
+
+		/**
+		 * Edit a Character condition.
+		 * 
+		 * @param	int	$conditionId	ID of condition to edit
+		 * @param	string	$field		Field to match
+		 * @param	string	$value		Value to match
+		 */
+		public function editAchievementConditionCharacter($conditionId, $field, $value)
+		{
+			$this->db->query(
+				'UPDATE achievementconditions_character '.
+				'SET field = ?, value = ? '.
+				'WHERE id = ?',
+				'ssi',
+				$field,
+				$value,
+				$conditionId
+			);
+		}
+
+
+		/**
+		 * Delete a Character condition.
+		 * 
+		 * @param	int	$conditionId	ID of condition to delete
+		 */
+		public function deleteAchievementConditionCharacter($conditionId)
+		{
+			$this->db->query('DELETE FROM achievementconditions_character WHERE id = ?', 'i', $conditionId);
+		}
 		
 		
 		/**
@@ -383,7 +537,7 @@
 		public function getAchievementConditionsQuest($achievementId)
 		{
 			return $this->db->query(
-				'SELECT field, `count`, value, quest_id, status, groupby '.
+				'SELECT id, field, `count`, value, quest_id, status, groupby '.
 				'FROM achievementconditions_quest '.
 				'WHERE achievement_id = ?',
 				'i',
@@ -476,6 +630,79 @@
 			
 			return 0;
 		}
+
+
+		/**
+		 * Add a new Quest condition.
+		 * 
+		 * @param	int	$userId		ID of creating user
+		 * @param	int	$achievementId	ID of Achievement to add condition to
+		 * @param	string	$field		Field to match
+		 * @param	boolean	$count		Count the value
+		 * @param	string	$value		Value to match
+		 * @param	int	$questId	ID of Quest (optional)
+		 * @param	int	$status		Quest status (optional)
+		 * @param	string	$groupby	Field to group by (optional)
+		 */
+		public function addAchievementConditionQuest($userId, $achievementId, $field, $count, $value, $questId=null, $status=null, $groupby=null)
+		{
+			$this->db->query(
+				'INSERT INTO achievementconditions_quest '.
+				'(created_user_id, achievement_id, field, count, value, quest_id, status, groupby) '.
+				'VALUES '.
+				'(?, ?, ?, ?, ?, ?, ?, ?)',
+				'iisisiis',
+				$userId,
+				$achievementId,
+				$field,
+				$count,
+				$value,
+				$questId,
+				$status,
+				$groupby
+			);
+
+		}
+
+
+		/**
+		 * Edit a Quest condition.
+		 * 
+		 * @param	int	$conditionId	ID of condition to edit
+		 * @param	string	$field		Field to match
+		 * @param	boolean	$count		Count the value
+		 * @param	string	$value		Value to match
+		 * @param	int	$questId	ID of Quest (optional)
+		 * @param	int	$status		Quest status (optional)
+		 * @param	string	$groupby	Field to group by (optional)
+		 */
+		public function editAchievementConditionQuest($conditionId, $field, $count, $value, $questId=null, $status=null, $groupby=null)
+		{
+			$this->db->query(
+				'UPDATE achievementconditions_quest '.
+				'SET field = ?, count = ?, value = ?, quest_id = ?, status = ?, groupby = ? '.
+				'WHERE id = ?',
+				'sisiisi',
+				$field,
+				$count,
+				$value,
+				$questId,
+				$status,
+				$groupby,
+				$conditionId
+			);
+		}
+
+
+		/**
+		 * Delete a Quest condition.
+		 * 
+		 * @param	int	$conditionId	ID of condition to delete
+		 */
+		public function deleteAchievementConditionQuest($conditionId)
+		{
+			$this->db->query('DELETE FROM achievementconditions_quest WHERE id = ?', 'i', $conditionId);
+		}
 		
 		
 		/**
@@ -487,7 +714,7 @@
 		public function getAchievementConditionsAchievement($achievementId)
 		{
 			return $this->db->query(
-				'SELECT field, `count`, value, meta_achievement_id, groupby '.
+				'SELECT id, field, `count`, value, meta_achievement_id, groupby '.
 				'FROM achievementconditions_achievement '.
 				'WHERE achievement_id = ?',
 				'i',
@@ -576,6 +803,75 @@
 			
 			return 0;
 		}
+
+
+		/**
+		 * Add a new Achievement condition.
+		 * 
+		 * @param	int	$userId			ID of creating user
+		 * @param	int	$achievementId		ID of Achievement to add condition to
+		 * @param	string	$field			Field to match
+		 * @param	boolean	$count			Count the value
+		 * @param	string	$value			Value to match
+		 * @param	int	$metaAchievementId	ID of Meta-Achievement (optional)
+		 * @param	string	$groupby		Field to group by (optional)
+		 */
+		public function addAchievementConditionAchievement($userId, $achievementId, $field, $count, $value, $metaAchievementId=null, $groupby=null)
+		{
+			$this->db->query(
+				'INSERT INTO achievementconditions_achievement '.
+				'(created_user_id, achievement_id, field, count, value, meta_achievement_id, groupby) '.
+				'VALUES '.
+				'(?, ?, ?, ?, ?, ?, ?)',
+				'iisisis',
+				$userId,
+				$achievementId,
+				$field,
+				$count,
+				$value,
+				$metaAchievementId,
+				$groupby
+			);
+
+		}
+
+
+		/**
+		 * Edit a Achievement condition.
+		 * 
+		 * @param	int	$conditionId		ID of condition to edit
+		 * @param	string	$field			Field to match
+		 * @param	boolean	$count			Count the value
+		 * @param	string	$value			Value to match
+		 * @param	int	$metaAchievementId	ID of Achievement (optional)
+		 * @param	string	$groupby		Field to group by (optional)
+		 */
+		public function editAchievementConditionAchievement($conditionId, $field, $count, $value, $metaAchievementId=null, $groupby=null)
+		{
+			$this->db->query(
+				'UPDATE achievementconditions_achievement '.
+				'SET field = ?, count = ?, value = ?, meta_achievement_id = ?, groupby = ? '.
+				'WHERE id = ?',
+				'sisisi',
+				$field,
+				$count,
+				$value,
+				$metaAchievementId,
+				$groupby,
+				$conditionId
+			);
+		}
+
+
+		/**
+		 * Delete a Achievement condition.
+		 * 
+		 * @param	int	$conditionId	ID of condition to delete
+		 */
+		public function deleteAchievementConditionAchievement($conditionId)
+		{
+			$this->db->query('DELETE FROM achievementconditions_achievement WHERE id = ?', 'i', $conditionId);
+		}
 		
 		
 		/**
@@ -619,6 +915,232 @@
 			
 			
 			return false;
+		}
+
+
+		/**
+		 * Get all existing Achievements conditions.
+		 * 
+		 * @return	array	List of Achievements conditions
+		 */
+		public function getAchievementsConditions()
+		{
+			return $this->db->query(
+				'SELECT id, created, `condition` '.
+				'FROM achievementconditions'
+			);
+		}
+
+
+		/**
+		 * Check if an Achievement title already exists.
+		 * 
+		 * @param	int	$seminaryId	ID of Seminary
+		 * @param	string	$title		Achievement title to check
+		 * @param	int	$characterId	Do not check this ID (for editing)
+		 * @return	boolean			Whether Achievement title exists or not
+		 */
+		public function achievementTitleExists($seminaryId, $title, $achievementId=null)
+		{
+			$data = $this->db->query(
+				'SELECT id '.
+				'FROM achievements '.
+				'WHERE seminary_id = ? AND (title = ? OR url = ?)',
+				'iss',
+				$seminaryId,
+				$title,
+				\nre\core\Linker::createLinkParam($title)
+			);
+			
+			
+			return (!empty($data) && (is_null($achievementId) || $achievementId != $data[0]['id']));
+		}
+
+
+		/**
+		 * Create a new Achievement for a Seminary.
+		 * 
+		 * @param	int	$userId		ID of creating user
+		 * @param	int	$seminaryId	ID of Seminary
+		 * @param	int	$conditionId	ID of Achievement condition
+		 * @param	string	$title		Title of new Achievement
+		 * @param	string	$description	Description of new Achievement
+		 * @param	boolean	$progress	Show progress
+		 * @param	boolean	$hidden		Secret Achievement
+		 * @param	boolean	$onlyOnce	Only achieveable by one user
+		 * @param	boolean	$allConditions	Achievement must match all conditions
+		 * @param	string	$deadline	Deadline for Achievement
+		 * @return	int			ID of newly created Achievement
+		 */
+		public function createAchievement($userId, $seminaryId, $conditionId, $title, $description, $progress, $hidden, $onlyOnce, $allConditions, $deadline)
+		{
+			// Get position
+			$pos = $this->db->query(
+				'SELECT COALESCE(MAX(pos),0)+1 AS pos '.
+				'FROM achievements '.
+				'WHERE seminary_id = ?',
+				'i',
+				$seminaryId
+			);
+			$pos = $pos[0]['pos'];
+
+			// Create Achievement
+			$this->db->query(
+				'INSERT INTO achievements '.
+				'(created_user_id, seminary_id, achievementcondition_id, pos, title, url, description, progress, hidden, only_once, all_conditions, deadline) '.
+				'VALUES '.
+				'(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
+				'iiiisssiiiis',
+				$userId,
+				$seminaryId,
+				$conditionId,
+				$pos,
+				$title,
+				\nre\core\Linker::createLinkParam($title),
+				$description,
+				$progress,
+				$hidden,
+				$onlyOnce,
+				$allConditions,
+				$deadline
+			);
+			
+
+			// Return ID
+			return $this->db->getInsertId();
+		}
+
+		
+		/**
+		 * Move an Achievement up (decrement position) or down
+		 * (increment position).
+		 * 
+		 * @param	array	$achievement	Achievement to move
+		 * @param	boolean	$up		True for moving up, false for down
+		 */
+		public function moveAchievement($achievement, $up)
+		{
+			$this->db->setAutocommit(false);
+			try {
+				// Set temporary position
+				$this->db->query(
+					'UPDATE achievements '.
+					'SET pos = 0 '.
+					'WHERE id = ?',
+					'i',
+					$achievement['id']
+				);
+				// Switch entry
+				$this->db->query(
+					'UPDATE achievements '.
+					'SET pos = ? '.
+					'WHERE seminary_id = ? AND pos = ?',
+					'iii',
+					$achievement['pos'],
+					$achievement['seminary_id'],
+					$achievement['pos'] + ($up ? -1 : 1)
+				);
+				// Set new position
+				$this->db->query(
+					'UPDATE achievements '.
+					'SET pos = ? '.
+					'WHERE id = ?',
+					'ii',
+					$achievement['pos'] + ($up ? -1 : 1),
+					$achievement['id']
+				);
+				
+				$this->db->commit();
+			}
+			catch(\nre\exceptions\DatamodelException $e) {
+				$this->db->rollback();
+				$this->db->setAutocommit(true);
+				throw $e;
+			}
+			$this->db->setAutocommit(true);
+		}
+
+
+		/**
+		 * Edit an Achievement of a Seminary.
+		 * 
+		 * @param	int	$achievementId	ID of Achievement to edit
+		 * @param	int	$conditionId	ID of Achievement condition
+		 * @param	string	$title		New title of Achievement
+		 * @param	string	$description	New description of Achievement
+		 * @param	boolean	$progress	Show progress
+		 * @param	boolean	$hidden		Secret Achievement
+		 * @param	boolean	$onlyOnce	Only achieveable by one user
+		 * @param	boolean	$allConditions	Achievement must match all conditions
+		 * @param	string	$deadline	Deadline for Achievement
+		 */
+		public function editAchievement($achievementId, $conditionId, $title, $description, $progress, $hidden, $onlyOnce, $allConditions, $deadline)
+		{
+			$this->db->query(
+				'UPDATE achievements '.
+				'SET achievementcondition_id = ?, title = ?, url = ?, description = ?, progress = ?, hidden = ?, only_once = ?, all_conditions = ?, deadline = ? '.
+				'WHERE id = ?',
+				'isssiiiisi',
+				$conditionId,
+				$title,
+				\nre\core\Linker::createLinkParam($title),
+				$description,
+				$progress,
+				$hidden,
+				$onlyOnce,
+				$allConditions,
+				$deadline,
+				$achievementId
+			);
+		}
+
+
+		/**
+		 * Set unachieved media for an Achievement.
+		 * 
+		 * @param	int	$achievementId		ID of Achievement to set media for
+		 * @param	int	$achievementsmediaId	ID of achievementsmedia to set
+		 */
+		public function setUnachievedMediaForAchievement($achievementId, $achievementsmediaId)
+		{
+			$this->db->query(
+				'UPDATE achievements '.
+				'SET unachieved_achievementsmedia_id = ? '.
+				'WHERE id = ?',
+				'ii',
+				$achievementsmediaId,
+				$achievementId
+			);
+		}
+
+
+		/**
+		 * Set achieved media for an Achievement.
+		 * 
+		 * @param	int	$achievementId		ID of Achievement to set media for
+		 * @param	int	$achievementsmediaId	ID of achievementsmedia to set
+		 */
+		public function setAchievedMediaForAchievement($achievementId, $achievementsmediaId)
+		{
+			$this->db->query(
+				'UPDATE achievements '.
+				'SET achieved_achievementsmedia_id = ? '.
+				'WHERE id = ?',
+				'ii',
+				$achievementsmediaId,
+				$achievementId
+			);
+		}
+
+		
+		/**
+		 * Delete an Achievement.
+		 * 
+		 * @param	int	$achievementId	ID of Achievement to delete
+		 */
+		public function deleteAchievement($achievementId)
+		{
+			$this->db->query('DELETE FROM achievements WHERE id = ?', 'i', $achievementId);
 		}
 		
 	}

@@ -219,6 +219,9 @@
 			'questgroupshierarchytitle' => array(
 				'minlength'	=> 1,
 				'maxlength'	=> 64
+			),
+			'deadline' => array(
+				'regex'		=> '/^(\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2})?$/'
 			)
 		);
 		
@@ -261,7 +264,9 @@
 			array('^charactergroupsquests/([^/]+)/([^/]+)/create/?$',			'charactergroupsquests/create/$1/$2',	true),
 			array('^charactergroupsquests/([^/]+)/([^/]+)/([^/]+)/?$',			'charactergroupsquests/quest/$1/$2/$3',	true),
 			array('^charactergroupsquests/([^/]+)/([^/]+)/([^/]+)/(edit|delete|manage)/?$',	'charactergroupsquests/$4/$1/$2/$3',	true),
-			array('^achievements/([^/]+)/?$',					'achievements/index/$1',	true),
+			array('^achievements/([^/]+)/(create|manage)/?$',					'achievements/$2/$1',		true),
+			array('^achievements/([^/]+)/([^/]+)/(edit|conditions|moveup|movedown|delete)/?$',	'achievements/$3/$1/$2',	true),
+			array('^achievements/([^/]+)/?$',							'achievements/index/$1',	true),
 			array('^library/([^/]+)/?$',						'library/index/$1',		true),
 			array('^library/([^/]+)/create/?$',					'library/create/$1',		true),
 			array('^library/([^/]+)/([^/]+)/?$',					'library/topic/$1/$2',		true),
@@ -305,7 +310,9 @@
 			array('^charactergroupsquests/create/([^/]+)/([^/]+)/?$',			'charactergroupsquests/$1/$2/create',	true),
 			array('^charactergroupsquests/quest/(.*)$',					'charactergroupsquests/$1',		true),
 			array('^charactergroupsquests/(edit|delete|manage)/([^/]+)/([^/]+)/([^/]+)$',	'charactergroupsquests/$2/$3/$4/$1',	true),
-			array('^achievements/index/(.*)$',		'achievements/$1',		true),
+			array('^achievements/index/(.*)$',					'achievements/$1',		true),
+			array('^achievements/(create|manage)/(.*)$',				'achievements/$2/$1',		true),
+			array('^achievements/(edit|conditions|moveup|movedown|delete)/(.*)$',	'achievements/$2/$1',		true),
 			array('^library/index/([^/]+)/?$',					'library/$1',		true),
 			array('^library/create/([^/]+)/?$',					'library/$1/create',	true),
 			array('^library/topic/([^/]+)/([^/]+)/?$',				'library/$1/$2',	true),

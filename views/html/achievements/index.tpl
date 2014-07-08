@@ -6,6 +6,13 @@
 <ul class="breadcrumbs">
 	<li><a href="<?=$linker->link(array('seminaries',$seminary['url']))?>"><?=$seminary['title']?></a></li>
 </ul>
+<?php if(count(array_intersect(array('admin', 'moderator'), \hhu\z\controllers\SeminaryController::$character['characterroles'])) > 0) : ?>
+<nav class="admin">
+	<li><a href="<?=$linker->link('create', 3)?>"><?=_('Create new Achievement')?></a></li>
+	<li><a href="<?=$linker->link('manage', 3)?>"><?=_('Manage Achievements')?></a></li>
+</nav>
+<?php endif ?>
+
 <h1><i class="fa fa-trophy fa-fw"></i><?=_('Achievements')?></h1>
 <p><?=_('Achievement description')?></p>
 <div class="cf">

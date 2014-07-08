@@ -337,6 +337,48 @@
 			$this->db->setAutocommit(true);
 			return $mediaId;
 		}
+
+
+		public function createAchievementMedia($userId, $seminaryId, $filename, $description, $mimetype, $tmpFilename)
+		{
+			$mediaId = false;
+			$this->db->setAutocommit(false);
+			
+			try {
+				// Create Seminary media record
+				$mediaId = $this->createSeminaryMedia($userId, $seminaryId, $filename, $description, $mimetype);
+				
+				// Add media to Achievements media
+				$this->db->query(
+					'INSERT INTO achievementsmedia '.
+					'(seminarymedia_id, created_user_id) '.
+					'VALUES '.
+					'(?, ?) '.
+					'ON DUPLICATE KEY UPDATE '.
+					'created_user_id = ?',
+					'iii',
+					$mediaId,
+					$userId,
+					$userId
+				);
+			
+				// Create filename
+				$filename = ROOT.DS.\nre\configs\AppConfig::$dirs['seminarymedia'].DS.$mediaId;
+				if(!move_uploaded_file($tmpFilename, $filename))
+				{
+					$this->db->rollback();
+					$mediaId = false;
+				}
+			}
+			catch(\nre\exceptions\DatamodelException $e) {
+				$this->db->rollback();
+				$this->db->setAutocommit(true);
+			}
+			
+			
+			$this->db->setAutocommit(true);
+			return $mediaId;
+		}
 		
 		
 		
