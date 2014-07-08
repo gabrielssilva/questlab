@@ -249,8 +249,10 @@
 			switch($locked)
 			{
 				case null:
-					if(is_null($character) || !$this->Achievements->hasCharacterAchievedAchievement($achievement['id'], $character['id'])) {
-						throw new \nre\exceptions\AccessDeniedException();
+					if(count(array_intersect(array('admin', 'moderator'), \hhu\z\controllers\SeminaryController::$character['characterroles'])) == 0) {
+						if(is_null($character) || !$this->Achievements->hasCharacterAchievedAchievement($achievement['id'], $character['id'])) {
+							throw new \nre\exceptions\AccessDeniedException();
+						}
 					}
 					$index = 'achieved_achievementsmedia_id';
 				break;
