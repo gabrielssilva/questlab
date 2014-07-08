@@ -42,6 +42,7 @@
 			'moveup'	=> array('admin', 'moderator', 'user'),
 			'movedown'	=> array('admin', 'moderator', 'user'),
 			'edit'		=> array('admin', 'moderator', 'user'),
+			'conditions'	=> array('admin', 'moderator', 'user'),
 			'delete'	=> array('admin', 'moderator', 'user')
 		);
 		/**
@@ -55,6 +56,7 @@
 			'moveup'	=> array('admin', 'moderator'),
 			'movedown'	=> array('admin', 'moderator'),
 			'edit'		=> array('admin', 'moderator'),
+			'conditions'	=> array('admin', 'moderator'),
 			'delete'	=> array('admin')
 		);
 		
@@ -361,7 +363,7 @@
 					}
 
 					// Redirect to condition editing
-					//$this->redirect($this->linker->link(array('conditions', $seminary['url'], $achievement['url']), 1));
+					$this->redirect($this->linker->link(array('conditions', $seminary['url'], $achievement['url']), 1));
 				}
 			}
 
