@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: The Legend of Z\n"
-"POT-Creation-Date: 2014-07-01 23:17+0100\n"
-"PO-Revision-Date: 2014-07-01 23:17+0100\n"
+"POT-Creation-Date: 2014-07-09 11:21+0100\n"
+"PO-Revision-Date: 2014-07-09 11:29+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de_DE\n"
@@ -63,8 +63,10 @@ msgstr "Neuer Lösungsvorschlag"
 msgid "Character submission approved"
 msgstr "Lösungsvorschlag bewertet"
 
-#: controllers/QuestsController.inc:1107
-#: questtypes/submit/html/submission.tpl:30 views/html/quests/quest.tpl:54
+#: controllers/QuestsController.inc:1227
+#: questtypes/submit/html/submission.tpl:30
+#: views/html/achievements/conditions.tpl:54
+#: views/html/achievements/conditions.tpl:121 views/html/quests/quest.tpl:54
 #: views/html/quests/submissions.tpl:30
 msgid "solved"
 msgstr "Richtig!"
@@ -125,7 +127,8 @@ msgstr "Die Datei ist zu groß"
 msgid "Error during file upload: %s"
 msgstr "Fehler beim Dateiupload: %s"
 
-#: questtypes/submit/html/quest.tpl:17
+#: questtypes/submit/html/quest.tpl:17 views/html/achievements/create.tpl:66
+#: views/html/achievements/edit.tpl:68
 #: views/html/charactergroups/creategroup.tpl:64
 #: views/html/charactergroups/editgroup.tpl:65
 #: views/html/charactergroupsquests/create.tpl:66
@@ -137,7 +140,8 @@ msgstr "Fehler beim Dateiupload: %s"
 msgid "Allowed file types"
 msgstr "Erlaubte Dateiformate"
 
-#: questtypes/submit/html/quest.tpl:20
+#: questtypes/submit/html/quest.tpl:20 views/html/achievements/create.tpl:69
+#: views/html/achievements/edit.tpl:71
 #: views/html/charactergroups/creategroup.tpl:67
 #: views/html/charactergroups/editgroup.tpl:68
 #: views/html/charactergroupsquests/create.tpl:69
@@ -150,7 +154,8 @@ msgstr "Erlaubte Dateiformate"
 msgid "%s-files"
 msgstr "%s-Dateien"
 
-#: questtypes/submit/html/quest.tpl:20
+#: questtypes/submit/html/quest.tpl:20 views/html/achievements/create.tpl:69
+#: views/html/achievements/edit.tpl:71
 #: views/html/charactergroups/creategroup.tpl:67
 #: views/html/charactergroups/editgroup.tpl:68
 #: views/html/charactergroupsquests/create.tpl:69
@@ -191,7 +196,9 @@ msgstr "Bewertet von %s am %s um %s Uhr"
 msgid "Comment"
 msgstr "Kommentar"
 
-#: questtypes/submit/html/submission.tpl:31 views/html/quests/quest.tpl:59
+#: questtypes/submit/html/submission.tpl:31
+#: views/html/achievements/conditions.tpl:53
+#: views/html/achievements/conditions.tpl:120 views/html/quests/quest.tpl:59
 #: views/html/quests/submissions.tpl:20
 msgid "unsolved"
 msgstr "Leider falsch!"
@@ -270,73 +277,422 @@ msgstr "registriert am %s"
 msgid "Error"
 msgstr "Fehler"
 
-#: views/html/achievements/index.tpl:9 views/html/seminarymenu/index.tpl:6
+#: views/html/achievements/conditions.tpl:8
+#: views/html/achievements/create.tpl:8 views/html/achievements/delete.tpl:8
+#: views/html/achievements/edit.tpl:8 views/html/achievements/index.tpl:16
+#: views/html/achievements/manage.tpl:8 views/html/seminarymenu/index.tpl:6
 msgid "Achievements"
 msgstr "Achievements"
 
-#: views/html/achievements/index.tpl:10
+#: views/html/achievements/conditions.tpl:11
+msgid "Edit Achievement conditions"
+msgstr "Achievementbedingungen bearbeiten"
+
+#: views/html/achievements/conditions.tpl:14
+#: views/html/achievements/create.tpl:90
+msgid "Conditions"
+msgstr "Bedingungen"
+
+#: views/html/achievements/conditions.tpl:19
+#: views/html/achievements/conditions.tpl:86
+msgid "Date"
+msgstr "Datum"
+
+#: views/html/achievements/conditions.tpl:22
+#: views/html/achievements/conditions.tpl:31
+#: views/html/achievements/conditions.tpl:59
+#: views/html/achievements/conditions.tpl:89
+#: views/html/achievements/conditions.tpl:98
+#: views/html/achievements/conditions.tpl:126
+msgid "Field"
+msgstr "Feld"
+
+#: views/html/achievements/conditions.tpl:28
+#: views/html/achievements/conditions.tpl:29
+#: views/html/achievements/conditions.tpl:39
+#: views/html/achievements/conditions.tpl:40
+#: views/html/achievements/conditions.tpl:67
+#: views/html/achievements/conditions.tpl:68
+#: views/html/achievements/conditions.tpl:95
+#: views/html/achievements/conditions.tpl:106
+#: views/html/achievements/conditions.tpl:107
+#: views/html/achievements/conditions.tpl:134
+#: views/html/achievements/conditions.tpl:135
+msgid "Value"
+msgstr "Wert"
+
+#: views/html/achievements/conditions.tpl:38
+#: views/html/achievements/conditions.tpl:66
+#: views/html/achievements/conditions.tpl:105
+#: views/html/achievements/conditions.tpl:133
+msgid "Count"
+msgstr "Zählen"
+
+#: views/html/achievements/conditions.tpl:41
+#: views/html/achievements/conditions.tpl:108 views/html/quests/quest.tpl:116
+#: views/html/quests/quest.tpl:132
+msgid "Quest"
+msgstr "Quest"
+
+#: views/html/achievements/conditions.tpl:43
+#: views/html/achievements/conditions.tpl:50
+#: views/html/achievements/conditions.tpl:71
+#: views/html/achievements/conditions.tpl:110
+#: views/html/achievements/conditions.tpl:117
+#: views/html/achievements/conditions.tpl:138
+msgid "unset"
+msgstr "nicht gesetzt"
+
+#: views/html/achievements/conditions.tpl:48
+#: views/html/achievements/conditions.tpl:115
+msgid "Status"
+msgstr "Status"
+
+#: views/html/achievements/conditions.tpl:51
+#: views/html/achievements/conditions.tpl:118
+msgid "entered"
+msgstr "betreten"
+
+#: views/html/achievements/conditions.tpl:52
+#: views/html/achievements/conditions.tpl:119
+#: views/html/quests/submissions.tpl:10
+msgid "submitted"
+msgstr "eingereicht"
+
+#: views/html/achievements/conditions.tpl:56
+#: views/html/achievements/conditions.tpl:57
+#: views/html/achievements/conditions.tpl:76
+#: views/html/achievements/conditions.tpl:77
+#: views/html/achievements/conditions.tpl:123
+#: views/html/achievements/conditions.tpl:124
+#: views/html/achievements/conditions.tpl:143
+#: views/html/achievements/conditions.tpl:144
+msgid "Group by"
+msgstr "Gruppiert über"
+
+#: views/html/achievements/conditions.tpl:69
+#: views/html/achievements/conditions.tpl:136 views/html/html.tpl:77
+msgid "Achievement"
+msgstr "Achievement"
+
+#: views/html/achievements/conditions.tpl:81
+#: views/html/achievements/delete.tpl:14 views/html/achievements/manage.tpl:24
+#: views/html/charactergroups/deletegroup.tpl:15
+#: views/html/charactergroups/deletegroupsgroup.tpl:14
+#: views/html/charactergroupsquests/delete.tpl:15
+#: views/html/characters/delete.tpl:17 views/html/charactertypes/manage.tpl:48
+#: views/html/library/delete.tpl:14 views/html/library/edit.tpl:83
+#: views/html/questgroups/delete.tpl:17
+#: views/html/questgroups/edittexts.tpl:16
+#: views/html/questgroupshierarchy/delete.tpl:14
+#: views/html/quests/delete.tpl:11 views/html/quests/edittexts.tpl:53
+#: views/html/seminaries/delete.tpl:13 views/html/users/delete.tpl:11
+msgid "delete"
+msgstr "löschen"
+
+#: views/html/achievements/conditions.tpl:87
+#: views/html/achievements/conditions.tpl:96
+msgid "New condition"
+msgstr "Neue Bedingung"
+
+#: views/html/achievements/conditions.tpl:151
+#: views/html/achievements/create.tpl:109 views/html/achievements/edit.tpl:112
+#: views/html/charactergroupsquests/manage.tpl:66
+#: views/html/charactertypes/manage.tpl:52 views/html/library/edit.tpl:46
+#: views/html/library/edit.tpl:86 views/html/users/edit.tpl:105
+msgid "save"
+msgstr "speichern"
+
+#: views/html/achievements/create.tpl:11
+msgid "Create Achievement"
+msgstr "Achievement erstellen"
+
+#: views/html/achievements/create.tpl:22 views/html/achievements/edit.tpl:22
+#: views/html/quests/create.tpl:19 views/html/quests/edit.tpl:19
+#: views/html/quests/edittexts.tpl:25
+#, php-format
+msgid "Error during picture upload: %s"
+msgstr "Fehler beim Bildupload: %s"
+
+#: views/html/achievements/create.tpl:24 views/html/achievements/edit.tpl:24
+#: views/html/quests/create.tpl:21 views/html/quests/edit.tpl:21
+#: views/html/quests/edittexts.tpl:27
+#, php-format
+msgid "Picture has wrong type “%s”"
+msgstr "Der Bildtyp „%s“ ist nicht erlaubt"
+
+#: views/html/achievements/create.tpl:26 views/html/achievements/edit.tpl:26
+#: views/html/quests/create.tpl:23 views/html/quests/edit.tpl:23
+#: views/html/quests/edittexts.tpl:29
+msgid "Picture exceeds size maximum"
+msgstr "Das Bild ist zu groß"
+
+#: views/html/achievements/create.tpl:28 views/html/achievements/edit.tpl:28
+#: views/html/quests/create.tpl:25 views/html/quests/edit.tpl:25
+#: views/html/quests/edittexts.tpl:31
+msgid "Picture invalid"
+msgstr "Das Bild ist ungültig"
+
+#: views/html/achievements/create.tpl:33 views/html/achievements/edit.tpl:33
+#: views/html/charactergroupsquests/create.tpl:34
+#: views/html/charactergroupsquests/edit.tpl:34
+#: views/html/library/create.tpl:22 views/html/library/edit.tpl:22
+#: views/html/library/edit.tpl:62 views/html/library/edit.tpl:100
+#: views/html/questgroups/create.tpl:33 views/html/questgroups/edit.tpl:30
+#: views/html/quests/create.tpl:30 views/html/quests/edit.tpl:30
+#: views/html/seminaries/create.tpl:30 views/html/seminaries/edit.tpl:32
+#, php-format
+msgid "Title is too short (min. %d chars)"
+msgstr "Der Titel ist zu kurz (min. %d Zeichen)"
+
+#: views/html/achievements/create.tpl:35 views/html/achievements/edit.tpl:35
+#: views/html/charactergroupsquests/create.tpl:36
+#: views/html/charactergroupsquests/edit.tpl:36
+#: views/html/library/create.tpl:24 views/html/library/edit.tpl:24
+#: views/html/library/edit.tpl:64 views/html/library/edit.tpl:102
+#: views/html/questgroups/create.tpl:35 views/html/questgroups/edit.tpl:32
+#: views/html/quests/create.tpl:32 views/html/quests/edit.tpl:32
+#: views/html/seminaries/create.tpl:32 views/html/seminaries/edit.tpl:34
+#, php-format
+msgid "Title is too long (max. %d chars)"
+msgstr "Der Titel ist zu lang (max. %d Zeichen)"
+
+#: views/html/achievements/create.tpl:37 views/html/achievements/edit.tpl:37
+#: views/html/charactergroupsquests/create.tpl:38
+#: views/html/charactergroupsquests/edit.tpl:38
+#: views/html/library/create.tpl:26 views/html/library/edit.tpl:26
+#: views/html/library/edit.tpl:66 views/html/library/edit.tpl:104
+#: views/html/questgroups/create.tpl:37 views/html/questgroups/edit.tpl:34
+#: views/html/quests/create.tpl:34 views/html/quests/edit.tpl:34
+#: views/html/seminaries/create.tpl:34 views/html/seminaries/edit.tpl:36
+msgid "Title contains illegal characters"
+msgstr "Der Titel enthält ungültige Zeichen"
+
+#: views/html/achievements/create.tpl:39 views/html/achievements/edit.tpl:39
+#: views/html/charactergroupsquests/create.tpl:40
+#: views/html/charactergroupsquests/edit.tpl:40
+#: views/html/library/create.tpl:28 views/html/library/edit.tpl:28
+#: views/html/library/edit.tpl:68 views/html/library/edit.tpl:106
+#: views/html/questgroups/create.tpl:39 views/html/questgroups/edit.tpl:36
+#: views/html/quests/create.tpl:36 views/html/quests/edit.tpl:36
+#: views/html/seminaries/create.tpl:36 views/html/seminaries/edit.tpl:38
+msgid "Title already exists"
+msgstr "Der Titel existiert bereits"
+
+#: views/html/achievements/create.tpl:41 views/html/achievements/edit.tpl:41
+#: views/html/charactergroupsquests/create.tpl:42
+#: views/html/charactergroupsquests/edit.tpl:42
+#: views/html/library/create.tpl:30 views/html/library/edit.tpl:30
+#: views/html/library/edit.tpl:70 views/html/library/edit.tpl:108
+#: views/html/questgroups/create.tpl:41 views/html/questgroups/edit.tpl:38
+#: views/html/quests/create.tpl:38 views/html/quests/edit.tpl:38
+#: views/html/seminaries/create.tpl:38 views/html/seminaries/edit.tpl:40
+msgid "Title invalid"
+msgstr "Der Titel ist ungültig"
+
+#: views/html/achievements/create.tpl:46 views/html/achievements/edit.tpl:46
+msgid "Deadline has wrong format"
+msgstr "Frist hat ungültiges Format"
+
+#: views/html/achievements/create.tpl:48 views/html/achievements/edit.tpl:48
+msgid "Deadline invalid"
+msgstr "Frist ungültig"
+
+#: views/html/achievements/create.tpl:61 views/html/achievements/edit.tpl:61
+msgid "Images"
+msgstr "Bilder"
+
+#: views/html/achievements/create.tpl:62 views/html/achievements/edit.tpl:63
+msgid "Unachieved"
+msgstr "Nicht erhalten"
+
+#: views/html/achievements/create.tpl:64 views/html/achievements/edit.tpl:66
+msgid "Achieved"
+msgstr "Erhalten"
+
+#: views/html/achievements/create.tpl:74 views/html/achievements/create.tpl:75
+#: views/html/achievements/edit.tpl:76 views/html/achievements/edit.tpl:77
+#: views/html/charactergroupsquests/create.tpl:74
+#: views/html/charactergroupsquests/create.tpl:75
+#: views/html/charactergroupsquests/edit.tpl:75
+#: views/html/charactergroupsquests/edit.tpl:76
+#: views/html/library/create.tpl:43 views/html/library/create.tpl:44
+#: views/html/library/edit.tpl:43 views/html/library/edit.tpl:44
+#: views/html/library/edit.tpl:121 views/html/library/edit.tpl:122
+#: views/html/questgroups/create.tpl:73 views/html/questgroups/create.tpl:74
+#: views/html/questgroups/edit.tpl:61 views/html/questgroups/edit.tpl:62
+#: views/html/questgroups/questgroup.tpl:88 views/html/quests/create.tpl:70
+#: views/html/quests/create.tpl:71 views/html/quests/edit.tpl:73
+#: views/html/quests/edit.tpl:74 views/html/quests/index.tpl:47
+#: views/html/quests/index.tpl:48 views/html/seminaries/create.tpl:68
+#: views/html/seminaries/create.tpl:69 views/html/seminaries/edit.tpl:70
+#: views/html/seminaries/edit.tpl:71 views/html/seminaries/seminary.tpl:69
+msgid "Title"
+msgstr "Titel"
+
+#: views/html/achievements/create.tpl:76 views/html/achievements/edit.tpl:78
+#: views/html/charactergroupsquests/create.tpl:84
+#: views/html/charactergroupsquests/create.tpl:85
+#: views/html/charactergroupsquests/edit.tpl:85
+#: views/html/charactergroupsquests/edit.tpl:86
+#: views/html/charactergroupsquests/quest.tpl:45
+#: views/html/seminaries/create.tpl:72 views/html/seminaries/create.tpl:73
+#: views/html/seminaries/edit.tpl:74 views/html/seminaries/edit.tpl:75
+msgid "Description"
+msgstr "Beschreibung"
+
+#: views/html/achievements/create.tpl:79 views/html/achievements/edit.tpl:81
+msgid "Show progress"
+msgstr "Fortschritt anzeigen"
+
+#: views/html/achievements/create.tpl:81 views/html/achievements/edit.tpl:83
+#: views/html/achievements/index.tpl:33 views/html/achievements/index.tpl:81
+msgid "Secret Achievement"
+msgstr "Geheimes Achievement"
+
+#: views/html/achievements/create.tpl:83 views/html/achievements/edit.tpl:85
+msgid "Only achieveable by one Character"
+msgstr "Nur von einem Charakter erreichbar"
+
+#: views/html/achievements/create.tpl:85 views/html/achievements/edit.tpl:87
+msgid "All conditions"
+msgstr "Alle Bedingungen"
+
+#: views/html/achievements/create.tpl:86 views/html/achievements/edit.tpl:88
+msgid "Deadline"
+msgstr "Frist"
+
+#: views/html/achievements/create.tpl:95 views/html/achievements/edit.tpl:97
+msgid "Achievement conditions date"
+msgstr "Datum"
+
+#: views/html/achievements/create.tpl:97 views/html/achievements/edit.tpl:99
+msgid "Achievement conditions Character"
+msgstr "Charakter"
+
+#: views/html/achievements/create.tpl:99 views/html/achievements/edit.tpl:101
+msgid "Achievement conditions Quest"
+msgstr "Quest"
+
+#: views/html/achievements/create.tpl:101 views/html/achievements/edit.tpl:103
+msgid "Achievement conditions Achievement"
+msgstr "Metaachievement"
+
+#: views/html/achievements/create.tpl:108 views/html/achievements/edit.tpl:111
+msgid "edit conditions"
+msgstr "Bedingungen bearbeiten"
+
+#: views/html/achievements/delete.tpl:11
+msgid "Delete Achievement"
+msgstr "Achievement löschen"
+
+#: views/html/achievements/delete.tpl:12
+#, php-format
+msgid "Should the Achievement “%s” really be deleted?"
+msgstr "Soll das Achievement „%s“ wirklich gelöscht werden?"
+
+#: views/html/achievements/delete.tpl:15
+#: views/html/charactergroups/deletegroup.tpl:16
+#: views/html/charactergroups/deletegroupsgroup.tpl:15
+#: views/html/charactergroupsquests/delete.tpl:16
+#: views/html/characters/delete.tpl:18 views/html/library/delete.tpl:15
+#: views/html/questgroups/delete.tpl:18
+#: views/html/questgroupshierarchy/delete.tpl:15
+#: views/html/quests/delete.tpl:12 views/html/seminaries/delete.tpl:14
+#: views/html/users/delete.tpl:12
+msgid "cancel"
+msgstr "abbrechen"
+
+#: views/html/achievements/edit.tpl:11
+msgid "Edit Achievement"
+msgstr "Achievement bearbeiten"
+
+#: views/html/achievements/edit.tpl:92
+msgid "Condition"
+msgstr "Bedingung"
+
+#: views/html/achievements/edit.tpl:109
+msgid "Changing the condition will delete all current conditions"
+msgstr "Das Ändern der Bedingung löscht alle bisherigen Bedingungen"
+
+#: views/html/achievements/index.tpl:11
+msgid "Create new Achievement"
+msgstr "Neues Achievement erstellen"
+
+#: views/html/achievements/index.tpl:12 views/html/achievements/manage.tpl:11
+msgid "Manage Achievements"
+msgstr "Achievements verwalten"
+
+#: views/html/achievements/index.tpl:17
 msgid "Achievement description"
 msgstr ""
 "Achievements sind Auszeichnungen für deine Erfolge im Verlauf der Reise. Sie "
 "dienen als historische Erinnerungen an Meilensteine, besondere Taten und "
 "interessante oder lustige Ereignisse, die du erlebst."
 
-#: views/html/achievements/index.tpl:13
+#: views/html/achievements/index.tpl:20
 msgid "Seldom Achievements"
 msgstr "Die seltensten Achievements"
 
-#: views/html/achievements/index.tpl:26 views/html/achievements/index.tpl:74
-msgid "Secret Achievement"
-msgstr "Geheimes Achievement"
-
-#: views/html/achievements/index.tpl:27
+#: views/html/achievements/index.tpl:34
 #, php-format
 msgid "Achievement has been achieved only %d times"
 msgstr "wurde erst %d mal gefunden"
 
-#: views/html/achievements/index.tpl:33
+#: views/html/achievements/index.tpl:40
 msgid "Most successful collectors"
 msgstr "Die erfolgreichsten Sammler"
 
-#: views/html/achievements/index.tpl:41
+#: views/html/achievements/index.tpl:48
 #, php-format
 msgid "Character has achieved %d Achievement"
 msgstr "hat %d Achievement erhalten"
 
-#: views/html/achievements/index.tpl:43
+#: views/html/achievements/index.tpl:50
 #, php-format
 msgid "Character has achieved %d Achievements"
 msgstr "hat %d Achievements erhalten"
 
-#: views/html/achievements/index.tpl:51
+#: views/html/achievements/index.tpl:58
 msgid "Personal Achievements"
 msgstr "Deine Achievements"
 
-#: views/html/achievements/index.tpl:53
+#: views/html/achievements/index.tpl:60
 #, php-format
 msgid "Own progress: %d %%"
 msgstr "Persönlicher Fortschritt: %d%%"
 
-#: views/html/achievements/index.tpl:58
+#: views/html/achievements/index.tpl:65
 #: views/html/charactergroups/group.tpl:32
 #: views/html/charactergroups/managegroup.tpl:20
 #: views/html/characters/character.tpl:46 views/html/seminarybar/index.tpl:8
 msgid "Rank"
 msgstr "Platz"
 
-#: views/html/achievements/index.tpl:58
+#: views/html/achievements/index.tpl:65
 #, php-format
 msgid "You achieved %d of %d Achievements so far"
 msgstr "Du hast bislang %d von insgesamt %d Achievements erreicht"
 
-#: views/html/achievements/index.tpl:65 views/html/seminarybar/index.tpl:29
+#: views/html/achievements/index.tpl:72 views/html/seminarybar/index.tpl:29
 #, php-format
 msgid "achieved at: %s"
 msgstr "erhalten am: %s"
 
-#: views/html/achievements/index.tpl:78
+#: views/html/achievements/index.tpl:85
 msgid "Continue playing to unlock this secret Achievement"
 msgstr "Spiele weiter, um diesen geheimen Erfolg freizuschalten"
+
+#: views/html/achievements/manage.tpl:23
+#: views/html/charactergroups/editgroup.tpl:83
+#: views/html/charactergroups/editgroupsgroup.tpl:50
+#: views/html/charactergroupsquests/edit.tpl:94
+#: views/html/characters/edit.tpl:108 views/html/questgroups/edit.tpl:64
+#: views/html/questgroups/edittexts.tpl:24
+#: views/html/questgroupshierarchy/edit.tpl:57 views/html/quests/edit.tpl:111
+#: views/html/quests/edittexts.tpl:63 views/html/seminaries/edit.tpl:77
+msgid "edit"
+msgstr "bearbeiten"
 
 #: views/html/charactergroups/creategroup.tpl:8
 #: views/html/charactergroups/creategroupsgroup.tpl:8
@@ -507,30 +863,6 @@ msgstr "%s-Gruppe löschen"
 msgid "Should the %s Character group “%s” really be deleted?"
 msgstr "Soll die %s-Gruppen „%s“ wirklich gelöscht werden?"
 
-#: views/html/charactergroups/deletegroup.tpl:15
-#: views/html/charactergroups/deletegroupsgroup.tpl:14
-#: views/html/charactergroupsquests/delete.tpl:15
-#: views/html/characters/delete.tpl:17 views/html/charactertypes/manage.tpl:48
-#: views/html/library/delete.tpl:14 views/html/library/edit.tpl:83
-#: views/html/questgroups/delete.tpl:17
-#: views/html/questgroups/edittexts.tpl:16
-#: views/html/questgroupshierarchy/delete.tpl:14
-#: views/html/quests/delete.tpl:11 views/html/quests/edittexts.tpl:22
-#: views/html/seminaries/delete.tpl:13 views/html/users/delete.tpl:11
-msgid "delete"
-msgstr "löschen"
-
-#: views/html/charactergroups/deletegroup.tpl:16
-#: views/html/charactergroups/deletegroupsgroup.tpl:15
-#: views/html/charactergroupsquests/delete.tpl:16
-#: views/html/characters/delete.tpl:18 views/html/library/delete.tpl:15
-#: views/html/questgroups/delete.tpl:18
-#: views/html/questgroupshierarchy/delete.tpl:15
-#: views/html/quests/delete.tpl:12 views/html/seminaries/delete.tpl:14
-#: views/html/users/delete.tpl:12
-msgid "cancel"
-msgstr "abbrechen"
-
 #: views/html/charactergroups/deletegroupsgroup.tpl:10
 #: views/html/charactergroups/groupsgroup.tpl:13
 msgid "Delete Character groups-group"
@@ -546,16 +878,6 @@ msgstr "Soll die Gruppenart „%s“ wirklich gelöscht werden?"
 #, php-format
 msgid "Edit %s Character group"
 msgstr "%s-Gruppe bearbeiten"
-
-#: views/html/charactergroups/editgroup.tpl:83
-#: views/html/charactergroups/editgroupsgroup.tpl:50
-#: views/html/charactergroupsquests/edit.tpl:94
-#: views/html/characters/edit.tpl:108 views/html/questgroups/edit.tpl:64
-#: views/html/questgroups/edittexts.tpl:24
-#: views/html/questgroupshierarchy/edit.tpl:57 views/html/quests/edit.tpl:111
-#: views/html/quests/edittexts.tpl:32 views/html/seminaries/edit.tpl:77
-msgid "edit"
-msgstr "bearbeiten"
 
 #: views/html/charactergroups/editgroupsgroup.tpl:11
 #: views/html/charactergroups/groupsgroup.tpl:12
@@ -643,58 +965,6 @@ msgstr "Quests"
 msgid "New %s-Quest"
 msgstr "Neue %s-Quest"
 
-#: views/html/charactergroupsquests/create.tpl:34
-#: views/html/charactergroupsquests/edit.tpl:34
-#: views/html/library/create.tpl:22 views/html/library/edit.tpl:22
-#: views/html/library/edit.tpl:62 views/html/library/edit.tpl:100
-#: views/html/questgroups/create.tpl:33 views/html/questgroups/edit.tpl:30
-#: views/html/quests/create.tpl:30 views/html/quests/edit.tpl:30
-#: views/html/seminaries/create.tpl:30 views/html/seminaries/edit.tpl:32
-#, php-format
-msgid "Title is too short (min. %d chars)"
-msgstr "Der Titel ist zu kurz (min. %d Zeichen)"
-
-#: views/html/charactergroupsquests/create.tpl:36
-#: views/html/charactergroupsquests/edit.tpl:36
-#: views/html/library/create.tpl:24 views/html/library/edit.tpl:24
-#: views/html/library/edit.tpl:64 views/html/library/edit.tpl:102
-#: views/html/questgroups/create.tpl:35 views/html/questgroups/edit.tpl:32
-#: views/html/quests/create.tpl:32 views/html/quests/edit.tpl:32
-#: views/html/seminaries/create.tpl:32 views/html/seminaries/edit.tpl:34
-#, php-format
-msgid "Title is too long (max. %d chars)"
-msgstr "Der Titel ist zu lang (max. %d Zeichen)"
-
-#: views/html/charactergroupsquests/create.tpl:38
-#: views/html/charactergroupsquests/edit.tpl:38
-#: views/html/library/create.tpl:26 views/html/library/edit.tpl:26
-#: views/html/library/edit.tpl:66 views/html/library/edit.tpl:104
-#: views/html/questgroups/create.tpl:37 views/html/questgroups/edit.tpl:34
-#: views/html/quests/create.tpl:34 views/html/quests/edit.tpl:34
-#: views/html/seminaries/create.tpl:34 views/html/seminaries/edit.tpl:36
-msgid "Title contains illegal characters"
-msgstr "Der Titel enthält ungültige Zeichen"
-
-#: views/html/charactergroupsquests/create.tpl:40
-#: views/html/charactergroupsquests/edit.tpl:40
-#: views/html/library/create.tpl:28 views/html/library/edit.tpl:28
-#: views/html/library/edit.tpl:68 views/html/library/edit.tpl:106
-#: views/html/questgroups/create.tpl:39 views/html/questgroups/edit.tpl:36
-#: views/html/quests/create.tpl:36 views/html/quests/edit.tpl:36
-#: views/html/seminaries/create.tpl:36 views/html/seminaries/edit.tpl:38
-msgid "Title already exists"
-msgstr "Der Titel existiert bereits"
-
-#: views/html/charactergroupsquests/create.tpl:42
-#: views/html/charactergroupsquests/edit.tpl:42
-#: views/html/library/create.tpl:30 views/html/library/edit.tpl:30
-#: views/html/library/edit.tpl:70 views/html/library/edit.tpl:108
-#: views/html/questgroups/create.tpl:41 views/html/questgroups/edit.tpl:38
-#: views/html/quests/create.tpl:38 views/html/quests/edit.tpl:38
-#: views/html/seminaries/create.tpl:38 views/html/seminaries/edit.tpl:40
-msgid "Title invalid"
-msgstr "Der Titel ist ungültig"
-
 #: views/html/charactergroupsquests/create.tpl:47
 #: views/html/charactergroupsquests/edit.tpl:47
 #: views/html/quests/create.tpl:43 views/html/quests/edit.tpl:43
@@ -714,39 +984,11 @@ msgstr "Die XP-Angabe enthält ungültige Zeichen"
 msgid "XPs invalid"
 msgstr "Die XP-Angabe ist ungültig"
 
-#: views/html/charactergroupsquests/create.tpl:74
-#: views/html/charactergroupsquests/create.tpl:75
-#: views/html/charactergroupsquests/edit.tpl:75
-#: views/html/charactergroupsquests/edit.tpl:76
-#: views/html/library/create.tpl:43 views/html/library/create.tpl:44
-#: views/html/library/edit.tpl:43 views/html/library/edit.tpl:44
-#: views/html/library/edit.tpl:121 views/html/library/edit.tpl:122
-#: views/html/questgroups/create.tpl:73 views/html/questgroups/create.tpl:74
-#: views/html/questgroups/edit.tpl:61 views/html/questgroups/edit.tpl:62
-#: views/html/questgroups/questgroup.tpl:88 views/html/quests/create.tpl:70
-#: views/html/quests/create.tpl:71 views/html/quests/edit.tpl:73
-#: views/html/quests/edit.tpl:74 views/html/quests/index.tpl:47
-#: views/html/quests/index.tpl:48 views/html/seminaries/create.tpl:68
-#: views/html/seminaries/create.tpl:69 views/html/seminaries/edit.tpl:70
-#: views/html/seminaries/edit.tpl:71 views/html/seminaries/seminary.tpl:69
-msgid "Title"
-msgstr "Titel"
-
 #: views/html/charactergroupsquests/create.tpl:78
 #: views/html/charactergroupsquests/edit.tpl:79
 #: views/html/questgroups/create.tpl:58 views/html/quests/index.tpl:14
 msgid "Questgroup"
 msgstr "Questgruppe"
-
-#: views/html/charactergroupsquests/create.tpl:84
-#: views/html/charactergroupsquests/create.tpl:85
-#: views/html/charactergroupsquests/edit.tpl:85
-#: views/html/charactergroupsquests/edit.tpl:86
-#: views/html/charactergroupsquests/quest.tpl:45
-#: views/html/seminaries/create.tpl:72 views/html/seminaries/create.tpl:73
-#: views/html/seminaries/edit.tpl:74 views/html/seminaries/edit.tpl:75
-msgid "Description"
-msgstr "Beschreibung"
 
 #: views/html/charactergroupsquests/create.tpl:86
 #: views/html/charactergroupsquests/create.tpl:87
@@ -795,12 +1037,6 @@ msgstr "Medien"
 #: views/html/charactergroupsquests/manage.tpl:43
 msgid "File invalid"
 msgstr "Die Datei ist ungültig"
-
-#: views/html/charactergroupsquests/manage.tpl:66
-#: views/html/charactertypes/manage.tpl:52 views/html/library/edit.tpl:46
-#: views/html/library/edit.tpl:86 views/html/users/edit.tpl:105
-msgid "save"
-msgstr "speichern"
 
 #: views/html/charactergroupsquests/manage.tpl:79
 msgid "Not attended"
@@ -1017,10 +1253,6 @@ msgstr "oder"
 msgid "register yourself"
 msgstr "registriere dich"
 
-#: views/html/html.tpl:77
-msgid "Achievement"
-msgstr "Achievement"
-
 #: views/html/html.tpl:87
 msgid "Level-up"
 msgstr "Levelaufstieg"
@@ -1176,7 +1408,7 @@ msgstr "Questgruppe bearbeiten"
 msgid "Edit Questgroup texts"
 msgstr "Questgruppetexte bearbeiten"
 
-#: views/html/questgroups/edittexts.tpl:20 views/html/quests/edittexts.tpl:27
+#: views/html/questgroups/edittexts.tpl:20 views/html/quests/edittexts.tpl:58
 msgid "New Questgroup text"
 msgstr "Neuer Questgruppentext"
 
@@ -1290,24 +1522,6 @@ msgstr "Soll die Hierarchie „%s“ wirklich gelöscht werden?"
 msgid "Create Quest"
 msgstr "Quest erstellen"
 
-#: views/html/quests/create.tpl:19 views/html/quests/edit.tpl:19
-#, php-format
-msgid "Error during picture upload: %s"
-msgstr "Fehler beim Bildupload: %s"
-
-#: views/html/quests/create.tpl:21 views/html/quests/edit.tpl:21
-#, php-format
-msgid "Picture has wrong type “%s”"
-msgstr "Der Bildtyp „%s“ ist nicht erlaubt"
-
-#: views/html/quests/create.tpl:23 views/html/quests/edit.tpl:23
-msgid "Picture exceeds size maximum"
-msgstr "Das Bild ist zu groß"
-
-#: views/html/quests/create.tpl:25 views/html/quests/edit.tpl:25
-msgid "Picture invalid"
-msgstr "Das Bild ist ungültig"
-
 #: views/html/quests/create.tpl:60 views/html/quests/edit.tpl:63
 msgid "Picture"
 msgstr "Bild"
@@ -1383,10 +1597,6 @@ msgstr "Epilog"
 msgid "Continuation"
 msgstr "Setze deine Reise fort"
 
-#: views/html/quests/quest.tpl:116 views/html/quests/quest.tpl:132
-msgid "Quest"
-msgstr "Quest"
-
 #: views/html/quests/quest.tpl:134
 msgid "Go on"
 msgstr "Fortfahren"
@@ -1403,10 +1613,6 @@ msgstr "Lösung von %s"
 #: views/html/quests/submissions.tpl:7
 msgid "Submissions"
 msgstr "Lösungen"
-
-#: views/html/quests/submissions.tpl:10
-msgid "submitted"
-msgstr "eingereicht"
 
 #: views/html/seminaries/create.tpl:8
 msgid "New seminary"
@@ -1732,10 +1938,6 @@ msgstr "Hallo %s"
 #~ msgid "Questname"
 #~ msgstr "Questname"
 
-#, fuzzy
-#~ msgid "achieved at %s"
-#~ msgstr "erhalten am: %s"
-
 #~ msgid "Usergroups"
 #~ msgstr "Benutzergruppen"
 
@@ -1759,9 +1961,6 @@ msgstr "Hallo %s"
 
 #~ msgid "locked"
 #~ msgstr "gesperrt"
-
-#~ msgid "Group Leader"
-#~ msgstr "Gruppenleiter"
 
 #~ msgid "as"
 #~ msgstr "als"
