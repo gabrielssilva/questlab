@@ -57,6 +57,143 @@
 			
 			return $data[0];
 		}
+
+
+		/**
+		 * Get all XP-levels for a Seminary.
+		 * 
+		 * @throws	IdNotFoundException
+		 * @param	int	$seminaryId	ID of Seminary
+		 * @return	array			List of XP-level
+		 */
+		public function getXPLevelsForSeminary($seminaryId)
+		{
+			return $this->db->query(
+				'SELECT id, seminary_id, xps, level, name '.
+				'FROM xplevels '.
+				'WHERE seminary_id = ? '.
+				'ORDER BY level ASC',
+				'i',
+				$seminaryId
+			);
+		}
+
+
+		/**
+		 * Create a new XP-level for a Seminary.
+		 * 
+		 * @param	int	$userId		ID of creating user
+		 * @param	int	$seminaryId	ID of Seminary
+		 * @param	int	$xps		XPs of new XP-level
+		 * @param	string	$name		Name of new XP-level (optional)
+		 */
+		public function createXPLevel($userId, $seminaryId, $xps, $name=null)
+		{
+			// Get level
+			$level = $this->db->query(
+				'SELECT COALESCE(MAX(level),0)+1 AS level '.
+				'FROM xplevels '.
+				'WHERE seminary_id = ?',
+				'i',
+				$seminaryId
+			);
+			$level = $level[0]['level'];
+
+			$this->db->setAutocommit(false);
+			try {
+				// Create XP-level
+				$this->db->query(
+					'INSERT INTO xplevels '.
+					'(created_user_id, seminary_id, xps, level, name) '.
+					'VALUES '.
+					'(?, ?, ?, ?, ?)',
+					'iiiis',
+					$userId,
+					$seminaryId,
+					$xps,
+					$level,
+					$name
+				);
+				$xplevelId = $this->db->getInsertId();
+
+				// Create avatars
+				$this->db->query(
+					'INSERT INTO avatars '.
+					'(created_user_id, charactertype_id, xplevel_id) '.
+					'SELECT ?, charactertypes.id, ? '.
+					'FROM charactertypes '.
+					'WHERE seminary_id = ?',
+					'iii',
+					$userId,
+					$xplevelId,
+					$seminaryId
+				);
+
+				$this->db->commit();
+			}
+			catch(\Exception $e) {
+				$this->db->rollback();
+				$this->db->setAutocommit(true);
+				throw $e;
+			}
+
+			$this->db->setAutocommit(true);
+		}
+
+
+		/**
+		 * Edit a XP-level.
+		 * 
+		 * @param	int	$xplevelId	ID of XP-level to edit
+		 * @param	int	$xps		New XPs of XP-level
+		 * @param	string	$name		New name of XP-level (optional)
+		 */
+		public function editXPLevel($xplevelId, $xps, $name=null)
+		{
+			$this->db->query(
+				'UPDATE xplevels '.
+				'SET xps = ?, name = ? '.
+				'WHERE id = ?',
+				'isi',
+				$xps,
+				$name,
+				$xplevelId
+			);
+		}
+
+
+		/**
+		 * Delete a XP-level.
+		 * 
+		 * @param	int	$xplevel	XP-level to delete
+		 */
+		public function deleteXPLevel($xplevel)
+		{
+			$this->db->setAutocommit(false);
+			try {
+				// Delete XP-level
+				$this->db->query('DELETE FROM xplevels WHERE id = ?', 'i', $xplevel['id']);
+
+				// Adjust levels
+				$this->db->query(
+					'UPDATE xplevels '.
+					'SET level = level - 1 '.
+					'WHERE seminary_id = ? AND level > ?',
+					'ii',
+					$xplevel['seminary_id'],
+					$xplevel['level']
+				);
+
+				$this->db->commit();
+			}
+			catch(\Exception $e) {
+				$this->db->rollback();
+				$this->db->setAutocommit(true);
+				throw $e;
+			}
+
+			$this->db->setAutocommit(true);
+		}
 		
 	}
 

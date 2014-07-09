@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: The Legend of Z\n"
-"POT-Creation-Date: 2014-07-09 11:21+0100\n"
-"PO-Revision-Date: 2014-07-09 11:29+0100\n"
+"POT-Creation-Date: 2014-07-09 13:01+0100\n"
+"PO-Revision-Date: 2014-07-09 13:02+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de_DE\n"
@@ -387,6 +387,7 @@ msgstr "Achievement"
 #: views/html/questgroupshierarchy/delete.tpl:14
 #: views/html/quests/delete.tpl:11 views/html/quests/edittexts.tpl:53
 #: views/html/seminaries/delete.tpl:13 views/html/users/delete.tpl:11
+#: views/html/xplevels/manage.tpl:45
 msgid "delete"
 msgstr "löschen"
 
@@ -400,6 +401,7 @@ msgstr "Neue Bedingung"
 #: views/html/charactergroupsquests/manage.tpl:66
 #: views/html/charactertypes/manage.tpl:52 views/html/library/edit.tpl:46
 #: views/html/library/edit.tpl:86 views/html/users/edit.tpl:105
+#: views/html/xplevels/manage.tpl:49
 msgid "save"
 msgstr "speichern"
 
@@ -839,7 +841,7 @@ msgstr "Motto"
 #: views/html/library/edit.tpl:124 views/html/questgroups/create.tpl:76
 #: views/html/questgroupshierarchy/create.tpl:63
 #: views/html/quests/create.tpl:108 views/html/seminaries/create.tpl:75
-#: views/html/users/create.tpl:96
+#: views/html/users/create.tpl:96 views/html/xplevels/manage.tpl:83
 msgid "create"
 msgstr "erstellen"
 
@@ -925,7 +927,8 @@ msgstr "%squests"
 #: views/html/characters/manage.tpl:17
 #: views/html/questgroups/questgroup.tpl:62 views/html/quests/create.tpl:72
 #: views/html/quests/create.tpl:73 views/html/quests/edit.tpl:75
-#: views/html/quests/edit.tpl:76
+#: views/html/quests/edit.tpl:76 views/html/xplevels/manage.tpl:43
+#: views/html/xplevels/manage.tpl:81
 msgid "XPs"
 msgstr "XP"
 
@@ -968,6 +971,7 @@ msgstr "Neue %s-Quest"
 #: views/html/charactergroupsquests/create.tpl:47
 #: views/html/charactergroupsquests/edit.tpl:47
 #: views/html/quests/create.tpl:43 views/html/quests/edit.tpl:43
+#: views/html/xplevels/manage.tpl:26 views/html/xplevels/manage.tpl:63
 #, php-format
 msgid "XPs not set"
 msgstr "XP nicht angegeben"
@@ -975,12 +979,14 @@ msgstr "XP nicht angegeben"
 #: views/html/charactergroupsquests/create.tpl:49
 #: views/html/charactergroupsquests/edit.tpl:49
 #: views/html/quests/create.tpl:45 views/html/quests/edit.tpl:45
+#: views/html/xplevels/manage.tpl:28 views/html/xplevels/manage.tpl:65
 msgid "XPs contain illegal characters"
 msgstr "Die XP-Angabe enthält ungültige Zeichen"
 
 #: views/html/charactergroupsquests/create.tpl:51
 #: views/html/charactergroupsquests/edit.tpl:51
 #: views/html/quests/create.tpl:47 views/html/quests/edit.tpl:47
+#: views/html/xplevels/manage.tpl:30 views/html/xplevels/manage.tpl:67
 msgid "XPs invalid"
 msgstr "Die XP-Angabe ist ungültig"
 
@@ -1075,7 +1081,7 @@ msgstr "Fortschritt"
 #: views/html/characters/character.tpl:77
 #: views/html/characters/character.tpl:83
 #: views/html/characters/character.tpl:89 views/html/seminarybar/index.tpl:43
-#: views/html/users/user.tpl:41
+#: views/html/users/user.tpl:41 views/html/xplevels/manage.tpl:41
 msgid "Level"
 msgstr "Level"
 
@@ -1207,7 +1213,7 @@ msgid "Please choose an avatar"
 msgstr "Bitte wähle einen Avatar aus"
 
 #: views/html/charactertypes/manage.tpl:9 views/html/seminaries/index.tpl:38
-#: views/html/seminaries/seminary.tpl:14
+#: views/html/seminaries/seminary.tpl:15
 msgid "Manage Charactertypes"
 msgstr "Charakterrassen verwalten"
 
@@ -1663,9 +1669,9 @@ msgstr "Erstelle einen Charakter"
 msgid "Your Character “%s” has not been activated yet"
 msgstr "Dein Charakter „%s“ wurde noch nicht aktiviert"
 
-#: views/html/seminaries/seminary.tpl:15
-msgid "Manage Questgroups"
-msgstr "Questgruppen verwalten"
+#: views/html/seminaries/seminary.tpl:14 views/html/xplevels/manage.tpl:9
+msgid "Manage XP-levels"
+msgstr "XP-Level verwalten"
 
 #: views/html/seminaries/seminary.tpl:19
 msgid "Show Quests"
@@ -1849,6 +1855,14 @@ msgstr "Registrieren"
 msgid "Roles"
 msgstr "Rollen"
 
+#: views/html/xplevels/manage.tpl:11
+msgid "Edit XP-levels"
+msgstr "XP-Level bearbeiten"
+
+#: views/html/xplevels/manage.tpl:52
+msgid "Create new XP-level"
+msgstr "Neues XP-Level erstellen"
+
 #: views/htmlmail/mail/characterregistration.tpl:1
 #: views/textmail/mail/characterregistration.tpl:1
 #, php-format
@@ -1883,6 +1897,9 @@ msgstr "Ein neuer Benutzer wurde registriert"
 #, php-format
 msgid "Hello %s"
 msgstr "Hallo %s"
+
+#~ msgid "Manage Questgroups"
+#~ msgstr "Questgruppen verwalten"
 
 #, fuzzy
 #~ msgid "Edit Questgrouphierarchy"
