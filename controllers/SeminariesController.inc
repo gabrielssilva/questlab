@@ -24,7 +24,7 @@
 		 * 
 		 * @var array
 		 */
-		public $models = array('seminaries', 'users', 'characterroles', 'charactertypes', 'questgroupshierarchy', 'questgroups', 'questgrouptexts', 'media');
+		public $models = array('seminaries', 'users', 'characterroles', 'charactertypes', 'xplevels', 'questgroupshierarchy', 'questgroups', 'questgrouptexts', 'media');
 		/**
 		 * Required components
 		 * 
@@ -76,6 +76,7 @@
 				$seminary['description'] = $description.(strlen($description) < strlen($seminary['description']) ? ' …' : null);
 				$seminary['creator'] = $this->Users->getUserById($seminary['created_user_id']);
 				$seminary['charactertypes'] = $this->Charactertypes->getCharacterTypesForSeminary($seminary['id']);
+				$seminary['xplevels'] = $this->Xplevels->getXPLevelsForSeminary($seminary['id']);
 				
 				// Character of currently logged-in user
 				try {

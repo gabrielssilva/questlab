@@ -36,7 +36,9 @@
 <ul id="characterlist" class="admnql">
 	<?php foreach($characters as &$character) : ?>
 	<li class="cf">
+		<?php if(array_key_exists('avatar', $character) && !is_null($character['avatar']['small_avatarpicture_id'])) : ?>
 		<img src="<?=$linker->link(array('media','avatar',$seminary['url'],$character['charactertype_url'],$character['xplevel']['level'],'portrait'))?>">
+		<?php endif ?>
 		<p><a href="<?=$linker->link(array('characters','character',$seminary['url'],$character['url']))?>"><?=$character['name']?></a><span><?=$character['xps']?> XP</span></p>
 		<p><small><a href="<?=$linker->link(array('users','user',$character['user']['url']))?>"><?=$character['user']['username']?></a></small>
 		<?php if(in_array('admin', $character['characterroles'])) : ?><small>(<?=_('Admin')?>)</small><?php endif ?>

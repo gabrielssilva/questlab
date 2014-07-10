@@ -31,7 +31,7 @@
 		 * 
 		 * @var array
 		 */
-		public $models = array('seminaries', 'characters', 'characterroles', 'achievements');
+		public $models = array('seminaries', 'characters', 'characterroles', 'xplevels', 'avatars', 'achievements');
 		/**
 		 * Current Seminary
 		 * 
@@ -84,6 +84,13 @@
 				{
 					self::$character = $this->Characters->getCharacterForUserAndSeminary(self::$user['id'], self::$seminary['id']);
 					self::$character['characterroles'] = array_map(function($r) { return $r['name']; }, $this->Characterroles->getCharacterrolesForCharacterById(self::$character['id']));
+					try {
+						self::$character['xplevel'] = $this->Xplevels->getXPLevelById(self::$character['xplevel_id']);
+						self::$character['avatar'] = $this->Avatars->getAvatarByTypeAndLevel(self::$seminary['id'], self::$character['charactertype_url'], self::$character['xplevel']['level']);
+					}
+					catch(\nre\exceptions\IdNotFoundException $e) {
+						// No Avatar available
+					}
 				}
 			}
 			catch(\nre\exceptions\IdNotFoundException $e) {

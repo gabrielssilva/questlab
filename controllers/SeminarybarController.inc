@@ -49,7 +49,6 @@
 			if(is_null($character)) {
 				return;
 			}
-			$character['xplevel'] = $this->Xplevels->getXPLevelById($character['xplevel_id']);
 			$character['rank'] = $this->Characters->getXPRank($seminary['id'], $character['xps']);
 			
 			// Get “last” Quest

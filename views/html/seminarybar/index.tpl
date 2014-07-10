@@ -1,7 +1,9 @@
 <?php if($render) : ?>
 <section class="cf">
 	<h1><?=$character['name']?></h1>
+	<?php if(array_key_exists('avatar', $character) && !is_null($character['avatar']['avatarpicture_id'])) : ?>
 	<img src="<?=$linker->link(array('media','avatar',$seminary['url'],$character['charactertype_url'],$character['xplevel']['level']))?>" class="char">
+	<?php endif ?>
 	<ul class="charstats">
 		<li><i class="fa fa-caret-right fa-fw"></i><?=('Level')?> <?=$character['xplevel']['level']?></li>
 		<li><i class="fa fa-caret-right fa-fw"></i><?=sprintf(_('%d XPs'), $character['xps'])?></li>

@@ -103,6 +103,12 @@
 				foreach($this->Seminarycharacterfields->getFieldsForCharacter($character['id']) as $value) {
 					$character['characterfields'][$value['url']] = $value;
 				}
+				try {
+					$character['avatar'] = $this->Avatars->getAvatarByTypeAndLevel($seminary['id'], $character['charactertype_url'], $character['xplevel']['level']);
+				}
+				catch(\nre\exceptions\IdNotFoundException $e) {
+					// No Avatar available
+				}
 			}
 			
 			

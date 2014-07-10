@@ -53,7 +53,7 @@
 			<li>
 				<label for="type-<?=$type['id']?>">
 					<p><?=$type['name']?></p>
-					<?php if(array_key_exists('avatar', $type)) : ?>
+					<?php if(array_key_exists('avatar', $type) && !is_null($type['avatar']['small_avatarpicture_id'])) : ?>
 					<img id="avatar" src="<?=$linker->link(array('media','avatar',$seminary['url'],$type['url'],$xplevels[0]['level'],'portrait'))?>" />
 					<?php endif ?>
 				</label>
