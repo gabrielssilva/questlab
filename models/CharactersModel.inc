@@ -579,25 +579,6 @@
 		
 		
 		/**
-		 * Get all XP-levels for a Seminary.
-		 * 
-		 * @param	int	$seminaryId	ID of Seminary
-		 * @return	array			List of XP-levels
-		 */
-		public function getXPLevelsForSeminary($seminaryId)
-		{
-			return $this->db->query(
-				'SELECT id, xps, level, name '.
-				'FROM xplevels '.
-				'WHERE seminary_id = ? '.
-				'ORDER BY level ASC',
-				'i',
-				$seminaryId
-			);
-		}
-		
-		
-		/**
 		 * Get Characters with the given Character role.
 		 * 
 		 * @param	int	$seminaryId		ID of Seminary

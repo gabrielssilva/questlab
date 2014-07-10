@@ -43,13 +43,63 @@
 		public function getCharacterTypesForSeminary($seminaryId)
 		{
 			return $this->db->query(
-				'SELECT id, name, url '.
+				'SELECT id, seminary_id, name, url '.
 				'FROM charactertypes '.
 				'WHERE seminary_id = ? '.
 				'ORDER BY name ASC',
 				'i',
 				$seminaryId
 			);
+		}
+
+
+		/**
+		 * Get Character type by its URL.
+		 * 
+		 * @param	int	$seminaryId		ID of Seminary
+		 * @param	string	$charactretypeUrl	URL-title of Character type
+		 * @return	array				Character type data
+		 */
+		public function getCharactertypeByUrl($seminaryId, $charactertypeUrl)
+		{
+			$data = $this->db->query(
+				'SELECT id, seminary_id, name, url '.
+				'FROM charactertypes '.
+				'WHERE seminary_id = ? AND url = ?',
+				'is',
+				$seminaryId,
+				$charactertypeUrl
+			);
+			if(empty($data)) {
+				throw new \nre\exceptions\IdNotFoundException($charactertypeUrl);
+			}
+			
+
+			return $data[0];
+		}
+
+
+		/**
+		 * Get Character type by its ID.
+		 * 
+		 * @param	string	$charactertypeId	ID of Character type
+		 * @return	array				Character type data
+		 */
+		public function getCharactertypeById($charactertypeId)
+		{
+			$data = $this->db->query(
+				'SELECT id, seminary_id, name, url '.
+				'FROM charactertypes '.
+				'WHERE id = ?',
+				'i',
+				$charactertypeId
+			);
+			if(empty($data)) {
+				throw new \nre\exceptions\IdNotFoundException($charactertypeId);
+			}
+			
+
+			return $data[0];
 		}
 		
 		
@@ -75,8 +125,8 @@
 			
 			return (!empty($data) && (is_null($charactertypeId) || $charactertypeId != $data[0]['id']));
 		}
-		
-		
+
+
 		/**
 		 * Create a new Charactertype for a Seminary.
 		 * 
@@ -87,19 +137,47 @@
 		 */
 		public function createCharactertype($userId, $seminaryId, $name)
 		{
-			$this->db->query(
-				'INSERT INTO charactertypes '.
-				'(created_user_id, seminary_id, name, url) '.
-				'VALUES '.
-				'(?, ?, ?, ?) ',
-				'iiss',
-				$userId,
-				$seminaryId,
-				$name,
-				\nre\core\Linker::createLinkParam($name)
-			);
-			
-			return $this->db->getInsertId();
+			$charactertypeId = null;
+			$this->db->setAutocommit(false);
+			try {
+				// Create Charactertype
+				$this->db->query(
+					'INSERT INTO charactertypes '.
+					'(created_user_id, seminary_id, name, url) '.
+					'VALUES '.
+					'(?, ?, ?, ?) ',
+					'iiss',
+					$userId,
+					$seminaryId,
+					$name,
+					\nre\core\Linker::createLinkParam($name)
+				);
+				$charactertypeId = $this->db->getInsertId();
+
+				// Create avatars
+				$this->db->query(
+					'INSERT INTO avatars '.
+					'(created_user_id, charactertype_id, xplevel_id) '.
+					'SELECT ?, ?, xplevels.id '.
+					'FROM xplevels '.
+					'WHERE seminary_id = ?',
+					'iii',
+					$userId,
+					$charactertypeId,
+					$seminaryId
+				);
+
+				$this->db->commit();
+			}
+			catch(\Exception $e) {
+				$this->db->rollback();
+				$this->db->setAutocommit(true);
+				throw $e;
+			}
+			$this->db->setAutocommit(true);
+
+
+			return $charactertypeId;
 		}
 		
 		

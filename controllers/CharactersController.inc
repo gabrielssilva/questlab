@@ -308,7 +308,7 @@
 			}
 			
 			// Get XP-levels
-			$xplevels = $this->Characters->getXPLevelsForSeminary($seminary['id']);
+			$xplevels = $this->Xplevels->getXPLevelsForSeminary($seminary['id']);
 			
 			// Get Avatars
 			if(count($xplevels) > 0)
@@ -563,7 +563,7 @@
 			}
 			
 			// Get XP-levels
-			$xplevels = $this->Characters->getXPLevelsForSeminary($seminary['id']);
+			$xplevels = $this->Xplevels->getXPLevelsForSeminary($seminary['id']);
 			
 			
 			// Set titile

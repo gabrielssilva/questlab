@@ -86,6 +86,60 @@
 			
 			return $data[0];
 		}
+
+
+		/**
+		 * Set the picture for an Avatar.
+		 * 
+		 * @param	int	$userId			ID of creating user
+		 * @param	int	$charactertypeId	ID of Charactertype of Avatar
+		 * @param	int	$xplevelId		ID of XP-level of Avatar
+		 * @param	int	$avatarpictureId	ID of Avatar picture to set
+		 */
+		public function setAvatarForTypeAndLevel($userId, $charactertypeId, $xplevelId, $avatarpictureId)
+		{
+			$this->db->query(
+				'INSERT INTO avatars '.
+				'(created_user_id, charactertype_id, xplevel_id, avatarpicture_id) '.
+				'VALUES '.
+				'(?, ?, ?, ?) '.
+				'ON DUPLICATE KEY UPDATE '.
+				'avatarpicture_id = ?',
+				'iiiii',
+				$userId,
+				$charactertypeId,
+				$xplevelId,
+				$avatarpictureId,
+				$avatarpictureId
+			);
+		}
+
+
+		/**
+		 * Set the portrait picture for an Avatar.
+		 * 
+		 * @param	int	$userId			ID of creating user
+		 * @param	int	$charactertypeId	ID of Charactertype of Avatar
+		 * @param	int	$xplevelId		ID of XP-level of Avatar
+		 * @param	int	$avatarpictureId	ID of Avatar portrait picture to set
+		 */
+		public function setAvatarPortraitForTypeAndLevel($userId, $charactertypeId, $xplevelId, $avatarpictureId)
+		{
+			$this->db->query(
+				'INSERT INTO avatars '.
+				'(created_user_id, charactertype_id, xplevel_id, small_avatarpicture_id) '.
+				'VALUES '.
+				'(?, ?, ?, ?) '.
+				'ON DUPLICATE KEY UPDATE '.
+				'small_avatarpicture_id = ?',
+				'iiiii',
+				$userId,
+				$charactertypeId,
+				$xplevelId,
+				$avatarpictureId,
+				$avatarpictureId
+			);
+		}
 		
 	}
 
