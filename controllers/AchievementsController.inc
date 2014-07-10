@@ -940,7 +940,7 @@
 				if(!is_null($this->request->getPostParam('delete')))
 				{
 					// Delete seminary
-					$this->Achievements->deleteAchievement($achievement['id']);
+					$this->Achievements->deleteAchievement($achievement);
 				}
 				
 				// Redirect to entry

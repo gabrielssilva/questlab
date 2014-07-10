@@ -1136,11 +1136,34 @@
 		/**
 		 * Delete an Achievement.
 		 * 
-		 * @param	int	$achievementId	ID of Achievement to delete
+		 * @param	int	$achievement	Achievement to delete
 		 */
-		public function deleteAchievement($achievementId)
+		public function deleteAchievement($achievement)
 		{
-			$this->db->query('DELETE FROM achievements WHERE id = ?', 'i', $achievementId);
+			$this->db->setAutocommit(false);
+			try {
+				// Delete Achievement
+				$this->db->query('DELETE FROM achievements WHERE id = ?', 'i', $achievementId);
+
+				// Adjust positions
+				$this->db->query(
+					'UPDATE achievements '.
+					'SET pos = pos - 1 '.
+					'WHERE seminary_id = ? AND pos > ?',
+					'ii',
+					$achievement['seminary_id'],
+					$achievement['pos']
+				);
+
+				$this->db->commit();
+			}
+			catch(\Exception $e) {
+				$this->db->rollback();
+				$this->db->setAutocommit(true);
+				throw $e;
+			}
+
+			$this->db->setAutocommit(true);
 		}
 		
 	}
