@@ -55,7 +55,7 @@
 					<?php if(array_key_exists('avatar', $loggedCharacter) && !is_null($loggedCharacter['avatar']['small_avatarpicture_id'])) : ?>
 					<img src="<?=$linker->link(array('media','avatar',$loggedSeminary['url'],$loggedCharacter['charactertype_url'],$loggedCharacter['xplevel']['level'],'portrait'))?>" />
 					<?php endif ?>
-					<span><?=$loggedCharacter['name']?></span><span class="lvlname">Level <?=$loggedCharacter['xplevel']?></span>
+					<span><?=$loggedCharacter['name']?></span><span class="lvlname">Level <?=$loggedCharacter['xplevel']['level']?></span>
 				</a>
 				<?php else : ?>
 				<a href="<?=$linker->link(array('users',$loggedUser['url']))?>"><?=$loggedUser['username']?><span class="lvlname"><?=$loggedUser['prename']?> <?=$loggedUser['surname']?></span></a>
