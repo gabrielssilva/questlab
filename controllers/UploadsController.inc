@@ -208,6 +208,11 @@
 			
 			// Set content-type
 			$this->response->addHeader("Content-type: image/jpeg");
+
+			// Check file
+			if(!file_exists($upload['filename'])) {
+				throw new \nre\exceptions\IdNotFoundException($upload['url']);
+			}
 			
 			// Cache
 			if($this->setCacheHeaders($upload['filename'])) {
