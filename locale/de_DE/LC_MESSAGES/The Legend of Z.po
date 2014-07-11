@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: The Legend of Z\n"
-"POT-Creation-Date: 2014-07-09 13:01+0100\n"
-"PO-Revision-Date: 2014-07-09 13:02+0100\n"
+"POT-Creation-Date: 2014-07-11 11:53+0100\n"
+"PO-Revision-Date: 2014-07-11 11:57+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de_DE\n"
@@ -17,9 +17,9 @@ msgstr ""
 "X-Poedit-SearchPath-1: questtypes\n"
 "X-Poedit-SearchPath-2: controllers\n"
 
-#: controllers/CharactersController.inc:385
+#: controllers/CharactersController.inc:391
 #: controllers/UsersController.inc:315 views/ajax/characters/index.tpl:10
-#: views/ajax/users/index.tpl:10 views/html/characters/index.tpl:42
+#: views/ajax/users/index.tpl:10 views/html/characters/index.tpl:48
 #: views/html/characters/manage.tpl:35 views/html/characters/manage.tpl:50
 #: views/html/characters/manage.tpl:58 views/html/userroles/user.tpl:5
 #: views/html/users/index.tpl:29 views/html/users/manage.tpl:28
@@ -27,9 +27,9 @@ msgstr ""
 msgid "Admin"
 msgstr "Administrator"
 
-#: controllers/CharactersController.inc:391
+#: controllers/CharactersController.inc:397
 #: controllers/UsersController.inc:321 views/ajax/characters/index.tpl:12
-#: views/ajax/users/index.tpl:12 views/html/characters/index.tpl:43
+#: views/ajax/users/index.tpl:12 views/html/characters/index.tpl:49
 #: views/html/characters/manage.tpl:36 views/html/characters/manage.tpl:51
 #: views/html/characters/manage.tpl:59 views/html/userroles/user.tpl:7
 #: views/html/users/index.tpl:30 views/html/users/manage.tpl:29
@@ -37,9 +37,9 @@ msgstr "Administrator"
 msgid "Moderator"
 msgstr "Moderator"
 
-#: controllers/CharactersController.inc:397
+#: controllers/CharactersController.inc:403
 #: controllers/UsersController.inc:327 views/ajax/characters/index.tpl:14
-#: views/ajax/users/index.tpl:14 views/html/characters/index.tpl:44
+#: views/ajax/users/index.tpl:14 views/html/characters/index.tpl:50
 #: views/html/characters/manage.tpl:37 views/html/characters/manage.tpl:53
 #: views/html/characters/manage.tpl:61 views/html/userroles/user.tpl:9
 #: views/html/users/index.tpl:31 views/html/users/manage.tpl:30
@@ -134,9 +134,10 @@ msgstr "Fehler beim Dateiupload: %s"
 #: views/html/charactergroupsquests/create.tpl:66
 #: views/html/charactergroupsquests/edit.tpl:67
 #: views/html/charactergroupsquests/manage.tpl:63
-#: views/html/questgroups/create.tpl:65 views/html/questgroups/edit.tpl:53
-#: views/html/quests/create.tpl:62 views/html/quests/edit.tpl:65
-#: views/html/seminaries/create.tpl:60 views/html/seminaries/edit.tpl:62
+#: views/html/charactertypes/edit.tpl:117 views/html/questgroups/create.tpl:65
+#: views/html/questgroups/edit.tpl:53 views/html/quests/create.tpl:62
+#: views/html/quests/edit.tpl:65 views/html/seminaries/create.tpl:60
+#: views/html/seminaries/edit.tpl:62
 msgid "Allowed file types"
 msgstr "Erlaubte Dateiformate"
 
@@ -147,9 +148,10 @@ msgstr "Erlaubte Dateiformate"
 #: views/html/charactergroupsquests/create.tpl:69
 #: views/html/charactergroupsquests/edit.tpl:70
 #: views/html/charactergroupsquests/manage.tpl:63
-#: views/html/questgroups/create.tpl:68 views/html/questgroups/edit.tpl:56
-#: views/html/quests/create.tpl:65 views/html/quests/edit.tpl:68
-#: views/html/seminaries/create.tpl:63 views/html/seminaries/edit.tpl:65
+#: views/html/charactertypes/edit.tpl:120 views/html/questgroups/create.tpl:68
+#: views/html/questgroups/edit.tpl:56 views/html/quests/create.tpl:65
+#: views/html/quests/edit.tpl:68 views/html/seminaries/create.tpl:63
+#: views/html/seminaries/edit.tpl:65
 #, php-format
 msgid "%s-files"
 msgstr "%s-Dateien"
@@ -161,9 +163,10 @@ msgstr "%s-Dateien"
 #: views/html/charactergroupsquests/create.tpl:69
 #: views/html/charactergroupsquests/edit.tpl:70
 #: views/html/charactergroupsquests/manage.tpl:63
-#: views/html/questgroups/create.tpl:68 views/html/questgroups/edit.tpl:56
-#: views/html/quests/create.tpl:65 views/html/quests/edit.tpl:68
-#: views/html/seminaries/create.tpl:63 views/html/seminaries/edit.tpl:65
+#: views/html/charactertypes/edit.tpl:120 views/html/questgroups/create.tpl:68
+#: views/html/questgroups/edit.tpl:56 views/html/quests/create.tpl:65
+#: views/html/quests/edit.tpl:68 views/html/seminaries/create.tpl:63
+#: views/html/seminaries/edit.tpl:65
 msgid "max."
 msgstr "max."
 
@@ -261,8 +264,8 @@ msgstr "Texteingabe"
 #: views/html/characters/character.tpl:83
 #: views/html/characters/character.tpl:89
 #: views/html/characters/character.tpl:103 views/html/quests/index.tpl:75
-#: views/html/seminaries/index.tpl:29 views/html/seminarybar/index.tpl:7
-#: views/html/seminarybar/index.tpl:43
+#: views/html/seminaries/index.tpl:29 views/html/seminarybar/index.tpl:9
+#: views/html/seminarybar/index.tpl:45
 #, php-format
 msgid "%d XPs"
 msgstr "%d XP"
@@ -371,7 +374,7 @@ msgid "Group by"
 msgstr "Gruppiert über"
 
 #: views/html/achievements/conditions.tpl:69
-#: views/html/achievements/conditions.tpl:136 views/html/html.tpl:77
+#: views/html/achievements/conditions.tpl:136 views/html/html.tpl:79
 msgid "Achievement"
 msgstr "Achievement"
 
@@ -380,9 +383,9 @@ msgstr "Achievement"
 #: views/html/charactergroups/deletegroup.tpl:15
 #: views/html/charactergroups/deletegroupsgroup.tpl:14
 #: views/html/charactergroupsquests/delete.tpl:15
-#: views/html/characters/delete.tpl:17 views/html/charactertypes/manage.tpl:48
-#: views/html/library/delete.tpl:14 views/html/library/edit.tpl:83
-#: views/html/questgroups/delete.tpl:17
+#: views/html/characters/delete.tpl:17 views/html/charactertypes/delete.tpl:14
+#: views/html/charactertypes/index.tpl:25 views/html/library/delete.tpl:14
+#: views/html/library/edit.tpl:83 views/html/questgroups/delete.tpl:17
 #: views/html/questgroups/edittexts.tpl:16
 #: views/html/questgroupshierarchy/delete.tpl:14
 #: views/html/quests/delete.tpl:11 views/html/quests/edittexts.tpl:53
@@ -399,7 +402,7 @@ msgstr "Neue Bedingung"
 #: views/html/achievements/conditions.tpl:151
 #: views/html/achievements/create.tpl:109 views/html/achievements/edit.tpl:112
 #: views/html/charactergroupsquests/manage.tpl:66
-#: views/html/charactertypes/manage.tpl:52 views/html/library/edit.tpl:46
+#: views/html/charactertypes/edit.tpl:124 views/html/library/edit.tpl:46
 #: views/html/library/edit.tpl:86 views/html/users/edit.tpl:105
 #: views/html/xplevels/manage.tpl:49
 msgid "save"
@@ -528,7 +531,7 @@ msgstr "Erhalten"
 #: views/html/quests/edit.tpl:74 views/html/quests/index.tpl:47
 #: views/html/quests/index.tpl:48 views/html/seminaries/create.tpl:68
 #: views/html/seminaries/create.tpl:69 views/html/seminaries/edit.tpl:70
-#: views/html/seminaries/edit.tpl:71 views/html/seminaries/seminary.tpl:69
+#: views/html/seminaries/edit.tpl:71 views/html/seminaries/seminary.tpl:65
 msgid "Title"
 msgstr "Titel"
 
@@ -597,8 +600,8 @@ msgstr "Soll das Achievement „%s“ wirklich gelöscht werden?"
 #: views/html/charactergroups/deletegroup.tpl:16
 #: views/html/charactergroups/deletegroupsgroup.tpl:15
 #: views/html/charactergroupsquests/delete.tpl:16
-#: views/html/characters/delete.tpl:18 views/html/library/delete.tpl:15
-#: views/html/questgroups/delete.tpl:18
+#: views/html/characters/delete.tpl:18 views/html/charactertypes/delete.tpl:15
+#: views/html/library/delete.tpl:15 views/html/questgroups/delete.tpl:18
 #: views/html/questgroupshierarchy/delete.tpl:15
 #: views/html/quests/delete.tpl:12 views/html/seminaries/delete.tpl:14
 #: views/html/users/delete.tpl:12
@@ -667,7 +670,7 @@ msgstr "Persönlicher Fortschritt: %d%%"
 #: views/html/achievements/index.tpl:65
 #: views/html/charactergroups/group.tpl:32
 #: views/html/charactergroups/managegroup.tpl:20
-#: views/html/characters/character.tpl:46 views/html/seminarybar/index.tpl:8
+#: views/html/characters/character.tpl:46 views/html/seminarybar/index.tpl:10
 msgid "Rank"
 msgstr "Platz"
 
@@ -676,7 +679,7 @@ msgstr "Platz"
 msgid "You achieved %d of %d Achievements so far"
 msgstr "Du hast bislang %d von insgesamt %d Achievements erreicht"
 
-#: views/html/achievements/index.tpl:72 views/html/seminarybar/index.tpl:29
+#: views/html/achievements/index.tpl:72 views/html/seminarybar/index.tpl:31
 #, php-format
 msgid "achieved at: %s"
 msgstr "erhalten am: %s"
@@ -689,8 +692,8 @@ msgstr "Spiele weiter, um diesen geheimen Erfolg freizuschalten"
 #: views/html/charactergroups/editgroup.tpl:83
 #: views/html/charactergroups/editgroupsgroup.tpl:50
 #: views/html/charactergroupsquests/edit.tpl:94
-#: views/html/characters/edit.tpl:108 views/html/questgroups/edit.tpl:64
-#: views/html/questgroups/edittexts.tpl:24
+#: views/html/characters/edit.tpl:108 views/html/charactertypes/index.tpl:24
+#: views/html/questgroups/edit.tpl:64 views/html/questgroups/edittexts.tpl:24
 #: views/html/questgroupshierarchy/edit.tpl:57 views/html/quests/edit.tpl:111
 #: views/html/quests/edittexts.tpl:63 views/html/seminaries/edit.tpl:77
 msgid "edit"
@@ -754,8 +757,8 @@ msgstr "Das Icon ist ungültig"
 #: views/html/charactergroups/creategroupsgroup.tpl:22
 #: views/html/charactergroups/editgroup.tpl:34
 #: views/html/charactergroups/editgroupsgroup.tpl:22
-#: views/html/charactertypes/manage.tpl:29
-#: views/html/charactertypes/manage.tpl:69
+#: views/html/charactertypes/create.tpl:22
+#: views/html/charactertypes/edit.tpl:22
 #, php-format
 msgid "Name is too short (min. %d chars)"
 msgstr "Der Name ist zu kurz (min. %d Zeichen)"
@@ -764,8 +767,8 @@ msgstr "Der Name ist zu kurz (min. %d Zeichen)"
 #: views/html/charactergroups/creategroupsgroup.tpl:24
 #: views/html/charactergroups/editgroup.tpl:36
 #: views/html/charactergroups/editgroupsgroup.tpl:24
-#: views/html/charactertypes/manage.tpl:31
-#: views/html/charactertypes/manage.tpl:71
+#: views/html/charactertypes/create.tpl:24
+#: views/html/charactertypes/edit.tpl:24
 #, php-format
 msgid "Name is too long (max. %d chars)"
 msgstr "Der Name ist zu lang (max. %d Zeichen)"
@@ -781,8 +784,8 @@ msgstr "Der Name enthält ungültige Zeichen"
 #: views/html/charactergroups/creategroupsgroup.tpl:28
 #: views/html/charactergroups/editgroup.tpl:40
 #: views/html/charactergroups/editgroupsgroup.tpl:28
-#: views/html/charactertypes/manage.tpl:33
-#: views/html/charactertypes/manage.tpl:73
+#: views/html/charactertypes/create.tpl:26
+#: views/html/charactertypes/edit.tpl:26
 msgid "Name already exists"
 msgstr "Der Name existiert bereits"
 
@@ -790,8 +793,8 @@ msgstr "Der Name existiert bereits"
 #: views/html/charactergroups/creategroupsgroup.tpl:30
 #: views/html/charactergroups/editgroup.tpl:42
 #: views/html/charactergroups/editgroupsgroup.tpl:30
-#: views/html/charactertypes/manage.tpl:35
-#: views/html/charactertypes/manage.tpl:75
+#: views/html/charactertypes/create.tpl:28
+#: views/html/charactertypes/edit.tpl:28
 msgid "Name invalid"
 msgstr "Der Name ist ungültig"
 
@@ -821,8 +824,10 @@ msgstr "Icon"
 #: views/html/charactergroups/editgroup.tpl:75
 #: views/html/charactergroups/editgroupsgroup.tpl:46
 #: views/html/charactergroups/editgroupsgroup.tpl:47
-#: views/html/charactertypes/manage.tpl:88
-#: views/html/charactertypes/manage.tpl:89 views/html/users/user.tpl:23
+#: views/html/charactertypes/create.tpl:41
+#: views/html/charactertypes/create.tpl:42
+#: views/html/charactertypes/edit.tpl:41 views/html/charactertypes/edit.tpl:42
+#: views/html/users/user.tpl:23
 msgid "Name"
 msgstr "Name"
 
@@ -837,7 +842,7 @@ msgstr "Motto"
 #: views/html/charactergroups/creategroupsgroup.tpl:50
 #: views/html/charactergroupsquests/create.tpl:93
 #: views/html/characters/register.tpl:96
-#: views/html/charactertypes/manage.tpl:91 views/html/library/create.tpl:46
+#: views/html/charactertypes/create.tpl:44 views/html/library/create.tpl:46
 #: views/html/library/edit.tpl:124 views/html/questgroups/create.tpl:76
 #: views/html/questgroupshierarchy/create.tpl:63
 #: views/html/quests/create.tpl:108 views/html/seminaries/create.tpl:75
@@ -923,7 +928,7 @@ msgstr "%squests"
 #: views/html/charactergroupsquests/create.tpl:77
 #: views/html/charactergroupsquests/edit.tpl:77
 #: views/html/charactergroupsquests/edit.tpl:78
-#: views/html/characters/index.tpl:23 views/html/characters/index.tpl:84
+#: views/html/characters/index.tpl:27 views/html/characters/index.tpl:90
 #: views/html/characters/manage.tpl:17
 #: views/html/questgroups/questgroup.tpl:62 views/html/quests/create.tpl:72
 #: views/html/quests/create.tpl:73 views/html/quests/edit.tpl:75
@@ -1080,7 +1085,8 @@ msgstr "Fortschritt"
 #: views/html/characters/character.tpl:38
 #: views/html/characters/character.tpl:77
 #: views/html/characters/character.tpl:83
-#: views/html/characters/character.tpl:89 views/html/seminarybar/index.tpl:43
+#: views/html/characters/character.tpl:89
+#: views/html/charactertypes/edit.tpl:103 views/html/seminarybar/index.tpl:45
 #: views/html/users/user.tpl:41 views/html/xplevels/manage.tpl:41
 msgid "Level"
 msgstr "Level"
@@ -1093,7 +1099,7 @@ msgstr "Meilensteine"
 msgid "Ranking"
 msgstr "Ranking"
 
-#: views/html/characters/character.tpl:112 views/html/seminarybar/index.tpl:15
+#: views/html/characters/character.tpl:112 views/html/seminarybar/index.tpl:17
 msgid "Last Quest"
 msgstr "Letzter Speicherpunkt"
 
@@ -1133,8 +1139,8 @@ msgid "Character properties"
 msgstr "Charaktereigenschaften"
 
 #: views/html/characters/edit.tpl:51 views/html/characters/edit.tpl:53
-#: views/html/characters/edit.tpl:55 views/html/characters/index.tpl:22
-#: views/html/characters/index.tpl:30 views/html/characters/index.tpl:31
+#: views/html/characters/edit.tpl:55 views/html/characters/index.tpl:26
+#: views/html/characters/index.tpl:34 views/html/characters/index.tpl:35
 #: views/html/characters/manage.tpl:16 views/html/characters/register.tpl:49
 #: views/html/characters/register.tpl:50
 msgid "Character name"
@@ -1149,48 +1155,52 @@ msgstr "Das Kursfeld „%s“ ist ungültig"
 msgid "Seminary fields"
 msgstr "Kursfelder"
 
-#: views/html/characters/index.tpl:13 views/html/library/manage.tpl:39
-#: views/html/users/index.tpl:7
-msgid "Manage"
-msgstr "Verwalten"
+#: views/html/characters/index.tpl:13 views/html/seminaries/index.tpl:38
+#: views/html/xplevels/manage.tpl:9
+msgid "Manage XP-levels"
+msgstr "XP-Level verwalten"
 
-#: views/html/characters/index.tpl:19 views/html/quests/index.tpl:13
+#: views/html/characters/index.tpl:14 views/html/seminaries/index.tpl:40
+msgid "Manage Charactertypes"
+msgstr "Charakterrassen verwalten"
+
+#: views/html/characters/index.tpl:17 views/html/characters/manage.tpl:10
+msgid "Manage Characters"
+msgstr "Charaktere verwalten"
+
+#: views/html/characters/index.tpl:23 views/html/quests/index.tpl:13
 #: views/html/users/index.tpl:12
 msgid "Filters"
 msgstr "Filter"
 
-#: views/html/characters/index.tpl:20 views/html/users/index.tpl:13
+#: views/html/characters/index.tpl:24 views/html/users/index.tpl:13
 msgid "Sortorder"
 msgstr "Sortierung"
 
-#: views/html/characters/index.tpl:24 views/html/characters/manage.tpl:18
+#: views/html/characters/index.tpl:28 views/html/characters/manage.tpl:18
 #: views/html/users/index.tpl:16 views/html/users/manage.tpl:15
 msgid "Role"
 msgstr "Rolle"
 
-#: views/html/characters/index.tpl:25 views/html/characters/manage.tpl:19
+#: views/html/characters/index.tpl:29 views/html/characters/manage.tpl:19
 #: views/html/users/index.tpl:17 views/html/users/manage.tpl:16
 msgid "Date of registration"
 msgstr "Registrierungsdatum"
 
-#: views/html/characters/index.tpl:33 views/html/quests/index.tpl:50
+#: views/html/characters/index.tpl:37 views/html/quests/index.tpl:50
 #: views/html/users/index.tpl:22
 msgid "Apply filters"
 msgstr "Filter anwenden"
 
-#: views/html/characters/index.tpl:55 views/html/quests/index.tpl:82
+#: views/html/characters/index.tpl:61 views/html/quests/index.tpl:82
 #: views/html/users/index.tpl:39
 msgid "Show more"
 msgstr "Weitere anzeigen"
 
-#: views/html/characters/index.tpl:56 views/html/quests/index.tpl:83
+#: views/html/characters/index.tpl:62 views/html/quests/index.tpl:83
 #: views/html/users/index.tpl:40
 msgid "Show all"
 msgstr "Alle anzeigen"
-
-#: views/html/characters/manage.tpl:10
-msgid "Manage Characters"
-msgstr "Charaktere verwalten"
 
 #: views/html/characters/manage.tpl:24 views/html/users/manage.tpl:18
 msgid "Sort list"
@@ -1212,18 +1222,80 @@ msgstr "Charakter erstellen"
 msgid "Please choose an avatar"
 msgstr "Bitte wähle einen Avatar aus"
 
-#: views/html/charactertypes/manage.tpl:9 views/html/seminaries/index.tpl:38
-#: views/html/seminaries/seminary.tpl:15
-msgid "Manage Charactertypes"
-msgstr "Charakterrassen verwalten"
+#: views/html/charactertypes/create.tpl:8
+#: views/html/charactertypes/delete.tpl:8 views/html/charactertypes/edit.tpl:8
+#: views/html/charactertypes/index.tpl:10
+msgid "Charactertypes"
+msgstr "Charakterrassen"
 
-#: views/html/charactertypes/manage.tpl:14
-msgid "Edit Charactertypes"
-msgstr "Characterrassen bearbeiten"
-
-#: views/html/charactertypes/manage.tpl:58
+#: views/html/charactertypes/create.tpl:11
 msgid "Create new Charactertype"
 msgstr "Neue Characterrasse erstellen"
+
+#: views/html/charactertypes/delete.tpl:11
+msgid "Delete Charactertype"
+msgstr "Characterrasse löschen"
+
+#: views/html/charactertypes/delete.tpl:12
+#, php-format
+msgid "Should the Characterytpe “%s” really be deleted?"
+msgstr "Soll die Charakterrasse „%s“ wirklich gelöscht werden?"
+
+#: views/html/charactertypes/edit.tpl:11
+msgid "Edit Charactertype"
+msgstr "Characterrasse bearbeiten"
+
+#: views/html/charactertypes/edit.tpl:45
+msgid "Avatars"
+msgstr "Avatare"
+
+#: views/html/charactertypes/edit.tpl:60
+#, php-format
+msgid "Error during avatar portrait upload: %s"
+msgstr "Fehler beim Upload des Avatarportraits: %s"
+
+#: views/html/charactertypes/edit.tpl:62
+#, php-format
+msgid "Avatar portrait has wrong type “%s”"
+msgstr "Der Dateityp „%s“ ist für Avatarportraits nicht erlaubt"
+
+#: views/html/charactertypes/edit.tpl:64
+msgid "Avatar portrait exceeds size maximum"
+msgstr "Das Avatarportrait ist zu groß"
+
+#: views/html/charactertypes/edit.tpl:66
+msgid "Avatar portrait invalid"
+msgstr "Das Avatarportrait ist ungültig"
+
+#: views/html/charactertypes/edit.tpl:85
+#, php-format
+msgid "Error during avatar upload: %s"
+msgstr "Fehler beim Upload des Avatars: %s"
+
+#: views/html/charactertypes/edit.tpl:87
+#, php-format
+msgid "Avatar has wrong type “%s”"
+msgstr "Der Dateityp „%s“ ist für Avatare nicht erlaubt"
+
+#: views/html/charactertypes/edit.tpl:89
+msgid "Avatar exceeds size maximum"
+msgstr "Der Avatar ist zu groß"
+
+#: views/html/charactertypes/edit.tpl:91
+msgid "Avatar invalid"
+msgstr "Der Avatar ist ungültig"
+
+#: views/html/charactertypes/edit.tpl:107
+msgid "Protrait"
+msgstr "Portrait"
+
+#: views/html/charactertypes/edit.tpl:112
+msgid "Avatar"
+msgstr "Avatar"
+
+#: views/html/charactertypes/index.tpl:13
+msgid "Create new Character type"
+msgstr "Neue Charakterrasse erstellen"
 
 #: views/html/error/index.tpl:5 views/html/error/index.tpl:14
 #: views/html/introduction/index.tpl:9 views/html/menu/index.tpl:6
@@ -1259,11 +1331,11 @@ msgstr "oder"
 msgid "register yourself"
 msgstr "registriere dich"
 
-#: views/html/html.tpl:87
+#: views/html/html.tpl:89
 msgid "Level-up"
 msgstr "Levelaufstieg"
 
-#: views/html/html.tpl:89 views/html/html.tpl:91
+#: views/html/html.tpl:91 views/html/html.tpl:93
 #, php-format
 msgid "You have reached level %d"
 msgstr "Du hast Level %d erreicht"
@@ -1325,6 +1397,10 @@ msgstr "Gesamtfortschritt: %d%%"
 #: views/html/library/manage.tpl:27
 msgid "Add Quest"
 msgstr "Quest hinzufügen"
+
+#: views/html/library/manage.tpl:39 views/html/users/index.tpl:7
+msgid "Manage"
+msgstr "Verwalten"
 
 #: views/html/library/topic.tpl:15
 msgid "Manage Questtopic"
@@ -1424,13 +1500,13 @@ msgstr "Neue Quest erstellen"
 
 #: views/html/questgroups/questgroup.tpl:40
 #: views/html/questgroupshierarchy/edit.tpl:11
-#: views/html/seminaries/seminary.tpl:28
+#: views/html/seminaries/seminary.tpl:24
 msgid "Edit Questgroupshierarchy"
 msgstr "Hierarchie bearbeiten"
 
 #: views/html/questgroups/questgroup.tpl:41
 #: views/html/questgroupshierarchy/delete.tpl:11
-#: views/html/seminaries/seminary.tpl:29
+#: views/html/seminaries/seminary.tpl:25
 msgid "Delete Questgroupshierarchy"
 msgstr "Hierarchie löschen"
 
@@ -1439,12 +1515,12 @@ msgid "Found optional Questline"
 msgstr "Optionale Questline gefunden"
 
 #: views/html/questgroups/questgroup.tpl:89
-#: views/html/seminaries/seminary.tpl:70
+#: views/html/seminaries/seminary.tpl:66
 msgid "Add new Questgroup"
 msgstr "Neue Questgruppe hinzufügen"
 
 #: views/html/questgroups/questgroup.tpl:98
-#: views/html/seminaries/seminary.tpl:80
+#: views/html/seminaries/seminary.tpl:76
 msgid "New Questgroupshierarchy"
 msgstr "Neue Hierarchie"
 
@@ -1453,7 +1529,7 @@ msgstr "Neue Hierarchie"
 #: views/html/questgroupshierarchy/create.tpl:53
 #: views/html/questgroupshierarchy/edit.tpl:52
 #: views/html/questgroupshierarchy/edit.tpl:53
-#: views/html/seminaries/seminary.tpl:81
+#: views/html/seminaries/seminary.tpl:77
 msgid "Title (singular)"
 msgstr "Titel (singular)"
 
@@ -1462,12 +1538,12 @@ msgstr "Titel (singular)"
 #: views/html/questgroupshierarchy/create.tpl:55
 #: views/html/questgroupshierarchy/edit.tpl:54
 #: views/html/questgroupshierarchy/edit.tpl:55
-#: views/html/seminaries/seminary.tpl:82
+#: views/html/seminaries/seminary.tpl:78
 msgid "Title (plural)"
 msgstr "Titel (plural)"
 
 #: views/html/questgroups/questgroup.tpl:102
-#: views/html/seminaries/seminary.tpl:83
+#: views/html/seminaries/seminary.tpl:79
 msgid "Add new Questgroupshierarchy"
 msgstr "Neue Hierarchy hinzufügen"
 
@@ -1607,7 +1683,7 @@ msgstr "Setze deine Reise fort"
 msgid "Go on"
 msgstr "Fortfahren"
 
-#: views/html/quests/quest.tpl:143 views/html/seminaries/seminary.tpl:52
+#: views/html/quests/quest.tpl:143 views/html/seminaries/seminary.tpl:48
 msgid "Let’s go"
 msgstr "Auf ins Abenteuer!"
 
@@ -1660,32 +1736,28 @@ msgstr "Neuen Kurs erstellen"
 msgid "created by %s on %s"
 msgstr "erstellt von %s am %s"
 
-#: views/html/seminaries/index.tpl:36
+#: views/html/seminaries/index.tpl:45
 msgid "Create a Character"
 msgstr "Erstelle einen Charakter"
 
-#: views/html/seminaries/index.tpl:41
+#: views/html/seminaries/index.tpl:48
 #, php-format
 msgid "Your Character “%s” has not been activated yet"
 msgstr "Dein Charakter „%s“ wurde noch nicht aktiviert"
 
-#: views/html/seminaries/seminary.tpl:14 views/html/xplevels/manage.tpl:9
-msgid "Manage XP-levels"
-msgstr "XP-Level verwalten"
-
-#: views/html/seminaries/seminary.tpl:19
+#: views/html/seminaries/seminary.tpl:15
 msgid "Show Quests"
 msgstr "Quests anzeigen"
 
-#: views/html/seminaries/seminary.tpl:20
+#: views/html/seminaries/seminary.tpl:16
 msgid "Recalculate XPs"
 msgstr "XP neuberechnen"
 
-#: views/html/seminarybar/index.tpl:22
+#: views/html/seminarybar/index.tpl:24
 msgid "Last Achievement"
 msgstr "Letztes Achievement"
 
-#: views/html/seminarybar/index.tpl:47
+#: views/html/seminarybar/index.tpl:49
 #, php-format
 msgid "Show %s-Profile"
 msgstr "%s-Profil anzeigen"
@@ -1948,9 +2020,6 @@ msgstr "Hallo %s"
 
 #~ msgid "continue"
 #~ msgstr "fortfahren"
-
-#~ msgid "Character type"
-#~ msgstr "Charaktertyp"
 
 #~ msgid "Questname"
 #~ msgstr "Questname"
