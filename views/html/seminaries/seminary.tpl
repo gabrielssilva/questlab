@@ -10,10 +10,6 @@
 	<li><a href="<?=$linker->link('edit', 3)?>"><?=_('Edit seminary')?></a></li>
 	<li><a href="<?=$linker->link('delete', 3)?>"><?=_('Delete seminary')?></a></li>
 </nav>
-<nav class="admin">
-	<li><a href="<?=$linker->link(array('xplevels','manage',$seminary['url']))?>"><?=_('Manage XP-levels')?></a></li>
-	<li><a href="<?=$linker->link(array('charactertypes','index',$seminary['url']))?>"><?=_('Manage Charactertypes')?></a></li>
-</nav>
 <?php endif ?>
 <nav class="admin">
 	<li><a href="<?=$linker->link(array('quests','index',$seminary['url']))?>"><?=_('Show Quests')?></a></li>
