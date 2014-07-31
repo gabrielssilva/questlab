@@ -38,7 +38,9 @@
 			<?=$character['name']?>
 			<?php endif ?>
 		</p>
+		<?php if(array_key_exists('xplevel', $character) && !is_null($character['xplevel'])) : ?>
 		<p><small><?=_('Level')?> <?=$character['xplevel']['level']?></small></p>
+		<?php endif ?>
 	</li>
 	<?php endforeach ?>
 </ul>

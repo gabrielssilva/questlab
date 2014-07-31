@@ -119,7 +119,12 @@
 				$character['characterroles'] = array_map(function($a) { return $a['name']; }, $character['characterroles']);
 				
 				// Level
-				$character['xplevel'] = $this->Xplevels->getXPLevelById($character['xplevel_id']);
+				try {
+					$character['xplevel'] = $this->Xplevels->getXPLevelById($character['xplevel_id']);
+				}
+				catch(\nre\Exceptions\IdNotFoundException $e) {
+					// No XP-level
+				}
 				
 				// Avatar
 				$avatar = $this->Avatars->getAvatarById($character['avatar_id']);
