@@ -580,6 +580,10 @@
 			
 			// Get XP-levels
 			$xplevels = $this->Xplevels->getXPLevelsForSeminary($seminary['id']);
+
+			// Get validation settings
+			$validationSettings = array();
+			$validationSettings['charactername'] = \nre\configs\AppConfig::$validation['charactername'];
 			
 			
 			// Set titile
@@ -593,6 +597,7 @@
 			$this->set('charactername', $charactername);
 			$this->set('validation', $validation);
 			$this->set('fieldsValidation', $fieldsValidation);
+			$this->set('validationSettings', $validationSettings);
 			$this->set('xplevels', $xplevels);
 		}
 		
