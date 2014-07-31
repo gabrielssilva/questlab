@@ -19,6 +19,12 @@
 	 */
 	class TextinputQuesttypeController extends \hhu\z\controllers\QuesttypeController
 	{
+		/**
+		 * Required components
+		 * 
+		 * @var array
+		 */
+		public $components = array('validation');
 		
 		
 		
@@ -162,6 +168,125 @@
 			// Pass data to view
 			$this->set('task', $task);
 			$this->set('fields', $fields);
+		}
+
+
+		/**
+		 * Action: edittask.
+		 * 
+		 * Edit the task of a Quest.
+		 * 
+		 * @param	array		$seminary	Current Seminary data
+		 * @param	array		$questgroup	Current Questgroup data
+		 * @param	array		$quest		Current Quest data
+		 */
+		public function edittask($seminary, $questgroup, $quest)
+		{
+			// Get Task
+			$task = $this->Textinput->getTextinputQuest($quest['id']);
+			$text = $task['text'];
+
+			// Get fields
+			$fields = $this->Textinput->getTextinputFields($quest['id']);
+
+			// Get field sizes
+			$fieldSizes = $this->Textinput->getFieldSizes();
+
+			// Values
+			$validations = array();
+
+			// Save data
+			if($this->request->getRequestMethod() == 'POST')
+			{
+				if(!is_null($this->request->getPostParam('preview')) || !is_null($this->request->getPostParam('save')))
+				{
+					// Get params and validate them
+					if(is_null($this->request->getPostParam('text'))) {
+						throw new \nre\exceptions\ParamsNotValidException('text');
+					}
+					$text = $this->request->getPostParam('text');
+					if(is_null($this->request->getPostParam('fields'))) {
+						throw new \nre\exceptions\ParamsNotValidException('fields');
+					}
+					$fields = $this->request->getPostParam('fields');
+					$fields = array_values($fields);
+					$fieldIndex = 0;
+					foreach($fields as &$field)
+					{
+						// Validate regex
+						$regex = $field['regex'];
+						//$fieldValidation = $this->Validation->validate($regex, \nre\configs\AppConfig::$validation['regex']);
+						$fieldValidation = @preg_match($regex, '') !== false;
+						if($fieldValidation !== true)
+						{
+							if(!array_key_exists($fieldIndex, $validations) || !is_array($validations[$fieldIndex])) {
+								$validations[$fieldIndex] = array();
+							}
+							$validations[$fieldIndex] = $this->Validation->addValidationResults($validations[$fieldIndex], 'regex', $fieldValidation);
+						}
+
+						// Validate size
+						foreach($fieldSizes as $sizeIndex => &$size)
+						{
+							if($size['size'] == $field['size'])
+							{
+								$field['sizeIndex'] = $sizeIndex;
+								break;
+							}
+						}
+						if(!array_key_exists('sizeIndex', $field)) {
+							throw new \nre\exceptions\ParamsNotValidException($fieldIndex);
+						}
+
+						$fieldIndex++;
+					}
+
+					// Save and redirect
+					if(!is_null($this->request->getPostParam('save')) && empty($validations))
+					{
+						// Save text
+						$this->Textinput->setTextForQuest(
+							$this->Auth->getUserId(),
+							$quest['id'],
+							$text
+						);
+
+						// Save field
+						foreach($fields as $index => &$field)
+						{
+							// Add regex modifiers
+							$modifiers = substr($field['regex'], strrpos($field['regex'], $field['regex'][0]) + 1);
+							if(strpos($modifiers, 'u') === false) {
+								$field['regex'] .= 'u';
+							}
+
+							// Save field
+							$this->Textinput->setFieldForText(
+								$quest['id'],
+								$index + 1,
+								$fieldSizes[$field['sizeIndex']]['id'],
+								$field['regex']
+							);
+						}
+
+						// Redirect
+						$this->redirect($this->linker->link(array('quest', $seminary['url'], $questgroup['url'], $quest['url']), 1));
+					}
+				}
+			}
+
+			// Set colors for fields
+			foreach($fields as &$field) {
+				$field['color'] = str_pad(sprintf('%x%x%x', rand(0,255), rand(0,255), rand(0,255)), 6, 9);
+			}
+
+
+			// Pass data to view
+			$this->set('task', $task);
+			$this->set('text', $text);
+			$this->set('fields', $fields);
+			$this->set('fieldSizes', $fieldSizes);
+			$this->set('validations', $validations);
 		}
 		
 		

@@ -34,6 +34,7 @@
 	<script type="text/javascript" src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
 	<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/respond.js/1.4.2/respond.js"></script>
 	<![endif]-->
+	<script type="text/javascript" src="/js/misc.js"></script>
 	<script type="text/javascript" src="/js/dnd.js"></script>
 	<meta name="description" content="">
 	<meta name="robots" content="noindex,follow">

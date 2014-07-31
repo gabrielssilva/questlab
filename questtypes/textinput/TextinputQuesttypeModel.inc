@@ -112,6 +112,109 @@
 			
 			return '';
 		}
+
+
+		/**
+		 * Set the text for a Quest and correct fields count.
+		 * 
+		 * @param	int	$userId		ID of user setting text
+		 * @param	int	$questId	ID of Quest to set text for
+		 * @param	string	$text		Text for Quset
+		 */
+		public function setTextForQuest($userId, $questId, $text)
+		{
+			$this->db->setAutocommit(false);
+			try {
+				// Set text
+				$this->db->query(
+					'INSERT INTO questtypes_textinput '.
+					'(quest_id, created_user_id, text) '.
+					'VALUES '.
+					'(?, ?, ?) '.
+					'ON DUPLICATE KEY UPDATE '.
+					'text = ?',
+					'iiss',
+					$questId,
+					$userId,
+					$text,
+					$text
+				);
+
+				// Count fields
+				$fieldCount = substr_count($text, '[textinput]');
+
+				// Remove fields
+				$this->db->query(
+					'DELETE FROM questtypes_textinput_fields '.
+					'WHERE questtypes_textinput_quest_id = ? AND number > ?',
+					'ii',
+					$questId,
+					$fieldCount
+				);
+
+				// Add fields
+				for($i=1; $i<=$fieldCount; $i++)
+				{
+					$this->db->query(
+						'INSERT IGNORE INTO questtypes_textinput_fields '.
+						'(questtypes_textinput_quest_id, number, regex) '.
+						'VALUES '.
+						'(?, ?, ?) ',
+						'iis',
+						$questId,
+						$i,
+						''
+					);
+				}
+
+				$this->db->commit();
+			}
+			catch(\Exception $e) {
+				$this->db->rollback();
+				$this->db->setAutocommit(true);
+				throw $e;
+			}
+
+			$this->db->setAutocommit(true);
+		}
+
+
+		/**
+		 * Set values for a field of a text.
+		 * 
+		 * @param	int	$questId	ID of Quest to set field for
+		 * @param	int	$number		Field number
+		 * @param	int	$sizeId		ID of field size
+		 * @param	string	$regex		RegEx for field
+		 */
+		public function setFieldForText($questId, $number, $sizeId, $regex)
+		{
+			$this->db->query(
+				'UPDATE questtypes_textinput_fields '.
+				'SET questtypes_textinput_fieldsize_id = ?, regex = ? '.
+				'WHERE questtypes_textinput_quest_id = ? AND number = ?',
+				'isii',
+				$sizeId,
+				$regex,
+				$questId,
+				$number
+			);
+		}
+
+
+		/**
+		 * Get all registered field sizes.
+		 * 
+		 * @return	List of field sizes
+		 */
+		public function getFieldSizes()
+		{
+			return $this->db->query(
+				'SELECT id, size '.
+				'FROM questtypes_textinput_fieldsizes '.
+				'ORDER BY size'
+			);
+		}
 		
 	}
 

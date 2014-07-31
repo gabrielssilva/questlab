@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: The Legend of Z\n"
-"POT-Creation-Date: 2014-07-11 11:53+0100\n"
-"PO-Revision-Date: 2014-07-11 11:57+0100\n"
+"POT-Creation-Date: 2014-07-31 10:52+0100\n"
+"PO-Revision-Date: 2014-07-31 11:00+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de_DE\n"
@@ -63,7 +63,7 @@ msgstr "Neuer Lösungsvorschlag"
 msgid "Character submission approved"
 msgstr "Lösungsvorschlag bewertet"
 
-#: controllers/QuestsController.inc:1227
+#: controllers/QuestsController.inc:1284
 #: questtypes/submit/html/submission.tpl:30
 #: views/html/achievements/conditions.tpl:54
 #: views/html/achievements/conditions.tpl:121 views/html/quests/quest.tpl:54
@@ -205,6 +205,54 @@ msgstr "Kommentar"
 #: views/html/quests/submissions.tpl:20
 msgid "unsolved"
 msgstr "Leider falsch!"
+
+#: questtypes/textinput/html/edittask (Kopie).tpl:3
+#: questtypes/textinput/html/edittask.tpl:24
+msgid "Text"
+msgstr "Text"
+
+#: questtypes/textinput/html/edittask (Kopie).tpl:6
+#, php-format
+msgid "Use %s for marking field positions"
+msgstr "Benutze %s zum Markieren von Feldpositionen"
+
+#: questtypes/textinput/html/edittask (Kopie).tpl:8
+msgid "edit text"
+msgstr "Text bearbeiten"
+
+#: questtypes/textinput/html/edittask (Kopie).tpl:12
+#: questtypes/textinput/html/edittask.tpl:29
+msgid "Fields"
+msgstr "Felder"
+
+#: questtypes/textinput/html/edittask (Kopie).tpl:37
+msgid "edit fields"
+msgstr "Felder bearbeiten"
+
+#: questtypes/textinput/html/edittask (Kopie).tpl:41
+#: questtypes/textinput/html/edittask.tpl:44
+#: views/html/achievements/conditions.tpl:151
+#: views/html/achievements/create.tpl:109 views/html/achievements/edit.tpl:112
+#: views/html/charactergroupsquests/manage.tpl:66
+#: views/html/charactertypes/edit.tpl:124 views/html/library/edit.tpl:46
+#: views/html/library/edit.tpl:86 views/html/quests/edit.tpl:112
+#: views/html/users/edit.tpl:105 views/html/xplevels/manage.tpl:49
+msgid "save"
+msgstr "speichern"
+
+#: questtypes/textinput/html/edittask.tpl:10
+#: questtypes/textinput/html/edittask.tpl:12
+msgid "Regex invalid"
+msgstr "Der reguläre Ausdruck ist ungültig"
+
+#: questtypes/textinput/html/edittask.tpl:25
+msgid "Add field"
+msgstr "Feld hinzufügen"
+
+#: questtypes/textinput/html/edittask.tpl:43
+#: questtypes/textinput/html/edittask.tpl:46
+msgid "Preview"
+msgstr "Vorschau"
 
 #: views/ajax/quests/index.tpl:9 views/html/quests/create.tpl:79
 #: views/html/quests/edit.tpl:82 views/html/quests/index.tpl:27
@@ -374,7 +422,7 @@ msgid "Group by"
 msgstr "Gruppiert über"
 
 #: views/html/achievements/conditions.tpl:69
-#: views/html/achievements/conditions.tpl:136 views/html/html.tpl:79
+#: views/html/achievements/conditions.tpl:136 views/html/html.tpl:80
 msgid "Achievement"
 msgstr "Achievement"
 
@@ -398,15 +446,6 @@ msgstr "löschen"
 #: views/html/achievements/conditions.tpl:96
 msgid "New condition"
 msgstr "Neue Bedingung"
-
-#: views/html/achievements/conditions.tpl:151
-#: views/html/achievements/create.tpl:109 views/html/achievements/edit.tpl:112
-#: views/html/charactergroupsquests/manage.tpl:66
-#: views/html/charactertypes/edit.tpl:124 views/html/library/edit.tpl:46
-#: views/html/library/edit.tpl:86 views/html/users/edit.tpl:105
-#: views/html/xplevels/manage.tpl:49
-msgid "save"
-msgstr "speichern"
 
 #: views/html/achievements/create.tpl:11
 msgid "Create Achievement"
@@ -694,7 +733,7 @@ msgstr "Spiele weiter, um diesen geheimen Erfolg freizuschalten"
 #: views/html/charactergroupsquests/edit.tpl:94
 #: views/html/characters/edit.tpl:108 views/html/charactertypes/index.tpl:24
 #: views/html/questgroups/edit.tpl:64 views/html/questgroups/edittexts.tpl:24
-#: views/html/questgroupshierarchy/edit.tpl:57 views/html/quests/edit.tpl:111
+#: views/html/questgroupshierarchy/edit.tpl:57
 #: views/html/quests/edittexts.tpl:63 views/html/seminaries/edit.tpl:77
 msgid "edit"
 msgstr "bearbeiten"
@@ -1331,11 +1370,11 @@ msgstr "oder"
 msgid "register yourself"
 msgstr "registriere dich"
 
-#: views/html/html.tpl:89
+#: views/html/html.tpl:90
 msgid "Level-up"
 msgstr "Levelaufstieg"
 
-#: views/html/html.tpl:91 views/html/html.tpl:93
+#: views/html/html.tpl:92 views/html/html.tpl:94
 #, php-format
 msgid "You have reached level %d"
 msgstr "Du hast Level %d erreicht"
@@ -1633,6 +1672,14 @@ msgstr "Soll die Quest „%s“ wirklich gelöscht werden?"
 #: views/html/quests/edit.tpl:8 views/html/quests/quest.tpl:11
 msgid "Edit Quest"
 msgstr "Quest bearbeiten"
+
+#: views/html/quests/edit.tpl:111
+msgid "edit task"
+msgstr "Aufgabe bearbeiten"
+
+#: views/html/quests/edittask.tpl:8
+msgid "Edit Quest task"
+msgstr "Questaufgabe bearbeiten"
 
 #: views/html/quests/edittexts.tpl:8 views/html/quests/quest.tpl:12
 msgid "Edit Quest texts"
@@ -2014,9 +2061,6 @@ msgstr "Hallo %s"
 
 #~ msgid "Character Groups Quests"
 #~ msgstr "Gruppenquests"
-
-#~ msgid "Skip task"
-#~ msgstr "Aufgabe überspringen"
 
 #~ msgid "continue"
 #~ msgstr "fortfahren"
