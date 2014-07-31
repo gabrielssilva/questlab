@@ -627,6 +627,7 @@
 			
 			// Get Quest
 			$quest = $this->Quests->getQuestByUrl($seminary['id'], $questgroup['id'], $questUrl);
+			$quest['type'] = $this->Questtypes->getQuesttypeById($quest['questtype_id']);
 			
 			// Get Quest media
 			$questmedia = null;
@@ -653,7 +654,7 @@
 			$validation = array();
 
 			// Check request method
-			if($this->request->getRequestMethod() == 'POST' && !is_null($this->request->getPostParam('edit')))
+			if($this->request->getRequestMethod() == 'POST' && (!is_null($this->request->getPostParam('edit')) || !is_null($this->request->getPostParam('edit-task'))))
 			{
 				// Get params and validate them
 				$validation = $this->Validation->validateParams($this->request->getPostParams(), $fields);
@@ -737,8 +738,15 @@
 						}
 					}
 					
-					// Redirect to entry
-					$this->redirect($this->linker->link(array('quest', $seminary['url'], $questgroup['url'], $quest['url']), 1));
+					// Redirect
+					if(!is_null($this->request->getPostParam('edit-task'))) {
+						// To task editing
+						$this->redirect($this->linker->link(array('edittask', $seminary['url'], $questgroup['url'], $quest['url']), 1));
+					}
+					else {
+						// To entry
+						$this->redirect($this->linker->link(array('quest', $seminary['url'], $questgroup['url'], $quest['url']), 1));
+					}
 				}
 			}
 
@@ -768,6 +776,56 @@
 			$this->set('questtype_id', $questtype);
 			$this->set('validation', $validation);
 			$this->set('validationSettings', $validationSettings);
+		}
+		
+
+		/**
+		 * Action: edittask.
+		 * 
+		 * Edit the task of a Quest of a Seminary.
+		 * 
+		 * @throws	IdNotFoundException
+		 * @param	string	$seminaryUrl		URL-Title of Seminary
+		 * @param	string	$questgroupUrl		URL-Title of Questgroup
+		 * @param	string	$questUrl		URL-Title of Quest
+		 */
+		public function edittask($seminaryUrl, $questgroupUrl, $questUrl)
+		{
+			// Get Seminary
+			$seminary = $this->Seminaries->getSeminaryByUrl($seminaryUrl);
+
+			// Get Questgroup
+			$questgroup = $this->Questgroups->getQuestgroupByUrl($seminary['id'], $questgroupUrl);
+			$questgroup['hierarchy'] = $this->Questgroupshierarchy->getHierarchyForQuestgroup($questgroup['id']);
+			$questgroup['picture'] = (!is_null($questgroup['questgroupspicture_id'])) ?  $this->Media->getSeminaryMediaById($questgroup['questgroupspicture_id']) : null;
+			
+			// Get Quest
+			$quest = $this->Quests->getQuestByUrl($seminary['id'], $questgroup['id'], $questUrl);
+			
+			// Get Quest media
+			$questmedia = null;
+			if(!is_null($quest['questsmedia_id'])) {
+				$questmedia = $this->Media->getSeminaryMediaById($quest['questsmedia_id']);
+			}
+
+			// Render editing task
+			$task = null;
+			$questtype = $this->Questtypes->getQuesttypeById($quest['questtype_id']);
+			if(!is_null($questtype['classname'])) {
+				$task = $this->renderTaskEditing($questtype['classname'], $seminary, $questgroup, $quest);
+			}
+
+
+			// Set titile
+			$this->addTitleLocalized('Edit Quest task');
+			$this->addTitle($seminary['title']);
+
+			// Pass data to view
+			$this->set('seminary', $seminary);
+			$this->set('questgroup', $questgroup);
+			$this->set('quest', $quest);
+			$this->set('media', $questmedia);
+			$this->set('task', $task);
 		}
 
 
@@ -1274,6 +1332,60 @@
 			}
 			
 			
+			// Return rendered output
+			return $task;
+		}
+
+
+		/**
+		 * Render editing of a Quest.
+		 * 
+		 * @param	string	$questtypeClassname	Name of the class for the Questtype of a Quest
+		 * @param	array	$seminary		Seminary data
+		 * @param	array	$questgroup		Questgroup data
+		 * @param	array	$quest			Quest data
+		 * @return	string				Rendered output
+		 */
+		private function renderTaskEditing($questtypeClassname, $seminary, $questgroup, $quest)
+		{
+			$task = null;
+			try {
+				// Generate request and response
+				$request = clone $this->request;
+				$response = $this->createQuesttypeResponse('edittask', $seminary, $questgroup, $quest);
+				
+				// Load Questtype Agent
+				$questtypeAgent = $this->loadQuesttypeAgent($questtypeClassname, $request, $response);
+
+				// Render Task
+				$task = $this->runQuesttypeAgent($questtypeAgent, $request, $response);
+			}
+			catch(\nre\exceptions\ViewNotFoundException $e) {
+				$task = $e->getMessage();
+			}
+			catch(\nre\exceptions\ActionNotFoundException $e) {
+				$task = $e->getMessage();
+			}
+			catch(\hhu\z\exceptions\QuesttypeModelNotValidException $e) {
+				$task = $e->getMessage();
+			}
+			catch(\hhu\z\exceptions\QuesttypeModelNotFoundException $e) {
+				$task = $e->getMessage();
+			}
+			catch(\hhu\z\exceptions\QuesttypeControllerNotValidException $e) {
+				$task = $e->getMessage();
+			}
+			catch(\hhu\z\exceptions\QuesttypeControllerNotFoundException $e) {
+				$task = $e->getMessage();
+			}
+			catch(\hhu\z\exceptions\QuesttypeAgentNotValidException $e) {
+				$task = $e->getMessage();
+			}
+			catch(\hhu\z\exceptions\QuesttypeAgentNotFoundException $e) {
+				$task = $e->getMessage();
+			}
+
+
 			// Return rendered output
 			return $task;
 		}

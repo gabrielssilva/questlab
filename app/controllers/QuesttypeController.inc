@@ -80,7 +80,6 @@
 		public abstract function quest($seminary, $questgroup, $quest, $character, $exception);
 		
 		
-		
 		/**
 		 * Action: submission.
 		 * 
@@ -92,6 +91,18 @@
 		 * @param	array	$character	Current Character data
 		 */
 		public abstract function submission($seminary, $questgroup, $quest, $character);
+
+
+		/**
+		 * Action: edittask.
+		 * 
+		 * Edit the task of a Quest.
+		 * 
+		 * @param	array		$seminary	Current Seminary data
+		 * @param	array		$questgroup	Current Questgroup data
+		 * @param	array		$quest		Current Quest data
+		 */
+		public abstract function edittask($seminary, $questgroup, $quest);
 		
 		
 		
