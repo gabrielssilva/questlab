@@ -35,7 +35,7 @@
 					<option value="<?=$size['size']?>" <?php if($fields[$index]['size'] == $size['size']) : ?>selected="selected"<?php endif ?>><?=$size['size']?></option>
 					<?php endforeach ?>
 				</select>
-				<input type="text" name="fields[<?=$index?>][regex]" value="<?=$field['regex']?>" style="border:1px solid #<?=$field['color']?>" <?php if(!empty($validations) && array_key_exists($index, $validations)) : ?>class="invalid"<?php endif ?> />
+				<input type="text" name="fields[<?=$index?>][regex]" value="<?=$field['regex']?>" <?php if(!empty($validations) && array_key_exists($index, $validations)) : ?>class="invalid"<?php endif ?> />
 			</li>
 			<?php endforeach ?>
 		</ul>

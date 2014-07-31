@@ -275,11 +275,6 @@
 				}
 			}
 
-			// Set colors for fields
-			foreach($fields as &$field) {
-				$field['color'] = str_pad(sprintf('%x%x%x', rand(0,255), rand(0,255), rand(0,255)), 6, 9);
-			}
-
 
 			// Pass data to view
 			$this->set('task', $task);
