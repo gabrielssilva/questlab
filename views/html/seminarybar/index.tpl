@@ -5,7 +5,9 @@
 	<img src="<?=$linker->link(array('media','avatar',$seminary['url'],$character['charactertype_url'],$character['xplevel']['level']))?>" class="char">
 	<?php endif ?>
 	<ul class="charstats">
+		<?php if(!is_null($character['xplevel'])) : ?>
 		<li><i class="fa fa-caret-right fa-fw"></i><?=('Level')?> <?=$character['xplevel']['level']?></li>
+		<?php endif ?>
 		<li><i class="fa fa-caret-right fa-fw"></i><?=sprintf(_('%d XPs'), $character['xps'])?></li>
 		<li><i class="fa fa-caret-right fa-fw"></i><?=$character['rank']?>. <?=_('Rank')?></li>
 		<li><i class="fa fa-caret-right fa-fw"></i><a href="<?=$linker->link(array('characters','character',$seminary['url'],$character['url']))?>">Zum Profil</a></li>
@@ -42,7 +44,13 @@
 		<li>
 			<a href="#" title="Achievement-Titel"><img src="<?=$linker->link(array('media','avatar',$seminary['url'],$member['charactertype_url'],$member['xplevel'],'portrait'))?>"></a>
 			<p><a href="<?=$linker->link(array('characters','character',$seminary['url'],$member['url']))?>"><?=$member['name']?></a></p>
-			<p><small><?=_('Level')?> <?=$member['xplevel']?> (<?=sprintf(_('%d XPs'), $member['xps'])?>)</small></p>
+			<p><small>
+				<?php if(array_key_exists('xplevel', $member) && !is_null($member['xplevel'])) : ?>
+				<?=_('Level')?> <?=$member['xplevel']?> (<?=sprintf(_('%d XPs'), $member['xps'])?>)
+				<?php else : ?>
+				<?=sprintf(_('%d XPs'), $member['xps'])?>
+				<?php endif ?>
+			</small></p>
 		</li>
 		<?php endforeach ?>
 	</ul>

@@ -96,12 +96,17 @@
 			$characters = $this->Characters->getCharactersForSeminarySorted($seminary['id'], $sortorder, $charactername, $limit, $offset);
 			foreach($characters as &$character)
 			{
-				$character['xplevel'] = $this->Xplevels->getXPLevelById($character['xplevel_id']);
 				$character['user'] = $this->Users->getUserById($character['user_id']);
 				$character['characterroles'] = array_map(function($r) { return $r['name']; }, $this->Characterroles->getCharacterrolesForCharacterById($character['id']));
 				$character['characterfields'] = array();
 				foreach($this->Seminarycharacterfields->getFieldsForCharacter($character['id']) as $value) {
 					$character['characterfields'][$value['url']] = $value;
+				}
+				try {
+					$character['xplevel'] = $this->Xplevels->getXPLevelById($character['xplevel_id']);
+				}
+				catch(\nre\exceptions\IdNotFoundException $e) {
+					// No XP-level
 				}
 				try {
 					$character['avatar'] = $this->Avatars->getAvatarByTypeAndLevel($seminary['id'], $character['charactertype_url'], $character['xplevel']['level']);
@@ -146,7 +151,12 @@
 			
 			// Get Character
 			$character = $this->Characters->getCharacterByUrl($seminary['id'], $characterUrl);
-			$character['xplevel'] = $this->Xplevels->getXPLevelById($character['xplevel_id']);
+			try {
+				$character['xplevel'] = $this->Xplevels->getXPLevelById($character['xplevel_id']);
+			}
+			catch(\nre\exceptions\IdNotFoundException $e) {
+				// No XP-level
+			}
 			$character['rank'] = $this->Characters->getXPRank($seminary['id'], $character['xps']);
 			
 			// Get User

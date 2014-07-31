@@ -33,10 +33,12 @@
 			</div>
 			<p><small><?=_('Total progress')?>: <?=round($character['quest_xps']*100/$seminary['achievable_xps'])?>%</small></p>
 		</div>
+		<?php if(array_key_exists('xplevel', $character) && !is_null($character['xplevel'])) : ?>
 		<div class="cdata square">
 			<p class="value"><?=$character['xplevel']['level']?></p>
 			<p><small><?=_('Level')?></small></p>
 		</div>
+		<?php endif ?>
 		<div class="cdata square">
 			<p class="value"><?=$character['xps']?></p>
 			<p><small>XP</small></p>
@@ -61,9 +63,11 @@
 			<?php endforeach ?>
 		</ul>
 	</div>
+	<?php if(array_key_exists('xplevel', $character) && !is_null($character['xplevel'])) : ?>
 	<div class="cportrait">
 		<img src="<?=$linker->link(array('media','avatar',$seminary['url'],$character['charactertype_url'],$character['xplevel']['level']))?>" />
 	</div>
+	<?php endif ?>
 </section>
 
 <div class="cf">
@@ -74,19 +78,39 @@
 			<li>
 				<a href="<?=$linker->link($rankCharacter['url'],3)?>"><img src="<?=$linker->link(array('media','avatar',$seminary['url'],$rankCharacter['charactertype_url'],$rankCharacter['xplevel'],'portrait'))?>"></a>
 				<p><?=$character['rank']-count($ranking['superior'])+$index?>. <a href="<?=$linker->link($rankCharacter['url'],3)?>"><?=$rankCharacter['name']?></a></p>
-				<p><small><?=_('Level')?> <?=$rankCharacter['xplevel']?> (<?=sprintf(_('%d XPs'), $rankCharacter['xps'])?>)</small></p>
+				<p><small>
+					<?php if(array_key_exists('xplevel', $rankCharacter) && !is_null($rankCharacter['xplevel'])) : ?>
+					<?=_('Level')?> <?=$rankCharacter['xplevel']?> (<?=sprintf(_('%d XPs'), $rankCharacter['xps'])?>)
+					<?php else : ?>
+					<?=sprintf(_('%d XPs'), $rankCharacter['xps'])?>
+					<?php endif ?>
+				</small></p>
 			</li>
 			<?php endforeach ?>
 			<li>
+				<?php if(array_key_exists('xplevel', $character) && !is_null($character['xplevel'])) : ?>
 				<img src="<?=$linker->link(array('media','avatar',$seminary['url'],$character['charactertype_url'],$character['xplevel']['level'],'portrait'))?>">
+				<?php endif ?>
 				<p class="fwb"><?=$character['rank']?>. <?=$character['name']?></p>
-				<p><small><?=_('Level')?> <?=$character['xplevel']['level']?> (<?=sprintf(_('%d XPs'), $character['xps'])?>)</small></p>
+				<p><small>
+					<?php if(array_key_exists('xplevel', $character) && !is_null($character['xplevel'])) : ?>
+					<?=_('Level')?> <?=$character['xplevel']['level']?> (<?=sprintf(_('%d XPs'), $character['xps'])?>)
+					<?php else : ?>
+					<?=sprintf(_('%d XPs'), $character['xps'])?>
+					<?php endif ?>
+				</small></p>
 			</li>
 			<?php foreach($ranking['inferior'] as $index => &$rankCharacter) : ?>
 			<li>
 				<a href="<?=$linker->link($rankCharacter['url'],3)?>"><img src="<?=$linker->link(array('media','avatar',$seminary['url'],$rankCharacter['charactertype_url'],$rankCharacter['xplevel'],'portrait'))?>"></a>
 				<p><?=$character['rank']+$index+1?>. <a href="<?=$linker->link($rankCharacter['url'],3)?>"><?=$rankCharacter['name']?></a></p>
-				<p><small><?=_('Level')?> <?=$rankCharacter['xplevel']?> (<?=sprintf(_('%d XPs'), $rankCharacter['xps'])?>)</small></p>
+				<p><small>
+					<?php if(array_key_exists('xplevel', $rankCharacter) && !is_null($rankCharacter['xplevel'])) : ?>
+					<?=_('Level')?> <?=$rankCharacter['xplevel']?> (<?=sprintf(_('%d XPs'), $rankCharacter['xps'])?>)
+					<?php else : ?>
+					<?=sprintf(_('%d XPs'), $rankCharacter['xps'])?>
+					<?php endif ?>
+				</small></p>
 			</li>
 			<?php endforeach ?>
 		</ul>
