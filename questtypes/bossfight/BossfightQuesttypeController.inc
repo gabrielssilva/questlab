@@ -213,6 +213,20 @@
 			$this->set('fight', $fight);
 			$this->set('stages', $stages);
 		}
+
+
+		/**
+		 * TODO Action: edittask.
+		 * 
+		 * Edit the task of a Quest.
+		 * 
+		 * @param	array		$seminary	Current Seminary data
+		 * @param	array		$questgroup	Current Questgroup data
+		 * @param	array		$quest		Current Quest data
+		 */
+		public function edittask($seminary, $questgroup, $quest)
+		{
+		}
 		
 		
 		
