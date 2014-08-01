@@ -65,6 +65,10 @@
 			$string = str_replace('[/strong]', '</strong>', $string);
 			
 			// Create tables
+			$string = preg_replace('/(\[table\])\s+/u', '$1', $string);
+			$string = preg_replace('/\s*(\[tr\])\s*/u', '$1', $string);
+			$string = preg_replace('%\s+(\[/table\])%u', '$1', $string);
+			$string = preg_replace('%\s*(\[/tr\])\s*%u', '$1', $string);
 			$string = str_replace('[table]', '</p><table>', $string);
 			$string = str_replace('[/table]', '</table><p>', $string);
 			$string = str_replace('[tr]', '<tr>', $string);
