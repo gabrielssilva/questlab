@@ -104,8 +104,8 @@
 </section>
 <?php endif ?>
 
-<?php if(count($nextquests) > 0 || !is_null($nextquestgroup)) : ?>
 <section>
+	<?php if(count($nextquests) > 0 || !is_null($nextquestgroup)) : ?>
 	<h1><?=_('Continuation')?></h1>
 	<?php if(count($nextquests) > 0) : ?>
 	<ul>
@@ -142,5 +142,7 @@
 	<p><?=$nextquestgroup['hierarchy']['title_singular']?> <?=$nextquestgroup['hierarchy']['questgroup_pos']?>: <a href="<?=$linker->link(array('questgroups','questgroup',$seminary['url'],$nextquestgroup['url']))?>"><?=$nextquestgroup['title']?></a></p>
 	<p><a class="cta orange" href="<?=$linker->link(array('questgroups','questgroup',$seminary['url'],$nextquestgroup['url']))?>"><?=_('Let’s go')?></a></p>
 	<?php endif ?>
+	<?php else : ?>
+	<h1><?=_('Game over')?></h1>
+	<?php endif ?>
 </section>
-<?php endif ?>
