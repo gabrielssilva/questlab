@@ -165,10 +165,6 @@
 			// Response speichern
 			$this->response = $response;
 			
-			
-			// Linker erstellen
-			$this->set('linker', new \nre\core\Linker($request));
-			
 		}
 		
 		
@@ -324,6 +320,15 @@
 			}
 			if(!is_array($components)) {
 				$components = array($components);
+			}
+			// Components of parent classes
+			$parent = $this;
+			while($parent = get_parent_class($parent))
+			{
+				$properties = get_class_vars($parent);
+				if(array_key_exists('components', $properties)) {
+					$components = array_merge($components, $properties['components']);
+				}
 			}
 			
 			// Load components
