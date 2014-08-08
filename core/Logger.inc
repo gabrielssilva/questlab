@@ -124,7 +124,18 @@
 		 */
 		private function getAutoLogMode()
 		{
-			return ($_SERVER['SERVER_ADDR'] == '127.0.0.1' && !$this->autoLogToScreenDisabled) ? self::LOGMODE_SCREEN : self::LOGMODE_PHP;
+			return ($this->isLocalhost() && !$this->autoLogToScreenDisabled) ? self::LOGMODE_SCREEN : self::LOGMODE_PHP;
+		}
+		
+		
+		/**
+		 * Detect if the server is running as localhost without domain.
+		 * 
+		 * @return	boolean	Wheather server is running as localhost or not
+		 */
+		private function isLocalhost()
+		{
+			return ($_SERVER['SERVER_ADDR'] == '127.0.0.1' || $_SERVER['SERVER_ADDR'] = '::1');
 		}
 		
 	}
