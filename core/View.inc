@@ -26,7 +26,7 @@
 		 * 
 		 * @var string
 		 */
-		private $templateFilename;
+		protected $templateFilename;
 		
 		
 		
@@ -57,7 +57,7 @@
 		 * @param	string	$action		Current Action
 		 * @param	bool	$isToplevel	Agent is a ToplevelAgent
 		 */
-		private function __construct($layoutName, $agentName=null, $action=null, $isToplevel=false)
+		protected function __construct($layoutName, $agentName=null, $action=null, $isToplevel=false)
 		{
 			// Create template filename
 			// LayoutName
