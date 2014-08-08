@@ -308,7 +308,9 @@
 					if(is_null($relatedQuesttext))
 					{
 						$nextQuestgroup = $this->Questgroups->getNextQuestgroup($questgroup['id']);
-						$nextQuestgroup['hierarchy'] = $this->Questgroupshierarchy->getHierarchyForQuestgroup($nextQuestgroup['id']);
+						if(!is_null($nextQuestgroup)) {
+							$nextQuestgroup['hierarchy'] = $this->Questgroupshierarchy->getHierarchyForQuestgroup($nextQuestgroup['id']);
+						}
 					}
 					else
 					{

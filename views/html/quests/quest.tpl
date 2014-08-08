@@ -104,7 +104,7 @@
 </section>
 <?php endif ?>
 
-<?php if(!is_null($nextquests) || !is_null($nextquestgroup)) : ?>
+<?php if(count($nextquests) > 0 || !is_null($nextquestgroup)) : ?>
 <section>
 	<h1><?=_('Continuation')?></h1>
 	<?php if(count($nextquests) > 0) : ?>
