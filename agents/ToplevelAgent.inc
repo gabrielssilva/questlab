@@ -153,6 +153,17 @@
 		}
 		
 		
+		/**
+		 * Return the IntermediateAgent.
+		 * 
+		 * @return	IntermediateAgent	IntermediateAgent
+		 */
+		public function getIntermediateAgent()
+		{
+			return $this->intermediateAgent;
+		}
+		
+		
 		
 		
 		/**
@@ -265,6 +276,7 @@
 		/**
 		 * Run the Controller of this Agent and its SubAgents.
 		 * 
+		 * @throws	AccessDeniedException
 		 * @throws	IdNotFoundException
 		 * @throws	ServiceUnavailableException
 		 * @throws	DatamodelException
@@ -292,6 +304,7 @@
 		/**
 		 * Run IntermediateAgent.
 		 * 
+		 * @throws	AccessDeniedException
 		 * @throws	ParamsNotValidException
 		 * @throws	IdNotFoundException
 		 * @throws	ServiceUnavailableException
