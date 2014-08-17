@@ -22,7 +22,7 @@
 <form method="post">
 	<fieldset>
 		<legend><?=_('Text')?></legend>
-		<button id="add-field"><?=_('Add field')?></button><br />
+		<button id="add-field" type="button"><?=_('Add field')?></button><br />
 		<textarea id="text" name="text"><?=$text?></textarea>
 	</fieldset>
 	<fieldset>
@@ -62,7 +62,7 @@
 		'<option value="<?=$size['size']?>"><?=$size['size']?></option>' +
 		<?php endforeach ?>
 		'</select>';
-	var inputElement = '<input type="text" name="fields[INDEX][regex]" />';
+	var inputElement = '<input type="text" name="fields[INDEX][regex]" required="required" placeholder="/regex/i" />';
 	$("#add-field").click(function(event) {
 		event.preventDefault();
 		var caret = getCaret("text");
@@ -76,7 +76,7 @@
 	function updateFields()
 	{
 		var newCount = $("#text").val().split("[textinput]").length - 1;
-		var oldCount = $("#fields li").length;
+		var oldCount = $("#fields > li").length;
 		var caret = getCaret("text");
 		var pos = $("#text").val().substring(0, caret).split("[textinput]").length - 1;
 		if(newCount > oldCount)
@@ -86,11 +86,17 @@
 			{
 				index++;
 				var element = '<li>' + selectElement.replace('INDEX', index) + inputElement.replace('INDEX', index) + '</li>';
-				if($("#fields li").length > pos-1) {
-					$($("#fields li")[pos-1]).before(element);
+				if($("#fields > li").length > 0)
+				{
+					if($("#fields > li").length > pos-1) {
+						$($("#fields > li")[pos-1]).before(element);
+					}
+					else {
+						$($("#fields > li")[pos-2]).after(element);
+					}
 				}
 				else {
-					$($("#fields li")[pos-2]).after(element);
+					$("#fields").append(element);
 				}
 			}
 		}
@@ -98,7 +104,7 @@
 		{
 			// Remove fields
 			for(var i=oldCount; i>newCount; i--) {
-				$($("#fields li")[pos]).remove();
+				$($("#fields > li")[pos]).remove();
 			}
 		}
 	}

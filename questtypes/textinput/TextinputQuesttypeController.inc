@@ -215,7 +215,6 @@
 					{
 						// Validate regex
 						$regex = $field['regex'];
-						//$fieldValidation = $this->Validation->validate($regex, \nre\configs\AppConfig::$validation['regex']);
 						$fieldValidation = @preg_match($regex, '') !== false;
 						if($fieldValidation !== true)
 						{

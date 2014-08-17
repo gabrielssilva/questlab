@@ -119,7 +119,7 @@
 		 * 
 		 * @param	int	$userId		ID of user setting text
 		 * @param	int	$questId	ID of Quest to set text for
-		 * @param	string	$text		Text for Quset
+		 * @param	string	$text		Text for Quest
 		 */
 		public function setTextForQuest($userId, $questId, $text)
 		{
