@@ -20,6 +20,12 @@
 	 */
 	class ChoiceinputQuesttypeController extends \hhu\z\controllers\QuesttypeController
 	{
+		/**
+		 * Required components
+		 * 
+		 * @var array
+		 */
+		public $components = array('validation');
 		
 		
 		
@@ -162,7 +168,7 @@
 
 
 		/**
-		 * TODO Action: edittask.
+		 * Action: edittask.
 		 * 
 		 * Edit the task of a Quest.
 		 * 
@@ -172,6 +178,119 @@
 		 */
 		public function edittask($seminary, $questgroup, $quest)
 		{
+			// Get Task
+			$task = $this->Choiceinput->getChoiceinputQuest($quest['id']);
+			$text = $task['text'];
+			
+			// Get lists
+			$choiceLists = $this->Choiceinput->getChoiceinputLists($quest['id']);
+			foreach($choiceLists as &$list)
+			{
+				$list['choices'] = $this->Choiceinput->getChoiceinputChoices($list['id']);
+				foreach($list['choices'] as $index => &$choice) {
+					//$choice['correct'] = ($choice['id'] == $list['questtypes_choiceinput_choice_id']);
+					if($choice['id'] == $list['questtypes_choiceinput_choice_id']) {
+						$list['answer'] = $index;
+					}
+					$choice = $choice['text'];
+				}
+				//$list = $list['choices'];
+			}
+
+			// Values
+			$validations = array();
+
+			// Save data
+			if($this->request->getRequestMethod() == 'POST')
+			{
+				if(!is_null($this->request->getPostParam('preview')) || !is_null($this->request->getPostParam('save')))
+				{
+					// Get params and validate them
+					if(is_null($this->request->getPostParam('text'))) {
+						throw new \nre\exceptions\ParamsNotValidException('text');
+					}
+					$text = $this->request->getPostParam('text');
+					if(is_null($this->request->getPostParam('lists'))) {
+						throw new \nre\exceptions\ParamsNotValidException('lists');
+					}
+					$choiceLists = $this->request->getPostParam('lists');
+					$choiceLists = array_values($choiceLists);
+					foreach($choiceLists as $listIndex => &$list)
+					{
+						// Validate choices
+						if(!array_key_exists('choices', $list)) {
+							throw new \nre\exceptions\ParamsNotValidException('choices');
+						}
+						$choiceIndex = 0;
+						$answer = null;
+						foreach($list['choices'] as $index => &$choice)
+						{
+							// Validate choice
+							$choiceValidation = $this->Validation->validate($choice, \nre\configs\AppConfig::$validation['choice']);
+							if($choiceValidation !== true)
+							{
+								if(!array_key_exists($listIndex, $validations) || !is_array($validations[$listIndex])) {
+									$validations[$listIndex] = array();
+								}
+								if(!array_key_exists('choices', $validations[$listIndex])) {
+									$validations[$listIndex]['choices'] = array();
+								}
+								$validations[$listIndex]['choices'][$choiceIndex] = $choiceValidation;
+							}
+
+							$choiceIndex++;
+							if(array_key_exists('answer', $list) && $list['answer'] == $index) {
+								$answer = $choiceIndex;
+							}
+						}
+
+						// Validate correct answer
+						if(is_null($answer))
+						{
+							if(!array_key_exists($listIndex, $validations) || !is_array($validations[$listIndex])) {
+								$validations[$listIndex] = array();
+							}
+							if(!array_key_exists('answer', $validations[$listIndex])) {
+								$validations[$listIndex]['answer'] = array();
+							}
+							$validations[$listIndex] = $this->Validation->addValidationResult($validations[$listIndex], 'answer', 'exist', true);
+						}
+					}
+
+					// Save and redirect
+					if(!is_null($this->request->getPostParam('save')) && empty($validations))
+					{
+						// Save text
+						$this->Choiceinput->setTextForQuest(
+							$this->Auth->getUserId(),
+							$quest['id'],
+							$text
+						);
+
+						// Save lists and choices
+						foreach($choiceLists as $listIndex => &$list)
+						{
+							// Save list
+							$this->Choiceinput->setListForText(
+								$quest['id'],
+								$listIndex + 1,
+								$list['choices'],
+								$list['answer'] + 1
+							);
+						}
+
+						// Redirect
+						$this->redirect($this->linker->link(array('quest', $seminary['url'], $questgroup['url'], $quest['url']), 1));
+					}
+				}
+			}
+
+
+			// Pass data to view
+			$this->set('task', $task);
+			$this->set('text', $text);
+			$this->set('choiceLists', $choiceLists);
+			$this->set('validations', $validations);
 		}
 		
 	}

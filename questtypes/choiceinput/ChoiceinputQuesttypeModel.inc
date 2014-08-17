@@ -147,6 +147,148 @@
 			
 			return null;
 		}
+
+
+		/**
+		 * Set the text for a Quest and correct choice input lists count.
+		 * 
+		 * @param	int	$userId		ID of user setting text
+		 * @param	int	$questId	ID of Quest to set text for
+		 * @param	string	$text		Text for Quest
+		 */
+		public function setTextForQuest($userId, $questId, $text)
+		{
+			$this->db->setAutocommit(false);
+			try {
+				// Set text
+				$this->db->query(
+					'INSERT INTO questtypes_choiceinput '.
+					'(quest_id, created_user_id, text) '.
+					'VALUES '.
+					'(?, ?, ?) '.
+					'ON DUPLICATE KEY UPDATE '.
+					'text = ?',
+					'iiss',
+					$questId,
+					$userId,
+					$text,
+					$text
+				);
+
+				// Count fields
+				$listCount = substr_count($text, '[choiceinput]');
+
+				// Remove fields
+				$this->db->query(
+					'DELETE FROM questtypes_choiceinput_lists '.
+					'WHERE questtypes_choiceinput_quest_id = ? AND number > ?',
+					'ii',
+					$questId,
+					$listCount
+				);
+
+				// Add fields
+				for($i=1; $i<=$listCount; $i++)
+				{
+					$this->db->query(
+						'INSERT IGNORE INTO questtypes_choiceinput_lists '.
+						'(questtypes_choiceinput_quest_id, number, questtypes_choiceinput_choice_id) '.
+						'VALUES '.
+						'(?, ?, NULL) ',
+						'ii',
+						$questId,
+						$i
+					);
+				}
+
+				$this->db->commit();
+			}
+			catch(\Exception $e) {
+				$this->db->rollback();
+				$this->db->setAutocommit(true);
+				throw $e;
+			}
+
+			$this->db->setAutocommit(true);
+		}
+
+
+		/**
+		 * Set list of choices for a text.
+		 * 
+		 * @param	int	$questId	ID of Quest to set choices for
+		 * @param	int	$number		List number
+		 * @param	array	$choices	List of choices
+		 * @param	int	$correctPos	Position of correct answer
+		 */
+		public function setListForText($questId, $number, $choices, $correctPos)
+		{
+			// Get ID of list
+			$listId = $this->db->query(
+				'SELECT id '.
+				'FROM questtypes_choiceinput_lists '.
+				'WHERE questtypes_choiceinput_quest_id = ? AND number = ?',
+				'ii',
+				$questId,
+				$number
+			);
+			$listId = $listId[0]['id'];
+
+			// Manage choices
+			$this->db->setAutocommit(false);
+			try {
+				// Remove choices
+				$this->db->query(
+					'DELETE FROM questtypes_choiceinput_choices '.
+					'WHERE questtypes_choiceinput_list_id = ? AND pos > ?',
+					'ii',
+					$listId,
+					count($choices)
+				);
+
+				// Add choices
+				foreach($choices as $index => &$choice)
+				{
+					$this->db->query(
+						'INSERT INTO questtypes_choiceinput_choices '.
+						'(questtypes_choiceinput_list_id, pos, text) '.
+						'VALUES '.
+						'(?, ?, ?) '.
+						'ON DUPLICATE KEY UPDATE '.
+						'text = ?',
+						'iiss',
+						$listId,
+						$index + 1,
+						$choice,
+						$choice
+					);
+				}
+
+				// Set correct choice for list
+				$this->db->query(
+					'UPDATE questtypes_choiceinput_lists '.
+					'SET questtypes_choiceinput_choice_id = ('.
+						'SELECT id '.
+						'FROM questtypes_choiceinput_choices '.
+						'WHERE questtypes_choiceinput_list_id = ? AND pos = ?'.
+					') '.
+					'WHERE id = ?',
+					'iii',
+					$listId,
+					$correctPos,
+					$listId
+				);
+
+				$this->db->commit();
+			}
+			catch(\Exception $e) {
+				$this->db->rollback();
+				$this->db->setAutocommit(true);
+				throw $e;
+			}
+
+			$this->db->setAutocommit(true);
+		}
 		
 	}
 

@@ -222,6 +222,10 @@
 			),
 			'deadline' => array(
 				'regex'		=> '/^(\d{4}-\d{2}-\d{2} \d{2}:\d{2}:\d{2})?$/'
+			),
+			'choice' => array(
+				'minlength'	=> 1,
+				'maxlength'	=> 128
 			)
 		);
 		
