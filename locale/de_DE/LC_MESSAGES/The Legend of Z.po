@@ -1,15 +1,15 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: The Legend of Z\n"
-"POT-Creation-Date: 2014-07-31 10:52+0100\n"
-"PO-Revision-Date: 2014-07-31 11:00+0100\n"
+"POT-Creation-Date: 2014-08-17 20:38+0100\n"
+"PO-Revision-Date: 2014-08-17 20:39+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de_DE\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.6.5\n"
+"X-Generator: Poedit 1.6.7\n"
 "X-Poedit-Basepath: ../../../\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Poedit-SourceCharset: UTF-8\n"
@@ -17,8 +17,8 @@ msgstr ""
 "X-Poedit-SearchPath-1: questtypes\n"
 "X-Poedit-SearchPath-2: controllers\n"
 
-#: controllers/CharactersController.inc:391
-#: controllers/UsersController.inc:315 views/ajax/characters/index.tpl:10
+#: controllers/CharactersController.inc:401
+#: controllers/UsersController.inc:320 views/ajax/characters/index.tpl:10
 #: views/ajax/users/index.tpl:10 views/html/characters/index.tpl:48
 #: views/html/characters/manage.tpl:35 views/html/characters/manage.tpl:50
 #: views/html/characters/manage.tpl:58 views/html/userroles/user.tpl:5
@@ -27,8 +27,8 @@ msgstr ""
 msgid "Admin"
 msgstr "Administrator"
 
-#: controllers/CharactersController.inc:397
-#: controllers/UsersController.inc:321 views/ajax/characters/index.tpl:12
+#: controllers/CharactersController.inc:407
+#: controllers/UsersController.inc:326 views/ajax/characters/index.tpl:12
 #: views/ajax/users/index.tpl:12 views/html/characters/index.tpl:49
 #: views/html/characters/manage.tpl:36 views/html/characters/manage.tpl:51
 #: views/html/characters/manage.tpl:59 views/html/userroles/user.tpl:7
@@ -37,8 +37,8 @@ msgstr "Administrator"
 msgid "Moderator"
 msgstr "Moderator"
 
-#: controllers/CharactersController.inc:403
-#: controllers/UsersController.inc:327 views/ajax/characters/index.tpl:14
+#: controllers/CharactersController.inc:413
+#: controllers/UsersController.inc:332 views/ajax/characters/index.tpl:14
 #: views/ajax/users/index.tpl:14 views/html/characters/index.tpl:50
 #: views/html/characters/manage.tpl:37 views/html/characters/manage.tpl:53
 #: views/html/characters/manage.tpl:61 views/html/userroles/user.tpl:9
@@ -63,7 +63,7 @@ msgstr "Neuer Lösungsvorschlag"
 msgid "Character submission approved"
 msgstr "Lösungsvorschlag bewertet"
 
-#: controllers/QuestsController.inc:1284
+#: controllers/QuestsController.inc:1287
 #: questtypes/submit/html/submission.tpl:30
 #: views/html/achievements/conditions.tpl:54
 #: views/html/achievements/conditions.tpl:121 views/html/quests/quest.tpl:54
@@ -90,6 +90,58 @@ msgstr "Wählen"
 #: questtypes/submit/html/quest.tpl:23 questtypes/textinput/html/quest.tpl:12
 msgid "solve"
 msgstr "lösen"
+
+#: questtypes/choiceinput/html/edittask.tpl:13
+#, php-format
+msgid "Choice input is too short (min. %d chars)"
+msgstr "Die Auswahleingabe ist zu kurz (min. %d Zeichen)"
+
+#: questtypes/choiceinput/html/edittask.tpl:15
+#, php-format
+msgid "Choice input is too long (max. %d chars)"
+msgstr "Die Auswahleingabe ist zu lang (max. %d Zeichen)"
+
+#: questtypes/choiceinput/html/edittask.tpl:17
+msgid "Choice input invalid"
+msgstr "Die Auswahleingabe ist ungültig"
+
+#: questtypes/choiceinput/html/edittask.tpl:29
+#: questtypes/choiceinput/html/edittask.tpl:57
+#, php-format
+msgid "Please select correct choice"
+msgstr "Bitte wähle die richtige Auswahleingabe aus"
+
+#: questtypes/choiceinput/html/edittask.tpl:43
+#: questtypes/textinput/html/edittask.tpl:24
+msgid "Text"
+msgstr "Text"
+
+#: questtypes/choiceinput/html/edittask.tpl:44
+#: questtypes/textinput/html/edittask.tpl:25
+msgid "Add field"
+msgstr "Feld hinzufügen"
+
+#: questtypes/choiceinput/html/edittask.tpl:48
+msgid "Choice inputs"
+msgstr "Auswahleingaben"
+
+#: questtypes/choiceinput/html/edittask.tpl:82
+#: questtypes/choiceinput/html/edittask.tpl:85
+#: questtypes/textinput/html/edittask.tpl:43
+#: questtypes/textinput/html/edittask.tpl:46
+msgid "Preview"
+msgstr "Vorschau"
+
+#: questtypes/choiceinput/html/edittask.tpl:83
+#: questtypes/textinput/html/edittask.tpl:44
+#: views/html/achievements/conditions.tpl:151
+#: views/html/achievements/create.tpl:109 views/html/achievements/edit.tpl:112
+#: views/html/charactergroupsquests/manage.tpl:66
+#: views/html/charactertypes/edit.tpl:124 views/html/library/edit.tpl:46
+#: views/html/library/edit.tpl:86 views/html/quests/edit.tpl:114
+#: views/html/users/edit.tpl:105 views/html/xplevels/manage.tpl:49
+msgid "save"
+msgstr "speichern"
 
 #: questtypes/crossword/html/quest.tpl:22
 #: questtypes/crossword/html/submission.tpl:22
@@ -206,53 +258,14 @@ msgstr "Kommentar"
 msgid "unsolved"
 msgstr "Leider falsch!"
 
-#: questtypes/textinput/html/edittask (Kopie).tpl:3
-#: questtypes/textinput/html/edittask.tpl:24
-msgid "Text"
-msgstr "Text"
-
-#: questtypes/textinput/html/edittask (Kopie).tpl:6
-#, php-format
-msgid "Use %s for marking field positions"
-msgstr "Benutze %s zum Markieren von Feldpositionen"
-
-#: questtypes/textinput/html/edittask (Kopie).tpl:8
-msgid "edit text"
-msgstr "Text bearbeiten"
-
-#: questtypes/textinput/html/edittask (Kopie).tpl:12
-#: questtypes/textinput/html/edittask.tpl:29
-msgid "Fields"
-msgstr "Felder"
-
-#: questtypes/textinput/html/edittask (Kopie).tpl:37
-msgid "edit fields"
-msgstr "Felder bearbeiten"
-
-#: questtypes/textinput/html/edittask (Kopie).tpl:41
-#: questtypes/textinput/html/edittask.tpl:44
-#: views/html/achievements/conditions.tpl:151
-#: views/html/achievements/create.tpl:109 views/html/achievements/edit.tpl:112
-#: views/html/charactergroupsquests/manage.tpl:66
-#: views/html/charactertypes/edit.tpl:124 views/html/library/edit.tpl:46
-#: views/html/library/edit.tpl:86 views/html/quests/edit.tpl:112
-#: views/html/users/edit.tpl:105 views/html/xplevels/manage.tpl:49
-msgid "save"
-msgstr "speichern"
-
 #: questtypes/textinput/html/edittask.tpl:10
 #: questtypes/textinput/html/edittask.tpl:12
 msgid "Regex invalid"
 msgstr "Der reguläre Ausdruck ist ungültig"
 
-#: questtypes/textinput/html/edittask.tpl:25
-msgid "Add field"
-msgstr "Feld hinzufügen"
-
-#: questtypes/textinput/html/edittask.tpl:43
-#: questtypes/textinput/html/edittask.tpl:46
-msgid "Preview"
-msgstr "Vorschau"
+#: questtypes/textinput/html/edittask.tpl:29
+msgid "Fields"
+msgstr "Felder"
 
 #: views/ajax/quests/index.tpl:9 views/html/quests/create.tpl:79
 #: views/html/quests/edit.tpl:82 views/html/quests/index.tpl:27
@@ -308,12 +321,15 @@ msgstr "Texteingabe"
 #: views/html/charactergroupsquests/manage.tpl:81
 #: views/html/charactergroupsquests/quest.tpl:25
 #: views/html/charactergroupsquests/quest.tpl:73
-#: views/html/characters/character.tpl:77
 #: views/html/characters/character.tpl:83
-#: views/html/characters/character.tpl:89
-#: views/html/characters/character.tpl:103 views/html/quests/index.tpl:75
-#: views/html/seminaries/index.tpl:29 views/html/seminarybar/index.tpl:9
-#: views/html/seminarybar/index.tpl:45
+#: views/html/characters/character.tpl:85
+#: views/html/characters/character.tpl:97
+#: views/html/characters/character.tpl:99
+#: views/html/characters/character.tpl:109
+#: views/html/characters/character.tpl:111
+#: views/html/characters/character.tpl:127 views/html/quests/index.tpl:75
+#: views/html/seminaries/index.tpl:29 views/html/seminarybar/index.tpl:11
+#: views/html/seminarybar/index.tpl:49 views/html/seminarybar/index.tpl:51
 #, php-format
 msgid "%d XPs"
 msgstr "%d XP"
@@ -709,7 +725,7 @@ msgstr "Persönlicher Fortschritt: %d%%"
 #: views/html/achievements/index.tpl:65
 #: views/html/charactergroups/group.tpl:32
 #: views/html/charactergroups/managegroup.tpl:20
-#: views/html/characters/character.tpl:46 views/html/seminarybar/index.tpl:10
+#: views/html/characters/character.tpl:48 views/html/seminarybar/index.tpl:12
 msgid "Rank"
 msgstr "Platz"
 
@@ -718,7 +734,7 @@ msgstr "Platz"
 msgid "You achieved %d of %d Achievements so far"
 msgstr "Du hast bislang %d von insgesamt %d Achievements erreicht"
 
-#: views/html/achievements/index.tpl:72 views/html/seminarybar/index.tpl:31
+#: views/html/achievements/index.tpl:72 views/html/seminarybar/index.tpl:33
 #, php-format
 msgid "achieved at: %s"
 msgstr "erhalten am: %s"
@@ -753,7 +769,7 @@ msgstr "bearbeiten"
 #: views/html/charactergroupsquests/edit.tpl:8
 #: views/html/charactergroupsquests/manage.tpl:8
 #: views/html/charactergroupsquests/quest.tpl:8
-#: views/html/characters/character.tpl:95 views/html/seminarymenu/index.tpl:5
+#: views/html/characters/character.tpl:119 views/html/seminarymenu/index.tpl:5
 msgid "Character Groups"
 msgstr "Gruppen"
 
@@ -1121,28 +1137,28 @@ msgstr "Charakter löschen"
 msgid "Total progress"
 msgstr "Fortschritt"
 
-#: views/html/characters/character.tpl:38
-#: views/html/characters/character.tpl:77
+#: views/html/characters/character.tpl:39
 #: views/html/characters/character.tpl:83
-#: views/html/characters/character.tpl:89
-#: views/html/charactertypes/edit.tpl:103 views/html/seminarybar/index.tpl:45
-#: views/html/users/user.tpl:41 views/html/xplevels/manage.tpl:41
+#: views/html/characters/character.tpl:97
+#: views/html/characters/character.tpl:109
+#: views/html/charactertypes/edit.tpl:103 views/html/seminarybar/index.tpl:49
+#: views/html/users/user.tpl:42 views/html/xplevels/manage.tpl:41
 msgid "Level"
 msgstr "Level"
 
-#: views/html/characters/character.tpl:48
+#: views/html/characters/character.tpl:50
 msgid "Milestones"
 msgstr "Meilensteine"
 
-#: views/html/characters/character.tpl:71
+#: views/html/characters/character.tpl:75
 msgid "Ranking"
 msgstr "Ranking"
 
-#: views/html/characters/character.tpl:112 views/html/seminarybar/index.tpl:17
+#: views/html/characters/character.tpl:136 views/html/seminarybar/index.tpl:19
 msgid "Last Quest"
 msgstr "Letzter Speicherpunkt"
 
-#: views/html/characters/character.tpl:118
+#: views/html/characters/character.tpl:142
 msgid "Topic progress"
 msgstr "Thematischer Fortschritt"
 
@@ -1673,7 +1689,7 @@ msgstr "Soll die Quest „%s“ wirklich gelöscht werden?"
 msgid "Edit Quest"
 msgstr "Quest bearbeiten"
 
-#: views/html/quests/edit.tpl:111
+#: views/html/quests/edit.tpl:112
 msgid "edit task"
 msgstr "Aufgabe bearbeiten"
 
@@ -1733,6 +1749,10 @@ msgstr "Fortfahren"
 #: views/html/quests/quest.tpl:143 views/html/seminaries/seminary.tpl:48
 msgid "Let’s go"
 msgstr "Auf ins Abenteuer!"
+
+#: views/html/quests/quest.tpl:146
+msgid "Game over"
+msgstr "Spielende"
 
 #: views/html/quests/submission.tpl:9
 #, php-format
@@ -1800,11 +1820,11 @@ msgstr "Quests anzeigen"
 msgid "Recalculate XPs"
 msgstr "XP neuberechnen"
 
-#: views/html/seminarybar/index.tpl:24
+#: views/html/seminarybar/index.tpl:26
 msgid "Last Achievement"
 msgstr "Letztes Achievement"
 
-#: views/html/seminarybar/index.tpl:49
+#: views/html/seminarybar/index.tpl:57
 #, php-format
 msgid "Show %s-Profile"
 msgstr "%s-Profil anzeigen"
@@ -1970,7 +1990,7 @@ msgstr "Registrierung"
 msgid "Register"
 msgstr "Registrieren"
 
-#: views/html/users/user.tpl:46
+#: views/html/users/user.tpl:48
 msgid "Roles"
 msgstr "Rollen"
 
@@ -2016,6 +2036,15 @@ msgstr "Ein neuer Benutzer wurde registriert"
 #, php-format
 msgid "Hello %s"
 msgstr "Hallo %s"
+
+#~ msgid "Use %s for marking field positions"
+#~ msgstr "Benutze %s zum Markieren von Feldpositionen"
+
+#~ msgid "edit text"
+#~ msgstr "Text bearbeiten"
+
+#~ msgid "edit fields"
+#~ msgstr "Felder bearbeiten"
 
 #~ msgid "Manage Questgroups"
 #~ msgstr "Questgruppen verwalten"
