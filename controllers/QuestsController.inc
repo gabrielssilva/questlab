@@ -44,6 +44,7 @@
 			'create'	=> array('admin', 'moderator', 'user'),
 			'edit'		=> array('admin', 'moderator', 'user'),
 			'edittexts'	=> array('admin', 'moderator', 'user'),
+			'edittask'	=> array('admin', 'moderator', 'user'),
 			'delete'	=> array('admin', 'moderator', 'user')
 		);
 		/**
@@ -59,6 +60,7 @@
 			'create'	=> array('admin', 'moderator'),
 			'edit'		=> array('admin', 'moderator'),
 			'edittexts'	=> array('admin', 'moderator'),
+			'edittask'	=> array('admin', 'moderator'),
 			'delete'	=> array('admin')
 		);
 		
