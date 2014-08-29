@@ -79,8 +79,12 @@
 <?php endif ?>
 
 <?php if(array_key_exists('Epilog', $questtexts) && count($questtexts['Epilog']) > 0) : ?>
-<section>
+<section <?php if(count($nextquests) == 0 && is_null($nextquestgroup)) : ?>class="gameover"<?php endif ?>>
+	<?php if(count($nextquests) == 0 && is_null($nextquestgroup)) : ?>
+	<h1><?=_('Game over')?></h1>
+	<?php else : ?>
 	<h1 id="questtext"><?=_('Epilog')?></h1>
+	<?php endif ?>
 	<div class="qtextbox">
 		<?php foreach($questtexts['Epilog'] as &$questtext) : ?>
 		<p class="qtext cf">
@@ -142,7 +146,5 @@
 	<p><?=$nextquestgroup['hierarchy']['title_singular']?> <?=$nextquestgroup['hierarchy']['questgroup_pos']?>: <a href="<?=$linker->link(array('questgroups','questgroup',$seminary['url'],$nextquestgroup['url']))?>"><?=$nextquestgroup['title']?></a></p>
 	<p><a class="cta orange" href="<?=$linker->link(array('questgroups','questgroup',$seminary['url'],$nextquestgroup['url']))?>"><?=_('Let’s go')?></a></p>
 	<?php endif ?>
-	<?php else : ?>
-	<h1><?=_('Game over')?></h1>
 	<?php endif ?>
 </section>
