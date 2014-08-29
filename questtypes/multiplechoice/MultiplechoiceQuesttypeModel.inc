@@ -153,6 +153,115 @@
 			
 			return false;
 		}
+
+
+		/**
+		 * Set a question for a multiplechoice Quest.
+		 * 
+		 * @param	int	$userId		ID of user
+		 * @param	int	$questId	ID of Quest to set question for
+		 * @param	int	$pos		Position of question
+		 * @param	string	$question	Question text
+		 */
+		public function setQuestionForQuest($userId, $questId, $pos, $question)
+		{
+			$this->db->query(
+				'INSERT INTO questtypes_multiplechoice '.
+				'(created_user_id, quest_id, pos, question) '.
+				'VALUES '.
+				'(?, ?, ?, ?) '.
+				'ON DUPLICATE KEY UPDATE '.
+				'question = ?',
+				'iiiss',
+				$userId,
+				$questId,
+				$pos,
+				$question,
+				$question
+			);
+		}
+
+
+		/**
+		 * Delete questions of a Quest.
+		 * 
+		 * @param	int	$questId	ID of Quest to delete question of
+		 * @param	int	$offset		Only delete questions after this position
+		 */
+		public function deleteQuestionsOfQuest($questId, $offset)
+		{
+			$this->db->query(
+				'DELETE FROM questtypes_multiplechoice '.
+				'WHERE quest_id = ? AND pos > ?',
+				'ii',
+				$questId,
+				$offset
+			);
+		}
+
+
+		/**
+		 * Set an answer for a question.
+		 * 
+		 * @param	int	$userId		ID of user
+		 * @param	int	$questId	ID of Quest to set answer for
+		 * @param	int	$questionPos	Position of question
+		 * @param	int	$answerPos	Position of answer
+		 * @param	string	$answer		Answer text
+		 * @param	boolean	$tick		Whether answer is correct or not
+		 */
+		public function setAnswerForQuestion($userId, $questId, $questionPos, $answerPos, $answer, $tick)
+		{
+			// Get question
+			$question = $this->getQuestionOfQuest($questId, $questionPos);
+			if(is_null($question)) {
+				return;
+			}
+
+			// Add answer
+			$this->db->query(
+				'INSERT INTO questtypes_multiplechoice_answers '.
+				'(created_user_id, questtypes_multiplechoice_id, pos, answer, tick) '.
+				'VALUES '.
+				'(?, ?, ?, ?, ?) '.
+				'ON DUPLICATE KEY UPDATE '.
+				'answer = ?, tick = ?',
+				'iiisisi',
+				$userId,
+				$question['id'],
+				$answerPos,
+				$answer,
+				$tick,
+				$answer,
+				$tick
+			);
+		}
+
+
+		/**
+		 * Delete answers of a question.
+		 * 
+		 * @param	int	$questId	ID of Quest to delete answers for
+		 * @param	int	$questionPos	Position of question
+		 * @param	int	$offset		Only delete answers after this position
+		 */
+		public function deleteAnswersOfQuestion($questId, $questionPos, $offset)
+		{
+			// Get question
+			$question = $this->getQuestionOfQuest($questId, $questionPos);
+			if(is_null($question)) {
+				return;
+			}
+
+			// Delete answer
+			$this->db->query(
+				'DELETE FROM questtypes_multiplechoice_answers '.
+				'WHERE questtypes_multiplechoice_id = ? AND pos > ?',
+				'ii',
+				$question['id'],
+				$offset
+			);
+		}
 		
 	}
 

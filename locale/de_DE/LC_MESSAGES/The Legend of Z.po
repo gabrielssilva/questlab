@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: The Legend of Z\n"
-"POT-Creation-Date: 2014-08-17 20:38+0100\n"
-"PO-Revision-Date: 2014-08-17 20:39+0100\n"
+"POT-Creation-Date: 2014-08-29 15:17+0100\n"
+"PO-Revision-Date: 2014-08-29 15:17+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de_DE\n"
@@ -106,7 +106,7 @@ msgid "Choice input invalid"
 msgstr "Die Auswahleingabe ist ungültig"
 
 #: questtypes/choiceinput/html/edittask.tpl:29
-#: questtypes/choiceinput/html/edittask.tpl:57
+#: questtypes/choiceinput/html/edittask.tpl:58
 #, php-format
 msgid "Please select correct choice"
 msgstr "Bitte wähle die richtige Auswahleingabe aus"
@@ -133,6 +133,7 @@ msgid "Preview"
 msgstr "Vorschau"
 
 #: questtypes/choiceinput/html/edittask.tpl:83
+#: questtypes/multiplechoice/html/edittask.tpl:79
 #: questtypes/textinput/html/edittask.tpl:44
 #: views/html/achievements/conditions.tpl:151
 #: views/html/achievements/create.tpl:109 views/html/achievements/edit.tpl:112
@@ -152,6 +153,41 @@ msgstr "vertikal"
 #: questtypes/crossword/html/submission.tpl:24
 msgid "horizontal"
 msgstr "horizontal"
+
+#: questtypes/multiplechoice/html/edittask.tpl:12
+#: questtypes/multiplechoice/html/edittask.tpl:44
+#, php-format
+msgid "Answer input is too short (min. %d chars)"
+msgstr "Die Antwort ist zu kurz (min. %d Zeichen)"
+
+#: questtypes/multiplechoice/html/edittask.tpl:14
+#: questtypes/multiplechoice/html/edittask.tpl:46
+#, php-format
+msgid "Answer input is too long (max. %d chars)"
+msgstr "Die Antwort ist zu lang (max. %d Zeichen)"
+
+#: questtypes/multiplechoice/html/edittask.tpl:16
+#: questtypes/multiplechoice/html/edittask.tpl:48
+msgid "Answer input invalid"
+msgstr "Die Anwort ist ungültig"
+
+#: questtypes/multiplechoice/html/edittask.tpl:30
+msgid "Questions"
+msgstr "Fragen"
+
+#: questtypes/multiplechoice/html/edittask.tpl:34
+#: questtypes/multiplechoice/html/edittask.tpl:88
+msgid "Question"
+msgstr "Frage"
+
+#: questtypes/multiplechoice/html/edittask.tpl:71
+#: questtypes/multiplechoice/html/edittask.tpl:90
+msgid "Remove question"
+msgstr "Frage entfernen"
+
+#: questtypes/multiplechoice/html/edittask.tpl:75
+msgid "Add question"
+msgstr "Frage hinzufügen"
 
 #: questtypes/multiplechoice/html/quest.tpl:3
 #, php-format

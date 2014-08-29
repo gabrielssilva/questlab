@@ -226,6 +226,10 @@
 			'choice' => array(
 				'minlength'	=> 1,
 				'maxlength'	=> 128
+			),
+			'answer' => array(
+				'minlength'	=> 1,
+				'maxlength'	=> 255
 			)
 		);
 		

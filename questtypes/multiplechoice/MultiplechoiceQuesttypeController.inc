@@ -19,6 +19,12 @@
 	 */
 	class MultiplechoiceQuesttypeController extends \hhu\z\controllers\QuesttypeController
 	{
+		/**
+		 * Required components
+		 * 
+		 * @var array
+		 */
+		public $components = array('validation');
 		
 		
 		
@@ -219,7 +225,7 @@
 
 
 		/**
-		 * TODO Action: edittask.
+		 * Action: edittask.
 		 * 
 		 * Edit the task of a Quest.
 		 * 
@@ -229,6 +235,94 @@
 		 */
 		public function edittask($seminary, $questgroup, $quest)
 		{
+			// Get questions
+			$questions = $this->Multiplechoice->getQuestionsOfQuest($quest['id']);
+			foreach($questions as &$question) {
+				$question['answers'] = $this->Multiplechoice->getAnswersOfQuestion($question['id']);
+			}
+
+			// Values
+			$validations = array();
+
+			// Save data
+			if($this->request->getRequestMethod() == 'POST' && !is_null($this->request->getPostParam('save')))
+			{
+				// Get params and validate them
+				$questions = $this->request->getPostParam('questions');
+				if(is_null($questions)) {
+					$questions = array();
+				}
+				$questions = array_values($questions);
+				foreach($questions as $questionIndex => &$question)
+				{
+					// Validate answers
+					$question['answers'] = array_values($question['answers']);
+					foreach($question['answers'] as $answerIndex => &$answer)
+					{
+						$answerValidation = $this->Validation->validate($answer['answer'], \nre\configs\AppConfig::$validation['answer']);
+						if($answerValidation !== true)
+						{
+							if(!array_key_exists($questionIndex, $validations) || !is_array($validations[$questionIndex])) {
+								$validations[$questionIndex] = array();
+							}
+							if(!array_key_exists('answers', $validations[$questionIndex])) {
+								$validations[$questionIndex]['answers'] = array();
+							}
+							$validations[$questionIndex]['answers'][$answerIndex] = $answerValidation;
+						}
+					}
+				}
+
+				// Save and redirect
+				if(empty($validations))
+				{
+					// Save questions
+					foreach($questions as $questionIndex => &$question)
+					{
+						// Save question
+						$this->Multiplechoice->setQuestionForQuest(
+							$this->Auth->getUserId(),
+							$quest['id'],
+							$questionIndex + 1,
+							$question['question']
+						);
+
+						// Save answers
+						foreach($question['answers'] as $answerIndex => &$answer)
+						{
+							$this->Multiplechoice->setAnswerForQuestion(
+								$this->Auth->getUserId(),
+								$quest['id'],
+								$questionIndex + 1,
+								$answerIndex + 1,
+								$answer['answer'],
+								array_key_exists('tick', $answer)
+							);
+						}
+
+						// Delete deleted answers
+						$this->Multiplechoice->deleteAnswersOfQuestion(
+							$quest['id'],
+							$questionIndex + 1,
+							count($question['answers'])
+						);
+					}
+
+					// Delete deleted questions
+					$this->Multiplechoice->deleteQuestionsOfQuest(
+						$quest['id'],
+						count($questions)
+					);
+
+					// Redirect
+					$this->redirect($this->linker->link(array('quest', $seminary['url'], $questgroup['url'], $quest['url']), 1));
+				}
+			}
+
+
+			// Pass data to view
+			$this->set('questions', $questions);
+			$this->set('validations', $validations);
 		}
 		
 		
