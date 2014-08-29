@@ -48,21 +48,21 @@
 		<legend><?=_('Choice inputs')?></legend>
 		<ul id="lists">
 			<?php foreach($choiceLists as $listIndex => &$list) : ?>
-			<?php if(!empty($validations) && array_key_exists($listIndex, $validations) && !empty($validations[$listIndex]) && array_key_exists('answer', $validations[$listIndex]) && $validations[$listIndex]['answer'] !== true) : ?>
-			<ul>
-				<?php foreach($validations[$listIndex]['answer'] as $setting => $value) : ?>
-				<li>
-					<?php
-					switch($setting) {
-						case 'exist': printf(_('Please select correct choice'));
-						break;
-					}
-					?>
-				</li>
-				<?php endforeach ?>
-			</ul>
-			<?php endif ?>
 			<li id="list-<?=$listIndex?>">
+				<?php if(!empty($validations) && array_key_exists($listIndex, $validations) && !empty($validations[$listIndex]) && array_key_exists('answer', $validations[$listIndex]) && $validations[$listIndex]['answer'] !== true) : ?>
+				<ul>
+					<?php foreach($validations[$listIndex]['answer'] as $setting => $value) : ?>
+					<li>
+						<?php
+						switch($setting) {
+							case 'exist': printf(_('Please select correct choice'));
+							break;
+						}
+						?>
+					</li>
+					<?php endforeach ?>
+				</ul>
+				<?php endif ?>
 				<ul>
 					<?php foreach($list['choices'] as $choiceIndex => &$choice) : ?>
 					<li>
