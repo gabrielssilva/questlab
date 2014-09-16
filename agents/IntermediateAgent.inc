@@ -27,7 +27,8 @@
 		/**
 		 * Get the layout if it was explicitly defined.
 		 * 
-		 * @return	string	Layout of the IntermediateAgent
+		 * @param	string	$agentName	Name of Agent to get Layout for
+		 * @return	string			Layout of the IntermediateAgent
 		 */
 		public static function getLayout($agentName)
 		{

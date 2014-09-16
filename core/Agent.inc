@@ -107,7 +107,7 @@
 		 * @throws	ControllerNotFoundException
 		 * @param	string		$agentName	Name of the Agent to instantiate
 		 * @param	Request		$request	Current request
-		 * @param	Response	$respone	Current respone
+		 * @param	Response	$response	Current response
 		 * @param	Logger		$log		Log-system
 		 */
 		public static function factory($agentName, Request $request, Response $response, Logger $log=null)
@@ -165,7 +165,7 @@
 		 * @throws	ControllerNotValidException
 		 * @throws	ControllerNotFoundException
 		 * @param	Request		$request	Current request
-		 * @param	Response	$respone	Current response
+		 * @param	Response	$response	Current response
 		 * @param	Logger		$log		Log-system
 		 */
 		protected function __construct(Request $request, Response $response, Logger $log=null)
@@ -500,8 +500,9 @@
 		/**
 		 * Handle the exception of a SubAgent.
 		 * 
-		 * @param	string		$label		Name of the original Agent
-		 * @param	Excepiton	$exception	Occurred exception
+		 * @param	Agent		$subAgent	SubAgent to handle error of
+		 * @param	Request		$request	Current request
+		 * @param	Exception	$exception	Occurred exception
 		 * @return	array				InlineError-SubAgent
 		 */
 		private function errorInline($subAgent, $request, $exception)

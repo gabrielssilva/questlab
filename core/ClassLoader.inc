@@ -27,7 +27,7 @@
 		 * Load a class.
 		 * 
 		 * @throws	ClassNotFoundException
-		 * @param	string		$className	Name of the class to load
+		 * @param	string		$fullClassName	Name of the class to load
 		 */
 		public static function load($fullClassName)
 		{

@@ -14,10 +14,16 @@
 	 */
 	// Directory separator
 	if(!defined('DS')) {
+		/**
+		 * @internal
+		 */
 		define('DS', DIRECTORY_SEPARATOR);
 	}
 	// Root directory
 	if(!defined('ROOT')) {
+		/**
+		 * @internal
+		 */
 		define('ROOT', dirname(dirname(__FILE__)));
 	}
 	

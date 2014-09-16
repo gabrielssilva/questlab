@@ -160,7 +160,7 @@
 		/**
 		 * Get a GET-parameter.
 		 * 
-		 * @param	int	$index		Index of GET-parameter
+		 * @param	int	$key		Index of GET-parameter
 		 * @param	string	$defaultIndex	Index of default configuration value for this parameter
 		 * @return	string			Value of GET-parameter
 		 */
