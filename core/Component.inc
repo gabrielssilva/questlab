@@ -26,8 +26,8 @@
 		/**
 		 * Load the class of a Component.
 		 * 
-		 * @throws	ComponentNotFoundException
-		 * @throws	ComponentNotValidException
+		 * @throws	\nre\exceptions\ComponentNotFoundException
+		 * @throws	\nre\exceptions\ComponentNotValidException
 		 * @param	string	$componentName		Name of the Component to load
 		 */
 		public static function load($componentName)

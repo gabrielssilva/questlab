@@ -61,7 +61,7 @@
 		/**
 		 * Get a Quest and its data by its URL.
 		 * 
-		 * @throws	IdNotFoundException
+		 * @throws	\nre\exceptions\IdNotFoundException
 		 * @param	int	$seminaryId	ID of the corresponding Seminary
 		 * @param	int	$questgroupId	ID of the corresponding Questgroup
 		 * @param	string	$questURL	URL-title of a Quest
@@ -89,7 +89,7 @@
 		/**
 		 * Get a Quest and its data by its ID.
 		 * 
-		 * @throws	IdNotFoundException
+		 * @throws	\nre\exceptions\IdNotFoundException
 		 * @param	string	$questId	ID of a Quest
 		 * @return	array			Quest data
 		 */

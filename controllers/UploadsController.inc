@@ -50,8 +50,8 @@
 		/**
 		 * Prefilter.
 		 * 
-		 * @param	Request		$request	Current request
-		 * @param	Response	$response	Current response
+		 * @param	\nre\core\Request	$request	Current request
+		 * @param	\nre\core\Response	$response	Current response
 		 */
 		public function preFilter(\nre\core\Request $request, \nre\core\Response $response)
 		{
@@ -70,8 +70,8 @@
 		 * 
 		 * Display a Seminary upload.
 		 * 
-		 * @throws	AccessDeniedException
-		 * @throws	IdNotFoundException
+		 * @throws	\nre\exceptions\AccessDeniedException
+		 * @throws	\nre\exceptions\IdNotFoundException
 		 * @param	string	$seminaryUrl	URL-title of Seminary
 		 * @param	string	$uploadUrl	URL-name of the upload
 		 * @param	string	$action		Current action (optional)
@@ -134,7 +134,7 @@
 		 * 
 		 * Display the icon of a Character group.
 		 * 
-		 * @throws	IdNotFoundException
+		 * @throws	\nre\exceptions\IdNotFoundException
 		 * @param	string	$seminaryUrl		URL-Title of a Seminary
 		 * @param	string	$groupsgroupUrl		URL-Title of a Character groups-group
 		 * @param	string	$groupUrl		URL-Title of a Character group
@@ -171,7 +171,7 @@
 		/**
 		 * Determine the file for an upload.
 		 * 
-		 * @throws	IdNotFoundException
+		 * @throws	\nre\exceptions\IdNotFoundException
 		 * @param	array	$upload	Upload to get file for
 		 * @return	object		File for the upload (or null if upload is cached)
 		 */

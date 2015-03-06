@@ -70,8 +70,8 @@
 		/**
 		 * Prefilter that is executed before running the Controller.
 		 * 
-		 * @param	Request		$request	Current request
-		 * @param	Response	$response	Current response
+		 * @param	\nre\core\Request	$request	Current request
+		 * @param	\nre\core\Response	$response	Current response
 		 */
 		public function preFilter(\nre\core\Request $request, \nre\core\Response $response)
 		{
@@ -152,7 +152,7 @@
 		 * 
 		 * Show a quest and its task.
 		 * 
-		 * @throws	IdNotFoundException
+		 * @throws	\nre\exceptions\IdNotFoundException
 		 * @param	string	$seminaryUrl		URL-Title of Seminary
 		 * @param	string	$questgroupUrl		URL-Title of Questgroup
 		 * @param	string	$questUrl		URL-Title of Quest
@@ -348,7 +348,7 @@
 		/**
 		 * List Character submissions for a Quest.
 		 * 
-		 * @throws	IdNotFoundException
+		 * @throws	\nre\exceptions\IdNotFoundException
 		 * @param	string	$seminaryUrl	URL-Title of Seminary
 		 * @param	string	$questgroupUrl	URL-Title of Questgroup
 		 * @param	string	$questUrl	URL-Title of Quest
@@ -403,7 +403,7 @@
 		/**
 		 * Show and handle the submission of a Character for a Quest.
 		 * 
-		 * @throws	IdNotFoundException
+		 * @throws	\nre\exceptions\IdNotFoundException
 		 * @param	string	$seminaryUrl	URL-Title of Seminary
 		 * @param	string	$questgroupUrl	URL-Title of Questgroup
 		 * @param	string	$questUrl	URL-Title of Quest
@@ -614,7 +614,7 @@
 		 * 
 		 * Edit a Quest of a Seminary.
 		 * 
-		 * @throws	IdNotFoundException
+		 * @throws	\nre\exceptions\IdNotFoundException
 		 * @param	string	$seminaryUrl		URL-Title of Seminary
 		 * @param	string	$questgroupUrl		URL-Title of Questgroup
 		 * @param	string	$questUrl		URL-Title of Quest
@@ -788,7 +788,7 @@
 		 * 
 		 * Edit the task of a Quest of a Seminary.
 		 * 
-		 * @throws	IdNotFoundException
+		 * @throws	\nre\exceptions\IdNotFoundException
 		 * @param	string	$seminaryUrl		URL-Title of Seminary
 		 * @param	string	$questgroupUrl		URL-Title of Questgroup
 		 * @param	string	$questUrl		URL-Title of Quest
@@ -838,7 +838,7 @@
 		 * 
 		 * Edit the texts of a Quest of a Seminary.
 		 * 
-		 * @throws	IdNotFoundException
+		 * @throws	\nre\exceptions\IdNotFoundException
 		 * @param	string	$seminaryUrl		URL-Title of Seminary
 		 * @param	string	$questgroupUrl		URL-Title of Questgroup
 		 * @param	string	$questUrl		URL-Title of Quest
@@ -1059,7 +1059,7 @@
 		 * 
 		 * Delete a Quest of a Seminary.
 		 * 
-		 * @throws	IdNotFoundException
+		 * @throws	\nre\exceptions\IdNotFoundException
 		 * @param	string	$seminaryUrl		URL-Title of Seminary
 		 * @param	string	$questgroupUrl		URL-Title of Questgroup
 		 * @param	string	$questUrl		URL-Title of Quest
@@ -1358,9 +1358,9 @@
 		/**
 		 * Create a response for the Questtype rendering.
 		 * 
-		 * @param	string		$action	Action to run
-		 * @param	mixed		$param	Additional parameters to add to the response
-		 * @return	Response		Generated response
+		 * @param	string			$action	Action to run
+		 * @param	mixed			$param	Additional parameters to add to the response
+		 * @return	\nre\core\Response	Generated response
 		 */
 		private function createQuesttypeResponse($action, $param1)
 		{
@@ -1389,10 +1389,10 @@
 		/**
 		 * Load and construct the QuesttypeAgent for a Questtype.
 		 * 
-		 * @param	string		$questtypeClassname	Name of the class for the Questtype of a Quest
-		 * @param	Request		$request		Request
-		 * @param	Response	$response		Response
-		 * @return						QuesttypeAgent
+		 * @param	string				$questtypeClassname	Name of the class for the Questtype of a Quest
+		 * @param	\nre\core\Request		$request		Request
+		 * @param	\nre\core\Response		$response		Response
+		 * @return	\hhu\z\agents\QuesttypeAgent				Questtype Agent
 		 */
 		private function loadQuesttypeAgent($questtypeClassname, $request, $response)
 		{
@@ -1408,9 +1408,9 @@
 		/**
 		 * Run and render the Agent for a QuesttypeAgent and return ist output.
 		 * 
-		 * @param	Agent		$questtypeAgent		QuesttypeAgent to run and render
-		 * @param	Request		$request		Request
-		 * @param	Response	$response		Response
+		 * @param	\nre\core\Agent		$questtypeAgent	QuesttypeAgent to run and render
+		 * @param	\nre\core\Request	$request	Request
+		 * @param	\nre\core\Response	$response	Response
 		 * @return	string					Rendered output
 		 */
 		private function runQuesttypeAgent($questtypeAgent, $request, $response)

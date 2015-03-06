@@ -58,7 +58,7 @@
 		 * Show a Character groups Quest for a Character groups-group
 		 * of a Seminary.
 		 * 
-		 * @throws	IdNotFoundException
+		 * @throws	\nre\exceptions\IdNotFoundException
 		 * @param	string	$seminaryUrl		URL-Title of a Seminary
 		 * @param	string	$groupsgroupUrl		URL-Title of a Character groups-group
 		 * @param	string	$questUrl		URL-Title of a Character groups Quest
@@ -109,7 +109,7 @@
 		 * Manage a Character groups Quest for a Character groups-group
 		 * of a Seminary.
 		 * 
-		 * @throws	IdNotFoundException
+		 * @throws	\nre\exceptions\IdNotFoundException
 		 * @param	string	$seminaryUrl		URL-Title of a Seminary
 		 * @param	string	$groupsgroupUrl		URL-Title of a Character groups-group
 		 * @param	string	$questUrl		URL-Title of a Character groups Quest
@@ -402,7 +402,7 @@
 		 * Edit a Character groups Quest of a Character groups-group
 		 * of a Seminary.
 		 * 
-		 * @throws	IdNotFoundException
+		 * @throws	\nre\exceptions\IdNotFoundException
 		 * @param	string	$seminaryUrl		URL-Title of a Seminary
 		 * @param	string	$groupsgroupUrl		URL-Title of a Character groups-group
 		 * @param	string	$questUrl		URL-Title of a Character groups Quest
@@ -565,7 +565,7 @@
 		 * Delete a Character groups Quest of a Character groups-group
 		 * of a Seminary.
 		 * 
-		 * @throws	IdNotFoundException
+		 * @throws	\nre\exceptions\IdNotFoundException
 		 * @param	string	$seminaryUrl		URL-Title of a Seminary
 		 * @param	string	$groupsgroupUrl		URL-Title of a Character groups-group
 		 * @param	string	$questUrl		URL-Title of a Character groups Quest

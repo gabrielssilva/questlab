@@ -156,7 +156,7 @@
 		 * Handle an error that orrcurred during the
 		 * loading/constructing/running of the ToplevelAgent.
 		 * 
-		 * @param	Exception	$exception	Occurred exception
+		 * @param	\Exception	$exception	Occurred exception
 		 * @param	int		$httpStatusCode	HTTP-statuscode
 		 */
 		private function error(\nre\core\Exception $exception, $httpStatusCode)
@@ -223,7 +223,7 @@
 		 * Handle a error which cannot be handles by the system (and
 		 * HTTP 503).
 		 * 
-		 * @param	Exception	$exception	Occurred exception
+		 * @param	\Exception	$exception	Occurred exception
 		 */
 		private function errorService($exception)
 		{

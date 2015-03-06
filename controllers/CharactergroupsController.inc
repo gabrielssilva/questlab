@@ -74,7 +74,7 @@
 		 * 
 		 * Show Character groups-groups for a Seminary.
 		 * 
-		 * @throws	IdNotFoundException
+		 * @throws	\nre\exceptions\IdNotFoundException
 		 * @param	string	$seminaryUrl		URL-Title of a Seminary
 		 */
 		public function index($seminaryUrl)
@@ -102,7 +102,7 @@
 		 * Show Character groups for a Character groups-group of a
 		 * Seminary.
 		 * 
-		 * @throws	IdNotFoundException
+		 * @throws	\nre\exceptions\IdNotFoundException
 		 * @param	string	$seminaryUrl		URL-Title of a Seminary
 		 * @param	string	$groupsgroupUrl		URL-Title of a Character groups-group
 		 */
@@ -139,7 +139,7 @@
 		 * 
 		 * Create a new Character groups-group for a Seminary.
 		 * 
-		 * @throws	IdNotFoundException
+		 * @throws	\nre\exceptions\IdNotFoundException
 		 * @param	string	$seminaryUrl		URL-Title of a Seminary
 		 */
 		public function creategroupsgroup($seminaryUrl)
@@ -205,7 +205,7 @@
 		 * 
 		 * Edit a Character groups-group of a Seminary.
 		 * 
-		 * @throws	IdNotFoundException
+		 * @throws	\nre\exceptions\IdNotFoundException
 		 * @param	string	$seminaryUrl		URL-Title of a Seminary
 		 * @param	string	$groupsgroupUrl		URL-Title of a Character groups-group
 		 */
@@ -274,7 +274,7 @@
 		 * 
 		 * Delete a Character groups-group of a Seminary.
 		 * 
-		 * @throws	IdNotFoundException
+		 * @throws	\nre\exceptions\IdNotFoundException
 		 * @param	string	$seminaryUrl		URL-Title of a Seminary
 		 * @param	string	$groupsgroupUrl		URL-Title of a Character groups-group
 		 */
@@ -320,7 +320,7 @@
 		 * Show a Character group for a Character groups-group of a
 		 * Seminary.
 		 * 
-		 * @throws	IdNotFoundException
+		 * @throws	\nre\exceptions\IdNotFoundException
 		 * @param	string	$seminaryUrl		URL-Title of a Seminary
 		 * @param	string	$groupsgroupUrl		URL-Title of a Character groups-group
 		 * @param	string	$groupUrl		URL-Title of a Character group
@@ -370,7 +370,7 @@
 		 * Manage a Character group for a Character groups-group of a
 		 * Seminary.
 		 * 
-		 * @throws	IdNotFoundException
+		 * @throws	\nre\exceptions\IdNotFoundException
 		 * @param	string	$seminaryUrl		URL-Title of a Seminary
 		 * @param	string	$groupsgroupUrl		URL-Title of a Character groups-group
 		 * @param	string	$groupUrl		URL-Title of a Character group
@@ -457,7 +457,7 @@
 		 * Create a Character group for a Character groups-group of a
 		 * Seminary.
 		 * 
-		 * @throws	IdNotFoundException
+		 * @throws	\nre\exceptions\IdNotFoundException
 		 * @param	string	$seminaryUrl		URL-Title of a Seminary
 		 * @param	string	$groupsgroupUrl		URL-Title of a Character groups-group
 		 */
@@ -578,7 +578,7 @@
 		 * Edit a Character group for a Character groups-group of a
 		 * Seminary.
 		 * 
-		 * @throws	IdNotFoundException
+		 * @throws	\nre\exceptions\IdNotFoundException
 		 * @param	string	$seminaryUrl		URL-Title of a Seminary
 		 * @param	string	$groupsgroupUrl		URL-Title of a Character groups-group
 		 * @param	string	$groupUrl		URL-Title of a Character group
@@ -709,7 +709,7 @@
 		 * Delete a Character group for a Character groups-group of a
 		 * Seminary.
 		 * 
-		 * @throws	IdNotFoundException
+		 * @throws	\nre\exceptions\IdNotFoundException
 		 * @param	string	$seminaryUrl		URL-Title of a Seminary
 		 * @param	string	$groupsgroupUrl		URL-Title of a Character groups-group
 		 * @param	string	$groupUrl		URL-Title of a Character group

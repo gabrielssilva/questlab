@@ -111,7 +111,7 @@
 		/**
 		 * Get a Questgroup by its ID.
 		 * 
-		 * @throws	IdNotFoundException
+		 * @throws	\nre\exceptions\IdNotFoundException
 		 * @param	int	$questgroupId	ID of a Questgroup
 		 * @return	array			Questgroup data
 		 */
@@ -136,7 +136,7 @@
 		/**
 		 * Get a Questgroup by its URL.
 		 * 
-		 * @throws	IdNotFoundException
+		 * @throws	\nre\exceptions\IdNotFoundException
 		 * @param	int	$seminaryId	ID of the corresponding seminary
 		 * @param	string	$questgroupURL	URL-title of a Questgroup
 		 * @return	array			Questgroup data
@@ -586,7 +586,7 @@
 		/**
 		 * Edit a Questgroup.
 		 * 
-		 * @throws	DatamodelException
+		 * @throws	\nre\exceptions\DatamodelException
 		 * @param	int	$questgroupId	ID of Questgroup to edit
 		 * @param	string	$title		New title of Questgroup
 		 */

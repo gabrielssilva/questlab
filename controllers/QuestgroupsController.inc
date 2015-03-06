@@ -68,7 +68,7 @@
 		 * 
 		 * Display a Questgroup and its data.
 		 * 
-		 * @throws	IdNotFoundException
+		 * @throws	\nre\exceptions\IdNotFoundException
 		 * @param	string	$seminaryUrl	URL-Title of a Seminary
 		 * @param	string	$questgroupUrl	URL-Title of a Questgroup
 		 */
@@ -366,7 +366,7 @@
 		 * 
 		 * Edit a Questgroup.
 		 * 
-		 * @throws	IdNotFoundException
+		 * @throws	\nre\exceptions\IdNotFoundException
 		 * @param	string	$seminaryUrl	URL-title of a Seminary
 		 * @param	string	$questgroupUrl	URL-title of Questgroup to edit
 		 */
@@ -489,7 +489,7 @@
 		 * 
 		 * Edit the texts of a Questgroup.
 		 * 
-		 * @throws	IdNotFoundException
+		 * @throws	\nre\exceptions\IdNotFoundException
 		 * @param	string	$seminaryUrl	URL-title of a Seminary
 		 * @param	string	$questgroupUrl	URL-title of Questgroup to edit
 		 */
@@ -567,7 +567,7 @@
 		 * 
 		 * Move a Questgroup up (decrement position).
 		 * 
-		 * @throws	IdNotFoundException
+		 * @throws	\nre\exceptions\IdNotFoundException
 		 * @param	string	$seminaryUrl	URL-title of Seminary
 		 * @param	string	$questgroupUrl	URL-title of Questgroup
 		 */
@@ -604,7 +604,7 @@
 		 * 
 		 * Move a Questgroup down (increment position).
 		 * 
-		 * @throws	IdNotFoundException
+		 * @throws	\nre\exceptions\IdNotFoundException
 		 * @param	string	$seminaryUrl	URL-title of Seminary
 		 * @param	string	$questgroupUrl	URL-title of Questgroup
 		 */
@@ -641,7 +641,7 @@
 		 * 
 		 * Delete a Questgroup.
 		 * 
-		 * @throws	IdNotFoundException
+		 * @throws	\nre\exceptions\IdNotFoundException
 		 * @param	string	$seminaryUrl	URL-Title of a Seminary
 		 * @param	string	$questgroupUrl	URL-Title of a Questgroup
 		 */

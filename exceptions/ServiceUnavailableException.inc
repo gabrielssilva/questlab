@@ -45,7 +45,7 @@
 		/**
 		 * Construct a new exception.
 		 * 
-		 * @param	Exception	$exception	Exception that has occurred
+		 * @param	\Exception	$exception	Exception that has occurred
 		 */
 		function __construct($exception)
 		{
@@ -65,7 +65,7 @@
 		/**
 		 * Get the exception that hat occurred
 		 * 
-		 * @return	Exception	Exception that has occurred
+		 * @return	\Exception	Exception that has occurred
 		 */
 		public function getException()
 		{

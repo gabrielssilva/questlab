@@ -241,7 +241,7 @@
 		/**
 		 * Get the character of a user for a Seminary.
 		 * 
-		 * @throws	IdNotFoundException
+		 * @throws	\nre\exceptions\IdNotFoundException
 		 * @param	int	$userId		ID of the user
 		 * @param	int	$seminaryId	ID of the Seminary
 		 * @return	array			Character data
@@ -273,7 +273,7 @@
 		/**
 		 * Get a Character by its Url.
 		 * 
-		 * @throws	IdNotFoundException
+		 * @throws	\nre\exceptions\IdNotFoundException
 		 * @param	int	$seminaryId	ID of the Seminary
 		 * @param	string	$characterUrl	URL-name of the Character
 		 * @return	array			Character data
@@ -305,7 +305,7 @@
 		/**
 		 * Get a Character by its Id.
 		 * 
-		 * @throws	IdNotFoundException
+		 * @throws	\nre\exceptions\IdNotFoundException
 		 * @param	string	$characterId	ID of the Character
 		 * @return	array			Character data
 		 */

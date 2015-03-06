@@ -26,7 +26,7 @@
 		/**
 		 * Load a class.
 		 * 
-		 * @throws	ClassNotFoundException
+		 * @throws	\nre\exceptions\ClassNotFoundException
 		 * @param	string		$className	Name of the class to load
 		 */
 		public static function load($fullClassName)
@@ -55,7 +55,7 @@
 		/**
 		 * Check inheritance of a class.
 		 * 
-		 * @throws	ClassNotValidException
+		 * @throws	\nre\exceptions\ClassNotValidException
 		 * @param	string	$className		Name of the class to check
 		 * @param	string	$parentClassName	Name of the parent class
 		 */

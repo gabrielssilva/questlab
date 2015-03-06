@@ -26,7 +26,7 @@
 		/**
 		 * Construct a MySQL-driver.
 		 * 
-		 * @throws	DatamodelException
+		 * @throws	\nre\exceptions\DatamodelException
 		 * @param	array	$config	Connection and login settings
 		 */
 		function __construct($config)
@@ -40,7 +40,7 @@
 		/**
 		 * Execute a SQL-query.
 		 * 
-		 * @throws	DatamodelException
+		 * @throws	\nre\exceptions\DatamodelException
 		 * @param	string	$query	Query to run
 		 * @param	mixed	…	Params
 		 * @return	array		Result
@@ -137,7 +137,7 @@
 		/**
 		 * Establish a connect to a MqSQL-database.
 		 * 
-		 * @throws	DatamodelException
+		 * @throws	\nre\exceptions\DatamodelException
 		 * @param	array	$config	Connection and login settings
 		 */
 		protected function connect($config)

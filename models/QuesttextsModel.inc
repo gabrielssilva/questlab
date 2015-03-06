@@ -131,7 +131,7 @@
 		/**
 		 * Get corresponding Questtexts for a Questgroup.
 		 * 
-		 * @throws	IdNotFoundException
+		 * @throws	\nre\exceptions\IdNotFoundException
 		 * @param	int	$questgroupId	ID of Questgroup to get the Questtexst for
 		 * @param	array			List of Questtexts
 		 */

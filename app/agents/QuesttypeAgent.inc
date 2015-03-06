@@ -22,13 +22,13 @@
 		/**
 		 * Current request
 		 * 
-		 * @var Request
+		 * @var \nre\core\Request
 		 */
 		private $request;
 		/**
 		 * Current response
 		 * 
-		 * @var Response
+		 * @var \nre\core\Response
 		 */
 		private $response;
 		
@@ -39,8 +39,8 @@
 		 * Load a QuesttypeAgent.
 		 * 
 		 * @static
-		 * @throws	QuesttypeAgentNotFoundException
-		 * @throws	QuesttypeAgentNotValidException
+		 * @throws	\hhu\z\exceptions\QuesttypeAgentNotFoundException
+		 * @throws	\hhu\z\exceptions\QuesttypeAgentNotValidException
 		 * @param	string	$questtypeName	Name of the QuesttypeAgent to load
 		 */
 		public static function load($questtypeName)
@@ -68,14 +68,14 @@
 		 * Instantiate a QuesttypeAgent (Factory Pattern).
 		 * 
 		 * @static
-		 * @throws	DatamodelException
-		 * @throws	DriverNotValidException
-		 * @throws	DriverNotFoundException
-		 * @throws	ViewNotFoundException
-		 * @throws	QuesttypeModelNotValidException
-		 * @throws	QuesttypeModelNotFoundException
-		 * @throws	QuesttypeControllerNotValidException
-		 * @throws	QuesttypeControllerNotFoundException
+		 * @throws	\nre\exceptions\DatamodelException
+		 * @throws	\nre\exceptions\DriverNotValidException
+		 * @throws	\nre\exceptions\DriverNotFoundException
+		 * @throws	\nre\exceptions\ViewNotFoundException
+		 * @throws	\hhu\z\exceptions\QuesttypeModelNotValidException
+		 * @throws	\hhu\z\exceptions\QuesttypeModelNotFoundException
+		 * @throws	\hhu\z\exceptions\QuesttypeControllerNotValidException
+		 * @throws	\hhu\z\exceptions\QuesttypeControllerNotFoundException
 		 * @param	string		$questtypeName	Name of the QuesttypeAgent to instantiate
 		 * @param	Request		$request	Current request
 		 * @param	Response	$response	Current respone
@@ -129,7 +129,7 @@
 		 * Load the class of a QuesttypeAgent.
 		 * 
 		 * @static
-		 * @throws	ClassNotFoundException
+		 * @throws	\nre\exceptions\ClassNotFoundException
 		 * @param	string	$questtypeName	Name of the QuesttypeAgent to load
 		 * @param	string	$fullClassName	Name of the class to load
 		 */
@@ -159,7 +159,7 @@
 		 * Check inheritance of the QuesttypeAgent-class.
 		 * 
 		 * @static
-		 * @throws	ClassNotValidException
+		 * @throws	\nre\exceptions\ClassNotValidException
 		 * @param	string	$className		Name of the class to check
 		 * @param	string	$parentClassName	Name of the parent class
 		 */
@@ -179,19 +179,19 @@
 		/**
 		 * Construct a new QuesttypeAgent.
 		 * 
-		 * @throws	DatamodelException
-		 * @throws	DriverNotValidException
-		 * @throws	DriverNotFoundException
-		 * @throws	ViewNotFoundException
-		 * @throws	ModelNotValidException
-		 * @throws	ModelNotFoundException
-		 * @throws	QuesttypeModelNotValidException
-		 * @throws	QuesttypeModelNotFoundException
-		 * @throws	QuesttypeControllerNotValidException
-		 * @throws	QuesttypeControllerNotFoundException
-		 * @param	Request		$request	Current request
-		 * @param	Response	$response	Current response
-		 * @param	Logger		$log		Log-system
+		 * @throws	\nre\exceptions\DatamodelException
+		 * @throws	\nre\exceptions\DriverNotValidException
+		 * @throws	\nre\exceptions\DriverNotFoundException
+		 * @throws	\nre\exceptions\ViewNotFoundException
+		 * @throws	\nre\exceptions\ModelNotValidException
+		 * @throws	\nre\exceptions\ModelNotFoundException
+		 * @throws	\hhu\z\exceptions\QuesttypeModelNotValidException
+		 * @throws	\hhu\z\exceptions\QuesttypeModelNotFoundException
+		 * @throws	\hhu\z\exceptions\QuesttypeControllerNotValidException
+		 * @throws	\hhu\z\exceptions\QuesttypeControllerNotFoundException
+		 * @param	\nre\core\Request	$request	Current request
+		 * @param	\nre\core\Response	$response	Current response
+		 * @param	\nre\core\Logger	$log		Log-system
 		 */
 		protected function __construct(\nre\core\Request $request, \nre\core\Response $response, \nre\core\Logger $log=null)
 		{
@@ -242,16 +242,16 @@
 		/**
 		 * Load the Controller of this Agent.
 		 * 
-		 * @throws	DatamodelException
-		 * @throws	DriverNotValidException
-		 * @throws	DriverNotFoundException
-		 * @throws	ViewNotFoundException
-		 * @throws	ModelNotValidException
-		 * @throws	ModelNotFoundException
-		 * @throws	QuesttypeModelNotValidException
-		 * @throws	QuesttypeModelNotFoundException
-		 * @throws	QuesttypeControllerNotValidException
-		 * @throws	QuesttypeControllerNotFoundException
+		 * @throws	\nre\exceptions\DatamodelException
+		 * @throws	\nre\exceptions\DriverNotValidException
+		 * @throws	\nre\exceptions\DriverNotFoundException
+		 * @throws	\nre\exceptions\ViewNotFoundException
+		 * @throws	\nre\exceptions\ModelNotValidException
+		 * @throws	\nre\exceptions\ModelNotFoundException
+		 * @throws	\hhu\z\exceptions\QuesttypeModelNotValidException
+		 * @throws	\hhu\z\exceptions\QuesttypeModelNotFoundException
+		 * @throws	\hhu\z\exceptions\QuesttypeControllerNotValidException
+		 * @throws	\hhu\z\exceptions\QuesttypeControllerNotFoundException
 		 */
 		protected function loadController()
 		{

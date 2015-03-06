@@ -56,7 +56,7 @@
 		/**
 		 * Get a Character groups-group by its URL.
 		 * 
-		 * @throws	IdNotFoundException
+		 * @throws	\nre\exceptions\IdNotFoundException
 		 * @param	int	$seminaryId	ID of the corresponding Seminary
 		 * @param	string	$groupsgroupUrl	URL-name of the Character groups-group
 		 * @return	array			Character groups-group data
@@ -82,7 +82,7 @@
 		/**
 		 * Get a Character groups-group by its ID.
 		 * 
-		 * @throws	IdNotFoundException
+		 * @throws	\nre\exceptions\IdNotFoundException
 		 * @param	string	$groupsgroupId	ID of the Character groups-group
 		 * @return	array			Character groups-group data
 		 */
@@ -252,7 +252,7 @@
 		/**
 		 * Get a Character group by its URL.
 		 * 
-		 * @throws	IdNotFoundException
+		 * @throws	\nre\exceptions\IdNotFoundException
 		 * @param	int	$groupsgroupId	ID of the Character groups-group
 		 * @param	string	$groupUrl	URL-name of the Character group
 		 * @return	array			Character group data
@@ -281,7 +281,7 @@
 		/**
 		 * Get a Character group by its ID.
 		 * 
-		 * @throws	IdNotFoundException
+		 * @throws	\nre\exceptions\IdNotFoundException
 		 * @param	int	$groupsgroupId	ID of the Character group
 		 * @return	array			Character group data
 		 */

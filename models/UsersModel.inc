@@ -59,7 +59,7 @@
 		/**
 		 * Get registered users.
 		 * 
-		 * @throws	ParamsNotValidException
+		 * @throws	\nre\exceptions\ParamsNotValidException
 		 * @param	string	$sort		Field to sort by
 		 * @param	string	$username	Only get users with the given username (optional)
 		 * @param	int	$limit		Limit amount of Characters (optional)
@@ -127,7 +127,7 @@
 		/**
 		 * Get a user and its data by its ID.
 		 * 
-		 * @throws	IdNotFoundException
+		 * @throws	\nre\exceptions\IdNotFoundException
 		 * @param	int	$userId	ID of an user
 		 * @return	array		Userdata
 		 */
@@ -153,7 +153,7 @@
 		/**
 		 * Get a user and its data by its URL-username.
 		 * 
-		 * @throws	IdNotFoundException
+		 * @throws	\nre\exceptions\IdNotFoundException
 		 * @param	string	$userUrl	URL-Username of an user
 		 * @return	array			Userdata
 		 */
@@ -179,7 +179,7 @@
 		/**
 		 * Log a user in if its credentials are valid.
 		 * 
-		 * @throws	DatamodelException
+		 * @throws	\nre\exceptions\DatamodelException
 		 * @param	string	$username	The name of the user to log in
 		 * @param	string	$password	Plaintext password of the user to log in
 		 */
@@ -302,7 +302,7 @@
 		/**
 		 * Edit a user.
 		 * 
-		 * @throws	DatamodelException
+		 * @throws	\nre\exceptions\DatamodelException
 		 * @param	int	$userId		ID of the user to delete
 		 * @param	string	$username	New name of user
 		 * @param	string	$prename	Prename of the user to create

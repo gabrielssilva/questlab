@@ -37,7 +37,7 @@
 		/**
 		 * Get XP-level by its ID.
 		 * 
-		 * @throws	IdNotFoundException
+		 * @throws	\nre\exceptions\IdNotFoundException
 		 * @param	int	$xplevelId	ID of XP-level
 		 * @return	array			XP-level data
 		 */
@@ -62,7 +62,7 @@
 		/**
 		 * Get all XP-levels for a Seminary.
 		 * 
-		 * @throws	IdNotFoundException
+		 * @throws	\nre\exceptions\IdNotFoundException
 		 * @param	int	$seminaryId	ID of Seminary
 		 * @return	array			List of XP-level
 		 */

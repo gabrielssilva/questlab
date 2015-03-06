@@ -51,14 +51,14 @@
 		/**
 		 * Construct a new Seminary Controller.
 		 * 
-		 * @throws	DriverNotFoundException
-		 * @throws	DriverNotValidException
-		 * @throws	ModelNotValidException
-		 * @throws	ModelNotFoundException
-		 * @throws	ViewNotFoundException
-		 * @param	string	$layoutName	Name of the current Layout
-		 * @param	string	$action		Current Action
-		 * @param	Agent	$agent		Corresponding Agent
+		 * @throws	\nre\exceptions\DriverNotFoundException
+		 * @throws	\nre\exceptions\DriverNotValidException
+		 * @throws	\nre\exceptions\ModelNotValidException
+		 * @throws	\nre\exceptions\ModelNotFoundException
+		 * @throws	\nre\exceptions\ViewNotFoundException
+		 * @param	string		$layoutName	Name of the current Layout
+		 * @param	string		$action		Current Action
+		 * @param	\nre\core\Agent	$agent		Corresponding Agent
 		 */
 		public function __construct($layoutName, $action, $agent)
 		{
@@ -70,8 +70,8 @@
 		/**
 		 * Prefilter that is executed before running the Controller.
 		 * 
-		 * @param	Request		$request	Current request
-		 * @param	Response	$response	Current response
+		 * @param	\nre\core\Request	$request	Current request
+		 * @param	\nre\core\Response	$response	Current response
 		 */
 		public function preFilter(\nre\core\Request $request, \nre\core\Response $response)
 		{
@@ -112,8 +112,8 @@
 		/**
 		 * Postfilter that is executed after running the Controller.
 		 * 
-		 * @param	Request		$request	Current request
-		 * @param	Response	$response	Current response
+		 * @param	\nre\core\Request	$request	Current request
+		 * @param	\nre\core\Response	$response	Current response
 		 */
 		public function postFilter(\nre\core\Request $request, \nre\core\Response $response)
 		{
@@ -126,8 +126,8 @@
 		 * Check user permissions.
 		 * 
 		 * @throws AccessDeniedException
-		 * @param	Request		$request	Current request
-		 * @param	Response	$response	Current response
+		 * @param	\nre\core\Request	$request	Current request
+		 * @param	\nre\core\Response	$response	Current response
 		 */
 		private function checkPermission(\nre\core\Request $request, \nre\core\Response $response)
 		{
@@ -158,9 +158,9 @@
 		/**
 		 * Check for newly achieved Achievements.
 		 * 
-		 * @param	Request		$request		Current request
-		 * @param	Response	$response		Current response
-		 * @param	array		$checkConditions	Conditions to check
+		 * @param	\nre\core\Request	$request		Current request
+		 * @param	\nre\core\Response	$response		Current response
+		 * @param	array			$checkConditions	Conditions to check
 		 */
 		protected function checkAchievements(\nre\core\Request $request, \nre\core\Response $response, $checkConditions=null)
 		{

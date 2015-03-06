@@ -88,7 +88,7 @@
 		/**
 		 * Get an upload by its ID.
 		 * 
-		 * @throws	IdNotFoundException
+		 * @throws	\nre\exceptions\IdNotFoundException
 		 * @param	int	$uploadId	ID of the uploaded file
 		 * @return	array			Upload data
 		 */
@@ -113,7 +113,7 @@
 		/**
 		 * Get an upload by its URL.
 		 * 
-		 * @throws	IdNotFoundException
+		 * @throws	\nre\exceptions\IdNotFoundException
 		 * @param	int	$seminaryId	ID of Seminary
 		 * @param	int	$uploadId	ID of the uploaded file
 		 * @return	array			Upload data

@@ -96,8 +96,8 @@
 		 * 
 		 * Show a user and its details.
 		 * 
-		 * @throws	IdNotFoundException
-		 * @throws	AccessDeniedException
+		 * @throws	\nre\exceptions\IdNotFoundException
+		 * @throws	\nre\exceptions\AccessDeniedException
 		 * @param	string	$userUrl	URL-Username of an user
 		 */
 		public function user($userUrl)
@@ -446,7 +446,7 @@
 		 * 
 		 * Edit a user.
 		 * 
-		 * @throws	IdNotFoundException
+		 * @throws	\nre\exceptions\IdNotFoundException
 		 * @param	string	$userUrl	URL-Username of an user
 		 */
 		public function edit($userUrl)
@@ -542,7 +542,7 @@
 		 * 
 		 * Delete a user.
 		 * 
-		 * @throws	IdNotFoundException
+		 * @throws	\nre\exceptions\IdNotFoundException
 		 * @param	string	$userUrl	URL-Username of an user
 		 */
 		public function delete($userUrl)

@@ -103,7 +103,7 @@
 		 * 
 		 * Show a seminary and its details.
 		 * 
-		 * @throws	IdNotFoundException
+		 * @throws	\nre\exceptions\IdNotFoundException
 		 * @param	string	$seminaryUrl	URL-Title of a seminary
 		 */
 		public function seminary($seminaryUrl)
@@ -281,7 +281,7 @@
 		 * 
 		 * Edit a seminary.
 		 * 
-		 * @throws	IdNotFoundException
+		 * @throws	\nre\exceptions\IdNotFoundException
 		 * @param	string	$seminaryUrl	URL-Title of a seminary
 		 */
 		public function edit($seminaryUrl)
@@ -397,7 +397,7 @@
 		 * 
 		 * Delete a seminary.
 		 * 
-		 * @throws	IdNotFoundException
+		 * @throws	\nre\exceptions\IdNotFoundException
 		 * @param	string	$seminaryUrl	URL-Title of a seminary
 		 */
 		public function delete($seminaryUrl)
@@ -436,7 +436,7 @@
 		 * 
 		 * (Re-) Calculate the amount of achievable XPs for a Seminary.
 		 * 
-		 * @throws	IdNotFoundException
+		 * @throws	\nre\exceptions\IdNotFoundException
 		 * @param	string	$seminaryUrl	URL-Title of a Seminary
 		 */
 		public function calculatexps($seminaryUrl)

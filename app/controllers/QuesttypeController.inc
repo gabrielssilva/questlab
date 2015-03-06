@@ -75,7 +75,7 @@
 		 * @param	array		$questgroup	Current Questgroup data
 		 * @param	array		$quest		Current Quest data
 		 * @param	array		$character	Current Character data
-		 * @param	Exception	$exception	Character submission exception
+		 * @param	\Exception	$exception	Character submission exception
 		 */
 		public abstract function quest($seminary, $questgroup, $quest, $character, $exception);
 		
@@ -111,8 +111,8 @@
 		 * Load a QuesttypeController.
 		 * 
 		 * @static
-		 * @throws	QuesttypeControllerNotFoundException
-		 * @throws	QuesttypeControllerNotValidException
+		 * @throws	\hhu\z\exceptions\QuesttypeControllerNotFoundException
+		 * @throws	\hhu\z\exceptions\QuesttypeControllerNotValidException
 		 * @param	string	$controllerName		Name of the QuesttypeController to load
 		 */
 		public static function load($controllerName)
@@ -140,18 +140,18 @@
 		 * Instantiate a QuesttypeController (Factory Pattern).
 		 * 
 		 * @static
-		 * @throws	DatamodelException
-		 * @throws	DriverNotFoundException
-		 * @throws	DriverNotValidException
-		 * @throws	ModelNotValidException
-		 * @throws	ModelNotFoundException
-		 * @throws	QuesttypeModelNotValidException
-		 * @throws	QuesttypeModelNotFoundException
-		 * @throws	ViewNotFoundException
-		 * @param	string	$controllerName	Name of the QuesttypeController to instantiate
-		 * @param	string	$layoutName	Name of the current Layout
-		 * @param	string	$action		Current Action
-		 * @param	Agent	$agent		Corresponding Agent
+		 * @throws	\nre\exceptions\DatamodelException
+		 * @throws	\nre\exceptions\DriverNotFoundException
+		 * @throws	\nre\exceptions\DriverNotValidException
+		 * @throws	\nre\exceptions\ModelNotValidException
+		 * @throws	\nre\exceptions\ModelNotFoundException
+		 * @throws	\nre\exceptions\ViewNotFoundException
+		 * @throws	\hhu\z\exceptions\QuesttypeModelNotValidException
+		 * @throws	\hhu\z\exceptions\QuesttypeModelNotFoundException
+		 * @param	string		$controllerName	Name of the QuesttypeController to instantiate
+		 * @param	string		$layoutName	Name of the current Layout
+		 * @param	string		$action		Current Action
+		 * @param	\nre\core\Agent	$agent		Corresponding Agent
 		 */
 		public static function factory($controllerName, $layoutName, $action, $agent)
 		{
@@ -183,7 +183,7 @@
 		 * Load the class of a QuesttypeController
 		 * 
 		 * @static
-		 * @throws	ClassNotFoundException
+		 * @throws	\nre\exceptions\ClassNotFoundException
 		 * @param	string	$questtypeName	Name of the QuesttypeController to load
 		 * @param	string	$fullClassName	Name of the class to load
 		 */
@@ -213,7 +213,7 @@
 		 * Check inheritance of the QuesttypeController-class.
 		 * 
 		 * @static
-		 * @throws	ClassNotValidException
+		 * @throws	\nre\exceptions\ClassNotValidException
 		 * @param	string	$className		Name of the class to check
 		 * @param	string	$parentClassName	Name of the parent class
 		 */
@@ -233,13 +233,13 @@
 		/**
 		 * Construct a new application Controller.
 		 * 
-		 * @throws	DriverNotFoundException
-		 * @throws	DriverNotValidException
-		 * @throws	ModelNotValidException
-		 * @throws	ModelNotFoundException
-		 * @throws	QuesttypeModelNotValidException
-		 * @throws	QuesttypeModelNotFoundException
-		 * @throws	ViewNotFoundException
+		 * @throws	\nre\exceptions\DriverNotFoundException
+		 * @throws	\nre\exceptions\DriverNotValidException
+		 * @throws	\nre\exceptions\ModelNotValidException
+		 * @throws	\nre\exceptions\ModelNotFoundException
+		 * @throws	\nre\exceptions\ViewNotFoundException
+		 * @throws	\hhu\z\exceptions\QuesttypeModelNotValidException
+		 * @throws	\hhu\z\exceptions\QuesttypeModelNotFoundException
 		 * @param	string	$layoutName	Name of the current Layout
 		 * @param	string	$action		Current Action
 		 * @param	Agent	$agent		Corresponding Agent
@@ -255,13 +255,13 @@
 		/**
 		 * Load the Models of this Controller.
 		 * 
-		 * @throws	DatamodelException
-		 * @throws	DriverNotFoundException
-		 * @throws	DriverNotValidException
-		 * @throws	ModelNotValidException
-		 * @throws	ModelNotFoundException
-		 * @throws	QuesttypeModelNotValidException
-		 * @throws	QuesttypeModelNotFoundException
+		 * @throws	\nre\exceptions\DatamodelException
+		 * @throws	\nre\exceptions\DriverNotFoundException
+		 * @throws	\nre\exceptions\DriverNotValidException
+		 * @throws	\nre\exceptions\ModelNotValidException
+		 * @throws	\nre\exceptions\ModelNotFoundException
+		 * @throws	\hhu\z\exceptions\QuesttypeModelNotValidException
+		 * @throws	\hhu\z\exceptions\QuesttypeModelNotFoundException
 		 */
 		protected function loadModels()
 		{
@@ -276,8 +276,8 @@
 		/**
 		 * Load the Model of the Questtype.
 		 * 
-		 * @throws	QuesttypeModelNotValidException
-		 * @throws	QuesttypeModelNotFoundException
+		 * @throws	\hhu\z\exceptions\QuesttypeModelNotValidException
+		 * @throws	\hhu\z\exceptions\QuesttypeModelNotFoundException
 		 */
 		private function loadModel()
 		{
@@ -296,7 +296,7 @@
 		/**
 		 * Load the View of this QuesttypeController.
 		 * 
-		 * @throws	ViewNotFoundException
+		 * @throws	\nre\exceptions\ViewNotFoundException
 		 * @param	string	$layoutName	Name of the current Layout
 		 * @param	string	$action		Current Action
 		 */

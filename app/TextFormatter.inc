@@ -22,14 +22,14 @@
 		/**
 		 * Linker to create links.
 		 * 
-		 * @var Linker
+		 * @var \nre\core\Linker
 		 */
 		private $linker;
 		/**
 		 * Media-Model to retrieve media data
 		 * 
 		 * @static
-		 * @var model
+		 * @var \nre\core\Model
 		 */
 		private static $Media = null;
 		
@@ -39,7 +39,7 @@
 		/**
 		 * Create a new text formatter.
 		 * 
-		 * @param	Linker $linker	Linker to create links with
+		 * @param	\nre\core\Linker $linker	Linker to create links with
 		 */
 		public function __construct(\nre\core\Linker $linker)
 		{

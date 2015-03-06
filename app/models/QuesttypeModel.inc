@@ -27,8 +27,8 @@
 		 * Load a Model.
 		 * 
 		 * @static
-		 * @throws	QuesttypeModelNotFoundException
-		 * @throws	QuesttypeModelNotValidException
+		 * @throws	\hhu\z\exceptions\QuesttypeModelNotFoundException
+		 * @throws	\hhu\z\exceptions\QuesttypeModelNotValidException
 		 * @param	string	$modelName		Name of the QuesttypeModel to load
 		 */
 		public static function load($modelName)
@@ -88,7 +88,7 @@
 		 * Load the class of a QuesttypeModel.
 		 * 
 		 * @static
-		 * @throws	ClassNotFoundException
+		 * @throws	\nre\exceptions\ClassNotFoundException
 		 * @param	string	$questtypeName	Name of the QuesttypeModel to load
 		 * @param	string	$fullClassName	Name of the class to load
 		 */
@@ -118,7 +118,7 @@
 		 * Check inheritance of the QuesttypeModel-class.
 		 * 
 		 * @static
-		 * @throws	ClassNotValidException
+		 * @throws	\nre\exceptions\ClassNotValidException
 		 * @param	string	$className		Name of the class to check
 		 * @param	string	$parentClassName	Name of the parent class
 		 */
@@ -138,11 +138,11 @@
 		/**
 		 * Construct a new QuesttypeModel.
 		 * 
-		 * @throws	DatamodelException
-		 * @throws	DriverNotFoundException
-		 * @throws	DriverNotValidException
-		 * @throws	QuesttypeModelNotValidException
-		 * @throws	QuesttypeModelNotFoundException
+		 * @throws	\nre\exceptions\DatamodelException
+		 * @throws	\nre\exceptions\DriverNotFoundException
+		 * @throws	\nre\exceptions\DriverNotValidException
+		 * @throws	\hhu\z\exceptions\QuesttypeModelNotValidException
+		 * @throws	\hhu\z\exceptions\QuesttypeModelNotFoundException
 		 */
 		public function __construct()
 		{

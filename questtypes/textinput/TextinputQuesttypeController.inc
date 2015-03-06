@@ -110,7 +110,7 @@
 		 * @param	array		$questgroup	Current Questgroup data
 		 * @param	array		$quest		Current Quest data
 		 * @param	array		$character	Current Character data
-		 * @param	Exception	$exception	Character submission exception
+		 * @param	\Exception	$exception	Character submission exception
 		 */
 		public function quest($seminary, $questgroup, $quest, $character, $exception)
 		{

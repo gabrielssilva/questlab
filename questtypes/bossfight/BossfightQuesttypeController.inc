@@ -93,7 +93,7 @@
 		 * @param	array		$questgroup	Current Questgroup data
 		 * @param	array		$quest		Current Quest data
 		 * @param	array		$character	Current Character data
-		 * @param	Exception	$exception	Character submission exception
+		 * @param	\Exception	$exception	Character submission exception
 		 */
 		public function quest($seminary, $questgroup, $quest, $character, $exception)
 		{
@@ -227,6 +227,23 @@
 		 */
 		public function edittask($seminary, $questgroup, $quest)
 		{
+			$fight = $this->Bossfight->getBossFight($quest['id']);
+			/*
+			if(!is_null($fight['boss_seminarymedia_id'])) {
+				$fight['bossmedia'] = $this->Media->getSeminaryMediaById($fight['boss_seminarymedia_id']);
+			}
+			*/
+			
+			// Get stages
+			$stage = $this->Bossfight->getFirstStage($quest['id']);
+			$stage['childs'] = $this->getChildStages($stage['id']);
+
+
+			// Pass data to view
+			$this->set('seminary', $seminary);
+			$this->set('fight', $fight);
+			$this->set('stages', $stage);
+			//print_r($stage);
 		}
 		
 		
@@ -248,6 +265,26 @@
 			if(!array_key_exists('stages', $_SESSION['quests'][$questId])) {
 				$_SESSION['quests'][$questId]['stages'] = array();
 			}
+		}
+
+
+		/**
+		 * Get all child-stages of a parent-stage.
+		 * 
+		 * @param	int	$stageId	ID of parent-stage
+		 * @return	array			List of child-stages
+		 */
+		private function getChildStages($stageId)
+		{
+			$childStages = $this->Bossfight->getChildStages($stageId);
+			if(!empty($childStages)) {
+				foreach($childStages as &$stage) {
+					$stage['childs'] = $this->getChildStages($stage['id']);
+				}
+			}
+
+
+			return $childStages;
 		}
 		
 	}

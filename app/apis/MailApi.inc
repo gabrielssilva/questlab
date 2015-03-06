@@ -46,7 +46,7 @@
 		/**
 		 * Set linker instance for creating links.
 		 * 
-		 * @param	Linker	$linker	Linker instance for creating links
+		 * @param	\nre\core\Linker	$linker	Linker instance for creating links
 		 */
 		public function setLinker(\nre\core\Linker $linker)
 		{
@@ -140,7 +140,7 @@
 		 * 
 		 * This method runs the generation of mailtext.
 		 * 
-		 * @return	Exception	Occured exception or null
+		 * @return	\Exception	Occured exception or null
 		 */
 		public function run()
 		{

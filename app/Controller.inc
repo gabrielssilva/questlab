@@ -29,13 +29,13 @@
 		/**
 		 * Logger instance
 		 * 
-		 * @var Logger
+		 * @var \nre\core\Logger
 		 */
 		protected $log = null;
 		/**
 		 * Linker instance
 		 * 
-		 * @var Linker
+		 * @var \nre\core\Linker
 		 */
 		protected $linker = null;
 		
@@ -45,14 +45,14 @@
 		/**
 		 * Construct a new application Controller.
 		 * 
-		 * @throws	DriverNotFoundException
-		 * @throws	DriverNotValidException
-		 * @throws	ModelNotValidException
-		 * @throws	ModelNotFoundException
-		 * @throws	ViewNotFoundException
-		 * @param	string	$layoutName	Name of the current Layout
-		 * @param	string	$action		Current Action
-		 * @param	Agent	$agent		Corresponding Agent
+		 * @throws	\nre\exceptions\DriverNotFoundException
+		 * @throws	\nre\exceptions\DriverNotValidException
+		 * @throws	\nre\exceptions\ModelNotValidException
+		 * @throws	\nre\exceptions\ModelNotFoundException
+		 * @throws	\nre\exceptions\ViewNotFoundException
+		 * @param	string		$layoutName	Name of the current Layout
+		 * @param	string		$action		Current Action
+		 * @param	\nre\core\Agent	$agent		Corresponding Agent
 		 */
 		public function __construct($layoutName, $action, $agent)
 		{
@@ -67,8 +67,8 @@
 		/**
 		 * Prefilter that is executed before running the Controller.
 		 * 
-		 * @param	Request		$request	Current request
-		 * @param	Response	$response	Current response
+		 * @param	\nre\core\Request	$request	Current request
+		 * @param	\nre\core\Response	$response	Current response
 		 */
 		public function preFilter(\nre\core\Request $request, \nre\core\Response $response)
 		{
@@ -104,8 +104,8 @@
 		/**
 		 * Postfilter that is executed after running the Controller.
 		 * 
-		 * @param	Request		$request	Current request
-		 * @param	Response	$response	Current response
+		 * @param	\nre\core\Request	$request	Current request
+		 * @param	\nre\core\Response	$response	Current response
 		 */
 		public function postFilter(\nre\core\Request $request, \nre\core\Response $response)
 		{

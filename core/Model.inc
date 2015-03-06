@@ -26,8 +26,8 @@
 		/**
 		 * Load the class of a Model.
 		 * 
-		 * @throws	ModelNotFoundException
-		 * @throws	ModelNotValidException
+		 * @throws	\nre\exceptions\ModelNotFoundException
+		 * @throws	\nre\exceptions\ModelNotValidException
 		 * @param	string	$modelName		Name of the Model to load
 		 */
 		public static function load($modelName)
@@ -88,11 +88,11 @@
 		 * 
 		 * TODO Catch exception
 		 * 
-		 * @throws	DatamodelException
-		 * @throws	DriverNotFoundException
-		 * @throws	DriverNotValidException
-		 * @throws	ModelNotValidException
-		 * @throws	ModelNotFoundException
+		 * @throws	\nre\exceptions\DatamodelException
+		 * @throws	\nre\exceptions\DriverNotFoundException
+		 * @throws	\nre\exceptions\DriverNotValidException
+		 * @throws	\nre\exceptions\ModelNotValidException
+		 * @throws	\nre\exceptions\ModelNotFoundException
 		 */
 		protected function __construct()
 		{
@@ -106,11 +106,11 @@
 		/**
 		 * Load the Models of this Model.
 		 * 
-		 * @throws	DatamodelException
-		 * @throws	DriverNotFoundException
-		 * @throws	DriverNotValidException
-		 * @throws	ModelNotValidException
-		 * @throws	ModelNotFoundException
+		 * @throws	\nre\exceptions\DatamodelException
+		 * @throws	\nre\exceptions\DriverNotFoundException
+		 * @throws	\nre\exceptions\DriverNotValidException
+		 * @throws	\nre\exceptions\ModelNotValidException
+		 * @throws	\nre\exceptions\ModelNotFoundException
 		 */
 		private function loadModels()
 		{

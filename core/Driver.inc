@@ -26,8 +26,8 @@
 		/**
 		 * Load the class of a Driver.
 		 * 
-		 * @throws	DriverNotFoundException
-		 * @throws	DriverNotValidException
+		 * @throws	\nre\exceptions\DriverNotFoundException
+		 * @throws	\nre\exceptions\DriverNotValidException
 		 * @param	string	$driverName	Name of the Driver to load
 		 */
 		public static function load($driverName)

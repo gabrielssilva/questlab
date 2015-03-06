@@ -26,8 +26,8 @@
 		/**
 		 * Action: index.
 		 * 
-		 * @param	Request		$request	Current request
-		 * @param	Response	$response	Current response
+		 * @param	\nre\core\Request	$request	Current request
+		 * @param	\nre\core\Response	$response	Current response
 		 */
 		public function index(\nre\core\Request $request, \nre\core\Response $response)
 		{

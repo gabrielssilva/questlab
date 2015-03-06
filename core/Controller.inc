@@ -56,8 +56,8 @@
 		/**
 		 * Load the class of a Controller.
 		 * 
-		 * @throws	ControllerNotFoundException
-		 * @throws	ControllerNotValidException
+		 * @throws	\nre\exceptions\ControllerNotFoundException
+		 * @throws	\nre\exceptions\ControllerNotValidException
 		 * @param	string	$controllerName		Name of the Controller to load
 		 */
 		public static function load($controllerName)
@@ -84,12 +84,12 @@
 		/**
 		 * Instantiate a Controller (Factory Pattern).
 		 * 
-		 * @throws	DatamodelException
-		 * @throws	DriverNotFoundException
-		 * @throws	DriverNotValidException
-		 * @throws	ModelNotValidException
-		 * @throws	ModelNotFoundException
-		 * @throws	ViewNotFoundException
+		 * @throws	\nre\exceptions\DatamodelException
+		 * @throws	\nre\exceptions\DriverNotFoundException
+		 * @throws	\nre\exceptions\DriverNotValidException
+		 * @throws	\nre\exceptions\ModelNotValidException
+		 * @throws	\nre\exceptions\ModelNotFoundException
+		 * @throws	\nre\exceptions\ViewNotFoundException
 		 * @param	string	$controllerName	Name of the Controller to instantiate
 		 * @param	string	$layoutName	Name of the current Layout
 		 * @param	string	$action		Current Action
@@ -125,11 +125,11 @@
 		/**
 		 * Construct a new Controller.
 		 * 
-		 * @throws	DriverNotFoundException
-		 * @throws	DriverNotValidException
-		 * @throws	ModelNotValidException
-		 * @throws	ModelNotFoundException
-		 * @throws	ViewNotFoundException
+		 * @throws	\nre\exceptions\DriverNotFoundException
+		 * @throws	\nre\exceptions\DriverNotValidException
+		 * @throws	\nre\exceptions\ModelNotValidException
+		 * @throws	\nre\exceptions\ModelNotFoundException
+		 * @throws	\nre\exceptions\ViewNotFoundException
 		 * @param	string	$layoutName	Name of the current Layout
 		 * @param	string	$action		Current Action
 		 * @param	Agent	$agent		Corresponding Agent
@@ -186,10 +186,10 @@
 		 * This method executes the Action of the Controller defined by
 		 * the current Request.
 		 * 
-		 * @throws	ParamsNotValidException
-		 * @throws	IdNotFoundException
-		 * @throws	DatamodelException
-		 * @throws	ActionNotFoundException
+		 * @throws	\nre\exceptions\ParamsNotValidException
+		 * @throws	\nre\exceptions\IdNotFoundException
+		 * @throws	\nre\exceptions\DatamodelException
+		 * @throws	\nre\exceptions\ActionNotFoundException
 		 * @param	Request		$request	Current request
 		 * @param	Response	$response	Current response
 		 */
@@ -309,8 +309,8 @@
 		/**
 		 * Load the Components of this Controller.
 		 * 
-		 * @throws	ComponentNotValidException
-		 * @throws	ComponentNotFoundException
+		 * @throws	\nre\exceptions\ComponentNotValidException
+		 * @throws	\nre\exceptions\ComponentNotFoundException
 		 */
 		private function loadComponents()
 		{
@@ -348,11 +348,11 @@
 		/**
 		 * Load the Models of this Controller.
 		 * 
-		 * @throws	DatamodelException
-		 * @throws	DriverNotFoundException
-		 * @throws	DriverNotValidException
-		 * @throws	ModelNotValidException
-		 * @throws	ModelNotFoundException
+		 * @throws	\nre\exceptions\DatamodelException
+		 * @throws	\nre\exceptions\DriverNotFoundException
+		 * @throws	\nre\exceptions\DriverNotValidException
+		 * @throws	\nre\exceptions\ModelNotValidException
+		 * @throws	\nre\exceptions\ModelNotFoundException
 		 */
 		protected function loadModels()
 		{
@@ -405,7 +405,7 @@
 		/**
 		 * Load the View of this Controller.
 		 * 
-		 * @throws	ViewNotFoundException
+		 * @throws	\nre\exceptions\ViewNotFoundException
 		 * @param	string	$layoutName	Name of the current Layout
 		 * @param	string	$action		Current Action
 		 */

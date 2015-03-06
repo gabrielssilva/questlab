@@ -52,7 +52,7 @@
 		 * 
 		 * List Character types.
 		 * 
-		 * @throws	IdNotFoundException
+		 * @throws	\nre\exceptions\IdNotFoundException
 		 * @param	string	$seminaryUrl	URL-Title of a Seminary
 		 */
 		public function index($seminaryUrl)
@@ -103,7 +103,7 @@
 		 * 
 		 * Create new Character type for a Seminary.
 		 * 
-		 * @throws	IdNotFoundException
+		 * @throws	\nre\exceptions\IdNotFoundException
 		 * @param	string	$seminaryUrl	URL-Title of a Seminary
 		 */
 		public function create($seminaryUrl)
@@ -173,7 +173,7 @@
 		 * 
 		 * Edit Character type for a Seminary.
 		 * 
-		 * @throws	IdNotFoundException
+		 * @throws	\nre\exceptions\IdNotFoundException
 		 * @param	string	$seminaryUrl		URL-title of a Seminary
 		 * @param	string	$charactertypeUrl	URL-title of Character type
 		 */
@@ -357,7 +357,7 @@
 		 * 
 		 * Delete Character type for a Seminary.
 		 * 
-		 * @throws	IdNotFoundException
+		 * @throws	\nre\exceptions\IdNotFoundException
 		 * @param	string	$seminaryUrl		URL-title of a Seminary
 		 * @param	string	$charactertypeUrl	URL-title of Character type
 		 */

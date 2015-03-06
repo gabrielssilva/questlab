@@ -63,7 +63,7 @@
 		/**
 		 * Get a Character groups Quest by its URL.
 		 * 
-		 * @throws	IdNotFoundException
+		 * @throws	\nre\exceptions\IdNotFoundException
 		 * @param	int	$groupsgroupId	ID of the Character groups-group
 		 * @param	string	$questUrl	URL-title of the Character groups Quest
 		 * @return	array			Character groups Quest data
@@ -90,7 +90,7 @@
 		/**
 		 * Get a Character groups Quest by its ID.
 		 * 
-		 * @throws	IdNotFoundException
+		 * @throws	\nre\exceptions\IdNotFoundException
 		 * @param	int	$questId	ID of the Character groups Quest
 		 * @return	array			Character groups Quest data
 		 */

@@ -22,7 +22,7 @@
 		/**
 		 * Linker
 		 * 
-		 * @var Linker
+		 * @var \nre\core\Linker
 		 */
 		private $linker = null;
 		
@@ -80,7 +80,7 @@
 		/**
 		 * Get linker instance for creating links.
 		 * 
-		 * @return	Linker	Linker instance for creating links
+		 * @return	\nre\core\Linker	Linker instance for creating links
 		 */
 		public function getLinker()
 		{

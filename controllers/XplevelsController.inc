@@ -49,7 +49,7 @@
 		 * 
 		 * Manage XP-levels.
 		 * 
-		 * @throws	IdNotFoundException
+		 * @throws	\nre\exceptions\IdNotFoundException
 		 * @param	string	$seminaryUrl	URL-Title of a Seminary
 		 */
 		public function manage($seminaryUrl)

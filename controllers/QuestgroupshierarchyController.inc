@@ -154,7 +154,7 @@
 		 * 
 		 * Edit a Questgroupshierarchy.
 		 * 
-		 * @throws	IdNotFoundException
+		 * @throws	\nre\exceptions\IdNotFoundException
 		 * @param	string	$seminaryUrl			URL-title of Seminary
 		 * @param	string	$questgroupshierarchyUrl	URL-title of Questgroupshierarchy
 		 */
@@ -234,7 +234,7 @@
 		 * 
 		 * Move a Questgroupshierarchy up (decrement position).
 		 * 
-		 * @throws	IdNotFoundException
+		 * @throws	\nre\exceptions\IdNotFoundException
 		 * @param	string	$seminaryUrl			URL-title of Seminary
 		 * @param	string	$questgroupshierarchyUrl	URL-title of Questgroupshierarchy
 		 */
@@ -270,7 +270,7 @@
 		 * 
 		 * Move a Questgroupshierarchy down (increment position).
 		 * 
-		 * @throws	IdNotFoundException
+		 * @throws	\nre\exceptions\IdNotFoundException
 		 * @param	string	$seminaryUrl			URL-title of Seminary
 		 * @param	string	$questgroupshierarchyUrl	URL-title of Questgroupshierarchy
 		 */
@@ -306,7 +306,7 @@
 		 * 
 		 * Delete a Questgroupshierarchy.
 		 * 
-		 * @throws	IdNotFoundException
+		 * @throws	\nre\exceptions\IdNotFoundException
 		 * @param	string	$seminaryUrl			URL-title of Seminary
 		 * @param	string	$questgroupshierarchyUrl	URL-title of Questgroupshierarchy
 		 */

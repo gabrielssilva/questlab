@@ -28,7 +28,7 @@
 		 * 
 		 * Show a user and its details.
 		 * 
-		 * @throws	IdNotFoundException
+		 * @throws	\nre\exceptions\IdNotFoundException
 		 * @param	string	$userUrl	URL-Username of an user
 		 */
 		public function user($userUrl)

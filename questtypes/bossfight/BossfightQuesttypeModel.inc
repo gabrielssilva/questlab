@@ -26,7 +26,7 @@
 		/**
 		 * Get a Boss-Fight.
 		 * 
-		 * @throws	IdNotFoundException
+		 * @throws	\nre\exceptions\IdNotFoundException
 		 * @param	int	$questId	ID of Quest
 		 * @return	array			Boss-Fight data
 		 */

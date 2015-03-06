@@ -57,8 +57,8 @@
 		/**
 		 * Prefilter.
 		 * 
-		 * @param	Request		$request	Current request
-		 * @param	Response	$response	Current response
+		 * @param	\nre\core\Request	$request	Current request
+		 * @param	\nre\core\Response	$response	Current response
 		 */
 		public function preFilter(\nre\core\Request $request, \nre\core\Response $response)
 		{
@@ -102,7 +102,7 @@
 		 * 
 		 * Display the moodpic for a category of a Seminary.
 		 * 
-		 * @throws	IdNotFoundException
+		 * @throws	\nre\exceptions\IdNotFoundException
 		 * @param	string	$seminaryUrl	URL-title of the Seminary
 		 * @param	string	$category	Category to show moodpic of
 		 * @param	string	$action		Action for processing the media
@@ -149,7 +149,7 @@
 		 * 
 		 * Display a Seminary medium.
 		 * 
-		 * @throws	IdNotFoundException
+		 * @throws	\nre\exceptions\IdNotFoundException
 		 * @param	string	$seminaryUrl	URL-title of the Seminary
 		 * @param	string	$mediaUrl	URL-name of the medium
 		 * @param	string	$action		Action for processing the media
@@ -180,8 +180,8 @@
 		 * 
 		 * Display an Avatar as full size or portrait.
 		 * 
-		 * @throws	ParamsNotValidException
-		 * @throws	IdNotFoundException
+		 * @throws	\nre\exceptions\ParamsNotValidException
+		 * @throws	\nre\exceptions\IdNotFoundException
 		 * @param	string	$seminaryUrl		URL-title of the Seminary
 		 * @param	string	$charactertypeUrl	URL-title of Character type
 		 * @param	int	$xplevel		XP-level
@@ -229,7 +229,7 @@
 		 * 
 		 * Display the achievement of a Seminary.
 		 * 
-		 * @throws	IdNotFoundException
+		 * @throws	\nre\exceptions\IdNotFoundException
 		 * @param	string	$seminaryUrl	URL-title of the Seminary
 		 * @param	string	$achievementUrl	URL-title of the Achievement
 		 * @param	string	$action		Action for processing the media
@@ -286,7 +286,7 @@
 		 * 
 		 * Display the icon for a Character group of a Seminary.
 		 * 
-		 * @throws	IdNotFoundException
+		 * @throws	\nre\exceptions\IdNotFoundException
 		 * @param	string	$seminaryUrl	URL-Title of a Seminary
 		 * @param	string	$groupsgroupUrl	URL-Title of a Character groups-group
 		 * @param	string	$groupUrl	URL-Title of a Character group
@@ -328,7 +328,7 @@
 		 * 
 		 * Display the icon for a Character groups Quest of a Seminary.
 		 * 
-		 * @throws	IdNotFoundException
+		 * @throws	\nre\exceptions\IdNotFoundException
 		 * @param	string	$seminaryUrl	URL-Title of a Seminary
 		 * @param	string	$groupsgroupUrl	URL-Title of a Character groups-group
 		 * @param	string	$questUrl	URL-Title of a Character groups Quest
@@ -407,8 +407,8 @@
 		/**
 		 * Determine the file for a medium and process it if necessary.
 		 * 
-		 * @throws	IdNotFoundException
-		 * @throws	ParamsNotValidException
+		 * @throws	\nre\exceptions\IdNotFoundException
+		 * @throws	\nre\exceptions\ParamsNotValidException
 		 * @param	array	$media	Medium to get file for
 		 * @param	string	$action	Action for processing the media
 		 * @return	object		File for the medium (or null if medium is cached)

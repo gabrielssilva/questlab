@@ -66,7 +66,7 @@
 		 * 
 		 * List Questtopics of a Seminary.
 		 * 
-		 * @throws	IdNotFoundException
+		 * @throws	\nre\exceptions\IdNotFoundException
 		 * @param	string	$seminaryUrl		URL-Title of Seminary
 		 */
 		public function index($seminaryUrl)
@@ -110,7 +110,7 @@
 		 * 
 		 * Show a Questtopic and its Quests with Questsubtopics.
 		 * 
-		 * @throws	IdNotFoundException
+		 * @throws	\nre\exceptions\IdNotFoundException
 		 * @param	string	$eminaryUrl	URL-Title of Seminary
 		 * @param	string	$questtopicUrl	URL-Title of Questtopic
 		 */
@@ -158,7 +158,7 @@
 		 * 
 		 * Manage a Questtopic and its Quests with Questsubtopics.
 		 * 
-		 * @throws	IdNotFoundException
+		 * @throws	\nre\exceptions\IdNotFoundException
 		 * @param	string	$eminaryUrl	URL-Title of Seminary
 		 * @param	string	$questtopicUrl	URL-Title of Questtopic
 		 */
@@ -232,7 +232,7 @@
 		 * 
 		 * Create a new Questtopic for a Seminary.
 		 * 
-		 * @throws	IdNotFoundException
+		 * @throws	\nre\exceptions\IdNotFoundException
 		 * @param	string	$seminaryUrl		URL-Title of Seminary
 		 */
 		public function create($seminaryUrl)
@@ -295,7 +295,7 @@
 		 *
 		 * Edit a Questtopic of a Seminary and its Questsubtopics.
 		 * 
-		 * @throws	IdNotFoundException
+		 * @throws	\nre\exceptions\IdNotFoundException
 		 * @param	string	$eminaryUrl	URL-Title of Seminary
 		 * @param	string	$questtopicUrl	URL-Title of Questtopic
 		 */
@@ -471,7 +471,7 @@
 		 * 
 		 * Delete a Questtopic of a Seminary.
 		 * 
-		 * @throws	IdNotFoundException
+		 * @throws	\nre\exceptions\IdNotFoundException
 		 * @param	string	$eminaryUrl	URL-Title of Seminary
 		 * @param	string	$questtopicUrl	URL-Title of Questtopic
 		 */

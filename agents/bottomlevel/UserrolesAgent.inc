@@ -26,8 +26,8 @@
 		/**
 		 * Action: user.
 		 * 
-		 * @param	Request		$request	Current request
-		 * @param	Response	$response	Current response
+		 * @param	\nre\core\Request	$request	Current request
+		 * @param	\nre\core\Response	$response	Current response
 		 */
 		public function user(\nre\core\Request $request, \nre\core\Response $response)
 		{

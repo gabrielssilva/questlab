@@ -37,7 +37,7 @@
 		/**
 		 * Get a medium by its URL.
 		 * 
-		 * @throws	IdNotFoundException
+		 * @throws	\nre\exceptions\IdNotFoundException
 		 * @param	string	$mediaURL	URL-name of the Medium
 		 * @return	array			Medium data
 		 */
@@ -62,7 +62,7 @@
 		/**
 		 * Get a medium by its ID.
 		 * 
-		 * @throws	IdNotFoundException
+		 * @throws	\nre\exceptions\IdNotFoundException
 		 * @param	int	$mediaId	ID of the Medium
 		 * @return	array			Medium data
 		 */
@@ -87,7 +87,7 @@
 		/**
 		 * Get a Seminary medium by its URL.
 		 * 
-		 * @throws	IdNotFoundException
+		 * @throws	\nre\exceptions\IdNotFoundException
 		 * @param	int	$seminaryId		ID of the seminary
 		 * @param	string	$seminaryMediaUrl	URL-name of the Seminary medium
 		 * @return	array				Seminary medium data
@@ -113,7 +113,7 @@
 		/**
 		 * Get a Seminary medium by its ID.
 		 * 
-		 * @throws	IdNotFoundException
+		 * @throws	\nre\exceptions\IdNotFoundException
 		 * @param	int	$seminaryMediaId	ID of the Seminary medium
 		 * @return	array				Seminary medium data
 		 */

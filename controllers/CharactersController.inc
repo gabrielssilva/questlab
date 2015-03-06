@@ -65,7 +65,7 @@
 		 * 
 		 * List registered Characters for a Seminary
 		 * 
-		 * @throws	IdNotFoundException
+		 * @throws	\nre\exceptions\IdNotFoundException
 		 * @param	string	$seminaryUrl	URL-Title of a Seminary
 		 * @param	string	$all		Whether to list all Characters at once or not (optional)
 		 */
@@ -140,7 +140,7 @@
 		 * 
 		 * Show a Charater and its details.
 		 * 
-		 * @throws	IdNotFoundException
+		 * @throws	\nre\exceptions\IdNotFoundException
 		 * @param	string	$seminaryUrl	URL-Title of a Seminary
 		 * @param	string	$characterUrl	URL-name of a Charater
 		 */
@@ -226,8 +226,8 @@
 		 * 
 		 * Register a new character for a Seminary.
 		 * 
-		 * @throws	IdNotFoundException
-		 * @throws	ParamsNotValidException
+		 * @throws	\nre\exceptions\IdNotFoundException
+		 * @throws	\nre\exceptions\ParamsNotValidException
 		 * @param	string	$seminaryUrl	URL-Title of a Seminary
 		 */
 		public function register($seminaryUrl)
@@ -362,7 +362,7 @@
 		 * 
 		 * Manage Characters.
 		 * 
-		 * @throws	IdNotFoundException
+		 * @throws	\nre\exceptions\IdNotFoundException
 		 * @param	string	$seminaryUrl	URL-Title of a Seminary
 		 */
 		public function manage($seminaryUrl)
@@ -471,8 +471,8 @@
 		 * 
 		 * Edit a new character for a Seminary.
 		 * 
-		 * @throws	IdNotFoundException
-		 * @throws	ParamsNotValidException
+		 * @throws	\nre\exceptions\IdNotFoundException
+		 * @throws	\nre\exceptions\ParamsNotValidException
 		 * @param	string	$seminaryUrl	URL-Title of a Seminary
 		 * @param	string	$characterUrl	URL-name of a Charater
 		 */
@@ -608,7 +608,7 @@
 		 * 
 		 * Delete a Character.
 		 * 
-		 * @throws	IdNotFoundException
+		 * @throws	\nre\exceptions\IdNotFoundException
 		 * @param	string	$seminaryUrl	URL-Title of a Seminary
 		 * @param	string	$characterUrl	URL-name of a Charater
 		 */

@@ -59,7 +59,7 @@
 		/**
 		 * Get a seminary and its data by its ID.
 		 * 
-		 * @throws	IdNotFoundException
+		 * @throws	\nre\exceptions\IdNotFoundException
 		 * @param	string	$seminaryId	ID of a seminary
 		 * @return	array			Seminary
 		 */
@@ -84,7 +84,7 @@
 		/**
 		 * Get a seminary and its data by its URL-title.
 		 * 
-		 * @throws	IdNotFoundException
+		 * @throws	\nre\exceptions\IdNotFoundException
 		 * @param	string	$seminaryUrl	URL-Title of a seminary
 		 * @return	array			Seminary
 		 */
@@ -205,7 +205,7 @@
 		/**
 		 * Edit a seminary.
 		 * 
-		 * @throws	DatamodelException
+		 * @throws	\nre\exceptions\DatamodelException
 		 * @param	int	$seminaryId	ID of Seminary to edit
 		 * @param	string	$title		New title of Seminary
 		 * @param	string	$course		New course of Seminary

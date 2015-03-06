@@ -32,8 +32,8 @@
 		/**
 		 * Prefilter.
 		 * 
-		 * @param	Request		$request	Current request
-		 * @param	Response	$response	Current response
+		 * @param	\nre\core\Request	$request	Current request
+		 * @param	\nre\core\Response	$response	Current response
 		 */
 		public function preFilter(\nre\core\Request $request, \nre\core\Response $response)
 		{
@@ -47,8 +47,8 @@
 		/**
 		 * Postfilter that is executed after running the Controller.
 		 * 
-		 * @param	Request		$request	Current request
-		 * @param	Response	$response	Current response
+		 * @param	\nre\core\Request	$request	Current request
+		 * @param	\nre\core\Response	$response	Current response
 		 */
 		public function postFilter(\nre\core\Request $request, \nre\core\Response $response)
 		{

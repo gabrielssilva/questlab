@@ -26,8 +26,8 @@
 		/**
 		 * Action: quest.
 		 * 
-		 * @param	Request		$request	Current request
-		 * @param	Response	$response	Current response
+		 * @param	\nre\core\Request	$request	Current request
+		 * @param	\nre\core\Response	$response	Current response
 		 */
 		public function quest(\nre\core\Request $request, \nre\core\Response $response)
 		{
@@ -38,8 +38,8 @@
 		/**
 		 * Action: submissions.
 		 * 
-		 * @param	Request		$request	Current request
-		 * @param	Response	$response	Current response
+		 * @param	\nre\core\Request	$request	Current request
+		 * @param	\nre\core\Response	$response	Current response
 		 */
 		public function submissions(\nre\core\Request $request, \nre\core\Response $response)
 		{
@@ -50,8 +50,8 @@
 		/**
 		 * Action: submission.
 		 * 
-		 * @param	Request		$request	Current request
-		 * @param	Response	$response	Current response
+		 * @param	\nre\core\Request	$request	Current request
+		 * @param	\nre\core\Response	$response	Current response
 		 */
 		public function submission(\nre\core\Request $request, \nre\core\Response $response)
 		{
@@ -62,8 +62,8 @@
 		/**
 		 * Action: create.
 		 * 
-		 * @param	Request		$request	Current request
-		 * @param	Response	$response	Current response
+		 * @param	\nre\core\Request	$request	Current request
+		 * @param	\nre\core\Response	$response	Current response
 		 */
 		public function create(\nre\core\Request $request, \nre\core\Response $response)
 		{
@@ -74,8 +74,8 @@
 		/**
 		 * Action: edit.
 		 * 
-		 * @param	Request		$request	Current request
-		 * @param	Response	$response	Current response
+		 * @param	\nre\core\Request	$request	Current request
+		 * @param	\nre\core\Response	$response	Current response
 		 */
 		public function edit(\nre\core\Request $request, \nre\core\Response $response)
 		{
@@ -86,8 +86,8 @@
 		/**
 		 * Action: edittask.
 		 * 
-		 * @param	Request		$request	Current request
-		 * @param	Response	$response	Current response
+		 * @param	\nre\core\Request	$request	Current request
+		 * @param	\nre\core\Response	$response	Current response
 		 */
 		public function edittask(\nre\core\Request $request, \nre\core\Response $response)
 		{
@@ -98,8 +98,8 @@
 		/**
 		 * Action: edittexts.
 		 * 
-		 * @param	Request		$request	Current request
-		 * @param	Response	$response	Current response
+		 * @param	\nre\core\Request	$request	Current request
+		 * @param	\nre\core\Response	$response	Current response
 		 */
 		public function edittexts(\nre\core\Request $request, \nre\core\Response $response)
 		{
@@ -110,8 +110,8 @@
 		/**
 		 * Action: delete.
 		 * 
-		 * @param	Request		$request	Current request
-		 * @param	Response	$response	Current response
+		 * @param	\nre\core\Request	$request	Current request
+		 * @param	\nre\core\Response	$response	Current response
 		 */
 		public function delete(\nre\core\Request $request, \nre\core\Response $response)
 		{

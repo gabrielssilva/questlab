@@ -68,7 +68,7 @@
 		 * 
 		 * List Achievements of a Seminary.
 		 * 
-		 * @throws	IdNotFoundException
+		 * @throws	\nre\exceptions\IdNotFoundException
 		 * @param	string	$seminaryUrl		URL-Title of Seminary
 		 */
 		public function index($seminaryUrl)
@@ -208,7 +208,7 @@
 		 * 
 		 * Manage Achievements of a Seminary.
 		 * 
-		 * @throws	IdNotFoundException
+		 * @throws	\nre\exceptions\IdNotFoundException
 		 * @param	string	$seminaryUrl		URL-Title of Seminary
 		 */
 		public function manage($seminaryUrl)
@@ -235,7 +235,7 @@
 		 * 
 		 * Create a new Achievement.
 		 * 
-		 * @throws	IdNotFoundException
+		 * @throws	\nre\exceptions\IdNotFoundException
 		 * @param	string	$seminaryUrl	URL-title of Seminary
 		 */
 		public function create($seminaryUrl)
@@ -400,7 +400,7 @@
 		 * 
 		 * Move an Achievement up (decrement position).
 		 * 
-		 * @throws	IdNotFoundException
+		 * @throws	\nre\exceptions\IdNotFoundException
 		 * @param	string	$seminaryUrl	URL-title of Seminary
 		 * @param	string	$achievementUrl	URL-title of Achievement
 		 */
@@ -426,7 +426,7 @@
 		 * 
 		 * Move an Achievement down (increment position).
 		 * 
-		 * @throws	IdNotFoundException
+		 * @throws	\nre\exceptions\IdNotFoundException
 		 * @param	string	$seminaryUrl	URL-title of Seminary
 		 * @param	string	$achievementUrl	URL-title of Achievement
 		 */
@@ -452,7 +452,7 @@
 		 * 
 		 * Edit an Achievement.
 		 * 
-		 * @throws	IdNotFoundException
+		 * @throws	\nre\exceptions\IdNotFoundException
 		 * @param	string	$seminaryUrl	URL-title of Seminary
 		 * @param	string	$achievementUrl	URL-title of Achievement to edit
 		 */
@@ -660,7 +660,7 @@
 		 * 
 		 * Edit conditions of an Achievement.
 		 * 
-		 * @throws	IdNotFoundException
+		 * @throws	\nre\exceptions\IdNotFoundException
 		 * @param	string	$seminaryUrl	URL-title of Seminary
 		 * @param	string	$achievementUrl	URL-title of Achievement to edit
 		 */
@@ -921,7 +921,7 @@
 		 * 
 		 * Delete an Achievement.
 		 * 
-		 * @throws	IdNotFoundException
+		 * @throws	\nre\exceptions\IdNotFoundException
 		 * @param	string	$seminaryUrl	URL-title of Seminary
 		 * @param	string	$achievementUrl	URL-title of Achievement
 		 */

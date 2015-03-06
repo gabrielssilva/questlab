@@ -37,7 +37,7 @@
 		/**
 		 * Get a Questgroup hierarchy by its ID.
 		 * 
-		 * throws	IdNotFoundException
+		 * throws	\nre\exceptions\IdNotFoundException
 		 * @param	int	$questgroupshierarchyId	ID of a Questgroup hierarchy
 		 * @return	array				Questgroup hierarchy
 		 */
@@ -62,7 +62,7 @@
 		/**
 		 * Get a Questgroup hierarchy by its URL.
 		 * 
-		 * @throws	IdNotFoundException
+		 * @throws	\nre\exceptions\IdNotFoundException
 		 * @param	int	$seminaryId			ID of Seminary
 		 * @param	int	$questgroupshierarchyURL	URL of a Questgroup hierarchy
 		 * @return	array					Questgroup hierarchy

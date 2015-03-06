@@ -26,7 +26,7 @@
 		/**
 		 * Load and instantiate the QuesttypeView of a QuesttypeAgent.
 		 * 
-		 * @throws	ViewNotFoundException
+		 * @throws	\nre\exceptions\ViewNotFoundException
 		 * @param	string	$layoutName	Name of Layout in use
 		 * @param	string	$agentName	Name of the Agent
 		 * @param	string	$action		Current Action
@@ -43,7 +43,7 @@
 		/**
 		 * Construct a new QuesttypeView.
 		 * 
-		 * @throws	ViewNotFoundException
+		 * @throws	\nre\exceptions\ViewNotFoundException
 		 * @param	string	$layoutName	Name of Layout in use
 		 * @param	string	$agentName	Name of the Agent
 		 * @param	string	$action		Current Action
