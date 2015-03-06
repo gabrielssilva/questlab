@@ -29,7 +29,8 @@ sup{top:-.5em}
 sub{bottom:-.25em}
 svg:not(:root){overflow:hidden}
 figure{margin:0}
-fieldset,legend{border:0;margin:0 0 10px;padding:0}
+fieldset{border:1px dotted #f7f5f2;padding:0 10px 0}
+legend{border:0;margin:0 0 10px;padding:0}
 button,input,select,textarea{font-family:inherit;font-size:100%;margin:0}
 button,input{line-height:normal}
 button,select{text-transform:none}
