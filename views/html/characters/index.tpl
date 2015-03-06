@@ -18,8 +18,8 @@
 </nav>
 <?php endif ?>
 
-<form method="get">
-	<fieldset class="filter">
+<form method="get" class="logreg admnqf">
+	<fieldset>
 		<legend><?=_('Filters')?></legend>
 		<p><small><?=_('Sortorder')?>:</small></p>
 		<select name="sortorder" onchange="this.form.submit();">
@@ -31,7 +31,7 @@
 			<option value="<?=$characterfield['url']?>" <?php if($sortorder == $characterfield['url']) : ?>selected="selected"<?php endif ?>><?=$characterfield['title']?></option>
 			<?php endforeach ?>
 		</select>
-		<label for="charactername"><?=_('Character name')?></label>:
+		<label for="charactername"><?=_('Character name')?>:</label>
 		<input id="charactername" type="text" name="charactername" placeholder="<?=_('Character name')?>" value="<?=$charactername?>" />
 	</fieldset>
 	<input type="submit" value="<?=_('Apply filters')?>" />

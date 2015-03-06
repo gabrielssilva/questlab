@@ -7,8 +7,8 @@
 	<li><a href="<?=$linker->link('manage',1)?>"><?=_('Manage')?></a></li>
 </nav>
 
-<form method="get">
-	<fieldset class="filter">
+<form method="get" class="logreg admnqf">
+	<fieldset>
 		<legend><?=_('Filters')?></legend>
 		<p><small><?=_('Sortorder')?>:</small></p>
 		<select name="sortorder" onchange="this.form.submit();">
@@ -16,7 +16,7 @@
 			<option value="role" <?php if($sortorder == 'role') : ?>selected="selected"<?php endif ?>><?=_('Role')?></option>
 			<option value="created" <?php if($sortorder == 'created') : ?>selected="selected"<?php endif ?>><?=_('Date of registration')?></option>
 		</select>
-		<label for="username"><?=_('Username')?></label>:
+		<label for="username"><?=_('Username')?>:</label>
 		<input id="username" type="text" name="username" placeholder="<?=_('Username')?>" value="<?=$username?>" />
 	</fieldset>
 	<input type="submit" value="<?=_('Apply filters')?>" />
