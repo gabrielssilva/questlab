@@ -395,7 +395,7 @@ input[type="submit"][disabled]{text-shadow:1px 2px #d48c4e;background:#f9ac69;bo
 .achmnts .unlcked{font-size:.75em;float:right;margin:-6px -4px 0 0;color:#878787}
 
 .cgqlist li{width:48%;float:left}
-.cgqlist li:nth-child(odd){float:right}
+.cgqlist li:nth-child(even){margin-left:2%}
 
 .libindx li{float:left;width:32%;margin-right:2%}
 .libindx li:nth-child(2n){float:left}
