@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<phpdocumentor>
+	<title>Questlab</title>
+	<parser>
+		<default-package-name>Questlab</default-package-name>
+		<target>doc</target>
+		<markers>
+			<item>TODO</item>
+		</markers>
+		<extension>php</extension>
+		<extension>inc</extension>
+	</parser>
+	<transformer>
+		<target>doc</target>
+	</transformer>
+	<logging>
+		<level>info</level>
+		<paths>
+			<default>logs/phpdoc.log</default>
+			<errors>logs/phpdoc.errors.log</errors>
+		</paths>
+	</logging>
+	<files>
+		<directory>.</directory>
+		<ignore>logs/*</ignore>
+		<ignore>media/*</ignore>
+		<ignore>doc/*</ignore>
+		<ignore>seminarymedia/*</ignore>
+		<ignore>seminaryuploads/*</ignore>
+		<ignore>uploads/*</ignore>
+		<ignore>www/analytics/*</ignore>
+	</files>
+	<plugins>
+		<plugin path="Core" />
+	</plugins>
+	<transformations>
+		<template name="clean" />
+	</transformations>
+</phpdocumentor>

@@ -1,0 +1,78 @@
+<?php
+
+	/**
+	 * The Legend of Z
+	 *
+	 * @author	Oliver Hanraths <oliver.hanraths@uni-duesseldorf.de>
+	 * @copyright	2014 Heinrich-Heine-Universität Düsseldorf
+	 * @license	http://www.gnu.org/licenses/gpl.html
+	 * @link	https://bitbucket.org/coderkun/the-legend-of-z
+	 */
+	
+	namespace hhu\z\exceptions;
+	
+	
+	/**
+	 * Exception: Character submission not valid.
+	 * 
+	 * @author	Oliver Hanraths <oliver.hanraths@uni-duesseldorf.de>
+	 */
+	class SubmissionNotValidException extends \nre\core\Exception
+	{
+		/**
+		 * Error code
+		 * 
+		 * @var int
+		 */
+		const CODE	=	200;
+		/**
+		 * Error message
+		 * 
+		 * @var string
+		 */
+		const MESSAGE	=	'Character submission not valid';
+		
+		/**
+		 * Nested exception
+		 * 
+		 * @var Exception
+		 */
+		private $nestedException;
+		
+		
+		
+		
+		/**
+		 * Construct a new exception.
+		 * 
+		 * @param	string	$nestedException	Nested exception
+		 */
+		function __construct($nestedException, $message=self::MESSAGE, $code=self::CODE)
+		{
+			parent::__construct(
+				$message,
+				$code,
+				$nestedException
+			);
+			
+			// Store value
+			$this->nestedException = $nestedException;
+		}
+		
+		
+		
+		
+		/**
+		 * Get Nested exception.
+		 * 
+		 * @return	string	Nested exception
+		 */
+		public function getNestedException()
+		{
+			return $this->nestedException;
+		}
+		
+	}
+
+?>
+
