@@ -193,6 +193,7 @@
 		 * Get Character groups for a Character groups-group.
 		 * 
 		 * @param	int	$groupsgroupId	ID of the Character groups-group
+		 * @param	string	$sortorder	Field to sort by (optional)
 		 * @return	array			Character groups
 		 */
 		public function getGroupsForGroupsgroup($groupsgroupId, $sortorder='name')

@@ -82,6 +82,7 @@
 		/**
 		 * Get Seminary Character fields of a Character.
 		 * 
+		 * @param	int	$fieldId	ID of Seminary Character field
 		 * @param	int	$characterId	ID of the Character
 		 * @return	array			Seminary Character fields
 		 */

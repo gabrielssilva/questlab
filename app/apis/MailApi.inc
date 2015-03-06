@@ -56,6 +56,8 @@
 		
 		/**
 		 * Use a ToplevelAgent for HTML-mail
+		 * 
+		 * @param	bool	$html	Whether to use HTML or not
 		 */
 		public function setHTML($html=true)
 		{
@@ -80,6 +82,8 @@
 		
 		/**
 		 * Set the Action for the message to render.
+		 * 
+		 * @param	string	$messageAgent	Agent to handle the message
 		 */
 		public function setMessage($messageAgent)
 		{

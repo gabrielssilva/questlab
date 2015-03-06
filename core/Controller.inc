@@ -93,6 +93,7 @@
 		 * @param	string	$controllerName	Name of the Controller to instantiate
 		 * @param	string	$layoutName	Name of the current Layout
 		 * @param	string	$action		Current Action
+		 * @param	string	$agent		Corresponding Agent
 		 */
 		public static function factory($controllerName, $layoutName, $action, $agent)
 		{

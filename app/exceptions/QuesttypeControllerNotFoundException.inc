@@ -46,6 +46,8 @@
 		 * Construct a new exception.
 		 * 
 		 * @param	string	$questtypeName	Name of the QuesttypeController that was not found
+		 * @param	string	$message	Error message
+		 * @param	int	$code		Error code
 		 */
 		function __construct($questtypeName, $message=self::MESSAGE, $code=self::CODE)
 		{

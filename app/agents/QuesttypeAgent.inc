@@ -78,7 +78,7 @@
 		 * @throws	QuesttypeControllerNotFoundException
 		 * @param	string		$questtypeName	Name of the QuesttypeAgent to instantiate
 		 * @param	Request		$request	Current request
-		 * @param	Response	$respone	Current respone
+		 * @param	Response	$response	Current respone
 		 * @param	Logger		$log		Log-system
 		 */
 		public static function factory($questtypeName, \nre\core\Request $request, \nre\core\Response $response, \nre\core\Logger $log=null)
@@ -190,7 +190,7 @@
 		 * @throws	QuesttypeControllerNotValidException
 		 * @throws	QuesttypeControllerNotFoundException
 		 * @param	Request		$request	Current request
-		 * @param	Response	$respone	Current response
+		 * @param	Response	$response	Current response
 		 * @param	Logger		$log		Log-system
 		 */
 		protected function __construct(\nre\core\Request $request, \nre\core\Response $response, \nre\core\Logger $log=null)

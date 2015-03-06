@@ -64,8 +64,8 @@
 		 * Load the class of an Agent.
 		 * 
 		 * @static
-		 * @throws	AgentNotFoundException
-		 * @throws	AgentNotValidException
+		 * @throws	\nre\exceptions\AgentNotFoundException
+		 * @throws	\nre\exceptions\AgentNotValidException
 		 * @param	string	$agentName	Name of the Agent to load
 		 */
 		public static function load($agentName)
@@ -500,7 +500,8 @@
 		/**
 		 * Handle the exception of a SubAgent.
 		 * 
-		 * @param	string		$label		Name of the original Agent
+		 * @param	array		$subAgent	Original (Sub-) Agent
+		 * @param	Request		$request	Current request
 		 * @param	Excepiton	$exception	Occurred exception
 		 * @return	array				InlineError-SubAgent
 		 */

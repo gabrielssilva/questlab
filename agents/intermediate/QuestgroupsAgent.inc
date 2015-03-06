@@ -25,6 +25,9 @@
 		
 		/**
 		 * Action: questgroup.
+		 * 
+		 * @param	Request		$request	Current request
+		 * @param	Response	$response	Current response
 		 */
 		public function questgroup(\nre\core\Request $request, \nre\core\Response $response)
 		{
@@ -34,6 +37,9 @@
 
 		/**
 		 * Action: edit.
+		 * 
+		 * @param	Request		$request	Current request
+		 * @param	Response	$response	Current response
 		 */
 		public function edit(\nre\core\Request $request, \nre\core\Response $response)
 		{
@@ -43,6 +49,9 @@
 
 		/**
 		 * Action: edittexts.
+		 * 
+		 * @param	Request		$request	Current request
+		 * @param	Response	$response	Current response
 		 */
 		public function edittexts(\nre\core\Request $request, \nre\core\Response $response)
 		{
@@ -52,6 +61,9 @@
 
 		/**
 		 * Action: delete.
+		 * 
+		 * @param	Request		$request	Current request
+		 * @param	Response	$response	Current response
 		 */
 		public function delete(\nre\core\Request $request, \nre\core\Response $response)
 		{

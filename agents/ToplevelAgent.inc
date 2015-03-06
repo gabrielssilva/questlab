@@ -74,7 +74,7 @@
 		 * @throws	ControllerNotValidException
 		 * @throws	ControllerNotFoundException
 		 * @param	Request		$request	Current request
-		 * @param	Response	$respone	Current response
+		 * @param	Response	$response	Current response
 		 * @param	Logger		$log		Log-system
 		 */
 		protected function __construct(\nre\core\Request $request, \nre\core\Response $response, \nre\core\Logger $log=null)

@@ -67,6 +67,7 @@
 		 * 
 		 * @throws	IdNotFoundException
 		 * @param	string	$seminaryUrl	URL-Title of a Seminary
+		 * @param	string	$all		Whether to list all Characters at once or not (optional)
 		 */
 		public function index($seminaryUrl, $all=null)
 		{

@@ -55,6 +55,7 @@
 		 * Instantiate a Driver (Factory Pattern).
 		 * 
 		 * @param	string	$driverName	Name of the Driver to instantiate
+		 * @param	array	$config		Configuration settings
 		 */
 		public static function factory($driverName, $config)
 		{

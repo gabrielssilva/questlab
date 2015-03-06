@@ -37,6 +37,9 @@
 		
 		/**
 		 * Construct a new exception.
+		 * 
+		 * @param	string	$message	Error message
+		 * @param	int	$code		Error code
 		 */
 		function __construct($message=self::MESSAGE, $code=self::CODE)
 		{

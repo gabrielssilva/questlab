@@ -151,6 +151,7 @@
 		 * @param	string	$controllerName	Name of the QuesttypeController to instantiate
 		 * @param	string	$layoutName	Name of the current Layout
 		 * @param	string	$action		Current Action
+		 * @param	Agent	$agent		Corresponding Agent
 		 */
 		public static function factory($controllerName, $layoutName, $action, $agent)
 		{

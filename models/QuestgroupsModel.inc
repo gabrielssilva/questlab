@@ -811,7 +811,7 @@
 		}
 		
 		
-		/*
+		/**
 		 * Calculate the total amount of achievable XPs for a Quest and
 		 * its following Quests by choosing the path with the highest
 		 * amount of XPs.

@@ -66,7 +66,8 @@
 		 * 
 		 * @param	array	$receiver	User that the message will be send to
 		 * @param	array	$seminary	Seminary which the Character was created for
-		 * @param	array	$newCharacter	Newly registered user
+		 * @param	arary	$user		User of the newly registered Character
+		 * @param	array	$newCharacter	Newly registered Character
 		 */
 		public function characterregistration($receiver, $seminary, $user, $newCharacter)
 		{

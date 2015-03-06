@@ -248,6 +248,8 @@
 		 * Create a new user.
 		 * 
 		 * @param	string	$username	Username of the user to create
+		 * @param	string	$prename	Prename of the user to create
+		 * @param	string	$surname	Surname of the user to create
 		 * @param	string	$email		E‑Mail-Address of the user to create
 		 * @param	string	$password	Password of the user to create
 		 * @return	int			ID of the newly created user
@@ -303,8 +305,11 @@
 		 * @throws	DatamodelException
 		 * @param	int	$userId		ID of the user to delete
 		 * @param	string	$username	New name of user
+		 * @param	string	$prename	Prename of the user to create
+		 * @param	string	$surname	Surname of the user to create
 		 * @param	string	$email		Changed e‑mail-address of user
 		 * @param	string	$password	Changed plaintext password of user
+		 * @param	bool	$mailing	Whether to activate mailing or not
 		 */
 		public function editUser($userId, $username, $prename, $surname, $email, $password, $mailing)
 		{

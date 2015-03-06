@@ -149,6 +149,13 @@
 		}
 		
 		
+		/**
+		 * Get the Questtext that was last entered by a Character.
+		 * 
+		 * @param	int	$characterId	ID of Character
+		 * @param	array	$questtexts	List of Questtexts to look into
+		 * @return	array			Questtext data
+		 */
 		public function pickQuesttextLastEnteredByCharacter($characterId, $questtexts)
 		{
 			if(count($questtexts) == 0) {

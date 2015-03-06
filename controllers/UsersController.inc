@@ -49,6 +49,8 @@
 		
 		/**
 		 * Action: index.
+		 * 
+		 * @param	string	$all	Whether to list all users at once or not (optional)
 		 */
 		public function index($all=null)
 		{

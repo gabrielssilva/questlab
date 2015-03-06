@@ -215,8 +215,8 @@
 		 * 
 		 * @param	Request		$request	Current request
 		 * @param	Response	$response	Current response
-		 * @param	bool		$absolute	Create absolute link
 		 * @param	string		$anchor		Anchor on target
+		 * @param	bool		$absolute	Create absolute link
 		 * @return	string				Created link
 		 */
 		private static function createLink(Request $request, Response $response, $anchor=null, $absolute=false)

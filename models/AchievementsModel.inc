@@ -132,9 +132,10 @@
 		/**
 		 * Get seldom Achievements.
 		 * 
-		 * @param	int	$seminaryId	ID of Seminary
-		 * @param	int	$count		Number of Achievements to retrieve
-		 * @return	array			List of seldom Achievements
+		 * @param	int	$seminaryId		ID of Seminary
+		 * @param	int	$count			Number of Achievements to retrieve
+		 * @param	bool	$alsoWithDeadline	Include Achievements with deadline (optional)
+		 * @return	array				List of seldom Achievements
 		 */
 		public function getSeldomAchievements($seminaryId, $count, $alsoWithDeadline=true)
 		{
@@ -161,6 +162,7 @@
 		 * Get all achieved Achievements for a Character.
 		 * 
 		 * @param	int	$characterId	ID of Character
+		 * @param	bool	$alsoWithDeadline	Include Achievements with deadline (optional)
 		 * @return	array			Achievements data
 		 */
 		public function getAchievedAchievementsForCharacter($characterId, $alsoWithDeadline=true)

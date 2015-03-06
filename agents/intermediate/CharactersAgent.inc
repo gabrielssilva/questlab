@@ -25,6 +25,9 @@
 		
 		/**
 		 * Action: index.
+		 * 
+		 * @param	Request		$request	Current request
+		 * @param	Response	$response	Current response
 		 */
 		public function index(\nre\core\Request $request, \nre\core\Response $response)
 		{
@@ -33,6 +36,9 @@
 		
 		/**
 		 * Action: character.
+		 * 
+		 * @param	Request		$request	Current request
+		 * @param	Response	$response	Current response
 		 */
 		public function character(\nre\core\Request $request, \nre\core\Response $response)
 		{

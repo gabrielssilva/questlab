@@ -92,6 +92,7 @@
 		 * Get Characters for a Seminary.
 		 * 
 		 * @param	int	$seminaryId	ID of the Seminary
+		 * @param	bool	$onlyWithRole	Only Characters that have at least one role assigned (optional)
 		 * @return	array			Characters
 		 */
 		public function getCharactersForSeminary($seminaryId, $onlyWithRole=false)
@@ -356,9 +357,10 @@
 		/**
 		 * Get Characters with the most amount of Achievements.
 		 * 
-		 * @param	int	$seminaryId	ID of Seminary
-		 * @param	int	$conut		Amount of Characters to retrieve
-		 * @return	array			List of Characters
+		 * @param	int	$seminaryId		ID of Seminary
+		 * @param	int	$conut			Amount of Characters to retrieve
+		 * @param	bool	$alsoWithDeadline	Include Achievements with deadline (optional)
+		 * @return	array				List of Characters
 		 */
 		public function getCharactersWithMostAchievements($seminaryId, $count, $alsoWithDeadline=true)
 		{
@@ -458,6 +460,7 @@
 		 * Get the inferior $count Characters in the ranking.
 		 * 
 		 * @param	int	$seminaryId	ID of Seminary
+		 * @param	int	characterId	ID of Character
 		 * @param	int	$xps		XP-value of Character
 		 * @param	int	$count		Count of Characters to determine
 		 * @return	array			List of inferior Characters

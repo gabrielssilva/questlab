@@ -83,11 +83,11 @@
 		 * Send an e‑mail.
 		 * 
 		 * @throws	MailingException
-		 * @param	string	$from		Sender of mail
 		 * @param	mixed	$to		One (string) or many (array) receivers
-		 * @param	string	$subject	Subject of mail
-		 * @param	string	$message	Message of mail
+		 * @param	string	$messageAction	Message Action
 		 * @param	boolean	$html		Whether mail should be formatted as HTML or not
+		 * @param	array	$params		Parameters to pass
+		 * @param	Linker	$linker		Linker instance
 		 */
 		public static function sendMail($to, $messageAction, $html=false, $params=null, $linker=null)
 		{

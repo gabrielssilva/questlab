@@ -1108,46 +1108,6 @@
 		}
 		
 		
-		/**
-		 * Action: createmedia.
-		 * TODO only temporary for easier data import.
-		 * 
-		 * Display a form for creating new Seminary media.
-		 * 
-		 * @param	string	$seminaryUrl	URL-title of Seminary
-		 */
-		public function createmedia($seminaryUrl)
-		{
-			// Get seminary
-			$seminary = $this->Seminaries->getSeminaryByUrl($seminaryUrl);
-			
-			// Create media
-			$mediaId = null;
-			$error = null;
-			if($this->request->getRequestMethod() == 'POST' && !is_null($this->request->getPostParam('submit')))
-			{
-				$file = $_FILES['file'];
-				$error = $file['error'];
-				if(empty($error))
-				{
-					$mediaId = $this->Media->createQuestMedia(
-						$this->Auth->getUserId(),
-						$seminary['id'],
-						$file['name'],
-						$this->request->getPostParam('description'),
-						$file['type'],
-						$file['tmp_name']
-					);
-				}
-			}
-			
-			
-			// Pass data to view
-			$this->set('seminary', $seminary);
-			$this->set('mediaid', $mediaId);
-		}
-		
-		
 		
 		
 		/**

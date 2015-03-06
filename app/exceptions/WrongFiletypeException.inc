@@ -44,6 +44,10 @@
 		
 		/**
 		 * Construct a new exception.
+		 * 
+		 * @param	string	$type		Type of file
+		 * @param	string	$message	Error message
+		 * @param	int	$code		Error code
 		 */
 		function __construct($type, $message=self::MESSAGE, $code=self::CODE)
 		{

@@ -46,6 +46,8 @@
 		 * Construct a new exception.
 		 * 
 		 * @param	string	$questtypeName	Name of the invalid QuesttypeModel
+		 * @param	string	$message	Error message
+		 * @param	int	$code		Error code
 		 */
 		function __construct($questtypeName, $message=self::MESSAGE, $code=self::CODE)
 		{

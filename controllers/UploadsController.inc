@@ -74,6 +74,7 @@
 		 * @throws	IdNotFoundException
 		 * @param	string	$seminaryUrl	URL-title of Seminary
 		 * @param	string	$uploadUrl	URL-name of the upload
+		 * @param	string	$action		Current action (optional)
 		 */
 		public function seminary($seminaryUrl, $uploadUrl, $action=null)
 		{

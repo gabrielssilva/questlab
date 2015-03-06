@@ -46,6 +46,8 @@
 		 * Construct a new exception.
 		 * 
 		 * @param	string	$className	Name of the invalid class
+		 * @param	string	$message	Error message
+		 * @param	int	$code		Error code
 		 */
 		function __construct($className, $message=self::MESSAGE, $code=self::CODE)
 		{

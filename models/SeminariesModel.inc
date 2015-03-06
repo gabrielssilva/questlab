@@ -106,7 +106,7 @@
 		}
 		
 		
-		/*
+		/**
 		 * Calculate sum of XPs for a Seminary.
 		 * 
 		 * @param	int	$seminaryId	ID of Seminary

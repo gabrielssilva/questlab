@@ -34,8 +34,10 @@
 		 * 
 		 * @param	int	$seminaryId	ID of Seminary
 		 * @param	int	$questId	ID of Quest
+		 * @param	int	$userId		ID of user
 		 * @param	int	$characterId	ID of Character
 		 * @param	array	$file		Submitted upload
+		 * @param	string	$filename	Name of submitted file
 		 */
 		public function setCharacterSubmission($seminaryId, $questId, $userId, $characterId, $file, $filename)
 		{

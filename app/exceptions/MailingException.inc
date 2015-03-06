@@ -44,6 +44,10 @@
 		
 		/**
 		 * Construct a new exception.
+		 * 
+		 * @param	int	$error		Nested error message
+		 * @param	string	$message	Error message
+		 * @param	int	$code		Error code
 		 */
 		function __construct($error, $message=self::MESSAGE, $code=self::CODE)
 		{

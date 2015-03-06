@@ -25,6 +25,10 @@
 		
 		/**
 		 * Construct a new HtmlmailAgent.
+		 * 
+		 * @param	Request		$request	Current request
+		 * @param	Response	$response	Current response
+		 * @param	Logger		$log		Logger instance
 		 */
 		protected function __construct(\nre\core\Request $request, \nre\core\Response $response, \nre\core\Logger $log=null)
 		{
@@ -34,6 +38,9 @@
 		
 		/**
 		 * Action: index.
+		 * 
+		 * @param	Request		$request	Current request
+		 * @param	Response	$response	Current response
 		 */
 		public function index(\nre\core\Request $request, \nre\core\Response $response)
 		{

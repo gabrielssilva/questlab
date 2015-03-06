@@ -23,6 +23,13 @@
 		
 		
 		
+		/**
+		 * Construct a new BinaryAgent.
+		 * 
+		 * @param	Request		$request	Current request
+		 * @param	Response	$response	Current response
+		 * @param	Logger		$log		Logger instance
+		 */
 		protected function __construct(\nre\core\Request $request, \nre\core\Response $response, \nre\core\Logger $log=null)
 		{
 			parent::__construct($request, $response, $log);
@@ -31,6 +38,9 @@
 		
 		/**
 		 * Action: index.
+		 * 
+		 * @param	Request		$request	Current request
+		 * @param	Response	$response	Current response
 		 */
 		public function index(\nre\core\Request $request, \nre\core\Response $response)
 		{

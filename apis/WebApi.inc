@@ -223,7 +223,7 @@
 		 * Handle a error which cannot be handles by the system (and
 		 * HTTP 503).
 		 * 
-		 * $param	Exception	$exception	Occurred exception
+		 * @param	Exception	$exception	Occurred exception
 		 */
 		private function errorService($exception)
 		{

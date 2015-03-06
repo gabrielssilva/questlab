@@ -126,6 +126,8 @@
 		 * Check user permissions.
 		 * 
 		 * @throws AccessDeniedException
+		 * @param	Request		$request	Current request
+		 * @param	Response	$response	Current response
 		 */
 		private function checkPermission(\nre\core\Request $request, \nre\core\Response $response)
 		{
@@ -155,6 +157,10 @@
 		
 		/**
 		 * Check for newly achieved Achievements.
+		 * 
+		 * @param	Request		$request		Current request
+		 * @param	Response	$response		Current response
+		 * @param	array		$checkConditions	Conditions to check
 		 */
 		protected function checkAchievements(\nre\core\Request $request, \nre\core\Response $response, $checkConditions=null)
 		{

@@ -394,6 +394,7 @@
 		 * @param	int	$seminaryId	ID of Seminary
 		 * @param	int	$questgroupId	ID of Questgroup (optional)
 		 * @param	int	$questtypeId	ID of Questtype (optional)
+		 * @param	string	$title		Part of the title to filter for (optional)
 		 * @return	int			Count of Quests for this Seminary
 		 */
 		public function getCountForQuestsForSeminaryByOpenSubmissions($seminaryId, $questgroupId=null, $questtypeId=null, $title=null)
@@ -425,6 +426,7 @@
 		 * @param	int	$seminaryId	ID of Seminary
 		 * @param	int	$questgroupId	ID of Questgroup (optional)
 		 * @param	int	$questtypeId	ID of Questtype (optional)
+		 * @param	string	$title		Part of title to filter for (optional)
 		 * @param	int	$limit		Limit amount of Quests (optional)
 		 * @param	int	$offset		Offset (optional)
 		 * @return	array			Quests for this Seminary

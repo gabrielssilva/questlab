@@ -86,6 +86,7 @@
 		 * @param	array	$questgroup	Current Questgroup data
 		 * @param	array	$quest		Current Quest data
 		 * @param	array	$character	Current Character data
+		 * @param	array	$answers	Character answers for the Quest
 		 * @return	boolean			True/false for a right/wrong answer or null for moderator evaluation
 		 */
 		public function matchAnswersOfCharacter($seminary, $questgroup, $quest, $character, $answers)
