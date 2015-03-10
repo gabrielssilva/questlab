@@ -283,6 +283,8 @@ input[type="submit"][disabled]{text-shadow:1px 2px #d48c4e;background:#f9ac69;bo
 .rare p{margin:0}
 
 .achmnts li{background:#fff;margin-bottom:10px;padding:15px;border-radius:3px}
+.achmnts .admin{margin:15px 10px 0}
+.achmnts li li{padding:0;margin:0}
 .achmnts img{width:55px;height:55px;float:left;margin-right:15px;border-radius:3px}
 .achmnts p,.achmnts h3{margin:0 0 4px;font-size:1em}
 .achmnts .unlcked{margin-top:3px;font-size:.875em;font-weight:normal;display:block}

@@ -18,10 +18,10 @@
 		<h3 id="<?=$achievement['url']?>"><?=$achievement['title']?></h3>
 		<p class="desc"><?=\hhu\z\Utils::t($achievement['description'])?></p>
 		<ul class="admin">
-			<?php if($index > 0) : ?><li><a href="<?=$linker->link(array('moveup',$seminary['url'],$achievement['url']),1)?>">↑</a></li><?php endif ?>
-			<?php if($index < count($achievements)-1) : ?><li><a href="<?=$linker->link(array('movedown',$seminary['url'],$achievement['url']),1)?>">↓</a></li><?php endif ?>
 			<li><a href="<?=$linker->link(array('edit',$seminary['url'],$achievement['url']),1)?>"><?=_('edit')?></a></li>
 			<li><a href="<?=$linker->link(array('delete',$seminary['url'],$achievement['url']),1)?>"><?=_('delete')?></a></li>
+			<?php if($index > 0) : ?><li><a href="<?=$linker->link(array('moveup',$seminary['url'],$achievement['url']),1)?>">↑</a></li><?php endif ?>
+			<?php if($index < count($achievements)-1) : ?><li><a href="<?=$linker->link(array('movedown',$seminary['url'],$achievement['url']),1)?>">↓</a></li><?php endif ?>
 		</ul>
 	</li>
 	<?php endforeach?>
