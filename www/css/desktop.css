@@ -203,8 +203,10 @@ input[type="submit"][disabled]{text-shadow:1px 2px #d48c4e;background:#f9ac69;bo
 .filter.add{margin-top:25px}
 .filter.add select,.filter.add input[type=text]{display:block;margin-bottom:10px;min-width:200px}
 
-.avatar li{display:inline-block;margin-right:5px;text-align:center}
+.avatar li{display:inline-block;margin:15px;text-align:center}
 .avatar img{border-radius:3px}
+.avatar p{margin:0}
+.avatar .admin li{display:block;margin:10px}
 
 .invalid{background:#ebd3d3;color:#850000}
 
