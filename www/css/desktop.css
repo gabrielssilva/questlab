@@ -52,6 +52,7 @@ table{border-collapse:collapse;border-spacing:0}
 .cf:after{clear:both}
 .cf{zoom:1}
 .cb{clear:both}
+li.cf .qgorder{padding:20px}
 
 .wrap{margin:0 5%;max-height:999999px;min-height:1px}
 
@@ -115,6 +116,7 @@ aside{display:none}
 .qglist .qgtitle .solved .fa{color:#bcd75e}
 .qglist .qgtitle .bonus{background:#f5821f}
 .qglist .qgtitle .bonus:hover{background:#f68e34}
+.qgorder{float:right}
 
 .qtextbox{font-size:.875em;border-radius:5px;background:#fff;border:15px solid #fff;max-height:200px;overflow:hidden}
 .qtext{padding-right:15px}

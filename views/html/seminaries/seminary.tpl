@@ -34,8 +34,14 @@
 		<img src="<?=$linker->link(array('media','seminary',$seminary['url'],$group['picture']['url']))?>">
 		<?php endif ?>
 		<section>
-			<p class="fwb"><?=$hierarchy['title_singular']?> <?=$group['pos']?>:
-			<a href="<?=$linker->link(array('questgroups','questgroup',$seminary['url'],$group['url']))?>"><?=$group['title']?></a></p>
+			<div class="qgorder">
+				<?php if($questgroupIndex > 0) : ?><a href="<?=$linker->link(array('questgroups','moveup',$seminary['url'],$group['url']))?>">↑</a><?php endif ?>
+				<?php if($questgroupIndex < count($hierarchy['questgroups'])-1) : ?><a href="<?=$linker->link(array('questgroups','movedown',$seminary['url'],$group['url']))?>">↓</a><?php endif ?>
+			</div>
+            <div>
+                <p class="fwb"><?=$hierarchy['title_singular']?> <?=$group['pos']?>:
+                <a href="<?=$linker->link(array('questgroups','questgroup',$seminary['url'],$group['url']))?>"><?=$group['title']?></a></p>
+            </div>
 			<div class="cf">
 				<div class="xpbar">
 					<span style="width:<?=($group['achievable_xps'] > 0) ? round($group['character_xps']*100/$group['achievable_xps']) : 0?>%"></span>
@@ -47,10 +53,6 @@
 			<?php endif ?>
 			<a href="<?=$linker->link(array('questgroups','questgroup',$seminary['url'],$group['url']))?>" class="cta orange"><?=_('Let’s go')?></a>
 			<?php if(in_array('admin', \hhu\z\controllers\SeminaryController::$character['characterroles'])) : ?>
-			<div>
-				<?php if($questgroupIndex > 0) : ?><a href="<?=$linker->link(array('questgroups','moveup',$seminary['url'],$group['url']))?>">↑</a><?php endif ?>
-				<?php if($questgroupIndex < count($hierarchy['questgroups'])-1) : ?><a href="<?=$linker->link(array('questgroups','movedown',$seminary['url'],$group['url']))?>">↓</a><?php endif ?>
-			</div>
 			<?php endif ?>
 		</section>
 	</li>
