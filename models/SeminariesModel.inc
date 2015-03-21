@@ -203,6 +203,63 @@
 
 
         /**
+         * Set the moodpic for the Character groups of a Seminary.
+         * 
+         * @param   int $seminaryId         ID of Seminary to set moodpic for Character groups for
+         * @param   int $seminaryMediaId    ID of Seminarymedia to set as moodpic
+         */
+        public function setMoodpicForCharactergroups($seminaryId, $seminaryMediaId)
+        {
+			$this->db->query(
+				'UPDATE seminaries '.
+				'SET charactergroups_seminarymedia_id = ? '.
+				'WHERE id = ?',
+				'ii',
+				$seminaryMediaId,
+				$seminaryId
+			);
+        }
+
+
+        /**
+         * Set the moodpic for the Achievements of a Seminary.
+         * 
+         * @param   int $seminaryId         ID of Seminary to set moodpic for Achievements for
+         * @param   int $seminaryMediaId    ID of Seminarymedia to set as moodpic
+         */
+        public function setMoodpicForAchievements($seminaryId, $seminaryMediaId)
+        {
+			$this->db->query(
+				'UPDATE seminaries '.
+				'SET achievements_seminarymedia_id = ? '.
+				'WHERE id = ?',
+				'ii',
+				$seminaryMediaId,
+				$seminaryId
+			);
+        }
+
+
+        /**
+         * Set the moodpic for the library of a Seminary.
+         * 
+         * @param   int $seminaryId         ID of Seminary to set moodpic for Library for
+         * @param   int $seminaryMediaId    ID of Seminarymedia to set as moodpic
+         */
+        public function setMoodpicForLibrary($seminaryId, $seminaryMediaId)
+        {
+			$this->db->query(
+				'UPDATE seminaries '.
+				'SET library_seminarymedia_id = ? '.
+				'WHERE id = ?',
+				'ii',
+				$seminaryMediaId,
+				$seminaryId
+			);
+        }
+
+
+        /**
 		 * (Re-) Calculate the amount of achievable XPs for a Seminary.
          * 
          * @param   int $seminaryId ID of Seminary to calculate XPs for
@@ -273,6 +330,10 @@
          */
 		public function copySeminary($userId, $sourceSeminaryId, $title, $course, $description, $copySeminaryfields, $copyMedia, $copyQuestgroupshierarchy, $copyQuestgroups, $copyQuests, $copyQuesttopics, $copyCharactertypes, $copyXPlevels, $copyAvatars, $copyAchievements, $copyCharactergroupsgroups, $copyCharactergroupsquests)
 		{ 
+            // Get Seminary
+            $seminary = $this->getSeminaryById($sourceSeminaryId);
+
+            // Copy Seminary
             $this->db->setAutocommit(false);
             try {
                 // Create new Seminary
@@ -285,8 +346,22 @@
 
                 // Copy media
                 $seminaryMediaIds = null;
-                if($copyMedia) {
+                if($copyMedia)
+                {
                     $seminaryMediaIds = $this->Media->copySeminaryMedia($userId, $sourceSeminaryId, $targetSeminaryId);
+                    // Set Seminary media
+                    if(!is_null($seminary['seminarymedia_id'])) {
+                        $this->setMoodpicForSeminary($targetSeminaryId, $seminaryMediaIds[$seminary['seminarymedia_id']]);
+                    }
+                    if(!is_null($seminary['charactergroups_seminarymedia_id'])) {
+                        $this->setMoodpicForCharactergroups($targetSeminaryId, $seminaryMediaIds[$seminary['charactergroups_seminarymedia_id']]);
+                    }
+                    if(!is_null($seminary['achievements_seminarymedia_id'])) {
+                        $this->setMoodpicForAchievements($targetSeminaryId, $seminaryMediaIds[$seminary['achievements_seminarymedia_id']]);
+                    }
+                    if(!is_null($seminary['library_seminarymedia_id'])) {
+                        $this->setMoodpicForLibrary($targetSeminaryId, $seminaryMediaIds[$seminary['library_seminarymedia_id']]);
+                    }
                 }
 
                 // Copy Quest content
