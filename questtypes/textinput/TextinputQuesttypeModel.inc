@@ -23,6 +23,42 @@
 		
 		
 		
+        /**
+         * Copy a Quest
+         * 
+         * @param   int $userId             ID of creating user
+         * @param   int $sourceQuestId      ID of Quest to copy from
+         * @param   int $targetQuestId      ID of Quest to copy to
+         * @param   int $seminaryMediaIds   Mapping of SeminaryMedia-IDs from source Seminary to targetSeminary
+         */
+        public function copyQuest($userId, $sourceQuestId, $targetQuestId, $seminaryMediaIds)
+        {
+            // Copy textinput
+            $this->db->query(
+                'INSERT INTO questtypes_textinput '.
+                '(quest_id, created_user_id, text) '.
+                'SELECT ?, ?, text '.
+                'FROM questtypes_textinput '.
+                'WHERE quest_id = ?',
+                'iii',
+                $targetQuestId, $userId,
+                $sourceQuestId
+            );
+
+            // Copy fields
+            $this->db->query(
+                'INSERT INTO questtypes_textinput_fields '.
+                '(questtypes_textinput_quest_id, number, questtypes_textinput_fieldsize_id, regex) '.
+                'SELECT ?, number, questtypes_textinput_fieldsize_id, regex '.
+                'FROM questtypes_textinput_fields '.
+                'WHERE questtypes_textinput_quest_id = ?',
+                'ii',
+                $targetQuestId,
+                $sourceQuestId
+            );
+        }
+
+
 		/**
 		 * Get textinput-text for a Quest.
 		 * 

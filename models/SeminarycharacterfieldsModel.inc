@@ -123,6 +123,28 @@
 				$characterId
 			);
 		}
+
+
+        /**
+         * Copy all Character fields of a Seminary.
+         * 
+         * @param   int $userId             ID of copying user
+         * @param   int $sourceSeminaryId   ID of Seminary to copy from
+         * @param   int $targetSeminaryId   ID of Seminary to copy to
+         */
+        public function copyFieldsOfSeminary($userId, $sourceSeminaryId, $targetSeminaryId)
+        {
+            $this->db->query(
+                'INSERT INTO seminarycharacterfields '.
+                '(created_user_id, seminary_id, pos, title, url, seminarycharacterfieldtype_id, regex, required) '.
+                'SELECT ?, ?, pos, title, url, seminarycharacterfieldtype_id, regex, required '.
+                'FROM seminarycharacterfields '.
+                'WHERE seminary_id = ?',
+                'iii',
+                $userId, $targetSeminaryId,
+                $sourceSeminaryId
+            );
+        }
 		
 	}
 

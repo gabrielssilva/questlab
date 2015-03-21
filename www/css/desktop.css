@@ -181,6 +181,9 @@ input[type="submit"][disabled]{text-shadow:1px 2px #d48c4e;background:#f9ac69;bo
 .logreg textarea,.logreg select{width:100%;margin:5px 0 15px;-webkit-box-sizing: border-box;-moz-box-sizing:border-box;box-sizing:border-box}
 .logreg textarea{height:150px}
 .logreg .cta{display:block}
+.logreg input[type="checkbox"]{margin:0}
+.logreg input[type="checkbox"] + label{display:inline;}
+.logreg input[type="checkbox"] + label:after{content:"\A";white-space:pre}
 
 .inlbl input{display:inline;margin:0 10px 0 0}
 .inlbl label{display:inline}
@@ -453,3 +456,7 @@ aside .charstats{background:#f7f5f2;border-radius:3px;padding:10px 0;margin-top:
 aside .charstats li{font-size:.875em;padding:2px 0}
 aside .cranks li:nth-child(odd){background:#f7f5f2}
 }
+
+
+div.cond{display:none;margin-left:15px}
+input[type="checkbox"]:checked + label + div.cond{display:block}

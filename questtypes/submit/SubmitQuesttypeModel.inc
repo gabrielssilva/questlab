@@ -29,6 +29,19 @@
 		
 		
 		
+        /**
+         * Copy a Quest
+         * 
+         * @param   int $userId             ID of creating user
+         * @param   int $sourceQuestId      ID of Quest to copy from
+         * @param   int $targetQuestId      ID of Quest to copy to
+         * @param   int $seminaryMediaIds   Mapping of SeminaryMedia-IDs from source Seminary to targetSeminary
+         */
+        public function copyQuest($userId, $sourceQuestId, $targetQuestId, $seminaryMediaIds)
+        {
+        }
+
+
 		/**
 		 * Save Character’s submitted upload.
 		 * 

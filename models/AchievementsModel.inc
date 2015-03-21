@@ -19,6 +19,12 @@
 	 */
 	class AchievementsModel extends \hhu\z\Model
 	{
+		/**
+		 * Required models
+		 * 
+		 * @var array
+		 */
+		public $models = array('media');
 		
 		
 		
@@ -249,8 +255,9 @@
 		public function getAchievementsForSeminary($seminaryId)
 		{
 			return $this->db->query(
-				'SELECT id, created, created_user_id, achievementcondition_id, pos, title, url, description, progress, hidden, only_once, all_conditions, deadline, unachieved_achievementsmedia_id, achieved_achievementsmedia_id '.
+				'SELECT achievements.id, achievementconditions.condition, seminary_id, pos, title, url, description, progress, hidden, only_once, all_conditions, deadline, unachieved_achievementsmedia_id, achieved_achievementsmedia_id '.
 				'FROM achievements '.
+				'LEFT JOIN achievementconditions ON achievementconditions.id = achievements.achievementcondition_id '.
 				'WHERE seminary_id = ? '.
 				'ORDER BY pos ASC',
 				'i',
@@ -369,6 +376,28 @@
 				$conditionId
 			);
 		}
+
+
+        /**
+         * Copy all date conditions of an Achievement.
+         * 
+         * @param   int $userId                 ID of creating user
+         * @param   int $sourceAchievementId    ID of Achievement to copy conditions from
+         * @param   int $targetAchievementId    ID of Achievement to copy conditions to
+         */
+        public function copyAchievementConditionsDate($userId, $sourceAchievementId, $targetAchievementId)
+        {
+            $this->db->query(
+                'INSERT INTO achievementconditions_date '.
+                '(created_user_id, achievement_id, `select`) '.
+                'SELECT ?, ?, `select` '.
+                'FROM achievementconditions_date '.
+                'WHERE achievement_id = ?',
+                'iii',
+                $userId, $targetAchievementId,
+                $sourceAchievementId
+            );
+        }
 
 
 		/**
@@ -517,6 +546,28 @@
 				$conditionId
 			);
 		}
+
+
+        /**
+         * Copy all Character conditions of an Achievement.
+         * 
+         * @param   int $userId                 ID of creating user
+         * @param   int $sourceAchievementId    ID of Achievement to copy conditions from
+         * @param   int $targetAchievementId    ID of Achievement to copy conditions to
+         */
+        public function copyAchievementConditionsCharacter($userId, $sourceAchievementId, $targetAchievementId)
+        {
+            $this->db->query(
+                'INSERT INTO achievementconditions_character '.
+                '(created_user_id, achievement_id, field, value) '.
+                'SELECT ?, ?, field, value '.
+                'FROM achievementconditions_character '.
+                'WHERE achievement_id = ?',
+                'iii',
+                $userId, $targetAchievementId,
+                $sourceAchievementId
+            );
+        }
 
 
 		/**
@@ -696,6 +747,52 @@
 		}
 
 
+        /**
+         * Copy all Quest conditions of an Achievement.
+         * 
+         * @param   int     $userId                 ID of creating user
+         * @param   int     $sourceAchievementId    ID of Achievement to copy conditions from
+         * @param   int     $targetAchievementId    ID of Achievement to copy conditions to
+         * @param   array   $questIds               Mapping of Quest-IDs from source Seminary to target Seminary
+         */
+        public function copyAchievementConditionsQuest($userId, $sourceAchievementId, $targetAchievementId, $questIds)
+        {
+            // Get conditions
+            $conditions = $this->getAchievementConditionsQuest($sourceAchievementId);
+
+            // Copy each condition
+            foreach($conditions as &$condition)
+            {
+                if(is_null($condition['quest_id']))
+                {
+                    $this->db->query(
+                        'INSERT INTO achievementconditions_quest '.
+                        '(created_user_id, achievement_id, field, count, value, status, groupby) '.
+                        'SELECT ?, ?, field, count, value, status, groupby '.
+                        'FROM achievementconditions_quest '.
+                        'WHERE id = ?',
+                        'iii',
+                        $userId, $targetAchievementId,
+                        $condition['id']
+                    );
+                }
+                else
+                {
+                    $this->db->query(
+                        'INSERT INTO achievementconditions_quest '.
+                        '(created_user_id, achievement_id, field, count, value, quest_id, status, groupby) '.
+                        'SELECT ?, ?, field, count, value, ?, status, groupby '.
+                        'FROM achievementconditions_quest '.
+                        'WHERE id = ?',
+                        'iiii',
+                        $userId, $targetAchievementId, $questIds[$condition['quest_id']],
+                        $condition['id']
+                    );
+                }
+            }
+        }
+
+
 		/**
 		 * Delete a Quest condition.
 		 * 
@@ -863,6 +960,52 @@
 				$conditionId
 			);
 		}
+
+
+        /**
+         * Copy all Achievement conditions of an Achievement.
+         * 
+         * @param   int     $userId                 ID of creating user
+         * @param   int     $sourceAchievementId    ID of Achievement to copy conditions from
+         * @param   int     $targetAchievementId    ID of Achievement to copy conditions to
+         * @param   array   $achievementIds         Mapping of Achievement-IDs from source Seminary to target Seminary
+         */
+        public function copyAchievementConditionsAchievement($userId, $sourceAchievementId, $targetAchievementId, $achievementIds)
+        {
+            // Get conditions
+            $conditions = $this->getAchievementConditionsAchievement($sourceAchievementId);
+
+            // Copy each condition
+            foreach($conditions as &$condition)
+            {
+                if(is_null($condition['meta_achievement_id']) || !array_key_exists($condition['meta_achievement_id'], $achievementIds))
+                {
+                    $this->db->query(
+                        'INSERT INTO achievementconditions_achievement '.
+                        '(created_user_id, achievement_id, field, count, value, groupby) '.
+                        'SELECT ?, ?, field, count, value, groupby '.
+                        'FROM achievementconditions_achievement '.
+                        'WHERE id = ?',
+                        'iii',
+                        $userId, $targetAchievementId,
+                        $condition['id']
+                    );
+                }
+                else
+                {
+                    $this->db->query(
+                        'INSERT INTO achievementconditions_achievement '.
+                        '(created_user_id, achievement_id, field, count, value, meta_achievement_id, groupby) '.
+                        'SELECT ?, ?, field, count, value, ?, groupby '.
+                        'FROM achievementconditions_achievement '.
+                        'WHERE id = ?',
+                        'iiii',
+                        $userId, $targetAchievementId, $achievementIds[$condition['meta_achievement_id']],
+                        $condition['id']
+                    );
+                }
+            }
+        }
 
 
 		/**
@@ -1133,6 +1276,97 @@
 				$achievementId
 			);
 		}
+
+
+        /**
+         * Copy all Achievements of a Seminary.
+         * 
+         * @param   int     $userId             ID of creating user
+         * @param   int     $sourceSeminaryId   Seminary to copy from
+         * @param   int     $targetSeminaryId   Seminary to copy to
+         * @param   array   $seminaryMediaIds   Mapping of Seminarymedia-IDs from source Seminary to target Seminary
+         * @param   array   $questIds           Mapping of Quest-IDs from source Seminary to target Seminary (optional)
+         */
+        public function copyAchievementsOfSeminary($userId, $sourceSeminaryId, $targetSeminaryId, $seminaryMediaIds, $questIds=null)
+        {
+            $achievementIds = array();
+
+            // Get Achievements
+            $achievements = $this->getAchievementsForSeminary($sourceSeminaryId);
+
+            // Copy each Achievements
+            foreach($achievements as &$achievement)
+            {
+                // Check Quest-IDs
+                if($achievement['condition'] == 'quest' && is_null($questIds)) {
+                    continue;
+                }
+
+                // Copy Achievement
+                $this->db->query(
+                    'INSERT INTO achievements '.
+                    '(created_user_id, seminary_id, achievementcondition_id, pos, title, url, description, progress, hidden, only_once, all_conditions, deadline) '.
+                    'SELECT ?, ?, achievementcondition_id, pos, title, url, description, progress, hidden, only_once, all_conditions, deadline '.
+                    'FROM achievements '.
+                    'WHERE id = ?',
+                    'iii',
+                    $userId, $targetSeminaryId,
+                    $achievement['id']
+                );
+                $achievementIds[$achievement['id']] = $this->db->getInsertId();
+
+                // Copy media
+                if(!is_null($achievement['unachieved_achievementsmedia_id']))
+                {
+                    $this->Media->copyAchievementMedia($userId, $seminaryMediaIds[$achievement['unachieved_achievementsmedia_id']]);
+                    $this->db->query(
+                        'UPDATE achievements '.
+                        'SET unachieved_achievementsmedia_id = ? '.
+                        'WHERE id = ?',
+                        'ii',
+                        $seminaryMediaIds[$achievement['unachieved_achievementsmedia_id']],
+                        $achievementIds[$achievement['id']]
+                    );
+                }
+                if(!is_null($achievement['achieved_achievementsmedia_id']))
+                {
+                    $this->Media->copyAchievementMedia($userId, $seminaryMediaIds[$achievement['achieved_achievementsmedia_id']]);
+                    $this->db->query(
+                        'UPDATE achievements '.
+                        'SET achieved_achievementsmedia_id = ? '.
+                        'WHERE id = ?',
+                        'ii',
+                        $seminaryMediaIds[$achievement['achieved_achievementsmedia_id']],
+                        $achievementIds[$achievement['id']]
+                    );
+                }
+            }
+
+            // Copy Achievement conditions
+            // Do this after copying the Achievements itself to ensure Meta-
+            // Achievements work correctly
+            foreach($achievements as &$achievement)
+            {
+                // Copy conditions
+                switch($achievement['condition'])
+                {
+                    case 'date':
+                        $this->copyAchievementConditionsDate($userId, $achievement['id'], $achievementIds[$achievement['id']]);
+                    break;
+                    case 'quest':
+                        if(!is_null($questIds)) {
+                            $this->copyAchievementConditionsQuest($userId, $achievement['id'], $achievementIds[$achievement['id']], $questIds);
+                        }
+                    break;
+                    case 'character':
+                        $this->copyAchievementConditionsCharacter($userId, $achievement['id'], $achievementIds[$achievement['id']]);
+                    break;
+                    case 'achievement':
+                        $this->copyAchievementConditionsAchievement($userId, $achievement['id'], $achievementIds[$achievement['id']], $achievementIds);
+                    break;
+                }
+            }
+        }
 
 		
 		/**

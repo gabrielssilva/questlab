@@ -133,6 +133,68 @@
 			
 			return $data[0];
 		}
+
+
+        /**
+         * Copy all media from a Seminary.
+         * 
+         * @param   int     $userId             ID of creating user
+         * @param   int     $sourceSeminaryId   ID of Seminary to copy from
+         * @param   int     $targetSeminaryId   ID of Seminary to copy to
+         * @return  array                       Mapping of Media-IDs from source Seminary to target Seminary
+         */
+        public function copySeminaryMedia($userId, $sourceSeminaryId, $targetSeminaryId)
+        {
+            $seminaryMediaIds = array();
+            $copiedFiles = array();
+
+            // Get all media from a Seminary
+            $seminaryMedia = $this->db->query(
+                'SELECT id '.
+                'FROM seminarymedia '.
+                'WHERE seminary_id = ?',
+                'i',
+                $sourceSeminaryId
+            );
+
+            // Copy each medium
+            try {
+                foreach($seminaryMedia as &$medium)
+                {
+                    // Copy database record
+                    $this->db->query(
+                        'INSERT INTO seminarymedia '.
+                        '(created_user_id, seminary_id, name, url, description, mimetype) '.
+                        'SELECT ?, ?, name, url, description, mimetype '.
+                        'FROM seminarymedia '.
+                        'WHERE id = ?',
+                        'iii',
+                        $userId, $targetSeminaryId,
+                        $medium['id']
+                    );
+                    $seminaryMediaIds[$medium['id']] = $this->db->getInsertId();
+
+                    // Copy file
+                    $sourceFilename = ROOT.DS.\nre\configs\AppConfig::$dirs['seminarymedia'].DS.$medium['id'];
+                    $targetFilename = ROOT.DS.\nre\configs\AppConfig::$dirs['seminarymedia'].DS.$seminaryMediaIds[$medium['id']];
+                    if(!copy($sourceFilename, $targetFilename)) {
+                        throw new \hhu\z\exceptions\FileCopyException(error_get_last());
+                    }
+                    $copiedFiles[] = $targetFilename;
+                }
+            }
+            catch(\hhu\z\exceptions\FileCopyException $e) {
+                // Cleanup
+                foreach($copiedFiles as $filename) {
+                    unlink($filename);
+                }
+                throw $e;
+            }
+
+
+            // Return new media IDs
+            return $seminaryMediaIds;
+        }
 		
 		
 		/**
@@ -227,6 +289,29 @@
 			return $mediaId;
 		}
 
+
+        /**
+         * Copy an Avatar picture.
+         * 
+         * @param   int $userId             ID of creating user
+         * @param   int $seminaryMediaId    ID of Seminary media to copy
+         */
+        public function copyAvatarpicture($userId, $avatarpictureId)
+        {
+            $this->db->query(
+                'INSERT INTO avatarpictures '.
+                '(seminarymedia_id, created_user_id) '.
+                'VALUES '.
+                '(?, ?) '.
+                'ON DUPLICATE KEY UPDATE '.
+                'created_user_id = ?',
+                'iii',
+                $avatarpictureId,
+                $userId,
+                $userId
+            );
+        }
+
 		
 		/**
 		 * Create a new Questgroup picture (Moodpic).
@@ -280,6 +365,29 @@
 			$this->db->setAutocommit(true);
 			return $mediaId;
 		}
+
+
+        /**
+         * Copy a Questgroup picture.
+         * 
+         * @param   int $userId             ID of creating user
+         * @param   int $seminaryMediaId    ID of Seminary media to copy
+         */
+        public function copyQuestgroupspicture($userId, $questgroupspictureId)
+        {
+            $this->db->query(
+                'INSERT INTO questgroupspictures '.
+                '(media_id, created_user_id) '.
+                'VALUES '.
+                '(?, ?) '.
+                'ON DUPLICATE KEY UPDATE '.
+                'created_user_id = ?',
+                'iii',
+                $questgroupspictureId,
+                $userId,
+                $userId
+            );
+        }
 		
 		
 		/**
@@ -337,6 +445,30 @@
 			$this->db->setAutocommit(true);
 			return $mediaId;
 		}
+
+
+
+        /**
+         * Copy media of a Quest.
+         * 
+         * @param   int $userId             ID of creating user
+         * @param   int $seminaryMediaId    ID of Quest media to copy
+         */
+        public function copyQuestsmedia($userId, $seminaryMediaId)
+        {
+            $this->db->query(
+                'INSERT INTO questsmedia '.
+                '(media_id, created_user_id) '.
+                'VALUES '.
+                '(?, ?) '.
+                'ON DUPLICATE KEY UPDATE '.
+                'created_user_id = ?',
+                'iii',
+                $seminaryMediaId,
+                $userId,
+                $userId
+            );
+        }
 		
 		
 		/**
@@ -445,6 +577,30 @@
 			$this->db->setAutocommit(true);
 			return $mediaId;
 		}
+
+
+
+        /**
+         * Copy Achievement media.
+         * 
+         * @param   int $userId             ID of creating user
+         * @param   int $seminaryMediaId    ID of Seminary media to copy
+         */
+        public function copyAchievementMedia($userId, $seminaryMediaId)
+        {
+            $this->db->query(
+                'INSERT INTO achievementsmedia '.
+                '(seminarymedia_id, created_user_id) '.
+                'VALUES '.
+                '(?, ?) '.
+                'ON DUPLICATE KEY UPDATE '.
+                'created_user_id = ?',
+                'iii',
+                $seminaryMediaId,
+                $userId,
+                $userId
+            );
+        }
 		
 		
 		
@@ -465,8 +621,9 @@
 			$data = $this->db->query(
 				'SELECT id '.
 				'FROM seminarymedia '.
-				'WHERE url = ?',
-				's',
+				'WHERE seminary_id = ? AND url = ?',
+				'is',
+                $seminaryId,
 				\nre\core\Linker::createLinkParam($filename)
 			);
 			if(!empty($data)) {

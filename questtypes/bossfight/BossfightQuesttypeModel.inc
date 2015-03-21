@@ -19,10 +19,55 @@
 	 */
 	class BossfightQuesttypeModel extends \hhu\z\models\QuesttypeModel
 	{
+		/**
+		 * Required models
+		 * 
+		 * @var array
+		 */
+		public $models = array('media');
 		
 		
 		
 		
+        /**
+         * Copy a Quest
+         * 
+         * @param   int $userId             ID of creating user
+         * @param   int $sourceQuestId      ID of Quest to copy from
+         * @param   int $targetQuestId      ID of Quest to copy to
+         * @param   int $seminaryMediaIds   Mapping of SeminaryMedia-IDs from source Seminary to targetSeminary
+         */
+        public function copyQuest($userId, $sourceQuestId, $targetQuestId, $seminaryMediaIds)
+        {
+            // Check Seminary media
+            if(is_null($seminaryMediaIds)) {
+                return;
+            }
+
+            // Get boss fight
+            $bossfight = $this->getBossFight($sourceQuestId);
+
+            // Copy media
+            $this->Media->copyQuestsmedia($userId, $seminaryMediaIds[$bossfight['boss_seminarymedia_id']]);
+
+            // Copy boss fight
+            $this->db->query(
+                'INSERT INTO questtypes_bossfight '.
+                '(quest_id, created_user_id, bossname, boss_seminarymedia_id, lives_character, lives_boss) '.
+                'SELECT ?, ?, bossname, ?, lives_character, lives_boss '.
+                'FROM questtypes_bossfight '.
+                'WHERE quest_id = ?',
+                'iiii',
+                $targetQuestId, $userId, $seminaryMediaIds[$bossfight['boss_seminarymedia_id']],
+                $sourceQuestId
+            );
+
+            // Copy stages
+			$stage = $this->getFirstStage($sourceQuestId);
+            $this->copyStage($userId, $targetQuestId, $stage);
+        }
+
+
 		/**
 		 * Get a Boss-Fight.
 		 * 
@@ -57,7 +102,7 @@
 		public function getFirstStage($questId)
 		{
 			$data = $this->db->query(
-				'SELECT id, text, question, livedrain_character, livedrain_boss '.
+				'SELECT id, parent_stage_id, text, question, livedrain_character, livedrain_boss '.
 				'FROM questtypes_bossfight_stages '.
 				'WHERE questtypes_bossfight_quest_id = ? AND parent_stage_id IS NULL',
 				'i',
@@ -105,7 +150,7 @@
 		public function getChildStages($parentStageId)
 		{
 			return $this->db->query(
-				'SELECT id, text, question, livedrain_character, livedrain_boss '.
+				'SELECT id, parent_stage_id, text, question, livedrain_character, livedrain_boss '.
 				'FROM questtypes_bossfight_stages '.
 				'WHERE parent_stage_id = ?',
 				'i',
@@ -177,6 +222,55 @@
 			
 			return (!empty($data));
 		}
+
+
+
+
+        /**
+         * Copy a Bossfight stage and its child-stages.
+         * 
+         * @param   int     $userId         ID of copying user
+         * @param   int     $targetQuestId  ID of Quest to copy to
+         * @param   array   $stage          Data of stage to copy
+         * @param   array   $stageIds       Mapping of Stage-IDs from source Seminary to target Seminary
+         */
+        private function copyStage($userId, $targetQuestId, $stage, $stageIds=array())
+        {
+            // Copy stage
+            if(is_null($stage['parent_stage_id']))
+            {
+                $this->db->query(
+                    'INSERT INTO questtypes_bossfight_stages '.
+                    '(questtypes_bossfight_quest_id, text, question, livedrain_character, livedrain_boss) '.
+                    'SELECT ?, text, question, livedrain_character, livedrain_boss '.
+                    'FROM questtypes_bossfight_stages '.
+                    'WHERE id = ?',
+                    'ii',
+                    $targetQuestId,
+                    $stage['id']
+                );
+            }
+            else
+            {
+                $this->db->query(
+                    'INSERT INTO questtypes_bossfight_stages '.
+                    '(questtypes_bossfight_quest_id, parent_stage_id, text, question, livedrain_character, livedrain_boss) '.
+                    'SELECT ?, ?, text, question, livedrain_character, livedrain_boss '.
+                    'FROM questtypes_bossfight_stages '.
+                    'WHERE id = ?',
+                    'iii',
+                    $targetQuestId, $stageIds[$stage['parent_stage_id']],
+                    $stage['id']
+                );
+            }
+            $stageIds[$stage['id']] = $this->db->getInsertId();
+
+            // Copy child stages
+            $childStages = $this->getChildStages($stage['id']);
+            foreach($childStages as $childStage) {
+                $this->copyStage($userId, $targetQuestId, $childStage, $stageIds);
+            }
+        }
 		
 	}
 

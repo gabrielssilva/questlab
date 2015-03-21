@@ -31,7 +31,7 @@
 		 * 
 		 * @var array
 		 */
-		public $models = array('questgroupshierarchy', 'quests');
+		public $models = array('questgroupshierarchy', 'questgrouptexts', 'quests', 'questtexts', 'media');
 		
 		
 		
@@ -98,7 +98,7 @@
 		public function getQuestgroupsForSeminary($seminaryId)
 		{
 			return $this->db->query(
-				'SELECT id, title, url, achievable_xps '.
+				'SELECT id, title, url, questgroupspicture_id, achievable_xps '.
 				'FROM questgroups '.
 				'WHERE seminary_id = ? '.
 				'ORDER BY title ASC',
@@ -396,6 +396,7 @@
 			}
 			
 			// XPs of child Questgroups
+            //var_dump($this->Questgroupshierarchy);
 			$questgroupHierarchy = $this->Questgroupshierarchy->getHierarchyForQuestgroup($questgroupId);
 			if(!empty($questgroupHierarchy))
 			{
@@ -519,6 +520,79 @@
 		}
 
 
+        /**
+         * Copy Questgroupshierarchy of Questgroups from a Seminary.
+         * 
+         * @param   array   $questgroupshierarchyIds    Mapping of hierarchy-IDs from source Seminary to target Seminary
+         * @param   array   $questgroupIds              Mapping of Questgroup-IDs from source Seminary to target Seminary
+         */
+        public function copyQuestgroupsHierarchy($questgroupshierarchyIds, $questgroupIds)
+        {
+            foreach($questgroupIds as $sourceQuestgroupId => $targetQuestgroupId)
+            {
+                $hierarchy = $this->Questgroupshierarchy->getHierarchyForQuestgroup($sourceQuestgroupId);
+                if(!is_null($hierarchy))
+                {
+                    if(is_null($hierarchy['parent_questgroup_id']))
+                    {
+                        $this->db->query(
+                            'INSERT INTO questgroups_questgroupshierarchy '.
+                            '(questgroup_id, questgroupshierarchy_id, parent_questgroup_id, pos) '.
+                            'VALUES '.
+                            '(?, ?, null, ?)',
+                            'iii',
+                            $targetQuestgroupId,
+                            $questgroupshierarchyIds[$hierarchy['id']],
+                            $hierarchy['questgroup_pos']
+                        );
+                    }
+                    else
+                    {
+                        $this->db->query(
+                            'INSERT INTO questgroups_questgroupshierarchy '.
+                            '(questgroup_id, questgroupshierarchy_id, parent_questgroup_id, pos) '.
+                            'VALUES '.
+                            '(?, ?, ?, ?)',
+                            'iiii',
+                            $targetQuestgroupId,
+                            $questgroupshierarchyIds[$hierarchy['id']],
+                            $questgroupIds[$hierarchy['parent_questgroup_id']],
+                            $hierarchy['questgroup_pos']
+                        );
+                    }
+                }
+            }
+        }
+
+
+        /**
+         * Copy all related Questgroups of Questtexts of a Seminary.
+         * 
+         * @param   array   $questgroupIds  Mapping of Questgroup-IDs from source Seminary to target Seminary
+         * @param   array   $questtextIds   Mapping of Questtext-IDs from source Seminary to target Seminary
+         */
+        public function copyRelatedQuestgroups($questgroupIds, $questtextIds)
+        {
+            foreach($questgroupIds as $sourceQuestgroupId => $targetQuestgroupId)
+            {
+                $questtexts = $this->Questtexts->getRelatedQuesttextsForQuestgroup($sourceQuestgroupId);
+                foreach($questtexts as &$questtext)
+                {
+                    $this->db->query(
+                        'INSERT INTO questgroups_questtexts '.
+                        '(questgroup_id, questtext_id, entry_text) '.
+                        'SELECT ?, ?, entry_text '.
+                        'FROM questgroups_questtexts '.
+                        'WHERE questgroup_id = ? AND questtext_id = ?',
+                        'iiii',
+                        $targetQuestgroupId, $questtextIds[$questtext['id']],
+                        $sourceQuestgroupId, $questtext['id']
+                    );
+                }
+            }
+        }
+
+
 		/**
 		 * Move a Questgroup up (decrement position) or down (increment
 		 * position).
@@ -601,6 +675,61 @@
 				\nre\core\Linker::createLinkParam($title),
 				$questgroupId
 			);
+		}
+
+
+		/**
+		 * Copy Questgroups of Seminary.
+		 * 
+		 * @throws	\nre\exceptions\DatamodelException
+         * @param   int     $userId                     ID of creating user
+		 * @param	int	    $sourceSeminaryId	        ID of Seminary to copy Questgroups from
+         * @param   int     $targetSeminaryId           ID of Seminary to copy Questgroups to
+         * @param   array   $questgroupshierarchyIds    Mapping of hierarchy-IDs from source Seminary to target Seminary
+         * @param   array   $seminaryMediaIds           Mapping of Seminary-media-IDs from source Seminary to target Seminary (optional)
+         * @return  array                               Mapping of Questgroup-IDs from source Seminary to target Seminary
+		 */
+		public function copyQuestgroupsOfSeminary($userId, $sourceSeminaryId, $targetSeminaryId, $questgroupshierarchyIds, $seminaryMediaIds=null)
+		{
+            // Get Questgroups of source Seminary
+            $questgroupIds = array();
+            $questgroups = $this->getQuestgroupsForSeminary($sourceSeminaryId);
+            foreach($questgroups as &$questgroup)
+            {
+                // Insert into target Seminary
+                $this->db->query(
+                    'INSERT INTO questgroups '.
+                    '(created_user_id, seminary_id, title, url) '.
+                    'VALUES '.
+                    '(?, ?, ?, ?)',
+                    'iiss',
+                    $userId,
+                    $targetSeminaryId,
+                    $questgroup['title'],
+                    $questgroup['url']
+                );
+                $questgroupIds[$questgroup['id']] = $this->db->getInsertId();
+
+                // Copy media
+                if(!is_null($seminaryMediaIds) && !is_null($questgroup['questgroupspicture_id']))
+                {
+                    $this->Media->copyQuestgroupspicture($userId, $seminaryMediaIds[$questgroup['questgroupspicture_id']]);
+                    $this->db->query(
+                        'UPDATE questgroups '.
+                        'SET questgroupspicture_id = ? '.
+                        'WHERE id = ?',
+                        'ii',
+                        $seminaryMediaIds[$questgroup['questgroupspicture_id']],
+                        $questgroupIds[$questgroup['id']]
+                    );
+                }
+
+                // Copy Questgroup texts
+                $this->Questgrouptexts->copyQuestgrouptexts($userId, $questgroup['id'], $questgroupIds[$questgroup['id']]);
+            }
+
+
+            return $questgroupIds;
 		}
 
 

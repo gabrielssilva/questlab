@@ -19,6 +19,12 @@
 	 */
 	class QuesttextsModel extends \hhu\z\Model
 	{
+		/**
+		 * Required models
+		 * 
+		 * @var array
+		 */
+		public $models = array('media');
 		
 		
 		
@@ -304,6 +310,57 @@
 				$questtextId
 			);
 		}
+
+
+        /**
+         * Copy Quest texts from one Quest to another.
+         * 
+         * @param   int     $userId             ID of copying user
+         * @param   int     $sourceQuestId      ID of source Quest
+         * @param   int     $targetQuestId      ID of target Quest
+         * @param   array   $seminaryMediaIds   Mapping of Seminary-media-IDs from source Seminary to target Seminary (optional)
+         */
+        public function copyQuesttexts($userId, $sourceQuestId, $targetQuestId, $seminaryMediaIds=null)
+        {
+            $questtextIds = array();
+
+            // Get Questtexts
+			$questtexts = $this->getQuesttextsOfQuest($sourceQuestId);
+
+            // Copy each text
+            foreach($questtexts as &$text)
+            {
+                // Copy text
+                $this->db->query(
+                    'INSERT INTO questtexts '.
+                    '(created_user_id, quest_id, questtexttype_id, pos, text, out_text, abort_text) '.
+                    'SELECT ?, ?, questtexttype_id, pos, text, out_text, abort_text '.
+                    'FROM questtexts '.
+                    'WHERE id = ?',
+                    'iii',
+                    $userId, $targetQuestId,
+                    $text['id']
+                );
+                $questtextIds[$text['id']] = $this->db->getInsertId();
+
+                // Copy media
+                if(!is_null($seminaryMediaIds) && !is_null($text['questsmedia_id']))
+                {
+                    $this->Media->copyQuestsmedia($userId, $seminaryMediaIds[$text['questsmedia_id']]);
+                    $this->db->query(
+                        'UPDATE questtexts '.
+                        'SET questsmedia_id = ? '.
+                        'WHERE id = ?',
+                        'ii',
+                        $seminaryMediaIds[$text['questsmedia_id']],
+                        $questtextIds[$text['id']]
+                    );
+                }
+            }
+
+
+            return $questtextIds;
+        }
 		
 		
 		/**

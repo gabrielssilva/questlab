@@ -19,12 +19,6 @@
 	 */
 	class QuestgrouptextsModel extends \hhu\z\Model
 	{
-		/**
-		 * Required models
-		 * 
-		 * @var array
-		 */
-		public $models = array('questgroupshierarchy', 'questgroups', 'quests', 'questtexts');
 		
 		
 		
@@ -56,52 +50,6 @@
 				'i',
 				$questgroupId
 			);
-		}
-
-
-		/**
-		 * Get the first text of a Questgroup.
-		 * 
-		 * @param	int	$questgroupId	ID of a Questgroup
-		 * @return	string			First text of this Questgroup or NULL
-		 */
-		public function getFirstQuestgroupText($questgroupId)
-		{
-			// Text of Questgroup itself
-			$questgroupTexts = $this->getQuestgroupTexts($questgroupId);
-			if(!empty($questgroupTexts)) {
-				return $questgroupTexts[0]['text'];
-			}
-			
-			// Text of first Quest
-			$quest = $this->Quests->getFirstQuestOfQuestgroup($questgroupId);
-			if(!is_null($quest))
-			{
-				$questText = $this->Questtexts->getFirstQuestText($quest['id']);
-				if(!is_null($questText)) {
-					return $questText;
-				}
-			}
-			
-			// Text of ChildQuestgroups
-			$questgroupHierarchy = $this->Questgroupshierarchy->getHierarchyForQuestgroup($questgroupId);
-			$childQuestgroupshierarchy = $this->Questgroupshierarchy->getChildQuestgroupshierarchy($questgroupHierarchy['id']);
-			foreach($childQuestgroupshierarchy as &$hierarchy)
-			{
-				// Get Questgroups
-				$questgroups = $this->Questgroups->getQuestgroupsForHierarchy($hierarchy['id'], $questgroupId);
-				foreach($questgroups as &$group)
-				{
-					$childQuestgroupText = $this->getFirstQuestgroupText($group['id']);
-					if(!is_null($childQuestgroupText)) {
-						return $childQuestgroupText;
-					}
-				}
-			}
-			
-			
-			// No text found
-			return null;
 		}
 
 
@@ -153,6 +101,28 @@
 				$questgrouptextId
 			);
 		}
+
+
+        /**
+         * Copy Questgroup texts from one Questgroup to another.
+         * 
+         * @param   $userId             ID of copying user
+         * @param   $sourceQuestgroupId ID of source Questgroup
+         * @param   $targetQuestgroupId ID of target Questgroup
+         */
+        public function copyQuestgrouptexts($userId, $sourceQuestgroupId, $targetQuestgroupId)
+        {
+            $this->db->query(
+                'INSERT INTO questgrouptexts '.
+                '(created_user_id, questgroup_id, pos, text) '.
+                'SELECT ?, ?, pos, text '.
+                'FROM questgrouptexts '.
+                'WHERE questgroup_id = ?',
+                'iii',
+                $userId, $targetQuestgroupId,
+                $sourceQuestgroupId
+            );
+        }
 
 
 		/**

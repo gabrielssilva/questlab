@@ -24,7 +24,7 @@
 		 * 
 		 * @var array
 		 */
-		public $models = array('seminaries', 'users', 'characterroles', 'charactertypes', 'xplevels', 'questgroupshierarchy', 'questgroups', 'questgrouptexts', 'media');
+		public $models = array('users', 'seminaries', 'characterroles', 'charactertypes', 'xplevels', 'questgroupshierarchy', 'questgroups', 'questgrouptexts', 'quests', 'questtexts', 'media');
 		/**
 		 * Required components
 		 * 
@@ -41,6 +41,7 @@
 			'seminary' => array('admin', 'moderator', 'user'),
 			'create' => array('admin', 'moderator'),
 			'edit' => array('admin', 'moderator', 'user'),
+			'copy' => array('admin', 'moderator', 'user'),
 			'delete' => array('admin', 'moderator', 'user'),
 			'calculatexps' => array('admin', 'moderator', 'user')
 		);
@@ -52,6 +53,7 @@
 		public $seminaryPermissions = array(
 			'seminary' => array('admin', 'moderator', 'user', 'guest'),
 			'edit' => array('admin'),
+			'copy' => array('admin'),
 			'delete' => array('admin'),
 			'calculatexps' => array('admin', 'moderator')
 		);
@@ -138,7 +140,7 @@
 					}
 					
 					// Get first Questgroup text
-					$text = $this->Questgrouptexts->getFirstQuestgroupText($questgroup['id']);
+					$text = $this->getFirstQuestgroupText($questgroup['id']);
 					if(!is_null($text))
 					{
 						$questgroup['text'] = \hhu\z\Utils::shortenString($text, 100, 120).' …';
@@ -390,6 +392,101 @@
 			$this->set('validation', $validation);
 			$this->set('validationSettings', $validationSettings);
 		}
+        
+
+        /**
+         * Copy a Seminary and selected content.
+         * 
+		 * @throws	\nre\exceptions\IdNotFoundException
+		 * @param	string	$seminaryUrl	URL-Title of a seminary
+         */
+        public function copy($seminaryUrl)
+        {
+			// Get seminary
+			$seminary = $this->Seminaries->getSeminaryByUrl($seminaryUrl);
+
+			// Values
+			$title = sprintf('%s (%s)', $seminary['title'], _('Copy'));
+			$course = $seminary['course'];
+			$description = $seminary['description'];
+            $elements = array();
+			$fields = array('title', 'course');
+			$validation = array();
+            $exception = null;
+
+			// Check request method
+			if($this->request->getRequestMethod() == 'POST' && !is_null($this->request->getPostParam('edit')))
+			{
+				// Get params and validate them
+				$validation = $this->Validation->validateParams($this->request->getPostParams(), $fields);
+				$title = $this->request->getPostParam('title');
+				if($this->Seminaries->seminaryTitleExists($title)) {
+					$validation = $this->Validation->addValidationResult($validation, 'title', 'exist', true);
+				}
+				$course = $this->request->getPostParam('course');
+				$description = $this->request->getPostParam('description');
+                $elements = $this->request->getPostParam('elements');
+                if(!is_array($elements)) {
+                    $elements = array();
+                }
+
+				// Copy Seminary
+				if($validation === true)
+				{
+                    try {
+                        $seminaryId = $this->Seminaries->copySeminary(
+                            $this->Auth->getUserId(),
+                            $seminary['id'],
+                            $title,
+                            $course,
+                            $description,
+                            array_key_exists('seminaryfields', $elements),
+                            array_key_exists('media', $elements),
+                            array_key_exists('questgroupshierarchy', $elements),
+                            array_key_exists('questgroups', $elements),
+                            array_key_exists('quests', $elements),
+                            array_key_exists('questtopics', $elements),
+                            array_key_exists('charactertypes', $elements),
+                            array_key_exists('xplevels', $elements),
+                            array_key_exists('avatars', $elements),
+                            array_key_exists('achievements', $elements),
+                            array_key_exists('charactergroupsgroups', $elements),
+                            array_key_exists('charactergroupsquests', $elements)
+                        );
+                        $seminary = $this->Seminaries->getSeminaryById($seminaryId);
+
+                        // Redirect to overview
+                        $this->redirect($this->linker->link('index', 1));
+                    }
+                    catch(\hhu\z\exceptions\QuesttypeModelNotValidException $e) {
+                        $exception = $e;
+                    }
+                    catch(\hhu\z\exceptions\QuesttypeModelNotFoundException $e) {
+                        $exception = $e;
+                    }
+                    catch(\hhu\z\exceptions\FileCopyException $e) {
+                        $exception = $e;
+                    }
+                }
+            }
+
+			// Get validation settings
+			$validationSettings = array();
+			foreach($fields as &$field) {
+				$validationSettings[$field] = \nre\configs\AppConfig::$validation[$field];
+			}
+
+
+			// Pass data to view
+			$this->set('seminary', $seminary);
+			$this->set('title', $title);
+			$this->set('course', $course);
+			$this->set('description', $description);
+			$this->set('elements', $elements);
+			$this->set('validation', $validation);
+			$this->set('validationSettings', $validationSettings);
+            $this->set('exception', $exception);
+        }
 		
 		
 		/**
@@ -444,22 +541,59 @@
 			// Get Seminary
 			$seminary = $this->Seminaries->getSeminaryByUrl($seminaryUrl);
 			
-			// Questgrouphierarchy and Questgroups
-			$questgroupshierarchy = $this->Questgroupshierarchy->getHierarchyOfSeminary($seminary['id']);
-			foreach($questgroupshierarchy as &$hierarchy)
+			// (Re-) Calculate XPs
+            $this->Seminaries->calculateXPsForSeminary($seminary['id']);
+			
+			// Redirect to Questgroup
+			$this->redirect($this->linker->link(array('seminary', $seminary['url']), 1));
+		}
+
+
+
+
+		/**
+		 * Get the first text of a Questgroup.
+		 * 
+		 * @param	int	$questgroupId	ID of a Questgroup
+		 * @return	string			First text of this Questgroup or NULL
+		 */
+		private function getFirstQuestgroupText($questgroupId)
+		{
+			// Text of Questgroup itself
+			$questgroupTexts = $this->Questgrouptexts->getQuestgroupTexts($questgroupId);
+			if(!empty($questgroupTexts)) {
+				return $questgroupTexts[0]['text'];
+			}
+			
+			// Text of first Quest
+			$quest = $this->Quests->getFirstQuestOfQuestgroup($questgroupId);
+			if(!is_null($quest))
+			{
+				$questText = $this->Questtexts->getFirstQuestText($quest['id']);
+				if(!is_null($questText)) {
+					return $questText;
+				}
+			}
+			
+			// Text of ChildQuestgroups
+			$questgroupHierarchy = $this->Questgroupshierarchy->getHierarchyForQuestgroup($questgroupId);
+			$childQuestgroupshierarchy = $this->Questgroupshierarchy->getChildQuestgroupshierarchy($questgroupHierarchy['id']);
+			foreach($childQuestgroupshierarchy as &$hierarchy)
 			{
 				// Get Questgroups
-				$hierarchy['questgroups'] = $this->Questgroups->getQuestgroupsForHierarchy($hierarchy['id']);
-				foreach($hierarchy['questgroups'] as &$questgroup)
+				$questgroups = $this->Questgroups->getQuestgroupsForHierarchy($hierarchy['id'], $questgroupId);
+				foreach($questgroups as &$group)
 				{
-					// Calculate achievable XPs
-					$this->Questgroups->calculateXPsForQuestgroup($questgroup['id']);
+					$childQuestgroupText = $this->getFirstQuestgroupText($group['id']);
+					if(!is_null($childQuestgroupText)) {
+						return $childQuestgroupText;
+					}
 				}
 			}
 			
 			
-			// Redirect to Questgroup
-			$this->redirect($this->linker->link(array('seminary', $seminary['url']), 1));
+			// No text found
+			return null;
 		}
 		
 	}

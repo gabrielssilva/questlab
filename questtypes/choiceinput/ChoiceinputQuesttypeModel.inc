@@ -24,6 +24,79 @@
 		
 		
 		
+        /**
+         * Copy a Quest
+         * 
+         * @param   int $userId             ID of creating user
+         * @param   int $sourceQuestId      ID of Quest to copy from
+         * @param   int $targetQuestId      ID of Quest to copy to
+         * @param   int $seminaryMediaIds   Mapping of SeminaryMedia-IDs from source Seminary to targetSeminary
+         */
+        public function copyQuest($userId, $sourceQuestId, $targetQuestId, $seminaryMediaIds)
+        {
+            // Copy choiceinput
+            $this->db->query(
+                'INSERT INTO questtypes_choiceinput '.
+                '(quest_id, created_user_id, text) '.
+                'SELECT ?, ?, text '.
+                'FROM questtypes_choiceinput '.
+                'WHERE quest_id = ?',
+                'iii',
+                $targetQuestId, $userId,
+                $sourceQuestId
+            );
+
+            // Copy lists
+            $lists = $this->getChoiceinputLists($sourceQuestId);
+            foreach($lists as &$list)
+            {
+                // Copy list
+                $this->db->query(
+                    'INSERT INTO questtypes_choiceinput_lists '.
+                    '(questtypes_choiceinput_quest_id, number) '.
+                    'SELECT ?, number '.
+                    'FROM questtypes_choiceinput_lists '.
+                    'WHERE id = ?',
+                    'ii',
+                    $targetQuestId,
+                    $list['id']
+                );
+                $targetListId = $this->db->getInsertId();
+
+                // Copy choices
+                $choiceIds = array();
+                $choices = $this->getChoiceinputChoices($list['id']);
+                foreach($choices as $choice)
+                {
+                    $this->db->query(
+                        'INSERT INTO questtypes_choiceinput_choices '.
+                        '(questtypes_choiceinput_list_id, pos, text) '.
+                        'SELECT ?, pos, text '.
+                        'FROM questtypes_choiceinput_choices '.
+                        'WHERE id = ?',
+                        'ii',
+                        $targetListId,
+                        $choice['id']
+                    );
+                    $choiceIds[$choice['id']] = $this->db->getInsertId();
+                }
+
+                // Set correct choice
+                if(!is_null($list['questtypes_choiceinput_choice_id']))
+                {
+                    $this->db->query(
+                        'UPDATE questtypes_choiceinput_lists '.
+                        'SET questtypes_choiceinput_choice_id = ? '.
+                        'WHERE id = ?',
+                        'ii',
+                        $choiceIds[$list['questtypes_choiceinput_choice_id']],
+                        $targetListId
+                    );
+                }
+            }
+        }
+
+
 		/**
 		 * Get choiceinput-text for a Quest.
 		 * 

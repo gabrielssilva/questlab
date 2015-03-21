@@ -8,6 +8,7 @@
 <?php if(in_array('admin', \hhu\z\controllers\SeminaryController::$character['characterroles'])) : ?>
 <nav class="admin">
 	<li><a href="<?=$linker->link('edit', 3)?>"><?=_('Edit seminary')?></a></li>
+	<li><a href="<?=$linker->link('copy', 3)?>"><?=_('Copy seminary')?></a></li>
 	<li><a href="<?=$linker->link('delete', 3)?>"><?=_('Delete seminary')?></a></li>
 </nav>
 <?php endif ?>

@@ -176,6 +176,42 @@
 				$groupsgroupId
 			);
 		}
+
+
+        /**
+         * Copy all Character groups-groups of a Seminary.
+         * 
+         * @param   int     $userId             ID of creating user
+         * @param   int     $sourceSeminaryId   ID of Seminary to copy from
+         * @param   int     $targetSeminaryId   ID of Seminary to copy to
+         * @param   array                       Mapping of Character groups-groups-IDs from source Seminary to target Seminary
+         */
+        public function copyGroupsgroupsOfSeminary($userId, $sourceSeminaryId, $targetSeminaryId)
+        {
+            $groupsgroupIds = array();
+
+            // Get Character groups
+            $groupsgroups = $this->getGroupsroupsForSeminary($sourceSeminaryId);
+
+            // Copy each Groups-group
+            foreach($groupsgroups as &$group)
+            {
+                $this->db->query(
+                    'INSERT INTO charactergroupsgroups '.
+                    '(created_user_id, seminary_id, name, url, preferred) '.
+                    'SELECT ?, ?, name, url, preferred '.
+                    'FROM charactergroupsgroups '.
+                    'WHERE id = ?',
+                    'iii',
+                    $userId, $targetSeminaryId,
+                    $group['id']
+                );
+                $groupsgroupIds[$group['id']] = $this->db->getInsertId();
+            }
+
+
+            return $groupsgroupIds;
+        }
 		
 		
 		/**

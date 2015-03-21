@@ -19,6 +19,12 @@
 	 */
 	class AvatarsModel extends \hhu\z\Model
 	{
+		/**
+		 * Required models
+		 * 
+		 * @var array
+		 */
+		public $models = array('media');
 		
 		
 		
@@ -89,6 +95,32 @@
 
 
 		/**
+		 * Get an Avatar by its Character type and XP-level.
+		 * 
+		 * @param	int	$charactertypeId	ID of Character type
+		 * @param	int	$xplevelId		ID of XP-level
+		 * @return	array				Avatar data
+		 */
+		public function getAvatarByTypeAndLevelId($charactertypeId, $xplevelId)
+		{
+			$data = $this->db->query(
+				'SELECT id, charactertype_id, xplevel_id, avatarpicture_id, small_avatarpicture_id '.
+				'FROM avatars '.
+				'WHERE charactertype_id = ? AND xplevel_id = ?',
+				'ii',
+				$charactertypeId,
+				$xplevelId
+			);
+			if(empty($data)) {
+				throw new \nre\exceptions\IdNotFoundException($charactertypeId.'-'.$xplevelId);
+			}
+			
+			
+			return $data[0];
+		}
+
+
+		/**
 		 * Set the picture for an Avatar.
 		 * 
 		 * @param	int	$userId			ID of creating user
@@ -140,6 +172,51 @@
 				$avatarpictureId
 			);
 		}
+
+
+        /**
+         * Copy all Avatars from a Seminary.
+         * 
+         * @param   int     $userId             ID of copying user
+         * @param   array   $charactertypeIds   Mapping of Charactertype-IDs from source Seminary to target Seminary
+         * @param   array   $xplevelIds         Mapping of XP-level-IDs from source Seminary to targetSeminary
+         * @param   array   $seminaryMediaIds   Mapping of Seminarymedia-IDs from source Seminary to target Seminary
+         */
+        public function copyAvatars($userId, $charactertypeIds, $xplevelIds, $seminaryMediaIds)
+        {
+            // Copy Avatars
+            foreach($charactertypeIds as $sourceCharactertypeId => $targetCharactertypeId)
+            {
+                foreach($xplevelIds as $sourceXplevelId => $targetXplevelId)
+                {
+                    try {
+                        // Get Avatar
+                        $avatar = $this->getAvatarByTypeAndLevelId($sourceCharactertypeId, $sourceXplevelId);
+
+                        // Copy media
+                        $this->Media->copyAvatarpicture($userId, $seminaryMediaIds[$avatar['avatarpicture_id']]);
+                        $this->Media->copyAvatarpicture($userId, $seminaryMediaIds[$avatar['small_avatarpicture_id']]);
+
+                        // Copy Avatar
+                        $this->db->query(
+                            'INSERT INTO avatars '.
+                            '(created_user_id, charactertype_id, xplevel_id, avatarpicture_id, small_avatarpicture_id) '.
+                            'VALUES '.
+                            '(?, ?, ?, ?, ?)',
+                            'iiiii',
+                            $userId,
+                            $targetCharactertypeId,
+                            $targetXplevelId,
+                            $seminaryMediaIds[$avatar['avatarpicture_id']],
+                            $seminaryMediaIds[$avatar['small_avatarpicture_id']]
+                        );
+                    }
+                    catch(\nre\exceptions\IdNotFoundException $e) {
+                        // Not all combinations of charactertypes and XP-levels exist
+                    }
+                }
+            }
+        }
 		
 	}
 

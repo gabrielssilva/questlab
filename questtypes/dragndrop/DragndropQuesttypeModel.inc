@@ -19,10 +19,115 @@
 	 */
 	class DragndropQuesttypeModel extends \hhu\z\models\QuesttypeModel
 	{
+		/**
+		 * Required models
+		 * 
+		 * @var array
+		 */
+		public $models = array('media');
 		
 		
 		
 		
+        /**
+         * Copy a Quest
+         * 
+         * @param   int $userId             ID of creating user
+         * @param   int $sourceQuestId      ID of Quest to copy from
+         * @param   int $targetQuestId      ID of Quest to copy to
+         * @param   int $seminaryMediaIds   Mapping of SeminaryMedia-IDs from source Seminary to targetSeminary
+         */
+        public function copyQuest($userId, $sourceQuestId, $targetQuestId, $seminaryMediaIds)
+        {
+            // Check Seminary media
+            if(is_null($seminaryMediaIds)) {
+                return;
+            }
+
+            // Get Dragndrop
+            $dragndrop = $this->getDragndrop($sourceQuestId);
+
+            // Copy media
+            $this->Media->copyQuestsmedia($userId, $seminaryMediaIds[$dragndrop['questmedia_id']]);
+
+            // Copy dran&drop
+            $this->db->query(
+                'INSERT INTO questtypes_dragndrop '.
+                '(quest_id, created_user_id, questmedia_id, width, height) '.
+                'SELECT ?, ?, ?, width, height '.
+                'FROM questtypes_dragndrop '.
+                'WHERE quest_id = ?',
+                'iiii',
+                $targetQuestId, $userId, $seminaryMediaIds[$dragndrop['questmedia_id']],
+                $sourceQuestId
+            );
+
+            // Copy drags
+            $dragIds = array();
+            $drags = $this->getDrags($sourceQuestId);
+            foreach($drags as &$drag)
+            {
+                // Copy media
+                $this->Media->copyQuestsmedia($userId, $seminaryMediaIds[$drag['questmedia_id']]);
+
+                // Copy drag
+                $this->db->query(
+                    'INSERT INTO questtypes_dragndrop_drags '.
+                    '(questtypes_dragndrop_id, questmedia_id) '.
+                    'SELECT ?, ? '.
+                    'FROM questtypes_dragndrop_drags '.
+                    'WHERE id = ?',
+                    'iii',
+                    $targetQuestId, $seminaryMediaIds[$drag['questmedia_id']],
+                    $drag['id']
+                );
+                $dragIds[$drag['id']] = $this->db->getInsertId();
+            }
+
+            // Copy drops
+            $dropIds = array();
+            $drops = $this->getDrops($sourceQuestId);
+            foreach($drops as &$drop)
+            {
+                // Copy drop
+                $this->db->query(
+                    'INSERT INTO questtypes_dragndrop_drops '.
+                    '(questtypes_dragndrop_id, top, `left`, width, height) '.
+                    'SELECT ?, top, `left`, width, height '.
+                    'FROM questtypes_dragndrop_drops '.
+                    'WHERE id = ?',
+                    'ii',
+                    $targetQuestId,
+                    $drop['id']
+                );
+                $dropIds[$drop['id']] = $this->db->getInsertId();
+
+                // Link drags and drops
+                $links = $this->db->query(
+                    'SELECT questtypes_dragndrop_drag_id '.
+                    'FROM questtypes_dragndrop_drops_drags '.
+                    'WHERE questtypes_dragndrop_drop_id = ?',
+                    'i',
+                    $drop['id']
+                );
+                foreach($links as $link)
+                {
+                    $this->db->query(
+                        'INSERT INTO questtypes_dragndrop_drops_drags '.
+                        '(questtypes_dragndrop_drop_id, questtypes_dragndrop_drag_id, created_user_id) '.
+                        'VALUES '.
+                        '(?, ?, ?)',
+                        'iii',
+                        $dropIds[$drop['id']],
+                        $dragIds[$link['questtypes_dragndrop_drag_id']],
+                        $userId
+                    );
+                }
+            }
+        }
+
+
+
 		/**
 		 * Get Drag&Drop-field.
 		 * 

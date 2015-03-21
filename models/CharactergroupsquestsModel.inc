@@ -25,7 +25,7 @@
 		 * 
 		 * @var array
 		 */
-		public $models = array('uploads');
+		public $models = array('uploads', 'media');
 		
 		
 		
@@ -50,7 +50,7 @@
 		public function getQuestsForCharactergroupsgroup($groupsgroupId)
 		{
 			return $this->db->query(
-				'SELECT id, questgroups_id, title, url, xps '.
+				'SELECT id, questgroups_id, title, url, xps, questsmedia_id '.
 				'FROM charactergroupsquests '.
 				'WHERE charactergroupsgroup_id = ? '.
 				'ORDER BY created ASC',
@@ -375,6 +375,55 @@
 		}
 		
 		
+        /**
+         * Copy all Character groups Quests from a Seminary.
+         * 
+         * @param   int     $userId             ID of copying user
+         * @param   array   $groupsgroupIds     Mapping of Character groups-group-IDs from source Seminary to target Seminary
+         * @param   array   $questgroupIds      Mapping of Questgroup-IDs from source Seminary to target Seminary
+         * @param   array   $seminaryMediaIds   Mapping of Seminarymedia-IDs from source Seminary to target Seminary (optional)
+         */
+        public function copyQuestsOfSeminary($userId, $groupsgroupIds, $questgroupIds, $seminaryMediaIds=null)
+        {
+            foreach($groupsgroupIds as $sourceGroupsgroupId => $targetGroupsgroupId)
+            {
+                // Get Quests
+                $quests = $this->getQuestsForCharactergroupsgroup($sourceGroupsgroupId);
+
+                // Copy each Quest
+                foreach($quests as &$quest)
+                {
+                    // Copy Quest
+                    $this->db->query(
+                        'INSERT INTO charactergroupsquests '.
+                        '(created_user_id, charactergroupsgroup_id, questgroups_id, title, url, description, xps, rules, won_text, lost_text) '.
+                        'SELECT ?, ?, ?, title, url, description, xps, rules, won_text, lost_text '.
+                        'FROM charactergroupsquests '.
+                        'WHERE id = ?',
+                        'iiii',
+                        $userId, $targetGroupsgroupId, $questgroupIds[$quest['questgroups_id']],
+                        $quest['id']
+                    );
+                    $targetQuestId = $this->db->getInsertId();
+
+                    // Copy media
+                    if(!is_null($seminaryMediaIds) && !is_null($quest['questsmedia_id']))
+                    {
+                        $this->Media->copyQuestsmedia($userId, $seminaryMediaIds[$quest['questsmedia_id']]);
+                        $this->db->query(
+                            'UPDATE charactergroupsquests '.
+                            'SET questsmedia_id = ? '.
+                            'WHERE id = ?',
+                            'ii',
+                            $seminaryMediaIds[$quest['questsmedia_id']],
+                            $targetQuestId
+                        );
+                    }
+                }
+            }
+        }
+
+
 		/**
 		 * Delete a Character groups Quest.
 		 * 

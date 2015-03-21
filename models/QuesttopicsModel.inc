@@ -100,6 +100,81 @@
 				$seminaryId
 			);
 		}
+
+
+        /**
+         * Copy all Questtopics and their subtopics of a Seminary.
+         * 
+         * @param   int     $userId             ID of creating user
+         * @param   int     $sourceSeminaryId   ID of Seminary to copy from
+         * @param   int     $targetSeminaryId   ID of Seminary to copy to
+         * @param   array   $questIds           Mapping of Quest-IDs from source Seminary to target Seminary
+         * @return  array                       Mapping of Questsubtopic-IDs from source Seminary to targetSeminary
+         */
+        public function copyQuesttopicsOfSeminary($userId, $sourceSeminaryId, $targetSeminaryId, $questIds)
+        {
+            $questsubtopicIds = array();
+
+            // Get Questtopics
+            $questtopics = $this->getQuesttopicsForSeminary($sourceSeminaryId);
+            foreach($questtopics as &$questtopic)
+            {
+                // Copy Questtopic
+                $this->db->query(
+                    'INSERT INTO questtopics '.
+                    '(created_user_id, seminary_id, title, url) '.
+                    'SELECT ?, ?, title, url '.
+                    'FROM questtopics '.
+                    'WHERE id = ?',
+                    'iii',
+                    $userId, $targetSeminaryId,
+                    $questtopic['id']
+                );
+                $targetQuesttopicId = $this->db->getInsertId();
+
+                // Get Questsubtopics
+                $questsubtopics = $this->getSubtopicsForQuesttopic($questtopic['id']);
+                foreach($questsubtopics as &$questsubtopic)
+                {
+                    // Copy Questsubtopic
+                    $this->db->query(
+                        'INSERT INTO questsubtopics '.
+                        '(created_user_id, questtopic_id, title, url) '.
+                        'SELECT ?, ?, title, url '.
+                        'FROM questsubtopics '.
+                        'WHERE id = ?',
+                        'iii',
+                        $userId, $targetQuesttopicId,
+                        $questsubtopic['id']
+                    );
+                    $questsubtopicIds[$questsubtopic['id']] = $this->db->getInsertId();
+
+                    // Get Quest links
+                    $quests = $this->db->query(
+                        'SELECT quest_id '.
+                        'FROM quests_questsubtopics '.
+                        'WHERE questsubtopic_id = ?',
+                        'i',
+                       $questsubtopic['id']
+                    );
+                    foreach($quests as &$quest)
+                    {
+                        $this->db->query(
+                            'INSERT INTO quests_questsubtopics '.
+                            '(quest_id, questsubtopic_id) '.
+                            'VALUES '.
+                            '(?, ?)',
+                            'ii',
+                            $questIds[$quest['quest_id']],
+                            $questsubtopicIds[$questsubtopic['id']]
+                        );
+                    }
+                }
+            }
+
+
+            return $questsubtopicIds;
+        }
 		
 		
 		/**

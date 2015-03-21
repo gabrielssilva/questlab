@@ -24,7 +24,7 @@
 		 * 
 		 * @var array
 		 */
-		public $models = array('questgroupshierarchy', 'questgroups');
+		public $models = array('questgroupshierarchy', 'questgroups', 'quests', 'questtopics', 'media', 'charactertypes', 'xplevels', 'avatars', 'achievements', 'charactergroups', 'charactergroupsquests', 'seminarycharacterfields');
 		
 		
 		
@@ -200,6 +200,28 @@
 				$seminaryId
 			);
 		}
+
+
+        /**
+		 * (Re-) Calculate the amount of achievable XPs for a Seminary.
+         * 
+         * @param   int $seminaryId ID of Seminary to calculate XPs for
+         */
+        public function calculateXPsForSeminary($seminaryId)
+        {
+			// Questgrouphierarchy and Questgroups
+			$questgroupshierarchy = $this->Questgroupshierarchy->getHierarchyOfSeminary($seminaryId);
+			foreach($questgroupshierarchy as &$hierarchy)
+			{
+				// Get Questgroups
+				$hierarchy['questgroups'] = $this->Questgroups->getQuestgroupsForHierarchy($hierarchy['id']);
+				foreach($hierarchy['questgroups'] as &$questgroup)
+				{
+					// Calculate achievable XPs
+					$this->Questgroups->calculateXPsForQuestgroup($questgroup['id']);
+				}
+			}
+        }
 		
 		
 		/**
@@ -225,6 +247,122 @@
 				$seminaryId
 			);
 		}
+
+
+        /**
+         * Copy a Seminary and its content.
+         * 
+         * @param   int     $userId                     ID of copying user
+         * @param   int     $sourceSeminaryId           ID of Seminary to copy
+         * @param   string  $title                      Title of new Seminary
+         * @param   string  $course                     Course of now Seminary
+         * @param   string  $description                Description of new Seminary
+         * @param   boolean $copySeminaryfields         Whether to copy Seminary Character fields of not
+         * @param   boolean $copyMedia                  Whether to copy media or not
+         * @param   boolean $copyQuestgroupshierarchy   Whether to copy Questgroupshierarchy or not
+         * @param   boolean $copyQuestgroups            Whether to copy Questgroups or not
+         * @param   boolean $copyQuests                 Whether to copy Quests or not
+         * @param   boolean $copyQuesttopics            Whether to copy Quest topics or not
+         * @param   boolean $copyCharactertypes         Whether to copy Charactertypes or not
+         * @param   boolean $copyXPlevels               Whether to copy XP-levels or not
+         * @param   boolean $copyAvatars                Whether to copy Avatars or not
+         * @param   boolean $copyAchievements           Whether to copy Achievements or not
+         * @param   boolean $copyCharactergroupsgroups  Whether to copy Character groups-groups or not
+         * @param   boolean $copyCharactergroupsquests  Whether to copy Character groups Quests or not
+         * @return                                      ID of newly created Seminary
+         */
+		public function copySeminary($userId, $sourceSeminaryId, $title, $course, $description, $copySeminaryfields, $copyMedia, $copyQuestgroupshierarchy, $copyQuestgroups, $copyQuests, $copyQuesttopics, $copyCharactertypes, $copyXPlevels, $copyAvatars, $copyAchievements, $copyCharactergroupsgroups, $copyCharactergroupsquests)
+		{ 
+            $this->db->setAutocommit(false);
+            try {
+                // Create new Seminary
+                $targetSeminaryId = $this->createSeminary($userId, $title, $course, $description);
+
+                // Copy Seminary fields
+                if($copySeminaryfields) {
+                    $this->Seminarycharacterfields->copyFieldsOfSeminary($userId, $sourceSeminaryId, $targetSeminaryId);
+                }
+
+                // Copy media
+                $seminaryMediaIds = null;
+                if($copyMedia) {
+                    $seminaryMediaIds = $this->Media->copySeminaryMedia($userId, $sourceSeminaryId, $targetSeminaryId);
+                }
+
+                // Copy Quest content
+                $questIds = null;
+                $questgroupIds = null;
+                // Questgroupshierarchy
+                if($copyQuestgroupshierarchy)
+                {
+                    $questgroupshierarchyIds = $this->Questgroupshierarchy->copyQuestgroupshierarchy($userId, $sourceSeminaryId, $targetSeminaryId);
+                    // Questgroups
+                    if($copyQuestgroups)
+                    {
+                        $questgroupIds = $this->Questgroups->copyQuestgroupsOfSeminary($userId, $sourceSeminaryId, $targetSeminaryId, $questgroupshierarchyIds, $seminaryMediaIds);
+                        $this->Questgroups->copyQuestgroupsHierarchy($questgroupshierarchyIds, $questgroupIds);
+                        // Quests
+                        if($copyQuests)
+                        {
+                            $questAndTextIds = $this->Quests->copyQuests($userId, $sourceSeminaryId, $questgroupIds, $seminaryMediaIds);
+                            $questIds = $questAndTextIds['quests'];
+                            $questtextIds = $questAndTextIds['questtexts'];
+                            $this->Questgroups->copyRelatedQuestgroups($questgroupIds, $questtextIds);
+                            // Questtopics
+                            if($copyQuesttopics) {
+                                $questsubtopicIds = $this->Questtopics->copyQuesttopicsOfSeminary($userId, $sourceSeminaryId, $targetSeminaryId, $questIds);
+                            }
+                        }
+                    }
+                }
+
+                // Copy Character content
+                // Charactertypes
+                if($copyCharactertypes)
+                {
+                    $charactertypeIds = $this->Charactertypes->copyCharactertypesOfSeminary($userId, $sourceSeminaryId, $targetSeminaryId);
+                    // XP-levels
+                    if($copyXPlevels)
+                    {
+                        $xplevelIds = $this->Xplevels->copyXPLevelsOfSeminary($userId, $sourceSeminaryId, $targetSeminaryId);
+                        // Avatars
+                        if($copyAvatars && !is_null($seminaryMediaIds)) {
+                            $this->Avatars->copyAvatars($userId, $charactertypeIds, $xplevelIds, $seminaryMediaIds);
+                        }
+                    }
+                }
+
+                // Copy Achievements
+                if($copyAchievements && !is_null($seminaryMediaIds)) {
+                    $this->Achievements->copyAchievementsOfSeminary($userId, $sourceSeminaryId, $targetSeminaryId, $seminaryMediaIds, $questIds);
+                }
+
+                // Copy Charactergroups content
+                // Charactergroupsgroups
+                if($copyCharactergroupsgroups)
+                {
+                    $characterGroupsgroupIds = $this->Charactergroups->copyGroupsgroupsOfSeminary($userId, $sourceSeminaryId, $targetSeminaryId);
+                    // Copy Charactergroupsquests
+                    if($copyCharactergroupsquests &!is_null($questgroupIds)) {
+                        $this->Charactergroupsquests->copyQuestsOfSeminary($userId, $characterGroupsgroupIds, $questgroupIds, $seminaryMediaIds);
+                    }
+                }
+
+                // Recalculate XPs
+                $this->calculateXPsForSeminary($targetSeminaryId);
+
+				$this->db->commit();
+			}
+            catch(\Exception $e) {
+				$this->db->rollback();
+				$this->db->setAutocommit(true);
+				throw $e;
+			}
+			$this->db->setAutocommit(true);
+
+
+            return $targetSeminaryId;
+        }
 		
 		
 		/**
@@ -236,7 +374,7 @@
 		{
 			$this->db->query('DELETE FROM seminaries WHERE id = ?', 'i', $seminaryId);
 		}
-		
+
 	}
 
 ?>

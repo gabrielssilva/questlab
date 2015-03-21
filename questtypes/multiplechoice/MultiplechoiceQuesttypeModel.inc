@@ -23,6 +23,50 @@
 		
 		
 		
+        /**
+         * Copy a Quest
+         * 
+         * @param   int $userId             ID of creating user
+         * @param   int $sourceQuestId      ID of Quest to copy from
+         * @param   int $targetQuestId      ID of Quest to copy to
+         * @param   int $seminaryMediaIds   Mapping of SeminaryMedia-IDs from source Seminary to targetSeminary
+         */
+        public function copyQuest($userId, $sourceQuestId, $targetQuestId, $seminaryMediaIds)
+        {
+            // Get questions
+            $questions = $this->getQuestionsOfQuest($sourceQuestId);
+
+            // Copy each question
+            foreach($questions as &$question)
+            {
+                // Copy question
+                $this->db->query(
+                    'INSERT INTO questtypes_multiplechoice '.
+                    '(created_user_id, quest_id, pos, question) '.
+                    'SELECT ?, ?, pos, question '.
+                    'FROM questtypes_multiplechoice '.
+                    'WHERE id = ?',
+                    'iii',
+                    $userId, $targetQuestId,
+                    $question['id']
+                );
+                $targetQuestionId = $this->db->getInsertId();
+
+                // Copy answers
+                $this->db->query(
+                    'INSERT INTO questtypes_multiplechoice_answers '.
+                    '(created_user_id, questtypes_multiplechoice_id, pos, answer, tick) '.
+                    'SELECT ?, ?, pos, answer, tick '.
+                    'FROM questtypes_multiplechoice_answers '.
+                    'WHERE questtypes_multiplechoice_id = ?',
+                    'iii',
+                    $userId, $targetQuestionId,
+                    $question['id']
+                );
+            }
+        }
+
+
 		/**
 		 * Get the count of multiple choice questions for a Quest.
 		 * 

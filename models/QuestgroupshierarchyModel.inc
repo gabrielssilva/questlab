@@ -302,7 +302,31 @@
 			}
 			$this->db->setAutocommit(true);
 		}
-		
+
+
+        /**
+		 * Copy complete Questgroupshierarchy of a Seminary.
+		 * 
+		 * @param	int	    $userId				ID of creating user
+		 * @param	int 	$sourceSeminaryId	ID of Seminary to copy hierarchy from
+		 * @param	int	    $targetSeminaryId	ID of Seminary to copy hierarchy to
+         * @return  array                       Mapping of hierarchy-IDs from source Seminary to target Seminary
+         */
+        public function copyQuestgroupshierarchy($userId, $sourceSeminaryId, $targetSeminaryId)
+        {
+            // Get Hierarchy of Seminary
+			$questgroupshierarchy = $this->getHierarchyOfSeminary($sourceSeminaryId);
+
+            // Copy hierarchy
+            $hierarchyIds = array();
+			foreach($questgroupshierarchy as $hierarchy) {
+                $this->copyHierarchy($userId, $sourceSeminaryId, $targetSeminaryId, $hierarchy, $hierarchyIds);
+            }
+
+
+            return $hierarchyIds;
+        }
+
 		
 		/**
 		 * Delete a Questgroupshierarchy.
@@ -313,6 +337,56 @@
 		{
 			$this->db->query('DELETE FROM questgroupshierarchy WHERE id = ?', 'i', $questgroupshierarchyId);
 		}
+
+
+
+
+        /**
+		 * Copy a Questgroupshierarchy and its child hierarchy.
+		 * 
+		 * @param	int	    $userId				ID of creating user
+		 * @param	int 	$sourceSeminaryId	ID of Seminary to copy hierarchy from
+		 * @param	int	    $targetSeminaryId	ID of Seminary to copy hierarchy to
+         * @param   array   $hierarchy          Hierarchy to copy
+         * @return  array   $hierarchyIds       Mapping of hierarchy IDs from source Seminary to target Seminary
+         */
+        private function copyHierarchy($userId, $sourceSeminaryId, $targetSeminaryId, $hierarchy, &$hierarchyIds)
+        {
+            // insert for new seminary
+            if(is_null($hierarchy['parent_questgroupshierarchy_id']))
+            {
+                $this->db->query(
+                    'INSERT INTO questgroupshierarchy '.
+                    '(created_user_id, seminary_id, parent_questgroupshierarchy_id, pos, title_singular, title_plural, url) '.
+                    'SELECT ?, ?, null, pos, title_singular, title_plural, url '.
+                    'FROM questgroupshierarchy '.
+                    'WHERE id = ?',
+                    'iii',
+                    $userId, $targetSeminaryId,
+                    $hierarchy['id']
+                );
+            }
+            else
+            {
+                $this->db->query(
+                    'INSERT INTO questgroupshierarchy '.
+                    '(created_user_id, seminary_id, parent_questgroupshierarchy_id, pos, title_singular, title_plural, url) '.
+                    'SELECT ?, ?, ?, pos, title_singular, title_plural, url '.
+                    'FROM questgroupshierarchy '.
+                    'WHERE id = ?',
+                    'iiii',
+                    $userId, $targetSeminaryId, $hierarchyIds[$hierarchy['parent_questgroupshierarchy_id']],
+                    $hierarchy['id']
+                );
+            }
+			$hierarchyIds[$hierarchy['id']] = $this->db->getInsertId();
+
+            // insert sub hierarchy
+            $childHierarchy = $this->getChildQuestgroupshierarchy($hierarchy['id']);
+            foreach($childHierarchy as $hierarchy) {
+                $this->copyHierarchy($userId, $sourceSeminaryId, $targetSeminaryId, $hierarchy, $hierarchyIds);
+            }
+        }
 		
 	}
 

@@ -201,6 +201,42 @@
 		}
 		
 		
+        /**
+         * Copy all Charactertypes of a Seminary.
+         * 
+         * @param   int     $userId             ID of copying user
+         * @param   int     $sourceSeminaryId   ID of Seminary to copy from
+         * @param   int     $targetSeminaryId   ID of Seminary to copy to
+         * @param   array                       Mapping of Charactertype-IDs from source Seminary to targetSeminary
+         */
+        public function copyCharactertypesOfSeminary($userId, $sourceSeminaryId, $targetSeminaryId)
+        {
+            $charactertypeIds = array();
+
+            // Get Charactertypes
+            $charactertypes = $this->getCharacterTypesForSeminary($sourceSeminaryId);
+
+            // Copy each Charactertype
+            foreach($charactertypes as &$type)
+            {
+                $this->db->query(
+                    'INSERT INTO charactertypes '.
+                    '(created_user_id, seminary_id, name, url) '.
+                    'SELECT ?, ?, name, url '.
+                    'FROM charactertypes '.
+                    'WHERE id = ?',
+                    'iii',
+                    $userId, $targetSeminaryId,
+                    $type['id']
+                );
+                $charactertypeIds[$type['id']] = $this->db->getInsertId();
+            }
+
+
+            return $charactertypeIds;
+        }
+
+
 		/**
 		 * Delete a Charactertype.
 		 * 

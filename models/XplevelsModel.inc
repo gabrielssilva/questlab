@@ -161,6 +161,42 @@
 			);
 		}
 
+ 
+        /**
+         * Copy all XP-levels of a Seminary.
+         * 
+         * @param   int     $userId             ID of copying user
+         * @param   int     $sourceSeminaryId   ID of Seminary to copy from
+         * @param   int     $targetSeminaryId   ID of Seminary to copy to
+         * @param   array                       Mapping of XP-level-IDs from source Seminary to targetSeminary
+         */
+        public function copyXPLevelsOfSeminary($userId, $sourceSeminaryId, $targetSeminaryId)
+        {
+            $xplevelIds = array();
+
+            // Get XP-levels
+            $xplevels = $this->getXPLevelsForSeminary($sourceSeminaryId);
+
+            // Copy each XP-level
+            foreach($xplevels as &$level)
+            {
+                $this->db->query(
+                    'INSERT INTO xplevels '.
+                    '(created_user_id, seminary_id, xps, level, name) '.
+                    'SELECT ?, ?, xps, level, name '.
+                    'FROM xplevels '.
+                    'WHERE id = ?',
+                    'iii',
+                    $userId, $targetSeminaryId,
+                    $level['id']
+                );
+                $xplevelIds[$level['id']] = $this->db->getInsertId();
+            }
+
+
+            return $xplevelIds;
+        }
+
 
 		/**
 		 * Delete a XP-level.

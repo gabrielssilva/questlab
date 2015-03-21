@@ -43,6 +43,13 @@
 		 * @var int;
 		 */
 		const QUEST_STATUS_SOLVED = 3;
+
+		/**
+		 * Required models
+		 * 
+		 * @var array
+		 */
+		public $models = array('questtypes', 'questtexts', 'media');
 		
 		
 		
@@ -481,7 +488,6 @@
 		
 		
 		
-		
 		/**
 		 * Mark a Quest for a Character.
 		 * 
@@ -674,6 +680,83 @@
 				$questId
 			);
 		}
+
+
+        /**
+         * Copy all Quests from a Seminary.
+         * 
+         * @param   int     $userId             ID of creating user
+         * @param   int     $seminaryId         ID of Seminary to copy from
+         * @param   array   $questgroupIds      Mapping of Questgroup-IDs from source Seminary to target Seminary
+         * @param   array   $seminaryMediaIds   Mapping of Seminary-media-IDs from source Seminary to target Seminary (optional)
+         * @return  array                       Mapping of Quest-IDs from source Seminary to target Seminary
+         */
+        public function copyQuests($userId, $sourceSeminaryId, $questgroupIds, $seminaryMediaIds=null)
+        {
+            $questIds = array();
+            $questtextIds = array();
+
+            // Get Quests
+            $quests = $this->getQuestsForSeminary($sourceSeminaryId);
+
+            // Copy each Quest
+            foreach($quests as &$quest)
+            {
+                // Copy Quest
+                $this->db->query(
+                    'INSERT INTO quests '.
+                    '(created_user_id, questgroup_id, questtype_id, title, url, xps, entry_text, wrong_text, task) '.
+                    'SELECT ?, ?, questtype_id, title, url, xps, entry_text, wrong_text, task '.
+                    'FROM quests '.
+                    'WHERE id = ?',
+                    'iii',
+                    $userId,
+                    $questgroupIds[$quest['questgroup_id']],
+                    $quest['id']
+                );
+                $questIds[$quest['id']] = $this->db->getInsertId();
+
+                // Copy media
+                if(!is_null($seminaryMediaIds) && !is_null($quest['questsmedia_id']))
+                {
+                    $this->Media->copyQuestsmedia($userId, $seminaryMediaIds[$quest['questsmedia_id']]);
+                    $this->db->query(
+                        'UPDATE quests '.
+                        'SET questsmedia_id = ? '.
+                        'WHERE id = ?',
+                        'ii',
+                        $seminaryMediaIds[$quest['questsmedia_id']],
+                        $questIds[$quest['id']]
+                    );
+                }
+
+                // Copy texts
+                $questtextIds = array_merge(
+                    $questtextIds,
+                    $this->Questtexts->copyQuesttexts($userId, $quest['id'], $questIds[$quest['id']], $seminaryMediaIds)
+                );
+
+                // Copy content
+                $questtype = $this->Questtypes->getQuesttypeById($quest['questtype_id']);
+                if(!is_null($questtype['classname']))
+                {
+                    // Load Questtype Model
+                    \hhu\z\models\QuesttypeModel::load($questtype['classname']);
+
+                    // Construct Questtype Model
+                    $questtypeModel = \hhu\z\models\QuesttypeModel::factory($questtype['classname']);
+
+                    // Copy content
+                    $questtypeModel->copyQuest($userId, $quest['id'], $questIds[$quest['id']], $seminaryMediaIds);
+                }
+            }
+
+
+            return array(
+                'quests' => $questIds,
+                'questtexts' => $questtextIds
+            );
+        }
 
 
 		/**

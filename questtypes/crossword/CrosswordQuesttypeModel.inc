@@ -23,6 +23,30 @@
 		
 		
 		
+        /**
+         * Copy a Quest
+         * 
+         * @param   int $userId             ID of creating user
+         * @param   int $sourceQuestId      ID of Quest to copy from
+         * @param   int $targetQuestId      ID of Quest to copy to
+         * @param   int $seminaryMediaIds   Mapping of SeminaryMedia-IDs from source Seminary to targetSeminary
+         */
+        public function copyQuest($userId, $sourceQuestId, $targetQuestId, $seminaryMediaIds)
+        {
+            // Copy words
+            $this->db->query(
+                'INSERT INTO questtypes_crossword_words '.
+                '(quest_id, question, word, vertical, pos_x, pos_y) '.
+                'SELECT ?, question, word, vertical, pos_x, pos_y '.
+                'FROM questtypes_crossword_words '.
+                'WHERE quest_id = ?',
+                'ii',
+                $targetQuestId,
+                $sourceQuestId
+            );
+        }
+
+
 		/**
 		 * Get all words for a crossword-Quest.
 		 * 
