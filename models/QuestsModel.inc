@@ -710,8 +710,7 @@
                     'FROM quests '.
                     'WHERE id = ?',
                     'iii',
-                    $userId,
-                    $questgroupIds[$quest['questgroup_id']],
+                    $userId, $questgroupIds[$quest['questgroup_id']],
                     $quest['id']
                 );
                 $questIds[$quest['id']] = $this->db->getInsertId();
@@ -731,10 +730,7 @@
                 }
 
                 // Copy texts
-                $questtextIds = array_merge(
-                    $questtextIds,
-                    $this->Questtexts->copyQuesttexts($userId, $quest['id'], $questIds[$quest['id']], $seminaryMediaIds)
-                );
+                $questtextIds = $questtextIds + $this->Questtexts->copyQuesttexts($userId, $quest['id'], $questIds[$quest['id']], $seminaryMediaIds);
 
                 // Copy content
                 $questtype = $this->Questtypes->getQuesttypeById($quest['questtype_id']);
@@ -748,6 +744,32 @@
 
                     // Copy content
                     $questtypeModel->copyQuest($userId, $quest['id'], $questIds[$quest['id']], $seminaryMediaIds);
+                }
+            }
+
+            // Copy flow
+            // Do this after copying the Quests themselves to ensure all Quests
+            // have their target IDs.
+            foreach($quests as &$quest)
+            {
+                $previousQuests = $this->db->query(
+                    'SELECT previous_quest_id '.
+                    'FROM quests_previousquests '.
+                    'WHERE quest_id = ?',
+                    'i',
+                    $quest['id']
+                );
+                foreach($previousQuests as &$previousQuest)
+                {
+                    $this->db->query(
+                        'INSERT INTO quests_previousquests '.
+                        '(quest_id, previous_quest_id) '.
+                        'VALUES '.
+                        '(?, ?)',
+                        'ii',
+                        $questIds[$quest['id']],
+                        $questIds[$previousQuest['previous_quest_id']]
+                    );
                 }
             }
 

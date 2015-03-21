@@ -396,7 +396,6 @@
 			}
 			
 			// XPs of child Questgroups
-            //var_dump($this->Questgroupshierarchy);
 			$questgroupHierarchy = $this->Questgroupshierarchy->getHierarchyForQuestgroup($questgroupId);
 			if(!empty($questgroupHierarchy))
 			{

@@ -1343,7 +1343,7 @@
             }
 
             // Copy Achievement conditions
-            // Do this after copying the Achievements itself to ensure Meta-
+            // Do this after copying the Achievements themselves to ensure Meta-
             // Achievements work correctly
             foreach($achievements as &$achievement)
             {
