@@ -1435,7 +1435,7 @@
 		private function sendSubmissionMail($seminary, $questgroup, $quest, $character)
 		{
 			// Get system moderators
-			$moderators = $this->Characters->getCharactersWithRole('moderator');
+			$moderators = $this->Characters->getCharactersWithCharacterRole($seminary['id'], 'moderator');
 			
 			// Send notification mail
 			try {
