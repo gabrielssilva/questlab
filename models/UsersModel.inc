@@ -112,7 +112,7 @@
 		public function getUsersWithRole($userrole)
 		{
 			return $this->db->query(
-				'SELECT users.id, users.created, users.username, users.url, users.surname, users.prename, users.email, users.mailing'.
+				'SELECT users.id, users.created, users.username, users.url, users.surname, users.prename, users.email, users.mailing '.
 				'FROM users '.
 				'LEFT JOIN users_userroles ON users_userroles.user_id = users.id '.
 				'LEFT JOIN userroles ON userroles.id = users_userroles.userrole_id '.
