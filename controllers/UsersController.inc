@@ -207,7 +207,7 @@
 			
 			$fields = array('username', 'prename', 'surname', 'email', 'password');
 			$validation = array();
-            $emailhost = \nre\configs\AppConfig::$misc['registration_host'];
+            $emailhost = \nre\configs\AppConfig::$app['registration_host'];
 			
 			// Register a new user
 			if($this->request->getRequestMethod() == 'POST' && !is_null($this->request->getPostParam('register')))

@@ -30,11 +30,12 @@
 		 * @var array
 		 */
 		public static $app = array(
-			'name'			=>	'Questlab',
-			'genericname'		=>	'The Legend of Z',
-			'namespace'		=>	'hhu\\z\\',
-			'timeZone'		=>	'Europe/Berlin',
-			'mailsender'		=>	'questlab@hhu.de'
+            'name'              => 'Questlab',
+            'genericname'       => 'The Legend of Z',
+            'namespace'         => 'hhu\\z\\',
+            'timeZone'          => 'Europe/Berlin',
+            'mailsender'        => 'questlab@hhu.de',
+            'registration_host' => ''
 		);
 		
 		
@@ -143,7 +144,6 @@
 		 * @var array
 		 */
 		public static $misc = array(
-            'registration_host'     => '',
             'ranking_range'         => 2,
             'achievements_range'    => 3,
             'title_delimiter'       => ' – ',
