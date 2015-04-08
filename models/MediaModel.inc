@@ -97,12 +97,13 @@
 			$data = $this->db->query(
 				'SELECT id, name, url, description, mimetype '.
 				'FROM seminarymedia '.
-				'WHERE url = ?',
-				's',
+				'WHERE seminary_id = ? AND url = ?',
+				'is',
+                $seminaryId,
 				$seminaryMediaUrl
 			);
 			if(empty($data)) {
-				throw new \nre\exceptions\IdNotFoundException($seminaryMediaUrl);
+				throw new \nre\exceptions\IdNotFoundException($seminaryId.': '.$seminaryMediaUrl);
 			}
 			
 			

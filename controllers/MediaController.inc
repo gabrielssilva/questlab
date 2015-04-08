@@ -425,7 +425,7 @@
 			// Set filename
 			$media['filename'] = ROOT.DS.\nre\configs\AppConfig::$dirs['seminarymedia'].DS.$media['id'];
 			if(!file_exists($media['filename'])) {
-				throw new \nre\exceptions\IdNotFoundException($media['url']);
+				throw new \nre\exceptions\IdNotFoundException($media['id'].': '.$media['url']);
 			}
 			
 			// Cache
