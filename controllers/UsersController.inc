@@ -207,6 +207,7 @@
 			
 			$fields = array('username', 'prename', 'surname', 'email', 'password');
 			$validation = array();
+            $emailhost = \nre\configs\AppConfig::$misc['registration_host'];
 			
 			// Register a new user
 			if($this->request->getRequestMethod() == 'POST' && !is_null($this->request->getPostParam('register')))
@@ -220,6 +221,11 @@
 				$prename = $this->request->getPostParam('prename');
 				$surname = $this->request->getPostParam('surname');
 				$email = $this->request->getPostParam('email');
+                if(!empty($emailhost)) {
+                    if(substr_compare($email, $emailhost, max(0, strlen($email)-strlen($emailhost)), strlen($emailhost)) !== 0) {
+                        $validation = $this->Validation->addValidationResult($validation, 'email', 'host', 'invalid');
+                    }
+                }
 				if($this->Users->emailExists($email)) {
 					$validation = $this->Validation->addValidationResult($validation, 'email', 'exist', true);
 				}
@@ -264,6 +270,7 @@
 			$this->set('prename', $prename);
 			$this->set('surname', $surname);
 			$this->set('email', $email);
+            $this->set('emailhost', $emailhost);
 			$this->set('validation', $validation);
 			$this->set('validationSettings', $validationSettings);
 		}

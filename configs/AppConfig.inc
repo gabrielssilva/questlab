@@ -143,10 +143,11 @@
 		 * @var array
 		 */
 		public static $misc = array(
-			'ranking_range'		=> 2,
-			'achievements_range'	=> 3,
-			'title_delimiter'	=> ' – ',
-			'lists_limit'		=> 10
+            'registration_host'     => '',
+            'ranking_range'         => 2,
+            'achievements_range'    => 3,
+            'title_delimiter'       => ' – ',
+            'lists_limit'           => 10
 		);
 		
 		

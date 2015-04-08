@@ -55,6 +55,8 @@
 							break;
 							case 'exist': echo _('E‑mail address already exists');
 							break;
+                            case 'host': printf(_('E‑Mail address has to end with @%s'), $emailhost);
+                            break;
 							default: echo _('E‑mail address invalid');
 						}
 					break;
@@ -87,7 +89,7 @@
 		<label for="surname"><?=_('Surname')?>:</label>
 		<input name="surname" type="text" placeholder="<?=_('Surname')?>" title="<?=_('Surname')?>" required="required" maxlength="<?=$validationSettings['surname']['maxlength']?>" value="<?=$surname?>" <?=(array_key_exists('surname', $validation)) ? 'class="invalid"' : null?> /><br />
 		<label for="email"><?=_('E‑mail address')?>:</label>
-		<input name="email" type="email" placeholder="<?=_('E‑mail address')?>" title="<?=_('E‑mail address')?>" required="required" value="<?=$email?>" <?=(array_key_exists('email', $validation)) ? 'class="invalid"' : null?> /><br />
+		<input name="email" type="email" placeholder="<?=(!empty($emailhost)) ? '…@'.$emailhost : _('E‑mail address')?>" title="<?=_('E‑mail address')?>" required="required" value="<?=$email?>" <?=(array_key_exists('email', $validation)) ? 'class="invalid"' : null?> /><br />
 		<label for="password"><?=_('Password')?>:</label>
 		<input name="password" type="password" placeholder="<?=_('Password')?>" title="<?=_('Password')?>" required="required" maxlength="<?=$validationSettings['password']['maxlength']?>" <?=(array_key_exists('password', $validation)) ? 'class="invalid"' : null?> /><br />
 	</fieldset>
