@@ -616,7 +616,7 @@
 			$data = $this->db->query(
 				'SELECT ('.(
 					$count
-					? "count($field) >= $value"
+					? "count($field) = $value"
 					: "$field = $value"
 				). ') AS got '.
 				'FROM quests_characters '.
