@@ -124,9 +124,14 @@
 			$solved = $this->Quests->hasCharacterSolvedQuest($quest['id'], $character['id']);
 			
 			// Get Character answers
-			if(!$solved || $this->request->getGetParam('show-answer') == 'true' || $this->request->getGetParam('status') == 'solved') {
-				foreach($fields as &$field) {
+            $correctAnswersCount = null;
+			if(!$solved || $this->request->getGetParam('show-answer') == 'true' || $this->request->getGetParam('status') == 'solved')
+            {
+                $correctAnswersCount = 0;
+				foreach($fields as &$field)
+                {
 					$field['answer'] = $this->Textinput->getCharacterSubmission($field['id'], $character['id']);
+                    $correctAnswersCount += $this->isMatching($field['regex'], $field['answer']);
 				}
 			}
 			
@@ -134,6 +139,7 @@
 			// Pass data to view
 			$this->set('task', $task);
 			$this->set('fields', $fields);
+            $this->set('count', $correctAnswersCount);
 		}
 		
 		

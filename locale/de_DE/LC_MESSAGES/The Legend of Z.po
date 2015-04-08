@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: The Legend of Z\n"
-"POT-Creation-Date: 2015-04-08 15:55+0100\n"
-"PO-Revision-Date: 2015-04-08 15:56+0100\n"
+"POT-Creation-Date: 2015-04-08 16:22+0100\n"
+"PO-Revision-Date: 2015-04-08 16:22+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de_DE\n"
@@ -135,7 +135,7 @@ msgstr "Wählen"
 #: questtypes/crossword/html/quest.tpl:30
 #: questtypes/dragndrop/html/quest.tpl:16
 #: questtypes/multiplechoice/html/quest.tpl:19
-#: questtypes/submit/html/quest.tpl:23 questtypes/textinput/html/quest.tpl:12
+#: questtypes/submit/html/quest.tpl:23 questtypes/textinput/html/quest.tpl:13
 msgid "solve"
 msgstr "lösen"
 
@@ -338,6 +338,11 @@ msgstr "Der reguläre Ausdruck ist ungültig"
 #: questtypes/textinput/html/edittask.tpl:29
 msgid "Fields"
 msgstr "Felder"
+
+#: questtypes/textinput/html/quest.tpl:12
+#, php-format
+msgid "You filled %d of %d fields correctly"
+msgstr "Du hast %d von %d Feldern korrekt ausgefüllt"
 
 #: views/ajax/quests/index.tpl:9 views/html/quests/create.tpl:79
 #: views/html/quests/edit.tpl:82 views/html/quests/index.tpl:27
