@@ -181,6 +181,16 @@
 						$this->Charactergroupsquests->uploadMediaForQuest($this->Auth->getUserId(), $seminary['id'], $quest['id'], $file, $filename);
 					}
 				}
+
+                // Delete media
+				if(!is_null($this->request->getPostParam('deletemedia')))
+                {
+                    $uploadIds = $this->request->getPostParam('uploads');
+                    var_dump($uploadIds);
+                    foreach($uploadIds as $uploadId) {
+                        $this->Uploads->deleteSeminaryupload($uploadId);
+                    }
+                }
 				
 				// Set XPs of Character groups for this Character groups Quest
 				if(!is_null($this->request->getPostParam('setxps')))

@@ -135,6 +135,40 @@
 			
 			return $data[0];
 		}
+
+
+        /**
+         * Delete a Seminary upload.
+         * 
+         * @param   int $uploadId   ID of Seminary upload to delete
+         */
+        public function deleteSeminaryupload($uploadId)
+        {
+			$this->db->setAutocommit(false);
+			
+			try {
+                // Get Upload
+                $upload = $this->getSeminaryuploadById($uploadId);
+                
+                // Delete database record
+				$this->db->query(
+                    'DELETE FROM seminaryuploads '.
+                    'WHERE id = ?',
+                    'i',
+                    $uploadId
+                );
+
+                // Delete file
+                $filename = ROOT.DS.\nre\configs\AppConfig::$dirs['seminaryuploads'].DS.$upload['url'];
+                unlink($filename);
+            }
+			catch(\nre\exceptions\DatamodelException $e) {
+				$this->db->rollback();
+				$this->db->setAutocommit(true);
+			}
+			
+			$this->db->setAutocommit(true);
+        }
 		
 	}
 

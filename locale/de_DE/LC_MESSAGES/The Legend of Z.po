@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: The Legend of Z\n"
-"POT-Creation-Date: 2015-04-08 12:28+0100\n"
-"PO-Revision-Date: 2015-04-08 12:29+0100\n"
+"POT-Creation-Date: 2015-04-08 15:55+0100\n"
+"PO-Revision-Date: 2015-04-08 15:56+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de_DE\n"
@@ -105,7 +105,6 @@ msgstr ""
 #: questtypes/textinput/html/edittask.tpl:44
 #: views/html/achievements/conditions.tpl:151
 #: views/html/achievements/create.tpl:109 views/html/achievements/edit.tpl:112
-#: views/html/charactergroupsquests/manage.tpl:66
 #: views/html/charactertypes/edit.tpl:124 views/html/library/edit.tpl:46
 #: views/html/library/edit.tpl:86 views/html/quests/edit.tpl:114
 #: views/html/users/edit.tpl:105 views/html/xplevels/manage.tpl:49
@@ -258,7 +257,7 @@ msgstr "Fehler beim Dateiupload: %s"
 #: views/html/charactergroups/editgroup.tpl:65
 #: views/html/charactergroupsquests/create.tpl:66
 #: views/html/charactergroupsquests/edit.tpl:67
-#: views/html/charactergroupsquests/manage.tpl:63
+#: views/html/charactergroupsquests/manage.tpl:72
 #: views/html/charactertypes/edit.tpl:117 views/html/questgroups/create.tpl:65
 #: views/html/questgroups/edit.tpl:53 views/html/quests/create.tpl:62
 #: views/html/quests/edit.tpl:65 views/html/seminaries/create.tpl:60
@@ -272,7 +271,7 @@ msgstr "Erlaubte Dateiformate"
 #: views/html/charactergroups/editgroup.tpl:68
 #: views/html/charactergroupsquests/create.tpl:69
 #: views/html/charactergroupsquests/edit.tpl:70
-#: views/html/charactergroupsquests/manage.tpl:63
+#: views/html/charactergroupsquests/manage.tpl:72
 #: views/html/charactertypes/edit.tpl:120 views/html/questgroups/create.tpl:68
 #: views/html/questgroups/edit.tpl:56 views/html/quests/create.tpl:65
 #: views/html/quests/edit.tpl:68 views/html/seminaries/create.tpl:63
@@ -287,7 +286,7 @@ msgstr "%s-Dateien"
 #: views/html/charactergroups/editgroup.tpl:68
 #: views/html/charactergroupsquests/create.tpl:69
 #: views/html/charactergroupsquests/edit.tpl:70
-#: views/html/charactergroupsquests/manage.tpl:63
+#: views/html/charactergroupsquests/manage.tpl:72
 #: views/html/charactertypes/edit.tpl:120 views/html/questgroups/create.tpl:68
 #: views/html/questgroups/edit.tpl:56 views/html/quests/create.tpl:65
 #: views/html/quests/edit.tpl:68 views/html/seminaries/create.tpl:63
@@ -391,7 +390,7 @@ msgstr "Texteingabe"
 #: views/ajax/quests/index.tpl:29 views/html/charactergroups/group.tpl:33
 #: views/html/charactergroups/group.tpl:46
 #: views/html/charactergroupsquests/manage.tpl:21
-#: views/html/charactergroupsquests/manage.tpl:81
+#: views/html/charactergroupsquests/manage.tpl:88
 #: views/html/charactergroupsquests/quest.tpl:25
 #: views/html/charactergroupsquests/quest.tpl:73
 #: views/html/characters/character.tpl:83
@@ -512,7 +511,7 @@ msgid "Group by"
 msgstr "Gruppiert über"
 
 #: views/html/achievements/conditions.tpl:69
-#: views/html/achievements/conditions.tpl:136 views/html/html.tpl:80
+#: views/html/achievements/conditions.tpl:136 views/html/html.tpl:83
 msgid "Achievement"
 msgstr "Achievement"
 
@@ -1188,18 +1187,26 @@ msgstr "Medien"
 msgid "File invalid"
 msgstr "Die Datei ist ungültig"
 
-#: views/html/charactergroupsquests/manage.tpl:79
+#: views/html/charactergroupsquests/manage.tpl:68
+msgid "delete selected"
+msgstr "markierte löschen"
+
+#: views/html/charactergroupsquests/manage.tpl:73
+msgid "upload"
+msgstr "hochladen"
+
+#: views/html/charactergroupsquests/manage.tpl:86
 msgid "Not attended"
 msgstr "Nicht teilgenommen"
 
-#: views/html/charactergroupsquests/manage.tpl:88
+#: views/html/charactergroupsquests/manage.tpl:95
 msgid "Set XPs"
 msgstr "Setze XP"
 
 #: views/html/charactergroupsquests/quest.tpl:16
 #, php-format
 msgid "Manage %s-Quest"
-msgstr "%s-Quest Verwalten"
+msgstr "%s-Quest verwalten"
 
 #: views/html/charactergroupsquests/quest.tpl:55
 msgid "Won Quest"
@@ -1471,11 +1478,11 @@ msgstr "oder"
 msgid "register yourself"
 msgstr "registriere dich"
 
-#: views/html/html.tpl:90
+#: views/html/html.tpl:93
 msgid "Level-up"
 msgstr "Levelaufstieg"
 
-#: views/html/html.tpl:92 views/html/html.tpl:94
+#: views/html/html.tpl:95 views/html/html.tpl:97
 #, php-format
 msgid "You have reached level %d"
 msgstr "Du hast Level %d erreicht"

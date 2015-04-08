@@ -51,19 +51,26 @@
 		<?php endforeach ?>
 	</ul>
 	<?php endif ?>
-	<ul class="gqgllry">
-		<?php foreach($uploads as &$upload) : ?>
-		<li>
-			<a href="<?=$linker->link(array('uploads','seminary',$seminary['url'],$upload['upload']['url']))?>">
-				<img src="<?=$linker->link(array('uploads','seminary',$seminary['url'],$upload['upload']['url'],'thumbnail'))?>" />
-			</a>
-		</li>
-		<?php endforeach ?>
-	</ul>
-	<p><?=_('Allowed file types')?>: <?php foreach($mimetypes as &$mimetype) : ?><?=sprintf(_('%s-files'), strtoupper(explode('/',$mimetype['mimetype'])[1]))?> <?php if($mimetype['size'] > 0) : ?>(<?=_('max.')?> <?=round($mimetype['size']/(1024*1024),2)?> MiB) <?php endif ?><?php endforeach ?></p>
-	<form method="post" enctype="multipart/form-data">
+	<form class="mng" method="post" enctype="multipart/form-data">
+        <ul class="gqgllry mnglst">
+            <?php foreach($uploads as &$upload) : ?>
+            <li>
+                <input type="checkbox" id="upload_<?=$upload['upload']['id']?>" name="uploads[]" value="<?=$upload['upload']['id']?>" />
+                <br />
+                <label for="upload_<?=$upload['upload']['id']?>">
+                    <a href="<?=$linker->link(array('uploads','seminary',$seminary['url'],$upload['upload']['url']))?>">
+                        <img src="<?=$linker->link(array('uploads','seminary',$seminary['url'],$upload['upload']['url'],'thumbnail'))?>" />
+                    </a>
+                <label>
+            </li>
+            <?php endforeach ?>
+        </ul>
+        <input type="submit" name="deletemedia" value="<?=_('delete selected')?>" />
+    </form>
+	<form class="mng" method="post" enctype="multipart/form-data">
 		<input type="file" name="media" /><br />
-		<input type="submit" name="setmedia" value="<?=_('save')?>" />
+        <p><?=_('Allowed file types')?>: <?php foreach($mimetypes as &$mimetype) : ?><?=sprintf(_('%s-files'), strtoupper(explode('/',$mimetype['mimetype'])[1]))?> <?php if($mimetype['size'] > 0) : ?>(<?=_('max.')?> <?=round($mimetype['size']/(1024*1024),2)?> MiB) <?php endif ?><?php endforeach ?></p>
+		<input type="submit" name="setmedia" value="<?=_('upload')?>" />
 	</form>
 </section>
 
