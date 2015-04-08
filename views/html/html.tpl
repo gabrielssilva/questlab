@@ -48,6 +48,9 @@
 			<label for="toggle" class="toggle" onclick><i class="fa fa-bars"></i>Menü</label>
 			<div id="home">
 				<a href="<?=$linker->link(array(), 0, true, array(), true)?>"><?=\nre\configs\AppConfig::$app['name']?></a>
+                <?php if(!empty($mailcontact)) : ?>
+                <a class="contact" href="mailto:<?=$mailcontact?>"><?=$mailcontact?></a>
+                <?php endif ?>
 			</div>
 			<?php if(!is_null($loggedUser)) : ?>
 			<div id="profile" class="cf">

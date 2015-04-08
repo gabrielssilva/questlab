@@ -34,7 +34,8 @@
             'genericname'       => 'The Legend of Z',
             'namespace'         => 'hhu\\z\\',
             'timeZone'          => 'Europe/Berlin',
-            'mailsender'        => 'questlab@hhu.de',
+            'mailsender'        => '',
+            'mailcontact'       => '',
             'registration_host' => ''
 		);
 		

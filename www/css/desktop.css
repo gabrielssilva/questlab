@@ -69,8 +69,9 @@ header a:hover{color:#fff}
 header .fa{color:#5e9499}
 header a:hover .fa{color:#7fb0b4}
 
-#home{display:none;opacity:0}
-#home a{line-height:93px;font-size:22px;letter-spacing:8px}
+#home{display:none;opacity:0;margin-bottom:25px}
+#home a{font-size:22px;letter-spacing:8px;padding-top:25px}
+#home a.contact{font-size:14px;letter-spacing:0;text-transform:none;padding-top:0}
 #profile{float:right}
 #profile a{padding-top:10px;font-size:.875em;font-family:"Open sans",sans-serif;text-transform:none;margin-left:0}
 #profile img{float:left;width:36px;height:36px;margin-right:15px;border-radius:18px}

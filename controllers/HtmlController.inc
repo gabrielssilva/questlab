@@ -74,6 +74,9 @@
 			
 			// Set notifications
 			$this->set('notifications', $this->Notification->getNotifications());
+
+            // Set some application data
+            $this->set('mailcontact', \nre\configs\AppConfig::$app['mailcontact']);
 		}
 		
 		
