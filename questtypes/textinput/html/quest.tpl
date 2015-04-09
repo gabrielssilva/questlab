@@ -9,6 +9,8 @@
 		<?php endforeach ?>
 		<?=$t->t(mb_substr($task['text'], $posStart, mb_strlen($task['text'], 'UTF-8')-$posStart, 'UTF-8'))?>
 	</p>
+    <?php if($showcount) : ?>
     <p><?=sprintf(_('You filled %d of %d fields correctly'), $count, count($fields))?>.</p>
+    <?php endif ?>
 	<input type="submit" name="submit" value="<?=_('solve')?>" />
 </form>

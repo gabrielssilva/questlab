@@ -172,18 +172,19 @@
 			
 			// Get current question
 			$question = $this->Multiplechoice->getQuestionOfQuest($quest['id'], $pos);
-			
-			// Get answers
-			$question['answers'] = $this->Multiplechoice->getAnswersOfQuestion($question['id']);
-			
-			
-			// Get previous user answers
-			if($this->request->getGetParam('show-answer') == 'true' || !$this->Quests->hasCharacterSolvedQuest($quest['id'], $character['id']) || $this->request->getGetParam('status') == 'solved')
-			{
-				foreach($question['answers'] as &$answer) {
-					$answer['useranswer'] = $this->Multiplechoice->getCharacterSubmission($answer['id'], $character['id']);
-				}
-			}
+            if(!is_null($question))
+            {
+                // Get answers
+                $question['answers'] = $this->Multiplechoice->getAnswersOfQuestion($question['id']);
+
+                // Get previous user answers
+                if($this->request->getGetParam('show-answer') == 'true' || !$this->Quests->hasCharacterSolvedQuest($quest['id'], $character['id']) || $this->request->getGetParam('status') == 'solved')
+                {
+                    foreach($question['answers'] as &$answer) {
+                        $answer['useranswer'] = $this->Multiplechoice->getCharacterSubmission($answer['id'], $character['id']);
+                    }
+                }
+            }
 			
 			
 			// Pass data to view

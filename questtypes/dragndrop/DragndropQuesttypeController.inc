@@ -131,18 +131,26 @@
 		{
 			// Get Drag&Drop field
 			$dndField = $this->Dragndrop->getDragndrop($quest['id']);
-			$dndField['media'] = $this->Media->getSeminaryMediaById($dndField['questmedia_id']);
+            if(!is_null($dndField) && !is_null($dndField['questmedia_id'])) {
+                $dndField['media'] = $this->Media->getSeminaryMediaById($dndField['questmedia_id']);
+            }
 			
 			// Get Drags
 			$drags = array();
-			$dragsByIndex = $this->Dragndrop->getDrags($dndField['quest_id']);
-			foreach($dragsByIndex as &$drag) {
-				$drag['media'] = $this->Media->getSeminaryMediaById($drag['questmedia_id']);
-				$drags[$drag['id']] = $drag;
-			}
+            if(!is_null($dndField))
+            {
+                $dragsByIndex = $this->Dragndrop->getDrags($dndField['quest_id']);
+                foreach($dragsByIndex as &$drag) {
+                    $drag['media'] = $this->Media->getSeminaryMediaById($drag['questmedia_id']);
+                    $drags[$drag['id']] = $drag;
+                }
+            }
 			
 			// Get Drops
-			$drops = $this->Dragndrop->getDrops($dndField['quest_id']);
+			$drops = array();
+            if(!is_null($dndField)) {
+                $this->Dragndrop->getDrops($dndField['quest_id']);
+            }
 			
 			// Get Character answers
 			if($this->request->getGetParam('show-answer') == 'true' || !$this->Quests->hasCharacterSolvedQuest($quest['id'], $character['id']) || $this->request->getGetParam('status') == 'solved')

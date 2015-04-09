@@ -99,7 +99,7 @@
 		{
 			// Get Boss-Fight
 			$fight = $this->Bossfight->getBossFight($quest['id']);
-			if(!is_null($fight['boss_seminarymedia_id'])) {
+			if(!is_null($fight) && !is_null($fight['boss_seminarymedia_id'])) {
 				$fight['bossmedia'] = $this->Media->getSeminaryMediaById($fight['boss_seminarymedia_id']);
 			}
 			

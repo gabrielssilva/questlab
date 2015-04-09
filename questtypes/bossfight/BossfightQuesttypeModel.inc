@@ -71,7 +71,6 @@
 		/**
 		 * Get a Boss-Fight.
 		 * 
-		 * @throws	\nre\exceptions\IdNotFoundException
 		 * @param	int	$questId	ID of Quest
 		 * @return	array			Boss-Fight data
 		 */
@@ -84,12 +83,11 @@
 				'i',
 				$questId
 			);
-			if(empty($data)) {
-				throw new \nre\exceptions\IdNotFoundException($questId);
+			if(!empty($data)) {
+                return $data[0];
 			}
 			
-			
-			return $data[0];
+			return null;
 		}
 		
 		

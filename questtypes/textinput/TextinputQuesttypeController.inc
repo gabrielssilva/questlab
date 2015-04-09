@@ -134,12 +134,16 @@
                     $correctAnswersCount += $this->isMatching($field['regex'], $field['answer']);
 				}
 			}
+
+            // Show count
+            $showcount = (count($this->request->getGetParams()) > 1);
 			
 			
 			// Pass data to view
 			$this->set('task', $task);
 			$this->set('fields', $fields);
             $this->set('count', $correctAnswersCount);
+            $this->set('showcount', $showcount);
 		}
 		
 		
