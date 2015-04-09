@@ -165,7 +165,7 @@
 				break;
 				case 'role':
 					return $this->db->query(
-						'SELECT '.
+						'SELECT DISTINCT '.
 							'characters.id, characters.created, characters.user_id, characters.name, characters.url, cache_characters.xps, cache_characters.quest_xps, cache_characters.avatar_id, '.
 							'charactertypes.id AS charactertype_id, charactertypes.name AS charactertype_name, charactertypes.url AS charactertype_url, '.
 							'xplevels.id AS xplevel_id, xplevels.level AS xplevel, '.
@@ -187,7 +187,7 @@
 				break;
 				default:
 					return $this->db->query(
-						'SELECT '.
+						'SELECT DISTINCT '.
 							'characters.id, characters.created, characters.user_id, characters.name, characters.url, cache_characters.xps, cache_characters.quest_xps, cache_characters.avatar_id, '.
 							'charactertypes.id AS charactertype_id, charactertypes.name AS charactertype_name, charactertypes.url AS charactertype_url, '.
 							'xplevels.id AS xplevel_id, xplevels.level AS xplevel, '.
