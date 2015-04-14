@@ -1,7 +1,8 @@
 <form method="post">
 	<fieldset>
+        <?php if(!is_null($question)) : ?>
 		<legend><?=sprintf(_('Question %d of %d'), $pos, $count)?>:</legend>
-		<p class="fwb"><?=\hhu\z\Utils::t($question['question'])?></p>
+		<p class="fwb"><?=$t->t($question['question'])?></p>
 		<ol class="mchoice">
 			<?php foreach($question['answers'] as $i => &$answer) : ?>
 			<li class="cf">
@@ -10,6 +11,7 @@
 			</li>
 			<?php endforeach ?>
 		</ol>
+        <?php endif ?>
 	</fieldset>
 	
 	<input type="hidden" name="question" value="<?=$pos?>" />
