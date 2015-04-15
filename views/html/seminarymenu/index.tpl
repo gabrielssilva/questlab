@@ -5,5 +5,6 @@
 	<li><a href="<?=$linker->link(array('charactergroups','index',$loggedSeminary['url']))?>"><i class="fa fa-users fa-fw"></i><?=_('Character Groups')?></a></li>
 	<li><a href="<?=$linker->link(array('achievements','index',$loggedSeminary['url']))?>"><i class="fa fa-trophy fa-fw"></i><?=_('Achievements')?></a></li>
 	<li><a href="<?=$linker->link(array('library','index',$loggedSeminary['url']))?>"><i class="fa fa-book fa-fw"></i><?=_('Library')?></a></li>
+    <?php if(!is_null($loggedSeminary['map_seminarymedia_id'])) : ?><li><a href="<?=$linker->link(array('map','index',$loggedSeminary['url']))?>"><i class="fa fa-map-marker fa-fw"></i><?=_('Map')?></a></li><?php endif ?>
 </ul>
 <?php endif ?>

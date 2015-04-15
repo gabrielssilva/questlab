@@ -8,8 +8,10 @@
 	<link href="http://fonts.googleapis.com/css?family=Open+Sans:400,700" rel="stylesheet" type="text/css">
 	<link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
 	<link rel="stylesheet" type="text/css" href="<?=$linker->link(array('css','desktop.css'))?>" media="all" />
+	<link rel="stylesheet" type="text/css" href="<?=$linker->link(array('css','ol.css'))?>" media="all" />
 	<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
-	<script type="text/javascript" src="/js/jquery.nicescroll.min.js"></script>
+	<script type="text/javascript" src="<?=$linker->link(array('js','jquery.nicescroll.min.js'))?>"></script>
+	<script type="text/javascript" src="<?=$linker->link(array('js','ol.js'))?>"></script>
 	<script type="text/javascript">
 	$(document).ready(
 	function() {

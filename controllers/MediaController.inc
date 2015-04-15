@@ -27,6 +27,7 @@
 		public $permissions = array(
 			'index' 		=> array('admin', 'moderator', 'user', 'guest'),
 			'seminarymoodpic'	=> array('admin', 'moderator', 'user'),
+			'seminarymap'	=> array('admin', 'moderator', 'user'),
 			'seminary' 		=> array('admin', 'moderator', 'user'),
 			'avatar'		=> array('admin', 'moderator', 'user'),
 			'achievement'		=> array('admin', 'moderator', 'user'),
@@ -142,6 +143,34 @@
 			$this->set('media', $media);
 			$this->set('file', $file);
 		}
+
+
+        /**
+		 * Action: seminarymap
+		 * 
+		 * Display the map of a Seminary.
+		 * 
+		 * @throws	\nre\exceptions\IdNotFoundException
+		 * @param	string	$seminaryUrl	URL-title of the Seminary
+         */
+        public function seminarymap($seminaryUrl)
+        {
+			// Get Seminary
+			$seminary = $this->Seminaries->getSeminaryByUrl($seminaryUrl);
+
+			// Get media
+			$media = $this->Media->getSeminaryMediaById($seminary['map_seminarymedia_id']);
+			
+			// Get file
+			$file = $this->getMediaFile($media);
+			if(is_null($file)) {
+				return;
+			}
+			
+			// Pass data to view
+			$this->set('media', $media);
+			$this->set('file', $file);
+        }
 		
 		
 		/**

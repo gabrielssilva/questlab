@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: The Legend of Z\n"
-"POT-Creation-Date: 2015-04-08 16:22+0100\n"
-"PO-Revision-Date: 2015-04-08 16:22+0100\n"
+"POT-Creation-Date: 2015-04-15 21:08+0100\n"
+"PO-Revision-Date: 2015-04-15 21:08+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de_DE\n"
@@ -119,23 +119,23 @@ msgstr "Charakter"
 msgid "Boss"
 msgstr ""
 
-#: questtypes/bossfight/html/quest.tpl:11
-#: questtypes/bossfight/html/quest.tpl:24
+#: questtypes/bossfight/html/quest.tpl:12
+#: questtypes/bossfight/html/quest.tpl:25
 #: questtypes/bossfight/html/submission.tpl:21
 #: questtypes/bossfight/html/submission.tpl:33
 msgid "lost"
 msgstr "verloren"
 
-#: questtypes/bossfight/html/quest.tpl:41 views/html/quests/quest.tpl:133
+#: questtypes/bossfight/html/quest.tpl:43 views/html/quests/quest.tpl:133
 msgid "Choose"
 msgstr "Wählen"
 
-#: questtypes/bossfight/html/quest.tpl:47
+#: questtypes/bossfight/html/quest.tpl:49
 #: questtypes/choiceinput/html/quest.tpl:16
 #: questtypes/crossword/html/quest.tpl:30
 #: questtypes/dragndrop/html/quest.tpl:16
-#: questtypes/multiplechoice/html/quest.tpl:19
-#: questtypes/submit/html/quest.tpl:23 questtypes/textinput/html/quest.tpl:13
+#: questtypes/multiplechoice/html/quest.tpl:21
+#: questtypes/submit/html/quest.tpl:23 questtypes/textinput/html/quest.tpl:15
 msgid "solve"
 msgstr "lösen"
 
@@ -225,12 +225,12 @@ msgstr "Frage entfernen"
 msgid "Add question"
 msgstr "Frage hinzufügen"
 
-#: questtypes/multiplechoice/html/quest.tpl:3
+#: questtypes/multiplechoice/html/quest.tpl:4
 #, php-format
 msgid "Question %d of %d"
 msgstr "Frage %d von %d"
 
-#: questtypes/multiplechoice/html/quest.tpl:17
+#: questtypes/multiplechoice/html/quest.tpl:19
 msgid "solve Question"
 msgstr "Frage lösen"
 
@@ -339,7 +339,7 @@ msgstr "Der reguläre Ausdruck ist ungültig"
 msgid "Fields"
 msgstr "Felder"
 
-#: questtypes/textinput/html/quest.tpl:12
+#: questtypes/textinput/html/quest.tpl:13
 #, php-format
 msgid "You filled %d of %d fields correctly"
 msgstr "Du hast %d von %d Feldern korrekt ausgefüllt"
@@ -516,7 +516,7 @@ msgid "Group by"
 msgstr "Gruppiert über"
 
 #: views/html/achievements/conditions.tpl:69
-#: views/html/achievements/conditions.tpl:136 views/html/html.tpl:83
+#: views/html/achievements/conditions.tpl:136 views/html/html.tpl:85
 msgid "Achievement"
 msgstr "Achievement"
 
@@ -1483,11 +1483,11 @@ msgstr "oder"
 msgid "register yourself"
 msgstr "registriere dich"
 
-#: views/html/html.tpl:93
+#: views/html/html.tpl:95
 msgid "Level-up"
 msgstr "Levelaufstieg"
 
-#: views/html/html.tpl:95 views/html/html.tpl:97
+#: views/html/html.tpl:97 views/html/html.tpl:99
 #, php-format
 msgid "You have reached level %d"
 msgstr "Du hast Level %d erreicht"
@@ -1557,6 +1557,10 @@ msgstr "Verwalten"
 #: views/html/library/topic.tpl:15
 msgid "Manage Questtopic"
 msgstr "Thema verwalten"
+
+#: views/html/map/index.tpl:10 views/html/seminarymenu/index.tpl:8
+msgid "Map"
+msgstr "Karte"
 
 #: views/html/menu/index.tpl:2 views/html/users/create.tpl:5
 #: views/html/users/delete.tpl:5 views/html/users/edit.tpl:6

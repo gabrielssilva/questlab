@@ -49,7 +49,7 @@
 		{			
 			// Get seminaries
 			return $this->db->query(
-				'SELECT id, created, created_user_id, title, url, course, description, seminarymedia_id, charactergroups_seminarymedia_id, achievements_seminarymedia_id, library_seminarymedia_id '.
+				'SELECT id, created, created_user_id, title, url, course, description, seminarymedia_id, charactergroups_seminarymedia_id, achievements_seminarymedia_id, library_seminarymedia_id, map_seminarymedia_id '.
 				'FROM seminaries '.
 				'ORDER BY created DESC'
 			);
@@ -66,7 +66,7 @@
 		public function getSeminaryById($seminaryId)
 		{
 			$seminary = $this->db->query(
-				'SELECT id, created, created_user_id, title, url, course, description, seminarymedia_id, charactergroups_seminarymedia_id, achievements_seminarymedia_id, library_seminarymedia_id '.
+				'SELECT id, created, created_user_id, title, url, course, description, seminarymedia_id, charactergroups_seminarymedia_id, achievements_seminarymedia_id, library_seminarymedia_id, map_seminarymedia_id '.
 				'FROM seminaries '.
 				'WHERE id = ?',
 				'i',
@@ -91,7 +91,7 @@
 		public function getSeminaryByUrl($seminaryUrl)
 		{
 			$seminary = $this->db->query(
-				'SELECT id, created, created_user_id, title, url, course, description, seminarymedia_id, charactergroups_seminarymedia_id, achievements_seminarymedia_id, library_seminarymedia_id '.
+				'SELECT id, created, created_user_id, title, url, course, description, seminarymedia_id, charactergroups_seminarymedia_id, achievements_seminarymedia_id, library_seminarymedia_id, map_seminarymedia_id '.
 				'FROM seminaries '.
 				'WHERE url = ?',
 				's',
@@ -442,6 +442,7 @@
 		
 		/**
 		 * Delete a seminary.
+		 * TODO Delete media
 		 * 
 		 * @param	int	$seminaryId	ID of the seminary to delete
 		 */
