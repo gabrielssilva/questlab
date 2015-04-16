@@ -24,7 +24,7 @@
 		 * 
 		 * @var array
 		 */
-		public $models = array('seminaries');
+		public $models = array('seminaries', 'map');
 		/**
 		 * User permissions
 		 * 
@@ -58,9 +58,13 @@
             // Get Seminary
 			$seminary = $this->Seminaries->getSeminaryByUrl($seminaryUrl);
 
+            // Get map
+            $map = $this->Map->getMapOfSeminary($seminary['id']);
+
 
             // Pass data to view
             $this->set('seminary', $seminary);
+            $this->set('map', $map);
 		}
 		
 	}

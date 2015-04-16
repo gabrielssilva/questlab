@@ -10,7 +10,7 @@
 <h1><i class="fa fa-map-marker fa-fw"></i><?=_('Map')?></h1>
 <div id="map" class="map" style="background-image:url('<?=$linker->link(array('grafics','paper.jpg'))?>')"></div>
 <script type="text/javascript">
-    var extent = [0, 0, 1200, 857];
+    var extent = [0, 0, <?=$map['width']?>, <?=$map['height']?>];
     var projection = new ol.proj.Projection({
         code: 'pixel',
         units: 'pixels',
@@ -29,11 +29,17 @@
                     })
                 })
             ],
+            controls: ol.control.defaults().extend([
+                new ol.control.OverviewMap({
+                    collapsed: true,
+                })
+            ]),
             view: new ol.View({
                 projection: projection,
                 center: ol.extent.getCenter(extent),
-                zoom: 1
-            })
+                zoom: 1,
+                extent: extent
+            }),
         });
     });
 </script>

@@ -50,7 +50,7 @@
 		 * 
 		 * @var array
 		 */
-		public $models = array('seminaries', 'achievements', 'media', 'avatars', 'charactergroups', 'charactergroupsquests');
+		public $models = array('seminaries', 'achievements', 'media', 'avatars', 'charactergroups', 'charactergroupsquests', 'map');
 		
 		
 		
@@ -158,8 +158,14 @@
 			// Get Seminary
 			$seminary = $this->Seminaries->getSeminaryByUrl($seminaryUrl);
 
+            // Get map
+            $map = $this->Map->getMapOfSeminary($seminary['id']);
+            if(is_null($map)) {
+                throw new \nre\exceptions\IdNotFoundException($seminaryUrl);
+            }
+
 			// Get media
-			$media = $this->Media->getSeminaryMediaById($seminary['map_seminarymedia_id']);
+			$media = $this->Media->getSeminaryMediaById($map['seminarymedia_id']);
 			
 			// Get file
 			$file = $this->getMediaFile($media);
