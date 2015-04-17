@@ -149,7 +149,7 @@
 			// Get Drops
 			$drops = array();
             if(!is_null($dndField)) {
-                $this->Dragndrop->getDrops($dndField['quest_id']);
+                $drops = $this->Dragndrop->getDrops($dndField['quest_id']);
             }
 			
 			// Get Character answers
