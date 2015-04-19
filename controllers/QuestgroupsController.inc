@@ -55,8 +55,8 @@
 			'create'	=> array('admin'),
 			'edit'		=> array('admin', 'moderator'),
 			'edittexts'	=> array('admin', 'moderator'),
-			'moveup'	=> array('admin', 'moderator'),
-			'movedown'	=> array('admin', 'moderator'),
+			'moveup'	=> array('admin'),
+			'movedown'	=> array('admin'),
 			'delete'	=> array('admin')
 		);
 		
