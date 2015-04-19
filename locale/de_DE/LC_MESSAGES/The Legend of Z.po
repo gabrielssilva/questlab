@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: The Legend of Z\n"
-"POT-Creation-Date: 2015-04-15 21:08+0100\n"
-"PO-Revision-Date: 2015-04-15 21:08+0100\n"
+"POT-Creation-Date: 2015-04-19 11:29+0100\n"
+"PO-Revision-Date: 2015-04-19 11:29+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de_DE\n"
@@ -18,7 +18,7 @@ msgstr ""
 "X-Poedit-SearchPath-2: controllers\n"
 
 #: controllers/CharactersController.inc:402
-#: controllers/UsersController.inc:329 views/ajax/characters/index.tpl:10
+#: controllers/UsersController.inc:333 views/ajax/characters/index.tpl:10
 #: views/ajax/users/index.tpl:10 views/html/characters/index.tpl:48
 #: views/html/characters/manage.tpl:35 views/html/characters/manage.tpl:50
 #: views/html/characters/manage.tpl:58 views/html/userroles/user.tpl:5
@@ -28,7 +28,7 @@ msgid "Admin"
 msgstr "Administrator"
 
 #: controllers/CharactersController.inc:408
-#: controllers/UsersController.inc:335 views/ajax/characters/index.tpl:12
+#: controllers/UsersController.inc:339 views/ajax/characters/index.tpl:12
 #: views/ajax/users/index.tpl:12 views/html/characters/index.tpl:49
 #: views/html/characters/manage.tpl:36 views/html/characters/manage.tpl:51
 #: views/html/characters/manage.tpl:59 views/html/userroles/user.tpl:7
@@ -38,7 +38,7 @@ msgid "Moderator"
 msgstr "Moderator"
 
 #: controllers/CharactersController.inc:414
-#: controllers/UsersController.inc:341 views/ajax/characters/index.tpl:14
+#: controllers/UsersController.inc:345 views/ajax/characters/index.tpl:14
 #: views/ajax/users/index.tpl:14 views/html/characters/index.tpl:50
 #: views/html/characters/manage.tpl:37 views/html/characters/manage.tpl:53
 #: views/html/characters/manage.tpl:61 views/html/userroles/user.tpl:9
@@ -1462,7 +1462,7 @@ msgstr "Login"
 #: views/html/users/index.tpl:15 views/html/users/index.tpl:19
 #: views/html/users/index.tpl:20 views/html/users/login.tpl:12
 #: views/html/users/login.tpl:13 views/html/users/manage.tpl:14
-#: views/html/users/register.tpl:85 views/html/users/register.tpl:86
+#: views/html/users/register.tpl:87 views/html/users/register.tpl:88
 msgid "Username"
 msgstr "Benutzername"
 
@@ -1470,8 +1470,8 @@ msgstr "Benutzername"
 #: views/html/introduction/index.tpl:8 views/html/users/create.tpl:92
 #: views/html/users/create.tpl:93 views/html/users/edit.tpl:100
 #: views/html/users/edit.tpl:101 views/html/users/login.tpl:14
-#: views/html/users/login.tpl:15 views/html/users/register.tpl:93
-#: views/html/users/register.tpl:94
+#: views/html/users/login.tpl:15 views/html/users/register.tpl:95
+#: views/html/users/register.tpl:96 views/html/users/register.tpl:98
 msgid "Password"
 msgstr "Passwort"
 
@@ -2069,25 +2069,25 @@ msgid "Password is too long (max. %d chars)"
 msgstr "Das Passwort ist zu lang (max. %d Zeichen)"
 
 #: views/html/users/create.tpl:67 views/html/users/edit.tpl:71
-#: views/html/users/register.tpl:69
+#: views/html/users/register.tpl:71
 msgid "Password invalid"
 msgstr "Das Passwort ist ungültig"
 
 #: views/html/users/create.tpl:86 views/html/users/create.tpl:87
 #: views/html/users/edit.tpl:94 views/html/users/edit.tpl:95
-#: views/html/users/register.tpl:87 views/html/users/register.tpl:88
+#: views/html/users/register.tpl:89 views/html/users/register.tpl:90
 msgid "Prename"
 msgstr "Vorname"
 
 #: views/html/users/create.tpl:88 views/html/users/create.tpl:89
 #: views/html/users/edit.tpl:96 views/html/users/edit.tpl:97
-#: views/html/users/register.tpl:89 views/html/users/register.tpl:90
+#: views/html/users/register.tpl:91 views/html/users/register.tpl:92
 msgid "Surname"
 msgstr "Nachname"
 
 #: views/html/users/create.tpl:90 views/html/users/create.tpl:91
 #: views/html/users/edit.tpl:98 views/html/users/edit.tpl:99
-#: views/html/users/register.tpl:91 views/html/users/register.tpl:92
+#: views/html/users/register.tpl:93 views/html/users/register.tpl:94
 #: views/html/users/user.tpl:24
 msgid "E‑mail address"
 msgstr "E‑Mail-Adresse"
@@ -2130,7 +2130,16 @@ msgstr "Registrierung"
 msgid "E‑Mail address has to end with @%s"
 msgstr "Die E‑Mail-Adresse muss auf @%s enden"
 
-#: views/html/users/register.tpl:96
+#: views/html/users/register.tpl:69
+#, php-format
+msgid "Passwords does not match"
+msgstr "Passwörter stimmen nicht überein"
+
+#: views/html/users/register.tpl:97
+msgid "Repeat password"
+msgstr "Passwort wiederholen"
+
+#: views/html/users/register.tpl:100
 msgid "Register"
 msgstr "Registrieren"
 

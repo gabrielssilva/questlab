@@ -229,6 +229,10 @@
 				if($this->Users->emailExists($email)) {
 					$validation = $this->Validation->addValidationResult($validation, 'email', 'exist', true);
 				}
+                $password = $this->request->getPostParam('password');
+                if($password != $this->request->getPostParam('passwordrepeat')) {
+                    $validation = $this->Validation->addValidationResult($validation, 'password', 'repeat', false);
+                }
 				
 				
 				// Register
@@ -239,7 +243,7 @@
 						$prename,
 						$surname,
 						$email,
-						$this->request->getPostParam('password')
+						$password
 					);
 					$user = $this->Users->getUserById($userId);
 					

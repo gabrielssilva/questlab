@@ -7,10 +7,10 @@
 
 <h1><?=_('Registration')?></h1>
 <?php if($validation !== true) : ?>
-<ul>
+<ul class="validation">
 	<?php foreach($validation as $field => &$settings) : ?>
 	<li>
-		<ul>
+		<ul class="subvalidation">
 			<?php foreach($settings as $setting => $value) : ?>
 			<li>
 				<?php switch($field) {
@@ -66,6 +66,8 @@
 							break;
 							case 'maxlength': printf(_('Password is too long (max. %d chars)'), $value);
 							break;
+                            case 'repeat': printf(_('Passwords does not match'));
+                            break;
 							default: echo _('Password invalid');
 						}
 					break;
@@ -92,6 +94,8 @@
 		<input name="email" type="email" placeholder="<?=(!empty($emailhost)) ? '…@'.$emailhost : _('E‑mail address')?>" title="<?=_('E‑mail address')?>" required="required" value="<?=$email?>" <?=(array_key_exists('email', $validation)) ? 'class="invalid"' : null?> /><br />
 		<label for="password"><?=_('Password')?>:</label>
 		<input name="password" type="password" placeholder="<?=_('Password')?>" title="<?=_('Password')?>" required="required" maxlength="<?=$validationSettings['password']['maxlength']?>" <?=(array_key_exists('password', $validation)) ? 'class="invalid"' : null?> /><br />
+		<label for="passwordrepeat"><?=_('Repeat password')?>:</label>
+		<input name="passwordrepeat" type="password" placeholder="<?=_('Password')?>" title="<?=_('Password')?>" required="required" maxlength="<?=$validationSettings['password']['maxlength']?>" <?=(array_key_exists('password', $validation)) ? 'class="invalid"' : null?> /><br />
 	</fieldset>
 	<input type="submit" name="register" value="<?=_('Register')?>" />
 </form>
