@@ -17,8 +17,8 @@
 	<?php endif ?>
 </p>
 <?php endif ?>
-<?php if($validation !== true) : ?>
-<ul>
+<?php if($validation !== true && !empty($validation)) : ?>
+<ul class="validation">
 	<?php foreach($validation as $field => &$settings) : ?>
 	<li>
 		<ul>
@@ -67,7 +67,7 @@
 <form method="post" class="logreg" enctype="multipart/form-data">
 	<fieldset>
 		<label for="title"><?=_('Title')?>:</label>
-		<input type="text" id="title" name="title" placeholder="<?=_('Title')?>" maxlength="<?=$validationSettings['title']['maxlength']?>" value="<?=$title?>" <?=($validation !== true && array_key_exists('title', $validation)) ? 'class="invalid"' : null?> /><br />
+		<input type="text" id="title" name="title" placeholder="<?=_('Title')?>" required="required" maxlength="<?=$validationSettings['title']['maxlength']?>" value="<?=$title?>" <?=($validation !== true && array_key_exists('title', $validation)) ? 'class="invalid"' : null?> /><br />
 		<label for="course"><?=_('Course')?>:</label>
 		<input type="text" id="course" name="course" placeholder="<?=_('Course')?>" maxlength="<?=$validationSettings['course']['maxlength']?>" value="<?=$course?>" <?=($validation !== true && array_key_exists('course', $validation)) ? 'class="invalid"' : null?> /><br />
 		<label for="description"><?=_('Description')?>:<br />

@@ -24,8 +24,8 @@
 
 <section>
 	<h1><i class="fa fa-picture-o fa-fw"></i><?=_('Media')?></h1>
-	<?php if($validation !== true) : ?>
-	<ul>
+	<?php if($validation !== true && !empty($validation)) : ?>
+	<ul class="validation">
 		<?php foreach($validation as $field => &$settings) : ?>
 		<li>
 			<ul>

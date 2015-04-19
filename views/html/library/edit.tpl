@@ -10,7 +10,7 @@
 
 <h1><i class="fa fa-book fa-fw"></i><?=_('Edit Questtopic')?></h1>
 <?php if($validations['edit'] !== true) : ?>
-<ul>
+<ul class="validation">
 	<?php foreach($validations['edit'] as $field => &$settings) : ?>
 	<li>
 		<ul>
@@ -50,7 +50,7 @@
 <form method="post">
 	<?php foreach($subtopicsTitles as $subtopicId => &$title) : ?>
 	<?php if($validations['edit-subtopics'] !== true && array_key_exists($subtopicId, $validations['edit-subtopics']) && $validations['edit-subtopics'][$subtopicId] !== true) : ?>
-	<ul>
+	<ul class="validation">
 		<?php foreach($validations['edit-subtopics'][$subtopicId] as $field => &$settings) : ?>
 		<li>
 			<ul>
@@ -88,7 +88,7 @@
 
 <h2><?=_('Create new Questsubtopic')?></h2>
 <?php if($validations['create-subtopic'] !== true) : ?>
-<ul>
+<ul class="validation">
 	<?php foreach($validations['create-subtopic'] as $field => &$settings) : ?>
 	<li>
 		<ul>

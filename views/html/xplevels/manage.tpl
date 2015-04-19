@@ -14,7 +14,7 @@
 		<?php foreach($xplevels as &$xplevel) : ?>
 		<li>
 			<?php if($validations['edit'] !== true && array_key_exists($xplevel['id'], $validations['edit']) && $validations['edit'][$xplevel['id']] !== true) : ?>
-			<ul>
+			<ul class="validation">
 				<?php foreach($validations['edit'][$xplevel['id']] as $field => &$settings) : ?>
 				<li>
 					<ul>
@@ -51,7 +51,7 @@
 
 <h2><?=_('Create new XP-level')?></h2>
 <?php if($validations['create'] !== true) : ?>
-<ul>
+<ul class="validation">
 	<?php foreach($validations['create'] as $field => &$settings) : ?>
 	<li>
 		<ul>

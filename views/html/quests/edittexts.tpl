@@ -11,7 +11,7 @@
 	<fieldset>
 		<legend><?=$type['type']?></legend>
 		<?php if(array_key_exists($type['url'], $validations)) : ?>
-		<ul>
+		<ul class="validation">
 			<?php foreach($validations[$type['url']] as $textId => &$validation) : ?>
 			<?php if($validation !== true) : ?>
 				<?php foreach($validation as $field => &$settings) : ?>

@@ -6,11 +6,11 @@
 </ul>
 
 <h1><?=_('Registration')?></h1>
-<?php if($validation !== true) : ?>
+<?php if($validation !== true && !empty($validation)) : ?>
 <ul class="validation">
 	<?php foreach($validation as $field => &$settings) : ?>
 	<li>
-		<ul class="subvalidation">
+		<ul>
 			<?php foreach($settings as $setting => $value) : ?>
 			<li>
 				<?php switch($field) {

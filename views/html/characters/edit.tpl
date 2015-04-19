@@ -17,8 +17,8 @@
 
 <h1><?=_('Edit Character')?></h1>
 <form method="post" action="" class="logreg">
-	<?php if($validation !== true) : ?>
-	<ul>
+	<?php if($validation !== true && !empty($validation)) : ?>
+	<ul class="validation">
 		<?php foreach($validation as $field => &$settings) : ?>
 		<li>
 			<ul>

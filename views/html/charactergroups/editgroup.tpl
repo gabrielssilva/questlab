@@ -10,8 +10,8 @@
 </ul>
 
 <h1><?=sprintf(_('Edit %s Character group'), $groupsgroup['name'])?></h1>
-<?php if($validation !== true) : ?>
-<ul>
+<?php if($validation !== true && !empty($validation)) : ?>
+<ul class="validation">
 	<?php foreach($validation as $field => &$settings) : ?>
 	<li>
 		<ul>

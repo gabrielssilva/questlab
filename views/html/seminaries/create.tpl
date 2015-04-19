@@ -6,8 +6,8 @@
 </ul>
 
 <h1><?=_('New seminary')?></h1>
-<?php if($validation !== true) : ?>
-<ul>
+<?php if($validation !== true && !empty($validation)) : ?>
+<ul class="validation">
 	<?php foreach($validation as $field => &$settings) : ?>
 	<li>
 		<ul>
@@ -66,7 +66,7 @@
 	</fieldset>
 	<fieldset>
 		<label for="title"><?=_('Title')?>:</label>
-		<input type="text" name="title" placeholder="<?=_('Title')?>" maxlength="<?=$validationSettings['title']['maxlength']?>" value="<?=$title?>" <?=(array_key_exists('title', $validation)) ? 'class="invalid"' : null?> /><br />
+		<input type="text" name="title" placeholder="<?=_('Title')?>" required="required" maxlength="<?=$validationSettings['title']['maxlength']?>" value="<?=$title?>" <?=(array_key_exists('title', $validation)) ? 'class="invalid"' : null?> /><br />
 		<label for="course"><?=_('Course')?>:</label>
 		<input type="text" name="course" placeholder="<?=_('Course')?>" maxlength="<?=$validationSettings['course']['maxlength']?>" value="<?=$course?>" <?=(array_key_exists('course', $validation)) ? 'class="invalid"' : null?> /><br />
 		<label for="description"><?=_('Description')?>:<br />

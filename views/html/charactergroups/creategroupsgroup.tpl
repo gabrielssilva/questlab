@@ -9,8 +9,8 @@
 </ul>
 
 <h1><?=_('New Character groups-group')?></h1>
-<?php if($validation !== true) : ?>
-<ul>
+<?php if($validation !== true && !empty($validation)) : ?>
+<ul class="validation">
 	<?php foreach($validation as $field => &$settings) : ?>
 	<li>
 		<ul>
