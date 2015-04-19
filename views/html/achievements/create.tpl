@@ -105,6 +105,5 @@
 			<?php endforeach ?>
 		</select>
 	</fieldset>
-	<input type="submit" name="edit-conditions" value="<?=_('edit conditions')?>" />
-	<input type="submit" name="edit" value="<?=_('save')?>" />
+	<input type="submit" name="edit" value="<?=_('save and edit conditions')?>" />
 </form>

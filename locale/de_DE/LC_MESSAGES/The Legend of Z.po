@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: The Legend of Z\n"
-"POT-Creation-Date: 2015-04-19 11:29+0100\n"
-"PO-Revision-Date: 2015-04-19 11:29+0100\n"
+"POT-Creation-Date: 2015-04-19 12:49+0100\n"
+"PO-Revision-Date: 2015-04-19 12:50+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de_DE\n"
@@ -104,10 +104,10 @@ msgstr ""
 #: questtypes/multiplechoice/html/edittask.tpl:79
 #: questtypes/textinput/html/edittask.tpl:44
 #: views/html/achievements/conditions.tpl:151
-#: views/html/achievements/create.tpl:109 views/html/achievements/edit.tpl:112
-#: views/html/charactertypes/edit.tpl:124 views/html/library/edit.tpl:46
-#: views/html/library/edit.tpl:86 views/html/quests/edit.tpl:114
-#: views/html/users/edit.tpl:105 views/html/xplevels/manage.tpl:49
+#: views/html/achievements/edit.tpl:112 views/html/charactertypes/edit.tpl:124
+#: views/html/library/edit.tpl:46 views/html/library/edit.tpl:86
+#: views/html/quests/edit.tpl:114 views/html/users/edit.tpl:109
+#: views/html/xplevels/manage.tpl:49
 msgid "save"
 msgstr "speichern"
 
@@ -723,9 +723,9 @@ msgstr "Quest"
 msgid "Achievement conditions Achievement"
 msgstr "Metaachievement"
 
-#: views/html/achievements/create.tpl:108 views/html/achievements/edit.tpl:111
-msgid "edit conditions"
-msgstr "Bedingungen bearbeiten"
+#: views/html/achievements/create.tpl:108
+msgid "save and edit conditions"
+msgstr "speichern und Bedingungen bearbeiten"
 
 #: views/html/achievements/delete.tpl:11
 msgid "Delete Achievement"
@@ -759,6 +759,10 @@ msgstr "Bedingung"
 #: views/html/achievements/edit.tpl:109
 msgid "Changing the condition will delete all current conditions"
 msgstr "Das Ändern der Bedingung löscht alle bisherigen Bedingungen"
+
+#: views/html/achievements/edit.tpl:111
+msgid "edit conditions"
+msgstr "Bedingungen bearbeiten"
 
 #: views/html/achievements/index.tpl:11
 msgid "Create new Achievement"
@@ -987,7 +991,7 @@ msgstr "Motto"
 #: views/html/library/edit.tpl:124 views/html/questgroups/create.tpl:76
 #: views/html/questgroupshierarchy/create.tpl:63
 #: views/html/quests/create.tpl:108 views/html/seminaries/create.tpl:75
-#: views/html/users/create.tpl:96 views/html/xplevels/manage.tpl:83
+#: views/html/users/create.tpl:100 views/html/xplevels/manage.tpl:83
 msgid "create"
 msgstr "erstellen"
 
@@ -1456,9 +1460,9 @@ msgid "Login"
 msgstr "Login"
 
 #: views/html/error/index.tpl:8 views/html/error/index.tpl:9
-#: views/html/introduction/index.tpl:7 views/html/users/create.tpl:84
-#: views/html/users/create.tpl:85 views/html/users/edit.tpl:87
-#: views/html/users/edit.tpl:89 views/html/users/edit.tpl:91
+#: views/html/introduction/index.tpl:7 views/html/users/create.tpl:86
+#: views/html/users/create.tpl:87 views/html/users/edit.tpl:89
+#: views/html/users/edit.tpl:91 views/html/users/edit.tpl:93
 #: views/html/users/index.tpl:15 views/html/users/index.tpl:19
 #: views/html/users/index.tpl:20 views/html/users/login.tpl:12
 #: views/html/users/login.tpl:13 views/html/users/manage.tpl:14
@@ -1467,9 +1471,10 @@ msgid "Username"
 msgstr "Benutzername"
 
 #: views/html/error/index.tpl:10 views/html/error/index.tpl:11
-#: views/html/introduction/index.tpl:8 views/html/users/create.tpl:92
-#: views/html/users/create.tpl:93 views/html/users/edit.tpl:100
-#: views/html/users/edit.tpl:101 views/html/users/login.tpl:14
+#: views/html/introduction/index.tpl:8 views/html/users/create.tpl:94
+#: views/html/users/create.tpl:95 views/html/users/create.tpl:97
+#: views/html/users/edit.tpl:102 views/html/users/edit.tpl:103
+#: views/html/users/edit.tpl:105 views/html/users/login.tpl:14
 #: views/html/users/login.tpl:15 views/html/users/register.tpl:95
 #: views/html/users/register.tpl:96 views/html/users/register.tpl:98
 msgid "Password"
@@ -2069,28 +2074,39 @@ msgid "Password is too long (max. %d chars)"
 msgstr "Das Passwort ist zu lang (max. %d Zeichen)"
 
 #: views/html/users/create.tpl:67 views/html/users/edit.tpl:71
+#: views/html/users/register.tpl:69
+#, php-format
+msgid "Passwords does not match"
+msgstr "Passwörter stimmen nicht überein"
+
+#: views/html/users/create.tpl:69 views/html/users/edit.tpl:73
 #: views/html/users/register.tpl:71
 msgid "Password invalid"
 msgstr "Das Passwort ist ungültig"
 
-#: views/html/users/create.tpl:86 views/html/users/create.tpl:87
-#: views/html/users/edit.tpl:94 views/html/users/edit.tpl:95
+#: views/html/users/create.tpl:88 views/html/users/create.tpl:89
+#: views/html/users/edit.tpl:96 views/html/users/edit.tpl:97
 #: views/html/users/register.tpl:89 views/html/users/register.tpl:90
 msgid "Prename"
 msgstr "Vorname"
 
-#: views/html/users/create.tpl:88 views/html/users/create.tpl:89
-#: views/html/users/edit.tpl:96 views/html/users/edit.tpl:97
+#: views/html/users/create.tpl:90 views/html/users/create.tpl:91
+#: views/html/users/edit.tpl:98 views/html/users/edit.tpl:99
 #: views/html/users/register.tpl:91 views/html/users/register.tpl:92
 msgid "Surname"
 msgstr "Nachname"
 
-#: views/html/users/create.tpl:90 views/html/users/create.tpl:91
-#: views/html/users/edit.tpl:98 views/html/users/edit.tpl:99
+#: views/html/users/create.tpl:92 views/html/users/create.tpl:93
+#: views/html/users/edit.tpl:100 views/html/users/edit.tpl:101
 #: views/html/users/register.tpl:93 views/html/users/register.tpl:94
 #: views/html/users/user.tpl:24
 msgid "E‑mail address"
 msgstr "E‑Mail-Adresse"
+
+#: views/html/users/create.tpl:96 views/html/users/edit.tpl:104
+#: views/html/users/register.tpl:97
+msgid "Repeat password"
+msgstr "Passwort wiederholen"
 
 #: views/html/users/delete.tpl:8 views/html/users/user.tpl:18
 msgid "Delete user"
@@ -2105,7 +2121,7 @@ msgstr "Soll der Benutzer „%s“ (%s) wirklich gelöscht werden?"
 msgid "Edit user"
 msgstr "Benutzer bearbeiten"
 
-#: views/html/users/edit.tpl:103
+#: views/html/users/edit.tpl:107
 msgid "Mail notifications"
 msgstr "E‑Mailbenachrichtigungen"
 
@@ -2129,15 +2145,6 @@ msgstr "Registrierung"
 #, php-format
 msgid "E‑Mail address has to end with @%s"
 msgstr "Die E‑Mail-Adresse muss auf @%s enden"
-
-#: views/html/users/register.tpl:69
-#, php-format
-msgid "Passwords does not match"
-msgstr "Passwörter stimmen nicht überein"
-
-#: views/html/users/register.tpl:97
-msgid "Repeat password"
-msgstr "Passwort wiederholen"
 
 #: views/html/users/register.tpl:100
 msgid "Register"
