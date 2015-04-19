@@ -26,7 +26,7 @@
 		<p class="ltopc"><a href="<?=$linker->link(array('library','topic',$seminary['url'],$topic['url']))?>"><?=$topic['title']?></a></p>
 		<p><small>Fortschritt: <?=$topic['characterQuestcount']?> / <?=$topic['questcount']?></small></p>
 		<div class="xpbar">
-			<span style="width:<?=round($topic['characterQuestcount']/$topic['questcount']*100)?>%"></span>
+			<span style="width:<?=($topic['questcount'] > 0) ? round($topic['characterQuestcount']/$topic['questcount']*100) : 0?>%"></span>
 		</div>
 	</li>
 	<?php endforeach ?>

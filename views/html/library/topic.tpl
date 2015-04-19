@@ -18,7 +18,7 @@
 <div class="libindxpr cf">
 	<p><small>Themenfortschritt: <?=$questtopic['characterQuestcount']?> / <?=$questtopic['questcount']?></small></p>
 	<div class="xpbar">
-		<span style="width:<?=round($questtopic['characterQuestcount']/$questtopic['questcount']*100)?>%"></span>
+		<span style="width:<?=($questtopic['questcount'] > 0) ? round($questtopic['characterQuestcount']/$questtopic['questcount']*100) : 0?>%"></span>
 	</div>
 </div>
 

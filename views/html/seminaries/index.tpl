@@ -24,7 +24,7 @@
 			<?php if(array_key_exists('usercharacter', $seminary)) : ?>
 			<div class="cf">
 				<div class="xpbar">
-					<span style="width:<?=round($seminary['usercharacter']['xps'] * 100 / $seminary['xps'])?>%"></span>
+					<span style="width:<?=($seminary['xps'] > 0) ? round($seminary['usercharacter']['xps'] * 100 / $seminary['xps']) : 0?>%"></span>
 				</div>
 				<p class="xpnumeric"><?=$seminary['usercharacter']['xps']?> / <?=sprintf(_('%d XPs'), $seminary['xps'])?></p>
 			</div>

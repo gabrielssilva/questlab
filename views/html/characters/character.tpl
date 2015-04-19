@@ -29,9 +29,9 @@
 	<div class="cinfo">
 		<div class="cdata">
 			<div class="xpbar">
-				<span style="width:<?=round($character['quest_xps']*100/$seminary['achievable_xps'])?>%"></span>
+				<span style="width:<?=($seminary['achievable_xps'] > 0) ? round($character['quest_xps']*100/$seminary['achievable_xps']) : 0?>%"></span>
 			</div>
-			<p><small><?=_('Total progress')?>: <?=round($character['quest_xps']*100/$seminary['achievable_xps'])?>%</small></p>
+			<p><small><?=_('Total progress')?>: <?=($seminary['achievable_xps'] > 0) ? round($character['quest_xps']*100/$seminary['achievable_xps']) : 0?>%</small></p>
 		</div>
 		<?php if(array_key_exists('xplevel', $character) && !is_null($character['xplevel'])) : ?>
 		<div class="cdata square">
