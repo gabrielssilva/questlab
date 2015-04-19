@@ -493,7 +493,8 @@
 					$validation = $this->Validation->addValidationResult($validation, 'username', 'exist', true);
 				}
 				$password = $this->request->getPostParam('password');
-				if(!empty($password)) {
+				if(!empty($password))
+                {
 					$validation = $this->Validation->addValidationResults($validation,
 						'password',
 						$this->Validation->validateParam(
@@ -501,6 +502,9 @@
 							'password'
 						)
 					);
+                    if($password != $this->request->getPostParam('passwordrepeat')) {
+                        $validation = $this->Validation->addValidationResult($validation, 'password', 'repeat', false);
+                    }
 				}
 				$prename = $this->request->getPostParam('prename');
 				$surname = $this->request->getPostParam('surname');

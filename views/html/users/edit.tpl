@@ -10,8 +10,8 @@
 </ul>
 
 <h1><?=_('Edit user')?></h1>
-<?php if($validation !== true) : ?>
-<ul>
+<?php if($validation !== true && !empty($validation)) : ?>
+<ul class="validation">
 	<?php foreach($validation as $field => &$settings) : ?>
 	<li>
 		<ul>
@@ -68,6 +68,8 @@
 							break;
 							case 'maxlength': printf(_('Password is too long (max. %d chars)'), $value);
 							break;
+                            case 'repeat': printf(_('Passwords does not match'));
+                            break;
 							default: echo _('Password invalid');
 						}
 					break;
@@ -99,6 +101,8 @@
 		<input name="email" type="email" placeholder="<?=_('E‑mail address')?>" title="<?=_('E‑mail address')?>" required="required" value="<?=$email?>" <?=(array_key_exists('email', $validation)) ? 'class="invalid"' : null?> /><br />
 		<label for="password"><?=_('Password')?>:</label>
 		<input name="password" type="password" placeholder="<?=_('Password')?>" title="<?=_('Password')?>" maxlength="<?=$validationSettings['password']['maxlength']?>" <?=(array_key_exists('password', $validation)) ? 'class="invalid"' : null?> /><br />
+		<label for="passwordrepeat"><?=_('Repeat password')?>:</label>
+		<input name="passwordrepeat" type="password" placeholder="<?=_('Password')?>" title="<?=_('Password')?>" required="required" maxlength="<?=$validationSettings['password']['maxlength']?>" <?=(array_key_exists('password', $validation)) ? 'class="invalid"' : null?> /><br />
 		<input id="mailing" type="checkbox" name="mailing" <?php if($mailing) : ?>checked="checked"<?php endif ?> /> 
 		<label for="mailing"><?=_('Mail notifications')?></label>
 	</fieldset>
