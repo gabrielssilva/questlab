@@ -12,7 +12,7 @@ img{border:0}
 h1,h2,h3{color:#103a3e}
 h2{font-size:120%;margin-top:25px}
 h3{font-size:100%}
-ul,ol,nav{padding:0;list-style-type:none}
+ul,ol,nav{padding:0;margin-top:0;list-style-type:none}
 p{margin:0 0 16px;padding:0}
 audio,canvas,video{display:inline-block}
 audio:not([controls]){display:none;height:0}
@@ -29,8 +29,8 @@ sup{top:-.5em}
 sub{bottom:-.25em}
 svg:not(:root){overflow:hidden}
 figure{margin:0}
-fieldset{border:1px dotted #f7f5f2;padding:0 10px 0}
-legend{border:0;margin:0 0 10px;padding:0}
+fieldset{border:1px solid #eae8e4;padding:5px 10px}
+legend{border:0;padding:0}
 button,input,select,textarea{font-family:inherit;font-size:100%;margin:0}
 button,input{line-height:normal}
 button,select{text-transform:none}
@@ -177,6 +177,7 @@ input[type="submit"][disabled]{text-shadow:1px 2px #d48c4e;background:#f9ac69;bo
 /** Login, Registration & Filter **/
 
 .logreg{margin:15px 0;width:auto;display:inline-block;padding:15px 20px;background:#eae8e4;border-radius:3px}
+.logreg fieldset{border-color:#f7f5f2}
 .logreg label{display:block;font-size:.875em}
 .logreg input{margin:5px 0 15px}
 .logreg textarea,.logreg select{width:100%;margin:5px 0 15px;-webkit-box-sizing: border-box;-moz-box-sizing:border-box;box-sizing:border-box}
@@ -462,8 +463,13 @@ aside .cranks li:nth-child(odd){background:#f7f5f2}
 
 div.cond{display:none;margin-left:15px}
 input[type="checkbox"]:checked + label + div.cond{display:block}
+input[type="file"]{display:block}
 form.mng{margin:30px 0}
 form.mng p{margin:0}
 form.mng ul{margin:0}
 form.mng input[type="submit"]{margin:0}
 .mnglst li{text-align:center}
+form h2{font-size:120%;margin-top:0}
+table.avatars tbody tr{border:0 solid #EAE8E4;border-width:1px 0}
+table.avatars td{vertical-align:bottom;padding:5px 0}
+table.avatars img{max-height:15em}
