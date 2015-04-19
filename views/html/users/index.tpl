@@ -10,7 +10,7 @@
 <form method="get" class="logreg admnqf">
 	<fieldset>
 		<legend><?=_('Filters')?></legend>
-		<p><small><?=_('Sortorder')?>:</small></p>
+		<small><?=_('Sortorder')?>:</small>
 		<select name="sortorder" onchange="this.form.submit();">
 			<option value="username" <?php if($sortorder == 'username') : ?>selected="selected"<?php endif ?>><?=_('Username')?></option>
 			<option value="role" <?php if($sortorder == 'role') : ?>selected="selected"<?php endif ?>><?=_('Role')?></option>
@@ -18,6 +18,10 @@
 		</select>
 		<label for="username"><?=_('Username')?>:</label>
 		<input id="username" type="text" name="username" placeholder="<?=_('Username')?>" value="<?=$username?>" />
+        <label for="name"><?=_('Name')?>:</label>
+        <input id="name" type="text" name="name" placeholder="<?=_('Name')?>" value="<?=$name?>" />
+        <label for="email"><?=_('E‑mail address')?>:</label>
+        <input id="email" type="text" name="email" placeholder="<?=_('E‑mail address')?>" value="<?=$email?>" />
 	</fieldset>
 	<input type="submit" value="<?=_('Apply filters')?>" />
 </form>
@@ -29,6 +33,11 @@
 			<?php if(in_array('admin', $user['roles'])) : ?><small>(<?=_('Admin')?>)</small><?php endif ?>
 			<?php if(in_array('moderator', $user['roles'])) : ?><small>(<?=_('Moderator')?>)</small><?php endif ?>
 			<?php if(in_array('user', $user['roles'])) : ?><small>(<?=_('User')?>)</small><?php endif ?>
+            <br />
+            <small>
+                <?=$user['prename']?> <?=$user['surname']?>,
+                <a href="mailto:<?=$user['email']?>"><?=$user['email']?></a>
+            </small>
 		</p>
 	</li>
 	<?php endforeach ?>
@@ -36,7 +45,7 @@
 
 <?php if(is_null($all) && ($page*$limit) < $usersCount) : ?>
 <nav class="admin">
-	<li><a id="show-more" href="<?=$linker->link(null,1,true,array('page'=>$page+1,'sortorder'=>$sortorder))?>"><?=_('Show more')?></a></li>
+	<li><a id="show-more" href="<?=$linker->link(null,1,true,array('page'=>$page+1,'sortorder'=>$sortorder),false)?>"><?=_('Show more')?></a></li>
 	<li><a id="show-all" href="<?=$linker->link('all',1,true,array('sortorder'=>$sortorder))?>"><?=_('Show all')?></a></li>
 </nav>
 <?php endif ?>
@@ -45,7 +54,7 @@
 	var page = 1;
 	var request;
 	var linkUser = "<?=$linker->link(array('users','user','USER'))?>";
-	var linkPage = "<?=$linker->link(null,1,true,array('page'=>'PAGE','sortorder'=>$sortorder))?>";
+	var linkPage = "<?=$linker->link(null,1,true,array('page'=>'PAGE','sortorder'=>$sortorder),false)?>";
 	
 	$("#show-more").click(function(event) {
 		if(request) {
@@ -60,6 +69,10 @@
 					"<li><p>" +
 					"<a href=\"" + urlUser + "\">" + user['username'] + "</a><span class=\"xp\"><small>" + user['created'] + "</small></span>\n" +
 					(user['roles'].length > 0 ? "<small>(" + user['roles'].join(', ') + ")</small>" : '') + 
+
+                    "<br /><small>" + user['prename'] + " " + user['surname'] + ", " +
+                    "<a href=\"mailto:" + user['email'] + "\">" + user['email'] + "</a></small>" +
+
 					"</p></li>"
 				);
 			});

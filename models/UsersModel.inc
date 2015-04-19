@@ -40,12 +40,25 @@
 		 * @param	string	$username	Only get users with the given username (optional)
 		 * @return	int			Count of users
 		 */
-		public function getUsersCount($username=null)
+		public function getUsersCount($username=null, $name=null, $email=null)
 		{
+            // Create array of values
+            $values = array();
+            if(!is_null($username)) {
+                $values[] = sprintf('username LIKE \'%%%s%%\'', $username);
+            }
+            if(!is_null($name)) {
+                $values[] = sprintf('(surname LIKE \'%%%s%%\' OR prename LIKE \'%%%s%%\')', $name, $name);
+            }
+            if(!is_null($email)) {
+                $values[] = sprintf('email LIKE \'%%%s%%\'', $email);
+            }
+
+            // Execute query
 			$data = $this->db->query(
 				'SELECT count(DISTINCT id) AS c '.
 				'FROM users '.
-				(!is_null($username) ? sprintf('WHERE username LIKE \'%%%s%%\'', $username) : null )
+                (!empty($values) ? sprintf('WHERE %s', implode(' AND ', $values)) : null)
 			);
 			if(!empty($data)) {
 				return $data[0]['c'];
@@ -66,8 +79,21 @@
 		 * @param	int	$offset		Offset (optional)
 		 * @return	array			Users
 		 */
-		public function getUsers($sort, $username=null, $limit=null, $offset=0)
+		public function getUsers($sort, $username=null, $name=null, $email=null, $limit=null, $offset=0)
 		{
+            // Create array of values
+            $values = array();
+            if(!is_null($username)) {
+                $values[] = sprintf('username LIKE \'%%%s%%\'', $username);
+            }
+            if(!is_null($name)) {
+                $values[] = sprintf('(surname LIKE \'%%%s%%\' OR prename LIKE \'%%%s%%\')', $name, $name);
+            }
+            if(!is_null($email)) {
+                $values[] = sprintf('email LIKE \'%%%s%%\'', $email);
+            }
+
+            // Execute query
 			switch($sort)
 			{
 				case 'username':
@@ -80,7 +106,7 @@
 					return $this->db->query(
 						'SELECT id, created, username, url, surname, prename, email, mailing '.
 						'FROM users '.
-						(!is_null($username) ? sprintf('WHERE username LIKE \'%%%s%%\' ', $username) : null).
+                        (!empty($values) ? sprintf('WHERE %s ', implode(' AND ', $values)) : null).
 						sprintf('ORDER BY %s %s ', $sort, $orders[$sort]).
 						(!empty($limit) ? sprintf('LIMIT %d, %d', $offset, $limit) : null)
 					);
@@ -91,7 +117,7 @@
 						'FROM users '.
 						'LEFT JOIN users_userroles ON users_userroles.user_id = users.id '.
 						'LEFT JOIN userroles ON userroles.id = users_userroles.user_id '.
-						(!is_null($username) ? sprintf('WHERE username LIKE \'%%%s%%\' ', $username) : null).
+                        (!empty($values) ? sprintf('WHERE %s ', implode(' AND ', $values)) : null).
 						'ORDER BY userroles.id IS NULL, userroles.id ASC '.
 						(!empty($limit) ? sprintf('LIMIT %d, %d', $offset, $limit) : null)
 					);

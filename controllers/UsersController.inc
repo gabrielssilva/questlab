@@ -57,12 +57,16 @@
 			// Set filters
 			$sortorder = 'username';
 			$username = null;
+            $name = null;
+            $email = null;
 			$page = 1;
 			if($this->request->getRequestMethod() == 'GET')
 			{
 				$sortorder = $this->request->getGetParam('sortorder');
 				$sortorder = !empty($sortorder) ? $sortorder : 'username';
 				$username = (!is_null($this->request->getGetParam('username'))) ? $this->request->getGetParam('username') : $username;
+				$name = (!is_null($this->request->getGetParam('name'))) ? $this->request->getGetParam('name') : $name;
+				$email = (!is_null($this->request->getGetParam('email'))) ? $this->request->getGetParam('email') : $email;
 				$page = $this->request->getGetParam('page');
 				$page = !empty($page) ? intval($page) : 1;
 			}
@@ -70,8 +74,8 @@
 			// Get registered users
 			$limit = ($all != 'all') ? \nre\configs\AppConfig::$misc['lists_limit'] : null;
 			$offset = ($all != 'all') ? max((intval($page) - 1), 0) * $limit : 0;
-			$usersCount = $this->Users->getUsersCount($username);
-			$users = $this->Users->getUsers($sortorder, $username, $limit, $offset);
+			$usersCount = $this->Users->getUsersCount($username, $name, $email);
+			$users = $this->Users->getUsers($sortorder, $username, $name, $email, $limit, $offset);
 			foreach($users as &$user) {
 				$user['roles'] = array_map(function($r) { return $r['name']; }, $this->Userroles->getUserrolesForUserById($user['id']));
 			}
@@ -85,6 +89,8 @@
 			$this->set('usersCount', $usersCount);
 			$this->set('sortorder', $sortorder);
 			$this->set('username', $username);
+			$this->set('name', $name);
+			$this->set('email', $email);
 			$this->set('all', $all);
 			$this->set('page', $page);
 			$this->set('limit', $limit);
