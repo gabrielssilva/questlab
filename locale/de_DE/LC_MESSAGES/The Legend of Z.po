@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: The Legend of Z\n"
-"POT-Creation-Date: 2015-04-19 12:49+0100\n"
-"PO-Revision-Date: 2015-04-19 12:50+0100\n"
+"POT-Creation-Date: 2015-04-19 14:15+0100\n"
+"PO-Revision-Date: 2015-04-19 14:16+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de_DE\n"
@@ -104,7 +104,7 @@ msgstr ""
 #: questtypes/multiplechoice/html/edittask.tpl:79
 #: questtypes/textinput/html/edittask.tpl:44
 #: views/html/achievements/conditions.tpl:151
-#: views/html/achievements/edit.tpl:112 views/html/charactertypes/edit.tpl:124
+#: views/html/achievements/edit.tpl:112 views/html/charactertypes/edit.tpl:142
 #: views/html/library/edit.tpl:46 views/html/library/edit.tpl:86
 #: views/html/quests/edit.tpl:114 views/html/users/edit.tpl:109
 #: views/html/xplevels/manage.tpl:49
@@ -258,7 +258,7 @@ msgstr "Fehler beim Dateiupload: %s"
 #: views/html/charactergroupsquests/create.tpl:66
 #: views/html/charactergroupsquests/edit.tpl:67
 #: views/html/charactergroupsquests/manage.tpl:72
-#: views/html/charactertypes/edit.tpl:117 views/html/questgroups/create.tpl:65
+#: views/html/charactertypes/edit.tpl:135 views/html/questgroups/create.tpl:65
 #: views/html/questgroups/edit.tpl:53 views/html/quests/create.tpl:62
 #: views/html/quests/edit.tpl:65 views/html/seminaries/create.tpl:60
 #: views/html/seminaries/edit.tpl:62
@@ -272,7 +272,7 @@ msgstr "Erlaubte Dateiformate"
 #: views/html/charactergroupsquests/create.tpl:69
 #: views/html/charactergroupsquests/edit.tpl:70
 #: views/html/charactergroupsquests/manage.tpl:72
-#: views/html/charactertypes/edit.tpl:120 views/html/questgroups/create.tpl:68
+#: views/html/charactertypes/edit.tpl:138 views/html/questgroups/create.tpl:68
 #: views/html/questgroups/edit.tpl:56 views/html/quests/create.tpl:65
 #: views/html/quests/edit.tpl:68 views/html/seminaries/create.tpl:63
 #: views/html/seminaries/edit.tpl:65
@@ -287,7 +287,7 @@ msgstr "%s-Dateien"
 #: views/html/charactergroupsquests/create.tpl:69
 #: views/html/charactergroupsquests/edit.tpl:70
 #: views/html/charactergroupsquests/manage.tpl:72
-#: views/html/charactertypes/edit.tpl:120 views/html/questgroups/create.tpl:68
+#: views/html/charactertypes/edit.tpl:138 views/html/questgroups/create.tpl:68
 #: views/html/questgroups/edit.tpl:56 views/html/quests/create.tpl:65
 #: views/html/quests/edit.tpl:68 views/html/seminaries/create.tpl:63
 #: views/html/seminaries/edit.tpl:65
@@ -742,6 +742,7 @@ msgstr "Soll das Achievement „%s“ wirklich gelöscht werden?"
 #: views/html/charactergroupsquests/delete.tpl:16
 #: views/html/characters/delete.tpl:18 views/html/charactertypes/delete.tpl:15
 #: views/html/library/delete.tpl:15 views/html/questgroups/delete.tpl:18
+#: views/html/questgroups/movedown.tpl:18 views/html/questgroups/moveup.tpl:18
 #: views/html/questgroupshierarchy/delete.tpl:15
 #: views/html/quests/delete.tpl:12 views/html/seminaries/delete.tpl:14
 #: views/html/users/delete.tpl:12
@@ -1241,7 +1242,7 @@ msgstr "Fortschritt"
 #: views/html/characters/character.tpl:83
 #: views/html/characters/character.tpl:97
 #: views/html/characters/character.tpl:109
-#: views/html/charactertypes/edit.tpl:103 views/html/seminarybar/index.tpl:49
+#: views/html/charactertypes/edit.tpl:115 views/html/seminarybar/index.tpl:49
 #: views/html/users/user.tpl:42 views/html/xplevels/manage.tpl:41
 msgid "Level"
 msgstr "Level"
@@ -1405,47 +1406,47 @@ msgstr "Characterrasse bearbeiten"
 msgid "Avatars"
 msgstr "Avatare"
 
-#: views/html/charactertypes/edit.tpl:60
+#: views/html/charactertypes/edit.tpl:69
 #, php-format
 msgid "Error during avatar portrait upload: %s"
 msgstr "Fehler beim Upload des Avatarportraits: %s"
 
-#: views/html/charactertypes/edit.tpl:62
+#: views/html/charactertypes/edit.tpl:71
 #, php-format
 msgid "Avatar portrait has wrong type “%s”"
 msgstr "Der Dateityp „%s“ ist für Avatarportraits nicht erlaubt"
 
-#: views/html/charactertypes/edit.tpl:64
+#: views/html/charactertypes/edit.tpl:73
 msgid "Avatar portrait exceeds size maximum"
 msgstr "Das Avatarportrait ist zu groß"
 
-#: views/html/charactertypes/edit.tpl:66
+#: views/html/charactertypes/edit.tpl:75
 msgid "Avatar portrait invalid"
 msgstr "Das Avatarportrait ist ungültig"
 
-#: views/html/charactertypes/edit.tpl:85
+#: views/html/charactertypes/edit.tpl:95
 #, php-format
 msgid "Error during avatar upload: %s"
 msgstr "Fehler beim Upload des Avatars: %s"
 
-#: views/html/charactertypes/edit.tpl:87
+#: views/html/charactertypes/edit.tpl:97
 #, php-format
 msgid "Avatar has wrong type “%s”"
 msgstr "Der Dateityp „%s“ ist für Avatare nicht erlaubt"
 
-#: views/html/charactertypes/edit.tpl:89
+#: views/html/charactertypes/edit.tpl:99
 msgid "Avatar exceeds size maximum"
 msgstr "Der Avatar ist zu groß"
 
-#: views/html/charactertypes/edit.tpl:91
+#: views/html/charactertypes/edit.tpl:101
 msgid "Avatar invalid"
 msgstr "Der Avatar ist ungültig"
 
-#: views/html/charactertypes/edit.tpl:107
+#: views/html/charactertypes/edit.tpl:118
 msgid "Protrait"
 msgstr "Portrait"
 
-#: views/html/charactertypes/edit.tpl:112
+#: views/html/charactertypes/edit.tpl:125
 msgid "Avatar"
 msgstr "Avatar"
 
@@ -1659,6 +1660,19 @@ msgstr "Questgruppetexte bearbeiten"
 #: views/html/questgroups/edittexts.tpl:20 views/html/quests/edittexts.tpl:58
 msgid "New Questgroup text"
 msgstr "Neuer Questgruppentext"
+
+#: views/html/questgroups/movedown.tpl:14 views/html/questgroups/moveup.tpl:14
+msgid "Move Questgroup"
+msgstr "Questgroup verschieben"
+
+#: views/html/questgroups/movedown.tpl:15 views/html/questgroups/moveup.tpl:15
+#, php-format
+msgid "Should the Questgroup “%s” really be moved?"
+msgstr "Soll die Questgruppe „%s“ wirklich verschoben werden?"
+
+#: views/html/questgroups/movedown.tpl:17 views/html/questgroups/moveup.tpl:17
+msgid "move"
+msgstr "verschieben"
 
 #: views/html/questgroups/questgroup.tpl:22
 msgid "Create new Quest"

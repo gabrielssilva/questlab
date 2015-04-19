@@ -60,6 +60,30 @@
 		
 
 		/**
+		 * Action: moveup.
+		 * 
+		 * @param	\nre\core\Request	$request	Current request
+		 * @param	\nre\core\Response	$response	Current response
+		 */
+		public function moveup(\nre\core\Request $request, \nre\core\Response $response)
+		{
+			$this->addSubAgent('Questgroupshierarchypath', 'index', $request->getParam(3), $request->getParam(4));
+		}
+
+
+		/**
+		 * Action: movedown.
+		 * 
+		 * @param	\nre\core\Request	$request	Current request
+		 * @param	\nre\core\Response	$response	Current response
+		 */
+		public function movedown(\nre\core\Request $request, \nre\core\Response $response)
+		{
+			$this->addSubAgent('Questgroupshierarchypath', 'index', $request->getParam(3), $request->getParam(4));
+		}
+
+
+		/**
 		 * Action: delete.
 		 * 
 		 * @param	\nre\core\Request	$request	Current request

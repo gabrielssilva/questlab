@@ -580,22 +580,44 @@
 			$questgroup = $this->Questgroups->getQuestgroupByUrl($seminary['id'], $questgroupUrl);
 			$questgroup['hierarchy'] = $this->Questgroupshierarchy->getHierarchyForQuestgroup($questgroup['id']);
 			
-			// Set position
-			$this->Questgroups->moveQuestgroup($questgroup, true);
-
-
-			// Redirect
-			$referer = $this->request->getGetParam('referer');
-			if(!is_null($referer))
+			// Check request method
+			if($this->request->getRequestMethod() == 'POST')
 			{
-				try {
-					$questgroup = $this->Questgroups->getQuestgroupById($referer);
-					$this->redirect($this->linker->link(array('questgroups', 'questgroup', $seminary['url'], $questgroup['url'])));
-				}
-				catch(IdNotFoundException $e) {
-				}
+				// Check confirmation
+				if(!is_null($this->request->getPostParam('move')))
+				{
+                    // Set position
+                    $this->Questgroups->moveQuestgroup($questgroup, true);
+                }
+
+                // Redirect
+                $referer = $this->request->getGetParam('referer');
+                if(!is_null($referer))
+                {
+                    try {
+                        $questgroup = $this->Questgroups->getQuestgroupById($referer);
+                        $this->redirect($this->linker->link(array('questgroups', 'questgroup', $seminary['url'], $questgroup['url'])));
+                    }
+                    catch(IdNotFoundException $e) {
+                    }
+                }
+                $this->redirect($this->linker->link(array('seminaries', 'seminary', $seminary['url'])));
+            }
+
+			// Media
+			$picture = null;
+			if(!is_null($questgroup['questgroupspicture_id'])) {
+				$picture = $this->Media->getSeminaryMediaById($questgroup['questgroupspicture_id']);
 			}
-			$this->redirect($this->linker->link(array('seminaries', 'seminary', $seminary['url'])));
+			
+			
+			// Set titile
+			$this->addTitleLocalized('Move Questgroup');
+			
+			// Show confirmation
+			$this->set('seminary', $seminary);
+			$this->set('questgroup', $questgroup);
+			$this->set('picture', $picture);
 		}
 
 
@@ -617,22 +639,44 @@
 			$questgroup = $this->Questgroups->getQuestgroupByUrl($seminary['id'], $questgroupUrl);
 			$questgroup['hierarchy'] = $this->Questgroupshierarchy->getHierarchyForQuestgroup($questgroup['id']);
 			
-			// Set position
-			$this->Questgroups->moveQuestgroup($questgroup, false);
-
-
-			// Redirect
-			$referer = $this->request->getGetParam('referer');
-			if(!is_null($referer))
+			// Check request method
+			if($this->request->getRequestMethod() == 'POST')
 			{
-				try {
-					$questgroup = $this->Questgroups->getQuestgroupById($referer);
-					$this->redirect($this->linker->link(array('questgroups', 'questgroup', $seminary['url'], $questgroup['url'])));
-				}
-				catch(IdNotFoundException $e) {
-				}
+				// Check confirmation
+				if(!is_null($this->request->getPostParam('move')))
+				{
+                    // Set position
+                    $this->Questgroups->moveQuestgroup($questgroup, false);
+                }
+
+                // Redirect
+                $referer = $this->request->getGetParam('referer');
+                if(!is_null($referer))
+                {
+                    try {
+                        $questgroup = $this->Questgroups->getQuestgroupById($referer);
+                        $this->redirect($this->linker->link(array('questgroups', 'questgroup', $seminary['url'], $questgroup['url'])));
+                    }
+                    catch(IdNotFoundException $e) {
+                    }
+                }
+                $this->redirect($this->linker->link(array('seminaries', 'seminary', $seminary['url'])));
+            }
+
+			// Media
+			$picture = null;
+			if(!is_null($questgroup['questgroupspicture_id'])) {
+				$picture = $this->Media->getSeminaryMediaById($questgroup['questgroupspicture_id']);
 			}
-			$this->redirect($this->linker->link(array('seminaries', 'seminary', $seminary['url'])));
+			
+			
+			// Set titile
+			$this->addTitleLocalized('Move Questgroup');
+			
+			// Show confirmation
+			$this->set('seminary', $seminary);
+			$this->set('questgroup', $questgroup);
+			$this->set('picture', $picture);
 		}
 
 
