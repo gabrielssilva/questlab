@@ -77,7 +77,7 @@
 <?php endif ?>
 <form method="post">
 	<fieldset>
-		<input id="xplevel-new-xps" type="number" name="xplevels[new][xps]" value="<?=(count($xplevels) > 0) ? $xplevels[count($xplevels)-1]['xps']+1 : 0 ?>" min="<?=(count($xplevels) > 0) ? $xplevels[count($xplevels)-1]['xps']+1 : 0 ?>" <?=($validations['create'] !== true && array_key_exists('xps', $validations['create'])) ? 'class="invalid"' : null?> />
+		<input id="xplevel-new-xps" type="number" name="xplevelnew[xps]" value="<?=(count($xplevels) > 0) ? $xplevels[count($xplevels)-1]['xps']+1 : 0 ?>" min="<?=(count($xplevels) > 0) ? $xplevels[count($xplevels)-1]['xps']+1 : 0 ?>" <?=($validations['create'] !== true && array_key_exists('xps', $validations['create'])) ? 'class="invalid"' : null?> />
 		<label for="xplevel-new-xps"><?=_('XPs')?></label>
 	</fieldset>
 	<input type="submit" name="create" value="<?=_('create')?>" />

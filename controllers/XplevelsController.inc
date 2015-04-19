@@ -83,14 +83,14 @@
 			$action = null;
 			if($this->request->getRequestMethod() == 'POST')
 			{
-				// Get params
-				$xplevelsValues = $this->request->getPostParam('xplevels');
-				$deletes = $this->request->getPostParam('deletes');
-
 				// Edit and delete XP-levels
 				if(!is_null($this->request->getPostParam('edit')))
 				{
 					$action = 'edit';
+
+                    // Get params
+                    $xplevelsValues = $this->request->getPostParam('xplevels');
+                    $deletes = $this->request->getPostParam('deletes');
 					
 					// Validate params
 					if(!is_array($deletes)) {
@@ -145,16 +145,16 @@
 					$action = 'create';
 					
 					// Get params and validate them
-					$xplevel = $xplevelsValues['new'];
-					$validations[$action] = $this->Validation->validateParams($xplevel, array('xps'));
-					
+                    $xplevelnew = $this->request->getPostParam('xplevelnew');
+					$validations[$action] = $this->Validation->validateParams($xplevelnew, array('xps'));
+
 					// Create
 					if($validations[$action] === true)
 					{
 						$this->Xplevels->createXPLevel(
 							$this->Auth->getUserId(),
 							$seminary['id'],
-							$xplevel['xps']
+							$xplevelnew['xps']
 						);
 						
 						// Redirect
