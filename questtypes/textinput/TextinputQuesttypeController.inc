@@ -24,7 +24,15 @@
 		 * 
 		 * @var array
 		 */
-		public $components = array('validation');
+		public $components = array('validation', 'questtypedata');
+        /**
+         * Count of correct answers
+         * 
+         * @var int
+         */
+        const KEY_QUESTTYPEDATA_N_CORRECT_ANSWRES = 'nCorrectAnswers';
+
+        private $nCorrectAnswers = null;
 		
 		
 		
@@ -81,22 +89,31 @@
 		{
 			// Get right answers
 			$fields = $this->Textinput->getTextinputFields($quest['id']);
-			
+
 			// Match regexs with user answers
+            $nCorrectAnswers = 0;
 			foreach($fields as &$field)
 			{
 				$pos = intval($field['number']) - 1;
 				if(!array_key_exists($pos, $answers)) {
-					return false;
+					continue;
 				}
 				if(!$this->isMatching($field['regex'], $answers[$pos])) {
-					return false;
+					continue;
 				}
+                $nCorrectAnswers++;
 			}
+
+            // Save count of correct answers
+            $this->Questtypedata->set(
+                $quest['id'],
+                self::KEY_QUESTTYPEDATA_N_CORRECT_ANSWRES,
+                $nCorrectAnswers
+            );
 			
 			
 			// All answers right
-			return true;
+			return ($nCorrectAnswers == count($fields));
 		}
 		
 		
@@ -124,26 +141,26 @@
 			$solved = $this->Quests->hasCharacterSolvedQuest($quest['id'], $character['id']);
 			
 			// Get Character answers
-            $correctAnswersCount = null;
 			if(!$solved || $this->request->getGetParam('show-answer') == 'true' || $this->request->getGetParam('status') == 'solved')
             {
-                $correctAnswersCount = 0;
-				foreach($fields as &$field)
-                {
+                foreach($fields as &$field) {
 					$field['answer'] = $this->Textinput->getCharacterSubmission($field['id'], $character['id']);
-                    $correctAnswersCount += $this->isMatching($field['regex'], $field['answer']);
 				}
 			}
 
-            // Show count
-            $showcount = (count($this->request->getGetParams()) > 1);
+            // Get count of last correct answers
+            $nCorrectAnswers = $this->Questtypedata->get($quest['id'], self::KEY_QUESTTYPEDATA_N_CORRECT_ANSWRES);
+            $this->Questtypedata->set(
+                $quest['id'],
+                self::KEY_QUESTTYPEDATA_N_CORRECT_ANSWRES,
+                null
+            );
 			
 			
 			// Pass data to view
 			$this->set('task', $task);
 			$this->set('fields', $fields);
-            $this->set('count', $correctAnswersCount);
-            $this->set('showcount', $showcount);
+            $this->set('nCorrectAnswers', $nCorrectAnswers);
 		}
 		
 		
