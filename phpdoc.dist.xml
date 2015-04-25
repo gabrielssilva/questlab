@@ -1,33 +1,33 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <phpdocumentor>
-	<parser>
-		<default-package-name>NRE</default-package-name>
-		<target>doc</target>
-		<markers>
-			<item>TODO</item>
-		</markers>
-		<extension>php</extension>
-		<extension>inc</extension>
-	</parser>
-	<transformer>
-		<target>doc</target>
-	</transformer>
-	<logging>
-		<level>info</level>
-		<paths>
-			<default>logs/phpdoc.log</default>
-			<errors>logs/phpdoc.errors.log</errors>
-		</paths>
-	</logging>
-	<files>
-		<directory>.</directory>
-		<ignore>doc/*</ignore>
-		<ignore>logs/*</ignore>
-	</files>
-	<plugins>
-		<plugin path="Core" />
-	</plugins>
-	<transformations>
-		<template name="clean" />
-	</transformations>
+    <parser>
+        <default-package-name>NRE</default-package-name>
+        <target>doc</target>
+        <markers>
+            <item>TODO</item>
+        </markers>
+        <extension>php</extension>
+        <extension>inc</extension>
+    </parser>
+    <transformer>
+        <target>doc</target>
+    </transformer>
+    <logging>
+        <level>info</level>
+        <paths>
+            <default>logs/phpdoc.log</default>
+            <errors>logs/phpdoc.errors.log</errors>
+        </paths>
+    </logging>
+    <files>
+        <directory>.</directory>
+        <ignore>doc/*</ignore>
+        <ignore>logs/*</ignore>
+    </files>
+    <plugins>
+        <plugin path="Core" />
+    </plugins>
+    <transformations>
+        <template name="clean" />
+    </transformations>
 </phpdocumentor>
