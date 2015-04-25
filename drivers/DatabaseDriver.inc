@@ -77,7 +77,7 @@
 		/**
 		 * Establish a connect to a MqSQL-database.
 		 * 
-		 * @throws	DatamodelException
+		 * @throws	\nre\exceptions\DatamodelException
 		 * @param	array	$config	Connection and login settings
 		 */
 		protected abstract function connect($config);

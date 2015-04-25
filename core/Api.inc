@@ -31,7 +31,7 @@
 		/**
 		 * Der Toplevelagent
 		 * 
-		 * @var ToplevelAgent
+		 * @var \nre\agents\ToplevelAgent
 		 */
 		private $toplevelAgent = null;
 		/**
@@ -74,17 +74,17 @@
 		/**
 		 * Run the application.
 		 * 
-		 * @throws	DatamodelException
-		 * @throws	DriverNotValidException
-		 * @throws	DriverNotFoundException
-		 * @throws	ViewNotFoundException
-		 * @throws	ModelNotValidException
-		 * @throws	ModelNotFoundException
-		 * @throws	ControllerNotValidException
-		 * @throws	ControllerNotFoundException
-		 * @throws	AgentNotValidException
-		 * @throws	AgentNotFoundException
-		 * @return	Exception	Last occurred exception of an subagent
+		 * @throws	\nre\exceptions\DatamodelException
+		 * @throws	\nre\exceptions\DriverNotValidException
+		 * @throws	\nre\exceptions\DriverNotFoundException
+		 * @throws	\nre\exceptions\ViewNotFoundException
+		 * @throws	\nre\exceptions\ModelNotValidException
+		 * @throws	\nre\exceptions\ModelNotFoundException
+		 * @throws	\nre\exceptions\ControllerNotValidException
+		 * @throws	\nre\exceptions\ControllerNotFoundException
+		 * @throws	\nre\exceptions\AgentNotValidException
+		 * @throws	\nre\exceptions\AgentNotFoundException
+		 * @return	\Exception	Last occurred exception of an subagent
 		 */
 		public function run()
 		{
@@ -116,7 +116,7 @@
 		/**
 		 * Log an exception
 		 * 
-		 * @param	Exception	$exception	Occurred exception
+		 * @param	\Exception	$exception	Occurred exception
 		 * @param	int		$logMode	Log-mode
 		 */
 		protected function log($exception, $logMode)
@@ -133,9 +133,9 @@
 		/**
 		 * Load the ToplevelAgent specified by the request.
 		 * 
-		 * @throws	ServiceUnavailableException
-		 * @throws	AgentNotValidException
-		 * @throws	AgentNotFoundException
+		 * @throws	\nre\exceptions\ServiceUnavailableException
+		 * @throws	\nre\exceptions\AgentNotValidException
+		 * @throws	\nre\exceptions\AgentNotFoundException
 		 */
 		private function loadToplevelAgent()
 		{

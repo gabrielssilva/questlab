@@ -33,9 +33,9 @@
 		/**
 		 * Construct a new datamase model.
 		 * 
-		 * @throws	DatamodelException
-		 * @throws	DriverNotFoundException
-		 * @throws	DriverNotValidException
+		 * @throws	\nre\exceptions\DatamodelException
+		 * @throws	\nre\exceptions\DriverNotFoundException
+		 * @throws	\nre\exceptions\DriverNotValidException
 		 * @param	string	$type	Database type
 		 * @param	array	$config	Connection settings
 		 */
@@ -56,8 +56,8 @@
 		/**
 		 * Load the database driver.
 		 * 
-		 * @throws	DriverNotFoundException
-		 * @throws	DriverNotValidException
+		 * @throws	\nre\exceptions\DriverNotFoundException
+		 * @throws	\nre\exceptions\DriverNotValidException
 		 * @param	string	$driverName	Name of the database driver
 		 */
 		private function loadDriver($driverName)
@@ -69,7 +69,7 @@
 		/**
 		 * Establish a connection to the database.
 		 * 
-		 * @throws	DatamodelException
+		 * @throws	\nre\exceptions\DatamodelException
 		 * @param	string	$driverName	Name of the database driver
 		 * @param	array	$config		Connection settings
 		 */

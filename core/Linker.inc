@@ -22,7 +22,7 @@
 		/**
 		 * Current request
 		 * 
-		 * @var Request
+		 * @var \nre\core\Request
 		 */
 		private $request;
 		
@@ -32,7 +32,7 @@
 		/**
 		 * Construct a new linker.
 		 * 
-		 * @param	Request	$request	Current request
+		 * @param	\nre\core\Request	$request	Current request
 		 */
 		function __construct(\nre\requests\WebRequest $request)
 		{
@@ -213,10 +213,10 @@
 		/**
 		 * Create a link.
 		 * 
-		 * @param	Request		$request	Current request
-		 * @param	Response	$response	Current response
-		 * @param	bool		$absolute	Create absolute link
+		 * @param	\nre\core\Request		$request	Current request
+		 * @param	\nre\core\Response	$response	Current response
 		 * @param	string		$anchor		Anchor on target
+		 * @param	bool		$absolute	Create absolute link
 		 * @return	string				Created link
 		 */
 		private static function createLink(Request $request, Response $response, $anchor=null, $absolute=false)
@@ -276,7 +276,7 @@
 		 * Adapt a link to the environment.
 		 * 
 		 * @param	string	$url		URL
-		 * @param	Request	$request	Current request
+		 * @param	\nre\core\Request	$request	Current request
 		 * @param	bool	$absolute	Create absolute URL
 		 * @return	string			Adapted URL
 		 */

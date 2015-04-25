@@ -64,8 +64,8 @@
 		 * Load the class of an Agent.
 		 * 
 		 * @static
-		 * @throws	AgentNotFoundException
-		 * @throws	AgentNotValidException
+		 * @throws	\nre\exceptions\AgentNotFoundException
+		 * @throws	\nre\exceptions\AgentNotValidException
 		 * @param	string	$agentName	Name of the Agent to load
 		 */
 		public static function load($agentName)
@@ -97,17 +97,17 @@
 		 * Instantiate an Agent (Factory Pattern).
 		 * 
 		 * @static
-		 * @throws	DatamodelException
-		 * @throws	DriverNotValidException
-		 * @throws	DriverNotFoundException
-		 * @throws	ViewNotFoundException
-		 * @throws	ModelNotValidException
-		 * @throws	ModelNotFoundException
-		 * @throws	ControllerNotValidException
-		 * @throws	ControllerNotFoundException
+		 * @throws	\nre\exceptions\DatamodelException
+		 * @throws	\nre\exceptions\DriverNotValidException
+		 * @throws	\nre\exceptions\DriverNotFoundException
+		 * @throws	\nre\exceptions\ViewNotFoundException
+		 * @throws	\nre\exceptions\ModelNotValidException
+		 * @throws	\nre\exceptions\ModelNotFoundException
+		 * @throws	\nre\exceptions\ControllerNotValidException
+		 * @throws	\nre\exceptions\ControllerNotFoundException
 		 * @param	string		$agentName	Name of the Agent to instantiate
 		 * @param	Request		$request	Current request
-		 * @param	Response	$response	Current response
+		 * @param	Response	$respone	Current respone
 		 * @param	Logger		$log		Log-system
 		 */
 		public static function factory($agentName, Request $request, Response $response, Logger $log=null)
@@ -156,16 +156,16 @@
 		/**
 		 * Construct a new Agent.
 		 * 
-		 * @throws	DatamodelException
-		 * @throws	DriverNotValidException
-		 * @throws	DriverNotFoundException
-		 * @throws	ViewNotFoundException
-		 * @throws	ModelNotValidException
-		 * @throws	ModelNotFoundException
-		 * @throws	ControllerNotValidException
-		 * @throws	ControllerNotFoundException
+		 * @throws	\nre\exceptions\DatamodelException
+		 * @throws	\nre\exceptions\DriverNotValidException
+		 * @throws	\nre\exceptions\DriverNotFoundException
+		 * @throws	\nre\exceptions\ViewNotFoundException
+		 * @throws	\nre\exceptions\ModelNotValidException
+		 * @throws	\nre\exceptions\ModelNotFoundException
+		 * @throws	\nre\exceptions\ControllerNotValidException
+		 * @throws	\nre\exceptions\ControllerNotFoundException
 		 * @param	Request		$request	Current request
-		 * @param	Response	$response	Current response
+		 * @param	Response	$respone	Current response
 		 * @param	Logger		$log		Log-system
 		 */
 		protected function __construct(Request $request, Response $response, Logger $log=null)
@@ -188,13 +188,13 @@
 		/**
 		 * Run the Controller of this Agent and its SubAgents.
 		 * 
-		 * @throws	ParamsNotValidException
-		 * @throws	IdNotFoundException
-		 * @throws	DatamodelException
-		 * @throws	ActionNotFoundException
+		 * @throws	\nre\exceptions\ParamsNotValidException
+		 * @throws	\nre\exceptions\IdNotFoundException
+		 * @throws	\nre\exceptions\DatamodelException
+		 * @throws	\nre\exceptions\ActionNotFoundException
 		 * @param	Request		$request	Current request
 		 * @param	Response	$response	Current response
-		 * @return	Exception			Last occurred exception of SubAgents
+		 * @return	\Exception			Last occurred exception of SubAgents
 		 */
 		public function run(Request $request, Response $response)
 		{
@@ -302,14 +302,14 @@
 		/**
 		 * Load the Controller of this Agent.
 		 * 
-		 * @throws	DatamodelException
-		 * @throws	DriverNotValidException
-		 * @throws	DriverNotFoundException
-		 * @throws	ViewNotFoundException
-		 * @throws	ModelNotValidException
-		 * @throws	ModelNotFoundException
-		 * @throws	ControllerNotValidException
-		 * @throws	ControllerNotFoundException
+		 * @throws	\nre\exceptions\DatamodelException
+		 * @throws	\nre\exceptions\DriverNotValidException
+		 * @throws	\nre\exceptions\DriverNotFoundException
+		 * @throws	\nre\exceptions\ViewNotFoundException
+		 * @throws	\nre\exceptions\ModelNotValidException
+		 * @throws	\nre\exceptions\ModelNotFoundException
+		 * @throws	\nre\exceptions\ControllerNotValidException
+		 * @throws	\nre\exceptions\ControllerNotFoundException
 		 */
 		protected function loadController()
 		{
@@ -342,7 +342,7 @@
 		/**
 		 * Log an error.
 		 * 
-		 * @param	Exception	$exception	Occurred exception
+		 * @param	\Exception	$exception	Occurred exception
 		 * @param	int		$logMode	Log mode
 		 */
 		protected function log($exception, $logMode)
@@ -361,9 +361,9 @@
 		/**
 		 * Load a SubAgent and add it.
 		 * 
-		 * @throws	ServiceUnavailableException
-		 * @throws	AgentNotFoundException
-		 * @throws	AgentNotValidException
+		 * @throws	\nre\exceptions\ServiceUnavailableException
+		 * @throws	\nre\exceptions\AgentNotFoundException
+		 * @throws	\nre\exceptions\AgentNotValidException
 		 * @param	string	$agentName	Name of the Agent to load
 		 * @param	mixed	…		Additional parameters for the agent
 		 */
@@ -387,10 +387,10 @@
 		/**
 		 * Load a SubAgent and add it.
 		 * 
-		 * @throws	ServiceUnavailableException
-		 * @throws	DatamodelException
-		 * @throws	AgentNotFoundException
-		 * @throws	AgentNotValidException
+		 * @throws	\nre\exceptions\ServiceUnavailableException
+		 * @throws	\nre\exceptions\DatamodelException
+		 * @throws	\nre\exceptions\AgentNotFoundException
+		 * @throws	\nre\exceptions\AgentNotValidException
 		 * @param	string	$agentName	Name of the Agent to load
 		 * @param	mixed	…		Additional parameters for the agent
 		 */
@@ -444,7 +444,7 @@
 		/**
 		 * Create a new SubAgent.
 		 * 
-		 * @throws	DatamodelException
+		 * @throws	\nre\exceptions\DatamodelException
 		 * @param	string	$agentName	Agent name
 		 * @return	array			SubAgent
 		 */
@@ -500,9 +500,9 @@
 		/**
 		 * Handle the exception of a SubAgent.
 		 * 
-		 * @param	Agent		$subAgent	SubAgent to handle error of
+		 * @param	array		$subAgent	Original (Sub-) Agent
 		 * @param	Request		$request	Current request
-		 * @param	Exception	$exception	Occurred exception
+		 * @param	Excepiton	$exception	Occurred exception
 		 * @return	array				InlineError-SubAgent
 		 */
 		private function errorInline($subAgent, $request, $exception)
@@ -533,7 +533,7 @@
 		 * Create a new InlineError.
 		 * 
 		 * @param	string		$label		Name of the original Agent
-		 * @param	Exception	$exception	Occurred exception
+		 * @param	\Exception	$exception	Occurred exception
 		 */
 		private function newInlineError($label, $exception)
 		{

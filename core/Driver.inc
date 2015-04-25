@@ -26,8 +26,8 @@
 		/**
 		 * Load the class of a Driver.
 		 * 
-		 * @throws	DriverNotFoundException
-		 * @throws	DriverNotValidException
+		 * @throws	\nre\exceptions\DriverNotFoundException
+		 * @throws	\nre\exceptions\DriverNotValidException
 		 * @param	string	$driverName	Name of the Driver to load
 		 */
 		public static function load($driverName)
@@ -55,7 +55,7 @@
 		 * Instantiate a Driver (Factory Pattern).
 		 * 
 		 * @param	string	$driverName	Name of the Driver to instantiate
-		 * @param	mixed	$config		Driver configuration
+		 * @param	array	$config		Configuration settings
 		 */
 		public static function factory($driverName, $config)
 		{

@@ -34,7 +34,7 @@
 		/**
 		 * Load and instantiate the View of an Agent.
 		 * 
-		 * @throws	ViewNotFoundException
+		 * @throws	\nre\exceptions\ViewNotFoundException
 		 * @param	string	$layoutName	Name of Layout in use
 		 * @param	string	$agentName	Name of the Agent
 		 * @param	string	$action		Current Action
@@ -51,7 +51,7 @@
 		/**
 		 * Construct a new View.
 		 * 
-		 * @throws	ViewNotFoundException
+		 * @throws	\nre\exceptions\ViewNotFoundException
 		 * @param	string	$layoutName	Name of Layout in use
 		 * @param	string	$agentName	Name of the Agent
 		 * @param	string	$action		Current Action

@@ -36,19 +36,19 @@
 		/**
 		 * Current request
 		 * 
-		 * @var Request
+		 * @var \nre\core\Request
 		 */
 		private $request;
 		/**
 		 * Current response
 		 * 
-		 * @var Response
+		 * @var \nre\core\Response
 		 */
 		private $response;
 		/**
 		 * Layout instace
 		 * 
-		 * @var Layout
+		 * @var \nre\core\Layout
 		 */
 		private $layout = null;
 		/**
@@ -64,18 +64,18 @@
 		/**
 		 * Construct a ToplevelAgent.
 		 * 
-		 * @throws	ServiceUnavailableException
-		 * @throws	DatamodelException
-		 * @throws	DriverNotValidException
-		 * @throws	DriverNotFoundException
-		 * @throws	ViewNotFoundException
-		 * @throws	ModelNotValidException
-		 * @throws	ModelNotFoundException
-		 * @throws	ControllerNotValidException
-		 * @throws	ControllerNotFoundException
-		 * @param	Request		$request	Current request
-		 * @param	Response	$response	Current response
-		 * @param	Logger		$log		Log-system
+		 * @throws	\nre\exceptions\ServiceUnavailableException
+		 * @throws	\nre\exceptions\DatamodelException
+		 * @throws	\nre\exceptions\DriverNotValidException
+		 * @throws	\nre\exceptions\DriverNotFoundException
+		 * @throws	\nre\exceptions\ViewNotFoundException
+		 * @throws	\nre\exceptions\ModelNotValidException
+		 * @throws	\nre\exceptions\ModelNotFoundException
+		 * @throws	\nre\exceptions\ControllerNotValidException
+		 * @throws	\nre\exceptions\ControllerNotFoundException
+		 * @param	\nre\core\Request	$request	Current request
+		 * @param	\nre\core\Response	$response	Current response
+		 * @param	\nre\core\Logger	$log		Log-system
 		 */
 		protected function __construct(\nre\core\Request $request, \nre\core\Response $response, \nre\core\Logger $log=null)
 		{
@@ -106,10 +106,10 @@
 		/**
 		 * Run the Controller of this Agent and its SubAgents.
 		 * 
-		 * @throws	ServiceUnavailableException
-		 * @param	Request		$request	Current request
-		 * @param	Response	$response	Current response
-		 * @return	Exception			Last occurred exception of SubAgents
+		 * @throws	\nre\exceptions\ServiceUnavailableException
+		 * @param	\nre\core\Request	$request	Current request
+		 * @param	\nre\core\Response	$response	Current response
+		 * @return	\Exception				Last occurred exception of SubAgents
 		 */
 		public function run(\nre\core\Request $request, \nre\core\Response $response)
 		{
@@ -156,7 +156,7 @@
 		/**
 		 * Return the IntermediateAgent.
 		 * 
-		 * @return	IntermediateAgent	IntermediateAgent
+		 * @return	\nre\agents\IntermediateAgent	IntermediateAgent
 		 */
 		public function getIntermediateAgent()
 		{
@@ -169,10 +169,10 @@
 		/**
 		 * Load a SubAgent and add it.
 		 * 
-		 * @throws	ServiceUnavailableException
-		 * @throws	FatalDatamodelException
-		 * @throws	AgentNotFoundException
-		 * @throws	AgentNotValidException
+		 * @throws	\nre\exceptions\ServiceUnavailableException
+		 * @throws	\nre\exceptions\FatalDatamodelException
+		 * @throws	\nre\exceptions\AgentNotFoundException
+		 * @throws	\nre\exceptions\AgentNotValidException
 		 * @param	string	$agentName	Name of the Agent to load
 		 * @param	mixed	…		Additional parameters for the agent
 		 */
@@ -198,7 +198,7 @@
 		/**
 		 * Load IntermediateAgent defined by the current request.
 		 * 
-		 * @throws	ServiceUnavailableException
+		 * @throws	\nre\exceptions\ServiceUnavailableException
 		 */
 		private function loadIntermediateAgent()
 		{
@@ -241,7 +241,7 @@
 		/**
 		 * Load IntermediateAgent defined by the current request.
 		 * 
-		 * @throws	ServiceUnavailableException
+		 * @throws	\nre\exceptions\ServiceUnavailableException
 		 */
 		private function _loadIntermediateAgent()
 		{
@@ -276,13 +276,13 @@
 		/**
 		 * Run the Controller of this Agent and its SubAgents.
 		 * 
-		 * @throws	AccessDeniedException
-		 * @throws	IdNotFoundException
-		 * @throws	ServiceUnavailableException
-		 * @throws	DatamodelException
-		 * @param	Request		$request	Current request
-		 * @param	Response	$response	Current response
-		 * @return	Exception			Last occurred exception of SubAgents
+		 * @throws	\nre\exceptions\AccessDeniedException
+		 * @throws	\nre\exceptions\IdNotFoundException
+		 * @throws	\nre\exceptions\ServiceUnavailableException
+		 * @throws	\nre\exceptions\DatamodelException
+		 * @param	\nre\core\Request	$request	Current request
+		 * @param	\nre\core\Response	$response	Current response
+		 * @return	\Exception			Last occurred exception of SubAgents
 		 */
 		private function _run(\nre\core\Request $request, \nre\core\Response $response)
 		{
@@ -304,11 +304,11 @@
 		/**
 		 * Run IntermediateAgent.
 		 * 
-		 * @throws	AccessDeniedException
-		 * @throws	ParamsNotValidException
-		 * @throws	IdNotFoundException
-		 * @throws	ServiceUnavailableException
-		 * @throws	DatamodelException
+		 * @throws	\nre\exceptions\AccessDeniedException
+		 * @throws	\nre\exceptions\ParamsNotValidException
+		 * @throws	\nre\exceptions\IdNotFoundException
+		 * @throws	\nre\exceptions\ServiceUnavailableException
+		 * @throws	\nre\exceptions\DatamodelException
 		 */
 		private function runIntermediateAgent()
 		{
@@ -323,8 +323,8 @@
 		 * Handle an error that occurred during
 		 * loading/cnostructing/running of the IntermediateAgent.
 		 * 
-		 * @throws	ServiceUnavailableException
-		 * @param	Exception	$exception	Occurred exception
+		 * @throws	\nre\exceptions\ServiceUnavailableException
+		 * @param	\Exception	$exception	Occurred exception
 		 * @param	int		$httpStatusCode	HTTP-statuscode
 		 * @param	string		$stage		Stage of execution
 		 */
