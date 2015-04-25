@@ -376,6 +376,7 @@
 					$models = array_merge($models, $properties['models']);
 				}
 			}
+			$models = array_unique($models);
 			
 			// Load Models
 			foreach($models as &$model)
