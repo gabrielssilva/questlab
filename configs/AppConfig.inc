@@ -36,7 +36,10 @@
             'timeZone'          => 'Europe/Berlin',
             'mailsender'        => '',
             'mailcontact'       => '',
-            'registration_host' => ''
+            'registration_host' => '',
+            'languages'         => array(
+                'de'    => 'de_DE.utf8'
+            )
 		);
 		
 		
@@ -53,9 +56,7 @@
 			'toplevel-htmlmail'	=>	'htmlmail',
 			'intermediate'		=>	'introduction',
 			'intermediate-error'	=>	'error',
-			'intermediate-mail'	=>	'mail',
-			'language'		=>	'de_DE.utf8',
-			'locale'		=>	'de-DE'
+			'intermediate-mail'	=>	'mail'
 		);
 		
 		

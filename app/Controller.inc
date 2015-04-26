@@ -83,19 +83,22 @@
 			
 			// Create date and time and number formatter
 			$this->set('dateFormatter', new \IntlDateFormatter(
-				\nre\core\Config::getDefault('locale'),
+				//\nre\core\Config::getDefault('locale'),
+                \Locale::getDefault(),
 				\IntlDateFormatter::MEDIUM,
 				\IntlDateFormatter::NONE,
 				NULL
 			));
 			$this->set('timeFormatter', new \IntlDateFormatter(
-				\nre\core\Config::getDefault('locale'),
+				//\nre\core\Config::getDefault('locale'),
+                \Locale::getDefault(),
 				\IntlDateFormatter::NONE,
 				\IntlDateFormatter::SHORT,
 				NULL
 			));
 			$this->set('numberFormatter', new \NumberFormatter(
-				\nre\core\Config::getDefault('locale'),
+				//\nre\core\Config::getDefault('locale'),
+                \Locale::getDefault(),
 				\NumberFormatter::DEFAULT_STYLE
 			));
 		}

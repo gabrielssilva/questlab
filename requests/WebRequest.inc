@@ -184,6 +184,22 @@
 		{
 			return $_SERVER['REQUEST_METHOD'];
 		}
+
+
+        /**
+         * Get languages from browser setting.
+         * 
+         * @return  string  Browser setting for accepted languages.
+         */
+        public function getBrowserLanguages()
+        {
+            if(array_key_exists('HTTP_ACCEPT_LANGUAGE', $_SERVER)) {
+                return $_SERVER['HTTP_ACCEPT_LANGUAGE'];
+            }
+
+
+            return null;
+        }
 		
 		
 		/**
