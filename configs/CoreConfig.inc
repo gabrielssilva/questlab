@@ -3,10 +3,10 @@
     /**
      * NRE
      *
-     * @author    coderkun <olli@coderkun.de>
-     * @copyright    2013 coderkun (http://www.coderkun.de)
-     * @license    http://www.gnu.org/licenses/gpl.html
-     * @link    http://www.coderkun.de/projects/nre
+     * @author      coderkun <olli@coderkun.de>
+     * @copyright   2013 coderkun (http://www.coderkun.de)
+     * @license     http://www.gnu.org/licenses/gpl.html
+     * @link        http://www.coderkun.de/projects/nre
      */
 
     namespace nre\configs;
@@ -17,7 +17,7 @@
      * 
      * This class contains static variables with configuration values.
      * 
-     * @author    coderkun <olli@coderkun.de>
+     * @author  coderkun <olli@coderkun.de>
      */
     final class CoreConfig
     {
@@ -29,7 +29,7 @@
          * @var array
          */
         public static $core = array(
-            'namespace'        =>    'nre\\',
+            'namespace' => 'nre\\',
         );
 
 
@@ -40,8 +40,8 @@
          * @var array
          */
         public static $dirs = array(
-            'core'        =>    'core',
-            'publicDir'    =>    'www'
+            'core'      => 'core',
+            'publicDir' => 'www'
         );
 
 
@@ -52,9 +52,9 @@
          * @var array
          */
         public static $fileExts = array(
-            'default'        =>    'inc',
-            'views'            =>    'tpl',
-            'logs'            =>    'log',
+            'default'   => 'inc',
+            'views'     => 'tpl',
+            'logs'      => 'log',
         );
 
 
@@ -65,9 +65,9 @@
          * @var array
          */
         public static $defaults = array(
-            'action'        =>    'index',
-            'errorFile'        =>    'error',
-            'inlineErrorFile'    =>    'inlineerror'
+            'action'            => 'index',
+            'errorFile'         => 'error',
+            'inlineErrorFile'   => 'inlineerror'
         );
 
 
@@ -78,7 +78,7 @@
          * @var array
          */
         public static $misc = array(
-            'fileExtDot'        =>    '.'
+            'fileExtDot'    => '.'
         );
 
 
@@ -89,8 +89,8 @@
          * @var array
          */
         public static $log = array(
-            'filename'        =>    'errors',
-            'format'        =>    'Fehler %d: %s in %s, Zeile %d'
+            'filename'  => 'errors',
+            'format'    => 'Fehler %d: %s in %s, Zeile %d'
         );
 
 
@@ -102,9 +102,9 @@
          */
         public static $classes = array(
             'linker'    => array(
-                'url'        => array(
-                    'length'    =>    128,
-                    'delimiter'    =>    '-'
+                'url'       => array(
+                    'length'    => 128,
+                    'delimiter' => '-'
                 )
             )
         );
@@ -115,8 +115,8 @@
         /**
          * Determine the directory for a specific classtype.
          * 
-         * @param    string    $classType    Classtype to get directory of
-         * @return    string            Directory of given classtype
+         * @param   string  $classType  Classtype to get directory of
+         * @return  string              Directory of given classtype
          */
         public static function getClassDir($classType)
         {
@@ -144,8 +144,8 @@
         /**
          * Determine the file extension for a specific filetype.
          * 
-         * @param    string    $fileType    Filetype to get file extension of
-         * @return    string            File extension of given filetype
+         * @param   string  $fileType   Filetype to get file extension of
+         * @return  string              File extension of given filetype
          */
         public static function getFileExt($fileType)
         {

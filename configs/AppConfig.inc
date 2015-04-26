@@ -3,10 +3,10 @@
     /**
      * NRE
      *
-     * @author    coderkun <olli@coderkun.de>
-     * @copyright    2013 coderkun (http://www.coderkun.de)
-     * @license    http://www.gnu.org/licenses/gpl.html
-     * @link    http://www.coderkun.de/projects/nre
+     * @author      coderkun <olli@coderkun.de>
+     * @copyright   2013 coderkun (http://www.coderkun.de)
+     * @license     http://www.gnu.org/licenses/gpl.html
+     * @link        http://www.coderkun.de/projects/nre
      */
 
     namespace nre\configs;
@@ -18,7 +18,7 @@
      * This class contains static variables with configuration values for
      * the specific application.
      * 
-     * @author    coderkun <olli@coderkun.de>
+     * @author  coderkun <olli@coderkun.de>
      */
     final class AppConfig
     {
@@ -30,8 +30,8 @@
          * @var array
          */
         public static $app = array(
-            //'namespace'        =>    '',
-            //'timeZone'        =>    ''
+            //'namespace'   => '',
+            //'timeZone'    => ''
         );
 
 
@@ -42,10 +42,10 @@
          * @var array
          */
         public static $defaults = array(
-            //'toplevel'        =>    '',
-            //'toplevel-error'    =>    '',
-            //'intermediate'    =>    '',
-            //'intermediate-error'    =>    ''
+            //'toplevel'            => '',
+            //'toplevel-error'      => '',
+            //'intermediate'        => '',
+            //'intermediate-error'  => ''
         );
 
 
@@ -56,7 +56,7 @@
          * @var array
          */
         public static $routes = array(
-            //array('<pattern>', '<replace>', '<is_last>')
+            //array('<pattern>',    '<replace>',    '<is_last>')
         );
 
 
@@ -67,7 +67,7 @@
          * @var array
          */
         public static $reverseRoutes = array(
-            //array('<pattern>', '<replace>', '<is_last>')
+            //array('<pattern>',    '<replace>',    '<is_last>')
         );
 
     }
