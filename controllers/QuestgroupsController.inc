@@ -92,7 +92,7 @@
 				// Only check permissions if Character has not entered Quest before
 				if(!$this->Questgroups->hasCharacterEnteredQuestgroup($questgroup['id'], $character['id']))
 				{
-					$previousQuestgroup = $this->Questgroups->getPreviousQuestgroup($questgroup['id']);
+					$previousQuestgroup = $this->Questgroups->getPreviousQuestgroup($seminary['id'], $questgroup['id']);
 					if(!is_null($previousQuestgroup)) {
 						if(!$this->Questgroups->hasCharacterSolvedQuestgroup($previousQuestgroup['id'], $character['id'])) {
 							throw new \nre\exceptions\AccessDeniedException();
@@ -316,7 +316,6 @@
 					);
 					
 					// Upload moodpic
-					var_dump($moodpic);
 					if(!is_null($moodpic))
 					{
 						$mediaId = $this->Media->createQuestgrouppicture(

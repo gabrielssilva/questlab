@@ -184,7 +184,7 @@
 				if(count($previousQuests) == 0)
 				{
 					// Previous Questgroup
-					$previousQuestgroup = $this->Questgroups->getPreviousQuestgroup($questgroup['id']);
+					$previousQuestgroup = $this->Questgroups->getPreviousQuestgroup($seminary['id'], $questgroup['id']);
 					if(!is_null($previousQuestgroup) && !$this->Questgroups->hasCharacterSolvedQuestgroup($previousQuestgroup['id'], $character['id'])) {
 						throw new \nre\exceptions\AccessDeniedException();
 					}
@@ -309,7 +309,7 @@
 				{
 					if(is_null($relatedQuesttext))
 					{
-						$nextQuestgroup = $this->Questgroups->getNextQuestgroup($questgroup['id']);
+						$nextQuestgroup = $this->Questgroups->getNextQuestgroup($seminary['id'], $questgroup['id']);
 						if(!is_null($nextQuestgroup)) {
 							$nextQuestgroup['hierarchy'] = $this->Questgroupshierarchy->getHierarchyForQuestgroup($nextQuestgroup['id']);
 						}

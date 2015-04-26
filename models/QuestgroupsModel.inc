@@ -166,10 +166,11 @@
 		 * on the same level as the given Quest then the followed-up
 		 * Questgroup from a higher hierarchy level is returned.
 		 * 
+         * @param   int     $seminaryId ID of Seminary
 		 * @param	int	$questgroupId	ID of Questgroup to get next Questgroup of
 		 * @return	array			Questgroup data
 		 */
-		public function getNextQuestgroup($questgroupId)
+		public function getNextQuestgroup($seminaryId, $questgroupId)
 		{
 			$currentQuestgroup = $this->getQuestgroupById($questgroupId);
 			$currentQuestgroup['hierarchy'] = $this->Questgroupshierarchy->getHierarchyForQuestgroup($currentQuestgroup['id']);
@@ -177,9 +178,9 @@
 				return null;
 			}
 			
-			$nextQuestgroup = $this->_getNextQuestgroup($currentQuestgroup['hierarchy']['parent_questgroup_id'], $currentQuestgroup['hierarchy']['questgroup_pos']);
+			$nextQuestgroup = $this->_getNextQuestgroup($seminaryId, $currentQuestgroup['hierarchy']['parent_questgroup_id'], $currentQuestgroup['hierarchy']['questgroup_pos']);
 			if(is_null($nextQuestgroup) && !is_null($currentQuestgroup['hierarchy']['parent_questgroup_id'])) {
-				$nextQuestgroup = $this->getNextQuestgroup($currentQuestgroup['hierarchy']['parent_questgroup_id']);
+				$nextQuestgroup = $this->getNextQuestgroup($seminaryId, $currentQuestgroup['hierarchy']['parent_questgroup_id']);
 			}
 			
 			
@@ -195,10 +196,11 @@
 		 * followed-up Questgroup from a higher hierarchy level is
 		 * returned.
 		 * 
+         * @param   int     $seminaryId ID of Seminary
 		 * @param	int	$questgroupId	ID of Questgroup to get previous Questgroup of
 		 * @return	array			Questgroup data
 		 */
-		public function getPreviousQuestgroup($questgroupId)
+		public function getPreviousQuestgroup($seminaryId, $questgroupId)
 		{
 			$currentQuestgroup = $this->getQuestgroupById($questgroupId);
 			$currentQuestgroup['hierarchy'] = $this->Questgroupshierarchy->getHierarchyForQuestgroup($currentQuestgroup['id']);
@@ -206,9 +208,9 @@
 				return null;
 			}
 			
-			$previousQuestgroup = $this->_getPreviousQuestgroup($currentQuestgroup['hierarchy']['parent_questgroup_id'], $currentQuestgroup['hierarchy']['questgroup_pos']);
+			$previousQuestgroup = $this->_getPreviousQuestgroup($seminaryId, $currentQuestgroup['hierarchy']['parent_questgroup_id'], $currentQuestgroup['hierarchy']['questgroup_pos']);
 			if(is_null($previousQuestgroup) && !is_null($currentQuestgroup['hierarchy']['parent_questgroup_id'])) {
-				$previousQuestgroup = $this->getPreviousQuestgroup($currentQuestgroup['hierarchy']['parent_questgroup_id']);
+				$previousQuestgroup = $this->getPreviousQuestgroup($seminaryId, $currentQuestgroup['hierarchy']['parent_questgroup_id']);
 			}
 			
 			
@@ -752,11 +754,12 @@
 		/**
 		 * Get the next (direct) Questgroup.
 		 * 
+         * @param   int     $seminaryId ID of Seminary
 		 * @param	int	$parentQuestgroupId	ID of parent Questgroup to get next Questgroup of
 		 * @param	int	$questgroupPos		Position of Questgroup to get next Questgroup of
 		 * @return	array				Data of next Questgroup or NULL
 		 */
-		private function _getNextQuestgroup($parentQuestgroupId, $questgroupPos)
+		private function _getNextQuestgroup($seminaryId, $parentQuestgroupId, $questgroupPos)
 		{
 			if(!is_null($parentQuestgroupId))
 			{
@@ -764,9 +767,9 @@
 					'SELECT * '.
 					'FROM questgroups_questgroupshierarchy '.
 					'INNER JOIN questgroups ON questgroups.id = questgroups_questgroupshierarchy.questgroup_id '.
-					'WHERE parent_questgroup_id = ? AND pos = ? + 1',
-					'ii',
-					$parentQuestgroupId, $questgroupPos
+					'WHERE seminary_id = ? AND parent_questgroup_id = ? AND pos = ? + 1',
+					'iii',
+					$seminaryId, $parentQuestgroupId, $questgroupPos
 				);
 			}
 			else
@@ -775,9 +778,9 @@
 					'SELECT * '.
 					'FROM questgroups_questgroupshierarchy '.
 					'INNER JOIN questgroups ON questgroups.id = questgroups_questgroupshierarchy.questgroup_id '.
-					'WHERE parent_questgroup_id IS NULL AND pos = ? + 1',
-					'i',
-					$questgroupPos
+					'WHERE seminary_id = ? AND parent_questgroup_id IS NULL AND pos = ? + 1',
+					'ii',
+					$seminaryId, $questgroupPos
 				);
 			}
 			if(empty($data)) {
@@ -792,11 +795,12 @@
 		/**
 		 * Get the previous (direct) Questgroup.
 		 * 
+         * @param   int     $seminaryId ID of Seminary
 		 * @param	int	$parentQuestgroupId	ID of parent Questgroup to get previous Questgroup of
 		 * @param	int	$questgroupPos		Position of Questgroup to get previous Questgroup of
 		 * @return	array				Data of previous Questgroup or NULL
 		 */
-		private function _getPreviousQuestgroup($parentQuestgroupId, $questgroupPos)
+		private function _getPreviousQuestgroup($seminaryId, $parentQuestgroupId, $questgroupPos)
 		{
 			if(!is_null($parentQuestgroupId))
 			{
@@ -804,9 +808,9 @@
 					'SELECT * '.
 					'FROM questgroups_questgroupshierarchy '.
 					'INNER JOIN questgroups ON questgroups.id = questgroups_questgroupshierarchy.questgroup_id '.
-					'WHERE parent_questgroup_id = ? AND pos = ? - 1',
-					'ii',
-					$parentQuestgroupId, $questgroupPos
+					'WHERE seminary_id = ? AND parent_questgroup_id = ? AND pos = ? - 1',
+					'iii',
+					$seminaryId, $parentQuestgroupId, $questgroupPos
 				);
 			}
 			else
@@ -815,9 +819,9 @@
 					'SELECT * '.
 					'FROM questgroups_questgroupshierarchy '.
 					'INNER JOIN questgroups ON questgroups.id = questgroups_questgroupshierarchy.questgroup_id '.
-					'WHERE parent_questgroup_id IS NULL AND pos = ? - 1',
-					'i',
-					$questgroupPos
+					'WHERE seminary_id = ? AND parent_questgroup_id IS NULL AND pos = ? - 1',
+					'ii',
+					$seminaryId, $questgroupPos
 				);
 			}
 			if(empty($data)) {
