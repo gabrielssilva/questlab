@@ -21,7 +21,7 @@
 <form method="get" class="logreg admnqf">
 	<fieldset>
 		<legend><?=_('Filters')?></legend>
-		<p><small><?=_('Sortorder')?>:</small></p>
+		<small><?=_('Sortorder')?>:</small>
 		<select name="sortorder" onchange="this.form.submit();">
 			<option value="name" <?php if($sortorder == 'name') : ?>selected="selected"<?php endif ?>><?=_('Character name')?></option>
 			<option value="xps" <?php if($sortorder == 'xps') : ?>selected="selected"<?php endif ?>><?=_('XPs')?></option>
