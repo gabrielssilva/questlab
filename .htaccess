@@ -1,0 +1,44 @@
+Options -Indexes -MultiViews
+
+ErrorDocument 403 /www/error403.html
+ErrorDocument 404 /www/error404.html
+ErrorDocument 500 /www/error500.html
+
+
+<IfModule mod_authz_core.c>
+	Require all granted
+	
+	<Files ~ "\.inc$">
+		Require all denied
+	</Files>
+	<Files ~ "\.tpl$">
+		Require all denied
+	</Files>
+	<Files ~ "\.log$">
+		Require all denied
+	</Files>
+</IfModule>
+<IfModule !mod_authz_core.c>
+	Allow From All
+	
+	<Files ~ "\.inc$">
+		Order Deny,Allow
+		Deny From All
+	</Files>
+	<Files ~ "\.tpl$">
+		Order Deny,Allow
+		Deny From All
+	</Files>
+	<Files ~ "\.log$">
+		Order Deny,Allow
+		Deny From All
+	</Files>
+</IfModule>
+
+
+<IfModule mod_rewrite.c>
+	RewriteEngine On
+	
+	RewriteBase	/
+	RewriteRule	^(.*)$	www/$1 [L]
+</IfModule>
