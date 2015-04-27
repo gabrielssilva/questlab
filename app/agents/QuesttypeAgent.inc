@@ -109,23 +109,6 @@
 		
 		
 		/**
-		 * Determine the classname for the given Agent name.
-		 * 
-		 * @static
-		 * @param	string	$agentName	Agent name to get classname of
-		 * @param	string	$agentType	Agent type of given Agent name
-		 * @return	string			Classname for the Agent name
-		 */
-		/*private static function getClassName($agentName, $agentType)
-		{
-			$className = ClassLoader::concatClassNames($agentName, 'agent');
-			
-			
-			return \nre\configs\AppConfig::$app['namespace']."agents\\$agentType\\$className";
-		}*/
-		
-		
-		/**
 		 * Load the class of a QuesttypeAgent.
 		 * 
 		 * @static
