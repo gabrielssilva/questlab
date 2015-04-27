@@ -54,7 +54,7 @@
 		 * Construct a new API.
 		 * 
 		 * @param	Request		$request	Current request
-		 * @param	Response	$respone	Current response
+		 * @param	Response	$response	Current response
 		 */
 		public function __construct(Request $request, Response $response)
 		{
