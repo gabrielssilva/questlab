@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: The Legend of Z\n"
-"POT-Creation-Date: 2015-04-19 14:15+0100\n"
-"PO-Revision-Date: 2015-04-20 21:06+0100\n"
+"POT-Creation-Date: 2015-04-30 18:44+0100\n"
+"PO-Revision-Date: 2015-04-30 18:45+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de_DE\n"
@@ -18,31 +18,31 @@ msgstr ""
 "X-Poedit-SearchPath-2: controllers\n"
 
 #: controllers/CharactersController.inc:402
-#: controllers/UsersController.inc:333 views/ajax/characters/index.tpl:10
+#: controllers/UsersController.inc:339 views/ajax/characters/index.tpl:10
 #: views/ajax/users/index.tpl:10 views/html/characters/index.tpl:48
 #: views/html/characters/manage.tpl:35 views/html/characters/manage.tpl:50
 #: views/html/characters/manage.tpl:58 views/html/userroles/user.tpl:5
-#: views/html/users/index.tpl:29 views/html/users/manage.tpl:28
+#: views/html/users/index.tpl:33 views/html/users/manage.tpl:28
 #: views/html/users/manage.tpl:41 views/html/users/manage.tpl:49
 msgid "Admin"
 msgstr "Administrator"
 
 #: controllers/CharactersController.inc:408
-#: controllers/UsersController.inc:339 views/ajax/characters/index.tpl:12
+#: controllers/UsersController.inc:345 views/ajax/characters/index.tpl:12
 #: views/ajax/users/index.tpl:12 views/html/characters/index.tpl:49
 #: views/html/characters/manage.tpl:36 views/html/characters/manage.tpl:51
 #: views/html/characters/manage.tpl:59 views/html/userroles/user.tpl:7
-#: views/html/users/index.tpl:30 views/html/users/manage.tpl:29
+#: views/html/users/index.tpl:34 views/html/users/manage.tpl:29
 #: views/html/users/manage.tpl:42 views/html/users/manage.tpl:50
 msgid "Moderator"
 msgstr "Moderator"
 
 #: controllers/CharactersController.inc:414
-#: controllers/UsersController.inc:345 views/ajax/characters/index.tpl:14
+#: controllers/UsersController.inc:351 views/ajax/characters/index.tpl:14
 #: views/ajax/users/index.tpl:14 views/html/characters/index.tpl:50
 #: views/html/characters/manage.tpl:37 views/html/characters/manage.tpl:53
 #: views/html/characters/manage.tpl:61 views/html/userroles/user.tpl:9
-#: views/html/users/index.tpl:31 views/html/users/manage.tpl:30
+#: views/html/users/index.tpl:35 views/html/users/manage.tpl:30
 #: views/html/users/manage.tpl:44 views/html/users/manage.tpl:52
 msgid "User"
 msgstr "Benutzer"
@@ -101,6 +101,7 @@ msgstr ""
 
 #: questtypes/bossfight/html/edittask.tpl:17
 #: questtypes/choiceinput/html/edittask.tpl:83
+#: questtypes/dragndrop/html/edittask.tpl:144
 #: questtypes/multiplechoice/html/edittask.tpl:79
 #: questtypes/textinput/html/edittask.tpl:44
 #: views/html/achievements/conditions.tpl:151
@@ -190,6 +191,137 @@ msgstr "vertikal"
 msgid "horizontal"
 msgstr "horizontal"
 
+#: questtypes/dragndrop/html/edittask.tpl:11
+#: questtypes/dragndrop/html/edittask.tpl:104
+#: questtypes/submit/html/quest.tpl:8
+#: views/html/charactergroupsquests/manage.tpl:37
+#, php-format
+msgid "Error during file upload: %s"
+msgstr "Fehler beim Dateiupload: %s"
+
+#: questtypes/dragndrop/html/edittask.tpl:13
+#: questtypes/dragndrop/html/edittask.tpl:106
+#: questtypes/submit/html/quest.tpl:4
+#: views/html/charactergroupsquests/manage.tpl:39
+#, php-format
+msgid "File has wrong type “%s”"
+msgstr "Der Dateityp „%s“ ist nicht erlaubt"
+
+#: questtypes/dragndrop/html/edittask.tpl:15
+#: questtypes/dragndrop/html/edittask.tpl:108
+#: questtypes/submit/html/quest.tpl:6
+#: views/html/charactergroupsquests/manage.tpl:41
+msgid "File exceeds size maximum"
+msgstr "Die Datei ist zu groß"
+
+#: questtypes/dragndrop/html/edittask.tpl:17
+#: questtypes/dragndrop/html/edittask.tpl:110
+#: views/html/charactergroupsquests/manage.tpl:43
+msgid "File invalid"
+msgstr "Die Datei ist ungültig"
+
+#: questtypes/dragndrop/html/edittask.tpl:31
+#, php-format
+msgid "Step %d"
+msgstr "Schritt %d"
+
+#: questtypes/dragndrop/html/edittask.tpl:31
+#: views/html/achievements/conditions.tpl:22
+#: views/html/achievements/conditions.tpl:31
+#: views/html/achievements/conditions.tpl:59
+#: views/html/achievements/conditions.tpl:89
+#: views/html/achievements/conditions.tpl:98
+#: views/html/achievements/conditions.tpl:126
+msgid "Field"
+msgstr "Feld"
+
+#: questtypes/dragndrop/html/edittask.tpl:36
+msgid "Upload background image"
+msgstr "Hintergrundbild hochladen"
+
+#: questtypes/dragndrop/html/edittask.tpl:38
+#: questtypes/dragndrop/html/edittask.tpl:136
+#: questtypes/submit/html/quest.tpl:17 views/html/achievements/create.tpl:66
+#: views/html/achievements/edit.tpl:68
+#: views/html/charactergroups/creategroup.tpl:64
+#: views/html/charactergroups/editgroup.tpl:65
+#: views/html/charactergroupsquests/create.tpl:66
+#: views/html/charactergroupsquests/edit.tpl:67
+#: views/html/charactergroupsquests/manage.tpl:72
+#: views/html/charactertypes/edit.tpl:135 views/html/questgroups/create.tpl:65
+#: views/html/questgroups/edit.tpl:53 views/html/quests/create.tpl:62
+#: views/html/quests/edit.tpl:65 views/html/seminaries/create.tpl:60
+#: views/html/seminaries/edit.tpl:62
+msgid "Allowed file types"
+msgstr "Erlaubte Dateiformate"
+
+#: questtypes/dragndrop/html/edittask.tpl:41
+#: questtypes/dragndrop/html/edittask.tpl:139
+#: questtypes/submit/html/quest.tpl:20 views/html/achievements/create.tpl:69
+#: views/html/achievements/edit.tpl:71
+#: views/html/charactergroups/creategroup.tpl:67
+#: views/html/charactergroups/editgroup.tpl:68
+#: views/html/charactergroupsquests/create.tpl:69
+#: views/html/charactergroupsquests/edit.tpl:70
+#: views/html/charactergroupsquests/manage.tpl:72
+#: views/html/charactertypes/edit.tpl:138 views/html/questgroups/create.tpl:68
+#: views/html/questgroups/edit.tpl:56 views/html/quests/create.tpl:65
+#: views/html/quests/edit.tpl:68 views/html/seminaries/create.tpl:63
+#: views/html/seminaries/edit.tpl:65
+#, php-format
+msgid "%s-files"
+msgstr "%s-Dateien"
+
+#: questtypes/dragndrop/html/edittask.tpl:41
+#: questtypes/dragndrop/html/edittask.tpl:139
+#: questtypes/submit/html/quest.tpl:20 views/html/achievements/create.tpl:69
+#: views/html/achievements/edit.tpl:71
+#: views/html/charactergroups/creategroup.tpl:67
+#: views/html/charactergroups/editgroup.tpl:68
+#: views/html/charactergroupsquests/create.tpl:69
+#: views/html/charactergroupsquests/edit.tpl:70
+#: views/html/charactergroupsquests/manage.tpl:72
+#: views/html/charactertypes/edit.tpl:138 views/html/questgroups/create.tpl:68
+#: views/html/questgroups/edit.tpl:56 views/html/quests/create.tpl:65
+#: views/html/quests/edit.tpl:68 views/html/seminaries/create.tpl:63
+#: views/html/seminaries/edit.tpl:65
+msgid "max."
+msgstr "max."
+
+#: questtypes/dragndrop/html/edittask.tpl:45
+#: questtypes/dragndrop/html/edittask.tpl:80
+msgid "next step"
+msgstr "nächster Schritt"
+
+#: questtypes/dragndrop/html/edittask.tpl:48
+#: questtypes/dragndrop/html/edittask.tpl:83
+#, php-format
+msgid "Step %d:"
+msgstr "Schritt %d"
+
+#: questtypes/dragndrop/html/edittask.tpl:48
+msgid "Drop-items"
+msgstr "Drop-Elemente"
+
+#: questtypes/dragndrop/html/edittask.tpl:63
+#: questtypes/dragndrop/html/edittask.tpl:184
+msgid "Size"
+msgstr "Größe"
+
+#: questtypes/dragndrop/html/edittask.tpl:67
+#: questtypes/dragndrop/html/edittask.tpl:188
+msgid "Position"
+msgstr "Position"
+
+#: questtypes/dragndrop/html/edittask.tpl:79
+#: questtypes/dragndrop/html/edittask.tpl:143
+msgid "previous step"
+msgstr "vorheriger Schritt"
+
+#: questtypes/dragndrop/html/edittask.tpl:83
+msgid "Drag-items"
+msgstr "Drag-Elemente"
+
 #: questtypes/multiplechoice/html/edittask.tpl:12
 #: questtypes/multiplechoice/html/edittask.tpl:44
 #, php-format
@@ -233,66 +365,6 @@ msgstr "Frage %d von %d"
 #: questtypes/multiplechoice/html/quest.tpl:19
 msgid "solve Question"
 msgstr "Frage lösen"
-
-#: questtypes/submit/html/quest.tpl:4
-#: views/html/charactergroupsquests/manage.tpl:39
-#, php-format
-msgid "File has wrong type “%s”"
-msgstr "Der Dateityp „%s“ ist nicht erlaubt"
-
-#: questtypes/submit/html/quest.tpl:6
-#: views/html/charactergroupsquests/manage.tpl:41
-msgid "File exceeds size maximum"
-msgstr "Die Datei ist zu groß"
-
-#: questtypes/submit/html/quest.tpl:8
-#: views/html/charactergroupsquests/manage.tpl:37
-#, php-format
-msgid "Error during file upload: %s"
-msgstr "Fehler beim Dateiupload: %s"
-
-#: questtypes/submit/html/quest.tpl:17 views/html/achievements/create.tpl:66
-#: views/html/achievements/edit.tpl:68
-#: views/html/charactergroups/creategroup.tpl:64
-#: views/html/charactergroups/editgroup.tpl:65
-#: views/html/charactergroupsquests/create.tpl:66
-#: views/html/charactergroupsquests/edit.tpl:67
-#: views/html/charactergroupsquests/manage.tpl:72
-#: views/html/charactertypes/edit.tpl:135 views/html/questgroups/create.tpl:65
-#: views/html/questgroups/edit.tpl:53 views/html/quests/create.tpl:62
-#: views/html/quests/edit.tpl:65 views/html/seminaries/create.tpl:60
-#: views/html/seminaries/edit.tpl:62
-msgid "Allowed file types"
-msgstr "Erlaubte Dateiformate"
-
-#: questtypes/submit/html/quest.tpl:20 views/html/achievements/create.tpl:69
-#: views/html/achievements/edit.tpl:71
-#: views/html/charactergroups/creategroup.tpl:67
-#: views/html/charactergroups/editgroup.tpl:68
-#: views/html/charactergroupsquests/create.tpl:69
-#: views/html/charactergroupsquests/edit.tpl:70
-#: views/html/charactergroupsquests/manage.tpl:72
-#: views/html/charactertypes/edit.tpl:138 views/html/questgroups/create.tpl:68
-#: views/html/questgroups/edit.tpl:56 views/html/quests/create.tpl:65
-#: views/html/quests/edit.tpl:68 views/html/seminaries/create.tpl:63
-#: views/html/seminaries/edit.tpl:65
-#, php-format
-msgid "%s-files"
-msgstr "%s-Dateien"
-
-#: questtypes/submit/html/quest.tpl:20 views/html/achievements/create.tpl:69
-#: views/html/achievements/edit.tpl:71
-#: views/html/charactergroups/creategroup.tpl:67
-#: views/html/charactergroups/editgroup.tpl:68
-#: views/html/charactergroupsquests/create.tpl:69
-#: views/html/charactergroupsquests/edit.tpl:70
-#: views/html/charactergroupsquests/manage.tpl:72
-#: views/html/charactertypes/edit.tpl:138 views/html/questgroups/create.tpl:68
-#: views/html/questgroups/edit.tpl:56 views/html/quests/create.tpl:65
-#: views/html/quests/edit.tpl:68 views/html/seminaries/create.tpl:63
-#: views/html/seminaries/edit.tpl:65
-msgid "max."
-msgstr "max."
 
 #: questtypes/submit/html/quest.tpl:28
 msgid "Your submissions"
@@ -411,7 +483,7 @@ msgstr "Texteingabe"
 msgid "%d XPs"
 msgstr "%d XP"
 
-#: views/ajax/users/index.tpl:20 views/html/users/index.tpl:28
+#: views/ajax/users/index.tpl:20 views/html/users/index.tpl:32
 #: views/html/users/manage.tpl:31 views/html/users/user.tpl:22
 #, php-format
 msgid "registered on %s"
@@ -442,15 +514,6 @@ msgstr "Bedingungen"
 #: views/html/achievements/conditions.tpl:86
 msgid "Date"
 msgstr "Datum"
-
-#: views/html/achievements/conditions.tpl:22
-#: views/html/achievements/conditions.tpl:31
-#: views/html/achievements/conditions.tpl:59
-#: views/html/achievements/conditions.tpl:89
-#: views/html/achievements/conditions.tpl:98
-#: views/html/achievements/conditions.tpl:126
-msgid "Field"
-msgstr "Feld"
 
 #: views/html/achievements/conditions.tpl:28
 #: views/html/achievements/conditions.tpl:29
@@ -973,6 +1036,7 @@ msgstr "Icon"
 #: views/html/charactertypes/create.tpl:41
 #: views/html/charactertypes/create.tpl:42
 #: views/html/charactertypes/edit.tpl:41 views/html/charactertypes/edit.tpl:42
+#: views/html/users/index.tpl:21 views/html/users/index.tpl:22
 #: views/html/users/user.tpl:23
 msgid "Name"
 msgstr "Name"
@@ -1193,10 +1257,6 @@ msgstr "%s-Quest bearbeiten"
 msgid "Media"
 msgstr "Medien"
 
-#: views/html/charactergroupsquests/manage.tpl:43
-msgid "File invalid"
-msgstr "Die Datei ist ungültig"
-
 #: views/html/charactergroupsquests/manage.tpl:68
 msgid "delete selected"
 msgstr "markierte löschen"
@@ -1345,17 +1405,17 @@ msgid "Date of registration"
 msgstr "Registrierungsdatum"
 
 #: views/html/characters/index.tpl:37 views/html/quests/index.tpl:50
-#: views/html/users/index.tpl:22
+#: views/html/users/index.tpl:26
 msgid "Apply filters"
 msgstr "Filter anwenden"
 
 #: views/html/characters/index.tpl:61 views/html/quests/index.tpl:82
-#: views/html/users/index.tpl:39
+#: views/html/users/index.tpl:48
 msgid "Show more"
 msgstr "Weitere anzeigen"
 
 #: views/html/characters/index.tpl:62 views/html/quests/index.tpl:83
-#: views/html/users/index.tpl:40
+#: views/html/users/index.tpl:49
 msgid "Show all"
 msgstr "Alle anzeigen"
 
@@ -2112,6 +2172,7 @@ msgstr "Nachname"
 
 #: views/html/users/create.tpl:92 views/html/users/create.tpl:93
 #: views/html/users/edit.tpl:100 views/html/users/edit.tpl:101
+#: views/html/users/index.tpl:23 views/html/users/index.tpl:24
 #: views/html/users/register.tpl:93 views/html/users/register.tpl:94
 #: views/html/users/user.tpl:24
 msgid "E‑mail address"
