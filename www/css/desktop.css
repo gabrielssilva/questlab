@@ -355,8 +355,16 @@ input[type="submit"][disabled]{text-shadow:1px 2px #d48c4e;background:#f9ac69;bo
 .opponent .fa{font-size:1.25em;color:#c7135b;padding-right:0}
 .bossfight .option{background:#fff;margin-bottom:10px;padding:15px 15px 5px;border-radius:3px}
 
-#dragZone{background:#eae8e4;box-sizing:border-box;padding:5px 5px 0 5px}
+#dropZone.dev div{text-align:center;background-color:rgba(255,255,0,0.6)}
+#dropZone.dev i.move{cursor:grab}
+#dropZone.dev i.resize{position:absolute;right:0;bottom:0;padding:0;cursor:nwse-resize}
 .drop{background:#eae8e4}
+#drops li{position:relative;margin:10px 0 10px 30px}
+#drops span.lstidx{position:absolute;top:2px;left:-30px}
+#drops span.lstidx:after{content:'.'}
+#drops input[type="number"]{width:70px}
+#dragZone{background:#eae8e4;box-sizing:border-box;padding:5px 5px 0 5px}
+#drags > li{list-style-type:initial;margin:10px 0 10px 30px}
 
 
 /** Media Queries **/

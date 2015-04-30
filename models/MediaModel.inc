@@ -580,7 +580,6 @@
 		}
 
 
-
         /**
          * Copy Achievement media.
          * 
@@ -601,6 +600,32 @@
                 $userId,
                 $userId
             );
+        }
+
+
+        /**
+         * Gather some information about a Seminary medium.
+         * 
+         * The infos are organized in an associative array and contain the
+         * following keys: width and height
+         * 
+         * @param   int     $seminarymediaId    ID of Seminary media to get infos for
+         * @return  array                       List of infos for Seminary medium
+         */
+        public function getSeminarymediaInfos($seminarymediaId)
+        {
+            // Create filename
+            $filename = ROOT.DS.\nre\configs\AppConfig::$dirs['seminarymedia'].DS.$seminarymediaId;
+
+            // Get infos
+            $infos = array();
+            $im = new \Imagick($filename);
+            $infos['width'] = $im->getImageWidth();
+            $infos['height'] = $im->getImageHeight();
+
+
+            // Return infos
+            return $infos;
         }
 		
 		

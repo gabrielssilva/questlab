@@ -25,6 +25,12 @@
 		 * @var array
 		 */
 		public $models = array('media');
+		/**
+		 * Required components
+		 * 
+		 * @var array
+		 */
+		public $components = array('validation');
 		
 		
 		
@@ -222,19 +228,304 @@
 		}
 
 
-		/**
-		 * TODO Action: edittask.
-		 * 
-		 * Edit the task of a Quest.
-		 * 
-		 * @param	array		$seminary	Current Seminary data
-		 * @param	array		$questgroup	Current Questgroup data
-		 * @param	array		$quest		Current Quest data
-		 */
-		public function edittask($seminary, $questgroup, $quest)
-		{
-		}
-		
-	}
+        /**
+         * Action: edittask.
+         * 
+         * Edit the task of a Quest.
+         * 
+         * @param	array		$seminary	Current Seminary data
+         * @param	array		$questgroup	Current Questgroup data
+         * @param	array		$quest		Current Quest data
+         */
+        public function edittask($seminary, $questgroup, $quest)
+        {
+            // Get Drag&Drop field
+            $dndField = $this->Dragndrop->getDragndrop($quest['id']);
+            if(!is_null($dndField)) {
+                $dndField['media'] = $this->Media->getSeminaryMediaById($dndField['questmedia_id']);
+            }
+
+            // Get Drop-items
+            $drops = array();
+            if(!is_null($dndField)) {
+                $drops = $this->Dragndrop->getDrops($dndField['quest_id']);
+            }
+
+            // Get Drag-items
+            $drags = array();
+            if(!is_null($dndField))
+            {
+                $drags = $this->Dragndrop->getDrags($dndField['quest_id']);
+                foreach($drags as &$drag)
+                {
+                    $drag['media'] = $this->Media->getSeminaryMediaById($drag['questmedia_id']);
+                    $drag['drops'] = array_map(function($d) { return $d['id']; }, $this->Dragndrop->getDropsForDrag($drag['id']));
+                }
+            }
+
+            // Get allowed mimetypes
+            $mimetypes = \nre\configs\AppConfig::$mimetypes['questtypes'];
+
+            // Values
+            $step = 0;
+            $steps = 2;
+            $validation = true;
+            $dragsValidation = true;
+
+            // Save submitted data
+            if($this->request->getRequestMethod() == 'POST')
+            {
+                // Get current step
+                $step = max(0, min(2, intval($this->request->getPostParam('step'))));
+
+                // Drag&Drop-field (background image)
+                if($step == 0)
+                {
+                    // Validate zone
+                    $zone = null;
+                    if(!empty($_FILES) && array_key_exists('zone', $_FILES) && $_FILES['zone']['error'] != UPLOAD_ERR_NO_FILE)
+                    {
+                        $zone = $_FILES['zone'];
+
+                        // Check error
+                        if($zone['error'] !== UPLOAD_ERR_OK) {
+                            $validation = $this->Validation->addValidationResult($validation, 'zone', 'error', $zone['error']);
+                        }
+
+                        // Check mimetype
+                        $mediaMimetype = null;
+                        $zone['mimetype'] = \hhu\z\Utils::getMimetype($zone['tmp_name'], $zone['type']);
+                        foreach($mimetypes as &$mimetype) {
+                            if($mimetype['mimetype'] == $zone['mimetype']) {
+                                $mediaMimetype = $mimetype;
+                                break;
+                            }
+                        }
+                        if(is_null($mediaMimetype)) {
+                            $validation = $this->Validation->addValidationResult($validation, 'zone', 'mimetype', $zone['mimetype']);
+                        }
+                        elseif($zone['size'] > $mediaMimetype['size']) {
+                            $validation = $this->Validation->addValidationResult($validation, 'zone', 'size', $mediaMimetype['size']);
+                        }
+                    }
+
+                    // Set zone
+                    if($validation === true)
+                    {
+                        // Upload background image
+                        $mediaId = $this->Media->createQuestMedia(
+                            $this->Auth->getUserId(),
+                            $seminary['id'],
+                            sprintf('quest-dnd-%s', $quest['url']),
+                            '',
+                            $zone['mimetype'],
+                            $zone['tmp_name']
+                        );
+                        if($mediaId !== false)
+                        {
+                            // Create Drag&Drop zone
+                            $this->Dragndrop->createDragndrop(
+                                $this->Auth->getUserId(),
+                                $quest['id'],
+                                $mediaId
+                            );
+                        }
+
+                        // Reload Drag&Drop field
+                        $dndField = $this->Dragndrop->getDragndrop($quest['id']);
+                        $dndField['media'] = $this->Media->getSeminaryMediaById($dndField['questmedia_id']);
+                    }
+                }
+                // Drop-items
+                elseif($step == 1)
+                {
+                    // Get new Drop-items and organize them
+                    $dropsNew = array();
+                    $dropsUpdate = array();
+                    foreach($this->request->getPostParam('drops') as $drop)
+                    {
+                        if(array_key_exists('id', $drop)) {
+                            $dropsUpdate[$drop['id']] = $drop;
+                        }
+                        else {
+                            $dropsNew[] = $drop;
+                        }
+                    }
+
+                    // Update Drop-items
+                    foreach($drops as $drop)
+                    {
+                        if(array_key_exists($drop['id'], $dropsUpdate))
+                        {
+                            $drop = $dropsUpdate[$drop['id']];
+                            $this->Dragndrop->editDrop($drop['id'], $drop['width'], $drop['height'], $drop['x'], $drop['y']);
+                        }
+                        else {
+                            $this->Dragndrop->deleteDrop($drop['id']);
+                        }
+                    }
+                    // Add new Drop-items
+                    foreach($dropsNew as $drop) {
+                        $this->Dragndrop->addDrop($dndField['quest_id'], $drop['width'], $drop['height'], $drop['x'], $drop['y']);
+                    }
+
+                    // Reload Drop-items
+                    $drops = $this->Dragndrop->getDrops($dndField['quest_id']);
+                }
+                // Drag-items
+                elseif($step == 2)
+                {
+                    // Get new Drop-items and organize them
+                    $dragsNew = array();
+                    $dragsUpdate = array();
+                    foreach($this->request->getPostParam('drags') as $index => $drag)
+                    {
+                        // Get file
+                        if(array_key_exists($index, $_FILES['drags']['error']) && $_FILES['drags']['error'][$index] !== UPLOAD_ERR_NO_FILE)
+                        {
+                            $drag['file'] = array(
+                                'name'      => $_FILES['drags']['name'][$index],
+                                'type'      => $_FILES['drags']['type'][$index],
+                                'tmp_name'  => $_FILES['drags']['tmp_name'][$index],
+                                'error'     => $_FILES['drags']['error'][$index],
+                                'size'      => $_FILES['drags']['size'][$index]
+                            );
+
+                            // Validate file
+                            $dragValidation = true;
+
+                            // Check error
+                            if($drag['file']['error'] !== UPLOAD_ERR_OK) {
+                                $dragValidation = $this->Validation->addValidationResult($dragValidation, 'file', 'error', $drag['file']['error']);
+                            }
+
+                            // Check mimetype
+                            $dragMimetype = null;
+                            $drag['file']['mimetype'] = \hhu\z\Utils::getMimetype($drag['file']['tmp_name'], $drag['file']['type']);
+                            foreach($mimetypes as &$mimetype) {
+                                if($mimetype['mimetype'] == $drag['file']['mimetype']) {
+                                    $dragMimetype = $mimetype;
+                                    break;
+                                }
+                            }
+                            if(is_null($dragMimetype)) {
+                                $dragValidation = $this->Validation->addValidationResult($dragValidation, 'file', 'mimetype', $drag['file']['mimetype']);
+                            }
+                            elseif($drag['file']['size'] > $dragMimetype['size']) {
+                                $dragValidation = $this->Validation->addValidationResult($dragValidation, 'file', 'size', $dragMimetype['size']);
+                            }
+
+                            // Add validation result
+                            if($dragValidation !== true)
+                            {
+                                if(!is_array($dragsValidation)) {
+                                    $dragsValidation = array();
+                                }
+                                $dragsValidation[$index] = $dragValidation;
+                            }
+
+                            // Upload Drag-item file
+                            if($dragValidation === true)
+                            {
+                                $drag['file']['media_id'] = $this->Media->createQuestMedia(
+                                    $this->Auth->getUserId(),
+                                    $seminary['id'],
+                                    sprintf('quest-dnd-%s-%s', substr($quest['url'], 0, 25), substr($drag['file']['name'], 0, 25)),
+                                    '',
+                                    $drag['file']['mimetype'],
+                                    $drag['file']['tmp_name']
+                                );
+                            }
+                        }
+
+                        // Add to array
+                        if(array_key_exists('id', $drag)) {
+                            $dragsUpdate[$drag['id']] = $drag;
+                        }
+                        else {
+                            $dragsNew[] = $drag;
+                        }
+                    }
+
+                    // Update Drag-items
+                    foreach($drags as $drag)
+                    {
+                        if(array_key_exists($drag['id'], $dragsUpdate))
+                        {
+                            $drag = $dragsUpdate[$drag['id']];
+                            // Edit Drag-items
+                            if(array_key_exists('file', $drag) && array_key_exists('media_id', $drag['file'])) {
+                                $this->Dragndrop->editDrag($drag['id'], $drag['file']['media_id']);
+                            }
+                            // Set correct Drop-items for Drag-item
+                            $this->Dragndrop->setDropsForDrag(
+                                $this->Auth->getUserId(),
+                                $drag['id'],
+                                array_key_exists('drops', $drag) ? array_keys($drag['drops']) : array()
+                            );
+                        }
+                        else {
+                            $this->Dragndrop->deleteDrag($drag['id']);
+                        }
+                    }
+                    // Add new Drag-items
+                    foreach($dragsNew as $drag)
+                    {
+                        if(array_key_exists('file', $drag) && array_key_exists('media_id', $drag['file']))
+                        {
+                            // Create Drag-item
+                            $dragId = $this->Dragndrop->addDrag($dndField['quest_id'], $drag['file']['media_id']);
+
+                            // Set Drop-items for Drag-item
+                            $this->Dragndrop->setDropsForDrag(
+                                $this->Auth->getUserId(),
+                                $dragId,
+                                array_key_exists('drops', $drag) ? array_keys($drag['drops']) : array()
+                            );
+                        }
+                    }
+
+                    // Reload Drag-items
+                    $drags = $this->Dragndrop->getDrags($dndField['quest_id']);
+                    foreach($drags as &$drag)
+                    {
+                        $drag['media'] = $this->Media->getSeminaryMediaById($drag['questmedia_id']);
+                        $drag['drops'] = array_map(function($d) { return $d['id']; }, $this->Dragndrop->getDropsForDrag($drag['id']));
+                    }
+                }
+
+                // Go to next/previous step
+                if(!is_null($this->request->getPostParam('prev'))) {
+                    $step--;
+                }
+                else {
+                    $step++;
+                }
+
+                // Redirect after last step
+                if($step > $steps)
+                {
+                    if($validation === true && $dragsValidation === true) {
+                        $this->redirect($this->linker->link(array('quest', $seminary['url'], $questgroup['url'], $quest['url']), 1));
+                    }
+                    else {
+                        $step--;
+                    }
+                }
+            }
+
+
+            // Pass data to view
+            $this->set('seminary', $seminary);
+            $this->set('zone', $dndField);
+            $this->set('drops', $drops);
+            $this->set('drags', $drags);
+            $this->set('mimetypes', $mimetypes);
+            $this->set('step', $step);
+            $this->set('validation', $validation);
+            $this->set('dragsValidation', $dragsValidation);
+        }
+
+    }
 
 ?>

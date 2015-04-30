@@ -128,6 +128,33 @@
 
 
 
+        /**
+         * Create a new Drag&Drop field for a Quest.
+         * 
+         * @param   int $userId         ID of creating user
+         * @param   int $questId        ID of Quest to create Drag&Drop field for
+         * @param   int $questmediaId   ID of Questmedia to use for the field
+         */
+        public function createDragndrop($userId, $questId, $questmediaId)
+        {
+            // Get image measurements
+            $infos = $this->Media->getSeminarymediaInfos($questmediaId);
+
+            // Create field
+            $this->db->query(
+                'INSERT INTO questtypes_dragndrop '.
+                '(quest_id, created_user_id, questmedia_id, width, height) '.
+                'VALUES '.
+                '(?, ?, ?, ?, ?) '.
+                'ON DUPLICATE KEY UPDATE '.
+                'questmedia_id = ?, width = ?, height = ?',
+                'iiiiiiii',
+                $questId, $userId, $questmediaId, $infos['width'], $infos['height'],
+                $questmediaId, $infos['width'], $infos['height']
+            );
+        }
+
+
 		/**
 		 * Get Drag&Drop-field.
 		 * 
@@ -161,13 +188,151 @@
 		public function getDrops($dragndropId)
 		{
 			return $this->db->query(
-				'SELECT id, top, `left`, width, height '. //, questtypes_dragndrop_drag_id '.
+				'SELECT id, top, `left`, width, height '.
 				'FROM questtypes_dragndrop_drops '.
 				'WHERE questtypes_dragndrop_id = ?',
 				'i',
 				$dragndropId
 			);
 		}
+
+
+        /**
+         * Get Drop-items for a Drag-item
+         * 
+         * @param   int     $dragId ID of Drag-item to get Drop-items for
+         * @return  array           List of Drop-items
+         */
+        public function getDropsForDrag($dragId)
+        {
+            return $this->db->query(
+                'SELECT drops.id, top, `left`, width, height '.
+                'FROM questtypes_dragndrop_drops_drags AS drops_drags '.
+                'INNER JOIN questtypes_dragndrop_drops AS drops ON drops.id = drops_drags.questtypes_dragndrop_drop_id '.
+                'WHERE drops_drags.questtypes_dragndrop_drag_id = ?',
+                'i',
+                $dragId
+            );
+        }
+
+
+        /**
+         * Set correct Drop-items for a Drag-item.
+         * 
+         * @param   int     $userId     ID of creating user
+         * @param   int     $dragId     ID of Drag-item to set Drop-items for
+         * @param   array   $dropIds    List of Drop-items to set for Drag-item
+         */
+        public function setDropsForDrag($userId, $dragId, $dropIds)
+        {
+            // Set new Drop-items
+            if(!empty($dropIds))
+            {
+                $this->db->query(
+                    sprintf(
+                        'INSERT INTO questtypes_dragndrop_drops_drags '.
+                        '(questtypes_dragndrop_drop_id, questtypes_dragndrop_drag_id, created_user_id) '.
+                        'SELECT questtypes_dragndrop_drops.id, ?, ? '.
+                        'FROM questtypes_dragndrop_drops '.
+                        'WHERE questtypes_dragndrop_drops.questtypes_dragndrop_id = ('.
+                            'SELECT questtypes_dragndrop_drags.questtypes_dragndrop_id '.
+                            'FROM questtypes_dragndrop_drags '.
+                            'WHERE questtypes_dragndrop_drags.id = ?'.
+                        ') AND questtypes_dragndrop_drops.id IN (%s) '.
+                        'ON DUPLICATE KEY UPDATE '.
+                        'questtypes_dragndrop_drops_drags.created = questtypes_dragndrop_drops_drags.created',
+                        implode(',', array_map(function($id) { return intval($id); }, $dropIds))
+                    ),
+                    'iii',
+                    $dragId, $userId,
+                    $dragId
+                );
+
+                // Remove old Drop-items
+                $this->db->query(
+                    sprintf(
+                        'DELETE FROM questtypes_dragndrop_drops_drags '.
+                        'WHERE questtypes_dragndrop_drag_id = ? AND questtypes_dragndrop_drop_id NOT IN (%s)',
+                        implode(',', array_map(function($id) { return intval($id); }, $dropIds))
+                    ),
+                    'i',
+                    $dragId
+                );
+            }
+            else
+            {
+                // Remove all Drop-items
+                $this->db->query(
+                    'DELETE FROM questtypes_dragndrop_drops_drags '.
+                    'WHERE questtypes_dragndrop_drag_id = ?',
+                    'i',
+                    $dragId
+                );
+            }
+        }
+
+
+        /**
+         * Create a new Drop-item for a Drag&Drop-field.
+         * 
+         * @param   int $dragndropId    ID of Drag&Drop-field to create Drop-item for
+         * @param   int $width          Width of Drop-item
+         * @param   int $height         Height of Drop-item
+         * @param   int $x              X-coordinate of Drop-item
+         * @param   int $y              Y-coordinate of Drop-item
+         * @return  int                 ID of newly created Drop-item
+         */
+        public function addDrop($dragndropId, $width, $height, $x, $y)
+        {
+            $this->db->query(
+                'INSERT INTO questtypes_dragndrop_drops '.
+                '(questtypes_dragndrop_id, top, `left`, width, height) '.
+                'VALUES '.
+                '(?, ?, ?, ?, ?)',
+                'iiiii',
+                $dragndropId, $y, $x, $width, $height
+            );
+
+            return $this->db->getInsertId();
+        }
+
+
+        /**
+         * Edit Drop-item.
+         * 
+         * @param   int $dropId ID of Drop-item to edit
+         * @param   int $width  New width of Drop-item
+         * @param   int $height New height of Drop-item
+         * @param   int $x      New X-coordinate of Drop-item
+         * @param   int $y      New Y-coordinate of Drop-item
+         */
+        public function editDrop($dropId, $width, $height, $x, $y)
+        {
+            $this->db->query(
+                'UPDATE questtypes_dragndrop_drops '.
+                'SET top = ?, `left` = ?, width = ?, height = ? '.
+                'WHERE id = ?',
+                'iiiii',
+                $y, $x, $width, $height,
+                $dropId
+            );
+        }
+
+
+        /**
+         * Delete a Drop-item.
+         * 
+         * @param   int $dropId ID of Drop-item to delete
+         */
+        public function deleteDrop($dropId)
+        {
+            $this->db->query(
+                'DELETE FROM questtypes_dragndrop_drops '.
+                'WHERE id = ?',
+                'i',
+                $dropId
+            );
+        }
 		
 		
 		/**
@@ -195,6 +360,63 @@
 				$dragndropId
 			);
 		}
+
+
+        /**
+         * Create a new Drag-item.
+         * 
+         * @param   int $dragndropId    ID of Drag&Drop-field to add Drag-item for
+         * @param   int $questmediaId   ID of Questmedia to use for this Drag-item
+         * @return  int                 ID of newly created Drag-item
+         */
+        public function addDrag($dragndropId, $questmediaId)
+        {
+            $this->db->query(
+                'INSERT INTO questtypes_dragndrop_drags '.
+                '(questtypes_dragndrop_id, questmedia_id) '.
+                'VALUES '.
+                '(?, ?) ',
+                'ii',
+                $dragndropId, $questmediaId
+            );
+
+            return $this->db->getInsertId();
+        }
+
+
+        /**
+         * Edit Drag-item.
+         * 
+         * @param   int $dragId         ID of Drag-item to edit
+         * @param   int $questmediaId   ID of new Questmedia to use for this Drag-item
+         */
+        public function editDrag($dragId, $questmediaId)
+        {
+            $this->db->query(
+                'UPDATE questtypes_dragndrop_drags '.
+                'SET questmedia_id = ? '.
+                'WHERE id = ?',
+                'ii',
+                $questmediaId,
+                $dragId
+            );
+        }
+
+
+        /**
+         * Delete a Drag-item.
+         * 
+         * @param   int $dragId         ID of Drag-item to delete
+         */
+        public function deleteDrag($dragId)
+        {
+            $this->db->query(
+                'DELETE FROM questtypes_dragndrop_drags '.
+                'WHERE id = ?',
+                'i',
+                $dragId
+            );
+        }
 		
 		
 		/**

@@ -135,6 +135,16 @@
                     'mimetype'  => 'image/jpeg',
                     'size'      => 1048576
                 )
+            ),
+            'questtypes' => array(
+                array(
+                    'mimetype'  => 'image/jpeg',
+                    'size'      => 524288
+                ),
+                array(
+                    'mimetype'  => 'image/png',
+                    'size'      =>  1048576
+                )
             )
         );
 
