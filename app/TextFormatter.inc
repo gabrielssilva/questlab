@@ -120,7 +120,7 @@
             }
             try {
                 $dom = new \DOMDocument();
-                $dom->loadHTML($string);
+                $dom->loadHTML('<?xml encoding="UTF-8">'.$string);
                 foreach($dom->getElementsByTagName('a') as $link) {
                     $link->setAttribute('target', '_blank');
                 }
