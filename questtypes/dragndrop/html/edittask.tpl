@@ -146,7 +146,6 @@
     <input type="hidden" name="step" value="<?=$step?>" />
 </form>
 
-<script src="/js/jquery-ui.min.js"></script>
 <script>
     var dropIndex = <?=count($drops)?>;
     var dragIndex = <?=count($drags)?>;
