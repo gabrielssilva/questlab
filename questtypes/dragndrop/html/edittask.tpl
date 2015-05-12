@@ -28,7 +28,7 @@
 <form method="post" enctype="multipart/form-data">
     <?php if($step == 0) : ?>
     <fieldset>
-        <legend><?=sprintf(_('Step %d'), 1)?> <?=_('Field')?>:</legend>
+        <legend><?=sprintf(_('Step %d'), 1)?>: <?=_('Field')?>:</legend>
         <?php if(!is_null($zone)) : ?>
         <div id="dropZone" style="width:<?=$zone['width']?>px; height:<?=$zone['height']?>px; background-image:url('<?=$linker->link(array('media','seminary',$seminary['url'],$zone['media']['url']))?>')">
         </div>
@@ -45,7 +45,7 @@
     <input type="submit" name="next" value="<?=_('next step')?>" />
     <?php elseif($step == 1) : ?>
     <fieldset>
-        <legend><?=sprintf(_('Step %d:'), 2)?> <?=_('Drop-items')?></legend>
+        <legend><?=sprintf(_('Step %d'), 2)?>: <?=_('Drop-items')?></legend>
         <div id="dropZone" class="dev" style="position:relative; width:<?=$zone['width']?>px; height:<?=$zone['height']?>px; background-image:url('<?=$linker->link(array('media','seminary',$seminary['url'],$zone['media']['url']))?>')">
             <?php foreach($drops as $index => &$drop) : ?>
             <div id="drop<?=$index?>" ondragenter="onDragEnter(event)" ondragover="onDragOver(event)" ondragleave="onDragLeave(event)" ondrop="onDrop(event)" style="position:absolute; width:<?=$drop['width']?>px; height:<?=$drop['height']?>px; top:<?=$drop['top']?>px; left:<?=$drop['left']?>px;">
@@ -80,7 +80,7 @@
     <input type="submit" name="next" value="<?=_('next step')?>" />
     <?php elseif($step == 2) : ?>
     <fieldset>
-        <legend><?=sprintf(_('Step %d:'), 3)?> <?=_('Drag-items')?></legend>
+        <legend><?=sprintf(_('Step %d'), 3)?>: <?=_('Drag-items')?></legend>
         <div id="dropZone" class="dev" style="position:relative; width:<?=$zone['width']?>px; height:<?=$zone['height']?>px; background-image:url('<?=$linker->link(array('media','seminary',$seminary['url'],$zone['media']['url']))?>')">
             <?php foreach($drops as $index => &$drop) : ?>
             <div id="drop<?=$index?>" ondragenter="onDragEnter(event)" ondragover="onDragOver(event)" ondragleave="onDragLeave(event)" ondrop="onDrop(event)" style="position:absolute; width:<?=$drop['width']?>px; height:<?=$drop['height']?>px; top:<?=$drop['top']?>px; left:<?=$drop['left']?>px;">
