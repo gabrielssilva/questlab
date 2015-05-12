@@ -1,37 +1,37 @@
 <?php
 
 
-	/**
-	 * The Legend of Z
-	 *
-	 * @author	Oliver Hanraths <oliver.hanraths@uni-duesseldorf.de>
-	 * @copyright	2014 Heinrich-Heine-Universität Düsseldorf
-	 * @license	http://www.gnu.org/licenses/gpl.html
-	 * @link	https://bitbucket.org/coderkun/the-legend-of-z
-	 */
-	
-	namespace hhu\z\lib
-	{
-		
-		
-		/**
-		 * Class to ensure that Compatibility library below is loaded.
-		 * 
-		 * @author	Oliver Hanraths <oliver.hanraths@uni-duesseldorf.de>
-		 */
-		class Password
-		{
-			
-			/**
-			 * Call this function to ensure this file is loaded.
-			 */
-			public static function load()
-			{
-			}
-			
-		}
-			
-	}
+    /**
+     * The Legend of Z
+     *
+     * @author	Oliver Hanraths <oliver.hanraths@uni-duesseldorf.de>
+     * @copyright	2014 Heinrich-Heine-Universität Düsseldorf
+     * @license	http://www.gnu.org/licenses/gpl.html
+     * @link	https://bitbucket.org/coderkun/the-legend-of-z
+     */
+
+    namespace hhu\z\lib
+    {
+
+
+        /**
+         * Class to ensure that Compatibility library below is loaded.
+         * 
+         * @author	Oliver Hanraths <oliver.hanraths@uni-duesseldorf.de>
+         */
+        class Password
+        {
+
+            /**
+             * Call this function to ensure this file is loaded.
+             */
+            public static function load()
+            {
+            }
+
+        }
+
+    }
 
 
 

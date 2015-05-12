@@ -1,58 +1,58 @@
 <?php
 
-	/**
-	 * The Legend of Z
-	 *
-	 * @author	Oliver Hanraths <oliver.hanraths@uni-duesseldorf.de>
-	 * @copyright	2014 Heinrich-Heine-Universität Düsseldorf
-	 * @license	http://www.gnu.org/licenses/gpl.html
-	 * @link	https://bitbucket.org/coderkun/the-legend-of-z
-	 */
-	
-	namespace hhu\z\agents\toplevel;
-	
-	
-	/**
-	 * Agent to display a HTML-page.
-	 * 
-	 * @author	Oliver Hanraths <oliver.hanraths@uni-duesseldorf.de>
-	 */
-	class HtmlAgent extends \hhu\z\agents\ToplevelAgent
-	{
-		
-		
-		
-		
-		/**
-		 * Construct a new HtmlAgent.
-		 * 
-		 * @param	\nre\core\Request	$request	Current request
-		 * @param	\nre\core\Response	$response	Current response
-		 * @param	\nre\core\Logger	$log		Logger instance
-		 */
-		protected function __construct(\nre\core\Request $request, \nre\core\Response $response, \nre\core\Logger $log=null)
-		{
-			parent::__construct($request, $response, $log);
-			
-			
-			$this->setLanguage($request);
-		}
-		
-		
-		/**
-		 * Action: index.
-		 * 
-		 * @param	\nre\core\Request	$request	Current request
-		 * @param	\nre\core\Response	$response	Current response
-		 */
-		public function index(\nre\core\Request $request, \nre\core\Response $response)
-		{
-			// Add menu
-			$this->addSubAgent('Menu');
-			
-			// Add Seminary sidebar
-			$this->addSubAgent('Seminarybar');
-		}
+    /**
+     * The Legend of Z
+     *
+     * @author      Oliver Hanraths <oliver.hanraths@uni-duesseldorf.de>
+     * @copyright   2014 Heinrich-Heine-Universität Düsseldorf
+     * @license     http://www.gnu.org/licenses/gpl.html
+     * @link        https://bitbucket.org/coderkun/the-legend-of-z
+     */
+
+    namespace hhu\z\agents\toplevel;
+
+
+    /**
+     * Agent to display a HTML-page.
+     * 
+     * @author  Oliver Hanraths <oliver.hanraths@uni-duesseldorf.de>
+     */
+    class HtmlAgent extends \hhu\z\agents\ToplevelAgent
+    {
+
+
+
+
+        /**
+         * Construct a new HtmlAgent.
+         * 
+         * @param   \nre\core\Request   $request    Current request
+         * @param   \nre\core\Response  $response   Current response
+         * @param   \nre\core\Logger    $log        Logger instance
+         */
+        protected function __construct(\nre\core\Request $request, \nre\core\Response $response, \nre\core\Logger $log=null)
+        {
+            parent::__construct($request, $response, $log);
+
+
+            $this->setLanguage($request);
+        }
+
+
+        /**
+         * Action: index.
+         * 
+         * @param   \nre\core\Request   $request    Current request
+         * @param   \nre\core\Response  $response   Current response
+         */
+        public function index(\nre\core\Request $request, \nre\core\Response $response)
+        {
+            // Add menu
+            $this->addSubAgent('Menu');
+
+            // Add Seminary sidebar
+            $this->addSubAgent('Seminarybar');
+        }
 
 
 

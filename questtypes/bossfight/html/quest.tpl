@@ -32,23 +32,23 @@
 <?php if(!is_null($stage)) : ?>
 <p><?=\hhu\z\Utils::t($stage['text'])?></p>
 <form method="post" action="<?=$linker->link(null,0,false,null,true,'task')?>">
-	<input type="hidden" name="stage" value="<?=$stage['id']?>" />
-	<ul class="bossfight cf">
-		<?php foreach($childStages as &$childStage) : ?>
-		<li class="option">
-			<p><i>
-				<?php if(array_key_exists('answer', $childStage) && $childStage['answer']) : ?>→<?php endif ?>
-				<?=\hhu\z\Utils::t($childStage['question'])?>
-			</i></p>
-			<p><input type="submit" name="submit_stages[<?=$childStage['id']?>]" value="<?=_('Choose')?>" /></p>
-		</li>
-		<?php endforeach?>
-		<?php if($lives['character'] == 0 || $lives['boss'] == 0) : ?>
-		<li>
-			<input type="hidden" name="answers" value="" />
-			<input type="submit" name="submit" value="<?=_('solve')?>" />
-		</li>
-		<?php endif ?>
-	</ul>
+    <input type="hidden" name="stage" value="<?=$stage['id']?>" />
+    <ul class="bossfight cf">
+        <?php foreach($childStages as &$childStage) : ?>
+        <li class="option">
+            <p><i>
+                <?php if(array_key_exists('answer', $childStage) && $childStage['answer']) : ?>→<?php endif ?>
+                <?=\hhu\z\Utils::t($childStage['question'])?>
+            </i></p>
+            <p><input type="submit" name="submit_stages[<?=$childStage['id']?>]" value="<?=_('Choose')?>" /></p>
+        </li>
+        <?php endforeach?>
+        <?php if($lives['character'] == 0 || $lives['boss'] == 0) : ?>
+        <li>
+            <input type="hidden" name="answers" value="" />
+            <input type="submit" name="submit" value="<?=_('solve')?>" />
+        </li>
+        <?php endif ?>
+    </ul>
 </form>
 <?php endif ?>

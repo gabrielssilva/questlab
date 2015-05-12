@@ -1,314 +1,314 @@
 <?php
 
-	/**
-	 * The Legend of Z
-	 *
-	 * @author	Oliver Hanraths <oliver.hanraths@uni-duesseldorf.de>
-	 * @copyright	2014 Heinrich-Heine-Universität Düsseldorf
-	 * @license	http://www.gnu.org/licenses/gpl.html
-	 * @link	https://bitbucket.org/coderkun/the-legend-of-z
-	 */
-	
-	namespace hhu\z\models;
-	
-	
-	/**
-	 * Model of the SeminariesAgent to list registered seminaries.
-	 * 
-	 * @author	Oliver Hanraths <oliver.hanraths@uni-duesseldorf.de>
-	 */
-	class SeminariesModel extends \hhu\z\Model
-	{
-		/**
-		 * Required models
-		 * 
-		 * @var array
-		 */
-		public $models = array('questgroupshierarchy', 'questgroups', 'quests', 'questtopics', 'media', 'charactertypes', 'xplevels', 'avatars', 'achievements', 'charactergroups', 'charactergroupsquests', 'seminarycharacterfields');
-		
-		
-		
-		
-		/**
-		 * Construct a new SeminariesModel.
-		 */
-		public function __construct()
-		{
-			parent::__construct();
-		}
-		
-		
-		
-		
-		/**
-		 * Get registered seminaries.
-		 * 
-		 * @return	array	Seminaries
-		 */
-		public function getSeminaries()
-		{			
-			// Get seminaries
-			return $this->db->query(
-				'SELECT id, created, created_user_id, title, url, course, description, seminarymedia_id, charactergroups_seminarymedia_id, achievements_seminarymedia_id, library_seminarymedia_id, map_seminarymedia_id '.
-				'FROM seminaries '.
-				'ORDER BY created DESC'
-			);
-		}
-		
-		
-		/**
-		 * Get a seminary and its data by its ID.
-		 * 
-		 * @throws	\nre\exceptions\IdNotFoundException
-		 * @param	string	$seminaryId	ID of a seminary
-		 * @return	array			Seminary
-		 */
-		public function getSeminaryById($seminaryId)
-		{
-			$seminary = $this->db->query(
-				'SELECT id, created, created_user_id, title, url, course, description, seminarymedia_id, charactergroups_seminarymedia_id, achievements_seminarymedia_id, library_seminarymedia_id, map_seminarymedia_id '.
-				'FROM seminaries '.
-				'WHERE id = ?',
-				'i',
-				$seminaryId
-			);
-			if(empty($seminary)) {
-				throw new \nre\exceptions\IdNotFoundException($seminaryId);
-			}
-			
-			
-			return $seminary[0];
-		}
-		
-		
-		/**
-		 * Get a seminary and its data by its URL-title.
-		 * 
-		 * @throws	\nre\exceptions\IdNotFoundException
-		 * @param	string	$seminaryUrl	URL-Title of a seminary
-		 * @return	array			Seminary
-		 */
-		public function getSeminaryByUrl($seminaryUrl)
-		{
-			$seminary = $this->db->query(
-				'SELECT id, created, created_user_id, title, url, course, description, seminarymedia_id, charactergroups_seminarymedia_id, achievements_seminarymedia_id, library_seminarymedia_id, map_seminarymedia_id '.
-				'FROM seminaries '.
-				'WHERE url = ?',
-				's',
-				$seminaryUrl
-			);
-			if(empty($seminary)) {
-				throw new \nre\exceptions\IdNotFoundException($seminaryUrl);
-			}
-			
-			
-			return $seminary[0];
-		}
-		
-		
-		/**
-		 * Calculate sum of XPs for a Seminary.
-		 * 
-		 * @param	int	$seminaryId	ID of Seminary
-		 * @return	int			Total sum of XPs
-		 */
-		public function getTotalXPs($seminaryId)
-		{
-			$xps = 0;
-			
-			// Questgroups
-			$questgroupshierarchy = $this->Questgroupshierarchy->getHierarchyOfSeminary($seminaryId);
-			foreach($questgroupshierarchy as &$hierarchy)
-			{
-				// Get Questgroups
-				$questgroups = $this->Questgroups->getQuestgroupsForHierarchy($hierarchy['id']);
-				foreach($questgroups as &$questgroup) {
-					$xps += $questgroup['achievable_xps'];
-				}
-			}
-			
-			
-			return $xps;
-		}
-		
-		
-		/**
-		 * Check if a Seminary title already exists.
-		 * 
-		 * @param	string	$title		Seminary title to check
-		 * @param	int	$seminaryId	Do not check this ID (for editing)
-		 * @return	boolean			Whether Seminary title exists or not
-		 */
-		public function seminaryTitleExists($title, $seminaryId=null)
-		{
-			$data = $this->db->query(
-				'SELECT id '.
-				'FROM seminaries '.
-				'WHERE title = ? OR url = ?',
-				'ss',
-				$title,
-				\nre\core\Linker::createLinkParam($title)
-			);
-			
-			return (!empty($data) && (is_null($seminaryId) || $seminaryId != $data[0]['id']));
-		}
-		
-		
-		/**
-		 * Create a new Seminary.
-		 * 
-		 * @param	int	$userId		ID of creating user
-		 * @param	string	$title		Title of Seminary to create
-		 * @param	string	$course		Course of Seminary
-		 * @param	string	$description	Description of new Seminary
-		 * @return	int			ID of the newly created Seminary
-		 */
-		public function createSeminary($userId, $title, $course, $description)
-		{
-			$this->db->query(
-				'INSERT INTO seminaries '.
-				'(created_user_id, title, url, course, description) '.
-				'VALUES '.
-				'(?, ?, ?, ?, ?)',
-				'issss',
-				$userId,
-				$title,
-				\nre\core\Linker::createLinkParam($title),
-				$course,
-				$description
-			);
-			
-			
-			return $this->db->getInsertId();
-		}
-		
-		
-		/**
-		 * Set the moodpic for a Seminary.
-		 * 
-		 * @param	int	$seminaryId	ID of Seminary to set moodpic for
-		 * @param	int	$mediaId	ID of moodpic media
-		 */
-		public function setMoodpicForSeminary($seminaryId, $mediaId)
-		{
-			$this->db->query(
-				'UPDATE seminaries '.
-				'SET seminarymedia_id = ? '.
-				'WHERE id = ?',
-				'ii',
-				$mediaId,
-				$seminaryId
-			);
-		}
+    /**
+     * The Legend of Z
+     *
+     * @author      Oliver Hanraths <oliver.hanraths@uni-duesseldorf.de>
+     * @copyright   2014 Heinrich-Heine-Universität Düsseldorf
+     * @license     http://www.gnu.org/licenses/gpl.html
+     * @link        https://bitbucket.org/coderkun/the-legend-of-z
+     */
+
+    namespace hhu\z\models;
+
+
+    /**
+     * Model of the SeminariesAgent to list registered seminaries.
+     *
+     * @author  Oliver Hanraths <oliver.hanraths@uni-duesseldorf.de>
+     */
+    class SeminariesModel extends \hhu\z\Model
+    {
+        /**
+         * Required models
+         *
+         * @var array
+         */
+        public $models = array('questgroupshierarchy', 'questgroups', 'quests', 'questtopics', 'media', 'charactertypes', 'xplevels', 'avatars', 'achievements', 'charactergroups', 'charactergroupsquests', 'seminarycharacterfields');
+
+
+
+
+        /**
+         * Construct a new SeminariesModel.
+         */
+        public function __construct()
+        {
+            parent::__construct();
+        }
+
+
+
+
+        /**
+         * Get registered seminaries.
+         *
+         * @return  array   Seminaries
+         */
+        public function getSeminaries()
+        {
+            // Get seminaries
+            return $this->db->query(
+                'SELECT id, created, created_user_id, title, url, course, description, seminarymedia_id, charactergroups_seminarymedia_id, achievements_seminarymedia_id, library_seminarymedia_id, map_seminarymedia_id '.
+                'FROM seminaries '.
+                'ORDER BY created DESC'
+            );
+        }
+
+
+        /**
+         * Get a seminary and its data by its ID.
+         *
+         * @throws  \nre\exceptions\IdNotFoundException
+         * @param   string  $seminaryId ID of a seminary
+         * @return  array           Seminary
+         */
+        public function getSeminaryById($seminaryId)
+        {
+            $seminary = $this->db->query(
+                'SELECT id, created, created_user_id, title, url, course, description, seminarymedia_id, charactergroups_seminarymedia_id, achievements_seminarymedia_id, library_seminarymedia_id, map_seminarymedia_id '.
+                'FROM seminaries '.
+                'WHERE id = ?',
+                'i',
+                $seminaryId
+            );
+            if(empty($seminary)) {
+                throw new \nre\exceptions\IdNotFoundException($seminaryId);
+            }
+
+
+            return $seminary[0];
+        }
+
+
+        /**
+         * Get a seminary and its data by its URL-title.
+         *
+         * @throws  \nre\exceptions\IdNotFoundException
+         * @param   string  $seminaryUrl    URL-Title of a seminary
+         * @return  array           Seminary
+         */
+        public function getSeminaryByUrl($seminaryUrl)
+        {
+            $seminary = $this->db->query(
+                'SELECT id, created, created_user_id, title, url, course, description, seminarymedia_id, charactergroups_seminarymedia_id, achievements_seminarymedia_id, library_seminarymedia_id, map_seminarymedia_id '.
+                'FROM seminaries '.
+                'WHERE url = ?',
+                's',
+                $seminaryUrl
+            );
+            if(empty($seminary)) {
+                throw new \nre\exceptions\IdNotFoundException($seminaryUrl);
+            }
+
+
+            return $seminary[0];
+        }
+
+
+        /**
+         * Calculate sum of XPs for a Seminary.
+         *
+         * @param   int $seminaryId ID of Seminary
+         * @return  int         Total sum of XPs
+         */
+        public function getTotalXPs($seminaryId)
+        {
+            $xps = 0;
+
+            // Questgroups
+            $questgroupshierarchy = $this->Questgroupshierarchy->getHierarchyOfSeminary($seminaryId);
+            foreach($questgroupshierarchy as &$hierarchy)
+            {
+                // Get Questgroups
+                $questgroups = $this->Questgroups->getQuestgroupsForHierarchy($hierarchy['id']);
+                foreach($questgroups as &$questgroup) {
+                    $xps += $questgroup['achievable_xps'];
+                }
+            }
+
+
+            return $xps;
+        }
+
+
+        /**
+         * Check if a Seminary title already exists.
+         *
+         * @param   string  $title      Seminary title to check
+         * @param   int $seminaryId Do not check this ID (for editing)
+         * @return  boolean         Whether Seminary title exists or not
+         */
+        public function seminaryTitleExists($title, $seminaryId=null)
+        {
+            $data = $this->db->query(
+                'SELECT id '.
+                'FROM seminaries '.
+                'WHERE title = ? OR url = ?',
+                'ss',
+                $title,
+                \nre\core\Linker::createLinkParam($title)
+            );
+
+            return (!empty($data) && (is_null($seminaryId) || $seminaryId != $data[0]['id']));
+        }
+
+
+        /**
+         * Create a new Seminary.
+         *
+         * @param   int $userId     ID of creating user
+         * @param   string  $title      Title of Seminary to create
+         * @param   string  $course     Course of Seminary
+         * @param   string  $description    Description of new Seminary
+         * @return  int         ID of the newly created Seminary
+         */
+        public function createSeminary($userId, $title, $course, $description)
+        {
+            $this->db->query(
+                'INSERT INTO seminaries '.
+                '(created_user_id, title, url, course, description) '.
+                'VALUES '.
+                '(?, ?, ?, ?, ?)',
+                'issss',
+                $userId,
+                $title,
+                \nre\core\Linker::createLinkParam($title),
+                $course,
+                $description
+            );
+
+
+            return $this->db->getInsertId();
+        }
+
+
+        /**
+         * Set the moodpic for a Seminary.
+         *
+         * @param   int $seminaryId ID of Seminary to set moodpic for
+         * @param   int $mediaId    ID of moodpic media
+         */
+        public function setMoodpicForSeminary($seminaryId, $mediaId)
+        {
+            $this->db->query(
+                'UPDATE seminaries '.
+                'SET seminarymedia_id = ? '.
+                'WHERE id = ?',
+                'ii',
+                $mediaId,
+                $seminaryId
+            );
+        }
 
 
         /**
          * Set the moodpic for the Character groups of a Seminary.
-         * 
+         *
          * @param   int $seminaryId         ID of Seminary to set moodpic for Character groups for
          * @param   int $seminaryMediaId    ID of Seminarymedia to set as moodpic
          */
         public function setMoodpicForCharactergroups($seminaryId, $seminaryMediaId)
         {
-			$this->db->query(
-				'UPDATE seminaries '.
-				'SET charactergroups_seminarymedia_id = ? '.
-				'WHERE id = ?',
-				'ii',
-				$seminaryMediaId,
-				$seminaryId
-			);
+            $this->db->query(
+                'UPDATE seminaries '.
+                'SET charactergroups_seminarymedia_id = ? '.
+                'WHERE id = ?',
+                'ii',
+                $seminaryMediaId,
+                $seminaryId
+            );
         }
 
 
         /**
          * Set the moodpic for the Achievements of a Seminary.
-         * 
+         *
          * @param   int $seminaryId         ID of Seminary to set moodpic for Achievements for
          * @param   int $seminaryMediaId    ID of Seminarymedia to set as moodpic
          */
         public function setMoodpicForAchievements($seminaryId, $seminaryMediaId)
         {
-			$this->db->query(
-				'UPDATE seminaries '.
-				'SET achievements_seminarymedia_id = ? '.
-				'WHERE id = ?',
-				'ii',
-				$seminaryMediaId,
-				$seminaryId
-			);
+            $this->db->query(
+                'UPDATE seminaries '.
+                'SET achievements_seminarymedia_id = ? '.
+                'WHERE id = ?',
+                'ii',
+                $seminaryMediaId,
+                $seminaryId
+            );
         }
 
 
         /**
          * Set the moodpic for the library of a Seminary.
-         * 
+         *
          * @param   int $seminaryId         ID of Seminary to set moodpic for Library for
          * @param   int $seminaryMediaId    ID of Seminarymedia to set as moodpic
          */
         public function setMoodpicForLibrary($seminaryId, $seminaryMediaId)
         {
-			$this->db->query(
-				'UPDATE seminaries '.
-				'SET library_seminarymedia_id = ? '.
-				'WHERE id = ?',
-				'ii',
-				$seminaryMediaId,
-				$seminaryId
-			);
+            $this->db->query(
+                'UPDATE seminaries '.
+                'SET library_seminarymedia_id = ? '.
+                'WHERE id = ?',
+                'ii',
+                $seminaryMediaId,
+                $seminaryId
+            );
         }
 
 
         /**
-		 * (Re-) Calculate the amount of achievable XPs for a Seminary.
-         * 
+         * (Re-) Calculate the amount of achievable XPs for a Seminary.
+         *
          * @param   int $seminaryId ID of Seminary to calculate XPs for
          */
         public function calculateXPsForSeminary($seminaryId)
         {
-			// Questgrouphierarchy and Questgroups
-			$questgroupshierarchy = $this->Questgroupshierarchy->getHierarchyOfSeminary($seminaryId);
-			foreach($questgroupshierarchy as &$hierarchy)
-			{
-				// Get Questgroups
-				$hierarchy['questgroups'] = $this->Questgroups->getQuestgroupsForHierarchy($hierarchy['id']);
-				foreach($hierarchy['questgroups'] as &$questgroup)
-				{
-					// Calculate achievable XPs
-					$this->Questgroups->calculateXPsForQuestgroup($questgroup['id']);
-				}
-			}
+            // Questgrouphierarchy and Questgroups
+            $questgroupshierarchy = $this->Questgroupshierarchy->getHierarchyOfSeminary($seminaryId);
+            foreach($questgroupshierarchy as &$hierarchy)
+            {
+                // Get Questgroups
+                $hierarchy['questgroups'] = $this->Questgroups->getQuestgroupsForHierarchy($hierarchy['id']);
+                foreach($hierarchy['questgroups'] as &$questgroup)
+                {
+                    // Calculate achievable XPs
+                    $this->Questgroups->calculateXPsForQuestgroup($questgroup['id']);
+                }
+            }
         }
-		
-		
-		/**
-		 * Edit a seminary.
-		 * 
-		 * @throws	\nre\exceptions\DatamodelException
-		 * @param	int	$seminaryId	ID of Seminary to edit
-		 * @param	string	$title		New title of Seminary
-		 * @param	string	$course		New course of Seminary
-		 * @param	string	$description	New description of Seminary
-		 */
-		public function editSeminary($seminaryId, $title, $course, $description)
-		{
-			$this->db->query(
-				'UPDATE seminaries '.
-				'SET title = ?, url = ?, course = ?, description = ? '.
-				'WHERE id = ?',
-				'ssssi',
-				$title,
-				\nre\core\Linker::createLinkParam($title),
-				$course,
-				$description,
-				$seminaryId
-			);
-		}
+
+
+        /**
+         * Edit a seminary.
+         *
+         * @throws  \nre\exceptions\DatamodelException
+         * @param   int $seminaryId ID of Seminary to edit
+         * @param   string  $title      New title of Seminary
+         * @param   string  $course     New course of Seminary
+         * @param   string  $description    New description of Seminary
+         */
+        public function editSeminary($seminaryId, $title, $course, $description)
+        {
+            $this->db->query(
+                'UPDATE seminaries '.
+                'SET title = ?, url = ?, course = ?, description = ? '.
+                'WHERE id = ?',
+                'ssssi',
+                $title,
+                \nre\core\Linker::createLinkParam($title),
+                $course,
+                $description,
+                $seminaryId
+            );
+        }
 
 
         /**
          * Copy a Seminary and its content.
-         * 
+         *
          * @param   int     $userId                     ID of copying user
          * @param   int     $sourceSeminaryId           ID of Seminary to copy
          * @param   string  $title                      Title of new Seminary
@@ -328,8 +328,8 @@
          * @param   boolean $copyCharactergroupsquests  Whether to copy Character groups Quests or not
          * @return                                      ID of newly created Seminary
          */
-		public function copySeminary($userId, $sourceSeminaryId, $title, $course, $description, $copySeminaryfields, $copyMedia, $copyQuestgroupshierarchy, $copyQuestgroups, $copyQuests, $copyQuesttopics, $copyCharactertypes, $copyXPlevels, $copyAvatars, $copyAchievements, $copyCharactergroupsgroups, $copyCharactergroupsquests)
-		{ 
+        public function copySeminary($userId, $sourceSeminaryId, $title, $course, $description, $copySeminaryfields, $copyMedia, $copyQuestgroupshierarchy, $copyQuestgroups, $copyQuests, $copyQuesttopics, $copyCharactertypes, $copyXPlevels, $copyAvatars, $copyAchievements, $copyCharactergroupsgroups, $copyCharactergroupsquests)
+        {
             // Get Seminary
             $seminary = $this->getSeminaryById($sourceSeminaryId);
 
@@ -426,31 +426,31 @@
                 // Recalculate XPs
                 $this->calculateXPsForSeminary($targetSeminaryId);
 
-				$this->db->commit();
-			}
+                $this->db->commit();
+            }
             catch(\Exception $e) {
-				$this->db->rollback();
-				$this->db->setAutocommit(true);
-				throw $e;
-			}
-			$this->db->setAutocommit(true);
+                $this->db->rollback();
+                $this->db->setAutocommit(true);
+                throw $e;
+            }
+            $this->db->setAutocommit(true);
 
 
             return $targetSeminaryId;
         }
-		
-		
-		/**
-		 * Delete a seminary.
-		 * TODO Delete media
-		 * 
-		 * @param	int	$seminaryId	ID of the seminary to delete
-		 */
-		public function deleteSeminary($seminaryId)
-		{
-			$this->db->query('DELETE FROM seminaries WHERE id = ?', 'i', $seminaryId);
-		}
 
-	}
+
+        /**
+         * Delete a seminary.
+         * TODO Delete media
+         *
+         * @param   int $seminaryId ID of the seminary to delete
+         */
+        public function deleteSeminary($seminaryId)
+        {
+            $this->db->query('DELETE FROM seminaries WHERE id = ?', 'i', $seminaryId);
+        }
+
+    }
 
 ?>

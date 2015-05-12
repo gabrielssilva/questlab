@@ -1,28 +1,28 @@
 <?php if($validation !== true && !empty($validation)) : ?>
 <ul class="validation">
-	<?php foreach($validation as $field => &$settings) : ?>
-	<li>
-		<ul>
-			<?php foreach($settings as $setting => $value) : ?>
-			<li>
-				<?php switch($field) {
-					case 'zone':
-						switch($setting) {
-							case 'error': printf(_('Error during file upload: %s'), $value);
-							break;
-							case 'mimetype': printf(_('File has wrong type “%s”'), $value);
-							break;
-							case 'size': echo _('File exceeds size maximum');
-							break;
-							default: echo _('File invalid');
-						}
-					break;
-				} ?>
-			</li>
-			<?php endforeach ?>
-		</ul>
-	</li>
-	<?php endforeach ?>
+    <?php foreach($validation as $field => &$settings) : ?>
+    <li>
+        <ul>
+            <?php foreach($settings as $setting => $value) : ?>
+            <li>
+                <?php switch($field) {
+                    case 'zone':
+                        switch($setting) {
+                            case 'error': printf(_('Error during file upload: %s'), $value);
+                            break;
+                            case 'mimetype': printf(_('File has wrong type “%s”'), $value);
+                            break;
+                            case 'size': echo _('File exceeds size maximum');
+                            break;
+                            default: echo _('File invalid');
+                        }
+                    break;
+                } ?>
+            </li>
+            <?php endforeach ?>
+        </ul>
+    </li>
+    <?php endforeach ?>
 </ul>
 <?php endif ?>
 <form method="post" enctype="multipart/form-data">

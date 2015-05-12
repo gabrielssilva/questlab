@@ -3,25 +3,25 @@
     /**
      * The Legend of Z
      *
-     * @author    Oliver Hanraths <oliver.hanraths@uni-duesseldorf.de>
-     * @copyright    2014 Heinrich-Heine-Universität Düsseldorf
-     * @license    http://www.gnu.org/licenses/gpl.html
-     * @link    https://bitbucket.org/coderkun/the-legend-of-z
+     * @author      Oliver Hanraths <oliver.hanraths@uni-duesseldorf.de>
+     * @copyright   2014 Heinrich-Heine-Universität Düsseldorf
+     * @license     http://www.gnu.org/licenses/gpl.html
+     * @link        https://bitbucket.org/coderkun/the-legend-of-z
      */
-    
+
     namespace hhu\z\controllers\components;
-    
-    
+
+
     /**
      * Component to handle data for Questtypes between different Quest states.
-     * 
-     * @author    Oliver Hanraths <oliver.hanraths@uni-duesseldorf.de>
+     *
+     * @author  Oliver Hanraths <oliver.hanraths@uni-duesseldorf.de>
      */
     class QuesttypedataComponent extends \nre\core\Component
     {
         /**
          * Session key
-         * 
+         *
          * @var string
          */
         const SESSION_KEY = 'questtypes';
@@ -45,7 +45,7 @@
 
         /**
          * Set data with a key-value pair.
-         * 
+         *
          * @param   int     $questId    ID of Quest to set data for
          * @param   mixed   $key        Key
          * @param   mixed   $value      Value
@@ -64,7 +64,7 @@
 
         /**
          * Get data by a key.
-         * 
+         *
          * @param   int     $questId    ID of Quest to set data for
          * @param   mixed   $key        Key
          * @return  mixed               Value
@@ -86,4 +86,4 @@
 
     }
 
-?> 
+?>
