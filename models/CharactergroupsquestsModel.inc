@@ -213,17 +213,19 @@
         /**
          * Check if a Character groups Quest title already exists.
          *
-         * @param   string  $name       Character groups Quest title to check
-         * @param   int $questId    Do not check this ID (for editing)
-         * @return  boolean         Whether Character groups Quest title exists or not
+         * @param   int     $groupsgroupId  ID of Character groups-group
+         * @param   string  $name           Character groups Quest title to check
+         * @param   int     $questId        Do not check this ID (for editing)
+         * @return  boolean                 Whether Character groups Quest title exists or not
          */
-        public function characterGroupsQuestTitleExists($title, $questId=null)
+        public function characterGroupsQuestTitleExists($groupsgroupId, $title, $questId=null)
         {
             $data = $this->db->query(
                 'SELECT id '.
                 'FROM charactergroupsquests '.
-                'WHERE title = ? OR url = ?',
-                'ss',
+                'WHERE charactergroupsgroup_id = ? AND (title = ? OR url = ?)',
+                'iss',
+                $groupsgroupId,
                 $title,
                 \nre\core\Linker::createLinkParam($title)
             );

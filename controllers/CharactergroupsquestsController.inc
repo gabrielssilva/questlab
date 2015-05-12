@@ -291,7 +291,7 @@
                 // Get params and validate them
                 $validation = $this->Validation->validateParams($this->request->getPostParams(), $fields);
                 $title = $this->request->getPostParam('title');
-                if($this->Charactergroupsquests->characterGroupsQuestTitleExists($title)) {
+                if($this->Charactergroupsquests->characterGroupsQuestTitleExists($groupsgroup['id'], $title)) {
                     $validation = $this->Validation->addValidationResult($validation, 'title', 'exist', true);
                 }
                 $xps = $this->request->getPostParam('xps');
@@ -453,7 +453,7 @@
                 // Get params and validate them
                 $validation = $this->Validation->validateParams($this->request->getPostParams(), $fields);
                 $title = $this->request->getPostParam('title');
-                if($this->Charactergroupsquests->characterGroupsQuestTitleExists($title, $quest['id'])) {
+                if($this->Charactergroupsquests->characterGroupsQuestTitleExists($groupsgroup['id'], $title, $quest['id'])) {
                     $validation = $this->Validation->addValidationResult($validation, 'title', 'exist', true);
                 }
                 $xps = $this->request->getPostParam('xps');

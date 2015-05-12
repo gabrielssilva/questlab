@@ -484,7 +484,7 @@
                 // Get params and validate them
                 $validation = $this->Validation->validateParams($this->request->getPostParams(), $fields);
                 $charactergroupname = $this->request->getPostParam('charactergroupname');
-                if($this->Charactergroups->characterGroupNameExists($charactergroupname)) {
+                if($this->Charactergroups->characterGroupNameExists($groupsgroup['id'], $charactergroupname)) {
                     $validation = $this->Validation->addValidationResult($validation, 'charactergroupname', 'exist', true);
                 }
                 $motto = $this->request->getPostParam('motto');
@@ -615,7 +615,7 @@
                 // Get params and validate them
                 $validation = $this->Validation->validateParams($this->request->getPostParams(), $fields);
                 $charactergroupname = (count(array_intersect(array('admin','moderator'), \hhu\z\controllers\SeminaryController::$character['characterroles'])) > 0) ? $this->request->getPostParam('charactergroupname') : $group['name'];
-                if($this->Charactergroups->characterGroupNameExists($charactergroupname, $group['id'])) {
+                if($this->Charactergroups->characterGroupNameExists($groupsgroup['id'], $charactergroupname, $group['id'])) {
                     $validation = $this->Validation->addValidationResult($validation, 'charactergroupname', 'exist', true);
                 }
                 $motto = $this->request->getPostParam('motto');
