@@ -53,7 +53,7 @@
          * Format a string.
          *
          * @param   string  $string String to format
-         * @return  string      Formatted string
+         * @return  string          Formatted string
          */
         public function t($string)
         {
@@ -62,56 +62,17 @@
             $textileParser = new \Netcarver\Textile\Parser();
             $string = $textileParser->textileThis($string);
 
-            // Important text
-            // TODO Deprecated
-            $string = str_replace('[strong]', '<strong>', $string);
-            $string = str_replace('[/strong]', '</strong>', $string);
+            // Add link targets
+            $string = $this->tLinks($string);
 
-            // Create tables
-            // TODO Deprecated
-            $string = preg_replace('/(\[table\])\s+/u', '$1', $string);
-            $string = preg_replace('/\s*(\[tr\])\s*/u', '$1', $string);
-            $string = preg_replace('%\s+(\[/table\])%u', '$1', $string);
-            $string = preg_replace('%\s*(\[/tr\])\s*%u', '$1', $string);
-            $string = str_replace('[table]', '</p><table>', $string);
-            $string = str_replace('[/table]', '</table><p>', $string);
-            $string = str_replace('[tr]', '<tr>', $string);
-            $string = str_replace('[/tr]', '</tr>', $string);
-            $string = str_replace('[th]', '<th>', $string);
-            $string = str_replace('[/th]', '</th>', $string);
-            $string = str_replace('[td]', '<td>', $string);
-            $string = str_replace('[/td]', '</td>', $string);
+            // Handle custom formatting
+            $string = $this->tCustom($string);
 
             // Handle Seminarymedia
-            $seminarymedia = array();
-            preg_match_all('/\[seminarymedia:(\d+)\]/iu', $string, $matches); //, PREG_SET_ORDER | PREG_OFFSET_CAPTURE);
-            $seminarymediaIds = array_unique($matches[1]);
-            foreach($seminarymediaIds as &$seminarymediaId)
-            {
-                $replacement = null;
-                if(!is_null(\hhu\z\controllers\SeminaryController::$seminary) && $this->loadMediaModel())
-                {
-                    try {
-                        $medium = self::$Media->getSeminaryMediaById($seminarymediaId);
-                        $replacement = sprintf(
-                            '<img src="%s" alt="%s" />',
-                            $this->linker->link(array('media','seminary', \hhu\z\controllers\SeminaryController::$seminary['url'],$medium['url'])),
-                            $medium['description']
-                        );
-                    }
-                    catch(\nre\exceptions\IdNotFoundException $e) {
-                    }
-                }
-
-                $seminarymedia[$seminarymediaId] = $replacement;
-            }
-            foreach($seminarymedia as $seminarymediaId => $replacement) {
-                $string = str_replace("[seminarymedia:$seminarymediaId]", $replacement, $string);
-            }
+            $string = $this->tSeminarymedia($string);
 
 
             // Return processed string
-            //return nl2br($string);
             return $string;
         }
 
@@ -144,6 +105,105 @@
             // Return whether Media-Model has been loaded or not
             return !is_null(self::$Media);
         }
+
+
+        /**
+         * Add “target” attribute to anchors (links).
+         * 
+         * @param   string  $string String to format
+         * @return  string          Formatted string
+         */
+        private function tLinks($string)
+        {
+            if(!class_exists('\DOMDocument')) {
+                return $string;
+            }
+            try {
+                $dom = new \DOMDocument();
+                $dom->loadHTML($string);
+                foreach($dom->getElementsByTagName('a') as $link) {
+                    $link->setAttribute('target', '_blank');
+                }
+                return $dom->saveHTML();
+            }
+            catch(\Exception $e) {
+                return $string;
+            }
+        }
+
+
+        /**
+         * Handle custom formatting syntax.
+         * 
+         * @Deprecated
+         * @param   string  $string String to format
+         * @return  string          Formatted string
+         */
+        private function tCustom($string)
+        {
+            // Important text
+            $string = str_replace('[strong]', '<strong>', $string);
+            $string = str_replace('[/strong]', '</strong>', $string);
+
+            // Create tables
+            $string = preg_replace('/(\[table\])\s+/u', '$1', $string);
+            $string = preg_replace('/\s*(\[tr\])\s*/u', '$1', $string);
+            $string = preg_replace('%\s+(\[/table\])%u', '$1', $string);
+            $string = preg_replace('%\s*(\[/tr\])\s*%u', '$1', $string);
+            $string = str_replace('[table]', '</p><table>', $string);
+            $string = str_replace('[/table]', '</table><p>', $string);
+            $string = str_replace('[tr]', '<tr>', $string);
+            $string = str_replace('[/tr]', '</tr>', $string);
+            $string = str_replace('[th]', '<th>', $string);
+            $string = str_replace('[/th]', '</th>', $string);
+            $string = str_replace('[td]', '<td>', $string);
+            $string = str_replace('[/td]', '</td>', $string);
+
+
+            // Return new string
+            return $string;
+        }
+
+
+        /**
+         * Handle including Seminarymedia.
+         * 
+         * @param   string  $string String to format
+         * @return  string          Formatted string
+         */
+        private function tSeminarymedia($string)
+        {
+            $seminarymedia = array();
+            preg_match_all('/\[seminarymedia:(\d+)\]/iu', $string, $matches); //, PREG_SET_ORDER | PREG_OFFSET_CAPTURE);
+            $seminarymediaIds = array_unique($matches[1]);
+            foreach($seminarymediaIds as &$seminarymediaId)
+            {
+                $replacement = null;
+                if(!is_null(\hhu\z\controllers\SeminaryController::$seminary) && $this->loadMediaModel())
+                {
+                    try {
+                        $medium = self::$Media->getSeminaryMediaById($seminarymediaId);
+                        $replacement = sprintf(
+                            '<img src="%s" alt="%s" />',
+                            $this->linker->link(array('media','seminary', \hhu\z\controllers\SeminaryController::$seminary['url'],$medium['url'])),
+                            $medium['description']
+                        );
+                    }
+                    catch(\nre\exceptions\IdNotFoundException $e) {
+                    }
+                }
+
+                $seminarymedia[$seminarymediaId] = $replacement;
+            }
+            foreach($seminarymedia as $seminarymediaId => $replacement) {
+                $string = str_replace("[seminarymedia:$seminarymediaId]", $replacement, $string);
+            }
+
+
+            // Return new string
+            return $string;
+        }
+
 
     }
 
