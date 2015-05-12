@@ -193,7 +193,7 @@
                 {
                     // Previous Quests
                     // One previous Quest has to be solved and no other
-                    // following Quest of ones has to be tried
+                    // following Quest of ones has to be entered
                     // except it is also an previous Quest of the current Quest
                     $solved = false;
                     $tried = false;
@@ -209,7 +209,7 @@
                             foreach($followingQuests as $followingQuest)
                             {
                                 // Check following Quest
-                                if($followingQuest['id'] != $quest['id'] && $this->Quests->hasCharacterTriedQuest($followingQuest['id'], $character['id']))
+                                if($followingQuest['id'] != $quest['id'] && $this->Quests->hasCharacterEnteredQuest($followingQuest['id'], $character['id']))
                                 {
                                     $followingFollowingQuests = $this->Quests->getNextQuests($followingQuest['id']);
                                     if(!in_array($quest['id'], array_map(function($q) { return $q['id']; }, $followingFollowingQuests)))
