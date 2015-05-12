@@ -57,14 +57,18 @@
          */
         public function t($string)
         {
-            // Remove chars
-            $string = htmlspecialchars($string, ENT_NOQUOTES);
+            // Use Textile
+            \hhu\z\lib\Textile::load();
+            $textileParser = new \Netcarver\Textile\Parser();
+            $string = $textileParser->textileThis($string);
 
             // Important text
+            // TODO Deprecated
             $string = str_replace('[strong]', '<strong>', $string);
             $string = str_replace('[/strong]', '</strong>', $string);
 
             // Create tables
+            // TODO Deprecated
             $string = preg_replace('/(\[table\])\s+/u', '$1', $string);
             $string = preg_replace('/\s*(\[tr\])\s*/u', '$1', $string);
             $string = preg_replace('%\s+(\[/table\])%u', '$1', $string);
@@ -77,10 +81,6 @@
             $string = str_replace('[/th]', '</th>', $string);
             $string = str_replace('[td]', '<td>', $string);
             $string = str_replace('[/td]', '</td>', $string);
-
-            // Create links
-            $string = preg_replace('!(^|\s)"([^"]+)":(https?://[^\s]+)(\s|$)!i', '$1<a href="$3">$2</a>$4', $string);
-            $string = preg_replace('!(^|\s)(https?://[^\s]+)(\s|$)!i', '$1<a href="$2">$2</a>$3', $string);
 
             // Handle Seminarymedia
             $seminarymedia = array();
@@ -111,7 +111,8 @@
 
 
             // Return processed string
-            return nl2br($string);
+            //return nl2br($string);
+            return $string;
         }
 
 
