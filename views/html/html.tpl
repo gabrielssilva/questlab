@@ -37,8 +37,9 @@
     <script type="text/javascript" src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
     <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/respond.js/1.4.2/respond.js"></script>
     <![endif]-->
-    <script type="text/javascript" src="/js/misc.js"></script>
-    <script type="text/javascript" src="/js/dnd.js"></script>
+    <script type="text/javascript" src="<?=$linker->link(array('js','misc.js'))?>"></script>
+    <script type="text/javascript" src="<?=$linker->link(array('js','notification.js'))?>"></script>
+    <script type="text/javascript" src="<?=$linker->link(array('js','dnd.js'))?>"></script>
     <meta name="description" content="">
     <meta name="robots" content="noindex,follow">
     <link rel="icon" href="favicon.ico" type="image/x-icon">
@@ -103,6 +104,7 @@
             <?php endif ?>
             <?php endforeach ?>
         </ul>
+        <audio id="notify-sound" preload="auto" src="<?=$linker->link(array('sounds','notification.mp3'))?>"></audio>
         <?php endif ?>
         <?=$intermediate?>
     </article>
