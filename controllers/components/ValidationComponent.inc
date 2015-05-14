@@ -82,20 +82,25 @@
          * @param   array   $index  Names of parameter to validate and to validate against
          * @return  mixed       True or the parameter with settings the validation failed on
          */
-        public function validateParam($params, $index)
+        public function validateParam($params, $index, $config=null)
         {
+            // Check onfig
+            if(is_null($config)) {
+                $config = $this->config;
+            }
+
             // Check parameter
             if(!array_key_exists($index, $params)) {
                 throw new \nre\exceptions\ParamsNotValidException($index);
             }
             // Check settings
-            if(!array_key_exists($index, $this->config)) {
+            if(!array_key_exists($index, $config)) {
                 return true;
             }
 
 
             // Validate parameter and return result
-            return $this->validate($params[$index], $this->config[$index]);
+            return $this->validate($params[$index], $config[$index]);
         }
 
 
@@ -106,12 +111,12 @@
          * @param   array   $indices    Names of parameters to validate and to validate against
          * @return  mixed           True or the parameters with settings the validation failed on
          */
-        public function validateParams($params, $indices)
+        public function validateParams($params, $indices, $config=null)
         {
             // Validate parameters
             $validation = true;
             foreach($indices as $index) {
-                $validation = $this->addValidationResults($validation, $index, $this->validateParam($params, $index));
+                $validation = $this->addValidationResults($validation, $index, $this->validateParam($params, $index, $config));
             }
 
 
