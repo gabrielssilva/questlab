@@ -102,7 +102,7 @@
             // Get requested language
             $language = $request->getGetParam('lang', 'language');
             if(!is_null($language) && array_key_exists($language, $supportedLanguages)) {
-                return $language;
+                return $supportedLanguages[$language];
             }
 
             // Negotiate language
