@@ -91,6 +91,35 @@
         }
 
 
+        public function createBossFight($userId, $questId, $bossname, $bossmediaId, $livesCharacter, $livesBoss)
+        {
+            $this->db->query(
+                'INSERT INTO questtypes_bossfight '.
+                '(quest_id, created_user_id, bossname, boss_seminarymedia_id, lives_character, lives_boss) '.
+                'VALUES '.
+                '(?, ?, ?, ?, ?, ?)',
+                'iisiii',
+                $questId, $userId, $bossname, $bossmediaId, $livesCharacter, $livesBoss
+            );
+
+
+            return $this->db->getInsertId();
+        }
+
+
+        public function editBossFight($questId, $bossname, $bossmediaId, $livesCharacter, $livesBoss)
+        {
+            $this->db->query(
+                'UPDATE questtypes_bossfight '.
+                'SET bossname = ?, boss_seminarymedia_id = ?, lives_character = ?, lives_boss = ? '.
+                'WHERE quest_id = ?',
+                'siiii',
+                $bossname, $bossmediaId, $livesCharacter, $livesBoss,
+                $questId
+            );
+        }
+
+
         /**
          * Get the first Stage to begin the Boss-Fight with.
          *

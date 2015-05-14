@@ -25,6 +25,27 @@
          * @var array
          */
         public $models = array('media');
+        /**
+         * Required components
+         *
+         * @var array
+         */
+        public $components = array('validation');
+
+        private $validationSettings = array(
+            'bossname' => array(
+                'minlength' => 1,
+                'maxlength' => 32
+            ),
+            'lives_boss' => array(
+                'minlength' => 1,
+                'regex'     => '/^(\d*)$/'
+            ),
+            'lives_character' => array(
+                'minlength'     => 1,
+                'regex'         => '/^(\d*)$/'
+            )
+        );
 
 
 
@@ -227,23 +248,199 @@
          */
         public function edittask($seminary, $questgroup, $quest)
         {
+            // Get Fight
             $fight = $this->Bossfight->getBossFight($quest['id']);
-            /*
             if(!is_null($fight['boss_seminarymedia_id'])) {
                 $fight['bossmedia'] = $this->Media->getSeminaryMediaById($fight['boss_seminarymedia_id']);
             }
-            */
 
-            // Get stages
-            $stage = $this->Bossfight->getFirstStage($quest['id']);
-            $stage['childs'] = $this->getChildStages($stage['id']);
+            // Get Character
+            $character = $this->Characters->getCharacterForUserAndSeminary($this->Auth->getUserId(), $seminary['id']);
+
+            // Create (pseudo) tree
+            $tree = $this->createStageTree($fight['lives_character'], $fight['lives_boss']);
+            $this->attachStages($quest['id'], $tree);
+
+            // TODO Test
+            print_r($this->createStageTree2($quest['id'], $fight['lives_character'], $fight['lives_boss']));
+
+            // Get allowed mimetypes
+            $mimetypes = \nre\configs\AppConfig::$mimetypes['questtypes'];
+
+            // Values
+            $step = 1;
+            $steps = 1;
+            $bossname = $fight['bossname'];
+            $livesCharacter = $fight['lives_character'];
+            $livesBoss = $fight['lives_boss'];
+            $fields = array('bossname', 'lives_boss', 'lives_character');
+            $validation = true;
+
+            // Save submitted data
+            if($this->request->getRequestMethod() == 'POST')
+            {
+                // Get current step
+                $step = max(0, min($steps, intval($this->request->getPostParam('step'))));
+
+                // Bossfight
+                if($step == 0)
+                {
+                    // Get params and validate them
+                    $validation = $this->Validation->validateParams($this->request->getPostParams(), $fields, $this->validationSettings);
+                    $bossname = $this->request->getPostParam('bossname');
+                    $livesCharacter = $this->request->getPostParam('lives_character');
+                    $livesBoss = $this->request->getPostParam('lives_boss');
+
+                    // Validate image
+                    $bossimage = null;
+                    if(!empty($_FILES) && array_key_exists('bossimage', $_FILES) && $_FILES['bossimage']['error'] != UPLOAD_ERR_NO_FILE)
+                    {
+                        $bossimage = $_FILES['bossimage'];
+
+                        // Check error
+                        if($bossimage['error'] !== UPLOAD_ERR_OK) {
+                            $validation = $this->Validation->addValidationResult($validation, 'bossimage', 'error', $bossimage['error']);
+                        }
+
+                        // Check mimetype
+                        $bossimageMimetype = null;
+                        $bossimage['mimetype'] = \hhu\z\Utils::getMimetype($bossimage['tmp_name'], $bossimage['type']);
+                        foreach($mimetypes as &$mimetype)
+                        {
+                            if($mimetype['mimetype'] == $bossimage['mimetype']) {
+                                $bossimageMimetype = $mimetype;
+                                break;
+                            }
+                        }
+                        if(is_null($bossimageMimetype)) {
+                            $validation = $this->Validation->addValidationResult($validation, 'bossimage', 'mimetype', $bossimage['mimetype']);
+                        }
+                        elseif($bossimage['size'] > $bossimageMimetype['size']) {
+                            $validation = $this->Validation->addValidationResult($validation, 'bossimage', 'size', $bossimageMimetype['size']);
+                        }
+                    }
+
+                    // Set Bossfight data
+                    if($validation === true)
+                    {
+                        // Upload boss image
+                        $mediaId = $this->Media->createQuestMedia(
+                            $this->Auth->getUserId(),
+                            $seminary['id'],
+                            sprintf('quest-bossfight-%s', $quest['url']),
+                            '',
+                            $bossimage['mimetype'],
+                            $bossimage['tmp_name']
+                        );
+
+                        // Save data
+                        if(!is_null($fight))
+                        {
+                            // Edit Bossfight
+                            $this->Bossfight->editBossFight(
+                                $quest['id'],
+                                $bossname,
+                                ($mediaId !== false ? $mediaId : $fight['boss_seminarymedia_id']),
+                                $livesCharacter,
+                                $livesBoss
+                            );
+
+                            // TODO Delete needless stages
+                        }
+                        elseif($mediaId !== false)
+                        {
+                            // Create new Bossfight
+                            $this->Bossfight-createBossFight(
+                                $this->Auth->getUserId(),
+                                $quest['id'],
+                                $bossname,
+                                $mediaId,
+                                $livesCharacter,
+                                $livesBoss
+                            );
+                        }
+
+                        // Reload fight
+                        $fight = $this->Bossfight->getBossFight($quest['id']);
+                        if(!is_null($fight['boss_seminarymedia_id'])) {
+                            $fight['bossmedia'] = $this->Media->getSeminaryMediaById($fight['boss_seminarymedia_id']);
+                        }
+                        $tree = $this->createStageTree($fight['lives_character'], $fight['lives_boss']);
+                        $this->attachStages($quest['id'], $tree);
+                    }
+                }
+                // Stages
+                elseif($step == 1)
+                {
+                    // Get stages
+                    $stages = $this->request->getPostParam('stages');
+
+                    // Save stages
+                    foreach($tree as $i => &$v)
+                    {
+                        if(array_key_exists($i, $stages))
+                        {
+                            foreach($v as $j => &$h)
+                            {
+                                if(array_key_exists($j, $stages[$i]))
+                                {
+                                    /*
+                                    $text = $stages[$i][$j]['text'];
+                                    $question = $stages[$i][$j]['question'];
+                                    if(array_key_exists('stage', $h) && !empty($h['stage']))
+                                    {
+                                        // TODO Edit stage
+                                        $stageId = $h['stage']['id'];
+                                        var_dump($stageId);
+                                    }
+                                    else
+                                    {
+                                        // TODO Create new stage
+                                        var_dump('create stage');
+                                    }
+                                    */
+                                }
+                            }
+                        }
+                    }
+                }
+
+                // Go to next/previous step
+                // Go to next/previous step
+                if($validation === true)
+                {
+                    if(!is_null($this->request->getPostParam('prev'))) {
+                        $step--;
+                    }
+                    else {
+                        $step++;
+                    }
+                    if($step > $steps) {
+                        // TODO Redirect
+                        //$this->redirect($this->linker->link(array('quest', $seminary['url'], $questgroup['url'], $quest['url']), 1));
+                    }
+                }
+            }
+
+            // Get validation settings
+            $validationSettings = array();
+            foreach($fields as &$field) {
+                $validationSettings[$field] = $this->validationSettings[$field];
+            }
 
 
             // Pass data to view
             $this->set('seminary', $seminary);
+            $this->set('character', $character);
             $this->set('fight', $fight);
-            $this->set('stages', $stage);
-            //print_r($stage);
+            $this->set('step', $step);
+            $this->set('tree', $tree);
+            $this->set('bossname', $bossname);
+            $this->set('livesCharacter', $livesCharacter);
+            $this->set('livesBoss', $livesBoss);
+            $this->set('mimetypes', $mimetypes);
+            $this->set('validation', $validation);
+            $this->set('validationSettings', $validationSettings);
         }
 
 
@@ -285,6 +482,118 @@
 
 
             return $childStages;
+        }
+
+
+        private function createStageTree($livesCharacter, $livesBoss)
+        {
+            $c = max($livesCharacter, $livesBoss) * 2;
+            $tree = array();
+
+            $tree[0] = array(
+                array(
+                    'lives_character'   => $livesCharacter,
+                    'lives_boss'        => $livesBoss
+                )
+            );
+            for($i=1; $i<$c; $i++ )
+            {
+                $treeitem = array();
+                $n = pow(2, $i);
+                for($j=0; $j<$n/2; $j++)
+                {
+                    if(array_key_exists($j, $tree[$i-1]))
+                    {
+                        if($tree[$i-1][$j]['lives_character'] > 0 && $tree[$i-1][$j]['lives_boss'] > 0 && $tree[$i-1][$j]['lives_boss'] - 1 >= 0)
+                        {
+                            $treeitem[$j*2] = array(
+                                'lives_character'   => $tree[$i-1][$j]['lives_character'],
+                                'lives_boss'        => $tree[$i-1][$j]['lives_boss'] - 1,
+                            );
+                        }
+                        if($tree[$i-1][$j]['lives_character'] > 0 && $tree[$i-1][$j]['lives_boss'] > 0 && $tree[$i-1][$j]['lives_character'] - 1 >= 0)
+                        {
+                            $treeitem[$j*2+1] = array(
+                                'lives_character'   => $tree[$i-1][$j]['lives_character'] - 1,
+                                'lives_boss'        => $tree[$i-1][$j]['lives_boss'],
+                            );
+                        }
+                    }
+                }
+
+                $tree[] = $treeitem;
+            }
+
+
+            return $tree;
+        }
+
+
+        private function createStageTree2($questId, $livesCharacter, $livesBoss)
+        {
+            // Create tree root
+            $tree = array();
+            $tree[0] = array(
+                'lives_character'   => $livesCharacter,
+                'lives_boss'        => $livesBoss
+            );
+
+            // Get first stage
+            $stage = $this->Bossfight->getFirstStage($questId);
+            $tree[0]['stage'] = $stage;
+
+            // Start recursion
+            $this->createStageTreeRec($questId, $stage, $tree);
+
+
+            // Return tree
+            return $tree;
+        }
+
+
+        private function createStageTreeRec($questId, $stage, &$tree)
+        {
+            // Get child stages
+            $childStages = $this->Bossfight->getChildStages($stage['id']);
+            foreach($childStages as $childStage)
+            {
+                $this->createStageTreeRec($questId, $childStage, $tree);
+            }
+        }
+
+
+        private function attachStages($questId, &$tree)
+        {
+            foreach($tree as $i => &$v)
+            {
+                if($i == 0) {
+                    $v[0]['stage'] = $this->Bossfight->getFirstStage($questId);
+                }
+                else
+                {
+                    $childStages = null;
+                    foreach($v as $j => &$h)
+                    {
+                        if(is_null($childStages))
+                        {
+                            $childStages = range(0, 1);
+                            if(array_key_exists('stage', $tree[$i-1][floor($j/2)]) && !empty($tree[$i-1][floor($j/2)]['stage']))
+                            {
+                                $stages = $this->Bossfight->getChildStages($tree[$i-1][floor($j/2)]['stage']['id']);
+                                if(!empty($stages)) {
+                                    $childStages = $stages;
+                                }
+                            }
+                            $tree[$i-1][floor($j/2)]['childstages'] = $childStages;
+                            $h['stage'] = (count($childStages) > 0) ? $childStages[0] : array();
+                        }
+                        else {
+                            $h['stage'] = (count($childStages) > 1) ? $childStages[1] : array();
+                            $childStages = null;
+                        }
+                    }
+                }
+            }
         }
 
     }
