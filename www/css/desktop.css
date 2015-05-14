@@ -172,6 +172,7 @@ input[type="submit"][disabled]{text-shadow:1px 2px #d48c4e;background:#f9ac69;bo
 .notify p.announce{color:#0f373c;font-weight:700;font-size:.875em;margin-top:5px}
 .notify .fa{padding-right:5px}
 .notify .fa-times{float:right;padding:0;margin:-12px -10px 0 0;color:#d4d2ce}
+#notify-sound{display:none}
 
 
 /** Login, Registration & Filter **/
@@ -326,6 +327,8 @@ input[type="submit"][disabled]{text-shadow:1px 2px #d48c4e;background:#f9ac69;bo
 .success,.error{margin:15px 0;padding:5px 15px;border:1px solid #4F8A10;background:#DFF2BF;color:#4F8A10;border-radius:3px}
 .error{border:1px solid #850000;background:#ebd3d3;color:#850000}
 .success p,.error p{margin-bottom:5px}
+.dev textarea{width:99%;height:150px}
+.dev input[type="text"]{width:99%;max-width:99%;text-align:left}
 
 .solvdmsg{margin-top:20px}
 
@@ -342,7 +345,7 @@ input[type="submit"][disabled]{text-shadow:1px 2px #d48c4e;background:#f9ac69;bo
 
 .crossword table{border-spacing:2px;border-collapse:separate}
 .crossword td{background:#d7d4cf;padding:1px;border:0}
-.crossword input[type=text]{text-align:center;height:26px;width:100%;min-width:8px;max-width:40px;margin:0;padding:0;border:none;text-transform:uppercase}
+.crossword table input[type=text]{text-align:center;height:26px;width:100%;min-width:8px;max-width:40px;margin:0;padding:0;border:none;text-transform:uppercase}
 .crossword ol{list-style-type:decimal;margin-left:25px}
 .crossword li{margin-top:20px}
 .crossword .index{position:absolute;font-size:0.625em;margin:-2px 0 0 2px}
@@ -354,6 +357,16 @@ input[type="submit"][disabled]{text-shadow:1px 2px #d48c4e;background:#f9ac69;bo
 .opponent p{text-align:center}
 .opponent .fa{font-size:1.25em;color:#c7135b;padding-right:0}
 .bossfight .option{background:#fff;margin-bottom:10px;padding:15px 15px 5px;border-radius:3px}
+#bosstree span.ui-selected{background-color:white}
+.bosstreerow{display:block;height:2em;margin:2em 0;text-align:center}
+.bosstreerow div{white-space:nowrap}
+.bosstreerow .fa{display:inline;font-size:1.25em;padding-right:0}
+.bosstreerow .char{color:#c7135b}
+.bosstreeitem{float:left}
+.bosstreelabel{display:block;margin-top:0.5em;cursor:pointer}
+.bosstreeline{position:absolute;width:0;height:1px;background-color:black}
+.bossstage{display:none}
+.bossstage textarea{width:100%;height:150px}
 
 #dropZone.dev div{text-align:center;background-color:rgba(255,255,0,0.6)}
 #dropZone.dev i.move{cursor:grab}
