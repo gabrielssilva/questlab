@@ -73,7 +73,6 @@
             // Set Locale and Load translation
             if(!is_null($locale))
             {
-                //$locale = sprintf('%s_%s.UTF-8', $locale, strtoupper($locale));
                 putenv("LC_ALL=$locale");
                 setlocale(LC_ALL, $locale);
                 \Locale::setDefault($locale);
