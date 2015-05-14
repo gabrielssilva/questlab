@@ -276,7 +276,7 @@
             if($this->request->getRequestMethod() == 'POST')
             {
                 // Get current step
-                $step = max(0, min(2, intval($this->request->getPostParam('step'))));
+                $step = max(0, min($steps, intval($this->request->getPostParam('step'))));
 
                 // Drag&Drop-field (background image)
                 if($step == 0)
@@ -495,21 +495,17 @@
                 }
 
                 // Go to next/previous step
-                if(!is_null($this->request->getPostParam('prev'))) {
-                    $step--;
-                }
-                else {
-                    $step++;
-                }
-
-                // Redirect after last step
-                if($step > $steps)
+                if($validation === true && $dragsValidation === true)
                 {
-                    if($validation === true && $dragsValidation === true) {
-                        $this->redirect($this->linker->link(array('quest', $seminary['url'], $questgroup['url'], $quest['url']), 1));
+                    if(!is_null($this->request->getPostParam('prev'))) {
+                        $step--;
                     }
                     else {
-                        $step--;
+                        $step++;
+                    }
+                    // Redirect after last step
+                    if($step > $steps) {
+                        $this->redirect($this->linker->link(array('quest', $seminary['url'], $questgroup['url'], $quest['url']), 1));
                     }
                 }
             }
