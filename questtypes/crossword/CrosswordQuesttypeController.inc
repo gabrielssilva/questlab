@@ -373,6 +373,84 @@
          */
         public function edittask($seminary, $questgroup, $quest)
         {
+            // Get words
+            $words = $this->Crossword->getWordsForQuest($quest['id']);
+
+            // Create 2D-matrix
+            $matrix = array();
+            $maxX = 0;
+            $maxY = 0;
+            foreach($words as $index => &$word)
+            {
+                // Insert word
+                if($word['vertical'])
+                {
+                    $x = $word['pos_x'];
+                    $startY = $word['pos_y'];
+                    $endY = $startY + mb_strlen($word['word'], 'UTF-8') - 1;
+
+                    $matrix = array_pad($matrix, $x+1, array());
+                    $matrix[$x] = array_pad($matrix[$x], $endY+1, null);
+                    $maxX = max($maxX, $x);
+                    $maxY = max($maxY, $endY);
+
+                    foreach(range($startY, $endY) as $y)
+                    {
+                        $matrix[$x][$y] = array(
+                            'char'      => mb_substr($word['word'], $y-$startY, 1, 'UTF-8'),
+                            'indices'   => (array_key_exists($x, $matrix) && array_key_exists($y, $matrix[$x]) && !is_null($matrix[$x][$y]) && array_key_exists('indices', $matrix[$x][$y])) ? $matrix[$x][$y]['indices'] : array()
+                        );
+                        if($y == $startY) {
+                            $matrix[$x][$y]['indices'][] = $index;
+                        }
+                        if(array_key_exists('answer', $word))
+                        {
+                            $answer = mb_substr($word['answer'], $y-$startY, 1, 'UTF-8');
+                            if($answer != ' ') {
+                                $matrix[$x][$y]['answer'] = $answer;
+                            }
+                        }
+                    }
+                }
+                else
+                {
+                    $startX = $word['pos_x'];
+                    $endX = $startX + mb_strlen($word['word'], 'UTF-8') - 1;
+                    $y = $word['pos_y'];
+
+                    $matrix = array_pad($matrix, $endX+1, array());
+                    $maxX = max($maxX, $endX);
+                    $maxY = max($maxY, $y);
+
+                    foreach(range($startX, $endX) as $x)
+                    {
+                        $matrix[$x] = array_pad($matrix[$x], $y+1, null);
+
+                        $matrix[$x][$y] = array(
+                            'char'      => mb_substr($word['word'], $x-$startX, 1, 'UTF-8'),
+                            'indices'   => (array_key_exists($x, $matrix) && array_key_exists($y, $matrix[$x]) && !is_null($matrix[$x][$y]) && array_key_exists('indices', $matrix[$x][$y])) ? $matrix[$x][$y]['indices'] : array(),
+                            'answer'    => null
+                        );
+                        if($x == $startX) {
+                            $matrix[$x][$y]['indices'][] = $index;
+                        }
+                        if(array_key_exists('answer', $word))
+                        {
+                            $answer = mb_substr($word['answer'], $x-$startX, 1, 'UTF-8');
+                            if($answer != ' ') {
+                                $matrix[$x][$y]['answer'] = $answer;
+                            }
+                        }
+                    }
+                }
+            }
+
+
+            // Pass data to view
+            $this->set('words', $words);
+            $this->set('maxX', $maxX);
+            $this->set('maxY', $maxY);
+            $this->set('matrix', $matrix);
         }
 
     }
