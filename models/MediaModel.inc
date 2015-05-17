@@ -187,7 +187,9 @@
             catch(\hhu\z\exceptions\FileCopyException $e) {
                 // Cleanup
                 foreach($copiedFiles as $filename) {
-                    unlink($filename);
+                    if(file_exists($filename)) {
+                        unlink($filename);
+                    }
                 }
                 throw $e;
             }
