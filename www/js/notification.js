@@ -8,7 +8,7 @@
 function notify()
 {
     var notifySound = $("#notify-sound");
-    if(notifySound) {
+    if(notifySound.length > 0) {
         notifySound.get(0).play();
     }
 }
