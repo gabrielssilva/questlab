@@ -128,6 +128,9 @@
                 case 'library':
                     $index = 'library_seminarymedia_id';
                 break;
+                case 'map':
+                    $index = 'map_seminarymedia_id';
+                break;
             }
 
             // Get media

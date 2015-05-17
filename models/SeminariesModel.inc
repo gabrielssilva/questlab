@@ -24,7 +24,7 @@
          *
          * @var array
          */
-        public $models = array('questgroupshierarchy', 'questgroups', 'quests', 'questtopics', 'media', 'charactertypes', 'xplevels', 'avatars', 'achievements', 'charactergroups', 'charactergroupsquests', 'seminarycharacterfields');
+        public $models = array('questgroupshierarchy', 'questgroups', 'quests', 'questtopics', 'media', 'charactertypes', 'xplevels', 'avatars', 'achievements', 'charactergroups', 'charactergroupsquests', 'seminarycharacterfields', 'map');
 
 
 
@@ -260,6 +260,25 @@
 
 
         /**
+         * Set the moodpic for the map of a Seminary.
+         *
+         * @param   int $seminaryId         ID of Seminary to set moodpic for Map for
+         * @param   int $seminaryMediaId    ID of Seminarymedia to set as moodpic
+         */
+        public function setMoodpicForMap($seminaryId, $seminaryMediaId)
+        {
+            $this->db->query(
+                'UPDATE seminaries '.
+                'SET map_seminarymedia_id = ? '.
+                'WHERE id = ?',
+                'ii',
+                $seminaryMediaId,
+                $seminaryId
+            );
+        }
+
+
+        /**
          * (Re-) Calculate the amount of achievable XPs for a Seminary.
          *
          * @param   int $seminaryId ID of Seminary to calculate XPs for
@@ -326,9 +345,10 @@
          * @param   boolean $copyAchievements           Whether to copy Achievements or not
          * @param   boolean $copyCharactergroupsgroups  Whether to copy Character groups-groups or not
          * @param   boolean $copyCharactergroupsquests  Whether to copy Character groups Quests or not
+         * @param   boolean $copyMap                    Whether to copy Map or not
          * @return                                      ID of newly created Seminary
          */
-        public function copySeminary($userId, $sourceSeminaryId, $title, $course, $description, $copySeminaryfields, $copyMedia, $copyQuestgroupshierarchy, $copyQuestgroups, $copyQuests, $copyQuesttopics, $copyCharactertypes, $copyXPlevels, $copyAvatars, $copyAchievements, $copyCharactergroupsgroups, $copyCharactergroupsquests)
+        public function copySeminary($userId, $sourceSeminaryId, $title, $course, $description, $copySeminaryfields, $copyMedia, $copyQuestgroupshierarchy, $copyQuestgroups, $copyQuests, $copyQuesttopics, $copyCharactertypes, $copyXPlevels, $copyAvatars, $copyAchievements, $copyCharactergroupsgroups, $copyCharactergroupsquests, $copyMap)
         {
             // Get Seminary
             $seminary = $this->getSeminaryById($sourceSeminaryId);
@@ -361,6 +381,9 @@
                     }
                     if(!is_null($seminary['library_seminarymedia_id'])) {
                         $this->setMoodpicForLibrary($targetSeminaryId, $seminaryMediaIds[$seminary['library_seminarymedia_id']]);
+                    }
+                    if(!is_null($seminary['map_seminarymedia_id'])) {
+                        $this->setMoodpicForMap($targetSeminaryId, $seminaryMediaIds[$seminary['map_seminarymedia_id']]);
                     }
                 }
 
@@ -421,6 +444,11 @@
                     if($copyCharactergroupsquests &!is_null($questgroupIds)) {
                         $this->Charactergroupsquests->copyQuestsOfSeminary($userId, $characterGroupsgroupIds, $questgroupIds, $seminaryMediaIds);
                     }
+                }
+
+                // Copy Map
+                if($copyMap && !is_null($seminaryMediaIds)) {
+                    $this->Map->copyMapOfSeminary($sourceSeminaryId, $targetSeminaryId, $seminaryMediaIds);
                 }
 
                 // Recalculate XPs

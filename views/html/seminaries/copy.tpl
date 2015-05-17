@@ -111,6 +111,8 @@
             <input type="checkbox" id="elements_charactergroupsquests" name="elements[charactergroupsquests]" <?php if(array_key_exists('charactergroupsquests', $elements)) : ?>checked="checked"<?php endif ?> />
             <label for="elements_charactergroupsquests"><?=_('Character Groups Quests')?></label>
         </div>
+        <input type="checkbox" id="elements_map" name="elements[map]" <?php if(array_key_exists('map', $elements)) : ?>checked="checked"<?php endif ?>  />
+        <label for="elements_map"><?=_('Map')?></label>
     </fieldset>
 	<input type="submit" name="edit" value="<?=_('copy')?>" />
 </form>

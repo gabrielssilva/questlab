@@ -604,6 +604,45 @@
 
 
         /**
+         * Create a new map medium. 
+         *
+         * @param   int     $userId         ID of user that does the upload
+         * @param   int     $seminaryId     ID of Seminary
+         * @param   string  $filename       Filename of uploading media
+         * @param   string  $description    Description for media
+         * @param   string  $mimetype       Mimetype of media
+         * @param   string  $tmpFilename    Name of temporary uploaded file
+         * @return  mixed                   ID of media record or false if upload failed
+         */
+        public function createMapMedia($userId, $seminaryId, $filename, $description, $mimetype, $tmpFilename)
+        {
+            $mediaId = false;
+            $this->db->setAutocommit(false);
+
+            try {
+                // Create Seminary media record
+                $mediaId = $this->createSeminaryMedia($userId, $seminaryId, $filename, $description, $mimetype);
+
+                // Upload file
+                $filename = ROOT.DS.\nre\configs\AppConfig::$dirs['seminarymedia'].DS.$mediaId;
+                if(!move_uploaded_file($tmpFilename, $filename))
+                {
+                    $this->db->rollback();
+                    $mediaId = false;
+                }
+            }
+            catch(\nre\exceptions\DatamodelException $e) {
+                $this->db->rollback();
+                $this->db->setAutocommit(true);
+            }
+
+
+            $this->db->setAutocommit(true);
+            return $mediaId;
+        }
+
+
+        /**
          * Gather some information about a Seminary medium.
          *
          * The infos are organized in an associative array and contain the

@@ -145,6 +145,16 @@
                     'mimetype'  => 'image/png',
                     'size'      =>  1048576
                 )
+            ),
+            'map' => array(
+                array(
+                    'mimetype'  => 'image/jpeg',
+                    'size'      => 5242880
+                ),
+                array(
+                    'mimetype'  => 'image/png',
+                    'size'      =>  10485760
+                )
             )
         );
 
@@ -296,6 +306,8 @@
             array('^library/([^/]+)/create/?$',                         'library/create/$1',    true),
             array('^library/([^/]+)/([^/]+)/?$',                        'library/topic/$1/$2',  true),
             array('^library/([^/]+)/([^/]+)/(edit|delete|manage)/?$',   'library/$3/$1/$2',     true),
+            array('^map/([^/]+)/?$',        'map/index/$1', true),
+            array('^map/([^/]+)/(edit)/?$', 'map/$2/$1',    true),
             array('^media/(.*)$',   'media/$1?layout=binary',   false),
             array('^uploads/(.*)$', 'uploads/$1?layout=binary', false)
         );
@@ -345,7 +357,9 @@
             array('^library/index/([^/]+)/?$',                          'library/$1',           true),
             array('^library/create/([^/]+)/?$',                         'library/$1/create',    true),
             array('^library/topic/([^/]+)/([^/]+)/?$',                  'library/$1/$2',        true),
-            array('^library/(edit|delete|manage)/([^/]+)/([^/]+)/?$',   'library/$2/$3/$1',     true)
+            array('^library/(edit|delete|manage)/([^/]+)/([^/]+)/?$',   'library/$2/$3/$1',     true),
+            array('^map/index/(.*)$',   'map/$1',       true),
+            array('^map/(edit)/(.*)$',  'map/$2/$1',    true)
         );
 
 
