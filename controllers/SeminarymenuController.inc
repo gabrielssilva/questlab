@@ -20,6 +20,12 @@
      */
     class SeminarymenuController extends \hhu\z\Controller
     {
+        /**
+         * Required models
+         *
+         * @var array
+         */
+        public $models = array('map');
 
 
 
@@ -46,6 +52,12 @@
          */
         public function index()
         {
+            // Get map of Seminary
+            $map = $this->Map->getMapOfSeminary(\hhu\z\controllers\SeminaryController::$seminary['id']);
+
+
+            // Pass data to view
+            $this->set('map', $map);
         }
 
     }
