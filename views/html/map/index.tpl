@@ -11,7 +11,6 @@
 <?php if(count(array_intersect(array('admin', 'moderator'), \hhu\z\controllers\SeminaryController::$character['characterroles'])) > 0) : ?>
 <nav class="admin">
 	<li><a href="<?=$linker->link(array('edit',$seminary['url']), 1)?>"><?=_('Edit Map')?></a></li>
-	<li><a href="<?=$linker->link(array('delete',$seminary['url']), 1)?>"><?=_('Delete Map')?></a></li>
 </nav>
 <?php endif ?>
 <div id="map" class="map" style="background-image:url('<?=$linker->link(array('grafics','paper.jpg'))?>')"></div>
