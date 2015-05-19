@@ -1,13 +1,13 @@
--- MySQL dump 10.15  Distrib 10.0.17-MariaDB, for Linux (x86_64)
+-- MySQL dump 10.15  Distrib 10.0.18-MariaDB, for Linux (x86_64)
 --
 -- Host: localhost    Database: z
 -- ------------------------------------------------------
--- Server version	10.0.17-MariaDB-log
+-- Server version	10.0.18-MariaDB-log
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8 */;
+/*!40101 SET NAMES utf8mb4 */;
 /*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
 /*!40103 SET TIME_ZONE='+00:00' */;
 /*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
@@ -25,9 +25,9 @@ DROP TABLE IF EXISTS `achievementconditions`;
 CREATE TABLE `achievementconditions` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `condition` varchar(32) NOT NULL,
+  `condition` varchar(32) COLLATE utf8mb4_unicode_ci NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -42,11 +42,11 @@ CREATE TABLE `achievementconditions_achievement` (
   `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `created_user_id` int(11) NOT NULL,
   `achievement_id` int(11) NOT NULL,
-  `field` varchar(128) NOT NULL,
+  `field` varchar(128) COLLATE utf8mb4_unicode_ci NOT NULL,
   `count` tinyint(1) NOT NULL DEFAULT '0',
   `value` int(11) NOT NULL,
   `meta_achievement_id` int(11) DEFAULT NULL,
-  `groupby` varchar(128) DEFAULT NULL,
+  `groupby` varchar(128) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `created_user_id` (`created_user_id`),
   KEY `achievement_id` (`achievement_id`),
@@ -54,7 +54,7 @@ CREATE TABLE `achievementconditions_achievement` (
   CONSTRAINT `achievementconditions_achievement_ibfk_1` FOREIGN KEY (`created_user_id`) REFERENCES `users` (`id`),
   CONSTRAINT `achievementconditions_achievement_ibfk_2` FOREIGN KEY (`achievement_id`) REFERENCES `achievements` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `achievementconditions_achievement_ibfk_3` FOREIGN KEY (`meta_achievement_id`) REFERENCES `achievements` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -69,14 +69,14 @@ CREATE TABLE `achievementconditions_character` (
   `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `created_user_id` int(11) NOT NULL,
   `achievement_id` int(11) NOT NULL,
-  `field` varchar(128) NOT NULL,
-  `value` varchar(128) NOT NULL,
+  `field` varchar(128) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `value` varchar(128) COLLATE utf8mb4_unicode_ci NOT NULL,
   PRIMARY KEY (`id`),
   KEY `created_user_id` (`created_user_id`),
   KEY `achievement_id` (`achievement_id`),
   CONSTRAINT `achievementconditions_character_ibfk_1` FOREIGN KEY (`created_user_id`) REFERENCES `users` (`id`),
   CONSTRAINT `achievementconditions_character_ibfk_2` FOREIGN KEY (`achievement_id`) REFERENCES `achievements` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -91,13 +91,13 @@ CREATE TABLE `achievementconditions_date` (
   `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `created_user_id` int(11) NOT NULL,
   `achievement_id` int(11) NOT NULL,
-  `select` varchar(512) NOT NULL,
+  `select` varchar(512) COLLATE utf8mb4_unicode_ci NOT NULL,
   PRIMARY KEY (`id`),
   KEY `created_user_id` (`created_user_id`),
   KEY `achievement_id` (`achievement_id`),
   CONSTRAINT `achievementconditions_date_ibfk_1` FOREIGN KEY (`created_user_id`) REFERENCES `users` (`id`),
   CONSTRAINT `achievementconditions_date_ibfk_2` FOREIGN KEY (`achievement_id`) REFERENCES `achievements` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -112,12 +112,12 @@ CREATE TABLE `achievementconditions_quest` (
   `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `created_user_id` int(11) NOT NULL,
   `achievement_id` int(11) NOT NULL,
-  `field` varchar(128) NOT NULL,
+  `field` varchar(128) COLLATE utf8mb4_unicode_ci NOT NULL,
   `count` tinyint(1) NOT NULL DEFAULT '0',
   `value` int(11) NOT NULL,
   `quest_id` int(11) DEFAULT NULL,
   `status` tinyint(3) unsigned DEFAULT NULL,
-  `groupby` varchar(128) DEFAULT NULL,
+  `groupby` varchar(128) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `created_user_id` (`created_user_id`),
   KEY `achievement_id` (`achievement_id`),
@@ -125,7 +125,7 @@ CREATE TABLE `achievementconditions_quest` (
   CONSTRAINT `achievementconditions_quest_ibfk_1` FOREIGN KEY (`created_user_id`) REFERENCES `users` (`id`),
   CONSTRAINT `achievementconditions_quest_ibfk_2` FOREIGN KEY (`achievement_id`) REFERENCES `achievements` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `achievementconditions_quest_ibfk_3` FOREIGN KEY (`quest_id`) REFERENCES `quests` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -142,9 +142,9 @@ CREATE TABLE `achievements` (
   `seminary_id` int(11) NOT NULL,
   `achievementcondition_id` int(11) NOT NULL,
   `pos` int(10) unsigned NOT NULL DEFAULT '1',
-  `title` varchar(64) NOT NULL,
-  `url` varchar(64) NOT NULL,
-  `description` text NOT NULL,
+  `title` varchar(64) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `url` varchar(64) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `description` text COLLATE utf8mb4_unicode_ci NOT NULL,
   `progress` tinyint(1) NOT NULL,
   `hidden` tinyint(1) NOT NULL DEFAULT '0',
   `only_once` tinyint(1) NOT NULL DEFAULT '0',
@@ -165,7 +165,7 @@ CREATE TABLE `achievements` (
   CONSTRAINT `achievements_ibfk_3` FOREIGN KEY (`unachieved_achievementsmedia_id`) REFERENCES `achievementsmedia` (`seminarymedia_id`) ON DELETE SET NULL ON UPDATE SET NULL,
   CONSTRAINT `achievements_ibfk_4` FOREIGN KEY (`achieved_achievementsmedia_id`) REFERENCES `achievementsmedia` (`seminarymedia_id`) ON DELETE SET NULL ON UPDATE SET NULL,
   CONSTRAINT `achievements_ibfk_5` FOREIGN KEY (`achievementcondition_id`) REFERENCES `achievementconditions` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -183,7 +183,7 @@ CREATE TABLE `achievements_characters` (
   KEY `character_id` (`character_id`),
   CONSTRAINT `achievements_characters_ibfk_1` FOREIGN KEY (`achievement_id`) REFERENCES `achievements` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `achievements_characters_ibfk_2` FOREIGN KEY (`character_id`) REFERENCES `characters` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -201,7 +201,7 @@ CREATE TABLE `achievementsmedia` (
   KEY `created_user_id` (`created_user_id`),
   CONSTRAINT `achievementsmedia_ibfk_1` FOREIGN KEY (`seminarymedia_id`) REFERENCES `seminarymedia` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `achievementsmedia_ibfk_2` FOREIGN KEY (`created_user_id`) REFERENCES `users` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -219,7 +219,7 @@ CREATE TABLE `avatarpictures` (
   KEY `created_user_id` (`created_user_id`),
   CONSTRAINT `avatarpictures_ibfk_2` FOREIGN KEY (`created_user_id`) REFERENCES `users` (`id`),
   CONSTRAINT `avatarpictures_ibfk_3` FOREIGN KEY (`seminarymedia_id`) REFERENCES `seminarymedia` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -249,7 +249,7 @@ CREATE TABLE `avatars` (
   CONSTRAINT `avatars_ibfk_3` FOREIGN KEY (`xplevel_id`) REFERENCES `xplevels` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `avatars_ibfk_4` FOREIGN KEY (`avatarpicture_id`) REFERENCES `avatarpictures` (`seminarymedia_id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `avatars_ibfk_5` FOREIGN KEY (`small_avatarpicture_id`) REFERENCES `avatarpictures` (`seminarymedia_id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -264,7 +264,7 @@ CREATE TABLE `cache_charactergroups` (
   `xps` int(10) unsigned NOT NULL,
   PRIMARY KEY (`charactergroup_id`),
   CONSTRAINT `cache_charactergroups_ibfk_1` FOREIGN KEY (`charactergroup_id`) REFERENCES `charactergroups` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
@@ -320,7 +320,7 @@ CREATE TABLE `cache_characters` (
   CONSTRAINT `cache_characters_ibfk_1` FOREIGN KEY (`character_id`) REFERENCES `characters` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `cache_characters_ibfk_2` FOREIGN KEY (`xplevel_id`) REFERENCES `xplevels` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `cache_characters_ibfk_3` FOREIGN KEY (`avatar_id`) REFERENCES `avatars` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -335,9 +335,9 @@ CREATE TABLE `charactergroups` (
   `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `created_user_id` int(11) NOT NULL,
   `charactergroupsgroup_id` int(11) NOT NULL,
-  `name` varchar(64) NOT NULL,
-  `url` varchar(128) NOT NULL,
-  `motto` varchar(255) NOT NULL,
+  `name` varchar(64) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `url` varchar(128) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `motto` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `charactergroupsmedia_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `charactergroupsgroup_id_2` (`charactergroupsgroup_id`,`name`),
@@ -348,7 +348,7 @@ CREATE TABLE `charactergroups` (
   CONSTRAINT `charactergroups_ibfk_2` FOREIGN KEY (`created_user_id`) REFERENCES `users` (`id`),
   CONSTRAINT `charactergroups_ibfk_3` FOREIGN KEY (`charactergroupsgroup_id`) REFERENCES `charactergroupsgroups` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `charactergroups_ibfk_4` FOREIGN KEY (`charactergroupsmedia_id`) REFERENCES `charactergroupsmedia` (`seminarymedia_id`) ON DELETE SET NULL ON UPDATE SET NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Charaktergruppen';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='Charaktergruppen';
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
@@ -380,8 +380,8 @@ CREATE TABLE `charactergroupsgroups` (
   `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `created_user_id` int(11) NOT NULL,
   `seminary_id` int(11) NOT NULL,
-  `name` varchar(64) NOT NULL,
-  `url` varchar(64) NOT NULL,
+  `name` varchar(64) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `url` varchar(64) COLLATE utf8mb4_unicode_ci NOT NULL,
   `preferred` tinyint(1) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `seminary_id_3` (`seminary_id`,`url`),
@@ -390,7 +390,7 @@ CREATE TABLE `charactergroupsgroups` (
   KEY `seminary_id_2` (`seminary_id`),
   CONSTRAINT `charactergroupsgroups_ibfk_1` FOREIGN KEY (`created_user_id`) REFERENCES `users` (`id`),
   CONSTRAINT `charactergroupsgroups_ibfk_2` FOREIGN KEY (`seminary_id`) REFERENCES `seminaries` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -408,7 +408,7 @@ CREATE TABLE `charactergroupsmedia` (
   KEY `created_user_id` (`created_user_id`),
   CONSTRAINT `charactergroupsmedia_ibfk_1` FOREIGN KEY (`seminarymedia_id`) REFERENCES `seminarymedia` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `charactergroupsmedia_ibfk_2` FOREIGN KEY (`created_user_id`) REFERENCES `users` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -424,13 +424,13 @@ CREATE TABLE `charactergroupsquests` (
   `created_user_id` int(11) NOT NULL,
   `charactergroupsgroup_id` int(11) NOT NULL,
   `questgroups_id` int(11) NOT NULL,
-  `title` varchar(64) NOT NULL,
-  `url` varchar(64) NOT NULL,
-  `description` text NOT NULL,
+  `title` varchar(64) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `url` varchar(64) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `description` text COLLATE utf8mb4_unicode_ci NOT NULL,
   `xps` int(10) unsigned NOT NULL,
-  `rules` text NOT NULL,
-  `won_text` text NOT NULL,
-  `lost_text` text NOT NULL,
+  `rules` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `won_text` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `lost_text` text COLLATE utf8mb4_unicode_ci NOT NULL,
   `questsmedia_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `charactergroupsgroup_id_2` (`charactergroupsgroup_id`,`url`),
@@ -442,7 +442,7 @@ CREATE TABLE `charactergroupsquests` (
   CONSTRAINT `charactergroupsquests_ibfk_2` FOREIGN KEY (`charactergroupsgroup_id`) REFERENCES `charactergroupsgroups` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `charactergroupsquests_ibfk_3` FOREIGN KEY (`questgroups_id`) REFERENCES `questgroups` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `charactergroupsquests_ibfk_4` FOREIGN KEY (`questsmedia_id`) REFERENCES `questsmedia` (`media_id`) ON DELETE SET NULL ON UPDATE SET NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
@@ -478,7 +478,7 @@ CREATE TABLE `charactergroupsquests_groups` (
   KEY `charactergroup_id` (`charactergroup_id`),
   CONSTRAINT `charactergroupsquests_groups_ibfk_1` FOREIGN KEY (`charactergroupsquest_id`) REFERENCES `charactergroupsquests` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `charactergroupsquests_groups_ibfk_2` FOREIGN KEY (`charactergroup_id`) REFERENCES `charactergroups` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
@@ -551,7 +551,7 @@ CREATE TABLE `charactergroupsquests_seminaryuploads` (
   CONSTRAINT `charactergroupsquests_seminaryuploads_ibfk_1` FOREIGN KEY (`seminaryupload_id`) REFERENCES `seminaryuploads` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `charactergroupsquests_seminaryuploads_ibfk_2` FOREIGN KEY (`charactergroupsquest_id`) REFERENCES `charactergroupsquests` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `charactergroupsquests_seminaryuploads_ibfk_3` FOREIGN KEY (`created_user_id`) REFERENCES `users` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -564,10 +564,10 @@ DROP TABLE IF EXISTS `characterroles`;
 CREATE TABLE `characterroles` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `name` varchar(32) NOT NULL,
+  `name` varchar(32) COLLATE utf8mb4_unicode_ci NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `name` (`name`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -582,15 +582,15 @@ CREATE TABLE `characters` (
   `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `user_id` int(11) NOT NULL,
   `charactertype_id` int(11) NOT NULL,
-  `name` varchar(64) NOT NULL,
-  `url` varchar(64) NOT NULL,
+  `name` varchar(64) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `url` varchar(64) COLLATE utf8mb4_unicode_ci NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `name` (`name`),
   KEY `charactertype_id` (`charactertype_id`),
   KEY `user_id` (`user_id`),
   CONSTRAINT `characters_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `characters_ibfk_2` FOREIGN KEY (`charactertype_id`) REFERENCES `charactertypes` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Charaktere';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='Charaktere';
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
@@ -625,7 +625,7 @@ CREATE TABLE `characters_charactergroups` (
   KEY `charactergroup_id` (`charactergroup_id`),
   CONSTRAINT `characters_charactergroups_ibfk_1` FOREIGN KEY (`character_id`) REFERENCES `characters` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `characters_charactergroups_ibfk_2` FOREIGN KEY (`charactergroup_id`) REFERENCES `charactergroups` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
@@ -695,7 +695,7 @@ CREATE TABLE `characters_characterroles` (
   KEY `userseminaryrole_id` (`characterrole_id`),
   CONSTRAINT `characters_characterroles_ibfk_1` FOREIGN KEY (`character_id`) REFERENCES `characters` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `characters_characterroles_ibfk_2` FOREIGN KEY (`characterrole_id`) REFERENCES `characterroles` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -709,12 +709,12 @@ CREATE TABLE `characters_seminarycharacterfields` (
   `character_id` int(11) NOT NULL,
   `seminarycharacterfield_id` int(11) NOT NULL,
   `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `value` varchar(256) NOT NULL,
+  `value` varchar(256) COLLATE utf8mb4_unicode_ci NOT NULL,
   PRIMARY KEY (`character_id`,`seminarycharacterfield_id`),
   KEY `seminarycharacterfield_id` (`seminarycharacterfield_id`),
   CONSTRAINT `characters_seminarycharacterfields_ibfk_1` FOREIGN KEY (`character_id`) REFERENCES `characters` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `characters_seminarycharacterfields_ibfk_2` FOREIGN KEY (`seminarycharacterfield_id`) REFERENCES `seminarycharacterfields` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -729,15 +729,15 @@ CREATE TABLE `charactertypes` (
   `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `created_user_id` int(11) NOT NULL,
   `seminary_id` int(11) NOT NULL,
-  `name` varchar(128) NOT NULL,
-  `url` varchar(128) NOT NULL,
+  `name` varchar(128) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `url` varchar(128) COLLATE utf8mb4_unicode_ci NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `name` (`name`,`seminary_id`),
   KEY `created_user_id` (`created_user_id`),
   KEY `seminary_id` (`seminary_id`),
   CONSTRAINT `charactertypes_ibfk_1` FOREIGN KEY (`created_user_id`) REFERENCES `users` (`id`),
   CONSTRAINT `charactertypes_ibfk_2` FOREIGN KEY (`seminary_id`) REFERENCES `seminaries` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Charaktertypen';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='Charaktertypen';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -757,7 +757,7 @@ CREATE TABLE `maps` (
   KEY `seminarymedia_id` (`seminarymedia_id`),
   CONSTRAINT `maps_ibfk_1` FOREIGN KEY (`seminary_id`) REFERENCES `seminaries` (`id`),
   CONSTRAINT `maps_ibfk_2` FOREIGN KEY (`seminarymedia_id`) REFERENCES `seminarymedia` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -771,16 +771,16 @@ CREATE TABLE `media` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `created_user_id` int(11) NOT NULL,
-  `name` varchar(64) NOT NULL,
-  `url` varchar(64) NOT NULL,
-  `description` varchar(128) NOT NULL,
-  `mimetype` varchar(32) NOT NULL,
+  `name` varchar(64) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `url` varchar(64) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `description` varchar(128) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `mimetype` varchar(32) COLLATE utf8mb4_unicode_ci NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `seminary_id_2` (`name`),
   UNIQUE KEY `seminary_id_3` (`url`),
   KEY `created_user_id` (`created_user_id`),
   CONSTRAINT `media_ibfk_1` FOREIGN KEY (`created_user_id`) REFERENCES `users` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -795,8 +795,8 @@ CREATE TABLE `questgroups` (
   `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `created_user_id` int(11) NOT NULL,
   `seminary_id` int(11) NOT NULL,
-  `title` varchar(128) NOT NULL,
-  `url` varchar(128) NOT NULL,
+  `title` varchar(128) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `url` varchar(128) COLLATE utf8mb4_unicode_ci NOT NULL,
   `questgroupspicture_id` int(11) DEFAULT NULL,
   `achievable_xps` int(10) unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
@@ -807,7 +807,7 @@ CREATE TABLE `questgroups` (
   CONSTRAINT `questgroups_ibfk_1` FOREIGN KEY (`created_user_id`) REFERENCES `users` (`id`),
   CONSTRAINT `questgroups_ibfk_4` FOREIGN KEY (`questgroupspicture_id`) REFERENCES `questgroupspictures` (`media_id`) ON DELETE SET NULL ON UPDATE SET NULL,
   CONSTRAINT `questgroups_ibfk_5` FOREIGN KEY (`seminary_id`) REFERENCES `seminaries` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Aufgabengruppen';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='Aufgabengruppen';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -827,7 +827,7 @@ CREATE TABLE `questgroups_characters` (
   KEY `character_id` (`character_id`),
   CONSTRAINT `questgroups_characters_ibfk_1` FOREIGN KEY (`questgroup_id`) REFERENCES `questgroups` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `questgroups_characters_ibfk_2` FOREIGN KEY (`character_id`) REFERENCES `characters` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -849,7 +849,7 @@ CREATE TABLE `questgroups_questgroupshierarchy` (
   CONSTRAINT `questgroups_questgroupshierarchy_ibfk_1` FOREIGN KEY (`questgroup_id`) REFERENCES `questgroups` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `questgroups_questgroupshierarchy_ibfk_2` FOREIGN KEY (`questgroupshierarchy_id`) REFERENCES `questgroupshierarchy` (`id`),
   CONSTRAINT `questgroups_questgroupshierarchy_ibfk_3` FOREIGN KEY (`parent_questgroup_id`) REFERENCES `questgroups` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -862,12 +862,12 @@ DROP TABLE IF EXISTS `questgroups_questtexts`;
 CREATE TABLE `questgroups_questtexts` (
   `questgroup_id` int(11) NOT NULL,
   `questtext_id` int(11) NOT NULL,
-  `entry_text` text NOT NULL,
+  `entry_text` text COLLATE utf8mb4_unicode_ci NOT NULL,
   PRIMARY KEY (`questgroup_id`,`questtext_id`),
   KEY `questtext_id` (`questtext_id`),
   CONSTRAINT `questgroups_questtexts_ibfk_1` FOREIGN KEY (`questgroup_id`) REFERENCES `questgroups` (`id`),
   CONSTRAINT `questgroups_questtexts_ibfk_2` FOREIGN KEY (`questtext_id`) REFERENCES `questtexts` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -884,9 +884,9 @@ CREATE TABLE `questgroupshierarchy` (
   `seminary_id` int(11) NOT NULL,
   `parent_questgroupshierarchy_id` int(11) DEFAULT NULL,
   `pos` int(10) unsigned NOT NULL,
-  `title_singular` varchar(128) NOT NULL,
-  `title_plural` varchar(128) NOT NULL,
-  `url` varchar(128) NOT NULL,
+  `title_singular` varchar(128) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `title_plural` varchar(128) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `url` varchar(128) COLLATE utf8mb4_unicode_ci NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `pos` (`parent_questgroupshierarchy_id`,`pos`),
   UNIQUE KEY `url` (`seminary_id`,`parent_questgroupshierarchy_id`,`url`),
@@ -896,7 +896,7 @@ CREATE TABLE `questgroupshierarchy` (
   CONSTRAINT `questgroupshierarchy_ibfk_1` FOREIGN KEY (`created_user_id`) REFERENCES `users` (`id`),
   CONSTRAINT `questgroupshierarchy_ibfk_2` FOREIGN KEY (`seminary_id`) REFERENCES `seminaries` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `questgroupshierarchy_ibfk_3` FOREIGN KEY (`parent_questgroupshierarchy_id`) REFERENCES `questgroupshierarchy` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Aufgabengruppenhierarchie';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='Aufgabengruppenhierarchie';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -914,7 +914,7 @@ CREATE TABLE `questgroupspictures` (
   KEY `created_user_id` (`created_user_id`),
   CONSTRAINT `questgroupspictures_ibfk_1` FOREIGN KEY (`media_id`) REFERENCES `seminarymedia` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `questgroupspictures_ibfk_3` FOREIGN KEY (`created_user_id`) REFERENCES `users` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -930,14 +930,14 @@ CREATE TABLE `questgrouptexts` (
   `created_user_id` int(11) NOT NULL,
   `questgroup_id` int(11) NOT NULL,
   `pos` int(11) NOT NULL DEFAULT '1',
-  `text` text NOT NULL,
+  `text` text COLLATE utf8mb4_unicode_ci NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `questgroup_id_2` (`questgroup_id`,`pos`),
   KEY `created_user_id` (`created_user_id`),
   KEY `questgroup_id` (`questgroup_id`),
   CONSTRAINT `questgrouptexts_ibfk_1` FOREIGN KEY (`created_user_id`) REFERENCES `users` (`id`),
   CONSTRAINT `questgrouptexts_ibfk_2` FOREIGN KEY (`questgroup_id`) REFERENCES `questgroups` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -953,12 +953,12 @@ CREATE TABLE `quests` (
   `created_user_id` int(11) NOT NULL,
   `questgroup_id` int(11) NOT NULL,
   `questtype_id` int(11) NOT NULL,
-  `title` varchar(64) NOT NULL,
-  `url` varchar(64) NOT NULL,
+  `title` varchar(64) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `url` varchar(64) COLLATE utf8mb4_unicode_ci NOT NULL,
   `xps` int(11) unsigned NOT NULL,
-  `entry_text` text,
-  `wrong_text` text NOT NULL,
-  `task` text NOT NULL,
+  `entry_text` text COLLATE utf8mb4_unicode_ci,
+  `wrong_text` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `task` text COLLATE utf8mb4_unicode_ci NOT NULL,
   `questsmedia_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `questgroup_id_url` (`questgroup_id`,`url`),
@@ -970,7 +970,7 @@ CREATE TABLE `quests` (
   CONSTRAINT `quests_ibfk_2` FOREIGN KEY (`questtype_id`) REFERENCES `questtypes` (`id`),
   CONSTRAINT `quests_ibfk_4` FOREIGN KEY (`questgroup_id`) REFERENCES `questgroups` (`id`),
   CONSTRAINT `quests_ibfk_5` FOREIGN KEY (`questsmedia_id`) REFERENCES `questsmedia` (`media_id`) ON DELETE SET NULL ON UPDATE SET NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
@@ -1008,7 +1008,7 @@ CREATE TABLE `quests_characters` (
   KEY `character_id` (`character_id`),
   CONSTRAINT `quests_characters_ibfk_1` FOREIGN KEY (`quest_id`) REFERENCES `quests` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `quests_characters_ibfk_2` FOREIGN KEY (`character_id`) REFERENCES `characters` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
@@ -1077,7 +1077,7 @@ CREATE TABLE `quests_previousquests` (
   KEY `previous_quest_id` (`previous_quest_id`),
   CONSTRAINT `quests_previousquests_ibfk_1` FOREIGN KEY (`quest_id`) REFERENCES `quests` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `quests_previousquests_ibfk_2` FOREIGN KEY (`previous_quest_id`) REFERENCES `quests` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Vorherige Aufgaben';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='Vorherige Aufgaben';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1094,7 +1094,7 @@ CREATE TABLE `quests_questsubtopics` (
   KEY `questsubtopic_id` (`questsubtopic_id`),
   CONSTRAINT `quests_questsubtopics_ibfk_3` FOREIGN KEY (`quest_id`) REFERENCES `quests` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `quests_questsubtopics_ibfk_4` FOREIGN KEY (`questsubtopic_id`) REFERENCES `questsubtopics` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1112,7 +1112,7 @@ CREATE TABLE `questsmedia` (
   KEY `created_user_id` (`created_user_id`),
   CONSTRAINT `questsmedia_ibfk_1` FOREIGN KEY (`media_id`) REFERENCES `seminarymedia` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `questsmedia_ibfk_2` FOREIGN KEY (`created_user_id`) REFERENCES `users` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1127,15 +1127,15 @@ CREATE TABLE `questsubtopics` (
   `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `created_user_id` int(11) NOT NULL,
   `questtopic_id` int(11) NOT NULL,
-  `title` varchar(255) NOT NULL,
-  `url` varchar(128) NOT NULL,
+  `title` varchar(128) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `url` varchar(128) COLLATE utf8mb4_unicode_ci NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `title` (`title`,`questtopic_id`),
   KEY `created_user_id` (`created_user_id`),
   KEY `questtopic_id` (`questtopic_id`),
   CONSTRAINT `questsubtopics_ibfk_1` FOREIGN KEY (`created_user_id`) REFERENCES `users` (`id`),
   CONSTRAINT `questsubtopics_ibfk_2` FOREIGN KEY (`questtopic_id`) REFERENCES `questtopics` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Aufgabenbereiche';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='Aufgabenbereiche';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1152,9 +1152,9 @@ CREATE TABLE `questtexts` (
   `quest_id` int(11) NOT NULL,
   `questtexttype_id` int(11) NOT NULL,
   `pos` int(11) NOT NULL DEFAULT '1',
-  `text` text NOT NULL,
-  `out_text` text NOT NULL,
-  `abort_text` text NOT NULL,
+  `text` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `out_text` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `abort_text` text COLLATE utf8mb4_unicode_ci NOT NULL,
   `questsmedia_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `quest_id_2` (`quest_id`,`questtexttype_id`,`pos`),
@@ -1166,7 +1166,7 @@ CREATE TABLE `questtexts` (
   CONSTRAINT `questtexts_ibfk_3` FOREIGN KEY (`questtexttype_id`) REFERENCES `questtexttypes` (`id`),
   CONSTRAINT `questtexts_ibfk_4` FOREIGN KEY (`questsmedia_id`) REFERENCES `questsmedia` (`media_id`) ON DELETE SET NULL ON UPDATE SET NULL,
   CONSTRAINT `questtexts_ibfk_5` FOREIGN KEY (`quest_id`) REFERENCES `quests` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1179,12 +1179,12 @@ DROP TABLE IF EXISTS `questtexttypes`;
 CREATE TABLE `questtexttypes` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `type` varchar(64) NOT NULL,
-  `url` varchar(64) NOT NULL,
+  `type` varchar(64) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `url` varchar(64) COLLATE utf8mb4_unicode_ci NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `type` (`type`),
   UNIQUE KEY `url` (`url`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1199,15 +1199,15 @@ CREATE TABLE `questtopics` (
   `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `created_user_id` int(11) NOT NULL,
   `seminary_id` int(11) NOT NULL,
-  `title` varchar(255) NOT NULL,
-  `url` varchar(128) NOT NULL,
+  `title` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `url` varchar(128) COLLATE utf8mb4_unicode_ci NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `url` (`seminary_id`,`url`),
   KEY `created_user_id` (`created_user_id`),
   KEY `seminary_id` (`seminary_id`),
   CONSTRAINT `questtopics_ibfk_1` FOREIGN KEY (`created_user_id`) REFERENCES `users` (`id`),
   CONSTRAINT `questtopics_ibfk_2` FOREIGN KEY (`seminary_id`) REFERENCES `seminaries` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Aufgabenbereiche';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='Aufgabenbereiche';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1220,12 +1220,12 @@ DROP TABLE IF EXISTS `questtypes`;
 CREATE TABLE `questtypes` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `title` varchar(64) NOT NULL,
-  `url` varchar(64) NOT NULL,
-  `classname` varchar(64) DEFAULT NULL,
+  `title` varchar(64) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `url` varchar(64) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `classname` varchar(64) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `title` (`title`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1239,7 +1239,7 @@ CREATE TABLE `questtypes_bossfight` (
   `quest_id` int(11) NOT NULL,
   `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `created_user_id` int(11) NOT NULL,
-  `bossname` varchar(64) NOT NULL,
+  `bossname` varchar(64) COLLATE utf8mb4_unicode_ci NOT NULL,
   `boss_seminarymedia_id` int(11) NOT NULL,
   `lives_character` smallint(5) unsigned NOT NULL,
   `lives_boss` smallint(5) unsigned NOT NULL,
@@ -1249,7 +1249,7 @@ CREATE TABLE `questtypes_bossfight` (
   CONSTRAINT `questtypes_bossfight_ibfk_1` FOREIGN KEY (`quest_id`) REFERENCES `quests` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `questtypes_bossfight_ibfk_2` FOREIGN KEY (`created_user_id`) REFERENCES `users` (`id`),
   CONSTRAINT `questtypes_bossfight_ibfk_3` FOREIGN KEY (`boss_seminarymedia_id`) REFERENCES `seminarymedia` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1263,8 +1263,8 @@ CREATE TABLE `questtypes_bossfight_stages` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `questtypes_bossfight_quest_id` int(11) NOT NULL,
   `parent_stage_id` int(11) DEFAULT NULL,
-  `text` text NOT NULL,
-  `question` varchar(255) NOT NULL,
+  `text` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `question` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `livedrain_character` smallint(6) NOT NULL,
   `livedrain_boss` smallint(6) NOT NULL,
   PRIMARY KEY (`id`),
@@ -1272,7 +1272,7 @@ CREATE TABLE `questtypes_bossfight_stages` (
   KEY `questtypes_bossfight_quest_id` (`questtypes_bossfight_quest_id`),
   CONSTRAINT `questtypes_bossfight_stages_ibfk_1` FOREIGN KEY (`questtypes_bossfight_quest_id`) REFERENCES `questtypes_bossfight` (`quest_id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `questtypes_bossfight_stages_ibfk_2` FOREIGN KEY (`parent_stage_id`) REFERENCES `questtypes_bossfight_stages` (`id`) ON DELETE SET NULL ON UPDATE SET NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1290,7 +1290,7 @@ CREATE TABLE `questtypes_bossfight_stages_characters` (
   KEY `character_id` (`character_id`),
   CONSTRAINT `questtypes_bossfight_stages_characters_ibfk_1` FOREIGN KEY (`questtypes_bossfight_stage_id`) REFERENCES `questtypes_bossfight_stages` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `questtypes_bossfight_stages_characters_ibfk_2` FOREIGN KEY (`character_id`) REFERENCES `characters` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1304,12 +1304,12 @@ CREATE TABLE `questtypes_choiceinput` (
   `quest_id` int(11) NOT NULL,
   `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `created_user_id` int(11) NOT NULL,
-  `text` text NOT NULL,
+  `text` text COLLATE utf8mb4_unicode_ci NOT NULL,
   PRIMARY KEY (`quest_id`),
   KEY `created_user_id` (`created_user_id`),
   CONSTRAINT `questtypes_choiceinput_ibfk_1` FOREIGN KEY (`quest_id`) REFERENCES `quests` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `questtypes_choiceinput_ibfk_2` FOREIGN KEY (`created_user_id`) REFERENCES `users` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1323,11 +1323,11 @@ CREATE TABLE `questtypes_choiceinput_choices` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `questtypes_choiceinput_list_id` int(11) NOT NULL,
   `pos` int(10) unsigned NOT NULL DEFAULT '1',
-  `text` varchar(255) NOT NULL,
+  `text` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `questtypes_choiceinput_list_id` (`questtypes_choiceinput_list_id`,`pos`),
   CONSTRAINT `questtypes_choiceinput_choices_ibfk_1` FOREIGN KEY (`questtypes_choiceinput_list_id`) REFERENCES `questtypes_choiceinput_lists` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1347,7 +1347,7 @@ CREATE TABLE `questtypes_choiceinput_lists` (
   KEY `questtypes_choiceinput_choice_id` (`questtypes_choiceinput_choice_id`),
   CONSTRAINT `questtypes_choiceinput_lists_ibfk_1` FOREIGN KEY (`questtypes_choiceinput_quest_id`) REFERENCES `questtypes_choiceinput` (`quest_id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `questtypes_choiceinput_lists_ibfk_2` FOREIGN KEY (`questtypes_choiceinput_choice_id`) REFERENCES `questtypes_choiceinput_choices` (`id`) ON DELETE SET NULL ON UPDATE SET NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1368,7 +1368,7 @@ CREATE TABLE `questtypes_choiceinput_lists_characters` (
   CONSTRAINT `questtypes_choiceinput_lists_characters_ibfk_1` FOREIGN KEY (`character_id`) REFERENCES `characters` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `questtypes_choiceinput_lists_characters_ibfk_2` FOREIGN KEY (`questtypes_choiceinput_list_id`) REFERENCES `questtypes_choiceinput_lists` (`id`),
   CONSTRAINT `questtypes_choiceinput_lists_characters_ibfk_3` FOREIGN KEY (`questtypes_choiceinput_choice_id`) REFERENCES `questtypes_choiceinput_choices` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1381,8 +1381,8 @@ DROP TABLE IF EXISTS `questtypes_crossword_words`;
 CREATE TABLE `questtypes_crossword_words` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `quest_id` int(11) NOT NULL,
-  `question` text NOT NULL,
-  `word` varchar(64) NOT NULL,
+  `question` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `word` varchar(64) COLLATE utf8mb4_unicode_ci NOT NULL,
   `vertical` tinyint(1) NOT NULL,
   `pos_x` int(10) unsigned NOT NULL,
   `pos_y` int(10) unsigned NOT NULL,
@@ -1390,7 +1390,7 @@ CREATE TABLE `questtypes_crossword_words` (
   UNIQUE KEY `quest_id_2` (`quest_id`,`vertical`,`pos_x`,`pos_y`),
   KEY `quest_id` (`quest_id`),
   CONSTRAINT `questtypes_crossword_words_ibfk_1` FOREIGN KEY (`quest_id`) REFERENCES `quests` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1404,12 +1404,12 @@ CREATE TABLE `questtypes_crossword_words_characters` (
   `questtypes_crossword_word_id` int(11) NOT NULL,
   `character_id` int(11) NOT NULL,
   `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `answer` varchar(64) NOT NULL,
+  `answer` varchar(64) COLLATE utf8mb4_unicode_ci NOT NULL,
   PRIMARY KEY (`questtypes_crossword_word_id`,`character_id`),
   KEY `character_id` (`character_id`),
   CONSTRAINT `questtypes_crossword_words_characters_ibfk_1` FOREIGN KEY (`questtypes_crossword_word_id`) REFERENCES `questtypes_crossword_words` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `questtypes_crossword_words_characters_ibfk_2` FOREIGN KEY (`character_id`) REFERENCES `characters` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1432,7 +1432,7 @@ CREATE TABLE `questtypes_dragndrop` (
   CONSTRAINT `questtypes_dragndrop_ibfk_1` FOREIGN KEY (`quest_id`) REFERENCES `quests` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `questtypes_dragndrop_ibfk_2` FOREIGN KEY (`created_user_id`) REFERENCES `users` (`id`),
   CONSTRAINT `questtypes_dragndrop_ibfk_3` FOREIGN KEY (`questmedia_id`) REFERENCES `questsmedia` (`media_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1452,7 +1452,7 @@ CREATE TABLE `questtypes_dragndrop_drags` (
   KEY `questmedia_id` (`questmedia_id`),
   CONSTRAINT `questtypes_dragndrop_drags_ibfk_1` FOREIGN KEY (`questtypes_dragndrop_id`) REFERENCES `questtypes_dragndrop` (`quest_id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `questtypes_dragndrop_drags_ibfk_2` FOREIGN KEY (`questmedia_id`) REFERENCES `questsmedia` (`media_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1473,7 +1473,7 @@ CREATE TABLE `questtypes_dragndrop_drops` (
   PRIMARY KEY (`id`),
   KEY `questtypes_dragndrop_id` (`questtypes_dragndrop_id`),
   CONSTRAINT `questtypes_dragndrop_drops_ibfk_4` FOREIGN KEY (`questtypes_dragndrop_id`) REFERENCES `questtypes_dragndrop` (`quest_id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1494,7 +1494,7 @@ CREATE TABLE `questtypes_dragndrop_drops_characters` (
   CONSTRAINT `questtypes_dragndrop_drops_characters_ibfk_1` FOREIGN KEY (`questtypes_dragndrop_drop_id`) REFERENCES `questtypes_dragndrop_drops` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `questtypes_dragndrop_drops_characters_ibfk_2` FOREIGN KEY (`character_id`) REFERENCES `characters` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `questtypes_dragndrop_drops_characters_ibfk_3` FOREIGN KEY (`questtypes_dragndrop_drag_id`) REFERENCES `questtypes_dragndrop_drags` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1515,7 +1515,7 @@ CREATE TABLE `questtypes_dragndrop_drops_drags` (
   CONSTRAINT `questtypes_dragndrop_drops_drags_ibfk_1` FOREIGN KEY (`questtypes_dragndrop_drop_id`) REFERENCES `questtypes_dragndrop_drops` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `questtypes_dragndrop_drops_drags_ibfk_3` FOREIGN KEY (`created_user_id`) REFERENCES `users` (`id`),
   CONSTRAINT `questtypes_dragndrop_drops_drags_ibfk_4` FOREIGN KEY (`questtypes_dragndrop_drag_id`) REFERENCES `questtypes_dragndrop_drags` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1531,14 +1531,14 @@ CREATE TABLE `questtypes_multiplechoice` (
   `created_user_id` int(11) NOT NULL,
   `quest_id` int(11) NOT NULL,
   `pos` int(10) unsigned NOT NULL DEFAULT '1',
-  `question` text NOT NULL,
+  `question` text COLLATE utf8mb4_unicode_ci NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `quest_id_2` (`quest_id`,`pos`),
   KEY `created_user_id` (`created_user_id`),
   KEY `quest_id` (`quest_id`),
   CONSTRAINT `questtypes_multiplechoice_ibfk_1` FOREIGN KEY (`created_user_id`) REFERENCES `users` (`id`),
   CONSTRAINT `questtypes_multiplechoice_ibfk_2` FOREIGN KEY (`quest_id`) REFERENCES `quests` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1554,7 +1554,7 @@ CREATE TABLE `questtypes_multiplechoice_answers` (
   `created_user_id` int(11) NOT NULL,
   `questtypes_multiplechoice_id` int(11) NOT NULL,
   `pos` int(11) NOT NULL,
-  `answer` varchar(255) NOT NULL,
+  `answer` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `tick` tinyint(1) DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `questtypes_multiplechoice_id_2` (`questtypes_multiplechoice_id`,`pos`),
@@ -1562,7 +1562,7 @@ CREATE TABLE `questtypes_multiplechoice_answers` (
   KEY `questtypes_multiplechoice_id` (`questtypes_multiplechoice_id`),
   CONSTRAINT `questtypes_multiplechoice_answers_ibfk_1` FOREIGN KEY (`created_user_id`) REFERENCES `users` (`id`),
   CONSTRAINT `questtypes_multiplechoice_answers_ibfk_2` FOREIGN KEY (`questtypes_multiplechoice_id`) REFERENCES `questtypes_multiplechoice` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1581,7 +1581,7 @@ CREATE TABLE `questtypes_multiplechoice_characters` (
   KEY `character_id` (`character_id`),
   CONSTRAINT `questtypes_multiplechoice_characters_ibfk_1` FOREIGN KEY (`questtypes_multiplechoice_answer_id`) REFERENCES `questtypes_multiplechoice_answers` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `questtypes_multiplechoice_characters_ibfk_2` FOREIGN KEY (`character_id`) REFERENCES `characters` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1604,7 +1604,7 @@ CREATE TABLE `questtypes_submit_characters` (
   CONSTRAINT `questtypes_submit_characters_ibfk_3` FOREIGN KEY (`upload_id`) REFERENCES `seminaryuploads` (`id`),
   CONSTRAINT `questtypes_submit_characters_ibfk_4` FOREIGN KEY (`quest_id`) REFERENCES `quests` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `questtypes_submit_characters_ibfk_5` FOREIGN KEY (`character_id`) REFERENCES `characters` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1619,13 +1619,13 @@ CREATE TABLE `questtypes_submit_characters_comments` (
   `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `created_user_id` int(11) NOT NULL,
   `questtypes_submit_character_id` int(11) NOT NULL,
-  `comment` text NOT NULL,
+  `comment` text COLLATE utf8mb4_unicode_ci NOT NULL,
   PRIMARY KEY (`id`),
   KEY `created_user_id` (`created_user_id`),
   KEY `questtypes_submit_character_id` (`questtypes_submit_character_id`),
   CONSTRAINT `questtypes_submit_characters_comments_ibfk_1` FOREIGN KEY (`created_user_id`) REFERENCES `users` (`id`),
   CONSTRAINT `questtypes_submit_characters_comments_ibfk_2` FOREIGN KEY (`questtypes_submit_character_id`) REFERENCES `questtypes_submit_characters` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1640,7 +1640,7 @@ CREATE TABLE `questtypes_submit_mimetypes` (
   `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `created_user_id` int(11) NOT NULL,
   `seminary_id` int(11) NOT NULL,
-  `mimetype` varchar(32) NOT NULL,
+  `mimetype` varchar(32) COLLATE utf8mb4_unicode_ci NOT NULL,
   `size` int(10) unsigned NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
   UNIQUE KEY `mimetype` (`mimetype`,`seminary_id`),
@@ -1648,7 +1648,7 @@ CREATE TABLE `questtypes_submit_mimetypes` (
   KEY `seminary_id` (`seminary_id`),
   CONSTRAINT `questtypes_submit_mimetypes_ibfk_1` FOREIGN KEY (`created_user_id`) REFERENCES `users` (`id`),
   CONSTRAINT `questtypes_submit_mimetypes_ibfk_2` FOREIGN KEY (`seminary_id`) REFERENCES `seminaries` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1662,12 +1662,12 @@ CREATE TABLE `questtypes_textinput` (
   `quest_id` int(11) NOT NULL,
   `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `created_user_id` int(11) NOT NULL,
-  `text` text NOT NULL,
+  `text` text COLLATE utf8mb4_unicode_ci NOT NULL,
   PRIMARY KEY (`quest_id`),
   KEY `created_user_id` (`created_user_id`),
   CONSTRAINT `questtypes_textinput_ibfk_1` FOREIGN KEY (`quest_id`) REFERENCES `quests` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `questtypes_textinput_ibfk_2` FOREIGN KEY (`created_user_id`) REFERENCES `users` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1682,13 +1682,13 @@ CREATE TABLE `questtypes_textinput_fields` (
   `questtypes_textinput_quest_id` int(11) NOT NULL,
   `number` int(10) unsigned NOT NULL,
   `questtypes_textinput_fieldsize_id` int(11) NOT NULL DEFAULT '1',
-  `regex` varchar(255) NOT NULL,
+  `regex` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `questtypes_textinput_quest_id` (`questtypes_textinput_quest_id`,`number`),
   KEY `questtypes_textinput_fieldsize_id` (`questtypes_textinput_fieldsize_id`),
   CONSTRAINT `questtypes_textinput_fields_ibfk_1` FOREIGN KEY (`questtypes_textinput_quest_id`) REFERENCES `quests` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `questtypes_textinput_fields_ibfk_2` FOREIGN KEY (`questtypes_textinput_fieldsize_id`) REFERENCES `questtypes_textinput_fieldsizes` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1702,12 +1702,12 @@ CREATE TABLE `questtypes_textinput_fields_characters` (
   `questtypes_textinput_field_id` int(11) NOT NULL,
   `character_id` int(11) NOT NULL,
   `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `value` varchar(255) NOT NULL,
+  `value` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   PRIMARY KEY (`questtypes_textinput_field_id`,`character_id`),
   KEY `character_id` (`character_id`),
   CONSTRAINT `questtypes_textinput_fields_characters_ibfk_2` FOREIGN KEY (`character_id`) REFERENCES `characters` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `questtypes_textinput_fields_characters_ibfk_3` FOREIGN KEY (`questtypes_textinput_field_id`) REFERENCES `questtypes_textinput_fields` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1720,10 +1720,10 @@ DROP TABLE IF EXISTS `questtypes_textinput_fieldsizes`;
 CREATE TABLE `questtypes_textinput_fieldsizes` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `size` varchar(32) NOT NULL,
+  `size` varchar(32) COLLATE utf8mb4_unicode_ci NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `size` (`size`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1737,10 +1737,10 @@ CREATE TABLE `seminaries` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `created_user_id` int(11) NOT NULL,
-  `title` varchar(255) NOT NULL,
-  `url` varchar(128) NOT NULL,
-  `course` varchar(255) NOT NULL,
-  `description` text NOT NULL,
+  `title` varchar(128) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `url` varchar(128) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `course` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `description` text COLLATE utf8mb4_unicode_ci NOT NULL,
   `seminarymedia_id` int(11) DEFAULT NULL,
   `charactergroups_seminarymedia_id` int(11) DEFAULT NULL,
   `achievements_seminarymedia_id` int(11) DEFAULT NULL,
@@ -1761,7 +1761,7 @@ CREATE TABLE `seminaries` (
   CONSTRAINT `seminaries_ibfk_4` FOREIGN KEY (`achievements_seminarymedia_id`) REFERENCES `seminarymedia` (`id`) ON DELETE SET NULL ON UPDATE SET NULL,
   CONSTRAINT `seminaries_ibfk_5` FOREIGN KEY (`library_seminarymedia_id`) REFERENCES `seminarymedia` (`id`) ON DELETE SET NULL ON UPDATE SET NULL,
   CONSTRAINT `seminaries_ibfk_6` FOREIGN KEY (`map_seminarymedia_id`) REFERENCES `seminarymedia` (`id`) ON DELETE SET NULL ON UPDATE SET NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Lehrveranstaltungen';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='Lehrveranstaltungen';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1777,10 +1777,10 @@ CREATE TABLE `seminarycharacterfields` (
   `created_user_id` int(11) NOT NULL,
   `seminary_id` int(11) NOT NULL,
   `pos` int(10) unsigned NOT NULL,
-  `title` varchar(64) NOT NULL,
-  `url` varchar(64) NOT NULL,
+  `title` varchar(64) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `url` varchar(64) COLLATE utf8mb4_unicode_ci NOT NULL,
   `seminarycharacterfieldtype_id` int(11) NOT NULL,
-  `regex` varchar(512) NOT NULL,
+  `regex` varchar(512) COLLATE utf8mb4_unicode_ci NOT NULL,
   `required` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
   UNIQUE KEY `url` (`seminary_id`,`url`),
@@ -1791,7 +1791,7 @@ CREATE TABLE `seminarycharacterfields` (
   CONSTRAINT `seminarycharacterfields_ibfk_1` FOREIGN KEY (`created_user_id`) REFERENCES `users` (`id`),
   CONSTRAINT `seminarycharacterfields_ibfk_2` FOREIGN KEY (`seminary_id`) REFERENCES `seminaries` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `seminarycharacterfields_ibfk_3` FOREIGN KEY (`seminarycharacterfieldtype_id`) REFERENCES `seminarycharacterfieldtypes` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1804,10 +1804,10 @@ DROP TABLE IF EXISTS `seminarycharacterfieldtypes`;
 CREATE TABLE `seminarycharacterfieldtypes` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `title` varchar(64) NOT NULL,
-  `url` varchar(64) NOT NULL,
+  `title` varchar(64) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `url` varchar(64) COLLATE utf8mb4_unicode_ci NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1822,10 +1822,10 @@ CREATE TABLE `seminarymedia` (
   `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `created_user_id` int(11) NOT NULL,
   `seminary_id` int(11) NOT NULL,
-  `name` varchar(64) NOT NULL,
-  `url` varchar(64) NOT NULL,
-  `description` varchar(128) NOT NULL,
-  `mimetype` varchar(32) NOT NULL,
+  `name` varchar(64) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `url` varchar(64) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `description` varchar(128) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `mimetype` varchar(32) COLLATE utf8mb4_unicode_ci NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `seminary_id_2` (`seminary_id`,`name`),
   UNIQUE KEY `seminary_id_3` (`seminary_id`,`url`),
@@ -1833,7 +1833,7 @@ CREATE TABLE `seminarymedia` (
   KEY `seminary_id` (`seminary_id`),
   CONSTRAINT `seminarymedia_ibfk_1` FOREIGN KEY (`created_user_id`) REFERENCES `users` (`id`),
   CONSTRAINT `seminarymedia_ibfk_2` FOREIGN KEY (`seminary_id`) REFERENCES `seminaries` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1848,9 +1848,9 @@ CREATE TABLE `seminaryuploads` (
   `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `created_user_id` int(11) NOT NULL,
   `seminary_id` int(11) DEFAULT NULL,
-  `name` varchar(64) NOT NULL,
-  `url` varchar(255) NOT NULL,
-  `mimetype` varchar(32) NOT NULL,
+  `name` varchar(64) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `url` varchar(128) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `mimetype` varchar(32) COLLATE utf8mb4_unicode_ci NOT NULL,
   `public` tinyint(1) NOT NULL DEFAULT '1',
   PRIMARY KEY (`id`),
   UNIQUE KEY `url` (`url`),
@@ -1858,7 +1858,7 @@ CREATE TABLE `seminaryuploads` (
   KEY `seminary_id` (`seminary_id`),
   CONSTRAINT `seminaryuploads_ibfk_1` FOREIGN KEY (`created_user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `seminaryuploads_ibfk_2` FOREIGN KEY (`seminary_id`) REFERENCES `seminaries` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1871,10 +1871,10 @@ DROP TABLE IF EXISTS `userroles`;
 CREATE TABLE `userroles` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `name` varchar(32) NOT NULL,
+  `name` varchar(32) COLLATE utf8mb4_unicode_ci NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `name` (`name`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1887,18 +1887,18 @@ DROP TABLE IF EXISTS `users`;
 CREATE TABLE `users` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `username` varchar(32) NOT NULL,
-  `url` varchar(128) NOT NULL,
-  `surname` varchar(128) NOT NULL,
-  `prename` varchar(128) NOT NULL,
-  `email` varchar(64) NOT NULL,
-  `password` varchar(64) NOT NULL,
+  `username` varchar(32) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `url` varchar(128) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `surname` varchar(128) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `prename` varchar(128) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `email` varchar(64) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `password` varchar(64) COLLATE utf8mb4_unicode_ci NOT NULL,
   `mailing` tinyint(1) NOT NULL DEFAULT '1',
   PRIMARY KEY (`id`),
   UNIQUE KEY `username` (`username`),
   UNIQUE KEY `email` (`email`),
   UNIQUE KEY `url` (`url`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='Benutzer';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='Benutzer';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1916,7 +1916,7 @@ CREATE TABLE `users_userroles` (
   KEY `userrole_id` (`userrole_id`),
   CONSTRAINT `users_userroles_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `users_userroles_ibfk_3` FOREIGN KEY (`userrole_id`) REFERENCES `userroles` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -1933,7 +1933,7 @@ CREATE TABLE `xplevels` (
   `seminary_id` int(11) NOT NULL,
   `xps` int(10) unsigned NOT NULL,
   `level` int(11) NOT NULL,
-  `name` varchar(64) DEFAULT NULL,
+  `name` varchar(64) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `xps` (`seminary_id`,`xps`),
   UNIQUE KEY `level` (`level`,`seminary_id`),
@@ -1941,7 +1941,7 @@ CREATE TABLE `xplevels` (
   KEY `seminary_id` (`seminary_id`),
   CONSTRAINT `xplevels_ibfk_1` FOREIGN KEY (`created_user_id`) REFERENCES `users` (`id`),
   CONSTRAINT `xplevels_ibfk_2` FOREIGN KEY (`seminary_id`) REFERENCES `seminaries` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -1953,4 +1953,4 @@ CREATE TABLE `xplevels` (
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2015-04-26 13:28:31
+-- Dump completed on 2015-05-19 11:52:32

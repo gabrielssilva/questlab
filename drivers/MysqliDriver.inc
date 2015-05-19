@@ -156,7 +156,7 @@
             }
 
             // Set character encoding
-            if(!$con->set_charset('utf8')) {
+            if(!$con->set_charset('utf8mb4')) {
                 throw new \nre\exceptions\DatamodelException($con->connect_error, $con->connect_errno);
             }
 
