@@ -1,4 +1,4 @@
-<?php if(!is_null($seminary['seminarymedia_id'])) : ?>
+<?php if(!is_null($seminary['map_seminarymedia_id'])) : ?>
 <div class="moodpic">
 	<img src="<?=$linker->link(array('media','seminarymoodpic',$seminary['url'], 'map'))?>">
 </div>
