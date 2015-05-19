@@ -1,8 +1,4 @@
-<?php if(!is_null($seminary['seminarymedia_id'])) : ?>
-<div class="moodpic">
-	<img src="<?=$linker->link(array('media','seminarymoodpic',$seminary['url']))?>">
-</div>
-<?php endif ?>
+<?=$moodpic?>
 <h1><?=$seminary['title']?></h1>
 <?php if(count(array_intersect(array('admin', 'moderator'), \hhu\z\controllers\SeminaryController::$character['characterroles'])) > 0) : ?>
 <?php if(in_array('admin', \hhu\z\controllers\SeminaryController::$character['characterroles'])) : ?>

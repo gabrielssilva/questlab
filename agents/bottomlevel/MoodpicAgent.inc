@@ -9,15 +9,15 @@
      * @link        https://bitbucket.org/coderkun/the-legend-of-z
      */
 
-    namespace hhu\z\agents\intermediate;
+    namespace hhu\z\agents\bottomlevel;
 
 
     /**
-     * Agent to handle XP-levels of a Seminary.
+     * Agent to display a Moodpic.
      *
      * @author  Oliver Hanraths <oliver.hanraths@uni-duesseldorf.de>
      */
-    class XplevelsAgent extends \nre\agents\IntermediateAgent
+    class MoodpicAgent extends \nre\agents\BottomlevelAgent
     {
 
 
@@ -29,10 +29,8 @@
          * @param   \nre\core\Request   $request    Current request
          * @param   \nre\core\Response  $response   Current response
          */
-        public function manage(\nre\core\Request $request, \nre\core\Response $response)
+        public function index(\nre\core\Request $request, \nre\core\Response $response)
         {
-            // Add (default) Moodpic
-            $this->addSubAgent('Moodpic', 'index', $request->getParam(1));
         }
 
     }

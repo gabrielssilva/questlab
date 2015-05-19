@@ -24,6 +24,19 @@
 
 
         /**
+         * Action: index.
+         *
+         * @param   \nre\core\Request   $request    Current request
+         * @param   \nre\core\Response  $response   Current response
+         */
+        public function index(\nre\core\Request $request, \nre\core\Response $response)
+        {
+            // Add (default) Moodpic
+            $this->addSubAgent('Moodpic', 'index', $request->getParam(1));
+        }
+
+
+        /**
          * Action: quest.
          *
          * @param   \nre\core\Request   $request    Current request
@@ -31,6 +44,10 @@
          */
         public function quest(\nre\core\Request $request, \nre\core\Response $response)
         {
+            // Add (default) Moodpic
+            $this->addSubAgent('Moodpic', 'index', $request->getParam(1));
+
+            // Add Questgroups hierarchy path
             $this->addSubAgent('Questgroupshierarchypath', 'index', $request->getParam(3), $request->getParam(4), true);
         }
 
@@ -43,6 +60,10 @@
          */
         public function submissions(\nre\core\Request $request, \nre\core\Response $response)
         {
+            // Add (default) Moodpic
+            $this->addSubAgent('Moodpic', 'index', $request->getParam(1));
+
+            // Add Questgroups hierarchy path
             $this->addSubAgent('Questgroupshierarchypath', 'index', $request->getParam(3), $request->getParam(4), true);
         }
 
@@ -55,6 +76,10 @@
          */
         public function submission(\nre\core\Request $request, \nre\core\Response $response)
         {
+            // Add (default) Moodpic
+            $this->addSubAgent('Moodpic', 'index', $request->getParam(1));
+
+            // Add Questgroups hierarchy path
             $this->addSubAgent('Questgroupshierarchypath', 'index', $request->getParam(3), $request->getParam(4), true);
         }
 
@@ -67,6 +92,10 @@
          */
         public function create(\nre\core\Request $request, \nre\core\Response $response)
         {
+            // Add (default) Moodpic
+            $this->addSubAgent('Moodpic', 'index', $request->getParam(1));
+
+            // Add Questgroups hierarchy path
             $this->addSubAgent('Questgroupshierarchypath', 'index', $request->getParam(3), $request->getParam(4), true);
         }
 
@@ -79,6 +108,10 @@
          */
         public function edit(\nre\core\Request $request, \nre\core\Response $response)
         {
+            // Add (default) Moodpic
+            $this->addSubAgent('Moodpic', 'index', $request->getParam(1));
+
+            // Add Questgroups hierarchy path
             $this->addSubAgent('Questgroupshierarchypath', 'index', $request->getParam(3), $request->getParam(4), true);
         }
 
@@ -91,6 +124,10 @@
          */
         public function edittask(\nre\core\Request $request, \nre\core\Response $response)
         {
+            // Add (default) Moodpic
+            $this->addSubAgent('Moodpic', 'index', $request->getParam(1));
+
+            // Add Questgroups hierarchy path
             $this->addSubAgent('Questgroupshierarchypath', 'index', $request->getParam(3), $request->getParam(4), true);
         }
 
@@ -103,6 +140,10 @@
          */
         public function edittexts(\nre\core\Request $request, \nre\core\Response $response)
         {
+            // Add (default) Moodpic
+            $this->addSubAgent('Moodpic', 'index', $request->getParam(1));
+
+            // Add Questgroups hierarchy path
             $this->addSubAgent('Questgroupshierarchypath', 'index', $request->getParam(3), $request->getParam(4), true);
         }
 
@@ -115,6 +156,10 @@
          */
         public function delete(\nre\core\Request $request, \nre\core\Response $response)
         {
+            // Add (default) Moodpic
+            $this->addSubAgent('Moodpic', 'index', $request->getParam(1));
+
+            // Add Questgroups hierarchy path
             $this->addSubAgent('Questgroupshierarchypath', 'index', $request->getParam(3), $request->getParam(4), true);
         }
 

@@ -1,7 +1,9 @@
-<?php if(!is_null($seminary['seminarymedia_id'])) : ?>
+<?php if(!is_null($questgroup['picture'])) : ?>
 <div class="moodpic">
-	<img src="<?=$linker->link(array('media','seminarymoodpic',$seminary['url']))?>">
+	<img src="<?=$linker->link(array('media','seminary',$seminary['url'],$questgroup['picture']['url']))?>" />
 </div>
+<?php else : ?>
+<?=$moodpic?>
 <?php endif ?>
 <?=$questgroupshierarchypath?>
 

@@ -31,6 +31,47 @@
          */
         public function index(\nre\core\Request $request, \nre\core\Response $response)
         {
+            // Add (default) Moodpic
+            $this->addSubAgent('Moodpic', 'index', $request->getParam(1));
+        }
+
+
+        /**
+         * Action: create.
+         *
+         * @param   \nre\core\Request   $request    Current request
+         * @param   \nre\core\Response  $response   Current response
+         */
+        public function create(\nre\core\Request $request, \nre\core\Response $response)
+        {
+            // Add (default) Moodpic
+            $this->addSubAgent('Moodpic', 'index', $request->getParam(1));
+        }
+
+
+        /**
+         * Action: edit.
+         *
+         * @param   \nre\core\Request   $request    Current request
+         * @param   \nre\core\Response  $response   Current response
+         */
+        public function edit(\nre\core\Request $request, \nre\core\Response $response)
+        {
+            // Add (default) Moodpic
+            $this->addSubAgent('Moodpic', 'index', $request->getParam(1));
+        }
+
+
+        /**
+         * Action: delete.
+         *
+         * @param   \nre\core\Request   $request    Current request
+         * @param   \nre\core\Response  $response   Current response
+         */
+        public function delete(\nre\core\Request $request, \nre\core\Response $response)
+        {
+            // Add (default) Moodpic
+            $this->addSubAgent('Moodpic', 'index', $request->getParam(1));
         }
 
     }

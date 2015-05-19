@@ -2,6 +2,8 @@
 <div class="moodpic">
 	<img src="<?=$linker->link(array('media','seminarymoodpic',$seminary['url']))?>" />
 </div>
+<?php else: ?>
+<?=$moodpic?>
 <?php endif ?>
 <ul class="breadcrumbs">
 	<li><a href="<?=$linker->link(array('seminaries',$seminary['url']))?>"><?=$seminary['title']?></a></li>

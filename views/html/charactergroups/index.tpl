@@ -1,8 +1,4 @@
-<?php if(!is_null($seminary['charactergroups_seminarymedia_id'])) : ?>
-<div class="moodpic">
-	<img src="<?=$linker->link(array('media','seminarymoodpic',$seminary['url'], 'charactergroups'))?>">
-</div>
-<?php endif ?>
+<?=$moodpic?>
 <ul class="breadcrumbs">
 	<li><a href="<?=$linker->link(array('seminaries',$seminary['url']))?>"><?=$seminary['title']?></a></li>
 </ul>
