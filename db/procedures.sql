@@ -1,6 +1,6 @@
 DROP PROCEDURE IF EXISTS update_cache_characters_quest;
 DELIMITER $$
-CREATE PROCEDURE update_cache_characters_quest(
+CREATE DEFINER = 'z'@'%' PROCEDURE update_cache_characters_quest(
 	IN QUESTID INT(11)
 )
 BEGIN
@@ -27,7 +27,7 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS update_cache_characters_charactergroup;
 DELIMITER $$
-CREATE PROCEDURE update_cache_characters_charactergroup(
+CREATE DEFINER = 'z'@'%' PROCEDURE update_cache_characters_charactergroup(
 	IN CHARACTERGROUPID INT(11)
 )
 BEGIN
@@ -54,7 +54,7 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS update_cache_characters;
 DELIMITER $$
-CREATE PROCEDURE update_cache_characters(
+CREATE DEFINER = 'z'@'%' PROCEDURE update_cache_characters(
 	IN CHARACTERID INT(11)
 )
 BEGIN
@@ -108,7 +108,7 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS update_cache_charactergroups_charactergroupsquest;
 DELIMITER $$
-CREATE PROCEDURE update_cache_charactergroups_charactergroupsquest(
+CREATE DEFINER = 'z'@'%' PROCEDURE update_cache_charactergroups_charactergroupsquest(
 	IN CHARACTERGROUPSQUESTID INT(11)
 )
 BEGIN
@@ -135,7 +135,7 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS update_cache_charactergroups;
 DELIMITER $$
-CREATE PROCEDURE update_cache_charactergroups(
+CREATE DEFINER = 'z'@'%' PROCEDURE update_cache_charactergroups(
 	IN CHARACTERGROUPID INT(11)
 )
 BEGIN
