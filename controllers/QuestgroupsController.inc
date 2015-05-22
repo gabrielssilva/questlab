@@ -91,7 +91,6 @@
             {
                 // Check permission of previous parent Questgroups
                 $parentQuestgroup = $questgroup;
-                print_r($parentQuestgroup);
                 while(!is_null($parentQuestgroup['hierarchy']['parent_questgroup_id']))
                 {
                     $parentQuestgroup = $this->Questgroups->getQuestgroupById($parentQuestgroup['hierarchy']['parent_questgroup_id']);
@@ -107,8 +106,7 @@
                 }
 
                 // Check permission of previous Questgroup
-                // (only if Character has not entered Questgroup before)
-                if(!$this->Questgroups->hasCharacterEnteredQuestgroup($questgroup['id'], $character['id']))
+                if($this->Questgroups->hasCharacterEnteredQuestgroup($questgroup['id'], $character['id']))
                 {
                     $previousQuestgroup = $this->Questgroups->getPreviousQuestgroup($seminary['id'], $questgroup['id']);
                     if(!is_null($previousQuestgroup)) {
