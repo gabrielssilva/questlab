@@ -198,6 +198,7 @@
                     $xps = $this->request->getPostParam('xps');
                     foreach($groups as &$group)
                     {
+                        // Set XPs
                         if(array_key_exists($group['url'], $xps) && $xps[$group['url']] != 'null')
                         {
                             $xpsFactor = intval($xps[$group['url']]) / $quest['xps'];
@@ -205,6 +206,20 @@
                         }
                         else {
                             $this->Charactergroupsquests->deleteGroupForQuest($quest['id'], $group['id']);
+                        }
+
+                        // Check Achievements of Characters
+                        $characters = $this->Characters->getCharactersForGroup($group['id']);
+                        foreach($characters as &$character)
+                        {
+                            if($character['id'] != $this->Auth->getUserId())
+                            {
+                                $this->Achievement->checkAchievements(
+                                    $seminary['id'],
+                                    $character['id'],
+                                    array('character', 'achievement')
+                                );
+                            }
                         }
                     }
                 }
