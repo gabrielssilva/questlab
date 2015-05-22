@@ -100,8 +100,8 @@
             $this->checkPermission($request, $response);
 
             // Check achievements
-            $this->checkAchievements($request, $response, 'date');
-            $this->checkAchievements($request, $response, 'achievement');
+            $this->checkAchievements($request, 'date');
+            $this->checkAchievements($request, 'achievement');
 
             // Set Seminary and Character data
             $this->set('loggedSeminary', self::$seminary);
@@ -158,14 +158,13 @@
         /**
          * Check for newly achieved Achievements.
          *
-         * @param   \nre\core\Request   $request        Current request
-         * @param   \nre\core\Response  $response       Current response
-         * @param   array           $checkConditions    Conditions to check
+         * @param   \nre\core\Request   $request            Current request
+         * @param   array               $checkConditions    Conditions to check
          */
-        protected function checkAchievements(\nre\core\Request $request, \nre\core\Response $response, $checkConditions=null)
+        protected function checkAchievements(\nre\core\Request $request, $checkConditions=null)
         {
             // Do not check MediaController
-            if($this->request->getParam(0, 'toplevel') != \nre\configs\AppConfig::$defaults['toplevel']) {
+            if($request->getParam(0, 'toplevel') != \nre\configs\AppConfig::$defaults['toplevel']) {
                 return;
             }
 
@@ -174,152 +173,18 @@
                 return;
             }
 
-            // Set conditions to check
-            if(!is_null($checkConditions) && !is_array($checkConditions)) {
-                $checkConditions = array($checkConditions);
-            }
+            // Check Achievements
+            $achievements = $this->Achievement->checkAchievements(self::$seminary['id'], self::$character['id'], $checkConditions);
 
-            // Get unachieved Achievments
-            $achievements = $this->Achievements->getUnachhievedAchievementsForCharacter(self::$seminary['id'], self::$character['id']);
-            if(in_array('user', self::$character['characterroles'])) {
-                $achievements = array_merge($achievements, $this->Achievements->getUnachievedOnlyOnceAchievementsForSeminary(self::$seminary['id']));
-            }
-
-            // Check conditions
+            // Add notifications
             foreach($achievements as &$achievement)
             {
-                // Check condition to test
-                if(!is_null($checkConditions) && !in_array($achievement['condition'], $checkConditions)) {
-                    continue;
-                }
-
-                // Check deadline
-                if(!is_null($achievement['deadline']) && $achievement['deadline'] < date('Y-m-d H:i:s')) {
-                    continue;
-                }
-
-                // Get conditions
-                $conditions = array();
-                $progress = 0;
-                switch($achievement['condition'])
-                {
-                    // Date conditions
-                    case 'date':
-                        $conditionsDate = $this->Achievements->getAchievementConditionsDate($achievement['id']);
-                        foreach($conditionsDate as &$condition)
-                        {
-                            $conditions[] = array(
-                                'func'      => 'checkAchievementConditionDate',
-                                'params'    => array(
-                                    $condition['select']
-                                )
-                            );
-                        }
-                    break;
-                    // Character conditions
-                    case 'character':
-                        $conditionsCharacter = $this->Achievements->getAchievementConditionsCharacter($achievement['id']);
-                        foreach($conditionsCharacter as &$condition)
-                        {
-                            $conditions[] = array(
-                                'func'      => 'checkAchievementConditionCharacter',
-                                'params'    => array(
-                                    $condition['field'],
-                                    $condition['value'],
-                                    self::$character['id']
-                                )
-                            );
-                        }
-                    break;
-                    // Quest conditions
-                    case 'quest':
-                        $conditionsQuest = $this->Achievements->getAchievementConditionsQuest($achievement['id']);
-                        foreach($conditionsQuest as &$condition)
-                        {
-                            $conditions[] = array(
-                                'func'      => 'checkAchievementConditionQuest',
-                                'params'    => array(
-                                    $condition['field'],
-                                    $condition['count'],
-                                    $condition['value'],
-                                    $condition['status'],
-                                    $condition['groupby'],
-                                    $condition['quest_id'],
-                                    self::$character['id']
-                                )
-                            );
-                        }
-                    break;
-                    // Achievement conditions
-                    case 'achievement':
-                        $conditionsAchievement = $this->Achievements->getAchievementConditionsAchievement($achievement['id']);
-                        foreach($conditionsAchievement as &$condition)
-                        {
-                            $conditions[] = array(
-                                'func'      => 'checkAchievementConditionAchievement',
-                                'params'    => array(
-                                    $condition['field'],
-                                    $condition['count'],
-                                    $condition['value'],
-                                    $condition['groupby'],
-                                    $condition['meta_achievement_id'],
-                                    self::$character['id']
-                                )
-                            );
-                        }
-                    break;
-                }
-
-                // Do not achieve Achievements without conditions
-                if(empty($conditions)) {
-                    continue;
-                }
-
-                // Check conditions
-                $achieved = ($achievement['all_conditions'] == 1);
-                foreach($conditions as &$condition)
-                {
-                    // Calculate result of condition
-                    $result = call_user_func_array(
-                        array(
-                            $this->Achievements,
-                            $condition['func']
-                        ),
-                        $condition['params']
-                    );
-
-                    // The overall result and abort if possible
-                    if($achievement['all_conditions'])
-                    {
-                        if(!$result) {
-                            $achieved = false;
-                            break;
-                        }
-                    }
-                    else
-                    {
-                        if($result) {
-                            $achieved = true;
-                            break;
-                        }
-                    }
-
-                }
-
-                // Achievement achieved
-                if($achieved)
-                {
-                    // Set status
-                    $this->Achievements->setAchievementAchieved($achievement['id'], self::$character['id']);
-
-                    // Add notification
-                    $this->Notification->addNotification(
-                        \hhu\z\controllers\components\NotificationComponent::TYPE_ACHIEVEMENT,
-                        $achievement['title'],
-                        $this->linker->link(array('achievements', 'index', self::$seminary['url']), 0, true, null, true, $achievement['url']),
-                        (!is_null($achievement['achieved_achievementsmedia_id']) ? $this->linker->link(array('media','achievement',self::$seminary['url'],$achievement['url'])) : null)
-                    );
-                }
+                $this->Notification->addNotification(
+                    \hhu\z\controllers\components\NotificationComponent::TYPE_ACHIEVEMENT,
+                    $achievement['title'],
+                    $this->linker->link(array('achievements', 'index', self::$seminary['url']), 0, true, null, true, $achievement['url']),
+                    (!is_null($achievement['achieved_achievementsmedia_id']) ? $this->linker->link(array('media','achievement',self::$seminary['url'],$achievement['url'])) : null)
+                );
             }
         }
 
