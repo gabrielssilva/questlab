@@ -397,8 +397,11 @@
                 {
                     // Add Characters to group
                     case 'addcharacters':
-                        foreach($selectedCharacters as &$characterId) {
+                        foreach($selectedCharacters as &$characterId)
+                        {
                             $this->Charactergroups->addCharacterToCharactergroup($group['id'], $characterId);
+                            // Check Achievements
+                            $this->Achievement->checkAchievements($seminary['id'], $characterId, array('character', 'achievement'));
                         }
                     break;
                     // Remove Characters from group
