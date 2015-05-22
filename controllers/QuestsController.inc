@@ -180,16 +180,31 @@
             // Check permissions
             if(count(array_intersect(array('admin','moderator'), SeminaryController::$character['characterroles'])) == 0)
             {
-                $previousQuests = $this->Quests->getPreviousQuests($quest['id']);
-                if(count($previousQuests) == 0)
+                // Previous Questgroup
+                $previousQuestgroup = $this->Questgroups->getPreviousQuestgroup($seminary['id'], $questgroup['id']);
+                if(!is_null($previousQuestgroup) && !$this->Questgroups->hasCharacterSolvedQuestgroup($previousQuestgroup['id'], $character['id'])) {
+                    throw new \nre\exceptions\AccessDeniedException();
+                }
+                // Previous parents of previous Questgroup
+                $parentQuestgroup = $previousQuestgroup;
+                $parentQuestgroup['hierarchy'] = $this->Questgroupshierarchy->getHierarchyForQuestgroup($parentQuestgroup['id']);
+                while(!is_null($parentQuestgroup['hierarchy']['parent_questgroup_id']))
                 {
-                    // Previous Questgroup
-                    $previousQuestgroup = $this->Questgroups->getPreviousQuestgroup($seminary['id'], $questgroup['id']);
-                    if(!is_null($previousQuestgroup) && !$this->Questgroups->hasCharacterSolvedQuestgroup($previousQuestgroup['id'], $character['id'])) {
-                        throw new \nre\exceptions\AccessDeniedException();
+                    $parentQuestgroup = $this->Questgroups->getQuestgroupById($parentQuestgroup['hierarchy']['parent_questgroup_id']);
+                    $parentQuestgroup['hierarchy'] = $this->Questgroupshierarchy->getHierarchyForQuestgroup($parentQuestgroup['id']);
+                    try {
+                        $previousQuestgroup = $this->Questgroups->getPreviousQuestgroup($seminary['id'], $parentQuestgroup['id']);
+                        if(!$this->Questgroups->hasCharacterSolvedQuestgroup($previousQuestgroup['id'], $character['id'])) {
+                            throw new \nre\exceptions\AccessDeniedException();
+                        }
+                    }
+                    catch(\nre\exceptions\IdNotFoundException $e) {
                     }
                 }
-                else
+
+                // Previous Quests
+                $previousQuests = $this->Quests->getPreviousQuests($quest['id']);
+                if(count($previousQuests) > 0)
                 {
                     // Previous Quests
                     // One previous Quest has to be solved and no other

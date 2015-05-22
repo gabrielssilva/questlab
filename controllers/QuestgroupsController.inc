@@ -89,7 +89,25 @@
             // Check permission
             if(count(array_intersect(array('admin','moderator'), SeminaryController::$character['characterroles'])) == 0)
             {
-                // Only check permissions if Character has not entered Quest before
+                // Check permission of previous parent Questgroups
+                $parentQuestgroup = $questgroup;
+                print_r($parentQuestgroup);
+                while(!is_null($parentQuestgroup['hierarchy']['parent_questgroup_id']))
+                {
+                    $parentQuestgroup = $this->Questgroups->getQuestgroupById($parentQuestgroup['hierarchy']['parent_questgroup_id']);
+                    $parentQuestgroup['hierarchy'] = $this->Questgroupshierarchy->getHierarchyForQuestgroup($parentQuestgroup['id']);
+                    try {
+                        $previousQuestgroup = $this->Questgroups->getPreviousQuestgroup($seminary['id'], $parentQuestgroup['id']);
+                        if(!$this->Questgroups->hasCharacterSolvedQuestgroup($previousQuestgroup['id'], $character['id'])) {
+                            throw new \nre\exceptions\AccessDeniedException();
+                        }
+                    }
+                    catch(\nre\exceptions\IdNotFoundException $e) {
+                    }
+                }
+
+                // Check permission of previous Questgroup
+                // (only if Character has not entered Questgroup before)
                 if(!$this->Questgroups->hasCharacterEnteredQuestgroup($questgroup['id'], $character['id']))
                 {
                     $previousQuestgroup = $this->Questgroups->getPreviousQuestgroup($seminary['id'], $questgroup['id']);
