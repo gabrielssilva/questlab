@@ -80,6 +80,81 @@
             return \nre\configs\AppConfig::$app['namespace']."controllers\\components\\$className";
         }
 
+
+
+
+        /**
+         * Construct a new (Controller) Component.
+         *
+         * @throws  \nre\exceptions\DriverNotFoundException
+         * @throws  \nre\exceptions\DriverNotValidException
+         * @throws  \nre\exceptions\ModelNotValidException
+         * @throws  \nre\exceptions\ModelNotFoundException
+         */
+        protected function __construct()
+        {
+            // Load Models
+            $this->loadModels();
+        }
+
+
+
+        /**
+         * Load the Models of this Controller.
+         * 
+         * @throws  \nre\exceptions\DriverNotFoundException
+         * @throws  \nre\exceptions\DriverNotValidException
+         * @throws  \nre\exceptions\ModelNotValidException
+         * @throws  \nre\exceptions\ModelNotFoundException
+         */
+        protected function loadModels()
+        {
+            // Determine Models
+            $explicit = false;
+            $models = \nre\core\ClassLoader::stripClassType(\nre\core\ClassLoader::stripNamespace(get_class($this)));
+            if(property_exists($this, 'models'))
+            {
+                $models = $this->models;
+                $explicit = true;
+            }
+            if(!is_array($models)) {
+                $models = array($models);
+            }
+            // Models of parent classes
+            $parent = $this;
+            while($parent = get_parent_class($parent))
+            {
+                $properties = get_class_vars($parent);
+                if(array_key_exists('models', $properties)) {
+                    $models = array_merge($models, $properties['models']);
+                }
+            }
+            $models = array_unique($models);
+
+            // Load Models
+            foreach($models as &$model)
+            {
+                try {
+                    // Load class
+                    Model::load($model);
+
+                    // Construct Model
+                    $modelName = ucfirst(strtolower($model));
+                    $this->$modelName = Model::factory($model);
+                }
+                catch(\nre\exceptions\ModelNotValidException $e) {
+                    if($explicit) {
+                        throw $e;
+                    }
+                }
+                catch(\nre\exceptions\ModelNotFoundException $e) {
+                    if($explicit) {
+                        throw $e;
+                    }
+                }
+            }
+        }
+
     }
 
 ?>
