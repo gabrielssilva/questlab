@@ -4,7 +4,7 @@
 	<li><i class="fa fa-chevron-right fa-fw"></i><a href="<?=$linker->link(array('index',$seminary['url']),1)?>"><?=_('Map')?></a></li>
 </ul>
 
-<h1><i class="fa fa-map-marker fa-fw"></i><?=_('Map')?></h1>
+<h1><i class="fa fa-map-marker fa-fw"></i><?=_('Edit Map')?></h1>
 <?php if($validation !== true && !empty($validation)) : ?>
 <ul class="validation">
 	<?php foreach($validation as $field => &$settings) : ?>

@@ -74,6 +74,10 @@
                 throw new \nre\exceptions\IdNotFoundException($seminaryUrl);
             }
 
+            // Set titile
+            $this->addTitleLocalized('Map');
+            $this->addTitle($seminary['title']);
+
 
             // Pass data to view
             $this->set('seminary', $seminary);
@@ -158,8 +162,8 @@
             }
 
             // Set titile
-            //$this->addTitleLocalized('Delete Quest');
-            //$this->addTitle($seminary['title']);
+            $this->addTitleLocalized('Edit Map');
+            $this->addTitle($seminary['title']);
 
 
             // Pass data to view
