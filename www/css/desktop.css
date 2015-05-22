@@ -172,7 +172,6 @@ input[type="submit"][disabled]{text-shadow:1px 2px #d48c4e;background:#f9ac69;bo
 .notify p.announce{color:#0f373c;font-weight:700;font-size:.875em;margin-top:5px}
 .notify .fa{padding-right:5px}
 .notify .fa-times{float:right;padding:0;margin:-12px -10px 0 0;color:#d4d2ce}
-+#notify-sound{display:none}
 
 
 /** Login, Registration & Filter **/
