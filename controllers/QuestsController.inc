@@ -77,8 +77,8 @@
         {
             parent::preFilter($request, $response);
 
-            $this->checkAchievements($request, $response, array('character', 'quest'));
-            $this->checkAchievements($request, $response, 'achievement');
+            $this->checkAchievements($request, array('character', 'quest'));
+            $this->checkAchievements($request, 'achievement');
         }
 
 

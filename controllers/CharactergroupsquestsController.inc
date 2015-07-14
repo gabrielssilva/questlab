@@ -212,14 +212,11 @@
                         $characters = $this->Characters->getCharactersForGroup($group['id']);
                         foreach($characters as &$character)
                         {
-                            if($character['id'] != $this->Auth->getUserId())
-                            {
-                                $this->Achievement->checkAchievements(
-                                    $seminary['id'],
-                                    $character['id'],
-                                    array('character', 'achievement')
-                                );
-                            }
+                            $this->Achievement->checkAchievements(
+                                $seminary['id'],
+                                $character['id'],
+                                array('character', 'achievement')
+                            );
                         }
                     }
                 }
