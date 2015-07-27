@@ -89,3 +89,11 @@
 	</fieldset>
 	<input type="submit" name="edit" value="<?=_('edit')?>" />
 </form>
+<script>
+    $(function() {
+        $("#description").markItUp(mySettings);
+        $("#rules").markItUp(mySettings);
+        $("#wonText").markItUp(mySettings);
+        $("#lostText").markItUp(mySettings);
+    });
+</script>

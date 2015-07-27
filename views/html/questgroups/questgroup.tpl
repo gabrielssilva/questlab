@@ -28,7 +28,7 @@
 <?php if(count($texts) > 0): ?>
 <div class="qtextbox">
 <?php foreach($texts as &$text) : ?>
-<p class="qtext"><?=\hhu\z\Utils::t($text['text'])?></p>
+<p class="qtext"><?=$t->t($text['text'])?></p>
 <?php endforeach ?>
 </div>
 <?php endif ?>

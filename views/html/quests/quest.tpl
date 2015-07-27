@@ -30,7 +30,7 @@
 			<?php $mediaShown = true; ?>
 			<a href="<?=$linker->link(array('media','seminary',$seminary['url'],$media['url']))?>"><img src="<?=$linker->link(array('media','seminary',$seminary['url'],$media['url']))?>" /></a>
 			<?php endif ?>
-			<?=\hhu\z\Utils::t($questtext['text'])?>
+			<?=$t->t($questtext['text'])?>
 		</p>
 		<?php if(count($questtext['relatedQuestsgroups']) > 0 || !empty($questtext['abort_text'])) : ?>
 		<ul>
@@ -59,7 +59,7 @@
 	<?php elseif($queststatus == 'unsolved') : ?>
 	<div class="error">
 		<p class="fwb"><i class="fa fa-times-circle fa-fw"></i><?=_('unsolved')?></p>
-		<p><small><?=\hhu\z\Utils::t($quest['wrong_text'])?></small></p>
+		<p><small><?=$t->t($quest['wrong_text'])?></small></p>
 	</div>
 	<?php endif ?>
 	<?php endif ?>
@@ -93,7 +93,7 @@
 			<?php if(array_key_exists('media', $questtext)) : ?>
 			<a href="<?=$linker->link(array('media','seminary',$seminary['url'],$questtext['media']['url']))?>"><img src="<?=$linker->link(array('media','seminary',$seminary['url'],$questtext['media']['url']))?>" /></a>
 			<?php endif ?>
-			<?=\hhu\z\Utils::t($questtext['text'])?>
+			<?=$t->t($questtext['text'])?>
 		</p>
 		<?php if(count($questtext['relatedQuestsgroups']) > 0 || !empty($questtext['abort_text'])) : ?>
 		<ul>

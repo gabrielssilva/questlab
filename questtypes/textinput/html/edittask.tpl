@@ -56,6 +56,9 @@
 </p>
 
 <script>
+    $(function() {
+        $("#text").markItUp(mySettings);
+    });
     var index = <?=count($fields)?>;
     var selectElement = '<select name="fields[INDEX][size]">' +
         <?php foreach($fieldSizes as &$size) : ?>

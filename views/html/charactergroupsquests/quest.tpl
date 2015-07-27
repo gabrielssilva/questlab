@@ -39,23 +39,23 @@
 
 <section>
 	<h1><i class="fa fa-envelope fa-fw"></i><?=_('Description')?></h1>
-	<p><?=\hhu\z\Utils::t($quest['description'])?></p>
+	<p><?=$t->t($quest['description'])?></p>
 	<?php if(!empty($quest['rules'])) : ?>
 	<h1><i class="fa fa-exclamation-triangle fa-fw"></i><?=_('Rules')?></h1>
-	<p><?=\hhu\z\Utils::t($quest['rules'])?></p>
+	<p><?=$t->t($quest['rules'])?></p>
 	<?php endif ?>
 </section>
 
 <?php if(!empty($quest['won_text'])) : ?>
 <section>	
 	<h1><i class="fa fa-thumbs-up fa-fw"></i><?=_('Won Quest')?></h1>
-	<p><?=\hhu\z\Utils::t($quest['won_text'])?></p>
+	<p><?=$t->t($quest['won_text'])?></p>
 </section>
 <?php endif ?>
 <?php if(!empty($quest['lost_text'])) : ?>
 <section>
 	<h1><i class="fa fa-thumbs-down fa-fw"></i><?=_('Lost Quest')?></h1>
-	<p><?=\hhu\z\Utils::t($quest['lost_text'])?></p>
+	<p><?=$t->t($quest['lost_text'])?></p>
 </section>
 <?php endif ?>
 

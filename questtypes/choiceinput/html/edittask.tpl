@@ -99,6 +99,9 @@
 </p>
 
 <script>
+    $(function() {
+        $("#text").markItUp(mySettings);
+    });
     var listIndex = <?=count($choiceLists)?>;
     var choiceIndices = new Array(<?=count($choiceLists)?>);
     <?php foreach($choiceLists as $index => &$list) : ?>

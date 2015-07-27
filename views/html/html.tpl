@@ -3,10 +3,15 @@
 
 <head>
     <meta charset="utf-8" />
-    <title><?=(isset($title)) ? $title : \nre\configs\AppConfig::$app['name']?></title>
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="robots" content="noindex,follow">
+    <title><?=(isset($title)) ? $title : \nre\configs\AppConfig::$app['name']?></title>
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
     <link href="http://fonts.googleapis.com/css?family=Open+Sans:400,700" rel="stylesheet" type="text/css">
     <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="<?=$linker->link(array('markitup','skins','markitup','style.css'))?>" media="all" />
+    <link rel="stylesheet" type="text/css" href="<?=$linker->link(array('markitup','sets','textile','style.css'))?>" media="all" />
     <link rel="stylesheet" type="text/css" href="<?=$linker->link(array('css','desktop.css'))?>" media="all" />
     <link rel="stylesheet" type="text/css" href="<?=$linker->link(array('css','ol.css'))?>" media="all" />
     <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
@@ -37,12 +42,9 @@
     <script type="text/javascript" src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
     <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/respond.js/1.4.2/respond.js"></script>
     <![endif]-->
-    <script type="text/javascript" src="<?=$linker->link(array('js','misc.js'))?>"></script>
-    <script type="text/javascript" src="<?=$linker->link(array('js','notification.js'))?>"></script>
-    <script type="text/javascript" src="<?=$linker->link(array('js','dnd.js'))?>"></script>
-    <meta name="description" content="">
-    <meta name="robots" content="noindex,follow">
-    <link rel="icon" href="favicon.ico" type="image/x-icon">
+    <script type="text/javascript" src="<?=$linker->link(array('markitup','jquery.markitup.js'))?>"></script>
+    <script type="text/javascript" src="<?=$linker->link(array('markitup','sets','textile','set.js'))?>"></script>
+    <script type="text/javascript" src="<?=$linker->link(array('js','scripts.js'))?>"></script>
 </head>
 
 <body>

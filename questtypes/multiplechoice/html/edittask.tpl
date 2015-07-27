@@ -33,6 +33,11 @@
             <li id="question-<?=$questionIndex?>">
                 <?=_('Question')?>:
                 <textarea id="question-<?=$questionIndex?>-question" name="questions[<?=$questionIndex?>][question]"><?=$question['question']?></textarea>
+                <script>
+                    $(function() {
+                        $("#question-<?=$questionIndex?>-question").markItUp(mySettings);
+                    });
+                </script>
 
                 <?php if(!empty($validations) && array_key_exists($questionIndex, $validations) && !empty($validations[$questionIndex]) && $validations[$questionIndex]['answers'] !== true) : ?>
                 <ul>
@@ -85,7 +90,7 @@
     <?php foreach($questions as $index => &$question) : ?>
     answerIndices[<?=$index?>] = <?=count($question['answers'])?>;
     <?php endforeach?>
-    var questionElement =   '<?=_('Question')?>: <textarea name="questions[QUESTIONINDEX][question]"></textarea>' +
+    var questionElement =   '<?=_('Question')?>: <textarea id="questions-QUESTIONINDEX-question" name="questions[QUESTIONINDEX][question]"></textarea>' +
                 '<ul><li><button class="add-answer" type="button">+</button></li></ul>' +
                 '<button class="remove-question" type="button"><?=_('Remove question')?></button>';
     var answerElement = '<input id="question-QUESTIONINDEX-answer-ANSWERINDEX-tick" type="checkbox" name="questions[QUESTIONINDEX][answers][ANSWERINDEX][tick]" />' +
@@ -109,6 +114,7 @@
         $("#question-"+questionIndex+" .remove-question").click(removeQuestion);
         $("#question-"+questionIndex+" .add-answer").click(addAnswer);
         $("#question-"+questionIndex+" .remove-answer").click(removeAnswer);
+        $("#questions-"+questionIndex+"-question").markItUp(mySettings);
 
         questionIndex++;
     }
