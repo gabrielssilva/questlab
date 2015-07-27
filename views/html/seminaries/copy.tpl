@@ -1,74 +1,74 @@
 <?=$moodpic?>
 <ul class="breadcrumbs">
-	<li><a href="<?=$linker->link('index',1)?>"><?=_('Seminaries')?></a></li>
+    <li><a href="<?=$linker->link('index',1)?>"><?=_('Seminaries')?></a></li>
 </ul>
 
 <h1><?=_('Copy seminary')?></h1>
 <?php if(!is_null($exception)) : ?>
 <p class="error">
-	<?php if($exception instanceof \hhu\z\exceptions\FileCopyException) : ?>
-	<?=sprintf(_('Copying of files failed: “%s”'), $exception->getNestedError()['message'])?>
+    <?php if($exception instanceof \hhu\z\exceptions\FileCopyException) : ?>
+    <?=sprintf(_('Copying of files failed: “%s”'), $exception->getNestedError()['message'])?>
     <?php elseif($exception instanceof \Exception) : ?>
     <?=sprintf(_('Copying of Seminary failed: “%s”'), $exception->getMessage())?>
-	<?php endif ?>
+    <?php endif ?>
 </p>
 <?php endif ?>
 <?php if($validation !== true && !empty($validation)) : ?>
 <ul class="validation">
-	<?php foreach($validation as $field => &$settings) : ?>
-	<li>
-		<ul>
-			<?php foreach($settings as $setting => $value) : ?>
-			<li>
-				<?php switch($field) {
-					case 'moodpic':
-						switch($setting) {
-							case 'error': printf(_('Error during moodpic upload: %s'), $value);
-							break;
-							case 'mimetype': printf(_('Moodpic has wrong type “%s”'), $value);
-							break;
-							case 'size': echo _('Moodpic exceeds size maximum');
-							break;
-							default: echo _('Moodpic invalid');
-						}
-					break;
-					case 'title':
-						switch($setting) {
-							case 'minlength': printf(_('Title is too short (min. %d chars)'), $value);
-							break;
-							case 'maxlength': printf(_('Title is too long (max. %d chars)'), $value);
-							break;
-							case 'regex': echo _('Title contains illegal characters');
-							break;
-							case 'exist': echo _('Title already exists');
-							break;
-							default: echo _('Title invalid');
-						}
-					break;
-					case 'course':
-						switch($setting) {
-							case 'maxlength': printf(_('Course is too long (max. %d chars)'), $value);
-							break;
-							default: echo _('Course invalid');
-						}
-					break;
-				} ?>
-			</li>
-			<?php endforeach ?>
-		</ul>
-	</li>
-	<?php endforeach ?>
+    <?php foreach($validation as $field => &$settings) : ?>
+    <li>
+        <ul>
+            <?php foreach($settings as $setting => $value) : ?>
+            <li>
+                <?php switch($field) {
+                    case 'moodpic':
+                        switch($setting) {
+                            case 'error': printf(_('Error during moodpic upload: %s'), $value);
+                            break;
+                            case 'mimetype': printf(_('Moodpic has wrong type “%s”'), $value);
+                            break;
+                            case 'size': echo _('Moodpic exceeds size maximum');
+                            break;
+                            default: echo _('Moodpic invalid');
+                        }
+                    break;
+                    case 'title':
+                        switch($setting) {
+                            case 'minlength': printf(_('Title is too short (min. %d chars)'), $value);
+                            break;
+                            case 'maxlength': printf(_('Title is too long (max. %d chars)'), $value);
+                            break;
+                            case 'regex': echo _('Title contains illegal characters');
+                            break;
+                            case 'exist': echo _('Title already exists');
+                            break;
+                            default: echo _('Title invalid');
+                        }
+                    break;
+                    case 'course':
+                        switch($setting) {
+                            case 'maxlength': printf(_('Course is too long (max. %d chars)'), $value);
+                            break;
+                            default: echo _('Course invalid');
+                        }
+                    break;
+                } ?>
+            </li>
+            <?php endforeach ?>
+        </ul>
+    </li>
+    <?php endforeach ?>
 </ul>
 <?php endif ?>
 <form method="post" class="logreg" enctype="multipart/form-data">
-	<fieldset>
-		<label for="title"><?=_('Title')?>:</label>
-		<input type="text" id="title" name="title" placeholder="<?=_('Title')?>" required="required" maxlength="<?=$validationSettings['title']['maxlength']?>" value="<?=$title?>" <?=($validation !== true && array_key_exists('title', $validation)) ? 'class="invalid"' : null?> /><br />
-		<label for="course"><?=_('Course')?>:</label>
-		<input type="text" id="course" name="course" placeholder="<?=_('Course')?>" maxlength="<?=$validationSettings['course']['maxlength']?>" value="<?=$course?>" <?=($validation !== true && array_key_exists('course', $validation)) ? 'class="invalid"' : null?> /><br />
-		<label for="description"><?=_('Description')?>:<br />
-		<textarea id="description" name="description" placeholder="<?=_('Description')?>"><?=$description?></textarea><br />
-	</fieldset>
+    <fieldset>
+        <label for="title"><?=_('Title')?>:</label>
+        <input type="text" id="title" name="title" placeholder="<?=_('Title')?>" required="required" maxlength="<?=$validationSettings['title']['maxlength']?>" value="<?=$title?>" <?=($validation !== true && array_key_exists('title', $validation)) ? 'class="invalid"' : null?> /><br />
+        <label for="course"><?=_('Course')?>:</label>
+        <input type="text" id="course" name="course" placeholder="<?=_('Course')?>" maxlength="<?=$validationSettings['course']['maxlength']?>" value="<?=$course?>" <?=($validation !== true && array_key_exists('course', $validation)) ? 'class="invalid"' : null?> /><br />
+        <label for="description"><?=_('Description')?>:<br />
+        <textarea id="description" name="description" placeholder="<?=_('Description')?>"><?=$description?></textarea><br />
+    </fieldset>
     <fieldset>
         <legend><?=_('Elements')?></legend>
         <input type="checkbox" id="elements_seminaryfields" name="elements[seminaryfields]" <?php if(array_key_exists('seminaryfields', $elements)) : ?>checked="checked"<?php endif ?> />
@@ -110,5 +110,5 @@
         <input type="checkbox" id="elements_map" name="elements[map]" <?php if(array_key_exists('map', $elements)) : ?>checked="checked"<?php endif ?>  />
         <label for="elements_map"><?=_('Map')?></label>
     </fieldset>
-	<input type="submit" name="edit" value="<?=_('copy')?>" />
+    <input type="submit" name="edit" value="<?=_('copy')?>" />
 </form>

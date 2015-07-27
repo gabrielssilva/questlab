@@ -1,14 +1,14 @@
 <div class="moodpic">
-	<img src="<?=$linker->link(array('grafics','questlab.jpg'))?>" />
+    <img src="<?=$linker->link(array('grafics','questlab.jpg'))?>" />
 </div>
 <?php if(is_null($userId)) : ?>
 <form method="post" action="<?=$linker->link(array('users','login'))?>" class="logreg front">
-	<fieldset>
-		<p><label for="username"><?=_('Username')?>:</label><input name="username" type="text" placeholder="<?=_('Username')?>" title="<?=_('Username')?>" required="required" autofocus="autofocus" /></p>
-		<p><label for="password"><?=_('Password')?>:</label><input name="password" type="password" placeholder="<?=_('Password')?>" title="<?=_('Password')?>" required="required" /></p>
-		<input type="submit" name="login" class="cta" value="<?=_('Login')?>" />
-	</fieldset>
-	<p class="register"><?=_('or')?> <a href="<?=$linker->link(array('users','register'))?>"><?=_('register yourself')?></a></p>
+    <fieldset>
+        <p><label for="username"><?=_('Username')?>:</label><input name="username" type="text" placeholder="<?=_('Username')?>" title="<?=_('Username')?>" required="required" autofocus="autofocus" /></p>
+        <p><label for="password"><?=_('Password')?>:</label><input name="password" type="password" placeholder="<?=_('Password')?>" title="<?=_('Password')?>" required="required" /></p>
+        <input type="submit" name="login" class="cta" value="<?=_('Login')?>" />
+    </fieldset>
+    <p class="register"><?=_('or')?> <a href="<?=$linker->link(array('users','register'))?>"><?=_('register yourself')?></a></p>
 </form>
 <?php endif ?>
 <h1><?=\nre\configs\AppConfig::$app['name']?></h1>
@@ -21,30 +21,30 @@
 
 <h2>Die Legende von Zyren in der Presse</h2>
 <ul>
-	<li><a href="http://www.uni-duesseldorf.de/home/nc/startseite/news-detailansicht/article/erstmals-an-einer-deutschen-hochschule-gamification-und-interaktive-textadventures.html">Pressemitteilung der Heinrich-Heine-Universität Düsseldorf vom 12.7.13</a></li>
-	<li><a href="">Artikel in der Rheinischen Post (Print-Version) vom 23.7.13</a></li>
-	<li><a href="http://www.welt.de/regionales/duesseldorf/article120340979/Mit-Computer-spielend-zum-Uni-Abschluss.html">Artikel in der Zeitschrift Welt (Print- und Online-Version) vom 24.9.13</a></li>
-	<li><a href="http://www.heise.de/tp/artikel/40/40838/1.html">Artikel auf Heise Online</a></li>
-	<li><a href="http://www.faz.net/aktuell/beruf-chance/fantasy-an-der-uni-spielend-durchs-studium-12735331.html">Artikel in der Frankfurter Allgemeinen Zeitung</a></li>
-	<li><a href="http://www.wdr5.de/sendungen/leonardo/rollenspieluniduesseldorf100.html">Radiobeitrag im Deutschlandfunk vom 5.8.13</a></li>
-	<li>Diverse Beiträge in Blogs, Wikis und anderen sozialen Plattformen, wie beispielweise <a href="http://www.mittelstandswiki.de/wissen/Gamification,_Teil_1">www.mittelstandswiki.de</a> oder <a href="http://www.scoop.it/t/digitale-spiel-und-lernwelten/p/4005676096/2013/08/05/die-legende-von-zyren">www.scoop.it</a></li>
-	<li>Teilnahme am Finale des studentischen Video-Wettbewerb der DINI „Study Fiction – Videoclips zur Zukunft von Studium und Lehre“ mit dem Beitrag <a href="http://dini.de/wettbewerbe/study-fiction/preisverleihung/">„Always Online – Die Zukunft des Lernens“</a></li>
+    <li><a href="http://www.uni-duesseldorf.de/home/nc/startseite/news-detailansicht/article/erstmals-an-einer-deutschen-hochschule-gamification-und-interaktive-textadventures.html">Pressemitteilung der Heinrich-Heine-Universität Düsseldorf vom 12.7.13</a></li>
+    <li><a href="">Artikel in der Rheinischen Post (Print-Version) vom 23.7.13</a></li>
+    <li><a href="http://www.welt.de/regionales/duesseldorf/article120340979/Mit-Computer-spielend-zum-Uni-Abschluss.html">Artikel in der Zeitschrift Welt (Print- und Online-Version) vom 24.9.13</a></li>
+    <li><a href="http://www.heise.de/tp/artikel/40/40838/1.html">Artikel auf Heise Online</a></li>
+    <li><a href="http://www.faz.net/aktuell/beruf-chance/fantasy-an-der-uni-spielend-durchs-studium-12735331.html">Artikel in der Frankfurter Allgemeinen Zeitung</a></li>
+    <li><a href="http://www.wdr5.de/sendungen/leonardo/rollenspieluniduesseldorf100.html">Radiobeitrag im Deutschlandfunk vom 5.8.13</a></li>
+    <li>Diverse Beiträge in Blogs, Wikis und anderen sozialen Plattformen, wie beispielweise <a href="http://www.mittelstandswiki.de/wissen/Gamification,_Teil_1">www.mittelstandswiki.de</a> oder <a href="http://www.scoop.it/t/digitale-spiel-und-lernwelten/p/4005676096/2013/08/05/die-legende-von-zyren">www.scoop.it</a></li>
+    <li>Teilnahme am Finale des studentischen Video-Wettbewerb der DINI „Study Fiction – Videoclips zur Zukunft von Studium und Lehre“ mit dem Beitrag <a href="http://dini.de/wettbewerbe/study-fiction/preisverleihung/">„Always Online – Die Zukunft des Lernens“</a></li>
 </ul>
 
 <h2>Das Team</h2>
 <h3>Projektleitung:</h3>
 <ul>
-	<li itemscope itemtype="http://schema.org/Person"><span itemprop="name">Kathrin Knautz</span></li>
+    <li itemscope itemtype="http://schema.org/Person"><span itemprop="name">Kathrin Knautz</span></li>
 </ul>
 <h3>Entwicklung und Evaluation des Prototypens:</h3>
 <ul>
-	<li itemscope itemtype="http://schema.org/Person"><span itemprop="name">Lisa Orszullok</span></li>
-	<li itemscope itemtype="http://schema.org/Person"><span itemprop="name">Simone Soubusta</span></li>
-	<li itemscope itemtype="http://schema.org/Person"><span itemprop="name">Julia Göretz</span></li>
-	<li itemscope itemtype="http://schema.org/Person"><span itemprop="name">Anja Wintermeyer</span></li>
+    <li itemscope itemtype="http://schema.org/Person"><span itemprop="name">Lisa Orszullok</span></li>
+    <li itemscope itemtype="http://schema.org/Person"><span itemprop="name">Simone Soubusta</span></li>
+    <li itemscope itemtype="http://schema.org/Person"><span itemprop="name">Julia Göretz</span></li>
+    <li itemscope itemtype="http://schema.org/Person"><span itemprop="name">Anja Wintermeyer</span></li>
 </ul>
 <h3>Entwicklung „Questlab“:</h3>
 <ul>
-	<li itemscope itemtype="http://schema.org/Person"><span itemprop="name">Oliver Hanraths</span></li>
-	<li itemscope itemtype="http://schema.org/Person"><span itemprop="name">Daniel Miskovic</span></li>
+    <li itemscope itemtype="http://schema.org/Person"><span itemprop="name">Oliver Hanraths</span></li>
+    <li itemscope itemtype="http://schema.org/Person"><span itemprop="name">Daniel Miskovic</span></li>
 </ul>
