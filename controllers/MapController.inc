@@ -119,21 +119,23 @@
                     if($media['error'] !== UPLOAD_ERR_OK) {
                         $validation = $this->Validation->addValidationResult($validation, 'media', 'error', $media['error']);
                     }
-
-                    // Check mimetype
-                    $mediaMimetype = null;
-                    $media['mimetype'] = \hhu\z\Utils::getMimetype($media['tmp_name'], $media['type']);
-                    foreach($mimetypes as &$mimetype) {
-                        if($mimetype['mimetype'] == $media['mimetype']) {
-                            $mediaMimetype = $mimetype;
-                            break;
+                    else
+                    {
+                        // Check mimetype
+                        $mediaMimetype = null;
+                        $media['mimetype'] = \hhu\z\Utils::getMimetype($media['tmp_name'], $media['type']);
+                        foreach($mimetypes as &$mimetype) {
+                            if($mimetype['mimetype'] == $media['mimetype']) {
+                                $mediaMimetype = $mimetype;
+                                break;
+                            }
                         }
-                    }
-                    if(is_null($mediaMimetype)) {
-                        $validation = $this->Validation->addValidationResult($validation, 'media', 'mimetype', $media['mimetype']);
-                    }
-                    elseif($media['size'] > $mediaMimetype['size']) {
-                        $validation = $this->Validation->addValidationResult($validation, 'media', 'size', $mediaMimetype['size']);
+                        if(is_null($mediaMimetype)) {
+                            $validation = $this->Validation->addValidationResult($validation, 'media', 'mimetype', $media['mimetype']);
+                        }
+                        elseif($media['size'] > $mediaMimetype['size']) {
+                            $validation = $this->Validation->addValidationResult($validation, 'media', 'size', $mediaMimetype['size']);
+                        }
                     }
                 }
 
