@@ -951,7 +951,9 @@
                                     $validation = $this->Validation->addValidationResult($validation, 'media', 'size', $mediaMimetype['size']);
                                 }
                             }
-                            $validations[$type['url']][$text['id']] = $validation;
+                            if($validation !== true) {
+                                $validations[$type['url']][$text['id']] = $validation;
+                            }
 
                             // Upload medium
                             if(!is_null($medium) && $validation === true)
@@ -1022,7 +1024,9 @@
                                     $validation = $this->Validation->addValidationResult($validation, 'media', 'size', $mediaMimetype['size']);
                                 }
                             }
-                            $validations[$type['url']]['new'] = $validation;
+                            if($validation !== true) {
+                                $validations[$type['url']]['new'] = $validation;
+                            }
 
                             // Upload medium
                             if(!is_null($medium) && $validation === true)
