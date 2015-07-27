@@ -82,7 +82,6 @@
 <?php endif ?>
 <form method="post" class="logreg">
 	<fieldset>
-		<fieldset>
 		<label for="username"><?=_('Username')?>:</label>
 		<input name="username" type="text" placeholder="<?=_('Username')?>" title="<?=_('Username')?>" required="required" maxlength="<?=$validationSettings['username']['maxlength']?>" value="<?=$username?>" <?=(array_key_exists('username', $validation)) ? 'class="invalid"' : null?> /><br />
 		<label for="prename"><?=_('Prename')?>:</label>
@@ -95,7 +94,6 @@
 		<input name="password" type="password" placeholder="<?=_('Password')?>" title="<?=_('Password')?>" required="required" maxlength="<?=$validationSettings['password']['maxlength']?>" <?=(array_key_exists('password', $validation)) ? 'class="invalid"' : null?> /><br />
 		<label for="passwordrepeat"><?=_('Repeat password')?>:</label>
 		<input name="passwordrepeat" type="password" placeholder="<?=_('Password')?>" title="<?=_('Password')?>" required="required" maxlength="<?=$validationSettings['password']['maxlength']?>" <?=(array_key_exists('password', $validation)) ? 'class="invalid"' : null?> /><br />
-	</fieldset>
 	</fieldset>
 	<input type="submit" name="create" value="<?=_('create')?>" />
 </form>
