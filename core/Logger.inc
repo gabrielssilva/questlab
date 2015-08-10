@@ -64,7 +64,7 @@
          * @param   string  $message    Message to log
          * @param   int     $logMode    Log mode to use
          */
-        public function log($message, $logMode=self::LOGMODE_SCREEN)
+        public function log($message, $logMode=self::LOGMODE_AUTO)
         {
             // Choose log mode automatically
             if($logMode == self::LOGMODE_AUTO) {
@@ -135,7 +135,7 @@
          */
         private function isLocalhost()
         {
-            return ($_SERVER['SERVER_ADDR'] == '127.0.0.1' || $_SERVER['SERVER_ADDR'] = '::1');
+            return (strpos($_SERVER['HTTP_HOST'], '.') === false);
         }
 
     }

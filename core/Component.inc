@@ -98,9 +98,8 @@
         }
 
 
-
         /**
-         * Load the Models of this Controller.
+         * Load the Models of this Component.
          * 
          * @throws  \nre\exceptions\DriverNotFoundException
          * @throws  \nre\exceptions\DriverNotValidException
