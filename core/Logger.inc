@@ -64,7 +64,7 @@
          * @param   string  $message    Message to log
          * @param   int     $logMode    Log mode to use
          */
-        public function log($message, $logMode=self::LOGMODE_SCREEN)
+        public function log($message, $logMode=self::LOGMODE_AUTO)
         {
             // Choose log mode automatically
             if($logMode == self::LOGMODE_AUTO) {
