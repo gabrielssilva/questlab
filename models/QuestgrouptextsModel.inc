@@ -146,6 +146,17 @@
             );
         }
 
+
+        /**
+         * Delete all Questgroup texts of a Questgroup.
+         *
+         * @param   int $questgroupId   ID of Questgroup to delete texts of
+         */
+        public function deleteQuestgrouptexts($questgroupId)
+        {
+            $this->db->query('DELETE FROM questgrouptexts WHERE questgroup_id = ?', 'i', $questgroupId);
+        }
+
     }
 
 ?>

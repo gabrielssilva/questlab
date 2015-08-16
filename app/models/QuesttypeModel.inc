@@ -35,6 +35,14 @@
 
 
         /**
+         * Delete a Quest.
+         * 
+         * @param   int $questId    ID of Quest to delete
+         */
+        public abstract function deleteQuest($questId);
+
+
+        /**
          * Load a Model.
          *
          * @static

@@ -201,6 +201,35 @@
 
 
         /**
+         * Delete all media of a Seminary.
+         *
+         * @param   int $seminaryId ID of Seminary to delete media of
+         */
+        public function deleteSeminaryMediaOfSeminary($seminaryId)
+        {
+            // Get all media from a Seminary
+            $seminaryMedia = $this->db->query(
+                'SELECT id '.
+                'FROM seminarymedia '.
+                'WHERE seminary_id = ?',
+                'i',
+                $seminaryId
+            );
+
+            // Delete each medium
+            foreach($seminaryMedia as &$medium)
+            {
+                // Delete file
+                $filename = ROOT.DS.\nre\configs\AppConfig::$dirs['seminarymedia'].DS.$medium['id'];
+                @unlink($filename);
+            }
+
+            // Delete database entries
+            $this->db->query('DELETE FROM seminarymedia WHERE seminary_id = ?', 'i', $seminaryId);
+        }
+
+
+        /**
          * Create a new moodpic.
          *
          * @param   int $userId     ID of user that does the upload

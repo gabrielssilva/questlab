@@ -24,7 +24,7 @@
          *
          * @var array
          */
-        public $models = array('questgroupshierarchy', 'questgroups', 'quests', 'questtopics', 'media', 'charactertypes', 'xplevels', 'avatars', 'achievements', 'charactergroups', 'charactergroupsquests', 'seminarycharacterfields', 'map');
+        public $models = array('questgroupshierarchy', 'questgroups', 'quests', 'questtopics', 'media', 'characters', 'charactertypes', 'xplevels', 'avatars', 'achievements', 'charactergroups', 'charactergroupsquests', 'seminarycharacterfields', 'map', 'uploads');
 
 
 
@@ -470,13 +470,64 @@
 
         /**
          * Delete a seminary.
-         * TODO Delete media
          *
          * @param   int $seminaryId ID of the seminary to delete
          */
         public function deleteSeminary($seminaryId)
         {
-            $this->db->query('DELETE FROM seminaries WHERE id = ?', 'i', $seminaryId);
+            $this->db->setAutocommit(false);
+            try {
+                // Map
+                $this->Map->deleteMapOfSeminary($seminaryId);
+
+                // Charactergroups content
+                $this->Charactergroups->deleteGroupsgroupsOfSeminary($seminaryId);
+
+                // Achievements
+                $this->Achievements->deleteAchievementsOfSeminary($seminaryId);
+
+                // Character content
+                // Delete Characters
+                $characters = $this->Characters->getCharactersForSeminary($seminaryId);
+                foreach($characters as &$character) {
+                    $this->Characters->deleteCharacter($character['id']);
+                }
+                // Delete Avatars
+                $charactertypes = $this->Charactertypes->getCharacterTypesForSeminary($seminaryId);
+                $charactertypeIds = array_map(function($type) { return $type['id']; }, $charactertypes);
+                $xplevels = $this->Xplevels->getXPLevelsForSeminary($seminaryId);
+                $xplevelIds = array_map(function($level) { return $level['id']; }, $xplevels);
+                $this->Avatars->deleteAvatars($charactertypeIds, $xplevelIds);
+                // Delete XP-levels
+                $this->Xplevels->deleteXPLevelsOfSeminary($seminaryId);
+                // Delete Charactertypes
+                $this->Charactertypes->deleteCharactertypesOfSeminary($seminaryId);
+
+                // Delete Quests content
+                // Delete Quest topics
+                $this->Questtopics->deleteQuesttopicsOfSeminary($seminaryId);
+                // Delete Quests
+                $this->Quests->deleteQuestsOfSeminary($seminaryId);
+                // Delete Questgroups
+                $this->Questgroups->deleteQuestgroupsOfSeminary($seminaryId);
+                // Delete Questgroupshierarchy
+                $this->Questgroupshierarchy->deleteQuestgroupshierarchyOfSeminary($seminaryId);
+
+                // Media
+                $this->Media->deleteSeminaryMediaOfSeminary($seminaryId);
+
+                // Uploads
+                $this->Uploads->deleteSeminaryUploadsOfSeminary($seminaryId);
+
+                // Delete Seminary
+                $this->db->query('DELETE FROM seminaries WHERE id = ?', 'i', $seminaryId);
+            }
+            catch(\Exception $e) {
+                $this->db->rollback();
+                $this->db->setAutocommit(true);
+                throw $e;
+            }
+            $this->db->setAutocommit(true);
         }
 
     }

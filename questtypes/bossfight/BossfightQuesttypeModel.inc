@@ -69,6 +69,17 @@
 
 
         /**
+         * Delete a Quest.
+         * 
+         * @param   int $questId    ID of Quest to delete
+         */
+        public function deleteQuest($questId)
+        {
+            $this->db->query('DELETE FROM questtypes_bossfight WHERE quest_id = ?', 'i', $questId);
+        }
+
+
+        /**
          * Get a Boss-Fight.
          *
          * @param   int $questId    ID of Quest

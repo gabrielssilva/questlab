@@ -48,6 +48,17 @@
 
 
         /**
+         * Delete a Quest.
+         * 
+         * @param   int $questId    ID of Quest to delete
+         */
+        public function deleteQuest($questId)
+        {
+            $this->db->query('DELETE FROM questtypes_crossword_words WHERE quest_id = ?', 'i', $questId);
+        }
+
+
+        /**
          * Get all words for a crossword-Quest.
          *
          * @param   int $questId    ID of Quest

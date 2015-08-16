@@ -20,6 +20,12 @@
      */
     class CharactergroupsModel extends \hhu\z\Model
     {
+        /**
+         * Required models
+         *
+         * @var array
+         */
+        public $models = array('charactergroupsquests');
 
 
 
@@ -222,6 +228,31 @@
         public function deleteGroupsgroup($groupsgroupId)
         {
             $this->db->query('DELETE FROM charactergroupsgroups WHERE id = ?', 'i', $groupsgroupId);
+        }
+
+
+        /**
+         * Delete all Character groups-groups of a Seminary.
+         *
+         * @param   int $seminaryId ID of Seminary to delete Character groups-groups of
+         */
+        public function deleteGroupsgroupsOfSeminary($seminaryId)
+        {
+            // Get Groupsgroups
+            $charactergroupsgroups = $this->getGroupsroupsForSeminary($seminaryId);
+
+            // Delete each Groupsgroup
+            foreach($charactergroupsgroups as $groupsgroup)
+            {
+                // Delete Groups
+                $this->deleteGroupsOfGroupsgroup($groupsgroup['id']);
+
+                // Delete Groupsquests
+                $this->Charactergroupsquests->deleteQuestsOfGroupsgroup($groupsgroup['id']);
+
+                // Delete Groupsgroup
+                $this->db->query('DELETE FROM charactergroupsgroups WHERE seminary_id = ?', 'i', $seminaryId);
+            }
         }
 
 
@@ -472,6 +503,17 @@
         public function deleteGroup($groupId)
         {
             $this->db->query('DELETE FROM charactergroups WHERE id = ?', 'i', $groupId);
+        }
+
+
+        /**
+         * Delete all Character groups of a groups-group.
+         *
+         * @param   int $groupsgroupId  ID of Character groups-group to delete groups of
+         */
+        public function deleteGroupsOfGroupsgroup($groupsgroupId)
+        {
+            $this->db->query('DELETE FROM charactergroups WHERE charactergroupsgroup_id = ?', 'i', $groupsgroupId);
         }
 
 

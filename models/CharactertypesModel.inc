@@ -247,6 +247,17 @@
             $this->db->query('DELETE FROM charactertypes WHERE id = ?', 'i', $charactertypeId);
         }
 
+
+        /**
+         * Delete all Charactertypes of a Seminary.
+         *
+         * @param   int $seminaryId ID of Seminary to delete Charactertypes of
+         */
+        public function deleteCharactertypesOfSeminary($seminaryId)
+        {
+            $this->db->query('DELETE FROM charactertypes WHERE seminary_id = ?', 'i', $seminaryId);
+        }
+
     }
 
 ?>

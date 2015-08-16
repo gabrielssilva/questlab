@@ -170,6 +170,35 @@
             $this->db->setAutocommit(true);
         }
 
+
+        /**
+         * Delete all Seminary uploads of a Seminary.
+         *
+         * @param   int $seminaryId ID of Seminary to delete all Uploads of
+         */
+        public function deleteSeminaryUploadsOfSeminary($seminaryId)
+        {
+            // Get all uploads from a Seminary
+            $seminaryUploads = $this->db->query(
+                'SELECT id, url '.
+                'FROM seminaryuploads '.
+                'WHERE seminary_id = ?',
+                'i',
+                $seminaryId
+            );
+
+            // Delete each upload
+            foreach($seminaryUploads as &$upload)
+            {
+                // Delete file
+                $filename = ROOT.DS.\nre\configs\AppConfig::$dirs['seminaryuploads'].DS.$upload['url'];
+                @unlink($filename);
+            }
+
+            // Delete database entries
+            $this->db->query('DELETE FROM seminaryuploads WHERE seminary_id = ?', 'i', $seminaryId);
+        }
+
     }
 
 ?>

@@ -339,6 +339,17 @@
         }
 
 
+        /**
+         * Delete complete Questgroupshierarchy of a Seminary.
+         * 
+         * @param   int $seminaryId ID of Seminary to delete Questgroupshierarchy of
+         */
+        public function deleteQuestgroupshierarchyOfSeminary($seminaryId)
+        {
+            $this->db->query('DELETE FROM questgroupshierarchy WHERE seminary_id = ?', 'i', $seminaryId);
+        }
+
+
 
 
         /**

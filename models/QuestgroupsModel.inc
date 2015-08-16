@@ -749,6 +749,28 @@
         }
 
 
+        /**
+         * Delete all Questgroups of a Seminary.
+         *
+         * @param   int $seminaryId ID of Seminary to delete Questgroups of
+         */
+        public function deleteQuestgroupsOfSeminary($seminaryId)
+        {
+            // Get Questgroups
+            $questgroups = $this->getQuestgroupsForSeminary($seminaryId);
+
+            // Delete each Questgroup
+            foreach($questgroups as &$questgroup)
+            {
+                // Delete Questgroup texts
+                $this->Questgrouptexts->deleteQuestgrouptexts($questgroup['id']);
+
+                // Delete Questgroup
+                $this->db->query('DELETE FROM questgroups WHERE id = ?', 'i', $questgroup['id']);
+            }
+        }
+
+
 
 
         /**

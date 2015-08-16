@@ -115,7 +115,7 @@
         public function deleteMapOfSeminary($seminaryId)
         {
             // Get map
-            $map = $this->getMap($seminaryId);
+            $map = $this->getMapOfSeminary($seminaryId);
             if(is_null($map)) {
                 return;
             }

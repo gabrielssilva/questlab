@@ -43,6 +43,17 @@
 
 
         /**
+         * Delete a Quest.
+         * 
+         * @param   int $questId    ID of Quest to delete
+         */
+        public function deleteQuest($questId)
+        {
+            $this->db->query('DELETE FROM questtypes_submit_characters WHERE quest_id = ?', 'i', $questId);
+        }
+
+
+        /**
          * Save Character’s submitted upload.
          *
          * @param   int $seminaryId ID of Seminary

@@ -813,6 +813,42 @@
             $this->db->setAutocommit(true);
         }
 
+
+        /**
+         * Delete all Quests of a Seminary.
+         *
+         * @param   int $seminaryId ID of Seminary to delete all Quests of
+         */
+        public function deleteQuestsOfSeminary($seminaryId)
+        {
+            // Get Quests
+            $quests = $this->getQuestsForSeminary($seminaryId);
+
+            // Delete each Quest
+            foreach($quests as &$quest)
+            {
+                // Delete content
+                $questtype = $this->Questtypes->getQuesttypeById($quest['questtype_id']);
+                if(!is_null($questtype['classname']))
+                {
+                    // Load Questtype Model
+                    \hhu\z\models\QuesttypeModel::load($questtype['classname']);
+
+                    // Construct Questtype Model
+                    $questtypeModel = \hhu\z\models\QuesttypeModel::factory($questtype['classname']);
+
+                    // Delete content
+                    $questtypeModel->deleteQuest($quest['id']);
+                }
+
+                // Delete Quests texts
+                $this->Questtexts->deleteQuesttexts($quest['id']);
+
+                // Delete quest
+                $this->db->query('DELETE FROM quests WHERE id = ?', 'i', $quest['id']);
+            }
+        }
+
     }
 
 ?>

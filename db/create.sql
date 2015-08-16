@@ -218,7 +218,7 @@ CREATE TABLE `avatarpictures` (
   PRIMARY KEY (`seminarymedia_id`),
   KEY `created_user_id` (`created_user_id`),
   CONSTRAINT `avatarpictures_ibfk_2` FOREIGN KEY (`created_user_id`) REFERENCES `users` (`id`),
-  CONSTRAINT `avatarpictures_ibfk_3` FOREIGN KEY (`seminarymedia_id`) REFERENCES `seminarymedia` (`id`)
+  CONSTRAINT `avatarpictures_ibfk_3` FOREIGN KEY (`seminarymedia_id`) REFERENCES `seminarymedia` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -847,8 +847,8 @@ CREATE TABLE `questgroups_questgroupshierarchy` (
   KEY `parent_questgoup_id` (`parent_questgroup_id`),
   KEY `questgroupshierarchy_id` (`questgroupshierarchy_id`),
   CONSTRAINT `questgroups_questgroupshierarchy_ibfk_1` FOREIGN KEY (`questgroup_id`) REFERENCES `questgroups` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `questgroups_questgroupshierarchy_ibfk_2` FOREIGN KEY (`questgroupshierarchy_id`) REFERENCES `questgroupshierarchy` (`id`),
-  CONSTRAINT `questgroups_questgroupshierarchy_ibfk_3` FOREIGN KEY (`parent_questgroup_id`) REFERENCES `questgroups` (`id`)
+  CONSTRAINT `questgroups_questgroupshierarchy_ibfk_2` FOREIGN KEY (`questgroupshierarchy_id`) REFERENCES `questgroupshierarchy` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `questgroups_questgroupshierarchy_ibfk_3` FOREIGN KEY (`parent_questgroup_id`) REFERENCES `questgroups` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -865,8 +865,8 @@ CREATE TABLE `questgroups_questtexts` (
   `entry_text` text COLLATE utf8mb4_unicode_ci NOT NULL,
   PRIMARY KEY (`questgroup_id`,`questtext_id`),
   KEY `questtext_id` (`questtext_id`),
-  CONSTRAINT `questgroups_questtexts_ibfk_1` FOREIGN KEY (`questgroup_id`) REFERENCES `questgroups` (`id`),
-  CONSTRAINT `questgroups_questtexts_ibfk_2` FOREIGN KEY (`questtext_id`) REFERENCES `questtexts` (`id`)
+  CONSTRAINT `questgroups_questtexts_ibfk_1` FOREIGN KEY (`questgroup_id`) REFERENCES `questgroups` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `questgroups_questtexts_ibfk_2` FOREIGN KEY (`questtext_id`) REFERENCES `questtexts` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 

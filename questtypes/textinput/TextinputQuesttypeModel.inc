@@ -60,6 +60,17 @@
 
 
         /**
+         * Delete a Quest.
+         * 
+         * @param   int $questId    ID of Quest to delete
+         */
+        public function deleteQuest($questId)
+        {
+            $this->db->query('DELETE FROM questtypes_textinput WHERE quest_id = ?', 'i', $questId);
+        }
+
+
+        /**
          * Get textinput-text for a Quest.
          *
          * @param   int $questId    ID of Quest

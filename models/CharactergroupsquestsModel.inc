@@ -437,6 +437,17 @@
         }
 
 
+        /**
+         * Delete all Character groups Quests of a Character groups-group.
+         *
+         * @param   int $groupsgroupId  ID of Character groups-group to delete Quests of
+         */
+        public function deleteQuestsOfGroupsgroup($groupsgroupId)
+        {
+            $this->db->query('DELETE FROM charactergroupsquests WHERE charactergroupsgroup_id = ?', 'i', $groupsgroupId);
+        }
+
+
     }
 
 ?>

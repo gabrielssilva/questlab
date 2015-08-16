@@ -231,6 +231,17 @@
             $this->db->setAutocommit(true);
         }
 
+
+        /**
+         * Delete all XP-levels of a Seminary.
+         *
+         * @param   int $seminaryId ID of Seminary to delete XP-levels of
+         */
+        public function deleteXPLevelsOfSeminary($seminaryId)
+        {
+            $this->db->query('DELETE FROM xplevels WHERE seminary_id = ?', 'i', $seminaryId);
+        }
+
     }
 
 ?>

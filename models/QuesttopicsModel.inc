@@ -470,6 +470,17 @@
             $this->db->query('DELETE FROM questsubtopics WHERE id = ?', 'i', $questtopicId);
         }
 
+
+        /**
+         * Delete all Questtopics of a Seminary.
+         *
+         * @param   int $seminaryId ID of Seminary to delete Questtopics of
+         */
+        public function deleteQuesttopicsOfSeminary($seminaryId)
+        {
+            $this->db->query('DELETE FROM questtopics WHERE seminary_id = ?', 'i', $seminaryId);
+        }
+
     }
 
 ?>

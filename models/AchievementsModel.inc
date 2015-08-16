@@ -1402,6 +1402,18 @@
             $this->db->setAutocommit(true);
         }
 
+
+        /**
+         * Delete all Achievements of a Seminary.
+         *
+         * @param   int $seminaryId ID of Seminary to delete Achievements of
+         */
+        public function deleteAchievementsOfSeminary($seminaryId)
+        {
+            // Delete Achievements
+            $this->db->query('DELETE FROM achievements WHERE seminary_id = ?', 'i', $seminaryId);
+        }
+
     }
 
 ?>

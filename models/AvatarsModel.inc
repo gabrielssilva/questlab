@@ -218,6 +218,25 @@
             }
         }
 
+
+        /**
+         * Delete Avatars.
+         *
+         * @param   array   $charactertypeIds   List of Charactertype-IDs to delete Avatars of
+         * @param   array   $xplevelIds         List of XP-level-IDs to delete Avatars of
+         */
+        public function deleteAvatars($charactertypeIds, $xplevelIds)
+        {
+            $this->db->query(
+                sprintf(
+                    'DELETE FROM avatars '.
+                    'WHERE charactertype_id IN (%s) OR xplevel_id IN (%s)',
+                    implode(',', $charactertypeIds),
+                    implode(',', $xplevelIds)
+                )
+            );
+        }
+
     }
 
 ?>

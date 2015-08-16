@@ -384,6 +384,17 @@
             );
         }
 
+
+        /**
+         * Delete all Quest texts of a Quest.
+         *
+         * @param   int $questId    ID of Quest to delete all texts of
+         */
+        public function deleteQuesttexts($questId)
+        {
+            $this->db->query('DELETE FROM questtexts WHERE quest_id = ?', 'i', $questId);
+        }
+
     }
 
 ?>
