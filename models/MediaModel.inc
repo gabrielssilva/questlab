@@ -39,7 +39,7 @@
          *
          * @throws  \nre\exceptions\IdNotFoundException
          * @param   string  $mediaURL   URL-name of the Medium
-         * @return  array           Medium data
+         * @return  array               Medium data
          */
         public function getMediaByUrl($mediaUrl)
         {
@@ -88,9 +88,9 @@
          * Get a Seminary medium by its URL.
          *
          * @throws  \nre\exceptions\IdNotFoundException
-         * @param   int $seminaryId     ID of the seminary
+         * @param   int     $seminaryId         ID of the seminary
          * @param   string  $seminaryMediaUrl   URL-name of the Seminary medium
-         * @return  array               Seminary medium data
+         * @return  array                       Seminary medium data
          */
         public function getSeminaryMediaByUrl($seminaryId, $seminaryMediaUrl)
         {
@@ -115,8 +115,8 @@
          * Get a Seminary medium by its ID.
          *
          * @throws  \nre\exceptions\IdNotFoundException
-         * @param   int $seminaryMediaId    ID of the Seminary medium
-         * @return  array               Seminary medium data
+         * @param   int     $seminaryMediaId    ID of the Seminary medium
+         * @return  array                       Seminary medium data
          */
         public function getSeminaryMediaById($mediaId)
         {
@@ -232,13 +232,13 @@
         /**
          * Create a new moodpic.
          *
-         * @param   int $userId     ID of user that does the upload
-         * @param   int $seminaryId ID of Seminary
-         * @param   string  $filename   Filename of uploading media
+         * @param   int     $userId         ID of user that does the upload
+         * @param   int     $seminaryId     ID of Seminary
+         * @param   string  $filename       Filename of uploading media
          * @param   string  $description    Description for media
-         * @param   string  $mimetype   Mimetype of media
+         * @param   string  $mimetype       Mimetype of media
          * @param   string  $tmpFilename    Name of temporary uploaded file
-         * @return  mixed           ID of media record or false if upload failed
+         * @return  mixed                   ID of media record or false if upload failed
          */
         public function createMoodpic($userId, $seminaryId, $filename, $description, $mimetype, $tmpFilename)
         {
@@ -272,13 +272,13 @@
          * Create a new Avatar picture for a Charactertype by creating a new Seminarymedia and
          * adding it to the list of Avatar pictures.
          *
-         * @param   int $userId     ID of user that does the upload
-         * @param   int $seminaryId ID of Seminary
-         * @param   string  $filename   Filename of uploading media
+         * @param   int     $userId         ID of user that does the upload
+         * @param   int     $seminaryId     ID of Seminary
+         * @param   string  $filename       Filename of uploading media
          * @param   string  $description    Description for media
-         * @param   string  $mimetype   Mimetype of media
+         * @param   string  $mimetype       Mimetype of media
          * @param   string  $tmpFilename    Name of temporary uploaded file
-         * @return  mixed           ID of media record or false if upload failed
+         * @return  mixed                   ID of media record or false if upload failed
          */
         public function createAvatarpicture($userId, $seminaryId, $filename, $description, $mimetype, $tmpFilename)
         {
@@ -289,7 +289,7 @@
                 // Create Seminary media record
                 $mediaId = $this->createSeminaryMedia($userId, $seminaryId, $filename, $description, $mimetype);
 
-                // Add media to Achievements media
+                // Add media to Avatar pictures
                 $this->db->query(
                     'INSERT INTO avatarpictures '.
                     '(seminarymedia_id, created_user_id) '.
@@ -348,14 +348,14 @@
         /**
          * Create a new Questgroup picture (Moodpic).
          *
-         * @param   int $userId     ID of user that does the upload
-         * @param   int $seminaryId ID of Seminary
-         * @param   int $questgroupId   ID of Questgroup to create picture for
-         * @param   string  $filename   Filename of uploading media
+         * @param   int     $userId         ID of user that does the upload
+         * @param   int     $seminaryId     ID of Seminary
+         * @param   int     $questgroupId   ID of Questgroup to create picture for
+         * @param   string  $filename       Filename of uploading media
          * @param   string  $description    Description for media
-         * @param   string  $mimetype   Mimetype of media
+         * @param   string  $mimetype       Mimetype of media
          * @param   string  $tmpFilename    Name of temporary uploaded file
-         * @return  mixed           ID of media record or false if upload failed
+         * @return  mixed                   ID of media record or false if upload failed
          */
         public function createQuestgrouppicture($userId, $seminaryId, $questgroupId, $filename, $description, $mimetype, $tmpFilename)
         {
@@ -426,13 +426,13 @@
          * Create a new Quests media by creating a new Seminarymedia and
          * adding it to the list of Quests media.
          *
-         * @param   int $userId     ID of user that does the upload
-         * @param   int $seminaryId ID of Seminary
-         * @param   string  $filename   Filename of uploading media
+         * @param   int     $userId         ID of user that does the upload
+         * @param   int     $seminaryId     ID of Seminary
+         * @param   string  $filename       Filename of uploading media
          * @param   string  $description    Description for media
-         * @param   string  $mimetype   Mimetype of media
+         * @param   string  $mimetype       Mimetype of media
          * @param   string  $tmpFilename    Name of temporary uploaded file
-         * @return  mixed           ID of media record or false if upload failed
+         * @return  mixed                   ID of media record or false if upload failed
          */
         public function createQuestMedia($userId, $seminaryId, $filename, $description, $mimetype, $tmpFilename)
         {
@@ -507,13 +507,13 @@
          * Create a new Character groups media by creating a new Seminarymedia and
          * adding it to the list of media for Character groups.
          *
-         * @param   int $userId     ID of user that does the upload
-         * @param   int $seminaryId ID of Seminary
-         * @param   string  $filename   Filename of uploading media
+         * @param   int     $userId         ID of user that does the upload
+         * @param   int     $seminaryId     ID of Seminary
+         * @param   string  $filename       Filename of uploading media
          * @param   string  $description    Description for media
-         * @param   string  $mimetype   Mimetype of media
+         * @param   string  $mimetype       Mimetype of media
          * @param   string  $tmpFilename    Name of temporary uploaded file
-         * @return  mixed           ID of media record or false if upload failed
+         * @return  mixed                   ID of media record or false if upload failed
          */
         public function createCharactergroupMedia($userId, $seminaryId, $filename, $description, $mimetype, $tmpFilename)
         {
@@ -561,13 +561,13 @@
          * Create a new Achievement media by creating a new Seminarymedia and
          * adding it to the list of media for Achievements.
          *
-         * @param   int $userId     ID of user that does the upload
-         * @param   int $seminaryId ID of Seminary
-         * @param   string  $filename   Filename of uploading media
+         * @param   int     $userId         ID of user that does the upload
+         * @param   int     $seminaryId     ID of Seminary
+         * @param   string  $filename       Filename of uploading media
          * @param   string  $description    Description for media
-         * @param   string  $mimetype   Mimetype of media
+         * @param   string  $mimetype       Mimetype of media
          * @param   string  $tmpFilename    Name of temporary uploaded file
-         * @return  mixed           ID of media record or false if upload failed
+         * @return  mixed                   ID of media record or false if upload failed
          */
         public function createAchievementMedia($userId, $seminaryId, $filename, $description, $mimetype, $tmpFilename)
         {
@@ -704,12 +704,12 @@
         /**
          * Create a new Seminary media.
          *
-         * @param   int $userId     ID of user that does the upload
-         * @param   int $seminaryId ID of Seminary
-         * @param   string  $filename   Filename of uploading media
+         * @param   int     $userId         ID of user that does the upload
+         * @param   int     $seminaryId     ID of Seminary
+         * @param   string  $filename       Filename of uploading media
          * @param   string  $description    Description for media
-         * @param   string  $mimetype   Mimetype of media
-         * @return  mixed           ID of media record or false if upload failed
+         * @param   string  $mimetype       Mimetype of media
+         * @return  mixed                   ID of media record or false if upload failed
          */
         private function createSeminaryMedia($userId, $seminaryId, $filename, $description, $mimetype)
         {
