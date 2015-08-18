@@ -233,10 +233,10 @@
                         throw new \nre\exceptions\ParamsNotValidException('text');
                     }
                     $text = $this->request->getPostParam('text');
-                    if(is_null($this->request->getPostParam('fields'))) {
-                        throw new \nre\exceptions\ParamsNotValidException('fields');
-                    }
                     $fields = $this->request->getPostParam('fields');
+                    if(is_null($fields) && !is_array($fields)) {
+                        $fields = array();
+                    }
                     $fields = array_values($fields);
                     $fieldIndex = 0;
                     foreach($fields as &$field)
