@@ -103,11 +103,11 @@
         </select>
     </fieldset>
     <fieldset>
-        <label for="entrytext"><?=('Entry text')?>:</label><br />
+        <label for="entrytext"><?=_('Entry text')?>:</label><br />
         <textarea id="entrytext" name="entrytext" placeholder="<?=_('Entry text')?>"><?=$entryText?></textarea><br />
         <label for="task"><?=_('Task')?>:</label><br />
         <textarea id="task" name="task" placeholder="<?=('Task')?>"><?=$task?></textarea><br />
-        <label for="wrongtext"><?=('Wrong text')?>:</label><br />
+        <label for="wrongtext"><?=_('Wrong text')?>:</label><br />
         <textarea id="wrongtext" name="wrongtext" placeholder="<?=_('Wrong text')?>"><?=$wrongText?></textarea><br />
     </fieldset>
     <?php if(!is_null($quest['type']['classname'])) : ?>
