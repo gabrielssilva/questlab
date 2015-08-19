@@ -729,7 +729,7 @@
                     {
                         // Parent Questgroup
                         if(is_null($questgroup['hierarchy']['parent_questgroup_id'])) {
-                            $this->redirect($this->linker->link(array('simenaries', 'seminary', $seminary['url'])));
+                            $this->redirect($this->linker->link(array('seminaries', 'seminary', $seminary['url'])));
                         }
                         else
                         {

@@ -968,7 +968,7 @@ CREATE TABLE `quests` (
   KEY `questgroup_id` (`questgroup_id`),
   CONSTRAINT `quests_ibfk_1` FOREIGN KEY (`created_user_id`) REFERENCES `users` (`id`),
   CONSTRAINT `quests_ibfk_2` FOREIGN KEY (`questtype_id`) REFERENCES `questtypes` (`id`),
-  CONSTRAINT `quests_ibfk_4` FOREIGN KEY (`questgroup_id`) REFERENCES `questgroups` (`id`),
+  CONSTRAINT `quests_ibfk_4` FOREIGN KEY (`questgroup_id`) REFERENCES `questgroups` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `quests_ibfk_5` FOREIGN KEY (`questsmedia_id`) REFERENCES `questsmedia` (`media_id`) ON DELETE SET NULL ON UPDATE SET NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;

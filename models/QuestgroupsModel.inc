@@ -741,11 +741,11 @@
          */
         public function deleteQuestgroup($questgroupId)
         {
-            $this->db->query(
-                'DELETE FROM questgroups WHERE id = ?',
-                'i',
-                $questgroupId
-            );
+            // Delete Questgroup texts
+            $this->Questgrouptexts->deleteQuestgrouptexts($questgroupId);
+
+            // Delete Questgroup
+            $this->db->query('DELETE FROM questgroups WHERE id = ?', 'i', $questgroupId);
         }
 
 
@@ -760,13 +760,8 @@
             $questgroups = $this->getQuestgroupsForSeminary($seminaryId);
 
             // Delete each Questgroup
-            foreach($questgroups as &$questgroup)
-            {
-                // Delete Questgroup texts
-                $this->Questgrouptexts->deleteQuestgrouptexts($questgroup['id']);
-
-                // Delete Questgroup
-                $this->db->query('DELETE FROM questgroups WHERE id = ?', 'i', $questgroup['id']);
+            foreach($questgroups as &$questgroup) {
+                $this->deleteQuestgroup($questgroup['id']);
             }
         }
 
