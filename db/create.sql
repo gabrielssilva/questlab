@@ -1,8 +1,8 @@
--- MySQL dump 10.15  Distrib 10.0.18-MariaDB, for Linux (x86_64)
+-- MySQL dump 10.15  Distrib 10.0.21-MariaDB, for Linux (x86_64)
 --
 -- Host: localhost    Database: z
 -- ------------------------------------------------------
--- Server version	10.0.18-MariaDB-log
+-- Server version	10.0.21-MariaDB-log
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -275,7 +275,9 @@ CREATE TABLE `cache_charactergroups` (
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = '' */ ;
 DELIMITER ;;
-/*!50003 CREATE*/ /*!50017 DEFINER=`z`@`%`*/ /*!50003 TRIGGER `update_cache_cache_charactergroups_insert` AFTER INSERT ON `cache_charactergroups` FOR EACH ROW BEGIN
+/*!50003 CREATE*/ /*!50017 DEFINER=`z`@`%`*/ /*!50003 TRIGGER `update_cache_cache_charactergroups_insert`
+AFTER INSERT ON cache_charactergroups
+FOR EACH ROW BEGIN
 	CALL update_cache_characters_charactergroup(NEW.charactergroup_id);
 END */;;
 DELIMITER ;
@@ -292,7 +294,9 @@ DELIMITER ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = '' */ ;
 DELIMITER ;;
-/*!50003 CREATE*/ /*!50017 DEFINER=`z`@`%`*/ /*!50003 TRIGGER `update_cache_cache_charactergroups_update` AFTER UPDATE ON `cache_charactergroups` FOR EACH ROW BEGIN
+/*!50003 CREATE*/ /*!50017 DEFINER=`z`@`%`*/ /*!50003 TRIGGER `update_cache_cache_charactergroups_update`
+AFTER UPDATE ON cache_charactergroups
+FOR EACH ROW BEGIN
 	CALL update_cache_characters_charactergroup(NEW.charactergroup_id);
 END */;;
 DELIMITER ;
@@ -359,7 +363,9 @@ CREATE TABLE `charactergroups` (
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = '' */ ;
 DELIMITER ;;
-/*!50003 CREATE*/ /*!50017 DEFINER=`z`@`%`*/ /*!50003 TRIGGER `update_cache_charactergroups_insert` AFTER INSERT ON `charactergroups` FOR EACH ROW BEGIN
+/*!50003 CREATE*/ /*!50017 DEFINER=`z`@`%`*/ /*!50003 TRIGGER `update_cache_charactergroups_insert`
+AFTER INSERT ON charactergroups
+FOR EACH ROW BEGIN
 	CALL update_cache_charactergroups(NEW.id);
 END */;;
 DELIMITER ;
@@ -453,7 +459,9 @@ CREATE TABLE `charactergroupsquests` (
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = '' */ ;
 DELIMITER ;;
-/*!50003 CREATE*/ /*!50017 DEFINER=`z`@`%`*/ /*!50003 TRIGGER `update_cache_charactergroupsquests_update` AFTER UPDATE ON `charactergroupsquests` FOR EACH ROW BEGIN
+/*!50003 CREATE*/ /*!50017 DEFINER=`z`@`%`*/ /*!50003 TRIGGER `update_cache_charactergroupsquests_update`
+AFTER UPDATE ON charactergroupsquests
+FOR EACH ROW BEGIN
 	CALL update_cache_charactergroups_charactergroupsquest(NEW.id);
 END */;;
 DELIMITER ;
@@ -489,7 +497,9 @@ CREATE TABLE `charactergroupsquests_groups` (
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = '' */ ;
 DELIMITER ;;
-/*!50003 CREATE*/ /*!50017 DEFINER=`z`@`%`*/ /*!50003 TRIGGER `update_cache_charactergroupsquests_groups_insert` AFTER INSERT ON `charactergroupsquests_groups` FOR EACH ROW BEGIN
+/*!50003 CREATE*/ /*!50017 DEFINER=`z`@`%`*/ /*!50003 TRIGGER `update_cache_charactergroupsquests_groups_insert`
+AFTER INSERT ON charactergroupsquests_groups
+FOR EACH ROW BEGIN
 	CALL update_cache_charactergroups(NEW.charactergroup_id);
 END */;;
 DELIMITER ;
@@ -506,7 +516,9 @@ DELIMITER ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = '' */ ;
 DELIMITER ;;
-/*!50003 CREATE*/ /*!50017 DEFINER=`z`@`%`*/ /*!50003 TRIGGER `update_cache_charactergroupsquests_groups_update` AFTER UPDATE ON `charactergroupsquests_groups` FOR EACH ROW BEGIN
+/*!50003 CREATE*/ /*!50017 DEFINER=`z`@`%`*/ /*!50003 TRIGGER `update_cache_charactergroupsquests_groups_update`
+AFTER UPDATE ON charactergroupsquests_groups
+FOR EACH ROW BEGIN
 	CALL update_cache_charactergroups(OLD.charactergroup_id);
 	CALL update_cache_charactergroups(NEW.charactergroup_id);
 END */;;
@@ -524,7 +536,9 @@ DELIMITER ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = '' */ ;
 DELIMITER ;;
-/*!50003 CREATE*/ /*!50017 DEFINER=`z`@`%`*/ /*!50003 TRIGGER `update_cache_charactergroupsquests_groups_delete` AFTER DELETE ON `charactergroupsquests_groups` FOR EACH ROW BEGIN
+/*!50003 CREATE*/ /*!50017 DEFINER=`z`@`%`*/ /*!50003 TRIGGER `update_cache_charactergroupsquests_groups_delete`
+AFTER DELETE ON charactergroupsquests_groups
+FOR EACH ROW BEGIN
 	CALL update_cache_charactergroups(OLD.charactergroup_id);
 END */;;
 DELIMITER ;
@@ -601,7 +615,9 @@ CREATE TABLE `characters` (
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = '' */ ;
 DELIMITER ;;
-/*!50003 CREATE*/ /*!50017 DEFINER=`z`@`%`*/ /*!50003 TRIGGER `update_cache_characters_insert` AFTER INSERT ON `characters` FOR EACH ROW BEGIN
+/*!50003 CREATE*/ /*!50017 DEFINER=`z`@`%`*/ /*!50003 TRIGGER `update_cache_characters_insert`
+AFTER INSERT ON characters
+FOR EACH ROW BEGIN
 	CALL update_cache_characters(NEW.id);
 END */;;
 DELIMITER ;
@@ -636,7 +652,9 @@ CREATE TABLE `characters_charactergroups` (
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = '' */ ;
 DELIMITER ;;
-/*!50003 CREATE*/ /*!50017 DEFINER=`z`@`%`*/ /*!50003 TRIGGER `update_cache_characters_charactergroups_insert` AFTER INSERT ON `characters_charactergroups` FOR EACH ROW BEGIN
+/*!50003 CREATE*/ /*!50017 DEFINER=`z`@`%`*/ /*!50003 TRIGGER `update_cache_characters_charactergroups_insert`
+AFTER INSERT ON characters_charactergroups
+FOR EACH ROW BEGIN
 	CALL update_cache_characters(NEW.character_id);
 END */;;
 DELIMITER ;
@@ -653,7 +671,9 @@ DELIMITER ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = '' */ ;
 DELIMITER ;;
-/*!50003 CREATE*/ /*!50017 DEFINER=`z`@`%`*/ /*!50003 TRIGGER `update_cache_characters_charactergroups_update` AFTER UPDATE ON `characters_charactergroups` FOR EACH ROW BEGIN
+/*!50003 CREATE*/ /*!50017 DEFINER=`z`@`%`*/ /*!50003 TRIGGER `update_cache_characters_charactergroups_update`
+AFTER UPDATE ON characters_charactergroups
+FOR EACH ROW BEGIN
 	CALL update_cache_characters(OLD.character_id);
 	CALL update_cache_characters(NEW.character_id);
 END */;;
@@ -671,7 +691,9 @@ DELIMITER ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = '' */ ;
 DELIMITER ;;
-/*!50003 CREATE*/ /*!50017 DEFINER=`z`@`%`*/ /*!50003 TRIGGER `update_cache_characters_charactergroups_delete` AFTER DELETE ON `characters_charactergroups` FOR EACH ROW BEGIN
+/*!50003 CREATE*/ /*!50017 DEFINER=`z`@`%`*/ /*!50003 TRIGGER `update_cache_characters_charactergroups_delete`
+AFTER DELETE ON characters_charactergroups
+FOR EACH ROW BEGIN
 	CALL update_cache_characters(OLD.character_id);
 END */;;
 DELIMITER ;
@@ -981,7 +1003,9 @@ CREATE TABLE `quests` (
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = '' */ ;
 DELIMITER ;;
-/*!50003 CREATE*/ /*!50017 DEFINER=`z`@`%`*/ /*!50003 TRIGGER `update_cache_quests_update` AFTER UPDATE ON `quests` FOR EACH ROW BEGIN
+/*!50003 CREATE*/ /*!50017 DEFINER=`z`@`%`*/ /*!50003 TRIGGER `update_cache_quests_update`
+AFTER UPDATE ON quests
+FOR EACH ROW BEGIN
 	CALL update_cache_characters_quest(NEW.id);
 END */;;
 DELIMITER ;
@@ -1019,7 +1043,9 @@ CREATE TABLE `quests_characters` (
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = '' */ ;
 DELIMITER ;;
-/*!50003 CREATE*/ /*!50017 DEFINER=`z`@`%`*/ /*!50003 TRIGGER `update_cache_quests_characters_insert` AFTER INSERT ON `quests_characters` FOR EACH ROW BEGIN
+/*!50003 CREATE*/ /*!50017 DEFINER=`z`@`%`*/ /*!50003 TRIGGER `update_cache_quests_characters_insert`
+AFTER INSERT ON quests_characters
+FOR EACH ROW BEGIN
 	CALL update_cache_characters(NEW.character_id);
 END */;;
 DELIMITER ;
@@ -1036,7 +1062,9 @@ DELIMITER ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = '' */ ;
 DELIMITER ;;
-/*!50003 CREATE*/ /*!50017 DEFINER=`z`@`%`*/ /*!50003 TRIGGER `update_cache_quests_characters_update` AFTER UPDATE ON `quests_characters` FOR EACH ROW BEGIN
+/*!50003 CREATE*/ /*!50017 DEFINER=`z`@`%`*/ /*!50003 TRIGGER `update_cache_quests_characters_update`
+AFTER UPDATE ON quests_characters
+FOR EACH ROW BEGIN
 	CALL update_cache_characters(OLD.character_id);
 	CALL update_cache_characters(NEW.character_id);
 END */;;
@@ -1054,7 +1082,9 @@ DELIMITER ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = '' */ ;
 DELIMITER ;;
-/*!50003 CREATE*/ /*!50017 DEFINER=`z`@`%`*/ /*!50003 TRIGGER `update_cache_quests_characters_delete` AFTER DELETE ON `quests_characters` FOR EACH ROW BEGIN
+/*!50003 CREATE*/ /*!50017 DEFINER=`z`@`%`*/ /*!50003 TRIGGER `update_cache_quests_characters_delete`
+AFTER DELETE ON quests_characters
+FOR EACH ROW BEGIN
 	CALL update_cache_characters(OLD.character_id);
 END */;;
 DELIMITER ;
@@ -1961,7 +1991,7 @@ CREATE DEFINER=`z`@`%` PROCEDURE `update_cache_charactergroups`(
 	IN CHARACTERGROUPID INT(11)
 )
 BEGIN
-	/* XPs */
+	
 	REPLACE INTO cache_charactergroups
 	(charactergroup_id, xps)
 	SELECT charactergroups.id, IFNULL(SUM(ROUND(charactergroupsquests.xps * charactergroupsquests_groups.xps_factor)),0) AS xps
@@ -2032,7 +2062,7 @@ BEGIN
 	DECLARE XPLEVELID INT;
 	DECLARE AVATARID INT;
 	
-	/* XPs */
+	
 	SELECT IFNULL(SUM(quests.xps),0) INTO QUESTXPS
 	FROM quests_characters
 	LEFT JOIN quests ON quests.id = quests_characters.quest_id
@@ -2043,7 +2073,7 @@ BEGIN
 	WHERE characters_charactergroups.character_id = CHARACTERID;
 	SET TOTALXPS = QUESTXPS + GROUPSXPS;
 
-	/* XP-level */
+	
 	SELECT (
 		SELECT id
 		FROM xplevels
@@ -2057,13 +2087,13 @@ BEGIN
 	LEFT JOIN charactertypes ON charactertypes.id = characters.charactertype_id
 	WHERE characters.id = CHARACTERID;
 	
-	/* Avatar */
+	
 	SELECT avatars.id INTO AVATARID
 	FROM characters
 	LEFT JOIN avatars ON avatars.charactertype_id = characters.charactertype_id AND avatars.xplevel_id = XPLEVELID
 	WHERE characters.id = CHARACTERID;
 	
-	/* Set values */
+	
 	REPLACE INTO cache_characters
 	(character_id, xps, quest_xps, xplevel_id, avatar_id)
 	VALUES
@@ -2158,4 +2188,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2015-05-19 11:52:32
+-- Dump completed on 2015-08-19 21:42:23
