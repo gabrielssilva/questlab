@@ -1396,8 +1396,8 @@ CREATE TABLE `questtypes_choiceinput_lists_characters` (
   KEY `questtypes_choiceinput_choice_id` (`questtypes_choiceinput_choice_id`),
   KEY `questtypes_choiceinput_list_id` (`questtypes_choiceinput_list_id`),
   CONSTRAINT `questtypes_choiceinput_lists_characters_ibfk_1` FOREIGN KEY (`character_id`) REFERENCES `characters` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `questtypes_choiceinput_lists_characters_ibfk_2` FOREIGN KEY (`questtypes_choiceinput_list_id`) REFERENCES `questtypes_choiceinput_lists` (`id`),
-  CONSTRAINT `questtypes_choiceinput_lists_characters_ibfk_3` FOREIGN KEY (`questtypes_choiceinput_choice_id`) REFERENCES `questtypes_choiceinput_choices` (`id`)
+  CONSTRAINT `questtypes_choiceinput_lists_characters_ibfk_2` FOREIGN KEY (`questtypes_choiceinput_list_id`) REFERENCES `questtypes_choiceinput_lists` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `questtypes_choiceinput_lists_characters_ibfk_3` FOREIGN KEY (`questtypes_choiceinput_choice_id`) REFERENCES `questtypes_choiceinput_choices` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -2188,4 +2188,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2015-08-19 21:42:23
+-- Dump completed on 2015-08-19 22:23:25
