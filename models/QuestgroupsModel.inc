@@ -741,11 +741,40 @@
          */
         public function deleteQuestgroup($questgroupId)
         {
+            // Get Questgroupshierarchy
+            $hierarchy = $this->Questgroupshierarchy->getHierarchyForQuestgroup($questgroupId);
+
             // Delete Questgroup texts
             $this->Questgrouptexts->deleteQuestgrouptexts($questgroupId);
 
             // Delete Questgroup
             $this->db->query('DELETE FROM questgroups WHERE id = ?', 'i', $questgroupId);
+
+            // Correct Questgrouphierarchy positions
+            if(!empty($hierarchy))
+            {
+                if(is_null($hierarchy['parent_questgroup_id'])) {
+                    $this->db->query(
+                        'UPDATE questgroups_questgroupshierarchy '.
+                        'SET pos = pos - 1 '.
+                        'WHERE questgroupshierarchy_id = ? AND parent_questgroup_id IS NULL AND pos >= ?',
+                        'ii',
+                        $hierarchy['id'],
+                        $hierarchy['questgroup_pos']
+                    );
+                }
+                else {
+                    $this->db->query(
+                        'UPDATE questgroups_questgroupshierarchy '.
+                        'SET pos = pos - 1 '.
+                        'WHERE questgroupshierarchy_id = ? AND parent_questgroup_id = ? AND pos >= ?',
+                        'iii',
+                        $hierarchy['id'],
+                        $hierarchy['parent_questgroup_id'],
+                        $hierarchy['questgroup_pos']
+                    );
+                }
+            }
         }
 
 
