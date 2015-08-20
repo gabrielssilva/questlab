@@ -85,8 +85,12 @@
          */
         public static $media = array(
             'questgroup' => array(
-                'width'         => 480,
-                'height'        => 5000
+                'width'     => 480,
+                'height'    => 5000
+            ),
+            'quest' => array(
+                'width'     => 200,
+                'height'    => 200
             ),
             'avatar' => array(
                 'width'     => 500,

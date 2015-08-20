@@ -473,54 +473,32 @@
 
             // Load and process file
             $file = null;
-            switch($action)
+            if(is_null($action) || !in_array(strtoupper($format), self::getImageTypes()))
             {
-                // No action
-                case null:
-                    // Do not process the file
-                    $file = file_get_contents($media['filename']);
-                break;
-                case 'questgroup':
-                    if(!in_array(strtoupper($format), self::getImageTypes())) {
-                        $file = file_get_contents($media['filename']);
-                    }
-                    else
-                    {
+                // Do not process the file
+                $file = file_get_contents($media['filename']);
+            }
+            else
+            {
+                // Process file
+                switch($action)
+                {
+                    case 'questgroup':
+                    case 'quest':
+                    case 'avatar':
+                    case 'charactergroup':
+                    case 'charactergroupsquest':
                         $file = self::resizeImage(
                             $media['filename'],
                             $format,
-                            \nre\configs\AppConfig::$media['questgroup']['width'],
-                            \nre\configs\AppConfig::$media['questgroup']['height']
+                            \nre\configs\AppConfig::$media[$action]['width'],
+                            \nre\configs\AppConfig::$media[$action]['height']
                         );
-                    }
-                break;
-                case 'avatar':
-                    $file = self::resizeImage(
-                        $media['filename'],
-                        $format,
-                        \nre\configs\AppConfig::$media['avatar']['width'],
-                        \nre\configs\AppConfig::$media['avatar']['height']
-                    );
-                break;
-                case 'charactergroup':
-                    $file = self::resizeImage(
-                        $media['filename'],
-                        $format,
-                        \nre\configs\AppConfig::$media['charactergroup']['width'],
-                        \nre\configs\AppConfig::$media['charactergroup']['height']
-                    );
-                break;
-                case 'charactergroupsquest':
-                    $file = self::resizeImage(
-                        $media['filename'],
-                        $format,
-                        \nre\configs\AppConfig::$media['charactergroupsquest']['width'],
-                        \nre\configs\AppConfig::$media['charactergroupsquest']['height']
-                    );
-                break;
-                default:
-                    throw new ParamsNotValidException($action);
-                break;
+                    break;
+                    default:
+                        throw new ParamsNotValidException($action);
+                    break;
+                }
             }
 
 
