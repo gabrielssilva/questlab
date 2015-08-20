@@ -24,7 +24,7 @@
             <?php $mediaShown = true; ?>
             <a href="<?=$linker->link(array('media','seminary',$seminary['url'],$media['url']))?>"><img src="<?=$linker->link(array('media','seminary',$seminary['url'],$media['url'],'quest'))?>" /></a>
             <?php endif ?>
-            <?=$t->t($questtext['text'])?>
+            <?=str_replace('<p>', '', str_replace('</p>', '', $t->t($questtext['text'])))?>
         </p>
         <?php if(count($questtext['relatedQuestsgroups']) > 0 || !empty($questtext['abort_text'])) : ?>
         <ul>
@@ -87,7 +87,7 @@
             <?php if(array_key_exists('media', $questtext)) : ?>
             <a href="<?=$linker->link(array('media','seminary',$seminary['url'],$questtext['media']['url']))?>"><img src="<?=$linker->link(array('media','seminary',$seminary['url'],$questtext['media']['url'],'quest'))?>" /></a>
             <?php endif ?>
-            <?=$t->t($questtext['text'])?>
+            <?=str_replace('<p>', '', str_replace('</p>', '', $t->t($questtext['text'])))?>
         </p>
         <?php if(count($questtext['relatedQuestsgroups']) > 0 || !empty($questtext['abort_text'])) : ?>
         <ul>
