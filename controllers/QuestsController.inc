@@ -1091,7 +1091,7 @@
                 }
 
                 // Redirect to entry
-                $this->redirect($this->linker->link(array('seminary', $seminary['url']), 1));
+                $this->redirect($this->linker->link(array('quest', $seminary['url'], $questgroup['url'], $quest['url']), 1));
             }
 
 
