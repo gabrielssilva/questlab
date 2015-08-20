@@ -173,7 +173,8 @@
             'ranking_range'         => 2,
             'achievements_range'    => 3,
             'title_delimiter'       => ' – ',
-            'lists_limit'           => 10
+            'lists_limit'           => 10,
+            'imagesource_length'    => 30
         );
 
 
