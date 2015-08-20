@@ -31,6 +31,8 @@
          */
         public function index(\nre\core\Request $request, \nre\core\Response $response)
         {
+            // Add Moodpic
+            $this->addSubAgent('Moodpic', 'index');
         }
 
 
@@ -42,7 +44,21 @@
          */
         public function seminary(\nre\core\Request $request, \nre\core\Response $response)
         {
-            $this->addSubAgent('Moodpic', 'index', $request->getParam(1));
+            // Add Moodpic
+            $this->addSubAgent('Moodpic', 'seminary', $request->getParam(3));
+        }
+
+
+        /**
+         * Action: create.
+         *
+         * @param   \nre\core\Request   $request    Current request
+         * @param   \nre\core\Response  $response   Current response
+         */
+        public function create(\nre\core\Request $request, \nre\core\Response $response)
+        {
+            // Add Moodpic
+            $this->addSubAgent('Moodpic', 'index');
         }
 
 
@@ -54,7 +70,8 @@
          */
         public function edit(\nre\core\Request $request, \nre\core\Response $response)
         {
-            $this->addSubAgent('Moodpic', 'index', $request->getParam(1));
+            // Add Moodpic
+            $this->addSubAgent('Moodpic', 'seminary', $request->getParam(3), $request->getParam(1));
         }
 
 
@@ -66,7 +83,8 @@
          */
         public function copy(\nre\core\Request $request, \nre\core\Response $response)
         {
-            $this->addSubAgent('Moodpic', 'index', $request->getParam(1));
+            // Add Moodpic
+            $this->addSubAgent('Moodpic', 'seminary', $request->getParam(3), $request->getParam(1));
         }
 
 
@@ -78,7 +96,8 @@
          */
         public function delete(\nre\core\Request $request, \nre\core\Response $response)
         {
-            $this->addSubAgent('Moodpic', 'index', $request->getParam(1));
+            // Add Moodpic
+            $this->addSubAgent('Moodpic', 'seminary', $request->getParam(3), $request->getParam(1));
         }
 
     }

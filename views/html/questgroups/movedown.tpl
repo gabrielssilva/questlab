@@ -1,10 +1,4 @@
-<?php if(!is_null($picture)) : ?>
-<div class="moodpic">
-    <img src="<?=$linker->link(array('media','seminary',$seminary['url'],$picture['url']))?>" />
-</div>
-<?php else: ?>
 <?=$moodpic?>
-<?php endif ?>
 <?=$questgroupshierarchypath?>
 
 <?php if(!is_null($questgroup['hierarchy'])) : ?>

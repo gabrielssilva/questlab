@@ -164,14 +164,6 @@
             // Get texts
             $questgroupTexts = $this->Questgrouptexts->getQuestgroupTexts($questgroup['id']);
 
-            // Media
-            $picture = null;
-            if(!is_null($questgroup['questgroupspicture_id']))
-            {
-                $picture = $this->Media->getSeminaryMediaById($questgroup['questgroupspicture_id']);
-            }
-
-
             // Get Quests
             $quests = array();
             if(count($childQuestgroupshierarchy) == 0)
@@ -231,7 +223,6 @@
             $this->set('questgroup', $questgroup);
             $this->set('childquestgroupshierarchy', $childQuestgroupshierarchy);
             $this->set('texts', $questgroupTexts);
-            $this->set('picture', $picture);
             $this->set('quests', $quests);
         }
 
@@ -471,12 +462,6 @@
                 }
             }
 
-            // Media
-            $picture = null;
-            if(!is_null($questgroup['questgroupspicture_id'])) {
-                $picture = $this->Media->getSeminaryMediaById($questgroup['questgroupspicture_id']);
-            }
-
             // Get validation settings
             $validationSettings = array();
             foreach($fields as &$field) {
@@ -491,7 +476,6 @@
             // Pass data to view
             $this->set('seminary', $seminary);
             $this->set('questgroup', $questgroup);
-            $this->set('picture', $picture);
             $this->set('title', $title);
             $this->set('mimetypes', $mimetypes);
             $this->set('validation', $validation);
@@ -557,12 +541,6 @@
                 $this->redirect($this->linker->link(array('questgroup', $seminary['url'], $questgroup['url']), 1));
             }
 
-            // Media
-            $picture = null;
-            if(!is_null($questgroup['questgroupspicture_id'])) {
-                $picture = $this->Media->getSeminaryMediaById($questgroup['questgroupspicture_id']);
-            }
-
 
             // Set titile
             $this->addTitleLocalized('Edit Questgroup texts');
@@ -572,7 +550,6 @@
             $this->set('seminary', $seminary);
             $this->set('questgroup', $questgroup);
             $this->set('questgrouptexts', $questgroupTexts);
-            $this->set('picture', $picture);
             $this->set('mimetypes', $mimetypes);
         }
 
@@ -619,12 +596,6 @@
                 $this->redirect($this->linker->link(array('seminaries', 'seminary', $seminary['url'])));
             }
 
-            // Media
-            $picture = null;
-            if(!is_null($questgroup['questgroupspicture_id'])) {
-                $picture = $this->Media->getSeminaryMediaById($questgroup['questgroupspicture_id']);
-            }
-
 
             // Set titile
             $this->addTitleLocalized('Move Questgroup');
@@ -632,7 +603,6 @@
             // Show confirmation
             $this->set('seminary', $seminary);
             $this->set('questgroup', $questgroup);
-            $this->set('picture', $picture);
         }
 
 
@@ -678,12 +648,6 @@
                 $this->redirect($this->linker->link(array('seminaries', 'seminary', $seminary['url'])));
             }
 
-            // Media
-            $picture = null;
-            if(!is_null($questgroup['questgroupspicture_id'])) {
-                $picture = $this->Media->getSeminaryMediaById($questgroup['questgroupspicture_id']);
-            }
-
 
             // Set titile
             $this->addTitleLocalized('Move Questgroup');
@@ -691,7 +655,6 @@
             // Show confirmation
             $this->set('seminary', $seminary);
             $this->set('questgroup', $questgroup);
-            $this->set('picture', $picture);
         }
 
 
@@ -752,12 +715,6 @@
                 $this->redirect($this->linker->link(array('questgroup', $seminary['url'], $questgroup['url']), 1));
             }
 
-            // Media
-            $picture = null;
-            if(!is_null($questgroup['questgroupspicture_id'])) {
-                $picture = $this->Media->getSeminaryMediaById($questgroup['questgroupspicture_id']);
-            }
-
 
             // Set titile
             $this->addTitleLocalized('Delete Questgroup');
@@ -765,7 +722,6 @@
             // Show confirmation
             $this->set('seminary', $seminary);
             $this->set('questgroup', $questgroup);
-            $this->set('picture', $picture);
         }
 
     }

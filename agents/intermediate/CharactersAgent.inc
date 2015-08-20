@@ -31,8 +31,8 @@
          */
         public function index(\nre\core\Request $request, \nre\core\Response $response)
         {
-            // Add (default) Moodpic
-            $this->addSubAgent('Moodpic', 'index', $request->getParam(1));
+            // Add Moodpic
+            $this->addSubAgent('Moodpic', 'seminary', $request->getParam(3));
         }
 
 
@@ -44,8 +44,8 @@
          */
         public function character(\nre\core\Request $request, \nre\core\Response $response)
         {
-            // Add (default) Moodpic
-            $this->addSubAgent('Moodpic', 'index', $request->getParam(1));
+            // Add Moodpic
+            $this->addSubAgent('Moodpic', 'seminary', $request->getParam(3));
         }
 
 
@@ -57,8 +57,8 @@
          */
         public function register(\nre\core\Request $request, \nre\core\Response $response)
         {
-            // Add (default) Moodpic
-            $this->addSubAgent('Moodpic', 'index', $request->getParam(1));
+            // Add Moodpic
+            $this->addSubAgent('Moodpic', 'seminary', $request->getParam(3));
         }
 
 
@@ -70,8 +70,8 @@
          */
         public function manage(\nre\core\Request $request, \nre\core\Response $response)
         {
-            // Add (default) Moodpic
-            $this->addSubAgent('Moodpic', 'index', $request->getParam(1));
+            // Add Moodpic
+            $this->addSubAgent('Moodpic', 'seminary', $request->getParam(3));
         }
 
 
@@ -83,8 +83,8 @@
          */
         public function edit(\nre\core\Request $request, \nre\core\Response $response)
         {
-            // Add (default) Moodpic
-            $this->addSubAgent('Moodpic', 'index', $request->getParam(1));
+            // Add Moodpic
+            $this->addSubAgent('Moodpic', 'seminary', $request->getParam(3));
         }
 
 
@@ -96,8 +96,8 @@
          */
         public function delete(\nre\core\Request $request, \nre\core\Response $response)
         {
-            // Add (default) Moodpic
-            $this->addSubAgent('Moodpic', 'index', $request->getParam(1));
+            // Add Moodpic
+            $this->addSubAgent('Moodpic', 'seminary', $request->getParam(3));
         }
 
     }

@@ -31,8 +31,8 @@
          */
         public function index(\nre\core\Request $request, \nre\core\Response $response)
         {
-            // Add (default) Moodpic
-            $this->addSubAgent('Moodpic', 'index', $request->getParam(1));
+            // Add Moodpic
+            $this->addSubAgent('Moodpic', 'seminary', $request->getParam(3), $request->getParam(1));
         }
 
 
@@ -44,8 +44,8 @@
          */
         public function groupsgroup(\nre\core\Request $request, \nre\core\Response $response)
         {
-            // Add (default) Moodpic
-            $this->addSubAgent('Moodpic', 'index', $request->getParam(1));
+            // Add Moodpic
+            $this->addSubAgent('Moodpic', 'seminary', $request->getParam(3), $request->getParam(1));
         }
 
 
@@ -57,8 +57,8 @@
          */
         public function creategroupsgroup(\nre\core\Request $request, \nre\core\Response $response)
         {
-            // Add (default) Moodpic
-            $this->addSubAgent('Moodpic', 'index', $request->getParam(1));
+            // Add Moodpic
+            $this->addSubAgent('Moodpic', 'seminary', $request->getParam(3), $request->getParam(1));
         }
 
 
@@ -70,8 +70,8 @@
          */
         public function editgroupsgroup(\nre\core\Request $request, \nre\core\Response $response)
         {
-            // Add (default) Moodpic
-            $this->addSubAgent('Moodpic', 'index', $request->getParam(1));
+            // Add Moodpic
+            $this->addSubAgent('Moodpic', 'seminary', $request->getParam(3), $request->getParam(1));
         }
 
 
@@ -83,8 +83,8 @@
          */
         public function deletegroupsgroup(\nre\core\Request $request, \nre\core\Response $response)
         {
-            // Add (default) Moodpic
-            $this->addSubAgent('Moodpic', 'index', $request->getParam(1));
+            // Add Moodpic
+            $this->addSubAgent('Moodpic', 'seminary', $request->getParam(3), $request->getParam(1));
         }
 
 
@@ -96,8 +96,8 @@
          */
         public function group(\nre\core\Request $request, \nre\core\Response $response)
         {
-            // Add (default) Moodpic
-            $this->addSubAgent('Moodpic', 'index', $request->getParam(1));
+            // Add Moodpic
+            $this->addSubAgent('Moodpic', 'seminary', $request->getParam(3), $request->getParam(1));
         }
 
 
@@ -109,8 +109,8 @@
          */
         public function creategroup(\nre\core\Request $request, \nre\core\Response $response)
         {
-            // Add (default) Moodpic
-            $this->addSubAgent('Moodpic', 'index', $request->getParam(1));
+            // Add Moodpic
+            $this->addSubAgent('Moodpic', 'seminary', $request->getParam(3), $request->getParam(1));
         }
 
 
@@ -122,8 +122,8 @@
          */
         public function managegroup(\nre\core\Request $request, \nre\core\Response $response)
         {
-            // Add (default) Moodpic
-            $this->addSubAgent('Moodpic', 'index', $request->getParam(1));
+            // Add Moodpic
+            $this->addSubAgent('Moodpic', 'seminary', $request->getParam(3), $request->getParam(1));
         }
 
 
@@ -135,8 +135,8 @@
          */
         public function editgroup(\nre\core\Request $request, \nre\core\Response $response)
         {
-            // Add (default) Moodpic
-            $this->addSubAgent('Moodpic', 'index', $request->getParam(1));
+            // Add Moodpic
+            $this->addSubAgent('Moodpic', 'seminary', $request->getParam(3), $request->getParam(1));
         }
 
 
@@ -148,8 +148,8 @@
          */
         public function deletegroup(\nre\core\Request $request, \nre\core\Response $response)
         {
-            // Add (default) Moodpic
-            $this->addSubAgent('Moodpic', 'index', $request->getParam(1));
+            // Add Moodpic
+            $this->addSubAgent('Moodpic', 'seminary', $request->getParam(3), $request->getParam(1));
         }
 
     }

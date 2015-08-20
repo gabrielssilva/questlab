@@ -31,8 +31,8 @@
          */
         public function manage(\nre\core\Request $request, \nre\core\Response $response)
         {
-            // Add (default) Moodpic
-            $this->addSubAgent('Moodpic', 'index', $request->getParam(1));
+            // Add Moodpic
+            $this->addSubAgent('Moodpic', 'seminary', $request->getParam(3));
         }
 
     }

@@ -383,12 +383,6 @@
             // Get Quest
             $quest = $this->Quests->getQuestByUrl($seminary['id'], $questgroup['id'], $questUrl);
 
-            // Media
-            $questmedia = null;
-            if(!is_null($quest['questsmedia_id'])) {
-                $questmedia = $this->Media->getSeminaryMediaById($quest['questsmedia_id']);
-            }
-
             // Get submitted Character submissions waiting for approval
             $submittedSubmissionCharacters = $this->Characters->getCharactersSubmittedQuest($quest['id']);
 
@@ -408,7 +402,6 @@
             $this->set('seminary', $seminary);
             $this->set('questgroup', $questgroup);
             $this->set('quest', $quest);
-            $this->set('media', $questmedia);
             $this->set('submittedSubmissionCharacters', $submittedSubmissionCharacters);
             $this->set('unsolvedSubmissionCharacters', $unsolvedSubmissionCharacters);
             $this->set('solvedSubmissionCharacters', $solvedSubmissionCharacters);
@@ -442,12 +435,6 @@
             // Character
             $character = $this->Characters->getCharacterByUrl($seminary['id'], $characterUrl);
 
-            // Media
-            $questmedia = null;
-            if(!is_null($quest['questsmedia_id'])) {
-                $questmedia = $this->Media->getSeminaryMediaById($quest['questsmedia_id']);
-            }
-
             // Questtype
             $questtype = $this->Questtypes->getQuesttypeById($quest['questtype_id']);
 
@@ -465,7 +452,6 @@
             $this->set('questgroup', $questgroup);
             $this->set('quest', $quest);
             $this->set('character', $character);
-            $this->set('media', $questmedia);
             $this->set('output', $output);
         }
 
@@ -821,12 +807,6 @@
             // Get Quest
             $quest = $this->Quests->getQuestByUrl($seminary['id'], $questgroup['id'], $questUrl);
 
-            // Get Quest media
-            $questmedia = null;
-            if(!is_null($quest['questsmedia_id'])) {
-                $questmedia = $this->Media->getSeminaryMediaById($quest['questsmedia_id']);
-            }
-
             // Render editing task
             $task = null;
             $questtype = $this->Questtypes->getQuesttypeById($quest['questtype_id']);
@@ -843,7 +823,6 @@
             $this->set('seminary', $seminary);
             $this->set('questgroup', $questgroup);
             $this->set('quest', $quest);
-            $this->set('media', $questmedia);
             $this->set('task', $task);
         }
 

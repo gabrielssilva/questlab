@@ -1,6 +1,4 @@
-<div class="moodpic">
-    <img src="<?=$linker->link(array('grafics','questlab.jpg'))?>" />
-</div>
+<?=$moodpic?>
 <ul class="breadcrumbs">
     <li><a href="<?=$linker->link('index',1)?>"><?=_('Seminaries')?></a></li>
 </ul>

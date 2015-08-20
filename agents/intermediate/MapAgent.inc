@@ -31,7 +31,8 @@
          */
         public function index(\nre\core\Request $request, \nre\core\Response $response)
         {
-            $this->addSubAgent('Moodpic', 'index', $request->getParam(1));
+            // Add Moodpic
+            $this->addSubAgent('Moodpic', 'seminary', $request->getParam(3), $request->getParam(1));
         }
 
 
@@ -43,7 +44,8 @@
          */
         public function edit(\nre\core\Request $request, \nre\core\Response $response)
         {
-            $this->addSubAgent('Moodpic', 'index', $request->getParam(1));
+            // Add Moodpic
+            $this->addSubAgent('Moodpic', 'seminary', $request->getParam(3), $request->getParam(1));
         }
 
     }
