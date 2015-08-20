@@ -37,15 +37,15 @@
          * @var array
          */
         public $permissions = array(
-            'index'     => array('admin', 'moderator', 'user'),
-            'quest'     => array('admin', 'moderator', 'user'),
+            'index'         => array('admin', 'moderator', 'user'),
+            'quest'         => array('admin', 'moderator', 'user'),
             'submissions'   => array('admin', 'moderator', 'user'),
             'submission'    => array('admin', 'moderator', 'user'),
-            'create'    => array('admin', 'moderator', 'user'),
-            'edit'      => array('admin', 'moderator', 'user'),
-            'edittexts' => array('admin', 'moderator', 'user'),
-            'edittask'  => array('admin', 'moderator', 'user'),
-            'delete'    => array('admin', 'moderator', 'user')
+            'create'        => array('admin', 'moderator', 'user'),
+            'edit'          => array('admin', 'moderator', 'user'),
+            'edittexts'     => array('admin', 'moderator', 'user'),
+            'edittask'      => array('admin', 'moderator', 'user'),
+            'delete'        => array('admin', 'moderator', 'user')
         );
         /**
          * User seminary permissions
@@ -53,15 +53,15 @@
          * @var array
          */
         public $seminaryPermissions = array(
-            'index'     => array('admin', 'moderator'),
-            'quest'     => array('admin', 'moderator', 'user'),
+            'index'         => array('admin', 'moderator'),
+            'quest'         => array('admin', 'moderator', 'user'),
             'submissions'   => array('admin', 'moderator'),
             'submission'    => array('admin', 'moderator'),
-            'create'    => array('admin', 'moderator'),
-            'edit'      => array('admin', 'moderator'),
-            'edittexts' => array('admin', 'moderator'),
-            'edittask'  => array('admin', 'moderator'),
-            'delete'    => array('admin')
+            'create'        => array('admin', 'moderator'),
+            'edit'          => array('admin', 'moderator'),
+            'edittexts'     => array('admin', 'moderator'),
+            'edittask'      => array('admin', 'moderator'),
+            'delete'        => array('admin')
         );
 
 
