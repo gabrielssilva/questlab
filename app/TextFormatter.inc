@@ -124,7 +124,7 @@
                 foreach($dom->getElementsByTagName('a') as $link) {
                     $link->setAttribute('target', '_blank');
                 }
-                $body = $dom->getElementsByTagName('body')[0];
+                $body = $dom->getElementsByTagName('body')->item(0);
                 $string = $dom->saveHTML($body);
 
                 return trim(substr($string, 6, strlen($string) - 13));
