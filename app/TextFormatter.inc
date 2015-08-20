@@ -119,12 +119,15 @@
                 return $string;
             }
             try {
-                $dom = new \DOMDocument();
-                $dom->loadHTML('<?xml encoding="UTF-8">'.$string);
+                $dom = new \DOMDocument('1.0');
+                $dom->loadHTML('<!DOCTYPE html><html><head><meta charset="utf-8" /></head><body>'.$string.'</body></html>');
                 foreach($dom->getElementsByTagName('a') as $link) {
                     $link->setAttribute('target', '_blank');
                 }
-                return $dom->saveHTML();
+                $body = $dom->getElementsByTagName('body')[0];
+                $string = $dom->saveHTML($body);
+
+                return trim(substr($string, 6, strlen($string) - 13));
             }
             catch(\Exception $e) {
                 return $string;
