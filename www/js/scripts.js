@@ -130,7 +130,92 @@ function notify()
 
 
 
+/**
+ * Image lightbox functions
+ */
+
+/**
+ * Show caption for image.
+ */
+function captionOn()
+{
+    var description = $('a[href="' + $('#imagelightbox').attr('src') + '"] ~ span.source');
+    var div = $('<div id="imagelightbox-caption"></div>');
+    if(description.size() > 0)
+    {
+        description.first().clone().appendTo(div);
+        div.appendTo('body');
+        //$('<div id="imagelightbox-caption">' + description + '</div>' ).appendTo('body');
+    }
+    captionResize();
+    setTimeout(captionResize, 255);
+}
+
+/**
+ * Position caption.
+ */
+function captionResize()
+{
+    var lightbox = $('#imagelightbox');
+    var caption = $('#imagelightbox-caption');
+    if(lightbox.size() > 0 && caption.size() > 0)
+    {
+        var right = $(window).width() - lightbox.position().left - lightbox.width();
+        var bottom = $(window).height() - lightbox.position().top - lightbox.height();
+        caption.css('right', right+'px');
+        caption.css('bottom', bottom+'px');
+    }
+}
+
+/**
+ * Remove caption.
+ */
+function captionOff()
+{
+    $('#imagelightbox-caption').remove();
+}
+
+
+
+
+
+/**
+ * Start up
+ */
 $(function() {
-    // Play notification
+    // Add image lightbox
+    $('a').imageLightbox({
+        animationSpeed: 250,
+        onLoadStart: function() {
+            captionOff();
+        },
+        onLoadEnd: function() {
+            captionOn();
+        },
+        onEnd: function() {
+            captionOff();
+        }
+    });
+    // Position caption
+    $(window).on('resize', function() {
+        setTimeout(captionResize, 10);
+    });
+
+    // Add scroll
+    $(".qtextbox").niceScroll({
+        autohidemode:false,
+        cursorcolor:"#c2beb9"
+    });
+
+    // Notification
     notify();
+    setTimeout(
+        function() {
+            $(".notify").fadeOut(1500);
+        },
+        5000
+    );
+    $('body').click(function() {
+        $(".notify").fadeOut(200);
+    });
 });

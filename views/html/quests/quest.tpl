@@ -19,7 +19,16 @@
         <?php foreach($questtexts['Prolog'] as &$questtext) : ?>
         <p class="qtext cf">
             <?php if(array_key_exists('media', $questtext)) : ?>
-            <a href="<?=$linker->link(array('media','seminary',$seminary['url'],$questtext['media']['url']))?>"><img src="<?=$linker->link(array('media','seminary',$seminary['url'],$questtext['media']['url'], 'quest'))?>" /></a>
+            <a href="<?=$linker->link(array('media','seminary',$seminary['url'],$questtext['media']['url']))?>">
+                <img src="<?=$linker->link(array('media','seminary',$seminary['url'],$questtext['media']['url'], 'quest'))?>" />
+            </a>
+            <?php if(!empty($questtext['media']['sourceurl'])) : ?>
+            <span class="source">
+                <a href="<?=$questtext['media']['sourceurl']?>" target="_blank" title="<?=_('Image source')?>" rel="nofollow">
+                    <i class="fa fa-external-link"></i>
+                </a>
+            </span>
+            <?php endif ?>
             <?php elseif(!is_null($media) && !$mediaShown) : ?>
             <?php $mediaShown = true; ?>
             <a href="<?=$linker->link(array('media','seminary',$seminary['url'],$media['url']))?>"><img src="<?=$linker->link(array('media','seminary',$seminary['url'],$media['url'],'quest'))?>" /></a>
@@ -85,7 +94,16 @@
         <?php foreach($questtexts['Epilog'] as &$questtext) : ?>
         <p class="qtext cf">
             <?php if(array_key_exists('media', $questtext)) : ?>
-            <a href="<?=$linker->link(array('media','seminary',$seminary['url'],$questtext['media']['url']))?>"><img src="<?=$linker->link(array('media','seminary',$seminary['url'],$questtext['media']['url'],'quest'))?>" /></a>
+            <a href="<?=$linker->link(array('media','seminary',$seminary['url'],$questtext['media']['url']))?>">
+                <img src="<?=$linker->link(array('media','seminary',$seminary['url'],$questtext['media']['url'],'quest'))?>" />
+            </a>
+            <?php if(!empty($questtext['media']['sourceurl'])) : ?>
+            <span class="source">
+                <a href="<?=$questtext['media']['sourceurl']?>" target="_blank" title="<?=_('Image source')?>" rel="nofollow">
+                    <i class="fa fa-external-link"></i>
+                </a>
+            </span>
+            <?php endif ?>
             <?php endif ?>
             <?=str_replace('<p>', '', str_replace('</p>', '', $t->t($questtext['text'])))?>
         </p>

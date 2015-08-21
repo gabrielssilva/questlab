@@ -18,26 +18,7 @@
     <script type="text/javascript" src="<?=$linker->link(array('js','jquery-ui.min.js'))?>"></script>
     <script type="text/javascript" src="<?=$linker->link(array('js','jquery.nicescroll.min.js'))?>"></script>
     <script type="text/javascript" src="<?=$linker->link(array('js','ol.js'))?>"></script>
-    <script type="text/javascript">
-    $(document).ready(
-    function() {
-        $(".qtextbox").niceScroll({autohidemode:false,cursorcolor:"#c2beb9"});
-    }
-    );
-    </script>
-    <script src="/js/imagelightbox.min.js"></script>
-    <script type="text/javascript">
-    $( function()
-    {
-        $( 'a' ).imageLightbox();
-    });
-    </script>
-    <script type="text/javascript">
-    $(document).ready(function(){
-        setTimeout(function() { $(".notify").fadeOut(1500); }, 5000);
-        $('body').click(function() { $(".notify").fadeOut(200); });
-    });
-    </script>
+    <script type="text/javascript" src="<?=$linker->link(array('js','imagelightbox.min.js'))?>"></script>
     <!--[if lt IE 9]>
     <script type="text/javascript" src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
     <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/respond.js/1.4.2/respond.js"></script>
