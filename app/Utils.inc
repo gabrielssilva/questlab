@@ -209,45 +209,6 @@
             return $mimetype;
         }
 
-
-        /**
-         * Transform an URL to a label.
-         *
-         * @static
-         * @param   string  $url    URL to transform
-         * @return  string          Resulting Label
-         */
-        public static function urlToLabel($url)
-        {
-            // Parse URL
-            $parts = parse_url($url);
-
-            // Process URL parts
-            if(is_array($parts) && array_key_exists('host', $parts))
-            {
-                // Use only hostname as label
-                $url = $parts['host'];
-            }
-            else
-            {
-                // Strip protocol
-                if(($p = strpos($url, '://')) !== false) {
-                    $url = substr($url, $p+3);
-                }
-
-                // Shorten to a specific length
-                $url = substr($url, 0, \nre\configs\AppConfig::$misc['imagesource_length']).'…';
-            }
-
-            // Strip www-prefix
-            if(strpos($url, 'www.') === 0) {
-                $url = substr($url, strlen('www.'));
-            }
-
-
-            return $url;
-        }
-
     }
 
 ?>

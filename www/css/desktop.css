@@ -95,10 +95,13 @@ header a:hover .fa{color:#7fb0b4}
 article{padding:70px 0 30px}
 aside{display:none}
 
+.source{color:white;font-size:0.8em;padding:0.1em;background-color:rgba(0,0,0,0.3)}
+.source i{padding:0 3px}
+
 .moodpic{margin:-15px -5.5% 0 -5.5%;overflow:hidden}
 .moodpic img{width:100vw}
 .moodpic > div{position:relative}
-.moodpic .source{position:absolute;right:0;bottom:15px;color:white;font-size:0.8em;padding:0.2em;background-color:rgba(0,0,0,0.3)}
+.moodpic .source{position:absolute;right:0;bottom:10px}
 
 .breadcrumbs li{display:block;font-size:.875em}
 .breadcrumbs .fa{padding-right:5px;font-size:.75em;color:#989693}

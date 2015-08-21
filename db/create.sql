@@ -1854,9 +1854,7 @@ CREATE TABLE `seminarymedia` (
   `seminary_id` int(11) NOT NULL,
   `name` varchar(64) COLLATE utf8mb4_unicode_ci NOT NULL,
   `url` varchar(64) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `title` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `description` varchar(128) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `sourcelabel` varchar(128) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `sourceurl` varchar(512) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `mimetype` varchar(32) COLLATE utf8mb4_unicode_ci NOT NULL,
   PRIMARY KEY (`id`),
@@ -2191,4 +2189,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2015-08-20 13:14:00
+-- Dump completed on 2015-08-21  9:38:24

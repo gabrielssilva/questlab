@@ -121,7 +121,7 @@
         public function getSeminaryMediaById($mediaId)
         {
             $data = $this->db->query(
-                'SELECT id, name, url, title, description, sourcelabel, sourceurl, mimetype '.
+                'SELECT id, name, url, description, sourceurl, mimetype '.
                 'FROM seminarymedia '.
                 'WHERE id = ?',
                 'i',
