@@ -1379,7 +1379,7 @@
             $this->db->setAutocommit(false);
             try {
                 // Delete Achievement
-                $this->db->query('DELETE FROM achievements WHERE id = ?', 'i', $achievementId);
+                $this->db->query('DELETE FROM achievements WHERE id = ?', 'i', $achievement['id']);
 
                 // Adjust positions
                 $this->db->query(
