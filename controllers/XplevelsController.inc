@@ -118,6 +118,7 @@
                     // Edit and delete
                     if($validations['edit'] === true)
                     {
+                        $xplevels = array_reverse($xplevels);
                         foreach($xplevels as &$xplevel)
                         {
                             // Delete
