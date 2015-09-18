@@ -84,7 +84,7 @@
         public function conditions(\nre\core\Request $request, \nre\core\Response $response)
         {
             // Add Moodpic
-            $this->addSubAgent('Moodpic', 'seminary', $request->getParam(1));
+            $this->addSubAgent('Moodpic', 'seminary', $request->getParam(3));
         }
 
 

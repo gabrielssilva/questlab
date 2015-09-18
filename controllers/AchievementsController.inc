@@ -562,7 +562,6 @@
                     // Remove old conditions
                     if($conditions[$conditionIndex]['condition'] != $achievement['condition'])
                     {
-                        var_dump("remove");
                         switch($achievement['condition'])
                         {
                             // Date conditions
@@ -895,7 +894,7 @@
                 }
 
                 // Redirect to overview
-                $this->redirect($this->linker->link(array('manage', $seminary['url']), 1, true, null, false, $achievement['url']));
+                $this->redirect($this->linker->link(array(), 4));
             }
 
 
