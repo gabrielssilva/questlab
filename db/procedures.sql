@@ -52,6 +52,44 @@ END $$
 DELIMITER ;
 
 
+DROP PROCEDURE IF EXISTS update_cache_characters_xplevels;
+DELIMITER $$
+CREATE PROCEDURE update_cache_characters_xplevels(
+    IN SEMINARYID INT(11),
+    IN XPS_LOWER INT(11),
+    IN XPS_UPPER INT(11)
+)
+BEGIN
+    DECLARE CHARACTERID INT;
+    DECLARE done INT DEFAULT FALSE;
+    DECLARE characters_cursor CURSOR FOR
+        SELECT cache_characters.character_id
+        FROM charactertypes
+        INNER JOIN characters ON characters.charactertype_id = charactertypes.id
+        INNER JOIN cache_characters ON cache_characters.character_id = characters.id
+        WHERE charactertypes.seminary_id = SEMINARY_ID AND cache_characters.xps >= LEAST(XPS_LOWER, IFNULL(XPS_UPPER,XPS_LOWER)) AND (XPS_UPPER IS NULL OR cache_characters.xps <= GREATEST(XPS_LOWER, XPS_UPPER));
+    DECLARE CONTINUE HANDLER FOR NOT FOUND SET done = TRUE;
+
+    -- Get upper XPs
+    IF XPS_UPPER IS NULL THEN
+        SELECT MIN(xps) INTO XPS_UPPER
+        FROM xplevels
+        WHERE seminary_id = SEMINARYID AND xps > XPS_LOWER;
+    END IF;
+
+    SET done = 0;
+    OPEN characters_cursor;
+    get_characters: LOOP
+        FETCH characters_cursor INTO CHARACTERID;
+        IF done = TRUE THEN
+            LEAVE get_characters;
+        END IF;
+        CALL update_cache_characters(CHARACTERID);
+    END LOOP get_characters;
+END $$
+DELIMITER ;
+
+
 DROP PROCEDURE IF EXISTS update_cache_characters;
 DELIMITER $$
 CREATE DEFINER = 'z'@'%' PROCEDURE update_cache_characters(
@@ -80,9 +118,9 @@ BEGIN
 		SELECT id
 		FROM xplevels
 		WHERE seminary_id = charactertypes.seminary_id AND xps = (
-			SELECT MAX(xps)
+			SELECT MAX(xplevels_sub.xps)
 			FROM xplevels AS xplevels_sub
-			WHERE xps <= TOTALXPS
+			WHERE xplevels_sub.seminary_id = charactertypes.seminary_id AND xps <= TOTALXPS
 		)
 	) INTO XPLEVELID
 	FROM characters

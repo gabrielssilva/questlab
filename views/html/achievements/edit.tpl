@@ -55,10 +55,14 @@
 <form method="post" class="logreg" enctype="multipart/form-data">
     <fieldset>
         <legend><?=_('Images')?></legend>
+        <?php if(!is_null($achievement['unachieved_achievementsmedia_id'])) : ?>
         <img src="<?=$linker->link(array('media','achievement',$seminary['url'],$achievement['url'],'locked'))?>" />
+        <?php endif ?>
         <label for="unachievedImage"><?=_('Unachieved')?></label>
         <input id="unachievedImage" type="file" name="unachieved_image" accept="<?=implode(',', array_map(function($m) { return $m['mimetype']; }, $mimetypes))?>" /><br />
+        <?php if(!is_null($achievement['achieved_achievementsmedia_id'])) : ?>
         <img src="<?=$linker->link(array('media','achievement',$seminary['url'],$achievement['url']))?>" />
+        <?php endif ?>
         <label for="achievedImage"><?=_('Achieved')?></label>
         <input id="achievedImage" type="file" name="achieved_image" accept="<?=implode(',', array_map(function($m) { return $m['mimetype']; }, $mimetypes))?>" /><br />
         <p><?=_('Allowed file types')?>:</p>

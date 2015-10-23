@@ -316,14 +316,14 @@ CREATE TABLE `cache_characters` (
   `character_id` int(11) NOT NULL,
   `xps` int(10) unsigned NOT NULL,
   `quest_xps` int(10) unsigned NOT NULL,
-  `xplevel_id` int(11) NOT NULL,
-  `avatar_id` int(11) NOT NULL,
+  `xplevel_id` int(11) DEFAULT NULL,
+  `avatar_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`character_id`),
   KEY `xplevel_id` (`xplevel_id`),
   KEY `avatar_id` (`avatar_id`),
   CONSTRAINT `cache_characters_ibfk_1` FOREIGN KEY (`character_id`) REFERENCES `characters` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `cache_characters_ibfk_2` FOREIGN KEY (`xplevel_id`) REFERENCES `xplevels` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `cache_characters_ibfk_3` FOREIGN KEY (`avatar_id`) REFERENCES `avatars` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+  CONSTRAINT `cache_characters_ibfk_2` FOREIGN KEY (`xplevel_id`) REFERENCES `xplevels` (`id`) ON DELETE SET NULL ON UPDATE SET NULL,
+  CONSTRAINT `cache_characters_ibfk_3` FOREIGN KEY (`avatar_id`) REFERENCES `avatars` (`id`) ON DELETE SET NULL ON UPDATE SET NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -1974,6 +1974,63 @@ CREATE TABLE `xplevels` (
   CONSTRAINT `xplevels_ibfk_2` FOREIGN KEY (`seminary_id`) REFERENCES `seminaries` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_unicode_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = '' */ ;
+DELIMITER ;;
+/*!50003 CREATE*/ /*!50017 DEFINER=`z`@`%`*/ /*!50003 TRIGGER `update_cache_characters_xplevels_insert`
+AFTER INSERT ON xplevels
+FOR EACH ROW BEGIN
+    CALL update_cache_characters_xplevels(NEW.seminary_id, NEW.xps, NULL);
+END */;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_unicode_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = '' */ ;
+DELIMITER ;;
+/*!50003 CREATE*/ /*!50017 DEFINER=`z`@`%`*/ /*!50003 TRIGGER `update_cache_characters_xplevels_update`
+AFTER UPDATE ON xplevels
+FOR EACH ROW BEGIN
+    CALL update_cache_characters_xplevels(NEW.seminary_id, OLD.xps, NEW.xps);
+END */;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_unicode_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = '' */ ;
+DELIMITER ;;
+/*!50003 CREATE*/ /*!50017 DEFINER=`z`@`%`*/ /*!50003 TRIGGER `update_cache_characters_xplevels_delete`
+AFTER DELETE ON xplevels
+FOR EACH ROW BEGIN
+    CALL update_cache_characters_xplevels(OLD.seminary_id, OLD.xps, NULL);
+END */;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
 
 --
 -- Dumping routines for database 'z'
@@ -2079,9 +2136,9 @@ BEGIN
 		SELECT id
 		FROM xplevels
 		WHERE seminary_id = charactertypes.seminary_id AND xps = (
-			SELECT MAX(xps)
+			SELECT MAX(xplevels_sub.xps)
 			FROM xplevels AS xplevels_sub
-			WHERE xps <= TOTALXPS
+			WHERE xplevels_sub.seminary_id = charactertypes.seminary_id AND xps <= TOTALXPS
 		)
 	) INTO XPLEVELID
 	FROM characters
@@ -2173,6 +2230,54 @@ BEGIN
 		END IF;
 		CALL update_cache_characters(CHARACTERID);
 	END LOOP get_characters;
+END ;;
+DELIMITER ;
+/*!50003 SET sql_mode              = @saved_sql_mode */ ;
+/*!50003 SET character_set_client  = @saved_cs_client */ ;
+/*!50003 SET character_set_results = @saved_cs_results */ ;
+/*!50003 SET collation_connection  = @saved_col_connection */ ;
+/*!50003 DROP PROCEDURE IF EXISTS `update_cache_characters_xplevels` */;
+/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
+/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
+/*!50003 SET @saved_col_connection = @@collation_connection */ ;
+/*!50003 SET character_set_client  = utf8mb4 */ ;
+/*!50003 SET character_set_results = utf8mb4 */ ;
+/*!50003 SET collation_connection  = utf8mb4_unicode_ci */ ;
+/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
+/*!50003 SET sql_mode              = '' */ ;
+DELIMITER ;;
+CREATE DEFINER=`z`@`%` PROCEDURE `update_cache_characters_xplevels`(
+    IN SEMINARYID INT(11),
+    IN XPS_LOWER INT(11),
+    IN XPS_UPPER INT(11)
+)
+BEGIN
+    DECLARE CHARACTERID INT;
+    DECLARE done INT DEFAULT FALSE;
+    DECLARE characters_cursor CURSOR FOR
+        SELECT cache_characters.character_id
+        FROM charactertypes
+        INNER JOIN characters ON characters.charactertype_id = charactertypes.id
+        INNER JOIN cache_characters ON cache_characters.character_id = characters.id
+        WHERE charactertypes.seminary_id = SEMINARY_ID AND cache_characters.xps >= LEAST(XPS_LOWER, IFNULL(XPS_UPPER,XPS_LOWER)) AND (XPS_UPPER IS NULL OR cache_characters.xps <= GREATEST(XPS_LOWER, XPS_UPPER));
+    DECLARE CONTINUE HANDLER FOR NOT FOUND SET done = TRUE;
+
+        IF XPS_UPPER IS NULL THEN
+        SELECT MIN(xps) INTO XPS_UPPER
+        FROM xplevels
+        WHERE seminary_id = SEMINARYID AND xps > XPS_LOWER;
+    END IF;
+    
+
+    SET done = 0;
+    OPEN characters_cursor;
+    get_characters: LOOP
+        FETCH characters_cursor INTO CHARACTERID;
+        IF done = TRUE THEN
+            LEAVE get_characters;
+        END IF;
+        CALL update_cache_characters(CHARACTERID);
+    END LOOP get_characters;
 END ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;

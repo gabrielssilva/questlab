@@ -1,4 +1,4 @@
-/** Characters +Quests **/
+/** Characters + Quests **/
 
 DROP TRIGGER IF EXISTS update_cache_characters_insert;
 DELIMITER $$
@@ -49,7 +49,7 @@ DELIMITER ;
 
 
 
-/** Charactergroups +Charactergroupsquests **/
+/** Charactergroups + Charactergroupsquests **/
 
 DROP TRIGGER IF EXISTS update_cache_charactergroups_insert;
 DELIMITER $$
@@ -100,7 +100,7 @@ DELIMITER ;
 
 
 
-/** Characters → Charactergroups **/
+/** Characters + Charactergroups **/
 
 DROP TRIGGER IF EXISTS update_cache_characters_charactergroups_insert;
 DELIMITER $$
@@ -153,3 +153,34 @@ FOR EACH ROW BEGIN
 END $$
 DELIMITER ;
 
+
+
+
+/** XP-levels **/
+
+DROP TRIGGER IF EXISTS update_cache_characters_xplevels_insert;
+DELIMITER $$
+CREATE DEFINER = 'z'@'%' TRIGGER `update_cache_characters_xplevels_insert`
+AFTER INSERT ON xplevels
+FOR EACH ROW BEGIN
+    CALL update_cache_characters_xplevels(NEW.seminary_id, NEW.xps, NULL);
+END $$
+DELIMITER ;
+
+DROP TRIGGER IF EXISTS update_cache_characters_xplevels_update;
+DELIMITER $$
+CREATE DEFINER = 'z'@'%' TRIGGER `update_cache_characters_xplevels_update`
+AFTER UPDATE ON xplevels
+FOR EACH ROW BEGIN
+    CALL update_cache_characters_xplevels(NEW.seminary_id, OLD.xps, NEW.xps);
+END $$
+DELIMITER ;
+
+DROP TRIGGER IF EXISTS update_cache_characters_xplevels_delete;
+DELIMITER $$
+CREATE DEFINER = 'z'@'%' TRIGGER `update_cache_characters_xplevels_delete`
+AFTER DELETE ON xplevels
+FOR EACH ROW BEGIN
+    CALL update_cache_characters_xplevels(OLD.seminary_id, OLD.xps, NULL);
+END $$
+DELIMITER ;

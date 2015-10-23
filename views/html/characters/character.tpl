@@ -61,7 +61,9 @@
     </div>
     <?php if(array_key_exists('xplevel', $character) && !is_null($character['xplevel'])) : ?>
     <div class="cportrait">
+        <?php if(array_key_exists('avatar', $character) && !is_null($character['avatar']['avatarpicture_id'])) : ?>
         <img src="<?=$linker->link(array('media','avatar',$seminary['url'],$character['charactertype_url'],$character['xplevel']['level']))?>" />
+        <?php endif ?>
     </div>
     <?php endif ?>
 </section>
@@ -84,7 +86,7 @@
             </li>
             <?php endforeach ?>
             <li>
-                <?php if(array_key_exists('xplevel', $character) && !is_null($character['xplevel'])) : ?>
+                <?php if(array_key_exists('avatar', $character) && !is_null($character['avatar']['avatarpicture_id'])) : ?>
                 <img src="<?=$linker->link(array('media','avatar',$seminary['url'],$character['charactertype_url'],$character['xplevel']['level'],'portrait'))?>">
                 <?php endif ?>
                 <p class="fwb"><?=$character['rank']?>. <?=$character['name']?></p>
