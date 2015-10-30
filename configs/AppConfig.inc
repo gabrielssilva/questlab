@@ -313,6 +313,8 @@
             array('^library/([^/]+)/([^/]+)/(edit|delete|manage)/?$',   'library/$3/$1/$2',     true),
             array('^map/([^/]+)/?$',        'map/index/$1', true),
             array('^map/([^/]+)/(edit)/?$', 'map/$2/$1',    true),
+            array('^pages/([^/]+)/(edit|delete)$',          'pages/$2/$1',      true),
+            array('^pages/(?!(create|edit|delete))/?',      'pages/page/$1',    true),
             array('^media/(.*)$',   'media/$1?layout=binary',   false),
             array('^uploads/(.*)$', 'uploads/$1?layout=binary', false)
         );
@@ -364,7 +366,9 @@
             array('^library/topic/([^/]+)/([^/]+)/?$',                  'library/$1/$2',        true),
             array('^library/(edit|delete|manage)/([^/]+)/([^/]+)/?$',   'library/$2/$3/$1',     true),
             array('^map/index/(.*)$',   'map/$1',       true),
-            array('^map/(edit)/(.*)$',  'map/$2/$1',    true)
+            array('^map/(edit)/(.*)$',  'map/$2/$1',    true),
+            array('^pages/page/(.*+)$',             'pages/$1',     true),
+            array('^pages/(edit|delete)/([^/]+)$',  'pages/$2/$1',  true)
         );
 
 

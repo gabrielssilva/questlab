@@ -19,6 +19,12 @@
      */
     class MenuController extends \hhu\z\Controller
     {
+        /**
+         * Required models
+         *
+         * @var array
+         */
+        public $models = array('pages');
 
 
 
@@ -45,6 +51,12 @@
          */
         public function index()
         {
+            // Get additional pages
+            $pages = $this->Pages->getPages();
+
+
+            // Pass data to view
+            $this->set('pages', $pages);
         }
 
     }
