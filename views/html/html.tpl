@@ -53,9 +53,21 @@
                 <?php endif ?>
             </div>
             <?php endif ?>
-            <ul id="mainmenu">
-                <?=$menu?>
-            </ul>
+            <div id="mainmenu">
+                <ul>
+                    <?=$menu?>
+                </ul>
+                <div id="promoLogo" class="promo">
+                    <a href="http://www.questlab.zone">
+                        <img src="<?=$linker->link(array('grafics','questlab-logo.svg'))?>" />
+                    </a>
+                </div>
+            </div>
+            <div id="promoText" class="promo">
+                <a href="http://www.questlab.zone">
+                    <img src="<?=$linker->link(array('grafics','questlab-text.svg'))?>" />
+                </a>
+            </div>
         </nav>
     </header>
     <article class="wrap">

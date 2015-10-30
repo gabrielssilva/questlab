@@ -92,6 +92,13 @@ header a:hover .fa{color:#7fb0b4}
 .toggle{color:#d9e5e7;display:inline-block;padding:15px 15px 15px 0;position:relative;cursor:pointer;-webkit-touch-callout:none;-moz-user-select:none;-ms-user-select:none;-webkit-user-select:none;user-select:none}
 #toggle:checked ~ #mainmenu{display:block;position:fixed;top:54px;bottom:0;overflow-y:auto;opacity:1}
 
+#promoLogo{margin-top:50px;text-align:center}
+#promoLogo img{width:100px}
+#promoText{display:none;position:absolute;bottom:0;z-index:-1}
+#promoText img{width:200px}
+.promo{width:100%;text-align:center;opacity:0.6}
+.promo a{margin:0}
+
 article{padding:70px 0 30px}
 aside{display:none}
 
@@ -457,9 +464,11 @@ header a{margin-left:40px}
 #profile img{width:44px;height:44px;border-radius:22px}
 #profile span{display:block}
 #profile .lvlname{margin-top:0}
-#mainmenu{display:block;opacity:1;position:relative}
+#mainmenu{display:block;opacity:1;position:relative;margin-bottom:40px}
 #mainmenu a{padding-top:6px;padding-bottom:6px}
 #mainmenu li:first-child{display:none;opacity:0}
+#promoLogo{display:none}
+#promoText{display:block}
 #smnry li:first-child{display:block;opacity:1}
 #smnry a{margin:0 40px 2px}
 #toggle,.toggle{display:none}
