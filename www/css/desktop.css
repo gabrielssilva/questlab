@@ -53,6 +53,7 @@ table{border-collapse:collapse;border-spacing:0}
 .cf{zoom:1}
 .cb{clear:both}
 li.cf .qgorder{padding:20px}
+.text ul, .text ol{list-style-type:initial;padding-left:20px}
 
 .wrap{margin:0 5%;max-height:999999px;min-height:1px}
 

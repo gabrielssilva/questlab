@@ -25,7 +25,9 @@
 
 <h1><?=\nre\configs\AppConfig::$app['name']?></h1>
 <?php if(!empty($text)) : ?>
-<?=$t->t($text)?>
+<div class="text">
+    <?=$t->t($text)?>
+</div>
 <?php endif ?>
 
 <hr />

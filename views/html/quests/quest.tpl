@@ -77,8 +77,10 @@
     <?php endif ?>
     
     <?php if($queststatus != 'solved') : ?>
-    <?=$t->t($quest['task'])?>
-    <?=$task?>
+    <div class="text">
+        <?=$t->t($quest['task'])?>
+        <?=$task?>
+    </div>
     
     <?php if($solved && empty($queststatus)) : ?>
     <div class="solvdmsg">
