@@ -97,7 +97,7 @@
         public function getQuestById($questId)
         {
             $data = $this->db->query(
-                'SELECT id, questgroups_id, title, url, description, xps, rules, won_text, lost_text, questsmedia_id '.
+                'SELECT id, charactergroupsgroup_id, questgroups_id, title, url, description, xps, rules, won_text, lost_text, questsmedia_id '.
                 'FROM charactergroupsquests '.
                 'WHERE id = ?',
                 'i',
