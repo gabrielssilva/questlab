@@ -1934,6 +1934,44 @@ CREATE TABLE `stationtypes` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Table structure for table `stationtypes_keyword`
+--
+
+DROP TABLE IF EXISTS `stationtypes_keyword`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `stationtypes_keyword` (
+  `station_id` int(11) NOT NULL,
+  `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `created_user_id` int(11) NOT NULL,
+  `keyword_regex` varchar(256) COLLATE utf8mb4_unicode_ci NOT NULL,
+  PRIMARY KEY (`station_id`),
+  KEY `created_user_id` (`created_user_id`),
+  CONSTRAINT `stationtypes_keyword_ibfk_1` FOREIGN KEY (`station_id`) REFERENCES `charactergroupsqueststations` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `stationtypes_keyword_ibfk_2` FOREIGN KEY (`created_user_id`) REFERENCES `users` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `stationtypes_keyword_charactergroups`
+--
+
+DROP TABLE IF EXISTS `stationtypes_keyword_charactergroups`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `stationtypes_keyword_charactergroups` (
+  `station_id` int(11) NOT NULL,
+  `charactergroup_id` int(11) NOT NULL,
+  `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `keyword` varchar(32) COLLATE utf8mb4_unicode_ci NOT NULL,
+  PRIMARY KEY (`station_id`,`charactergroup_id`),
+  KEY `charactergroup_id` (`charactergroup_id`),
+  CONSTRAINT `stationtypes_keyword_charactergroups_ibfk_1` FOREIGN KEY (`station_id`) REFERENCES `charactergroupsqueststations` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `stationtypes_keyword_charactergroups_ibfk_2` FOREIGN KEY (`charactergroup_id`) REFERENCES `charactergroups` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
 -- Table structure for table `userroles`
 --
 
