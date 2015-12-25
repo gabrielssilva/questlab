@@ -319,7 +319,8 @@
             array('^pages/([^/]+)/(edit|delete)$',          'pages/$2/$1',      true),
             array('^pages/(?!(create|edit|delete))/?',      'pages/page/$1',    true),
             array('^media/(.*)$',   'media/$1?layout=binary',   false),
-            array('^uploads/(.*)$', 'uploads/$1?layout=binary', false)
+            array('^uploads/(.*)$', 'uploads/$1?layout=binary', false),
+            array('^qrcodes/(.*)$', 'qrcodes/$1?layout=binary', false)
         );
 
 
