@@ -1972,6 +1972,49 @@ CREATE TABLE `stationtypes_keyword_charactergroups` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Table structure for table `stationtypes_multiplechoice`
+--
+
+DROP TABLE IF EXISTS `stationtypes_multiplechoice`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `stationtypes_multiplechoice` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `created_user_id` int(11) NOT NULL,
+  `station_id` int(11) NOT NULL,
+  `pos` int(11) NOT NULL,
+  `answer` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `tick` tinyint(1) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `questtypes_multiplechoice_id_2` (`station_id`,`pos`),
+  KEY `created_user_id` (`created_user_id`),
+  KEY `questtypes_multiplechoice_id` (`station_id`),
+  CONSTRAINT `stationtypes_multiplechoice_ibfk_1` FOREIGN KEY (`created_user_id`) REFERENCES `users` (`id`),
+  CONSTRAINT `stationtypes_multiplechoice_ibfk_2` FOREIGN KEY (`station_id`) REFERENCES `charactergroupsqueststations` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `stationtypes_multiplechoice_charactergroups`
+--
+
+DROP TABLE IF EXISTS `stationtypes_multiplechoice_charactergroups`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `stationtypes_multiplechoice_charactergroups` (
+  `stationtypes_multiplechoice_id` int(11) NOT NULL,
+  `charactergroup_id` int(11) NOT NULL,
+  `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `ticked` tinyint(1) NOT NULL,
+  PRIMARY KEY (`stationtypes_multiplechoice_id`,`charactergroup_id`),
+  KEY `character_id` (`charactergroup_id`),
+  CONSTRAINT `stationtypes_multiplechoice_charactergroups_ibfk_1` FOREIGN KEY (`stationtypes_multiplechoice_id`) REFERENCES `stationtypes_multiplechoice` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `stationtypes_multiplechoice_charactergroups_ibfk_2` FOREIGN KEY (`charactergroup_id`) REFERENCES `charactergroups` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
 -- Table structure for table `userroles`
 --
 
