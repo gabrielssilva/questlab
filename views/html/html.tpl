@@ -9,7 +9,7 @@
     <title><?=(isset($title)) ? $title : \nre\configs\AppConfig::$app['name']?></title>
     <link rel="icon" href="favicon.ico" type="image/x-icon">
     <link href="http://fonts.googleapis.com/css?family=Open+Sans:400,700" rel="stylesheet" type="text/css">
-    <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+    <link href="//netdna.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.css" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="<?=$linker->link(array('markitup','skins','markitup','style.css'))?>" media="all" />
     <link rel="stylesheet" type="text/css" href="<?=$linker->link(array('markitup','sets','textile','style.css'))?>" media="all" />
     <link rel="stylesheet" type="text/css" href="<?=$linker->link(array('css','desktop.css'))?>" media="all" />
