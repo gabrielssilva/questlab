@@ -7,3 +7,4 @@ syntax: regexp
 ^seminaryuploads/*
 ^www/analytics/config/config.ini.php*
 ^www/analytics/temp/*
+^app/lib/phpqrcode/cache/*
