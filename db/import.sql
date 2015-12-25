@@ -1,13 +1,13 @@
--- MySQL dump 10.15  Distrib 10.0.17-MariaDB, for Linux (x86_64)
+-- MySQL dump 10.16  Distrib 10.1.9-MariaDB, for Linux (x86_64)
 --
--- Host: localhost    Database: z_default
+-- Host: localhost    Database: z
 -- ------------------------------------------------------
--- Server version	10.0.17-MariaDB-log
+-- Server version	10.1.9-MariaDB-log
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
 /*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
-/*!40101 SET NAMES utf8 */;
+/*!40101 SET NAMES utf8mb4 */;
 /*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
 /*!40103 SET TIME_ZONE='+00:00' */;
 /*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
@@ -20,7 +20,7 @@
 
 LOCK TABLES `achievementconditions` WRITE;
 /*!40000 ALTER TABLE `achievementconditions` DISABLE KEYS */;
-INSERT INTO `achievementconditions` VALUES (1,'2014-04-16 19:36:54','date'),(2,'2014-04-16 19:36:54','character'),(3,'2014-04-16 19:36:59','quest'),(4,'2014-04-16 19:36:59','achievement');
+INSERT INTO `achievementconditions` (`id`, `created`, `condition`) VALUES (1,'2014-04-16 19:36:54','date'),(2,'2014-04-16 19:36:54','character'),(3,'2014-04-16 19:36:59','quest'),(4,'2014-04-16 19:36:59','achievement');
 /*!40000 ALTER TABLE `achievementconditions` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -178,12 +178,30 @@ LOCK TABLES `charactergroupsquests_seminaryuploads` WRITE;
 UNLOCK TABLES;
 
 --
+-- Dumping data for table `charactergroupsqueststations`
+--
+
+LOCK TABLES `charactergroupsqueststations` WRITE;
+/*!40000 ALTER TABLE `charactergroupsqueststations` DISABLE KEYS */;
+/*!40000 ALTER TABLE `charactergroupsqueststations` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Dumping data for table `charactergroupsqueststations_charactergroups`
+--
+
+LOCK TABLES `charactergroupsqueststations_charactergroups` WRITE;
+/*!40000 ALTER TABLE `charactergroupsqueststations_charactergroups` DISABLE KEYS */;
+/*!40000 ALTER TABLE `charactergroupsqueststations_charactergroups` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Dumping data for table `characterroles`
 --
 
 LOCK TABLES `characterroles` WRITE;
 /*!40000 ALTER TABLE `characterroles` DISABLE KEYS */;
-INSERT INTO `characterroles` VALUES (1,'2014-04-16 14:42:54','admin'),(2,'2014-04-16 14:42:54','moderator'),(3,'2014-04-16 14:43:00','user'),(4,'2014-04-16 14:43:00','guest');
+INSERT INTO `characterroles` (`id`, `created`, `name`) VALUES (1,'2014-04-16 14:42:54','admin'),(2,'2014-04-16 14:42:54','moderator'),(3,'2014-04-16 14:43:00','user'),(4,'2014-04-16 14:43:00','guest');
 /*!40000 ALTER TABLE `characterroles` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -248,6 +266,15 @@ UNLOCK TABLES;
 LOCK TABLES `media` WRITE;
 /*!40000 ALTER TABLE `media` DISABLE KEYS */;
 /*!40000 ALTER TABLE `media` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Dumping data for table `pages`
+--
+
+LOCK TABLES `pages` WRITE;
+/*!40000 ALTER TABLE `pages` DISABLE KEYS */;
+/*!40000 ALTER TABLE `pages` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -382,7 +409,7 @@ UNLOCK TABLES;
 
 LOCK TABLES `questtexttypes` WRITE;
 /*!40000 ALTER TABLE `questtexttypes` DISABLE KEYS */;
-INSERT INTO `questtexttypes` VALUES (1,'2014-04-17 09:24:21','Prolog','Prolog'),(2,'2014-04-17 09:24:21','Hint','Hint'),(3,'2014-04-17 09:24:27','Epilog','Epilog');
+INSERT INTO `questtexttypes` (`id`, `created`, `type`, `url`) VALUES (1,'2014-04-17 09:24:21','Prolog','Prolog'),(2,'2014-04-17 09:24:21','Hint','Hint'),(3,'2014-04-17 09:24:27','Epilog','Epilog');
 /*!40000 ALTER TABLE `questtexttypes` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -401,7 +428,7 @@ UNLOCK TABLES;
 
 LOCK TABLES `questtypes` WRITE;
 /*!40000 ALTER TABLE `questtypes` DISABLE KEYS */;
-INSERT INTO `questtypes` VALUES (1,'2014-04-16 18:44:44','Empty','Empty',NULL),(2,'2014-04-16 18:44:44','Boss Fight','Boss-Fight','bossfight'),(3,'2014-04-16 18:45:19','Choice Input','Choice-Input','choiceinput'),(4,'2014-04-16 18:46:02','Crossword','Crossword','crossword'),(5,'2014-04-16 18:46:02','Drag&Drop','Drag&Drop','dragndrop'),(6,'2014-04-16 18:46:23','Multiple Choice','Multiple-Choice','multiplechoice'),(7,'2014-04-16 18:46:23','Submit','Submit','submit'),(8,'2014-04-16 18:46:43','Text Input','Text-Input','textinput');
+INSERT INTO `questtypes` (`id`, `created`, `title`, `url`, `classname`) VALUES (1,'2014-04-16 18:44:44','Empty','Empty',NULL),(2,'2014-04-16 18:44:44','Boss Fight','Boss-Fight','bossfight'),(3,'2014-04-16 18:45:19','Choice Input','Choice-Input','choiceinput'),(4,'2014-04-16 18:46:02','Crossword','Crossword','crossword'),(5,'2014-04-16 18:46:02','Drag&Drop','Drag&Drop','dragndrop'),(6,'2014-04-16 18:46:23','Multiple Choice','Multiple-Choice','multiplechoice'),(7,'2014-04-16 18:46:23','Submit','Submit','submit'),(8,'2014-04-16 18:46:43','Text Input','Text-Input','textinput');
 /*!40000 ALTER TABLE `questtypes` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -645,7 +672,7 @@ UNLOCK TABLES;
 
 LOCK TABLES `seminarycharacterfieldtypes` WRITE;
 /*!40000 ALTER TABLE `seminarycharacterfieldtypes` DISABLE KEYS */;
-INSERT INTO `seminarycharacterfieldtypes` VALUES (1,'2014-04-16 18:50:16','Number','Number'),(2,'2014-04-16 18:50:16','Varchar','Varchar'),(3,'2014-04-16 18:50:24','Text','Text'),(4,'2014-04-16 18:50:24','List','List');
+INSERT INTO `seminarycharacterfieldtypes` (`id`, `created`, `title`, `url`) VALUES (1,'2014-04-16 18:50:16','Number','Number'),(2,'2014-04-16 18:50:16','Varchar','Varchar'),(3,'2014-04-16 18:50:24','Text','Text'),(4,'2014-04-16 18:50:24','List','List');
 /*!40000 ALTER TABLE `seminarycharacterfieldtypes` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -668,12 +695,58 @@ LOCK TABLES `seminaryuploads` WRITE;
 UNLOCK TABLES;
 
 --
+-- Dumping data for table `stationtypes`
+--
+
+LOCK TABLES `stationtypes` WRITE;
+/*!40000 ALTER TABLE `stationtypes` DISABLE KEYS */;
+INSERT INTO `stationtypes` (`id`, `created`, `title`, `url`, `classname`) VALUES (1,'2015-12-25 15:50:52','Empty','Empty',NULL),(2,'2015-12-25 15:50:52','Keyword','Keyword','keyword'),(3,'2015-12-25 15:51:16','Multiple Choice','Multiple-Choice','multiplechoice');
+/*!40000 ALTER TABLE `stationtypes` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Dumping data for table `stationtypes_keyword`
+--
+
+LOCK TABLES `stationtypes_keyword` WRITE;
+/*!40000 ALTER TABLE `stationtypes_keyword` DISABLE KEYS */;
+/*!40000 ALTER TABLE `stationtypes_keyword` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Dumping data for table `stationtypes_keyword_charactergroups`
+--
+
+LOCK TABLES `stationtypes_keyword_charactergroups` WRITE;
+/*!40000 ALTER TABLE `stationtypes_keyword_charactergroups` DISABLE KEYS */;
+/*!40000 ALTER TABLE `stationtypes_keyword_charactergroups` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Dumping data for table `stationtypes_multiplechoice`
+--
+
+LOCK TABLES `stationtypes_multiplechoice` WRITE;
+/*!40000 ALTER TABLE `stationtypes_multiplechoice` DISABLE KEYS */;
+/*!40000 ALTER TABLE `stationtypes_multiplechoice` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Dumping data for table `stationtypes_multiplechoice_charactergroups`
+--
+
+LOCK TABLES `stationtypes_multiplechoice_charactergroups` WRITE;
+/*!40000 ALTER TABLE `stationtypes_multiplechoice_charactergroups` DISABLE KEYS */;
+/*!40000 ALTER TABLE `stationtypes_multiplechoice_charactergroups` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Dumping data for table `userroles`
 --
 
 LOCK TABLES `userroles` WRITE;
 /*!40000 ALTER TABLE `userroles` DISABLE KEYS */;
-INSERT INTO `userroles` VALUES (1,'2014-04-16 14:42:54','admin'),(2,'2014-04-16 14:42:54','moderator'),(3,'2014-04-16 14:43:00','user'),(4,'2014-04-16 14:43:00','guest');
+INSERT INTO `userroles` (`id`, `created`, `name`) VALUES (1,'2014-04-16 14:42:54','admin'),(2,'2014-04-16 14:42:54','moderator'),(3,'2014-04-16 14:43:00','user'),(4,'2014-04-16 14:43:00','guest');
 /*!40000 ALTER TABLE `userroles` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -683,7 +756,7 @@ UNLOCK TABLES;
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` VALUES (1,'2015-04-26 11:24:04','admin','admin','Admin','Admin','','$2y$10$1zCozXcIGak552mkv/K3vOPddrisvPlokJvUjHtHj6VBBRcmznXCG',1);
+INSERT INTO `users` (`id`, `created`, `username`, `url`, `surname`, `prename`, `email`, `password`, `mailing`) VALUES (1,'2015-04-26 11:24:04','admin','admin','Admin','Admin','','$2y$10$1zCozXcIGak552mkv/K3vOPddrisvPlokJvUjHtHj6VBBRcmznXCG',1);
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -693,7 +766,7 @@ UNLOCK TABLES;
 
 LOCK TABLES `users_userroles` WRITE;
 /*!40000 ALTER TABLE `users_userroles` DISABLE KEYS */;
-INSERT INTO `users_userroles` VALUES (1,1,'2015-04-26 11:33:36');
+INSERT INTO `users_userroles` (`user_id`, `userrole_id`, `created`) VALUES (1,1,'2015-04-26 11:33:36');
 /*!40000 ALTER TABLE `users_userroles` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -714,4 +787,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2015-04-26 13:34:20
+-- Dump completed on 2015-12-25 16:51:58
