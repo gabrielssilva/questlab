@@ -67,9 +67,8 @@
 </section>
 <?php endif ?>
 
-<?php if(!empty($stations)) : ?>
 <section>
-    <h1><i class="fa fa-map-signs fa-fw"></i><?=_('Stations')?></h1>
+    <h1 id="stations"><i class="fa fa-map-signs fa-fw"></i><?=_('Stations')?></h1>
     <div id="map" class="map"></div>
 
     <?php if(count(array_intersect(array('admin', 'moderator'), \hhu\z\controllers\SeminaryController::$character['characterroles'])) > 0) : ?>
@@ -79,6 +78,7 @@
         </ul>
     </nav>
     <?php endif ?>
+    <?php if(!empty($stations)) : ?>
     <ol class="grpqlist">
         <?php foreach($stations as &$station) : ?>
         <li>
@@ -96,8 +96,10 @@
         </li>
         <?php endforeach ?>
     </ol>
+    <?php else : ?>
+    <p><?=sprintf(_('Your %s-group has not discovered any station yet'), $groupsgroup['name'])?>.</p>
+    <?php endif ?>
 </section>
-<?php endif ?>
 
 <section>
     <h1><i class="fa fa-users fa-fw"></i><?=$groupsgroup['name']?></h1>

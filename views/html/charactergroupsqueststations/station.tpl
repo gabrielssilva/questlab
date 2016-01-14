@@ -8,9 +8,8 @@
 
 <?php if(count(array_intersect(array('admin', 'moderator'), \hhu\z\controllers\SeminaryController::$character['characterroles'])) > 0) : ?>
 <nav class="admin">
-    <li><a href="<?=$linker->link(array('edit',$seminary['url'],$groupsgroup['url'],$quest['url'],$station['url']),1)?>"><?=_('Edit')?></a></li>
-    <li><a href="<?=$linker->link(array('delete',$seminary['url'],$groupsgroup['url'],$quest['url'],$station['url']),1)?>"><?=_('Delete')?></a></li>
-    <li><a href="<?=$linker->link(array('manage',$seminary['url'],$groupsgroup['url'],$quest['url'],$station['url']),1)?>"><?=_('Manage')?></a></li>
+    <li><a href="<?=$linker->link(array('edit',$seminary['url'],$groupsgroup['url'],$quest['url'],$station['url']),1)?>"><?=_('edit')?></a></li>
+    <li><a href="<?=$linker->link(array('delete',$seminary['url'],$groupsgroup['url'],$quest['url'],$station['url']),1)?>"><?=_('delete')?></a></li>
 </nav>
 <?php endif ?>
 

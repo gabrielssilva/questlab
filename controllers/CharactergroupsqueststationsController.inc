@@ -27,6 +27,12 @@
          */
         public $models = array('seminaries', 'charactergroups', 'charactergroupsquests', 'charactergroupsqueststations', 'stationtypes', 'media');
         /**
+         * Required components
+         *
+         * @var array
+         */
+        public $components = array('validation');
+        /**
          * User permissions
          *
          * @var array
@@ -191,6 +197,421 @@
             $this->set('groups', $groups);
             $this->set('solved', $solved);
             $this->set('tried', $tried);
+        }
+
+
+        /**
+         * Action: create.
+         *
+         * Create a new Character groups Quest Station for a Character
+         * groups Quest.
+         *
+         * @param   string  $seminaryUrl    URL-Title of a Seminary
+         * @param   string  $groupsgroupUrl URL-Title of a Character groups-group
+         * @param   string  $questUrl       URL-Title of a Character groups Quest
+         */
+        public function create($seminaryUrl, $groupsgroupUrl, $questUrl)
+        {
+            // Get seminary
+            $seminary = $this->Seminaries->getSeminaryByUrl($seminaryUrl);
+
+            // Get Character groups-group
+            $groupsgroup = $this->Charactergroups->getGroupsgroupByUrl($seminary['id'], $groupsgroupUrl);
+
+            // Get Character groups-group Quests
+            $quest = $this->Charactergroupsquests->getQuestByUrl($groupsgroup['id'], $questUrl);
+
+            // Get Quest types
+            $stationtypes = $this->Stationtypes->getStationtypes();
+            foreach($stationtypes as &$stationtype) {
+                $stationtype['selected'] = false;
+            }
+
+            // Get allowed mimetypes
+            $mimetypes = \nre\configs\AppConfig::$mimetypes['icons'];
+
+            // Values
+            $title = '';
+            $task = '';
+            $longitude = null;
+            $latitude = null;
+            $rightText = '';
+            $wrongText = '';
+            $fields = array('title');
+            $validation = array();
+
+            // Create a new Station
+            if($this->request->getRequestMethod() == 'POST' && !is_null($this->request->getPostParam('create')))
+            {
+                // Get params and validate them
+                $validation = $this->Validation->validateParams($this->request->getPostParams(), $fields);
+                $title = $this->request->getPostParam('title');
+                if($this->Charactergroupsqueststations->stationTitleExists($quest['id'], $title)) {
+                    $validation = $this->Validation->addValidationResult($validation, 'title', 'exist', true);
+                }
+                $task = $this->request->getPostParam('task');
+                $rightText = $this->request->getPostParam('rightText');
+                $wrongText = $this->request->getPostParam('wrongText');
+
+                // Validate Stationtype
+                $stationtypeIndex = null;
+                foreach($stationtypes as $index => &$stationtype)
+                {
+                    $stationtype['selected'] = ($stationtype['url'] == $this->request->getPostParam('stationtype'));
+                    if($stationtype['selected']) {
+                        $stationtypeIndex = $index;
+                    }
+                }
+                if(is_null($stationtypeIndex)) {
+                    throw new \nre\exceptions\ParamsNotValidException($stationtype);
+                }
+
+                // Validate icon
+                $icon = null;
+                if(!empty($_FILES) && array_key_exists('icon', $_FILES) && $_FILES['icon']['error'] != UPLOAD_ERR_NO_FILE)
+                {
+                    $icon = $_FILES['icon'];
+
+                    // Check error
+                    if($icon['error'] !== UPLOAD_ERR_OK) {
+                        $validation = $this->Validation->addValidationResult($validation, 'icon', 'error', $icon['error']);
+                    }
+
+                    // Check mimetype
+                    $mediaMimetype = null;
+                    $icon['mimetype'] = \hhu\z\Utils::getMimetype($icon['tmp_name'], $icon['type']);
+                    foreach($mimetypes as &$mimetype) {
+                        if($mimetype['mimetype'] == $icon['mimetype']) {
+                            $mediaMimetype = $mimetype;
+                            break;
+                        }
+                    }
+                    if(is_null($mediaMimetype)) {
+                        $validation = $this->Validation->addValidationResult($validation, 'icon', 'mimetype', $icon['mimetype']);
+                    }
+                    elseif($icon['size'] > $mediaMimetype['size']) {
+                        $validation = $this->Validation->addValidationResult($validation, 'icon', 'size', $mediaMimetype['size']);
+                    }
+                }
+
+                // Create new Station
+                if($validation === true)
+                {
+                    $stationId = $this->Charactergroupsqueststations->createStation(
+                        $quest['id'],
+                        $stationtypes[$stationtypeIndex]['id'],
+                        $title,
+                        $task,
+                        $latitude,
+                        $longitude,
+                        $rightText,
+                        $wrongText
+                    );
+                    $station = $this->Charactergroupsqueststations->getStationById($stationId);
+
+                    // Upload icon
+                    if(!is_null($icon))
+                    {
+                        $mediaId = $this->Media->createQuestMedia(
+                            $this->Auth->getUserId(),
+                            $seminary['id'],
+                            sprintf('charactergroupsqueststation-%s', $station['url']),
+                            '',
+                            $icon['mimetype'],
+                            $icon['tmp_name']
+                        );
+                        if($mediaId !== false) {
+                            $this->Charactergroupsqueststations->setPictureForStation($station['id'], $mediaId);
+                        }
+                    }
+
+                    // Redirect to Station page
+                    $this->redirect(
+                        $this->linker->link(
+                            array(
+                                'station',
+                                $seminary['url'],
+                                $groupsgroup['url'],
+                                $quest['url'],
+                                $station['url']
+                            ),
+                            1
+                        )
+                    );
+                }
+            }
+
+
+            // Set title
+            $this->addTitle(_('Create Station'));
+            $this->addTitle($quest['title']);
+            $this->addTitle($groupsgroup['name']);
+            $this->addTitle($seminary['title']);
+
+            // Pass data to view
+            $this->set('seminary', $seminary);
+            $this->set('groupsgroup', $groupsgroup);
+            $this->set('quest', $quest);
+            $this->set('title', $title);
+            $this->set('task', $task);
+            $this->set('longitude', $longitude);
+            $this->set('latitude', $latitude);
+            $this->set('righttext', $rightText);
+            $this->set('wrongtext', $wrongText);
+            $this->set('mimetypes', $mimetypes);
+            $this->set('stationtypes', $stationtypes);
+            $this->set('validation', $validation);
+        }
+
+
+        /**
+         * Action: edit.
+         *
+         * Edit a Station of a Character groups Quest.
+         *
+         * @throws  \nre\exceptions\IdNotFoundException
+         * @param   string  $seminaryUrl    URL-Title of a Seminary
+         * @param   string  $groupsgroupUrl URL-Title of a Character groups-group
+         * @param   string  $questUrl       URL-Title of a Character groups Quest
+         * @param   string  $stationUrl     URL of station
+         */
+        public function edit($seminaryUrl, $groupsgroupUrl, $questUrl, $stationUrl)
+        {
+            // Get seminary
+            $seminary = $this->Seminaries->getSeminaryByUrl($seminaryUrl);
+
+            // Get Character groups-group
+            $groupsgroup = $this->Charactergroups->getGroupsgroupByUrl($seminary['id'], $groupsgroupUrl);
+
+            // Get Character groups-group Quests
+            $quest = $this->Charactergroupsquests->getQuestByUrl($groupsgroup['id'], $questUrl);
+
+            // Get Station
+            $station = $this->Charactergroupsqueststations->getStationByUrl($quest['id'], $stationUrl);
+
+            // Get Quest types
+            $stationtypes = $this->Stationtypes->getStationtypes();
+            foreach($stationtypes as &$stationtype) {
+                $stationtype['selected'] = false;
+            }
+
+            // Get allowed mimetypes
+            $mimetypes = \nre\configs\AppConfig::$mimetypes['icons'];
+
+            // Values
+            $title = $station['title'];
+            $task = $station['task'];
+            $longitude = $station['longitude'];
+            $latitude = $station['latitude'];
+            $rightText = $station['righttext'];
+            $wrongText = $station['wrongtext'];
+            $fields = array('title');
+            $validation = array();
+
+            // Check request method
+            if($this->request->getRequestMethod() == 'POST' && (!is_null($this->request->getPostParam('edit')) || !is_null($this->request->getPostParam('edit-task'))))
+            {
+                // Get params and validate them
+                $validation = $this->Validation->validateParams($this->request->getPostParams(), $fields);
+                $title = $this->request->getPostParam('title');
+                if($this->Charactergroupsqueststations->stationTitleExists($quest['id'], $title, $station['id'])) {
+                    $validation = $this->Validation->addValidationResult($validation, 'title', 'exist', true);
+                }
+                $task = $this->request->getPostParam('task');
+                $rightText = $this->request->getPostParam('rightText');
+                $wrongText = $this->request->getPostParam('wrongText');
+
+                // Validate Stationtype
+                $stationtypeIndex = null;
+                foreach($stationtypes as $index => &$stationtype)
+                {
+                    $stationtype['selected'] = ($stationtype['url'] == $this->request->getPostParam('stationtype'));
+                    if($stationtype['selected']) {
+                        $stationtypeIndex = $index;
+                    }
+                }
+                if(is_null($stationtypeIndex)) {
+                    throw new \nre\exceptions\ParamsNotValidException($stationtype);
+                }
+
+                // Validate icon
+                $icon = null;
+                if(!empty($_FILES) && array_key_exists('icon', $_FILES) && $_FILES['icon']['error'] != UPLOAD_ERR_NO_FILE)
+                {
+                    $icon = $_FILES['icon'];
+
+                    // Check error
+                    if($icon['error'] !== UPLOAD_ERR_OK) {
+                        $validation = $this->Validation->addValidationResult($validation, 'icon', 'error', $icon['error']);
+                    }
+
+                    // Check mimetype
+                    $mediaMimetype = null;
+                    $icon['mimetype'] = \hhu\z\Utils::getMimetype($icon['tmp_name'], $icon['type']);
+                    foreach($mimetypes as &$mimetype) {
+                        if($mimetype['mimetype'] == $icon['mimetype']) {
+                            $mediaMimetype = $mimetype;
+                            break;
+                        }
+                    }
+                    if(is_null($mediaMimetype)) {
+                        $validation = $this->Validation->addValidationResult($validation, 'icon', 'mimetype', $icon['mimetype']);
+                    }
+                    elseif($icon['size'] > $mediaMimetype['size']) {
+                        $validation = $this->Validation->addValidationResult($validation, 'icon', 'size', $mediaMimetype['size']);
+                    }
+                }
+
+                // Edit Station
+                if($validation === true)
+                {
+                    $this->Charactergroupsqueststations->editStation(
+                        $station['id'],
+                        $stationtypes[$stationtypeIndex]['id'],
+                        $title,
+                        $task,
+                        $latitude,
+                        $longitude,
+                        $rightText,
+                        $wrongText
+                    );
+                    $station = $this->Charactergroupsqueststations->getStationById($station['id']);
+
+                    // Upload icon
+                    if(!is_null($icon))
+                    {
+                        $mediaId = $this->Media->createQuestMedia(
+                            $this->Auth->getUserId(),
+                            $seminary['id'],
+                            sprintf('charactergroupsqueststation-%s', $station['url']),
+                            '',
+                            $icon['mimetype'],
+                            $icon['tmp_name']
+                        );
+                        if($mediaId !== false) {
+                            $this->Charactergroupsqueststations->setPictureForStation($station['id'], $mediaId);
+                        }
+                    }
+
+                    // Redirect to Station page
+                    $this->redirect(
+                        $this->linker->link(
+                            array(
+                                'station',
+                                $seminary['url'],
+                                $groupsgroup['url'],
+                                $quest['url'],
+                                $station['url']
+                            ),
+                            1
+                        )
+                    );
+                }
+            }
+
+
+            // Set title
+            $this->addTitle(_('Edit Station'));
+            $this->addTitle($station['title']);
+            $this->addTitle($quest['title']);
+            $this->addTitle($groupsgroup['name']);
+            $this->addTitle($seminary['title']);
+
+            // Pass data to view
+            $this->set('seminary', $seminary);
+            $this->set('groupsgroup', $groupsgroup);
+            $this->set('quest', $quest);
+            $this->set('title', $title);
+            $this->set('task', $task);
+            $this->set('longitude', $longitude);
+            $this->set('latitude', $latitude);
+            $this->set('righttext', $rightText);
+            $this->set('wrongtext', $wrongText);
+            $this->set('mimetypes', $mimetypes);
+            $this->set('stationtypes', $stationtypes);
+            $this->set('validation', $validation);
+        }
+
+
+        /**
+         * Action: delete.
+         *
+         * Delete a Station of a Character groups Quest.
+         *
+         * @throws  \nre\exceptions\IdNotFoundException
+         * @param   string  $seminaryUrl    URL-Title of a Seminary
+         * @param   string  $groupsgroupUrl URL-Title of a Character groups-group
+         * @param   string  $questUrl       URL-Title of a Character groups Quest
+         * @param   string  $stationUrl     URL of station
+         */
+        public function delete($seminaryUrl, $groupsgroupUrl, $questUrl, $stationUrl)
+        {
+            // Get seminary
+            $seminary = $this->Seminaries->getSeminaryByUrl($seminaryUrl);
+
+            // Get Character groups-group
+            $groupsgroup = $this->Charactergroups->getGroupsgroupByUrl($seminary['id'], $groupsgroupUrl);
+
+            // Get Character groups-group Quests
+            $quest = $this->Charactergroupsquests->getQuestByUrl($groupsgroup['id'], $questUrl);
+
+            // Get Station
+            $station = $this->Charactergroupsqueststations->getStationByUrl($quest['id'], $stationUrl);
+
+            // Check request method
+            if($this->request->getRequestMethod() == 'POST')
+            {
+                // Check confirmation
+                if(!is_null($this->request->getPostParam('delete')))
+                {
+                    // Delete seminary
+                    $this->Charactergroupsqueststations->deleteStation(
+                        $station['id']
+                    );
+
+                    // Redirect to overview
+                    $this->redirect(
+                        $this->linker->link(
+                            array(
+                                'charactergroupsquests',
+                                'quest',
+                                $seminary['url'],
+                                $groupsgroup['url'],
+                                $quest['url']
+                            ),
+                            0, true, null, true, 'stations'
+                        )
+                    );
+                }
+
+                // Redirect to entry
+                $this->redirect(
+                    $this->linker->link(
+                        array(
+                            'station',
+                            $seminary['url'],
+                            $groupsgroup['url'],
+                            $quest['url'],
+                            $station['url']
+                        ),
+                        1
+                    )
+                );
+            }
+
+
+            // Set title
+            $this->addTitle(_('Delete Station'));
+            $this->addTitle($station['title']);
+            $this->addTitle($quest['title']);
+            $this->addTitle($groupsgroup['name']);
+            $this->addTitle($seminary['title']);
+
+            // Pass data to view
+            $this->set('seminary', $seminary);
+            $this->set('groupsgroup', $groupsgroup);
+            $this->set('quest', $quest);
+            $this->set('station', $station);
         }
 
 

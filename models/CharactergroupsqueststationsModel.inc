@@ -239,6 +239,135 @@
         }
 
 
+        /**
+         * Check if a Character groups Quest Station title already exists.
+         *
+         * @param   int     $questId    ID of Character groups Quest
+         * @param   string  $title      Station title to check
+         * @param   int     $stationId  Do not check this ID (for editing)
+         * @return  boolean             Whether Station title exists or not
+         */
+        public function stationTitleExists($questId, $title, $stationId=null)
+        {
+            $data = $this->db->query(
+                'SELECT id '.
+                'FROM charactergroupsqueststations '.
+                'WHERE charactergroupsquest_id = ? AND (title = ? OR url = ?)',
+                'iss',
+                $questId,
+                $title,
+                \nre\core\Linker::createLinkParam($title)
+            );
+
+            return (!empty($data) && (is_null($stationId) || $stationId != $data[0]['id']));
+        }
+
+
+        /**
+         * Set the media for a Character groups Quest Station.
+         *
+         * @param   int $stationId  ID of Station to upload media for
+         * @param   int $mediaId    ID of Station media
+         */
+        public function setPictureForStation($station, $mediaId)
+        {
+            $this->db->query(
+                'UPDATE charactergroupsqueststations '.
+                'SET stationpicture_id = ? '.
+                'WHERE id = ?',
+                'ii',
+                $mediaId,
+                $station
+            );
+        }
+
+
+        /**
+         * Create a new Character groups Quest Station.
+         *
+         * @param   int     $questId        ID of Quest to create the Station for
+         * @param   int     $stationtypeId  ID of Station type
+         * @param   string  $title          Title
+         * @param   string  $task           Task description
+         * @param   int     $latitude       GPS latitude
+         * @param   int     $longitude      GPS longitude
+         * @param   string  $righttext      Text for correctly solved task
+         * @param   string  $wrongtext      Text for failed task
+         * @return  int                     ID of newly created station
+         */
+        public function createStation($questId, $stationtypeId, $title, $task, $latitude, $longitude, $righttext, $wrongtext)
+        {
+            // Get position
+            $pos = $this->db->query(
+                'SELECT COALESCE(MAX(pos),0)+1 AS pos '.
+                'FROM charactergroupsqueststations '.
+                'WHERE charactergroupsquest_id = ?',
+                'i',
+                $questId
+            );
+            $pos = $pos[0]['pos'];
+
+            // Create Station
+            $this->db->query(
+                'INSERT INTO charactergroupsqueststations '.
+                '(charactergroupsquest_id, stationtype_id, title, url, pos, task, latitude, longitude, righttext, wrongtext) '.
+                'VALUES '.
+                '(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
+                'iissisddss',
+                $questId, $stationtypeId, $title,
+                \nre\core\Linker::createLinkParam($title), $pos,
+                $task, $latitude, $longitude, $righttext, $wrongtext
+            );
+
+            
+            // Return ID of newly created Station
+            return $this->db->getInsertId();
+        }
+
+
+        /**
+         * Edit a Character groups Quest Station.
+         *
+         * @param   int     $stationId      ID of Station to edit
+         * @param   int     $stationtypeId  ID of Station type
+         * @param   string  $title          Title
+         * @param   string  $task           Task description
+         * @param   int     $latitude       GPS latitude
+         * @param   int     $longitude      GPS longitude
+         * @param   string  $righttext      Text for correctly solved task
+         * @param   string  $wrongtext      Text for failed task
+         */
+        public function editStation($stationId, $stationtypeId, $title, $task, $latitude, $longitude, $righttext, $wrongtext)
+        {
+            $this->db->query(
+                'UPDATE charactergroupsqueststations '.
+                'SET stationtype_id = ?, title = ?, url = ?, task = ?, latitude = ?, longitude = ?, righttext = ?, wrongtext = ? '.
+                'WHERE id = ?',
+                'isssddssi',
+                $stationtypeId, $title,
+                \nre\core\Linker::createLinkParam($title),
+                $task, $latitude, $longitude, $righttext, $wrongtext,
+                $stationId
+            );
+        }
+
+
+        /**
+         * Delete a Character-group Quest station.
+         *
+         * @param   int $stationId  ID of Station to delete
+         */
+        public function deleteStation($stationId)
+        {
+            $this->db->query(
+                'DELETE FROM charactergroupsqueststations '.
+                'WHERE ID = ?',
+                'i',
+                $stationId
+            );
+        }
+
+
 
 
 
