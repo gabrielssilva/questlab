@@ -194,28 +194,11 @@
             new ol.layer.Vector({
                 source: markersSource,
                 style: styleFunction
-                /*
-                style: new ol.style.Style({
-                    text: new ol.style.Text({
-                        text: '\uf041',
-                        //text: '\uf276',
-                        font: 'normal 28px FontAwesome',
-                        textBaseline: 'Bottom',
-                        fill: new ol.style.Fill({
-                            color: '#0F373C'
-                        })
-                    })
-                })
-                */
-            })/*,
-            new ol.layer.Vector({
-                source: pathSource
             })
-            */
         ],
         target: 'map',
         view: new ol.View({
-            center: ol.proj.transform([<?=$station['longitude']?>, <?=$station['latitude']?>], 'EPSG:4326', 'EPSG:3857'),
+            center: [0, 0],
             zoom: 19,
             maxZoom: 19
         })

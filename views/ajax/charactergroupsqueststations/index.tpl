@@ -6,22 +6,24 @@
     // Add points
     foreach($stations as &$station)
     {
-        $coordinate = array(
-            floatval($station['longitude']),
-            floatval($station['latitude'])
-        );
-        $coordinates[] = $coordinate;
-        $features[] = array(
-            'type'          => 'Feature',
-            'id'            => $station['id'],
-            'properties'    => array(
-                'name'      => $station['title'],
-            ),
-            'geometry'      => array(
-                'type'          => 'Point',
-                'coordinates'   => $coordinate
-            )
-        );
+        if(!is_null($station['longitude']) && !is_null($station['latitude'])) {
+            $coordinate = array(
+                floatval($station['longitude']),
+                floatval($station['latitude'])
+            );
+            $coordinates[] = $coordinate;
+            $features[] = array(
+                'type'          => 'Feature',
+                'id'            => $station['id'],
+                'properties'    => array(
+                    'name'      => $station['title'],
+                ),
+                'geometry'      => array(
+                    'type'          => 'Point',
+                    'coordinates'   => $coordinate
+                )
+            );
+        }
     }
 
     // Add lines between points
