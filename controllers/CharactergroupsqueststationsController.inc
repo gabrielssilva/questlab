@@ -394,7 +394,7 @@
             // Get Quest types
             $stationtypes = $this->Stationtypes->getStationtypes();
             foreach($stationtypes as &$stationtype) {
-                $stationtype['selected'] = false;
+                $stationtype['selected'] = ($stationtype['id'] == $station['stationtype_id']);
             }
 
             // Get allowed mimetypes
@@ -497,19 +497,37 @@
                         }
                     }
 
-                    // Redirect to Station page
-                    $this->redirect(
-                        $this->linker->link(
-                            array(
-                                'station',
-                                $seminary['url'],
-                                $groupsgroup['url'],
-                                $quest['url'],
-                                $station['url']
-                            ),
-                            1
-                        )
-                    );
+                    // Redirect
+                    if(!is_null($this->request->getPostParam('edit-task'))) {
+                        // To task editing
+                        $this->redirect(
+                            $this->linker->link(
+                                array(
+                                    'edittask',
+                                    $seminary['url'],
+                                    $groupsgroup['url'],
+                                    $quest['url'],
+                                    $station['url']
+                                ),
+                                1
+                            )
+                        );
+                    }
+                    else {
+                        // To Station page
+                        $this->redirect(
+                            $this->linker->link(
+                                array(
+                                    'station',
+                                    $seminary['url'],
+                                    $groupsgroup['url'],
+                                    $quest['url'],
+                                    $station['url']
+                                ),
+                                1
+                            )
+                        );
+                    }
                 }
             }
 
@@ -534,6 +552,54 @@
             $this->set('mimetypes', $mimetypes);
             $this->set('stationtypes', $stationtypes);
             $this->set('validation', $validation);
+        }
+
+
+        /**
+         * TODO Action: edittask.
+         *
+         * Edit the task of a Character groups Quest Station.
+         *
+         * @throws  \nre\exceptions\IdNotFoundException
+         * @param   string  $seminaryUrl    URL-Title of a Seminary
+         * @param   string  $groupsgroupUrl URL-Title of a Character groups-group
+         * @param   string  $questUrl       URL-Title of a Character groups Quest
+         * @param   string  $stationUrl     URL of station
+         */
+        public function edittask($seminaryUrl, $groupsgroupUrl, $questUrl, $stationUrl)
+        {
+            // Get seminary
+            $seminary = $this->Seminaries->getSeminaryByUrl($seminaryUrl);
+
+            // Get Character groups-group
+            $groupsgroup = $this->Charactergroups->getGroupsgroupByUrl($seminary['id'], $groupsgroupUrl);
+
+            // Get Character groups-group Quests
+            $quest = $this->Charactergroupsquests->getQuestByUrl($groupsgroup['id'], $questUrl);
+
+            // Get Station
+            $station = $this->Charactergroupsqueststations->getStationByUrl($quest['id'], $stationUrl);
+
+            // Render editing task
+            $task = null;
+            $stationtype = $this->Stationtypes->getStationtypeById($station['stationtype_id']);
+            if(!is_null($stationtype['classname'])) {
+                $task = $this->renderTaskEditing($stationtype['classname'], $seminary, $groupsgroup, $quest, $station);
+            }
+
+
+            // Set title
+            $this->addTitleLocalized('Edit Station task');
+            $this->addTitle($station['title']);
+            $this->addTitle($quest['title']);
+            $this->addTitle($groupsgroup['name']);
+            $this->addTitle($seminary['title']);
+
+            // Pass data to view
+            $this->set('seminary', $seminary);
+            $this->set('groupsgroup', $groupsgroup);
+            $this->set('quest', $quest);
+            $this->set('task', $task);
         }
 
 
@@ -700,6 +766,61 @@
                         $response->addParam($e);
                     }
                 }
+
+                // Render Task
+                $task = $this->runStationtypeAgent($stationtypeAgent, $request, $response);
+            }
+            catch(\nre\exceptions\ViewNotFoundException $e) {
+                $task = $e->getMessage();
+            }
+            catch(\nre\exceptions\ActionNotFoundException $e) {
+                $task = $e->getMessage();
+            }
+            catch(\hhu\z\exceptions\StationtypeModelNotValidException $e) {
+                $task = $e->getMessage();
+            }
+            catch(\hhu\z\exceptions\StationtypeModelNotFoundException $e) {
+                $task = $e->getMessage();
+            }
+            catch(\hhu\z\exceptions\StationtypeControllerNotValidException $e) {
+                $task = $e->getMessage();
+            }
+            catch(\hhu\z\exceptions\StationtypeControllerNotFoundException $e) {
+                $task = $e->getMessage();
+            }
+            catch(\hhu\z\exceptions\StationtypeAgentNotValidException $e) {
+                $task = $e->getMessage();
+            }
+            catch(\hhu\z\exceptions\stationtypeAgentNotFoundException $e) {
+                $task = $e->getMessage();
+            }
+
+
+            // Return rendered output
+            return $task;
+        }
+
+
+        /**
+         * Render editing of a Station task.
+         *
+         * @param   string  $stationtypeClassname   Name of the class for the Stationtype of a Station
+         * @param   array   $seminary               Seminary data
+         * @param   array   $groupsgroup            Groupsgroup data
+         * @param   array   $quest                  Quest data
+         * @param   array   $station                Station data
+         * @return  string                          Rendered output
+         */
+        private function renderTaskEditing($stationtypeClassname, $seminary, $groupsgroup, $quest, $station)
+        {
+            $task = null;
+            try {
+                // Generate request and response
+                $request = clone $this->request;
+                $response = $this->createStationtypeResponse('edittask', $seminary, $groupsgroup, $quest, $station);
+
+                // Load Stationtype Agent
+                $stationtypeAgent = $this->loadStationtypeAgent($stationtypeClassname, $request, $response);
 
                 // Render Task
                 $task = $this->runStationtypeAgent($stationtypeAgent, $request, $response);

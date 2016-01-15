@@ -74,6 +74,19 @@
 
 
         /**
+         * Action: edittask.
+         *
+         * @param   \nre\core\Request   $request    Current request
+         * @param   \nre\core\Response  $response   Current response
+         */
+        public function edittask(\nre\core\Request $request, \nre\core\Response $response)
+        {
+            // Add Moodpic
+            $this->addSubAgent('Moodpic', 'seminary', $request->getParam(3), 'charactergroups');
+        }
+
+
+        /**
          * Action: delete.
          *
          * @param   \nre\core\Request   $request    Current request

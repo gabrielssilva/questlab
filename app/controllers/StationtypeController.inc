@@ -71,6 +71,19 @@
         public abstract function quest($seminary, $groupsgroup, $quest, $station, $charactergroup);
 
 
+        /**
+         * Action: edittask.
+         *
+         * Edit the task of a Station.
+         *
+         * @param   array   $seminary       Current Seminary data
+         * @param   array   $groupsgroup    Current Groups group data
+         * @param   array   $quest          Current Quest data
+         * @param   array   $station        Current Station data
+         */
+        public abstract function edittask($seminary, $groupsgroup, $quest, $station);
+
+
 
 
         /**

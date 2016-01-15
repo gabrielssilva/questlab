@@ -91,7 +91,10 @@
         <label for="wrongText"><?=_('Wrong text')?>:</label><br />
         <textarea id="wrongText" name="wrongText" placeholder="<?=_('Wrong text')?>" style="width:100%; height:10em;"><?=$wrongtext?></textarea><br />
     </fieldset>
-    <input type="submit" name="edit" value="<?=_('edit')?>" />
+    <?php if(!is_null($stationtype['classname'])) : ?>
+    <input type="submit" name="edit-task" value="<?=_('edit task')?>" />
+    <?php endif ?>
+    <input type="submit" name="edit" value="<?=_('save')?>" />
 </form>
 <script>
     $(function() {
