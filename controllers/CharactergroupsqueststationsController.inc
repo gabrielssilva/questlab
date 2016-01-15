@@ -232,6 +232,7 @@
 
             // Values
             $title = '';
+            $prolog = '';
             $task = '';
             $longitude = null;
             $latitude = null;
@@ -249,6 +250,7 @@
                 if($this->Charactergroupsqueststations->stationTitleExists($quest['id'], $title)) {
                     $validation = $this->Validation->addValidationResult($validation, 'title', 'exist', true);
                 }
+                $prolog = $this->request->getPostParam('prolog');
                 $task = $this->request->getPostParam('task');
                 $longitude = $this->request->getPostParam('longitude');
                 $latitude = $this->request->getPostParam('latitude');
@@ -303,6 +305,7 @@
                         $quest['id'],
                         $stationtypes[$stationtypeIndex]['id'],
                         $title,
+                        $prolog,
                         $task,
                         $latitude,
                         $longitude,
@@ -355,6 +358,7 @@
             $this->set('groupsgroup', $groupsgroup);
             $this->set('quest', $quest);
             $this->set('title', $title);
+            $this->set('prolog', $prolog);
             $this->set('task', $task);
             $this->set('longitude', $longitude);
             $this->set('latitude', $latitude);
@@ -402,6 +406,7 @@
 
             // Values
             $title = $station['title'];
+            $prolog = $station['prolog'];
             $task = $station['task'];
             $longitude = $station['longitude'];
             $latitude = $station['latitude'];
@@ -419,6 +424,7 @@
                 if($this->Charactergroupsqueststations->stationTitleExists($quest['id'], $title, $station['id'])) {
                     $validation = $this->Validation->addValidationResult($validation, 'title', 'exist', true);
                 }
+                $prolog = $this->request->getPostParam('prolog');
                 $task = $this->request->getPostParam('task');
                 $longitude = $this->request->getPostParam('longitude');
                 $latitude = $this->request->getPostParam('latitude');
@@ -473,6 +479,7 @@
                         $station['id'],
                         $stationtypes[$stationtypeIndex]['id'],
                         $title,
+                        $prolog,
                         $task,
                         $latitude,
                         $longitude,
@@ -544,6 +551,7 @@
             $this->set('groupsgroup', $groupsgroup);
             $this->set('quest', $quest);
             $this->set('title', $title);
+            $this->set('prolog', $prolog);
             $this->set('task', $task);
             $this->set('longitude', $longitude);
             $this->set('latitude', $latitude);

@@ -1,8 +1,8 @@
--- MySQL dump 10.15  Distrib 10.0.22-MariaDB, for Linux (x86_64)
+-- MySQL dump 10.16  Distrib 10.1.10-MariaDB, for Linux (x86_64)
 --
 -- Host: localhost    Database: z
 -- ------------------------------------------------------
--- Server version	10.0.22-MariaDB-log
+-- Server version	10.1.10-MariaDB-log
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -584,6 +584,7 @@ CREATE TABLE `charactergroupsqueststations` (
   `url` varchar(64) COLLATE utf8mb4_unicode_ci NOT NULL,
   `pos` int(10) unsigned NOT NULL,
   `stationpicture_id` int(11) DEFAULT NULL,
+  `prolog` text COLLATE utf8mb4_unicode_ci NOT NULL,
   `task` text COLLATE utf8mb4_unicode_ci NOT NULL,
   `latitude` decimal(10,6) DEFAULT NULL,
   `longitude` decimal(10,6) DEFAULT NULL,
@@ -2470,4 +2471,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2015-10-30 22:27:53
+-- Dump completed on 2016-01-15 13:19:51

@@ -104,6 +104,16 @@
 </section>
 <?php endif ?>
 
+<?php if(!empty($station['prolog'])) : ?>
+<section>
+    <div class="qtextbox">
+        <p class="qtext cf">
+            <?=str_replace('<p>', '', str_replace('</p>', '', $t->t($station['prolog'])))?>
+        </p>
+    </div>
+</section>
+<?php endif ?>
+
 <?php if(!is_null($task)) : ?>
 <section class="task">
     <h1 id="task"><?=_('Task')?></h1>

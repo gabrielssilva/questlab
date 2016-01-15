@@ -84,6 +84,8 @@
     <fieldset>
         <label for="title"><?=_('Title')?>:</label>
         <input type="text" id="title" name="title" placeholder="<?=_('Title')?>" title="<?=_('Title')?>" maxlength="<?=$validationSettings['title']['maxlength']?>" value="<?=$title?>" <?=($validation !== true && array_key_exists('title', $validation)) ? 'class="invalid"' : null?> />
+        <label for="prolog"><?=_('Prolog')?>:</label><br />
+        <textarea id="prolog" name="prolog" placeholder="<?=_('Prolog')?>" style="width:100%; height:10em;"><?=$prolog?></textarea><br />
         <label for="task"><?=_('Task')?>:</label><br />
         <textarea id="task" name="task" placeholder="<?=_('Task')?>" style="width:100%; height:10em;"><?=$task?></textarea><br />
         <label for="rightText"><?=('Right text')?>:</label><br />
@@ -95,6 +97,7 @@
 </form>
 <script>
     $(function() {
+        $("#prolog").markItUp(mySettings);
         $("#task").markItUp(mySettings);
         $("#rightText").markItUp(mySettings);
         $("#wrongText").markItUp(mySettings);

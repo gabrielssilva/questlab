@@ -63,7 +63,7 @@
         public function getStationById($stationId)
         {
             $data = $this->db->query(
-                'SELECT id, charactergroupsquest_id, stationtype_id, title, url, stationpicture_id, task, latitude, longitude, righttext, wrongtext '.
+                'SELECT id, charactergroupsquest_id, stationtype_id, title, url, stationpicture_id, prolog, task, latitude, longitude, righttext, wrongtext '.
                 'FROM charactergroupsqueststations '.
                 'WHERE id = ?',
                 'i',
@@ -88,7 +88,7 @@
         public function getStationByUrl($groupsquestId, $stationUrl)
         {
             $data = $this->db->query(
-                'SELECT id, charactergroupsquest_id, stationtype_id, title, url, stationpicture_id, task, latitude, longitude, righttext, wrongtext '.
+                'SELECT id, charactergroupsquest_id, stationtype_id, title, url, stationpicture_id, prolog, task, latitude, longitude, righttext, wrongtext '.
                 'FROM charactergroupsqueststations '.
                 'WHERE charactergroupsquest_id = ? AND url = ?',
                 'is',
@@ -288,6 +288,7 @@
          * @param   int     $questId        ID of Quest to create the Station for
          * @param   int     $stationtypeId  ID of Station type
          * @param   string  $title          Title
+         * @param   string  $prolog         Prolog
          * @param   string  $task           Task description
          * @param   int     $latitude       GPS latitude
          * @param   int     $longitude      GPS longitude
@@ -295,7 +296,7 @@
          * @param   string  $wrongtext      Text for failed task
          * @return  int                     ID of newly created station
          */
-        public function createStation($questId, $stationtypeId, $title, $task, $latitude, $longitude, $righttext, $wrongtext)
+        public function createStation($questId, $stationtypeId, $title, $prolog, $task, $latitude, $longitude, $righttext, $wrongtext)
         {
             // Get position
             $pos = $this->db->query(
@@ -310,13 +311,13 @@
             // Create Station
             $this->db->query(
                 'INSERT INTO charactergroupsqueststations '.
-                '(charactergroupsquest_id, stationtype_id, title, url, pos, task, latitude, longitude, righttext, wrongtext) '.
+                '(charactergroupsquest_id, stationtype_id, title, url, pos, prolog, task, latitude, longitude, righttext, wrongtext) '.
                 'VALUES '.
-                '(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
-                'iissisddss',
+                '(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
+                'iississddss',
                 $questId, $stationtypeId, $title,
                 \nre\core\Linker::createLinkParam($title), $pos,
-                $task, $latitude, $longitude, $righttext, $wrongtext
+                $prolog, $task, $latitude, $longitude, $righttext, $wrongtext
             );
 
             
@@ -331,22 +332,23 @@
          * @param   int     $stationId      ID of Station to edit
          * @param   int     $stationtypeId  ID of Station type
          * @param   string  $title          Title
+         * @param   string  $prolog         Prolog
          * @param   string  $task           Task description
          * @param   int     $latitude       GPS latitude
          * @param   int     $longitude      GPS longitude
          * @param   string  $righttext      Text for correctly solved task
          * @param   string  $wrongtext      Text for failed task
          */
-        public function editStation($stationId, $stationtypeId, $title, $task, $latitude, $longitude, $righttext, $wrongtext)
+        public function editStation($stationId, $stationtypeId, $title, $prolog, $task, $latitude, $longitude, $righttext, $wrongtext)
         {
             $this->db->query(
                 'UPDATE charactergroupsqueststations '.
-                'SET stationtype_id = ?, title = ?, url = ?, task = ?, latitude = ?, longitude = ?, righttext = ?, wrongtext = ? '.
+                'SET stationtype_id = ?, title = ?, url = ?, prolog = ?, task = ?, latitude = ?, longitude = ?, righttext = ?, wrongtext = ? '.
                 'WHERE id = ?',
-                'isssddssi',
+                'issssddssi',
                 $stationtypeId, $title,
                 \nre\core\Linker::createLinkParam($title),
-                $task, $latitude, $longitude, $righttext, $wrongtext,
+                $prolog, $task, $latitude, $longitude, $righttext, $wrongtext,
                 $stationId
             );
         }
