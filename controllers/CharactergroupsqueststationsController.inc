@@ -250,6 +250,8 @@
                     $validation = $this->Validation->addValidationResult($validation, 'title', 'exist', true);
                 }
                 $task = $this->request->getPostParam('task');
+                $longitude = $this->request->getPostParam('longitude');
+                $latitude = $this->request->getPostParam('latitude');
                 $rightText = $this->request->getPostParam('rightText');
                 $wrongText = $this->request->getPostParam('wrongText');
 
@@ -418,6 +420,8 @@
                     $validation = $this->Validation->addValidationResult($validation, 'title', 'exist', true);
                 }
                 $task = $this->request->getPostParam('task');
+                $longitude = $this->request->getPostParam('longitude');
+                $latitude = $this->request->getPostParam('latitude');
                 $rightText = $this->request->getPostParam('rightText');
                 $wrongText = $this->request->getPostParam('wrongText');
 

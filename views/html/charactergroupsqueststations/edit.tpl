@@ -60,6 +60,9 @@
     </fieldset>
     <fieldset>
         <legend><?=_('Location')?></legend>
+        <div id="map" class="map"></div>
+        <input id="longitude" name="longitude" type="hidden" value="<?=$longitude?>" />
+        <input id="latitude" name="latitude" type="hidden" value="<?=$latitude?>" />
     </fieldset>
     <fieldset>
         <label for="stationtype"><?=('Stationtype')?>:</label>
@@ -95,5 +98,68 @@
         $("#task").markItUp(mySettings);
         $("#rightText").markItUp(mySettings);
         $("#wrongText").markItUp(mySettings);
+    });
+
+    var drawSource = new ol.source.Vector({
+        wrapX: false
+    });
+    var drawLayer = new ol.layer.Vector({
+        source: drawSource,
+        style: new ol.style.Style({
+            text: new ol.style.Text({
+                //text: '\uf041',
+                text: '\uf276',
+                font: 'normal 28px FontAwesome',
+                textBaseline: 'Bottom',
+                fill: new ol.style.Fill({
+                    color: '#0F373C'
+                })
+            })
+        })
+    });
+    var map = new ol.Map({
+        layers: [
+            new ol.layer.Tile({
+                source: new ol.source.OSM()
+            }),
+            drawLayer
+        ],
+        controls: ol.control.defaults(),
+        target: 'map',
+        view: new ol.View({
+            center: [0, 0],
+            zoom: 0,
+            maxZoom: 19
+        })
+    });
+    var draw = new ol.interaction.Draw({
+        source: drawSource,
+        type: 'Point',
+        maxPoints: 1,
+    });
+    map.addInteraction(draw);
+
+    // Add existing point
+    var longitude = $('#longitude').val();
+    var latitude = $('#latitude').val();
+    if(longitude && latitude) {
+        drawSource.addFeature(
+            new ol.Feature({
+                geometry: new ol.geom.Point(
+                    ol.proj.transform([longitude, latitude], 'EPSG:4326', 'EPSG:3857')
+                )
+            })
+        );
+    }
+
+    // Wire events
+    drawSource.on('addfeature', function(event) {
+        var coordinates = event.feature.getGeometry().getCoordinates();
+        coordinates = ol.proj.transform(coordinates, 'EPSG:3857', 'EPSG:4326');
+        $('#longitude').val(coordinates[0]);
+        $('#latitude').val(coordinates[1]);
+    });
+    draw.on('drawstart', function() {
+        drawSource.clear();
     });
 </script>
