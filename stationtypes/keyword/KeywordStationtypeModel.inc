@@ -48,6 +48,29 @@
 
 
         /**
+         * Set the keyword (regex) for a Station.
+         *
+         * @param   int     $userId     ID of creating user
+         * @param   int     $stationId  ID ot Station to set keyword for
+         * @param   string  $keyword    Keyword (regex)
+         */
+        public function setKeywordForStation($userId, $stationId, $keyword)
+        {
+            $this->db->query(
+                'INSERT INTO stationtypes_keyword '.
+                '(station_id, created_user_id, keyword_regex) '.
+                'VALUES '.
+                '(?, ?, ?) '.
+                'ON DUPLICATE KEY UPDATE '.
+                'created_user_id = ?, keyword_regex = ?',
+                'iisis',
+                $stationId, $userId, $keyword,
+                $userId, $keyword
+            );
+        }
+
+
+        /**
          * Save Character group’s submitted answer for a station.
          *
          * @param   int     $stationId          ID of Station
