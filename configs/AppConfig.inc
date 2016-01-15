@@ -71,6 +71,7 @@
             'media'             => 'media',
             'seminarymedia'     => 'seminarymedia',
             'questtypes'        => 'questtypes',
+            'stationtypes'      => 'stationtypes',
             'temporary'         => 'tmp',
             'uploads'           => 'uploads',
             'seminaryuploads'   => 'seminaryuploads'
@@ -304,6 +305,10 @@
             array('^charactergroupsquests/([^/]+)/([^/]+)/create/?$',                       'charactergroupsquests/create/$1/$2',   true),
             array('^charactergroupsquests/([^/]+)/([^/]+)/([^/]+)/?$',                      'charactergroupsquests/quest/$1/$2/$3', true),
             array('^charactergroupsquests/([^/]+)/([^/]+)/([^/]+)/(edit|delete|manage)/?$', 'charactergroupsquests/$4/$1/$2/$3',    true),
+            array('^charactergroupsqueststations/([^/]+)/([^/]+)/([^/]+)/?$',                                   'charactergroupsqueststations/index/$1/$2/$3?layout=ajax',  true),
+            array('^charactergroupsqueststations/([^/]+)/([^/]+)/([^/]+)/create/?$',                            'charactergroupsqueststations/create/$1/$2/$3',             true),
+            array('^charactergroupsqueststations/([^/]+)/([^/]+)/([^/]+)/([^/]+)/(edit|edittask|delete)/?$',    'charactergroupsqueststations/$5/$1/$2/$3/$4',              true),
+            array('^charactergroupsqueststations/([^/]+)/([^/]+)/([^/]+)/([^/]+)/?$',                           'charactergroupsqueststations/station/$1/$2/$3/$4',         true),
             array('^achievements/([^/]+)/(create|manage)/?$',                                   'achievements/$2/$1',       true),
             array('^achievements/([^/]+)/([^/]+)/(edit|conditions|moveup|movedown|delete)/?$',  'achievements/$3/$1/$2',    true),
             array('^achievements/([^/]+)/?$',                                                   'achievements/index/$1',    true),
@@ -316,7 +321,8 @@
             array('^pages/([^/]+)/(edit|delete)$',          'pages/$2/$1',      true),
             array('^pages/(?!(create|edit|delete))/?',      'pages/page/$1',    true),
             array('^media/(.*)$',   'media/$1?layout=binary',   false),
-            array('^uploads/(.*)$', 'uploads/$1?layout=binary', false)
+            array('^uploads/(.*)$', 'uploads/$1?layout=binary', false),
+            array('^qrcodes/(.*)$', 'qrcodes/$1?layout=binary', false)
         );
 
 
@@ -358,6 +364,9 @@
             array('^charactergroupsquests/create/([^/]+)/([^/]+)/?$',                       'charactergroupsquests/$1/$2/create',   true),
             array('^charactergroupsquests/quest/(.*)$',                                     'charactergroupsquests/$1',             true),
             array('^charactergroupsquests/(edit|delete|manage)/([^/]+)/([^/]+)/([^/]+)$',   'charactergroupsquests/$2/$3/$4/$1',    true),
+            array('^charactergroupsqueststations/index/(.*)$',                          'charactergroupsqueststations/$1',      true),
+            array('^charactergroupsqueststations/station/(.*)$',                        'charactergroupsqueststations/$1',      true),
+            array('^charactergroupsqueststations/(create|edit|edittask|delete)/(.*)$',  'charactergroupsqueststations/$2/$1',   true),
             array('^achievements/index/(.*)$',                                      'achievements/$1',      true),
             array('^achievements/(create|manage)/(.*)$',                            'achievements/$2/$1',   true),
             array('^achievements/(edit|conditions|moveup|movedown|delete)/(.*)$',   'achievements/$2/$1',   true),

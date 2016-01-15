@@ -95,7 +95,7 @@
         public function getGroupsgroupById($groupsgroupId)
         {
             $data = $this->db->query(
-                'SELECT id, name, url, preferred '.
+                'SELECT id, seminary_id, name, url, preferred '.
                 'FROM charactergroupsgroups '.
                 'WHERE id = ?',
                 'i',
@@ -397,6 +397,28 @@
 
 
             return $groups;
+        }
+
+
+        /**
+         * Get Character groups that have entered a Character groups Quest
+         * station.
+         *
+         * @param   int     $stationId  ID of station
+         * @return  array               List of groups
+         */
+        public function getGroupsForQueststation($stationId)
+        {
+            return $this->db->query(
+                'SELECT charactergroups.id, charactergroups.name, charactergroups.url, charactergroupsqueststations_charactergroups.created '.
+                'FROM charactergroupsqueststations_charactergroups '.
+                'INNER JOIN charactergroups ON charactergroups.id = charactergroupsqueststations_charactergroups.charactergroup_id '.
+                'WHERE charactergroupsqueststations_charactergroups.charactergroupsqueststation_id = ? AND status = ? '.
+                'ORDER BY charactergroupsqueststations_charactergroups.created ASC',
+                'ii',
+                $stationId,
+                CharactergroupsqueststationsModel::STATUS_ENTERED
+            );
         }
 
 

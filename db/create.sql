@@ -1,8 +1,8 @@
--- MySQL dump 10.15  Distrib 10.0.22-MariaDB, for Linux (x86_64)
+-- MySQL dump 10.16  Distrib 10.1.10-MariaDB, for Linux (x86_64)
 --
 -- Host: localhost    Database: z
 -- ------------------------------------------------------
--- Server version	10.0.22-MariaDB-log
+-- Server version	10.1.10-MariaDB-log
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -565,6 +565,61 @@ CREATE TABLE `charactergroupsquests_seminaryuploads` (
   CONSTRAINT `charactergroupsquests_seminaryuploads_ibfk_1` FOREIGN KEY (`seminaryupload_id`) REFERENCES `seminaryuploads` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `charactergroupsquests_seminaryuploads_ibfk_2` FOREIGN KEY (`charactergroupsquest_id`) REFERENCES `charactergroupsquests` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `charactergroupsquests_seminaryuploads_ibfk_3` FOREIGN KEY (`created_user_id`) REFERENCES `users` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `charactergroupsqueststations`
+--
+
+DROP TABLE IF EXISTS `charactergroupsqueststations`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `charactergroupsqueststations` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `charactergroupsquest_id` int(11) NOT NULL,
+  `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `stationtype_id` int(11) NOT NULL,
+  `title` varchar(64) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `url` varchar(64) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `pos` int(10) unsigned NOT NULL,
+  `stationpicture_id` int(11) DEFAULT NULL,
+  `prolog` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `task` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `latitude` decimal(10,6) DEFAULT NULL,
+  `longitude` decimal(10,6) DEFAULT NULL,
+  `righttext` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `wrongtext` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `charactergroupsquest_id_2` (`charactergroupsquest_id`,`url`),
+  UNIQUE KEY `charactergroupsquest_id_3` (`charactergroupsquest_id`,`pos`),
+  KEY `charactergroupsquest_id` (`charactergroupsquest_id`),
+  KEY `charactergroupsqueststationtype_id` (`stationtype_id`),
+  KEY `stationpicture_id` (`stationpicture_id`) USING BTREE,
+  CONSTRAINT `charactergroupsqueststations_ibfk_1` FOREIGN KEY (`charactergroupsquest_id`) REFERENCES `charactergroupsquests` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `charactergroupsqueststations_ibfk_2` FOREIGN KEY (`stationpicture_id`) REFERENCES `seminarymedia` (`id`) ON DELETE SET NULL ON UPDATE SET NULL,
+  CONSTRAINT `charactergroupsqueststations_ibfk_3` FOREIGN KEY (`stationtype_id`) REFERENCES `stationtypes` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `charactergroupsqueststations_charactergroups`
+--
+
+DROP TABLE IF EXISTS `charactergroupsqueststations_charactergroups`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `charactergroupsqueststations_charactergroups` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `charactergroupsqueststation_id` int(11) NOT NULL,
+  `charactergroup_id` int(11) NOT NULL,
+  `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `status` tinyint(3) unsigned NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `charactergroupsqueststation_id` (`charactergroupsqueststation_id`),
+  KEY `charactergroup_id` (`charactergroup_id`),
+  CONSTRAINT `charactergroupsqueststations_charactergroups_ibfk_1` FOREIGN KEY (`charactergroupsqueststation_id`) REFERENCES `charactergroupsqueststations` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `charactergroupsqueststations_charactergroups_ibfk_2` FOREIGN KEY (`charactergroup_id`) REFERENCES `charactergroups` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -1916,6 +1971,105 @@ CREATE TABLE `seminaryuploads` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Table structure for table `stationtypes`
+--
+
+DROP TABLE IF EXISTS `stationtypes`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `stationtypes` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `title` varchar(64) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `url` varchar(64) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `classname` varchar(64) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `title` (`title`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `stationtypes_keyword`
+--
+
+DROP TABLE IF EXISTS `stationtypes_keyword`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `stationtypes_keyword` (
+  `station_id` int(11) NOT NULL,
+  `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `created_user_id` int(11) NOT NULL,
+  `keyword_regex` varchar(256) COLLATE utf8mb4_unicode_ci NOT NULL,
+  PRIMARY KEY (`station_id`),
+  KEY `created_user_id` (`created_user_id`),
+  CONSTRAINT `stationtypes_keyword_ibfk_1` FOREIGN KEY (`station_id`) REFERENCES `charactergroupsqueststations` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `stationtypes_keyword_ibfk_2` FOREIGN KEY (`created_user_id`) REFERENCES `users` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `stationtypes_keyword_charactergroups`
+--
+
+DROP TABLE IF EXISTS `stationtypes_keyword_charactergroups`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `stationtypes_keyword_charactergroups` (
+  `station_id` int(11) NOT NULL,
+  `charactergroup_id` int(11) NOT NULL,
+  `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `keyword` varchar(32) COLLATE utf8mb4_unicode_ci NOT NULL,
+  PRIMARY KEY (`station_id`,`charactergroup_id`),
+  KEY `charactergroup_id` (`charactergroup_id`),
+  CONSTRAINT `stationtypes_keyword_charactergroups_ibfk_1` FOREIGN KEY (`station_id`) REFERENCES `charactergroupsqueststations` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `stationtypes_keyword_charactergroups_ibfk_2` FOREIGN KEY (`charactergroup_id`) REFERENCES `charactergroups` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `stationtypes_multiplechoice`
+--
+
+DROP TABLE IF EXISTS `stationtypes_multiplechoice`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `stationtypes_multiplechoice` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `created_user_id` int(11) NOT NULL,
+  `station_id` int(11) NOT NULL,
+  `pos` int(11) NOT NULL,
+  `answer` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `tick` tinyint(1) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `questtypes_multiplechoice_id_2` (`station_id`,`pos`),
+  KEY `created_user_id` (`created_user_id`),
+  KEY `questtypes_multiplechoice_id` (`station_id`),
+  CONSTRAINT `stationtypes_multiplechoice_ibfk_1` FOREIGN KEY (`created_user_id`) REFERENCES `users` (`id`),
+  CONSTRAINT `stationtypes_multiplechoice_ibfk_2` FOREIGN KEY (`station_id`) REFERENCES `charactergroupsqueststations` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `stationtypes_multiplechoice_charactergroups`
+--
+
+DROP TABLE IF EXISTS `stationtypes_multiplechoice_charactergroups`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `stationtypes_multiplechoice_charactergroups` (
+  `stationtypes_multiplechoice_id` int(11) NOT NULL,
+  `charactergroup_id` int(11) NOT NULL,
+  `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `ticked` tinyint(1) NOT NULL,
+  PRIMARY KEY (`stationtypes_multiplechoice_id`,`charactergroup_id`),
+  KEY `character_id` (`charactergroup_id`),
+  CONSTRAINT `stationtypes_multiplechoice_charactergroups_ibfk_1` FOREIGN KEY (`stationtypes_multiplechoice_id`) REFERENCES `stationtypes_multiplechoice` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `stationtypes_multiplechoice_charactergroups_ibfk_2` FOREIGN KEY (`charactergroup_id`) REFERENCES `charactergroups` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
 -- Table structure for table `userroles`
 --
 
@@ -2317,4 +2471,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2015-10-30 22:27:53
+-- Dump completed on 2016-01-15 13:19:51

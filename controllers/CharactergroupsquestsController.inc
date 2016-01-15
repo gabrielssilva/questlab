@@ -25,7 +25,7 @@
          *
          * @var array
          */
-        public $models = array('seminaries', 'charactergroups', 'charactergroupsquests', 'media', 'questgroups', 'uploads');
+        public $models = array('seminaries', 'charactergroups', 'charactergroupsquests', 'charactergroupsqueststations', 'media', 'questgroups', 'uploads');
         /**
          * Required components
          *
@@ -78,6 +78,30 @@
             $questgroup = $this->Questgroups->getQuestgroupById($quest['questgroups_id']);
             $questgroup['entered'] = $this->Questgroups->hasCharacterEnteredQuestgroup($questgroup['id'], self::$character['id']);
 
+            // Get Character group
+            $charactergroup = null;
+            $character = $this->Characters->getCharacterForUserAndSeminary($this->Auth->getUserId(), $seminary['id']);
+            $charactergroups = $this->Charactergroups->getGroupsForCharacter($character['id']);
+            if(!empty($charactergroups)) {
+                // TODO Multiple Character groups
+                $charactergroup = $charactergroups[0];
+            }
+
+            // Get Stations
+            $stations = null;
+            if(count(array_intersect(array('admin', 'moderator'), \hhu\z\controllers\SeminaryController::$character['characterroles'])) > 0) {
+                $stations = $this->Charactergroupsqueststations->getStationsForQuest($quest['id']);
+            }
+            elseif(!is_null($charactergroup)) {
+                $stations = $this->Charactergroupsqueststations->getStationsForQuestAndGroup($quest['id'], $charactergroup['id']);
+                foreach($stations as &$station) {
+                    $station['solved'] = $this->Charactergroupsqueststations->hasCharactergroupSolvedStation(
+                        $station['id'],
+                        $charactergroup['id']
+                    );
+                }
+            }
+
             // Get Character groups-groups
             $groups = $this->Charactergroups->getGroupsForQuest($quest['id']);
 
@@ -98,6 +122,7 @@
             $this->set('groupsgroup', $groupsgroup);
             $this->set('quest', $quest);
             $this->set('questgroup', $questgroup);
+            $this->set('stations', $stations);
             $this->set('groups', $groups);
             $this->set('uploads', $uploads);
         }
