@@ -105,6 +105,71 @@
         }
 
 
+        /**
+         * Action: edittask.
+         *
+         * Edit the task of a Station.
+         *
+         * @param   array   $seminary       Current Seminary data
+         * @param   array   $groupsgroup    Current Groups group data
+         * @param   array   $quest          Current Quest data
+         * @param   array   $station        Current Station data
+         */
+        public function edittask($seminary, $groupsgroup, $quest, $station)
+        {
+            // Get questions
+            $answers = $this->Multiplechoice->getAnswers($station['id']);
+
+            // Save data
+            if($this->request->getRequestMethod() == 'POST' && !is_null($this->request->getPostParam('save')))
+            {
+                // Get params
+                $answers = $this->request->getPostParam('answers');
+                if(is_null($answers)) {
+                    $answers = array();
+                }
+                $answers = array_values($answers);
+
+                // Save answers
+                foreach($answers as $answerIndex => &$answer)
+                {
+                    $this->Multiplechoice->setAnswer(
+                        $this->Auth->getUserId(),
+                        $station['id'],
+                        $answerIndex + 1,
+                        $answer['answer'],
+                        array_key_exists('tick', $answer)
+                    );
+                }
+
+                // Delete deleted answers
+                $this->Multiplechoice->deleteAnswers(
+                    $station['id'],
+                    count($answers)
+                );
+
+                // Redirect
+                $this->redirect(
+                    $this->linker->link(
+                        array(
+                            'station',
+                            $seminary['url'],
+                            $groupsgroup['url'],
+                            $quest['url'],
+                            $station['url']
+                        ),
+                        1
+                    )
+                );
+            }
+
+
+            // Pass data to view
+            $this->set('task', $station['task']);
+            $this->set('answers', $answers);
+        }
+
+
 
 
         /**

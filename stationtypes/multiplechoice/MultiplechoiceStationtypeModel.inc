@@ -43,6 +43,55 @@
 
 
         /**
+         * Set an answer for a Station.
+         *
+         * @param   int     $userId     ID of creating user
+         * @param   int     $stationId  ID of Station to set answer for
+         * @param   int     $pos        Position of answer
+         * @param   string  $answer     Answer text
+         * @param   int     $tick       Whether the answer is correct or not
+         */
+        public function setAnswer($userId, $stationId, $pos, $answer, $tick)
+        {
+            $this->db->query(
+                'INSERT INTO stationtypes_multiplechoice '.
+                '(created_user_id, station_id, pos, answer, tick) '.
+                'VALUES '.
+                '(?, ?, ?, ?, ?) '.
+                'ON DUPLICATE KEY UPDATE '.
+                'answer = ?, tick = ?',
+                'iiisisi',
+                $userId,
+                $stationId,
+                $pos,
+                $answer,
+                $tick,
+                $answer,
+                $tick
+            );
+        }
+
+
+        /**
+         * Delete all answers of a Station above a given index.
+         *
+         * @param   int $stationId  ID of Station to delete answers for
+         * @param   int $offset     Offset to delete answers above
+         */
+        public function deleteAnswers($stationId, $offset)
+        {
+            // Delete answers
+            $this->db->query(
+                'DELETE FROM stationtypes_multiplechoice '.
+                'WHERE station_id = ? AND pos > ?',
+                'ii',
+                $stationId,
+                $offset
+            );
+        }
+
+
+        /**
          * Save Character group’s submitted answer for a station.
          *
          * @param   int     $stationId          ID of Station
