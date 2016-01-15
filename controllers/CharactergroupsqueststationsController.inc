@@ -345,7 +345,7 @@
 
 
             // Set title
-            $this->addTitle(_('Create Station'));
+            $this->addTitleLocalized('Create Station');
             $this->addTitle($quest['title']);
             $this->addTitle($groupsgroup['name']);
             $this->addTitle($seminary['title']);
@@ -533,7 +533,7 @@
 
 
             // Set title
-            $this->addTitle(_('Edit Station'));
+            $this->addTitleLocalized('Edit Station');
             $this->addTitle($station['title']);
             $this->addTitle($quest['title']);
             $this->addTitle($groupsgroup['name']);
@@ -671,7 +671,7 @@
 
 
             // Set title
-            $this->addTitle(_('Delete Station'));
+            $this->addTitleLocalized('Delete Station');
             $this->addTitle($station['title']);
             $this->addTitle($quest['title']);
             $this->addTitle($groupsgroup['name']);
