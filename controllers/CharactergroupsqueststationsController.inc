@@ -39,7 +39,11 @@
          */
         public $permissions = array(
             'index'     => array('admin', 'moderator', 'user'),
-            'station'   => array('admin', 'moderator', 'user')
+            'station'   => array('admin', 'moderator', 'user'),
+            'create'    => array('admin', 'moderator', 'user'),
+            'edit'      => array('admin', 'moderator', 'user'),
+            'edittask'  => array('admin', 'moderator', 'user'),
+            'delete'    => array('admin', 'moderator', 'user')
         );
         /**
          * User seminary permissions
@@ -48,7 +52,11 @@
          */
         public $seminaryPermissions = array(
             'index'     => array('admin', 'moderator', 'user'),
-            'station'   => array('admin', 'moderator', 'user')
+            'station'   => array('admin', 'moderator', 'user'),
+            'create'    => array('admin', 'moderator'),
+            'edit'      => array('admin', 'moderator'),
+            'edittask'  => array('admin', 'moderator'),
+            'delete'    => array('admin', 'moderator')
         );
 
 
