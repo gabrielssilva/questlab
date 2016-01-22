@@ -298,6 +298,9 @@ input[type="submit"][disabled]{text-shadow:1px 2px #d48c4e;background:#f9ac69;bo
 .grpqlist .date{padding:0 15px 0 0;display:block}
 .grpqlist .xp{display:block}
 .gqgllry li{display:inline-block}
+.grpqslist li{display:inline-block;width:100px;height:100px}
+.grpqslist li a{color:#5e5c58}
+.grpqslist li i{font-size:100px;padding:0}
 
 
 /** Achievements **/

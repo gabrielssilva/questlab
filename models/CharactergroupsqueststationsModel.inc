@@ -185,6 +185,33 @@
 
 
         /**
+         * Check if a Character group has entered a Station.
+         *
+         * @param   int     $stationId  ID of Station to check
+         * @param   int     $groupId    ID of Character group to check
+         * @return  bool                Whether the group has tried the station or not
+         */
+        public function hasCharactergroupEnteredStation($stationId, $groupId)
+        {
+            $data = $this->db->query(
+                'SELECT created '.
+                'FROM charactergroupsqueststations_charactergroups '.
+                'WHERE charactergroupsqueststation_id = ? AND charactergroup_id = ? AND status >= ?',
+                'iii',
+                $stationId,
+                $groupId,
+                self::STATUS_ENTERED
+            );
+            if(!empty($data)) {
+                return $data[0]['created'];
+            }
+
+
+            return false;
+        }
+
+
+        /**
          * Check if a Character group has tried to solve a Station.
          *
          * @param   int     $stationId  ID of Station to check

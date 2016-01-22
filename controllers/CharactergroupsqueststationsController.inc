@@ -124,9 +124,6 @@
 
             // Get Station
             $station = $this->Charactergroupsqueststations->getStationByUrl($quest['id'], $stationUrl);
-            if(!is_null($station['stationpicture_id'])) {
-                $station['picture'] = $this->Media->getSeminaryMediaById($station['stationpicture_id']);
-            }
 
             // Get Character group
             $charactergroup = null;

@@ -13,9 +13,7 @@
 </nav>
 <?php endif ?>
 
-<?php if(array_key_exists('picture', $station)) : ?>
 <h1><?=$station['title']?></h1>
-<?php endif ?>
 <ul class="gdata cf">
     <?php if(!empty($station['longitude']) && !empty($station['latitude'])) : ?>
     <li>
@@ -28,6 +26,10 @@
             <i class="fa fa-qrcode"></i>
         </a>
     </li>
+    <?php endif ?>
+    <?php if($solved !== false) : ?>
+    <li>
+        <i class="fa fa-check-circle fa-fw"></i>
     <?php endif ?>
 </ul>
 
@@ -94,8 +96,8 @@
             <span class="group"><a href="<?=$linker->link(array('charactergroups','group',$seminary['url'],$groupsgroup['url'],$group['url']))?>"><?=$group['name']?></a></span>
             <?php if($group['solved'] !== false) : ?>
             <span class="xp">
-                <i class="fa fa-check-square-o fa-fw"></i>
                 <?=_(sprintf('solved at %s', $timeFormatter->format(new \DateTime($group['solved']))))?>
+                <i class="fa fa-check-circle fa-fw"></i>
             </span>
             <?php endif ?>
         </li>

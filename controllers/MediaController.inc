@@ -25,14 +25,15 @@
          * @var array
          */
         public $permissions = array(
-            'index'         => array('admin', 'moderator', 'user', 'guest'),
-            'seminarymoodpic'   => array('admin', 'moderator', 'user'),
-            'seminarymap'   => array('admin', 'moderator', 'user'),
-            'seminary'      => array('admin', 'moderator', 'user'),
-            'avatar'        => array('admin', 'moderator', 'user'),
-            'achievement'       => array('admin', 'moderator', 'user'),
-            'charactergroup'    => array('admin', 'moderator', 'user'),
-            'charactergroupsquest'  => array('admin', 'moderator', 'user')
+            'index'                         => array('admin', 'moderator', 'user', 'guest'),
+            'seminarymoodpic'               => array('admin', 'moderator', 'user'),
+            'seminarymap'                   => array('admin', 'moderator', 'user'),
+            'seminary'                      => array('admin', 'moderator', 'user'),
+            'avatar'                        => array('admin', 'moderator', 'user'),
+            'achievement'                   => array('admin', 'moderator', 'user'),
+            'charactergroup'                => array('admin', 'moderator', 'user'),
+            'charactergroupsquest'          => array('admin', 'moderator', 'user'),
+            'charactergroupsqueststation'   => array('admin', 'moderator', 'user')
         );
         /**
          * User seminary permissions
@@ -40,17 +41,18 @@
          * @var array
          */
         public $seminaryPermissions = array(
-            'seminary'      => array('admin', 'moderator', 'user', 'guest'),
-            'achievement'       => array('admin', 'moderator', 'user', 'guest'),
-            'charactergroup'    => array('admin', 'moderator', 'user', 'guest'),
-            'charactergroupsquest'  => array('admin', 'moderator', 'user', 'guest')
+            'seminary'                      => array('admin', 'moderator', 'user', 'guest'),
+            'achievement'                   => array('admin', 'moderator', 'user', 'guest'),
+            'charactergroup'                => array('admin', 'moderator', 'user', 'guest'),
+            'charactergroupsquest'          => array('admin', 'moderator', 'user', 'guest'),
+            'charactergroupsqueststation'   => array('admin', 'moderator', 'user', 'guest')
         );
         /**
          * Required models
          *
          * @var array
          */
-        public $models = array('seminaries', 'achievements', 'media', 'avatars', 'charactergroups', 'charactergroupsquests', 'map');
+        public $models = array('seminaries', 'achievements', 'media', 'avatars', 'charactergroups', 'charactergroupsquests', 'charactergroupsqueststations', 'map');
 
 
 
@@ -403,6 +405,47 @@
         }
 
 
+        /**
+         * Action: charactergroupsqueststation
+         *
+         * Display the icon for a Character groups Quest Station.
+         *
+         * @throws  \nre\exceptions\IdNotFoundException
+         * @param   string  $seminaryUrl    URL-Title of a Seminary
+         * @param   string  $groupsgroupUrl URL-Title of a Character groups-group
+         * @param   string  $questUrl       URL-Title of a Character groups Quest
+         * @param   string  $stationUrl     URL-title of Station
+         */
+        public function charactergroupsqueststation($seminaryUrl, $groupsgroupUrl, $questUrl, $stationUrl)
+        {
+            // Get seminary
+            $seminary = $this->Seminaries->getSeminaryByUrl($seminaryUrl);
+
+            // Get Character groups-group
+            $groupsgroup = $this->Charactergroups->getGroupsgroupByUrl($seminary['id'], $groupsgroupUrl);
+
+            // Get Character groups Quests
+            $quest = $this->Charactergroupsquests->getQuestByUrl($groupsgroup['id'], $questUrl);
+
+            // Get Station
+            $station = $this->Charactergroupsqueststations->getStationByUrl($quest['id'], $stationUrl);
+
+            // Get media
+            $media = $this->Media->getSeminaryMediaById($station['stationpicture_id']);
+
+            // Get file
+            $file = $this->getMediaFile($media, 'charactergroupsqueststation');
+            if(is_null($file)) {
+                return;
+            }
+
+
+            // Pass data to view
+            $this->set('media', $media);
+            $this->set('file', $file);
+        }
+
+
 
 
         /**
@@ -488,6 +531,14 @@
                     case 'avatar':
                     case 'charactergroup':
                     case 'charactergroupsquest':
+                        $file = self::resizeImage(
+                            $media['filename'],
+                            $format,
+                            \nre\configs\AppConfig::$media[$action]['width'],
+                            \nre\configs\AppConfig::$media[$action]['height']
+                        );
+                    break;
+                    case 'charactergroupsqueststation':
                         $file = self::resizeImage(
                             $media['filename'],
                             $format,

@@ -104,6 +104,10 @@
             'charactergroupsquest' => array(
                 'width'     => 80,
                 'height'    => 80
+            ),
+            'charactergroupsqueststation' => array(
+                'width'     => 100,
+                'height'    => 100
             )
         );
 
