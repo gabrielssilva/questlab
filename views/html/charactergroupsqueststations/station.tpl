@@ -147,7 +147,7 @@
             <?php if(strpos($station['wrongav']['mimetype'], 'audio') !== false) : ?>
             <audio controls="controls" autoplay="autoplay" preload="metadata" src="<?=$linker->link(array('media','seminary',$seminary['url'],$station['wrongav']['url'],'charactergroupsqueststation'))?>"></audio>
             <?php else : ?>
-            <video controls="controls" autoplay="autoplay" preload="metadata" src="<?=$linker->link(array('media','seminary',$seminary['url'],$station['wrongav']['url'],'charactergroupsqueststation'))?>" poster="<?=$linker->link(array('media','seminary',$seminary['url'],$station['wrongimage']['url']))?>"></video>
+            <video controls="controls" autoplay="autoplay" preload="metadata" src="<?=$linker->link(array('media','seminary',$seminary['url'],$station['wrongav']['url'],'charactergroupsqueststation'))?>"></video>
             <?php endif ?>
         <?php endif ?>
         <?=$t->t($station['wrongtext'])?>
