@@ -164,6 +164,38 @@
                     'mimetype'  => 'image/png',
                     'size'      =>  10485760
                 )
+            ),
+            'stationimages' => array(
+                array(
+                    'mimetype'  => 'image/jpeg',
+                    'size'      => 1048576
+                ),
+                array(
+                    'mimetype'  => 'image/png',
+                    'size'      =>  2097152
+                )
+            ),
+            'stationavs' => array(
+                array(
+                    'mimetype'  => 'audio/mpeg',
+                    'size'      =>  2097152
+                ),
+                array(
+                    'mimetype'  => 'audio/ogg',
+                    'size'      =>  2097152
+                ),
+                array(
+                    'mimetype'  => 'audio/opus',
+                    'size'      =>  2097152
+                ),
+                array(
+                    'mimetype'  => 'video/mp4',
+                    'size'      =>  2097152
+                ),
+                array(
+                    'mimetype'  => 'video/webm',
+                    'size'      =>  2097152
+                )
             )
         );
 

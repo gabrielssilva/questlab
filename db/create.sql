@@ -590,15 +590,27 @@ CREATE TABLE `charactergroupsqueststations` (
   `longitude` decimal(10,6) DEFAULT NULL,
   `righttext` text COLLATE utf8mb4_unicode_ci NOT NULL,
   `wrongtext` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `rightimage_id` int(11) DEFAULT NULL,
+  `rightav_id` int(11) DEFAULT NULL,
+  `wrongimage_id` int(11) DEFAULT NULL,
+  `wrongav_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `charactergroupsquest_id_2` (`charactergroupsquest_id`,`url`),
   UNIQUE KEY `charactergroupsquest_id_3` (`charactergroupsquest_id`,`pos`),
   KEY `charactergroupsquest_id` (`charactergroupsquest_id`),
   KEY `charactergroupsqueststationtype_id` (`stationtype_id`),
   KEY `stationpicture_id` (`stationpicture_id`) USING BTREE,
+  KEY `rightimage_id` (`rightimage_id`),
+  KEY `rightav_id` (`rightav_id`),
+  KEY `wrongimage_id` (`wrongimage_id`),
+  KEY `wrongav_id` (`wrongav_id`),
   CONSTRAINT `charactergroupsqueststations_ibfk_1` FOREIGN KEY (`charactergroupsquest_id`) REFERENCES `charactergroupsquests` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `charactergroupsqueststations_ibfk_2` FOREIGN KEY (`stationpicture_id`) REFERENCES `seminarymedia` (`id`) ON DELETE SET NULL ON UPDATE SET NULL,
-  CONSTRAINT `charactergroupsqueststations_ibfk_3` FOREIGN KEY (`stationtype_id`) REFERENCES `stationtypes` (`id`)
+  CONSTRAINT `charactergroupsqueststations_ibfk_3` FOREIGN KEY (`stationtype_id`) REFERENCES `stationtypes` (`id`),
+  CONSTRAINT `charactergroupsqueststations_ibfk_4` FOREIGN KEY (`rightimage_id`) REFERENCES `seminarymedia` (`id`) ON DELETE SET NULL ON UPDATE SET NULL,
+  CONSTRAINT `charactergroupsqueststations_ibfk_5` FOREIGN KEY (`rightav_id`) REFERENCES `seminarymedia` (`id`) ON DELETE SET NULL ON UPDATE SET NULL,
+  CONSTRAINT `charactergroupsqueststations_ibfk_6` FOREIGN KEY (`wrongimage_id`) REFERENCES `seminarymedia` (`id`) ON DELETE SET NULL ON UPDATE SET NULL,
+  CONSTRAINT `charactergroupsqueststations_ibfk_7` FOREIGN KEY (`wrongav_id`) REFERENCES `seminarymedia` (`id`) ON DELETE SET NULL ON UPDATE SET NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 

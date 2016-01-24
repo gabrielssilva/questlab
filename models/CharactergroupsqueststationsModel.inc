@@ -63,7 +63,7 @@
         public function getStationById($stationId)
         {
             $data = $this->db->query(
-                'SELECT id, charactergroupsquest_id, stationtype_id, title, url, stationpicture_id, prolog, task, latitude, longitude, righttext, wrongtext '.
+                'SELECT id, charactergroupsquest_id, stationtype_id, title, url, stationpicture_id, prolog, task, latitude, longitude, righttext, wrongtext, rightimage_id, rightav_id, wrongimage_id, wrongav_id '.
                 'FROM charactergroupsqueststations '.
                 'WHERE id = ?',
                 'i',
@@ -88,7 +88,7 @@
         public function getStationByUrl($groupsquestId, $stationUrl)
         {
             $data = $this->db->query(
-                'SELECT id, charactergroupsquest_id, stationtype_id, title, url, stationpicture_id, prolog, task, latitude, longitude, righttext, wrongtext '.
+                'SELECT id, charactergroupsquest_id, stationtype_id, title, url, stationpicture_id, prolog, task, latitude, longitude, righttext, wrongtext, rightimage_id, rightav_id, wrongimage_id, wrongav_id '.
                 'FROM charactergroupsqueststations '.
                 'WHERE charactergroupsquest_id = ? AND url = ?',
                 'is',
@@ -296,7 +296,7 @@
          * @param   int $stationId  ID of Station to upload media for
          * @param   int $mediaId    ID of Station media
          */
-        public function setPictureForStation($station, $mediaId)
+        public function setPictureForStation($stationId, $mediaId)
         {
             $this->db->query(
                 'UPDATE charactergroupsqueststations '.
@@ -304,8 +304,56 @@
                 'WHERE id = ?',
                 'ii',
                 $mediaId,
-                $station
+                $stationId
             );
+        }
+
+
+        /**
+         * Set the image for the right-text.
+         *
+         * @param   int $stationId  ID of Station to set image for
+         * @param   int $mediaId    ID of Seminary media to set
+         */
+        public function setRightImageForStation($stationId, $mediaId)
+        {
+            $this->setMediaForStation($stationId, $mediaId, 'rightimage_id');
+        }
+
+
+        /**
+         * Set the audio/video for the right-text.
+         *
+         * @param   int $stationId  ID of Station to set audio/video for
+         * @param   int $mediaId    ID of Seminary media to set
+         */
+        public function setRightAVForStation($stationId, $mediaId)
+        {
+            $this->setMediaForStation($stationId, $mediaId, 'rightav_id');
+        }
+
+
+        /**
+         * Set the image for the wrong-text.
+         *
+         * @param   int $stationId  ID of Station to set image for
+         * @param   int $mediaId    ID of Seminary media to set
+         */
+        public function setWrongImageForStation($stationId, $mediaId)
+        {
+            $this->setMediaForStation($stationId, $mediaId, 'wrongimage_id');
+        }
+
+
+        /**
+         * Set the audio/video for the wrong-text.
+         *
+         * @param   int $stationId  ID of Station to set audio/video for
+         * @param   int $mediaId    ID of Seminary media to set
+         */
+        public function setWrongAvForStation($stationId, $mediaId)
+        {
+            $this->setMediaForStation($stationId, $mediaId, 'wrongav_id');
         }
 
 
@@ -434,6 +482,29 @@
                 $stationId,
                 $groupId,
                 $status
+            );
+        }
+
+
+        /**
+         * Add a medium for a Character groups Quest Station.
+         *
+         * @param   int     $stationId  ID of Station to upload media for
+         * @param   int     $mediaId    ID of Seminary media
+         * @param   string  $field      Field name to set media to
+         */
+        private function setMediaForStation($stationId, $mediaId, $field)
+        {
+            $this->db->query(
+                sprintf(
+                    'UPDATE charactergroupsqueststations '.
+                    'SET %s = ? '.
+                    'WHERE id = ?',
+                    $field
+                ),
+                'ii',
+                $mediaId,
+                $stationId
             );
         }
 
