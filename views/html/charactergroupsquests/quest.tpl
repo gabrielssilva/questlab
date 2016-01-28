@@ -78,27 +78,42 @@
         </ul>
     </nav>
     <?php endif ?>
-    <?php if(!empty($stations)) : ?>
     <ol class="grpqlist">
         <?php foreach($stations as &$station) : ?>
         <li>
-            <?php if(array_key_exists('created', $station)) : ?>
-            <span class="date">
-                <?=$dateFormatter->format(new \DateTime($station['created']))?>
-                <?=$timeFormatter->format(new \DateTime($station['created']))?>
-            </span>
-            <?php endif ?>
             <span class="group">
+                <?php if(!array_key_exists('entered', $station) || $station['entered']) : ?>
                 <a href="<?=$linker->link(array('charactergroupsqueststations','station',$seminary['url'],$groupsgroup['url'],$quest['url'],$station['url']))?>"><?=$station['title']?></a>
+                <?php else : ?>
+                <?=_('Station not yet discovered')?>
+                <?php endif ?>
             </span>
-            <?php if(!array_key_exists('created', $station) || $station['solved'] !== false) : ?>
+            <?php if(array_key_exists('solved', $station) && $station['solved']) : ?>
+            <span class="xp">
+                <i class="fa fa-check-circle fa-fw"></i>
+            </span>
             <?php endif ?>
         </li>
         <?php endforeach ?>
     </ol>
-    <?php else : ?>
-    <p><?=sprintf(_('Your %s-group has not discovered any station yet'), $groupsgroup['name'])?>.</p>
-    <?php endif ?>
+
+    <ol class="grpqslist">
+        <?php foreach($stations as &$station) : ?>
+        <li>
+            <?php if(!array_key_exists('entered', $station) || $station['entered']) : ?>
+            <a href="<?=$linker->link(array('charactergroupsqueststations','station',$seminary['url'],$groupsgroup['url'],$quest['url'],$station['url']))?>">
+                <?php if(!is_null($station['stationpicture_id'])) : ?>
+                    <img title="<?=$station['title']?>" src="<?=$linker->link(array('media','charactergroupsqueststation',$seminary['url'],$groupsgroup['url'],$quest['url'],$station['url']))?>" />
+                <?php else : ?>
+                <i class="fa fa-globe"></i>
+                <?php endif ?>
+            </a>
+            <?php else : ?>
+            <i class="fa fa-question-circle"></i>
+            <?php endif ?>
+        </li>
+        <?php endforeach ?>
+    </ol>
 </section>
 
 <section>

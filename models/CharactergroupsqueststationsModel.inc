@@ -63,7 +63,7 @@
         public function getStationById($stationId)
         {
             $data = $this->db->query(
-                'SELECT id, charactergroupsquest_id, stationtype_id, title, url, stationpicture_id, prolog, task, latitude, longitude, righttext, wrongtext '.
+                'SELECT id, charactergroupsquest_id, stationtype_id, title, url, stationpicture_id, prolog, task, latitude, longitude, righttext, wrongtext, rightimage_id, rightav_id, wrongimage_id, wrongav_id '.
                 'FROM charactergroupsqueststations '.
                 'WHERE id = ?',
                 'i',
@@ -88,7 +88,7 @@
         public function getStationByUrl($groupsquestId, $stationUrl)
         {
             $data = $this->db->query(
-                'SELECT id, charactergroupsquest_id, stationtype_id, title, url, stationpicture_id, prolog, task, latitude, longitude, righttext, wrongtext '.
+                'SELECT id, charactergroupsquest_id, stationtype_id, title, url, stationpicture_id, prolog, task, latitude, longitude, righttext, wrongtext, rightimage_id, rightav_id, wrongimage_id, wrongav_id '.
                 'FROM charactergroupsqueststations '.
                 'WHERE charactergroupsquest_id = ? AND url = ?',
                 'is',
@@ -185,6 +185,33 @@
 
 
         /**
+         * Check if a Character group has entered a Station.
+         *
+         * @param   int     $stationId  ID of Station to check
+         * @param   int     $groupId    ID of Character group to check
+         * @return  bool                Whether the group has tried the station or not
+         */
+        public function hasCharactergroupEnteredStation($stationId, $groupId)
+        {
+            $data = $this->db->query(
+                'SELECT created '.
+                'FROM charactergroupsqueststations_charactergroups '.
+                'WHERE charactergroupsqueststation_id = ? AND charactergroup_id = ? AND status >= ?',
+                'iii',
+                $stationId,
+                $groupId,
+                self::STATUS_ENTERED
+            );
+            if(!empty($data)) {
+                return $data[0]['created'];
+            }
+
+
+            return false;
+        }
+
+
+        /**
          * Check if a Character group has tried to solve a Station.
          *
          * @param   int     $stationId  ID of Station to check
@@ -269,7 +296,7 @@
          * @param   int $stationId  ID of Station to upload media for
          * @param   int $mediaId    ID of Station media
          */
-        public function setPictureForStation($station, $mediaId)
+        public function setPictureForStation($stationId, $mediaId)
         {
             $this->db->query(
                 'UPDATE charactergroupsqueststations '.
@@ -277,8 +304,56 @@
                 'WHERE id = ?',
                 'ii',
                 $mediaId,
-                $station
+                $stationId
             );
+        }
+
+
+        /**
+         * Set the image for the right-text.
+         *
+         * @param   int $stationId  ID of Station to set image for
+         * @param   int $mediaId    ID of Seminary media to set
+         */
+        public function setRightImageForStation($stationId, $mediaId)
+        {
+            $this->setMediaForStation($stationId, $mediaId, 'rightimage_id');
+        }
+
+
+        /**
+         * Set the audio/video for the right-text.
+         *
+         * @param   int $stationId  ID of Station to set audio/video for
+         * @param   int $mediaId    ID of Seminary media to set
+         */
+        public function setRightAVForStation($stationId, $mediaId)
+        {
+            $this->setMediaForStation($stationId, $mediaId, 'rightav_id');
+        }
+
+
+        /**
+         * Set the image for the wrong-text.
+         *
+         * @param   int $stationId  ID of Station to set image for
+         * @param   int $mediaId    ID of Seminary media to set
+         */
+        public function setWrongImageForStation($stationId, $mediaId)
+        {
+            $this->setMediaForStation($stationId, $mediaId, 'wrongimage_id');
+        }
+
+
+        /**
+         * Set the audio/video for the wrong-text.
+         *
+         * @param   int $stationId  ID of Station to set audio/video for
+         * @param   int $mediaId    ID of Seminary media to set
+         */
+        public function setWrongAvForStation($stationId, $mediaId)
+        {
+            $this->setMediaForStation($stationId, $mediaId, 'wrongav_id');
         }
 
 
@@ -407,6 +482,29 @@
                 $stationId,
                 $groupId,
                 $status
+            );
+        }
+
+
+        /**
+         * Add a medium for a Character groups Quest Station.
+         *
+         * @param   int     $stationId  ID of Station to upload media for
+         * @param   int     $mediaId    ID of Seminary media
+         * @param   string  $field      Field name to set media to
+         */
+        private function setMediaForStation($stationId, $mediaId, $field)
+        {
+            $this->db->query(
+                sprintf(
+                    'UPDATE charactergroupsqueststations '.
+                    'SET %s = ? '.
+                    'WHERE id = ?',
+                    $field
+                ),
+                'ii',
+                $mediaId,
+                $stationId
             );
         }
 

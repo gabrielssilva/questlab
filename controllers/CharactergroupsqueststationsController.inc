@@ -39,7 +39,11 @@
          */
         public $permissions = array(
             'index'     => array('admin', 'moderator', 'user'),
-            'station'   => array('admin', 'moderator', 'user')
+            'station'   => array('admin', 'moderator', 'user'),
+            'create'    => array('admin', 'moderator', 'user'),
+            'edit'      => array('admin', 'moderator', 'user'),
+            'edittask'  => array('admin', 'moderator', 'user'),
+            'delete'    => array('admin', 'moderator', 'user')
         );
         /**
          * User seminary permissions
@@ -48,7 +52,11 @@
          */
         public $seminaryPermissions = array(
             'index'     => array('admin', 'moderator', 'user'),
-            'station'   => array('admin', 'moderator', 'user')
+            'station'   => array('admin', 'moderator', 'user'),
+            'create'    => array('admin', 'moderator'),
+            'edit'      => array('admin', 'moderator'),
+            'edittask'  => array('admin', 'moderator'),
+            'delete'    => array('admin', 'moderator')
         );
 
 
@@ -124,8 +132,19 @@
 
             // Get Station
             $station = $this->Charactergroupsqueststations->getStationByUrl($quest['id'], $stationUrl);
-            if(!is_null($station['stationpicture_id'])) {
-                $station['picture'] = $this->Media->getSeminaryMediaById($station['stationpicture_id']);
+
+            // Get media
+            if(!is_null($station['rightimage_id'])) {
+                $station['rightimage'] = $this->Media->getSeminaryMediaById($station['rightimage_id']);
+            }
+            if(!is_null($station['rightav_id'])) {
+                $station['rightav'] = $this->Media->getSeminaryMediaById($station['rightav_id']);
+            }
+            if(!is_null($station['wrongimage_id'])) {
+                $station['wrongimage'] = $this->Media->getSeminaryMediaById($station['wrongimage_id']);
+            }
+            if(!is_null($station['wrongav_id'])) {
+                $station['wrongav'] = $this->Media->getSeminaryMediaById($station['wrongav_id']);
             }
 
             // Get Character group
@@ -228,7 +247,9 @@
             }
 
             // Get allowed mimetypes
-            $mimetypes = \nre\configs\AppConfig::$mimetypes['icons'];
+            $iconMimetypes = \nre\configs\AppConfig::$mimetypes['icons'];
+            $imageMimetypes = \nre\configs\AppConfig::$mimetypes['stationimages'];
+            $avMimetypes = \nre\configs\AppConfig::$mimetypes['stationavs'];
 
             // Values
             $title = '';
@@ -238,6 +259,12 @@
             $latitude = null;
             $rightText = '';
             $wrongText = '';
+            $textMedia = array(
+                'rightimage'    => null,
+                'rightav'       => null,
+                'wrongimage'    => null,
+                'wrongav'       => null
+            );
             $fields = array('title');
             $validation = array();
 
@@ -284,7 +311,7 @@
                     // Check mimetype
                     $mediaMimetype = null;
                     $icon['mimetype'] = \hhu\z\Utils::getMimetype($icon['tmp_name'], $icon['type']);
-                    foreach($mimetypes as &$mimetype) {
+                    foreach($iconMimetypes as &$mimetype) {
                         if($mimetype['mimetype'] == $icon['mimetype']) {
                             $mediaMimetype = $mimetype;
                             break;
@@ -295,6 +322,51 @@
                     }
                     elseif($icon['size'] > $mediaMimetype['size']) {
                         $validation = $this->Validation->addValidationResult($validation, 'icon', 'size', $mediaMimetype['size']);
+                    }
+                }
+
+                // Validate media
+                if(!empty($_FILES))
+                {
+                    foreach(array_keys($textMedia) as $mediumKey)
+                    {
+                        if(array_key_exists($mediumKey, $_FILES) && $_FILES[$mediumKey]['error'] != UPLOAD_ERR_NO_FILE)
+                        {
+                            $mediumValidation = true;
+                            $medium = $_FILES[$mediumKey];
+
+                            // Check error
+                            if($medium['error'] !== UPLOAD_ERR_OK) {
+                                $mediumValidation = $this->Validation->addValidationResults($mediumValidation, 'error', $medium['error']);
+                            }
+                            else
+                            {
+                                // Check mimetype
+                                $mediaMimetype = null;
+                                $medium['mimetype'] = \hhu\z\Utils::getMimetype($medium['tmp_name'], $medium['type']);
+                                $mediaMimetypes = (strpos($mediumKey, 'image') !== false) ? $imageMimetypes : $avMimetypes;
+                                foreach($mediaMimetypes as &$mimetype) {
+                                    if($mimetype['mimetype'] == $medium['mimetype']) {
+                                        $mediaMimetype = $mimetype;
+                                        break;
+                                    }
+                                }
+                                if(is_null($mediaMimetype)) {
+                                    $mediumValidation = $this->Validation->addValidationResults($mediumValidation, 'mimetype', $medium['mimetype']);
+                                }
+                                elseif($medium['size'] > $mediaMimetype['size']) {
+                                    $mediumValidation = $this->Validation->addValidationResults($mediumValidation, 'size', $mediaMimetype['size']);
+                                }
+
+                                if($validation == true) {
+                                    $textMedia[$mediumKey] = $medium;
+                                }
+                            }
+
+                            if($mediumValidation !== true) {
+                                $validation = $this->Validation->addValidationResults($validation, $mediumKey, $mediumValidation);
+                            }
+                        }
                     }
                 }
 
@@ -328,6 +400,50 @@
                         if($mediaId !== false) {
                             $this->Charactergroupsqueststations->setPictureForStation($station['id'], $mediaId);
                         }
+                    }
+
+                    // Upload media
+                    $textMediaIds = array();
+                    foreach($textMedia as $mediumKey => $medium)
+                    {
+                        if(!is_null($medium))
+                        {
+                            $mediaId = $this->Media->createStationMedia(
+                                $this->Auth->getUserId(),
+                                $seminary['id'],
+                                sprintf('station-%d-%s', $station['id'], $mediumKey),
+                                $medium['name'],
+                                $medium['type'],
+                                $medium['tmp_name']
+                            );
+                            $textMediaIds[$mediumKey] = $mediaId;
+                        }
+                    }
+
+                    // Set media
+                    if(array_key_exists('rightimage', $textMediaIds)) {
+                        $this->Charactergroupsqueststations->setRightImageForStation(
+                            $station['id'],
+                            $textMediaIds['rightimage']
+                        );
+                    }
+                    if(array_key_exists('rightav', $textMediaIds)) {
+                        $this->Charactergroupsqueststations->setRightAvForStation(
+                            $station['id'],
+                            $textMediaIds['rightav']
+                        );
+                    }
+                    if(array_key_exists('wrongimage', $textMediaIds)) {
+                        $this->Charactergroupsqueststations->setWrongImageForStation(
+                            $station['id'],
+                            $textMediaIds['wrongimage']
+                        );
+                    }
+                    if(array_key_exists('wrongav', $textMediaIds)) {
+                        $this->Charactergroupsqueststations->setWrongAvForStation(
+                            $station['id'],
+                            $textMediaIds['wrongav']
+                        );
                     }
 
                     // Redirect to Station page
@@ -364,7 +480,9 @@
             $this->set('latitude', $latitude);
             $this->set('righttext', $rightText);
             $this->set('wrongtext', $wrongText);
-            $this->set('mimetypes', $mimetypes);
+            $this->set('iconMimetypes', $iconMimetypes);
+            $this->set('imageMimetypes', $imageMimetypes);
+            $this->set('avMimetypes', $avMimetypes);
             $this->set('stationtypes', $stationtypes);
             $this->set('validation', $validation);
         }
@@ -395,6 +513,20 @@
             // Get Station
             $station = $this->Charactergroupsqueststations->getStationByUrl($quest['id'], $stationUrl);
 
+            // Get media
+            if(!is_null($station['rightimage_id'])) {
+                $station['rightimage'] = $this->Media->getSeminaryMediaById($station['rightimage_id']);
+            }
+            if(!is_null($station['rightav_id'])) {
+                $station['rightav'] = $this->Media->getSeminaryMediaById($station['rightav_id']);
+            }
+            if(!is_null($station['wrongimage_id'])) {
+                $station['wrongimage'] = $this->Media->getSeminaryMediaById($station['wrongimage_id']);
+            }
+            if(!is_null($station['wrongav_id'])) {
+                $station['wrongav'] = $this->Media->getSeminaryMediaById($station['wrongav_id']);
+            }
+
             // Get Quest types
             $stationtypes = $this->Stationtypes->getStationtypes();
             foreach($stationtypes as &$stationtype) {
@@ -402,7 +534,9 @@
             }
 
             // Get allowed mimetypes
-            $mimetypes = \nre\configs\AppConfig::$mimetypes['icons'];
+            $iconMimetypes = \nre\configs\AppConfig::$mimetypes['icons'];
+            $imageMimetypes = \nre\configs\AppConfig::$mimetypes['stationimages'];
+            $avMimetypes = \nre\configs\AppConfig::$mimetypes['stationavs'];
 
             // Values
             $title = $station['title'];
@@ -412,6 +546,12 @@
             $latitude = $station['latitude'];
             $rightText = $station['righttext'];
             $wrongText = $station['wrongtext'];
+            $textMedia = array(
+                'rightimage'    => null,
+                'rightav'       => null,
+                'wrongimage'    => null,
+                'wrongav'       => null
+            );
             $fields = array('title');
             $validation = array();
 
@@ -458,7 +598,7 @@
                     // Check mimetype
                     $mediaMimetype = null;
                     $icon['mimetype'] = \hhu\z\Utils::getMimetype($icon['tmp_name'], $icon['type']);
-                    foreach($mimetypes as &$mimetype) {
+                    foreach($iconMimetypes as &$mimetype) {
                         if($mimetype['mimetype'] == $icon['mimetype']) {
                             $mediaMimetype = $mimetype;
                             break;
@@ -469,6 +609,51 @@
                     }
                     elseif($icon['size'] > $mediaMimetype['size']) {
                         $validation = $this->Validation->addValidationResult($validation, 'icon', 'size', $mediaMimetype['size']);
+                    }
+                }
+
+                // Validate media
+                if(!empty($_FILES))
+                {
+                    foreach(array_keys($textMedia) as $mediumKey)
+                    {
+                        if(array_key_exists($mediumKey, $_FILES) && $_FILES[$mediumKey]['error'] != UPLOAD_ERR_NO_FILE)
+                        {
+                            $mediumValidation = true;
+                            $medium = $_FILES[$mediumKey];
+
+                            // Check error
+                            if($medium['error'] !== UPLOAD_ERR_OK) {
+                                $mediumValidation = $this->Validation->addValidationResults($mediumValidation, 'error', $medium['error']);
+                            }
+                            else
+                            {
+                                // Check mimetype
+                                $mediaMimetype = null;
+                                $medium['mimetype'] = \hhu\z\Utils::getMimetype($medium['tmp_name'], $medium['type']);
+                                $mediaMimetypes = (strpos($mediumKey, 'image') !== false) ? $imageMimetypes : $avMimetypes;
+                                foreach($mediaMimetypes as &$mimetype) {
+                                    if($mimetype['mimetype'] == $medium['mimetype']) {
+                                        $mediaMimetype = $mimetype;
+                                        break;
+                                    }
+                                }
+                                if(is_null($mediaMimetype)) {
+                                    $mediumValidation = $this->Validation->addValidationResults($mediumValidation, 'mimetype', $medium['mimetype']);
+                                }
+                                elseif($medium['size'] > $mediaMimetype['size']) {
+                                    $mediumValidation = $this->Validation->addValidationResults($mediumValidation, 'size', $mediaMimetype['size']);
+                                }
+
+                                if($validation == true) {
+                                    $textMedia[$mediumKey] = $medium;
+                                }
+                            }
+
+                            if($mediumValidation !== true) {
+                                $validation = $this->Validation->addValidationResults($validation, $mediumKey, $mediumValidation);
+                            }
+                        }
                     }
                 }
 
@@ -502,6 +687,50 @@
                         if($mediaId !== false) {
                             $this->Charactergroupsqueststations->setPictureForStation($station['id'], $mediaId);
                         }
+                    }
+
+                    // Upload media
+                    $textMediaIds = array();
+                    foreach($textMedia as $mediumKey => $medium)
+                    {
+                        if(!is_null($medium))
+                        {
+                            $mediaId = $this->Media->createStationMedia(
+                                $this->Auth->getUserId(),
+                                $seminary['id'],
+                                sprintf('station-%d-%s', $station['id'], $mediumKey),
+                                $medium['name'],
+                                $medium['type'],
+                                $medium['tmp_name']
+                            );
+                            $textMediaIds[$mediumKey] = $mediaId;
+                        }
+                    }
+
+                    // Set media
+                    if(array_key_exists('rightimage', $textMediaIds)) {
+                        $this->Charactergroupsqueststations->setRightImageForStation(
+                            $station['id'],
+                            $textMediaIds['rightimage']
+                        );
+                    }
+                    if(array_key_exists('rightav', $textMediaIds)) {
+                        $this->Charactergroupsqueststations->setRightAvForStation(
+                            $station['id'],
+                            $textMediaIds['rightav']
+                        );
+                    }
+                    if(array_key_exists('wrongimage', $textMediaIds)) {
+                        $this->Charactergroupsqueststations->setWrongImageForStation(
+                            $station['id'],
+                            $textMediaIds['wrongimage']
+                        );
+                    }
+                    if(array_key_exists('wrongav', $textMediaIds)) {
+                        $this->Charactergroupsqueststations->setWrongAvForStation(
+                            $station['id'],
+                            $textMediaIds['wrongav']
+                        );
                     }
 
                     // Redirect
@@ -550,6 +779,7 @@
             $this->set('seminary', $seminary);
             $this->set('groupsgroup', $groupsgroup);
             $this->set('quest', $quest);
+            $this->set('station', $station);
             $this->set('title', $title);
             $this->set('prolog', $prolog);
             $this->set('task', $task);
@@ -557,14 +787,16 @@
             $this->set('latitude', $latitude);
             $this->set('righttext', $rightText);
             $this->set('wrongtext', $wrongText);
-            $this->set('mimetypes', $mimetypes);
+            $this->set('iconMimetypes', $iconMimetypes);
+            $this->set('imageMimetypes', $imageMimetypes);
+            $this->set('avMimetypes', $avMimetypes);
             $this->set('stationtypes', $stationtypes);
             $this->set('validation', $validation);
         }
 
 
         /**
-         * TODO Action: edittask.
+         * Action: edittask.
          *
          * Edit the task of a Character groups Quest Station.
          *

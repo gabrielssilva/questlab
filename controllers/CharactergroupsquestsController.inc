@@ -89,12 +89,20 @@
 
             // Get Stations
             $stations = null;
-            if(count(array_intersect(array('admin', 'moderator'), \hhu\z\controllers\SeminaryController::$character['characterroles'])) > 0) {
-                $stations = $this->Charactergroupsqueststations->getStationsForQuest($quest['id']);
-            }
-            elseif(!is_null($charactergroup)) {
-                $stations = $this->Charactergroupsqueststations->getStationsForQuestAndGroup($quest['id'], $charactergroup['id']);
-                foreach($stations as &$station) {
+            $stations = $this->Charactergroupsqueststations->getStationsForQuest($quest['id']);
+            foreach($stations as &$station)
+            {
+                // Icon
+                if(!is_null($station['stationpicture_id'])) {
+                    $station['picture'] = $this->Media->getSeminaryMediaById($station['stationpicture_id']);
+                }
+
+                // Entered state
+                if(!is_null($charactergroup)) {
+                    $station['entered'] = $this->Charactergroupsqueststations->hasCharactergroupEnteredStation(
+                        $station['id'],
+                        $charactergroup['id']
+                    );
                     $station['solved'] = $this->Charactergroupsqueststations->hasCharactergroupSolvedStation(
                         $station['id'],
                         $charactergroup['id']

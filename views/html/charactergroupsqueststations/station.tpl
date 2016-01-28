@@ -13,9 +13,7 @@
 </nav>
 <?php endif ?>
 
-<?php if(array_key_exists('picture', $station)) : ?>
 <h1><?=$station['title']?></h1>
-<?php endif ?>
 <ul class="gdata cf">
     <?php if(!empty($station['longitude']) && !empty($station['latitude'])) : ?>
     <li>
@@ -28,6 +26,10 @@
             <i class="fa fa-qrcode"></i>
         </a>
     </li>
+    <?php endif ?>
+    <?php if($solved !== false) : ?>
+    <li>
+        <i class="fa fa-check-circle fa-fw"></i>
     <?php endif ?>
 </ul>
 
@@ -94,8 +96,8 @@
             <span class="group"><a href="<?=$linker->link(array('charactergroups','group',$seminary['url'],$groupsgroup['url'],$group['url']))?>"><?=$group['name']?></a></span>
             <?php if($group['solved'] !== false) : ?>
             <span class="xp">
-                <i class="fa fa-check-square-o fa-fw"></i>
                 <?=_(sprintf('solved at %s', $timeFormatter->format(new \DateTime($group['solved']))))?>
+                <i class="fa fa-check-circle fa-fw"></i>
             </span>
             <?php endif ?>
         </li>
@@ -120,10 +122,34 @@
 
     <?php if($solved): ?>
     <div class="text">
+        <?php if(array_key_exists('rightimage', $station)) : ?>
+        <a href="<?=$linker->link(array('media','seminary',$seminary['url'],$station['rightimage']['url']))?>">
+            <img src="<?=$linker->link(array('media','seminary',$seminary['url'],$station['rightimage']['url'],'charactergroupsqueststation'))?>" />
+        </a><br />
+        <?php endif ?>
+        <?php if(array_key_exists('rightav', $station)) : ?>
+            <?php if(strpos($station['rightav']['mimetype'], 'audio') !== false) : ?>
+            <audio controls="controls" autoplay="autoplay" preload="metadata" src="<?=$linker->link(array('media','seminary',$seminary['url'],$station['rightav']['url'],'charactergroupsqueststation'))?>"></audio>
+            <?php else : ?>
+            <video controls="controls" autoplay="autoplay" preload="metadata" src="<?=$linker->link(array('media','seminary',$seminary['url'],$station['rightav']['url'],'charactergroupsqueststation'))?>"></video>
+            <?php endif ?>
+        <?php endif ?>
         <?=$t->t($station['righttext'])?>
     </div>
     <?php elseif($tried) : ?>
     <div class="text">
+        <?php if(array_key_exists('wrongimage', $station)) : ?>
+        <a href="<?=$linker->link(array('media','seminary',$seminary['url'],$station['wrongimage']['url']))?>">
+            <img src="<?=$linker->link(array('media','seminary',$seminary['url'],$station['wrongimage']['url'],'charactergroupsqueststation'))?>" />
+        </a><br />
+        <?php endif ?>
+        <?php if(array_key_exists('wrongav', $station)) : ?>
+            <?php if(strpos($station['wrongav']['mimetype'], 'audio') !== false) : ?>
+            <audio controls="controls" autoplay="autoplay" preload="metadata" src="<?=$linker->link(array('media','seminary',$seminary['url'],$station['wrongav']['url'],'charactergroupsqueststation'))?>"></audio>
+            <?php else : ?>
+            <video controls="controls" autoplay="autoplay" preload="metadata" src="<?=$linker->link(array('media','seminary',$seminary['url'],$station['wrongav']['url'],'charactergroupsqueststation'))?>" poster="<?=$linker->link(array('media','seminary',$seminary['url'],$station['wrongimage']['url']))?>"></video>
+            <?php endif ?>
+        <?php endif ?>
         <?=$t->t($station['wrongtext'])?>
     </div>
     <?php else : ?>
