@@ -113,7 +113,6 @@
                 'iiss',
                 $stationId, $charactergroupId, $answer, $answer
             );
-            var_dump("saved");
         }
 
     }

@@ -162,7 +162,6 @@
                     $validation = $this->Validation->addValidationResult($validation, 'title', 'exist', true);
                 }
                 $text = $this->request->getPostParam('text');
-                var_dump($text);
 
                 // Edit
                 if($validation === true)

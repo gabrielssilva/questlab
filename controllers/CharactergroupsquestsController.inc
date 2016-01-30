@@ -219,7 +219,6 @@
                 if(!is_null($this->request->getPostParam('deletemedia')))
                 {
                     $uploadIds = $this->request->getPostParam('uploads');
-                    var_dump($uploadIds);
                     foreach($uploadIds as $uploadId) {
                         $this->Uploads->deleteSeminaryupload($uploadId);
                     }
