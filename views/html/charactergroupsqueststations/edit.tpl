@@ -119,9 +119,9 @@
         </ul>
         <?php if(array_key_exists('rightav', $station)) : ?>
             <?php if(strpos($station['rightav']['mimetype'], 'audio') !== false) : ?>
-            <audio controls="controls" autoplay="false" preload="metadata" src="<?=$linker->link(array('media','seminary',$seminary['url'],$station['rightav']['url'],'charactergroupsqueststation'))?>"></audio>
+            <audio controls="controls" preload="metadata" src="<?=$linker->link(array('media','seminary',$seminary['url'],$station['rightav']['url']))?>"></audio>
             <?php else : ?>
-            <video controls="controls" autoplay="false" preload="metadata" src="<?=$linker->link(array('media','seminary',$seminary['url'],$station['rightav']['url'],'charactergroupsqueststation'))?>"></video>
+            <video controls="controls" preload="metadata" src="<?=$linker->link(array('media','seminary',$seminary['url'],$station['rightav']['url']))?>"></video>
             <?php endif ?>
         <?php else : ?>
             <i class="placeholder fa fa-film fa-4x"></i><br />
@@ -153,9 +153,9 @@
         </ul>
         <?php if(array_key_exists('wrongav', $station)) : ?>
             <?php if(strpos($station['wrongav']['mimetype'], 'audio') !== false) : ?>
-            <audio controls="controls" autoplay="false" preload="metadata" src="<?=$linker->link(array('media','seminary',$seminary['url'],$station['wrongav']['url'],'charactergroupsqueststation'))?>"></audio>
+            <audio controls="controls" preload="metadata" src="<?=$linker->link(array('media','seminary',$seminary['url'],$station['wrongav']['url']))?>"></audio>
             <?php else : ?>
-            <video controls="controls" autoplay="false" preload="metadata" src="<?=$linker->link(array('media','seminary',$seminary['url'],$station['wrongav']['url'],'charactergroupsqueststation'))?>"></video>
+            <video controls="controls" preload="metadata" src="<?=$linker->link(array('media','seminary',$seminary['url'],$station['wrongav']['url']))?>"></video>
             <?php endif ?>
         <?php else : ?>
             <i class="placeholder fa fa-film fa-4x"></i><br />
