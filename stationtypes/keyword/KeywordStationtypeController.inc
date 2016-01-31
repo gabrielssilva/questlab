@@ -157,9 +157,16 @@
          */
         private function isMatching($regex, $answer)
         {
+            // Check regex
+            if(empty($regex)) {
+                return false;
+            }
+
+            // Execute regex
             $score = preg_match($regex, trim($answer));
 
 
+            // Return result
             return ($score !== false && $score > 0);
         }
 
