@@ -6,6 +6,7 @@
     <li><i class="fa fa-chevron-right fa-fw"></i><a href="<?=$linker->link(array('charactergroupsquests','quest',$seminary['url'],$groupsgroup['url'],$quest['url']))?>"><?=$quest['title']?></a></li>
 </ul>
 
+<h1><?=$station['title']?></h1>
 <?php if(count(array_intersect(array('admin', 'moderator'), \hhu\z\controllers\SeminaryController::$character['characterroles'])) > 0) : ?>
 <nav class="admin">
     <li><a href="<?=$linker->link(array('edit',$seminary['url'],$groupsgroup['url'],$quest['url'],$station['url']),1)?>"><?=_('edit')?></a></li>
@@ -13,7 +14,6 @@
 </nav>
 <?php endif ?>
 
-<h1><?=$station['title']?></h1>
 <ul class="gdata cf">
     <?php if(!empty($station['longitude']) && !empty($station['latitude'])) : ?>
     <li>
