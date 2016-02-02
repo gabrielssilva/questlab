@@ -24,6 +24,30 @@
 
 
         /**
+         * Copy a Station.
+         *
+         * @param   int $userId             ID of creating user
+         * @param   int $sourceStationId    ID of Station to copy from
+         * @param   int $targetStationId    ID of Station to copy to
+         * @param   int $seminaryMediaIds   Mapping of SeminaryMedia-IDs from source Seminary to targetSeminary
+         */
+        public function copyStation($userId, $sourceStationId, $targetStationId, $seminaryMediaIds)
+        {
+            // Copy answers
+            $this->db->query(
+                'INSERT INTO stationtypes_multiplechoice '.
+                '(created_user_id, station_id, pos, answer, tick) '.
+                'SELECT ?, ?, pos, answer, tick '.
+                'FROM stationtypes_multiplechoice '.
+                'WHERE station_id = ?',
+                'iii',
+                $userId, $targetStationId,
+                $sourceStationId
+            );
+        }
+
+
+        /**
          * Get all answers for a Station
          *
          * @param   int     $stationId  ID of Station

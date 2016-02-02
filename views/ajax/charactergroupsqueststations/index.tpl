@@ -12,9 +12,19 @@
                 floatval($station['latitude'])
             );
             $coordinates[] = $coordinate;
+            // Marker
             $features[] = array(
                 'type'          => 'Feature',
                 'id'            => $station['id'],
+                'geometry'      => array(
+                    'type'          => 'Point',
+                    'coordinates'   => $coordinate
+                )
+            );
+            // Label
+            $features[] = array(
+                'type'          => 'Feature',
+                'id'            => $station['id'].'-label',
                 'properties'    => array(
                     'name'      => $station['title'],
                 ),

@@ -106,6 +106,10 @@
         <div class="cond">
             <input type="checkbox" id="elements_charactergroupsquests" name="elements[charactergroupsquests]" <?php if(array_key_exists('charactergroupsquests', $elements)) : ?>checked="checked"<?php endif ?> />
             <label for="elements_charactergroupsquests"><?=_('Character Groups Quests')?></label>
+            <div class="cond">
+                <input type="checkbox" id="elements_charactergroupsqueststations" name="elements[charactergroupsqueststations]" <?php if(array_key_exists('charactergroupsqueststations', $elements)) : ?>checked="checked"<?php endif ?> />
+                <label for="elements_charactergroupsqueststations"><?=_('Character Groups Quest Stations')?></label>
+            </div>
         </div>
         <input type="checkbox" id="elements_map" name="elements[map]" <?php if(array_key_exists('map', $elements)) : ?>checked="checked"<?php endif ?>  />
         <label for="elements_map"><?=_('Map')?></label>

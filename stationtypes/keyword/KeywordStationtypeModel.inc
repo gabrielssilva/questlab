@@ -24,6 +24,30 @@
 
 
         /**
+         * Copy a Station.
+         *
+         * @param   int $userId             ID of creating user
+         * @param   int $sourceStationId    ID of Station to copy from
+         * @param   int $targetStationId    ID of Station to copy to
+         * @param   int $seminaryMediaIds   Mapping of SeminaryMedia-IDs from source Seminary to targetSeminary
+         */
+        public function copyStation($userId, $sourceStationId, $targetStationId, $seminaryMediaIds)
+        {
+            // Copy keyword
+            $this->db->query(
+                'INSERT INTO stationtypes_keyword '.
+                '(station_id, created_user_id, keyword_regex) '.
+                'SELECT ?, ?, keyword_regex '.
+                'FROM stationtypes_keyword '.
+                'WHERE station_id = ?',
+                'iii',
+                $targetStationId, $userId,
+                $sourceStationId
+            );
+        }
+
+
+        /**
          * Get the task of a keyword Station
          *
          * @param   int $stationId  ID of Station
@@ -89,7 +113,6 @@
                 'iiss',
                 $stationId, $charactergroupId, $answer, $answer
             );
-            var_dump("saved");
         }
 
     }

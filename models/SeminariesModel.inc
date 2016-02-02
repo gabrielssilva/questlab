@@ -24,7 +24,7 @@
          *
          * @var array
          */
-        public $models = array('questgroupshierarchy', 'questgroups', 'quests', 'questtopics', 'media', 'characters', 'charactertypes', 'xplevels', 'avatars', 'achievements', 'charactergroups', 'charactergroupsquests', 'seminarycharacterfields', 'map', 'uploads');
+        public $models = array('questgroupshierarchy', 'questgroups', 'quests', 'questtopics', 'media', 'characters', 'charactertypes', 'xplevels', 'avatars', 'achievements', 'charactergroups', 'charactergroupsquests', 'charactergroupsqueststations', 'seminarycharacterfields', 'map', 'uploads');
 
 
 
@@ -328,27 +328,28 @@
         /**
          * Copy a Seminary and its content.
          *
-         * @param   int     $userId                     ID of copying user
-         * @param   int     $sourceSeminaryId           ID of Seminary to copy
-         * @param   string  $title                      Title of new Seminary
-         * @param   string  $course                     Course of now Seminary
-         * @param   string  $description                Description of new Seminary
-         * @param   boolean $copySeminaryfields         Whether to copy Seminary Character fields of not
-         * @param   boolean $copyMedia                  Whether to copy media or not
-         * @param   boolean $copyQuestgroupshierarchy   Whether to copy Questgroupshierarchy or not
-         * @param   boolean $copyQuestgroups            Whether to copy Questgroups or not
-         * @param   boolean $copyQuests                 Whether to copy Quests or not
-         * @param   boolean $copyQuesttopics            Whether to copy Quest topics or not
-         * @param   boolean $copyCharactertypes         Whether to copy Charactertypes or not
-         * @param   boolean $copyXPlevels               Whether to copy XP-levels or not
-         * @param   boolean $copyAvatars                Whether to copy Avatars or not
-         * @param   boolean $copyAchievements           Whether to copy Achievements or not
-         * @param   boolean $copyCharactergroupsgroups  Whether to copy Character groups-groups or not
-         * @param   boolean $copyCharactergroupsquests  Whether to copy Character groups Quests or not
-         * @param   boolean $copyMap                    Whether to copy Map or not
-         * @return                                      ID of newly created Seminary
+         * @param   int     $userId                             ID of copying user
+         * @param   int     $sourceSeminaryId                   ID of Seminary to copy
+         * @param   string  $title                              Title of new Seminary
+         * @param   string  $course                             Course of now Seminary
+         * @param   string  $description                        Description of new Seminary
+         * @param   boolean $copySeminaryfields                 Whether to copy Seminary Character fields of not
+         * @param   boolean $copyMedia                          Whether to copy media or not
+         * @param   boolean $copyQuestgroupshierarchy           Whether to copy Questgroupshierarchy or not
+         * @param   boolean $copyQuestgroups                    Whether to copy Questgroups or not
+         * @param   boolean $copyQuests                         Whether to copy Quests or not
+         * @param   boolean $copyQuesttopics                    Whether to copy Quest topics or not
+         * @param   boolean $copyCharactertypes                 Whether to copy Charactertypes or not
+         * @param   boolean $copyXPlevels                       Whether to copy XP-levels or not
+         * @param   boolean $copyAvatars                        Whether to copy Avatars or not
+         * @param   boolean $copyAchievements                   Whether to copy Achievements or not
+         * @param   boolean $copyCharactergroupsgroups          Whether to copy Character groups-groups or not
+         * @param   boolean $copyCharactergroupsquests          Whether to copy Character groups Quests or not
+         * @param   boolean $copyCharactergroupsqueststations   Whether to copy Character groups Quest Stations or not
+         * @param   boolean $copyMap                            Whether to copy Map or not
+         * @return                                              ID of newly created Seminary
          */
-        public function copySeminary($userId, $sourceSeminaryId, $title, $course, $description, $copySeminaryfields, $copyMedia, $copyQuestgroupshierarchy, $copyQuestgroups, $copyQuests, $copyQuesttopics, $copyCharactertypes, $copyXPlevels, $copyAvatars, $copyAchievements, $copyCharactergroupsgroups, $copyCharactergroupsquests, $copyMap)
+        public function copySeminary($userId, $sourceSeminaryId, $title, $course, $description, $copySeminaryfields, $copyMedia, $copyQuestgroupshierarchy, $copyQuestgroups, $copyQuests, $copyQuesttopics, $copyCharactertypes, $copyXPlevels, $copyAvatars, $copyAchievements, $copyCharactergroupsgroups, $copyCharactergroupsquests, $copyCharactergroupsqueststations, $copyMap)
         {
             // Get Seminary
             $seminary = $this->getSeminaryById($sourceSeminaryId);
@@ -437,12 +438,17 @@
 
                 // Copy Charactergroups content
                 // Charactergroupsgroups
+                $characterGroupsgroupIds = null;
+                $charactergroupsquestIds = null;
                 if($copyCharactergroupsgroups)
                 {
                     $characterGroupsgroupIds = $this->Charactergroups->copyGroupsgroupsOfSeminary($userId, $sourceSeminaryId, $targetSeminaryId);
                     // Copy Charactergroupsquests
                     if($copyCharactergroupsquests &!is_null($questgroupIds)) {
-                        $this->Charactergroupsquests->copyQuestsOfSeminary($userId, $characterGroupsgroupIds, $questgroupIds, $seminaryMediaIds);
+                        $charactergroupsquestIds = $this->Charactergroupsquests->copyQuestsOfSeminary($userId, $characterGroupsgroupIds, $questgroupIds, $seminaryMediaIds);
+                        if($copyCharactergroupsqueststations && !is_null($charactergroupsquestIds)) {
+                            $this->Charactergroupsqueststations->copyStationsOfSeminary($userId, $charactergroupsquestIds, $seminaryMediaIds);
+                        }
                     }
                 }
 

@@ -6,6 +6,7 @@
     <li><i class="fa fa-chevron-right fa-fw"></i><a href="<?=$linker->link(array('charactergroupsquests','quest',$seminary['url'],$groupsgroup['url'],$quest['url']))?>"><?=$quest['title']?></a></li>
 </ul>
 
+<h1><?=$station['title']?></h1>
 <?php if(count(array_intersect(array('admin', 'moderator'), \hhu\z\controllers\SeminaryController::$character['characterroles'])) > 0) : ?>
 <nav class="admin">
     <li><a href="<?=$linker->link(array('edit',$seminary['url'],$groupsgroup['url'],$quest['url'],$station['url']),1)?>"><?=_('edit')?></a></li>
@@ -13,7 +14,6 @@
 </nav>
 <?php endif ?>
 
-<h1><?=$station['title']?></h1>
 <ul class="gdata cf">
     <?php if(!empty($station['longitude']) && !empty($station['latitude'])) : ?>
     <li>
@@ -27,9 +27,14 @@
         </a>
     </li>
     <?php endif ?>
-    <?php if($solved !== false) : ?>
+    <?php if($tried) : ?>
     <li>
+        <?php if($solved) : ?>
         <i class="fa fa-check-circle fa-fw"></i>
+        <?php else : ?>
+        <i class="fa fa-times-circle fa-fw"></i>
+        <?php endif ?>
+    </li>
     <?php endif ?>
 </ul>
 
@@ -94,12 +99,19 @@
                 <?=$timeFormatter->format(new \DateTime($group['created']))?>
             </span>
             <span class="group"><a href="<?=$linker->link(array('charactergroups','group',$seminary['url'],$groupsgroup['url'],$group['url']))?>"><?=$group['name']?></a></span>
-            <?php if($group['solved'] !== false) : ?>
             <span class="xp">
+                <?php if($group['tried']) : ?>
+                <?php if($group['solved']) : ?>
                 <?=_(sprintf('solved at %s', $timeFormatter->format(new \DateTime($group['solved']))))?>
                 <i class="fa fa-check-circle fa-fw"></i>
+                <?php else : ?>
+                <?=_(sprintf('failed at %s', $timeFormatter->format(new \DateTime($group['solved']))))?>
+                <i class="fa fa-times-circle fa-fw"></i>
+                <?php endif ?>
+                <?php else : ?>
+                <i class="fa fa-globe fa-fw"></i>
+                <?php endif ?>
             </span>
-            <?php endif ?>
         </li>
         <?php endforeach ?>
     </ol>
@@ -120,6 +132,7 @@
 <section class="task">
     <h1 id="task"><?=_('Task')?></h1>
 
+    <?php if($tried) : ?>
     <?php if($solved): ?>
     <div class="text">
         <?php if(array_key_exists('rightimage', $station)) : ?>
@@ -129,14 +142,14 @@
         <?php endif ?>
         <?php if(array_key_exists('rightav', $station)) : ?>
             <?php if(strpos($station['rightav']['mimetype'], 'audio') !== false) : ?>
-            <audio controls="controls" autoplay="autoplay" preload="metadata" src="<?=$linker->link(array('media','seminary',$seminary['url'],$station['rightav']['url'],'charactergroupsqueststation'))?>"></audio>
+            <audio controls="controls" autoplay="autoplay" preload="metadata" src="<?=$linker->link(array('media','seminary',$seminary['url'],$station['rightav']['url']))?>"></audio>
             <?php else : ?>
-            <video controls="controls" autoplay="autoplay" preload="metadata" src="<?=$linker->link(array('media','seminary',$seminary['url'],$station['rightav']['url'],'charactergroupsqueststation'))?>"></video>
+            <video controls="controls" autoplay="autoplay" preload="metadata" src="<?=$linker->link(array('media','seminary',$seminary['url'],$station['rightav']['url']))?>"></video>
             <?php endif ?>
         <?php endif ?>
         <?=$t->t($station['righttext'])?>
     </div>
-    <?php elseif($tried) : ?>
+    <?php else : ?>
     <div class="text">
         <?php if(array_key_exists('wrongimage', $station)) : ?>
         <a href="<?=$linker->link(array('media','seminary',$seminary['url'],$station['wrongimage']['url']))?>">
@@ -145,13 +158,17 @@
         <?php endif ?>
         <?php if(array_key_exists('wrongav', $station)) : ?>
             <?php if(strpos($station['wrongav']['mimetype'], 'audio') !== false) : ?>
-            <audio controls="controls" autoplay="autoplay" preload="metadata" src="<?=$linker->link(array('media','seminary',$seminary['url'],$station['wrongav']['url'],'charactergroupsqueststation'))?>"></audio>
+            <audio controls="controls" autoplay="autoplay" preload="metadata" src="<?=$linker->link(array('media','seminary',$seminary['url'],$station['wrongav']['url']))?>"></audio>
             <?php else : ?>
-            <video controls="controls" autoplay="autoplay" preload="metadata" src="<?=$linker->link(array('media','seminary',$seminary['url'],$station['wrongav']['url'],'charactergroupsqueststation'))?>" poster="<?=$linker->link(array('media','seminary',$seminary['url'],$station['wrongimage']['url']))?>"></video>
+            <video controls="controls" autoplay="autoplay" preload="metadata" src="<?=$linker->link(array('media','seminary',$seminary['url'],$station['wrongav']['url']))?>"></video>
             <?php endif ?>
         <?php endif ?>
         <?=$t->t($station['wrongtext'])?>
     </div>
+    <?php endif ?>
+    <p>
+        <a class="cta orange" href="<?=$linker->link(array('charactergroupsquests','quest',$seminary['url'],$groupsgroup['url'],$quest['url']))?>"><?=_('Back to overview')?></a>
+    </p>
     <?php else : ?>
     <div class="text">
         <?=$t->t($station['task'])?>

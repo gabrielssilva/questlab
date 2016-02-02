@@ -24,6 +24,17 @@
 
 
         /**
+         * Copy a Station.
+         *
+         * @param   int $userId             ID of creating user
+         * @param   int $sourceStationId    ID of Station to copy from
+         * @param   int $targetStationId    ID of Station to copy to
+         * @param   int $seminaryMediaIds   Mapping of SeminaryMedia-IDs from source Seminary to targetSeminary
+         */
+        public abstract function copyStation($userId, $sourceStationId, $targetStationId, $seminaryMediaIds);
+
+
+        /**
          * Load a Model.
          *
          * @static

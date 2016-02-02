@@ -103,15 +103,31 @@
                         $station['id'],
                         $charactergroup['id']
                     );
-                    $station['solved'] = $this->Charactergroupsqueststations->hasCharactergroupSolvedStation(
-                        $station['id'],
-                        $charactergroup['id']
-                    );
+                    if($station['entered']) {
+                        $station['tried'] = $this->Charactergroupsqueststations->hasCharactergroupTriedStation(
+                            $station['id'],
+                            $charactergroup['id']
+                        );
+                        if($station['tried']) {
+                            $station['solved'] = $this->Charactergroupsqueststations->hasCharactergroupSolvedStation(
+                                $station['id'],
+                                $charactergroup['id']
+                            );
+                        }
+                    }
                 }
             }
 
-            // Get Character groups-groups
+            // Get Character groups
             $groups = $this->Charactergroups->getGroupsForQuest($quest['id']);
+            foreach($groups as &$group)
+            {
+                // Get count of solved Stations
+                $group['stations'] = $this->Charactergroupsqueststations->getSolvedStationsForQuestAndGroup(
+                    $quest['id'],
+                    $group['id']
+                );
+            }
 
             // Get uploads
             $uploads = $this->Charactergroupsquests->getMediaForQuest($quest['id']);
@@ -164,6 +180,14 @@
 
             // Get Character groups
             $groups = $this->Charactergroups->getGroupsForGroupsgroup($groupsgroup['id']);
+            foreach($groups as &$group)
+            {
+                // Get count of solved Stations
+                $group['stations'] = $this->Charactergroupsqueststations->getSolvedStationsForQuestAndGroup(
+                    $quest['id'],
+                    $group['id']
+                );
+            }
 
             // Get allowed mimetypes
             $mimetypes = \nre\configs\AppConfig::$mimetypes['charactergroupsquests'];
@@ -219,7 +243,6 @@
                 if(!is_null($this->request->getPostParam('deletemedia')))
                 {
                     $uploadIds = $this->request->getPostParam('uploads');
-                    var_dump($uploadIds);
                     foreach($uploadIds as $uploadId) {
                         $this->Uploads->deleteSeminaryupload($uploadId);
                     }

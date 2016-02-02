@@ -98,7 +98,7 @@
                 $stations = $this->Charactergroupsqueststations->getStationsForQuest($quest['id']);
             }
             elseif(!is_null($charactergroup)) {
-                $stations = $this->Charactergroupsqueststations->getStationsForQuestAndGroup($quest['id'], $charactergroup['id']);
+                $stations = $this->Charactergroupsqueststations->getEnteredStationsForQuestAndGroup($quest['id'], $charactergroup['id']);
             }
 
 
@@ -169,10 +169,16 @@
             {
                 $groups = $this->Charactergroups->getGroupsForQueststation($station['id']);
                 foreach($groups as &$group) {
-                    $group['solved'] = $this->Charactergroupsqueststations->hasCharactergroupSolvedStation(
+                    $group['tried'] = $this->Charactergroupsqueststations->hasCharactergroupTriedStation(
                         $station['id'],
                         $group['id']
                     );
+                    if($group['tried']) {
+                        $group['solved'] = $this->Charactergroupsqueststations->hasCharactergroupSolvedStation(
+                            $station['id'],
+                            $group['id']
+                        );
+                    }
                 }
             }
 
@@ -194,9 +200,9 @@
             $solved = false;
             $tried = false;
             if(!is_null($charactergroup)) {
-                $solved = $this->Charactergroupsqueststations->hasCharactergroupSolvedStation($station['id'], $charactergroup['id']);
-                if(!$solved) {
-                    $tried = $this->Charactergroupsqueststations->hasCharactergroupTriedStation($station['id'], $charactergroup['id']);
+                $tried = $this->Charactergroupsqueststations->hasCharactergroupTriedStation($station['id'], $charactergroup['id']);
+                if($tried) {
+                    $solved = $this->Charactergroupsqueststations->hasCharactergroupSolvedStation($station['id'], $charactergroup['id']);
                 }
             }
 

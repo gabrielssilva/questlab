@@ -78,6 +78,7 @@
             <li>
                 <span class="group"><a href="<?=$linker->link(array('charactergroups','group',$seminary['url'],$groupsgroup['url'],$group['url']))?>"><?=$group['name']?></a></span>
                 <span class="xp">
+                    <?=sprintf(_('%d Stations'), count($group['stations']))?>,
                     <select name="xps[<?=$group['url']?>]">
                         <option value="null" <?php if(is_null($group['quest_group'])) : ?>selected="selected"<?php endif ?>><?=_('Not attended')?></option>
                         <?php for($i=0; $i<=$quest['xps']; $i++) : ?>

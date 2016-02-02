@@ -384,9 +384,11 @@
          * @param   array   $groupsgroupIds     Mapping of Character groups-group-IDs from source Seminary to target Seminary
          * @param   array   $questgroupIds      Mapping of Questgroup-IDs from source Seminary to target Seminary
          * @param   array   $seminaryMediaIds   Mapping of Seminarymedia-IDs from source Seminary to target Seminary (optional)
+         * @return  array                       Mapping of Quest-IDs from source Seminary to target Seminary
          */
         public function copyQuestsOfSeminary($userId, $groupsgroupIds, $questgroupIds, $seminaryMediaIds=null)
         {
+            $questIds = array();
             foreach($groupsgroupIds as $sourceGroupsgroupId => $targetGroupsgroupId)
             {
                 // Get Quests
@@ -406,7 +408,7 @@
                         $userId, $targetGroupsgroupId, $questgroupIds[$quest['questgroups_id']],
                         $quest['id']
                     );
-                    $targetQuestId = $this->db->getInsertId();
+                    $questIds[$quest['id']] = $this->db->getInsertId();
 
                     // Copy media
                     if(!is_null($seminaryMediaIds) && !is_null($quest['questsmedia_id']))
@@ -418,11 +420,18 @@
                             'WHERE id = ?',
                             'ii',
                             $seminaryMediaIds[$quest['questsmedia_id']],
-                            $targetQuestId
+                            $questIds[$quest['id']]
                         );
                     }
+
+                    // TODO Copy Stations
+                    //$this->Charactergroupsqueststations->copyStationsOfQuest($quest['id'], $targetQuestId, $seminaryMediaIds);
                 }
             }
+
+
+            // Return target Quest-IDs
+            return $questIds;
         }
 
 

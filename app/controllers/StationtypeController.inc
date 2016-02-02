@@ -24,7 +24,7 @@
          *
          * @var array
          */
-        public $models = array('seminaries'); //, 'questgroups', 'quests', 'characters');
+        public $models = array('seminaries');
 
 
 

@@ -452,6 +452,7 @@
                             array_key_exists('achievements', $elements),
                             array_key_exists('charactergroupsgroups', $elements),
                             array_key_exists('charactergroupsquests', $elements),
+                            array_key_exists('charactergroupsqueststations', $elements),
                             array_key_exists('map', $elements)
                         );
                         $seminary = $this->Seminaries->getSeminaryById($seminaryId);

@@ -88,9 +88,17 @@
                 <?=_('Station not yet discovered')?>
                 <?php endif ?>
             </span>
-            <?php if(array_key_exists('solved', $station) && $station['solved']) : ?>
+            <?php if(array_key_exists('entered', $station) && $station['entered']) : ?>
             <span class="xp">
+                <?php if($station['tried']) : ?>
+                <?php if($station['solved']) : ?>
                 <i class="fa fa-check-circle fa-fw"></i>
+                <?php else : ?>
+                <i class="fa fa-times-circle fa-fw"></i>
+                <?php endif ?>
+                <?php else : ?>
+                <i class="fa fa-globe fa-fw"></i>
+                <?php endif ?>
             </span>
             <?php endif ?>
         </li>
@@ -100,10 +108,18 @@
     <ol class="grpqslist">
         <?php foreach($stations as &$station) : ?>
         <li>
-            <?php if(!array_key_exists('entered', $station) || $station['entered']) : ?>
+            <?php if(array_key_exists('entered', $station) && $station['entered']) : ?>
             <a href="<?=$linker->link(array('charactergroupsqueststations','station',$seminary['url'],$groupsgroup['url'],$quest['url'],$station['url']))?>">
+                <?php if($station['tried']) : ?>
+                <?php if($station['solved']) : ?>
                 <?php if(!is_null($station['stationpicture_id'])) : ?>
-                    <img title="<?=$station['title']?>" src="<?=$linker->link(array('media','charactergroupsqueststation',$seminary['url'],$groupsgroup['url'],$quest['url'],$station['url']))?>" />
+                <img title="<?=$station['title']?>" src="<?=$linker->link(array('media','charactergroupsqueststation',$seminary['url'],$groupsgroup['url'],$quest['url'],$station['url']))?>" />
+                <?php else : ?>
+                <i class="fa fa-circle"></i>
+                <?php endif ?>
+                <?php else : ?>
+                <i class="fa fa-times-circle"></i>
+                <?php endif ?>
                 <?php else : ?>
                 <i class="fa fa-globe"></i>
                 <?php endif ?>
@@ -123,7 +139,10 @@
         <li>
             <span class="date"><?=$dateFormatter->format(new \DateTime($group['created']))?></span>
             <span class="group"><a href="<?=$linker->link(array('charactergroups','group',$seminary['url'],$groupsgroup['url'],$group['url']))?>"><?=$group['name']?></a></span>
-            <span class="xp"><?=sprintf(_('%d XPs'), $group['xps'])?></span>
+            <span class="xp">
+                <?=sprintf(_('%d Stations'), count($group['stations']))?>,
+                <?=sprintf(_('%d XPs'), $group['xps'])?>
+            </span>
         </li>
         <?php endforeach ?>
     </ol>
@@ -152,20 +171,36 @@
         var styles = [];
         var geometry = feature.getGeometry();
         if(geometry instanceof ol.geom.Point) {
-            // Point styling
-            styles.push(
-                new ol.style.Style({
-                    text: new ol.style.Text({
-                        //text: '\uf041',
-                        text: '\uf276',
-                        font: 'normal 28px FontAwesome',
-                        textBaseline: 'Bottom',
-                        fill: new ol.style.Fill({
-                            color: '#0F373C'
+            var name = feature.get('name');
+            if(name) {
+                // Label styling
+                styles.push(
+                    new ol.style.Style({
+                        text: new ol.style.Text({
+                            text: name,
+                            textBaseline: 'Bottom',
+                            offsetY: 14,
+                            scale: 1.2
                         })
                     })
-                })
-            );
+                );
+            }
+            else {
+                // Point styling
+                styles.push(
+                    new ol.style.Style({
+                        text: new ol.style.Text({
+                            //text: '\uf041',
+                            text: '\uf276',
+                            font: 'normal 28px FontAwesome',
+                            textBaseline: 'Bottom',
+                            fill: new ol.style.Fill({
+                                color: '#0F373C'
+                            })
+                        })
+                    })
+                );
+            }
         }
         else if(geometry instanceof ol.geom.LineString) {
             // Line styling

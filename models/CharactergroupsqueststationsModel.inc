@@ -39,6 +39,13 @@
          */
         const STATUS_SOLVED = 3;
 
+        /**
+         * Required models
+         *
+         * @var array
+         */
+        public $models = array('stationtypes');
+
 
 
 
@@ -103,6 +110,7 @@
             return $data[0];
         }
 
+
         /**
          * Get all Stations for a Character groups Quest.
          *
@@ -112,7 +120,7 @@
         public function getStationsForQuest($questId)
         {
             return $this->db->query(
-                'SELECT id, title, url, stationpicture_id, latitude, longitude '.
+                'SELECT id, stationtype_id, title, url, stationpicture_id, latitude, longitude, rightimage_id, rightav_id, wrongimage_id, wrongav_id '.
                 'FROM charactergroupsqueststations '.
                 'WHERE charactergroupsquest_id = ? '.
                 'ORDER BY pos ASC',
@@ -123,28 +131,84 @@
 
 
         /**
-         * Get all Stations for a Character groups Quest and a Character group.
+         * Get all Stations for a Character groups Quest that have been entered
+         * by a Character group.
          *
          * @param   int     $questId    ID of Character groups Quest
          * @param   int     $groupId    ID of Character group
          * @return  array               List of Station
          */
-        public function getStationsForQuestAndGroup($questId, $groupId)
+        private function getEnteredStationsForQuestAndGroup($questId, $groupId)
         {
-            return $this->db->query(
-                'SELECT charactergroupsqueststations.id, charactergroupsqueststations_charactergroups.created, title, url, stationpicture_id, latitude, longitude '.
-                'FROM charactergroupsqueststations_charactergroups '.
-                'INNER JOIN charactergroupsqueststations ON charactergroupsqueststations.id = charactergroupsqueststations_charactergroups.charactergroupsqueststation_id '.
-                'WHERE '.
-                    'charactergroupsqueststations_charactergroups.charactergroup_id = ? AND '.
-                    'charactergroupsqueststations_charactergroups.status = ? AND '.
-                    'charactergroupsquest_id = ? '.
-                'ORDER BY charactergroupsqueststations_charactergroups.created ASC',
-                'iii',
-                $groupId,
-                self::STATUS_ENTERED,
-                $questId
-            );
+            return $this->getStationsForQuestAndGroup($questId, $groupId, self::STATUS_ENTERED);
+        }
+
+
+        /**
+         * Get all Stations for a Character groups Quest that have been solved 
+         * by a Character group.
+         *
+         * @param   int     $questId    ID of Character groups Quest
+         * @param   int     $groupId    ID of Character group
+         * @return  array               List of Station
+         */
+        public function getSolvedStationsForQuestAndGroup($questId, $groupId)
+        {
+            return $this->getStationsForQuestAndGroup($questId, $groupId, self::STATUS_SOLVED);
+        }
+
+
+        /**
+         * Copy all Character groups Quest Stations of a Seminary.
+         *
+         * @param   int     $userId                     ID of creating user
+         * @param   array   $charactergroupsquestIds    Mapping of Character groups Quest-IDs from source Seminary to target Seminary
+         * @param   array   $seminaryMediaIds           Mapping of Seminary-media-IDs from source Seminary to target Seminary (optional)
+         */
+        public function copyStationsOfSeminary($userId, $charactergroupsquestIds, $seminaryMediaIds)
+        {
+            // Go through each Quest
+            foreach($charactergroupsquestIds as $sourceQuestId => $targetQuestId)
+            {
+                // Get Stations
+                $stations = $this->getStationsForQuest($sourceQuestId);
+
+                // Copy each station
+                foreach($stations as &$station)
+                {
+                    // Copy Station
+                    $this->db->query(
+                        'INSERT INTO charactergroupsqueststations '.
+                        '(charactergroupsquest_id, stationtype_id, title, url, pos, stationpicture_id, prolog, task, latitude, longitude, righttext, wrongtext, rightimage_id, rightav_id, wrongimage_id, wrongav_id) '.
+                        'SELECT ?, stationtype_id, title, url, pos, ?, prolog, task, latitude, longitude, righttext, wrongtext, ?, ?, ?, ? '.
+                        'FROM charactergroupsqueststations '.
+                        'WHERE id = ?',
+                        'iiiiiii',
+                        $targetQuestId,
+                        (!is_null($station['stationpicture_id'])) ? $seminaryMediaIds[$station['stationpicture_id']] : null,
+                        (!is_null($station['rightimage_id'])) ? $seminaryMediaIds[$station['rightimage_id']] : null,
+                        (!is_null($station['rightav_id'])) ? $seminaryMediaIds[$station['rightav_id']] : null,
+                        (!is_null($station['wrongimage_id'])) ? $seminaryMediaIds[$station['wrongimage_id']] : null,
+                        (!is_null($station['wrongav_id'])) ? $seminaryMediaIds[$station['wrongav_id']] : null,
+                        $station['id']
+                    );
+                    $targetStationId = $this->db->getInsertId();
+
+                    // Copy content
+                    $stationtype = $this->Stationtypes->getStationtypeById($station['stationtype_id']);
+                    if(!is_null($stationtype['classname']))
+                    {
+                        // Load Stationtype Model
+                        \hhu\z\models\StationtypeModel::load($stationtype['classname']);
+
+                        // Construct Station Model
+                        $stationtypeModel = \hhu\z\models\StationtypeModel::factory($stationtype['classname']);
+
+                        // Copy content
+                        $stationtypeModel->copyStation($userId, $station['id'], $targetStationId, $seminaryMediaIds);
+                    }
+                }
+            }
         }
 
 
@@ -505,6 +569,33 @@
                 'ii',
                 $mediaId,
                 $stationId
+            );
+        }
+
+
+        /**
+         * Get all Stations for a Character groups Quest with a minimum status.
+         *
+         * @param   int     $questId    ID of Character groups Quest
+         * @param   int     $groupId    ID of Character group
+         * @param   int     $statusMin  Minimum status
+         * @return  array               List of Station
+         */
+        private function getStationsForQuestAndGroup($questId, $groupId, $statusMin)
+        {
+            return $this->db->query(
+                'SELECT charactergroupsqueststations.id, charactergroupsqueststations_charactergroups.created, title, url, stationpicture_id, latitude, longitude '.
+                'FROM charactergroupsqueststations_charactergroups '.
+                'INNER JOIN charactergroupsqueststations ON charactergroupsqueststations.id = charactergroupsqueststations_charactergroups.charactergroupsqueststation_id '.
+                'WHERE '.
+                    'charactergroupsqueststations_charactergroups.charactergroup_id = ? AND '.
+                    'charactergroupsqueststations_charactergroups.status >= ? AND '.
+                    'charactergroupsquest_id = ? '.
+                'ORDER BY charactergroupsqueststations_charactergroups.created ASC',
+                'iii',
+                $groupId,
+                $statusMin,
+                $questId
             );
         }
 
