@@ -132,6 +132,7 @@
 <section class="task">
     <h1 id="task"><?=_('Task')?></h1>
 
+    <?php if($tried) : ?>
     <?php if($solved): ?>
     <div class="text">
         <?php if(array_key_exists('rightimage', $station)) : ?>
@@ -148,7 +149,7 @@
         <?php endif ?>
         <?=$t->t($station['righttext'])?>
     </div>
-    <?php elseif($tried) : ?>
+    <?php else : ?>
     <div class="text">
         <?php if(array_key_exists('wrongimage', $station)) : ?>
         <a href="<?=$linker->link(array('media','seminary',$seminary['url'],$station['wrongimage']['url']))?>">
@@ -164,6 +165,10 @@
         <?php endif ?>
         <?=$t->t($station['wrongtext'])?>
     </div>
+    <?php endif ?>
+    <p>
+        <a class="cta orange" href="<?=$linker->link(array('charactergroupsquests','quest',$seminary['url'],$groupsgroup['url'],$quest['url']))?>"><?=_('Back to overview')?></a>
+    </p>
     <?php else : ?>
     <div class="text">
         <?=$t->t($station['task'])?>
