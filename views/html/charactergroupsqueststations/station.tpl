@@ -15,11 +15,6 @@
 <?php endif ?>
 
 <ul class="gdata cf">
-    <?php if(!empty($station['longitude']) && !empty($station['latitude'])) : ?>
-    <li>
-        <span class="fwb"><?=sprintf(_('%1.6F°%s %1.6F°%s'), $station['latitude'], ($station['latitude']>0)?'N':'S', $station['longitude'], ($station['longitude']>0)?'E':'W')?></span>
-    </li>
-    <?php endif ?>
     <?php if(count(array_intersect(array('admin', 'moderator'), \hhu\z\controllers\SeminaryController::$character['characterroles'])) > 0) : ?>
     <li>
         <a href="<?=$linker->link(array('qrcodes','charactergroupsqueststation',$seminary['url'],$groupsgroup['url'],$quest['url'],$station['url'],'50'))?>">
