@@ -138,7 +138,7 @@
          * @param   int     $groupId    ID of Character group
          * @return  array               List of Station
          */
-        private function getEnteredStationsForQuestAndGroup($questId, $groupId)
+        public function getEnteredStationsForQuestAndGroup($questId, $groupId)
         {
             return $this->getStationsForQuestAndGroup($questId, $groupId, self::STATUS_ENTERED);
         }
