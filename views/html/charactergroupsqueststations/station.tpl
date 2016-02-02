@@ -27,9 +27,14 @@
         </a>
     </li>
     <?php endif ?>
-    <?php if($solved !== false) : ?>
+    <?php if($tried) : ?>
     <li>
+        <?php if($solved) : ?>
         <i class="fa fa-check-circle fa-fw"></i>
+        <?php else : ?>
+        <i class="fa fa-times-circle fa-fw"></i>
+        <?php endif ?>
+    </li>
     <?php endif ?>
 </ul>
 

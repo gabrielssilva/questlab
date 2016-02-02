@@ -88,9 +88,17 @@
                 <?=_('Station not yet discovered')?>
                 <?php endif ?>
             </span>
-            <?php if(array_key_exists('solved', $station) && $station['solved']) : ?>
+            <?php if(array_key_exists('entered', $station) && $station['entered']) : ?>
             <span class="xp">
+                <?php if($station['tried']) : ?>
+                <?php if($station['solved']) : ?>
                 <i class="fa fa-check-circle fa-fw"></i>
+                <?php else : ?>
+                <i class="fa fa-times-circle fa-fw"></i>
+                <?php endif ?>
+                <?php else : ?>
+                <i class="fa fa-globe fa-fw"></i>
+                <?php endif ?>
             </span>
             <?php endif ?>
         </li>
@@ -100,10 +108,18 @@
     <ol class="grpqslist">
         <?php foreach($stations as &$station) : ?>
         <li>
-            <?php if(!array_key_exists('entered', $station) || $station['entered']) : ?>
+            <?php if(array_key_exists('entered', $station) && $station['entered']) : ?>
             <a href="<?=$linker->link(array('charactergroupsqueststations','station',$seminary['url'],$groupsgroup['url'],$quest['url'],$station['url']))?>">
+                <?php if($station['tried']) : ?>
+                <?php if($station['solved']) : ?>
                 <?php if(!is_null($station['stationpicture_id'])) : ?>
-                    <img title="<?=$station['title']?>" src="<?=$linker->link(array('media','charactergroupsqueststation',$seminary['url'],$groupsgroup['url'],$quest['url'],$station['url']))?>" />
+                <img title="<?=$station['title']?>" src="<?=$linker->link(array('media','charactergroupsqueststation',$seminary['url'],$groupsgroup['url'],$quest['url'],$station['url']))?>" />
+                <?php else : ?>
+                <i class="fa fa-circle"></i>
+                <?php endif ?>
+                <?php else : ?>
+                <i class="fa fa-times-circle"></i>
+                <?php endif ?>
                 <?php else : ?>
                 <i class="fa fa-globe"></i>
                 <?php endif ?>

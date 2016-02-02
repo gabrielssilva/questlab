@@ -194,9 +194,9 @@
             $solved = false;
             $tried = false;
             if(!is_null($charactergroup)) {
-                $solved = $this->Charactergroupsqueststations->hasCharactergroupSolvedStation($station['id'], $charactergroup['id']);
-                if(!$solved) {
-                    $tried = $this->Charactergroupsqueststations->hasCharactergroupTriedStation($station['id'], $charactergroup['id']);
+                $tried = $this->Charactergroupsqueststations->hasCharactergroupTriedStation($station['id'], $charactergroup['id']);
+                if($tried) {
+                    $solved = $this->Charactergroupsqueststations->hasCharactergroupSolvedStation($station['id'], $charactergroup['id']);
                 }
             }
 

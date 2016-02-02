@@ -103,10 +103,18 @@
                         $station['id'],
                         $charactergroup['id']
                     );
-                    $station['solved'] = $this->Charactergroupsqueststations->hasCharactergroupSolvedStation(
-                        $station['id'],
-                        $charactergroup['id']
-                    );
+                    if($station['entered']) {
+                        $station['tried'] = $this->Charactergroupsqueststations->hasCharactergroupTriedStation(
+                            $station['id'],
+                            $charactergroup['id']
+                        );
+                        if($station['tried']) {
+                            $station['solved'] = $this->Charactergroupsqueststations->hasCharactergroupSolvedStation(
+                                $station['id'],
+                                $charactergroup['id']
+                            );
+                        }
+                    }
                 }
             }
 
