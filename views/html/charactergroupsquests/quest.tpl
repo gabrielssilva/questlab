@@ -69,7 +69,9 @@
 
 <section>
     <h1 id="stations"><i class="fa fa-map-signs fa-fw"></i><?=_('Character Groups Quest Stations')?></h1>
+    <?php if($stationsDiscovered || count(array_intersect(array('admin', 'moderator'), \hhu\z\controllers\SeminaryController::$character['characterroles'])) > 0) : ?>
     <div id="map" class="map"></div>
+    <?php endif ?>
 
     <?php if(count(array_intersect(array('admin', 'moderator'), \hhu\z\controllers\SeminaryController::$character['characterroles'])) > 0) : ?>
     <nav class="admin">

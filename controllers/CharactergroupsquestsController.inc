@@ -90,6 +90,7 @@
             // Get Stations
             $stations = null;
             $stations = $this->Charactergroupsqueststations->getStationsForQuest($quest['id']);
+            $stationsDiscovered = false;
             foreach($stations as &$station)
             {
                 // Icon
@@ -104,6 +105,7 @@
                         $charactergroup['id']
                     );
                     if($station['entered']) {
+                        $stationsDiscovered = true;
                         $station['tried'] = $this->Charactergroupsqueststations->hasCharactergroupTriedStation(
                             $station['id'],
                             $charactergroup['id']
@@ -147,6 +149,7 @@
             $this->set('quest', $quest);
             $this->set('questgroup', $questgroup);
             $this->set('stations', $stations);
+            $this->set('stationsDiscovered', $stationsDiscovered);
             $this->set('groups', $groups);
             $this->set('uploads', $uploads);
         }
