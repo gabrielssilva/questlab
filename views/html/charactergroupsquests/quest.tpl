@@ -171,20 +171,36 @@
         var styles = [];
         var geometry = feature.getGeometry();
         if(geometry instanceof ol.geom.Point) {
-            // Point styling
-            styles.push(
-                new ol.style.Style({
-                    text: new ol.style.Text({
-                        //text: '\uf041',
-                        text: '\uf276',
-                        font: 'normal 28px FontAwesome',
-                        textBaseline: 'Bottom',
-                        fill: new ol.style.Fill({
-                            color: '#0F373C'
+            var name = feature.get('name');
+            if(name) {
+                // Label styling
+                styles.push(
+                    new ol.style.Style({
+                        text: new ol.style.Text({
+                            text: name,
+                            textBaseline: 'Bottom',
+                            offsetY: 14,
+                            scale: 1.2
                         })
                     })
-                })
-            );
+                );
+            }
+            else {
+                // Point styling
+                styles.push(
+                    new ol.style.Style({
+                        text: new ol.style.Text({
+                            //text: '\uf041',
+                            text: '\uf276',
+                            font: 'normal 28px FontAwesome',
+                            textBaseline: 'Bottom',
+                            fill: new ol.style.Fill({
+                                color: '#0F373C'
+                            })
+                        })
+                    })
+                );
+            }
         }
         else if(geometry instanceof ol.geom.LineString) {
             // Line styling
