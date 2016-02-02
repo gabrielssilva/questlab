@@ -181,7 +181,6 @@
                     }
                 }
             }
-            print_r($groups);
 
             // Task
             $task = null;
