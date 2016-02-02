@@ -118,8 +118,16 @@
                 }
             }
 
-            // Get Character groups-groups
+            // Get Character groups
             $groups = $this->Charactergroups->getGroupsForQuest($quest['id']);
+            foreach($groups as &$group)
+            {
+                // Get count of solved Stations
+                $group['stations'] = $this->Charactergroupsqueststations->getSolvedStationsForQuestAndGroup(
+                    $quest['id'],
+                    $group['id']
+                );
+            }
 
             // Get uploads
             $uploads = $this->Charactergroupsquests->getMediaForQuest($quest['id']);
@@ -172,6 +180,14 @@
 
             // Get Character groups
             $groups = $this->Charactergroups->getGroupsForGroupsgroup($groupsgroup['id']);
+            foreach($groups as &$group)
+            {
+                // Get count of solved Stations
+                $group['stations'] = $this->Charactergroupsqueststations->getSolvedStationsForQuestAndGroup(
+                    $quest['id'],
+                    $group['id']
+                );
+            }
 
             // Get allowed mimetypes
             $mimetypes = \nre\configs\AppConfig::$mimetypes['charactergroupsquests'];

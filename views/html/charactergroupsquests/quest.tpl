@@ -139,7 +139,10 @@
         <li>
             <span class="date"><?=$dateFormatter->format(new \DateTime($group['created']))?></span>
             <span class="group"><a href="<?=$linker->link(array('charactergroups','group',$seminary['url'],$groupsgroup['url'],$group['url']))?>"><?=$group['name']?></a></span>
-            <span class="xp"><?=sprintf(_('%d XPs'), $group['xps'])?></span>
+            <span class="xp">
+                <?=sprintf(_('%d Stations'), count($group['stations']))?>,
+                <?=sprintf(_('%d XPs'), $group['xps'])?>
+            </span>
         </li>
         <?php endforeach ?>
     </ol>

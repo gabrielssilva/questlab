@@ -98,7 +98,7 @@
                 $stations = $this->Charactergroupsqueststations->getStationsForQuest($quest['id']);
             }
             elseif(!is_null($charactergroup)) {
-                $stations = $this->Charactergroupsqueststations->getStationsForQuestAndGroup($quest['id'], $charactergroup['id']);
+                $stations = $this->Charactergroupsqueststations->getEnteredStationsForQuestAndGroup($quest['id'], $charactergroup['id']);
             }
 
 

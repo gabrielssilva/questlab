@@ -131,28 +131,30 @@
 
 
         /**
-         * Get all Stations for a Character groups Quest and a Character group.
+         * Get all Stations for a Character groups Quest that have been entered
+         * by a Character group.
          *
          * @param   int     $questId    ID of Character groups Quest
          * @param   int     $groupId    ID of Character group
          * @return  array               List of Station
          */
-        public function getStationsForQuestAndGroup($questId, $groupId)
+        private function getEnteredStationsForQuestAndGroup($questId, $groupId)
         {
-            return $this->db->query(
-                'SELECT charactergroupsqueststations.id, charactergroupsqueststations_charactergroups.created, title, url, stationpicture_id, latitude, longitude '.
-                'FROM charactergroupsqueststations_charactergroups '.
-                'INNER JOIN charactergroupsqueststations ON charactergroupsqueststations.id = charactergroupsqueststations_charactergroups.charactergroupsqueststation_id '.
-                'WHERE '.
-                    'charactergroupsqueststations_charactergroups.charactergroup_id = ? AND '.
-                    'charactergroupsqueststations_charactergroups.status = ? AND '.
-                    'charactergroupsquest_id = ? '.
-                'ORDER BY charactergroupsqueststations_charactergroups.created ASC',
-                'iii',
-                $groupId,
-                self::STATUS_ENTERED,
-                $questId
-            );
+            return $this->getStationsForQuestAndGroup($questId, $groupId, self::STATUS_ENTERED);
+        }
+
+
+        /**
+         * Get all Stations for a Character groups Quest that have been solved 
+         * by a Character group.
+         *
+         * @param   int     $questId    ID of Character groups Quest
+         * @param   int     $groupId    ID of Character group
+         * @return  array               List of Station
+         */
+        public function getSolvedStationsForQuestAndGroup($questId, $groupId)
+        {
+            return $this->getStationsForQuestAndGroup($questId, $groupId, self::STATUS_SOLVED);
         }
 
 
@@ -567,6 +569,33 @@
                 'ii',
                 $mediaId,
                 $stationId
+            );
+        }
+
+
+        /**
+         * Get all Stations for a Character groups Quest with a minimum status.
+         *
+         * @param   int     $questId    ID of Character groups Quest
+         * @param   int     $groupId    ID of Character group
+         * @param   int     $statusMin  Minimum status
+         * @return  array               List of Station
+         */
+        private function getStationsForQuestAndGroup($questId, $groupId, $statusMin)
+        {
+            return $this->db->query(
+                'SELECT charactergroupsqueststations.id, charactergroupsqueststations_charactergroups.created, title, url, stationpicture_id, latitude, longitude '.
+                'FROM charactergroupsqueststations_charactergroups '.
+                'INNER JOIN charactergroupsqueststations ON charactergroupsqueststations.id = charactergroupsqueststations_charactergroups.charactergroupsqueststation_id '.
+                'WHERE '.
+                    'charactergroupsqueststations_charactergroups.charactergroup_id = ? AND '.
+                    'charactergroupsqueststations_charactergroups.status >= ? AND '.
+                    'charactergroupsquest_id = ? '.
+                'ORDER BY charactergroupsqueststations_charactergroups.created ASC',
+                'iii',
+                $groupId,
+                $statusMin,
+                $questId
             );
         }
 
