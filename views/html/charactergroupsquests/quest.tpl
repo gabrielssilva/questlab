@@ -68,7 +68,7 @@
 <?php endif ?>
 
 <section>
-    <h1 id="stations"><i class="fa fa-map-signs fa-fw"></i><?=_('Stations')?></h1>
+    <h1 id="stations"><i class="fa fa-map-signs fa-fw"></i><?=_('Character Groups Quest Stations')?></h1>
     <div id="map" class="map"></div>
 
     <?php if(count(array_intersect(array('admin', 'moderator'), \hhu\z\controllers\SeminaryController::$character['characterroles'])) > 0) : ?>
