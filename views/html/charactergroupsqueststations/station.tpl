@@ -99,12 +99,19 @@
                 <?=$timeFormatter->format(new \DateTime($group['created']))?>
             </span>
             <span class="group"><a href="<?=$linker->link(array('charactergroups','group',$seminary['url'],$groupsgroup['url'],$group['url']))?>"><?=$group['name']?></a></span>
-            <?php if($group['solved'] !== false) : ?>
             <span class="xp">
+                <?php if($group['tried']) : ?>
+                <?php if($group['solved']) : ?>
                 <?=_(sprintf('solved at %s', $timeFormatter->format(new \DateTime($group['solved']))))?>
                 <i class="fa fa-check-circle fa-fw"></i>
+                <?php else : ?>
+                <?=_(sprintf('failed at %s', $timeFormatter->format(new \DateTime($group['solved']))))?>
+                <i class="fa fa-times-circle fa-fw"></i>
+                <?php endif ?>
+                <?php else : ?>
+                <i class="fa fa-globe fa-fw"></i>
+                <?php endif ?>
             </span>
-            <?php endif ?>
         </li>
         <?php endforeach ?>
     </ol>

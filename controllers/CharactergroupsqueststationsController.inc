@@ -169,12 +169,19 @@
             {
                 $groups = $this->Charactergroups->getGroupsForQueststation($station['id']);
                 foreach($groups as &$group) {
-                    $group['solved'] = $this->Charactergroupsqueststations->hasCharactergroupSolvedStation(
+                    $group['tried'] = $this->Charactergroupsqueststations->hasCharactergroupTriedStation(
                         $station['id'],
                         $group['id']
                     );
+                    if($group['tried']) {
+                        $group['solved'] = $this->Charactergroupsqueststations->hasCharactergroupSolvedStation(
+                            $station['id'],
+                            $group['id']
+                        );
+                    }
                 }
             }
+            print_r($groups);
 
             // Task
             $task = null;
