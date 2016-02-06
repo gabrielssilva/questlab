@@ -123,8 +123,8 @@
 </section>
 <?php endif ?>
 
-<?php if(!is_null($task)) : ?>
 <section class="task">
+<?php if(!is_null($task)) : ?>
     <h1 id="task"><?=_('Task')?></h1>
 
     <?php if($tried) : ?>
@@ -170,5 +170,9 @@
         <?=$task?>
     </div>
     <?php endif ?>
-</section>
+<?php else : ?>
+    <p>
+        <a class="cta orange" href="<?=$linker->link(array('charactergroupsquests','quest',$seminary['url'],$groupsgroup['url'],$quest['url']))?>"><?=_('Back to overview')?></a>
+    </p>
 <?php endif ?>
+</section>
