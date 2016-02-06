@@ -142,7 +142,9 @@
             <span class="date"><?=$dateFormatter->format(new \DateTime($group['created']))?></span>
             <span class="group"><a href="<?=$linker->link(array('charactergroups','group',$seminary['url'],$groupsgroup['url'],$group['url']))?>"><?=$group['name']?></a></span>
             <span class="xp">
+<?php if(count(array_intersect(array('admin', 'moderator'), \hhu\z\controllers\SeminaryController::$character['characterroles'])) > 0) : ?>
                 <?=sprintf(_('%d Stations'), count($group['stations']))?>,
+<?php endif ?>
                 <?=sprintf(_('%d XPs'), $group['xps'])?>
             </span>
         </li>
