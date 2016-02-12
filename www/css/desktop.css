@@ -349,12 +349,15 @@ input[type="submit"][disabled]{text-shadow:1px 2px #d48c4e;background:#f9ac69;bo
 
 .solvdmsg{margin-top:20px}
 
-.mchoice{list-style-type:lower-alpha;list-style-position:inside}
+.mchoice{list-style-type:none}
 .mchoice li{margin:0 0 10px 0}
-.mchoice input[type=checkbox]{display:inline-block;margin:-19px 10px 0 24px;vertical-align:top}
-.mchoice label{width:90%;display:inline-block;margin:-25px 0 0 0;vertical-align:top}
+.mchoice input[type=checkbox]{display:inline-block;margin:0 10px 0 24px;vertical-align:middle}
+.mchoice label{width:90%;display:inline-block;margin:0 0 0 0;vertical-align:middle}
+.mchoice p{padding:0;margin:0}
 #questions{list-style-type:numeric}
 #questions > li{margin-left:15px}
+#answers{list-style-type:numeric}
+#answers > li{margin-left:15px}
 
 .submit{padding:15px;background:#eae8e4;border-radius:3px;margin-bottom:15px}
 .submit p{margin:15px 0 0 0;font-weight:bold}

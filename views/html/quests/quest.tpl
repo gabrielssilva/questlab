@@ -77,7 +77,7 @@
     <?php endif ?>
     
     <?php if($queststatus != 'solved') : ?>
-    <div class="text">
+    <div>
         <?=$t->t($quest['task'])?>
         <?=$task?>
     </div>

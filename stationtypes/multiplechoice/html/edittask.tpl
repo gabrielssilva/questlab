@@ -5,12 +5,13 @@
     </fieldset>
     <fieldset>
         <legend><?=_('Answers')?></legend>
-        <ul id="answers">
+        <ol id="answers">
             <?php foreach($answers as $answerIndex => &$answer) : ?>
             <li>
+                <?=_('Answer')?>:<br />
                 <label>
                     <input id="answer-<?=$answerIndex?>-tick" type="checkbox" name="answers[<?=$answerIndex?>][tick]" <?php if(array_key_exists('tick', $answer) && $answer['tick']) : ?>checked="checked"<?php endif ?> />
-                    <?=_('correct answer')?>
+                    <?=_('correct')?>
                 </label>
                 <textarea id="answer-<?=$answerIndex?>" name="answers[<?=$answerIndex?>][answer]" class="answer">
 <?=$answer['answer']?>
@@ -22,7 +23,7 @@
             <li>
                 <button class="add-answer" type="button">+</button>
             </li>
-        </ul>
+        </ol>
     </fieldset>
     <input type="submit" name="save" value="<?=_('save')?>" />
 </form>

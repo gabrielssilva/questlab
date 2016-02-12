@@ -165,7 +165,7 @@
         <a class="cta orange" href="<?=$linker->link(array('charactergroupsquests','quest',$seminary['url'],$groupsgroup['url'],$quest['url']))?>"><?=_('Back to overview')?></a>
     </p>
     <?php else : ?>
-    <div class="text">
+    <div>
         <?=$t->t($station['task'])?>
         <?=$task?>
     </div>
