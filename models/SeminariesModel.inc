@@ -66,7 +66,7 @@
         public function getSeminaryById($seminaryId)
         {
             $seminary = $this->db->query(
-                'SELECT id, created, created_user_id, title, url, course, description, seminarymedia_id, charactergroups_seminarymedia_id, achievements_seminarymedia_id, library_seminarymedia_id, map_seminarymedia_id '.
+                'SELECT id, created, created_user_id, title, url, course, description, latitude, longitude, seminarymedia_id, charactergroups_seminarymedia_id, achievements_seminarymedia_id, library_seminarymedia_id, map_seminarymedia_id '.
                 'FROM seminaries '.
                 'WHERE id = ?',
                 'i',
@@ -91,7 +91,7 @@
         public function getSeminaryByUrl($seminaryUrl)
         {
             $seminary = $this->db->query(
-                'SELECT id, created, created_user_id, title, url, course, description, seminarymedia_id, charactergroups_seminarymedia_id, achievements_seminarymedia_id, library_seminarymedia_id, map_seminarymedia_id '.
+                'SELECT id, created, created_user_id, title, url, course, description, latitude, longitude, seminarymedia_id, charactergroups_seminarymedia_id, achievements_seminarymedia_id, library_seminarymedia_id, map_seminarymedia_id '.
                 'FROM seminaries '.
                 'WHERE url = ?',
                 's',
@@ -309,17 +309,19 @@
          * @param   string  $course     New course of Seminary
          * @param   string  $description    New description of Seminary
          */
-        public function editSeminary($seminaryId, $title, $course, $description)
+        public function editSeminary($seminaryId, $title, $course, $description, $latitude, $longitude)
         {
             $this->db->query(
                 'UPDATE seminaries '.
-                'SET title = ?, url = ?, course = ?, description = ? '.
+                'SET title = ?, url = ?, course = ?, description = ?, latitude = ?, longitude = ? '.
                 'WHERE id = ?',
-                'ssssi',
+                'ssssddi',
                 $title,
                 \nre\core\Linker::createLinkParam($title),
                 $course,
                 $description,
+                $latitude,
+                $longitude,
                 $seminaryId
             );
         }

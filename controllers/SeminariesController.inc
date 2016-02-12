@@ -298,6 +298,8 @@
             $title = $seminary['title'];
             $course = $seminary['course'];
             $description = $seminary['description'];
+            $latitude = $seminary['latitude'];
+            $longitude = $seminary['longitude'];
             $fields = array('title', 'course');
             $validation = array();
 
@@ -312,6 +314,8 @@
                 }
                 $course = $this->request->getPostParam('course');
                 $description = $this->request->getPostParam('description');
+                $latitude = $this->request->getPostParam('latitude');
+                $longitude = $this->request->getPostParam('longitude');
 
                 // Validate moodpic
                 $moodpic = null;
@@ -348,7 +352,9 @@
                         $seminary['id'],
                         $title,
                         $course,
-                        $description
+                        $description,
+                        $latitude,
+                        $longitude
                     );
                     $seminary = $this->Seminaries->getSeminaryById($seminary['id']);
 
@@ -388,6 +394,8 @@
             $this->set('title', $title);
             $this->set('course', $course);
             $this->set('description', $description);
+            $this->set('latitude', $latitude);
+            $this->set('longitude', $longitude);
             $this->set('mimetypes', $mimetypes);
             $this->set('validation', $validation);
             $this->set('validationSettings', $validationSettings);
