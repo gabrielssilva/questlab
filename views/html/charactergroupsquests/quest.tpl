@@ -80,6 +80,19 @@
         </ul>
     </nav>
     <?php endif ?>
+    <?php if(count($stationgroups) > 1) : ?>
+    <form method="get" action="<?=$linker->link(null, 5, true, null, true, 'stations')?>">
+        <label for="stationgroup"><?=sprintf(_('%s-Group to show'), $groupsgroup['name'])?>:</label>
+        <select id="stationgroup" name="stationgroup" onchange="this.form.submit();">
+            <?php if(count(array_intersect(array('admin', 'moderator'), \hhu\z\controllers\SeminaryController::$character['characterroles'])) > 0) : ?>
+            <option><?=sprintf(_('Select %s-Group'), $groupsgroup['name'])?></option>
+            <?php endif ?>
+            <?php foreach($stationgroups as &$group) : ?>
+            <option value="<?=$group['id']?>" <?php if($group['id'] == $stationgroup['id']) : ?>selected="selected"<?php endif ?>><?=$group['name']?></option>
+            <?php endforeach ?>
+        </select>
+    </form>
+    <?php endif ?>
     <ol class="grpqlist">
         <?php foreach($stations as &$station) : ?>
         <li>
@@ -154,7 +167,11 @@
 
 <script>
     var markersSource = new ol.source.Vector({
+<?php if(!is_null($stationgroup)) : ?>
+        url: '<?=$linker->link(array('charactergroupsqueststations','index',$seminary['url'],$groupsgroup['url'],$quest['url']), 0, true, array('stationgroup'=>$stationgroup['id']))?>',
+<?php else : ?>
         url: '<?=$linker->link(array('charactergroupsqueststations','index',$seminary['url'],$groupsgroup['url'],$quest['url']))?>',
+<?php endif ?>
         format: new ol.format.GeoJSON()
     });
     markersSource.on('change', function(e) {
@@ -165,12 +182,6 @@
             }
         );
     });
-    /*
-    var pathSource = new ol.source.Vector({
-        url: '<?=$linker->link(array('charactergroupsqueststations','index',$seminary['url'],$groupsgroup['url'],$quest['url']))?>',
-        format: new ol.format.GeoJSON()
-    });
-    */
     var styleFunction = function(feature, resolution) {
         var styles = [];
         var geometry = feature.getGeometry();

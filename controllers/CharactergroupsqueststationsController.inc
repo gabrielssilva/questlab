@@ -84,20 +84,39 @@
             $quest = $this->Charactergroupsquests->getQuestByUrl($groupsgroup['id'], $questUrl);
 
             // Get Character group
+            $charactergroups = null;
             $charactergroup = null;
-            $character = $this->Characters->getCharacterForUserAndSeminary($this->Auth->getUserId(), $seminary['id']);
-            $charactergroups = $this->Charactergroups->getGroupsForCharacter($character['id']);
-            if(!empty($charactergroups)) {
-                // TODO Multiple Character groups
-                $charactergroup = $charactergroups[0];
+            if(count(array_intersect(array('admin', 'moderator'), \hhu\z\controllers\SeminaryController::$character['characterroles'])) > 0) {
+                $charactergroups = $this->Charactergroups->getGroupsForGroupsgroup($groupsgroup['id']);
+            }
+            else {
+                $character = $this->Characters->getCharacterForUserAndSeminary($this->Auth->getUserId(), $seminary['id']);
+                $charactergroups = $this->Charactergroups->getGroupsForCharacter($character['id']);
+                if(!empty($charactergroups)) {
+                    $charactergroup = $stationgroups[0];
+                }
+            }
+            // Select group by parameter
+            $selectedStationGroupId = $this->request->getGetParam('stationgroup');
+            if(!is_null($selectedStationGroupId))
+            {
+                $selectedStationGroupId = intval($selectedStationGroupId);
+                foreach($charactergroups as &$group) {
+                    if($group['id'] == $selectedStationGroupId) {
+                        $charactergroup = $group;
+                        break;
+                    }
+                }
             }
 
             // Get Stations
-            $stations = null;
-            if(count(array_intersect(array('admin', 'moderator'), \hhu\z\controllers\SeminaryController::$character['characterroles'])) > 0) {
-                $stations = $this->Charactergroupsqueststations->getStationsForQuest($quest['id']);
+            $stations = array();
+            if(is_null($charactergroup)) {
+                if(count(array_intersect(array('admin', 'moderator'), \hhu\z\controllers\SeminaryController::$character['characterroles'])) > 0) {
+                    $stations = $this->Charactergroupsqueststations->getStationsForQuest($quest['id']);
+                }
             }
-            elseif(!is_null($charactergroup)) {
+            else {
                 $stations = $this->Charactergroupsqueststations->getEnteredStationsForQuestAndGroup($quest['id'], $charactergroup['id']);
             }
 

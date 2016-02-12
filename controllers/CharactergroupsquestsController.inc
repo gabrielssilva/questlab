@@ -78,13 +78,31 @@
             $questgroup = $this->Questgroups->getQuestgroupById($quest['questgroups_id']);
             $questgroup['entered'] = $this->Questgroups->hasCharacterEnteredQuestgroup($questgroup['id'], self::$character['id']);
 
-            // Get Character group
-            $charactergroup = null;
-            $character = $this->Characters->getCharacterForUserAndSeminary($this->Auth->getUserId(), $seminary['id']);
-            $charactergroups = $this->Charactergroups->getGroupsForCharacter($character['id']);
-            if(!empty($charactergroups)) {
-                // TODO Multiple Character groups
-                $charactergroup = $charactergroups[0];
+            // Get Character group(s)
+            $stationgroups = null;
+            $stationgroup = null;
+            if(count(array_intersect(array('admin', 'moderator'), \hhu\z\controllers\SeminaryController::$character['characterroles'])) > 0) {
+                $stationgroups = $this->Charactergroups->getGroupsForGroupsgroup($groupsgroup['id']);
+            }
+            else
+            {
+                $character = $this->Characters->getCharacterForUserAndSeminary($this->Auth->getUserId(), $seminary['id']);
+                $stationgroups = $this->Charactergroups->getGroupsForCharacter($character['id']);
+                if(!empty($stationgroups)) {
+                    $stationgroup = $stationgroups[0];
+                }
+            }
+            // Select group by parameter
+            $selectedStationGroupId = $this->request->getGetParam('stationgroup');
+            if(!is_null($selectedStationGroupId))
+            {
+                $selectedStationGroupId = intval($selectedStationGroupId);
+                foreach($stationgroups as &$group) {
+                    if($group['id'] == $selectedStationGroupId) {
+                        $stationgroup = $group;
+                        break;
+                    }
+                }
             }
 
             // Get Stations
@@ -99,21 +117,21 @@
                 }
 
                 // Entered state
-                if(!is_null($charactergroup)) {
+                if(!is_null($stationgroup)) {
                     $station['entered'] = $this->Charactergroupsqueststations->hasCharactergroupEnteredStation(
                         $station['id'],
-                        $charactergroup['id']
+                        $stationgroup['id']
                     );
                     if($station['entered']) {
                         $stationsDiscovered = true;
                         $station['tried'] = $this->Charactergroupsqueststations->hasCharactergroupTriedStation(
                             $station['id'],
-                            $charactergroup['id']
+                            $stationgroup['id']
                         );
                         if($station['tried']) {
                             $station['solved'] = $this->Charactergroupsqueststations->hasCharactergroupSolvedStation(
                                 $station['id'],
-                                $charactergroup['id']
+                                $stationgroup['id']
                             );
                         }
                     }
@@ -150,6 +168,8 @@
             $this->set('questgroup', $questgroup);
             $this->set('stations', $stations);
             $this->set('stationsDiscovered', $stationsDiscovered);
+            $this->set('stationgroups', $stationgroups);
+            $this->set('stationgroup', $stationgroup);
             $this->set('groups', $groups);
             $this->set('uploads', $uploads);
         }

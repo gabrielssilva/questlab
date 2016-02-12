@@ -589,7 +589,7 @@
                 'INNER JOIN charactergroupsqueststations ON charactergroupsqueststations.id = charactergroupsqueststations_charactergroups.charactergroupsqueststation_id '.
                 'WHERE '.
                     'charactergroupsqueststations_charactergroups.charactergroup_id = ? AND '.
-                    'charactergroupsqueststations_charactergroups.status >= ? AND '.
+                    'charactergroupsqueststations_charactergroups.status = ? AND '.
                     'charactergroupsquest_id = ? '.
                 'ORDER BY charactergroupsqueststations_charactergroups.created ASC',
                 'iii',
