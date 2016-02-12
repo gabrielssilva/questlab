@@ -1861,6 +1861,8 @@ CREATE TABLE `seminaries` (
   `url` varchar(128) COLLATE utf8mb4_unicode_ci NOT NULL,
   `course` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `description` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `latitude` decimal(10,6) DEFAULT NULL,
+  `longitude` decimal(10,6) DEFAULT NULL,
   `seminarymedia_id` int(11) DEFAULT NULL,
   `charactergroups_seminarymedia_id` int(11) DEFAULT NULL,
   `achievements_seminarymedia_id` int(11) DEFAULT NULL,
