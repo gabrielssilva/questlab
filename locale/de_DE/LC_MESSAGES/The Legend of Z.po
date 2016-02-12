@@ -1,15 +1,15 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: The Legend of Z\n"
-"POT-Creation-Date: 2016-02-02 10:47+0100\n"
-"PO-Revision-Date: 2016-02-02 10:47+0100\n"
+"POT-Creation-Date: 2016-02-12 11:06+0100\n"
+"PO-Revision-Date: 2016-02-12 11:07+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de_DE\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.8.6\n"
+"X-Generator: Poedit 1.8.7\n"
 "X-Poedit-Basepath: ../../..\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Poedit-SourceCharset: UTF-8\n"
@@ -71,7 +71,7 @@ msgstr "Lösungsvorschlag bewertet"
 msgid "solved"
 msgstr "Richtig!"
 
-#: controllers/SeminariesController.inc:409
+#: controllers/SeminariesController.inc:417
 msgid "Copy"
 msgstr "Kopie"
 
@@ -502,7 +502,7 @@ msgstr "Texteingabe"
 #: views/html/charactergroupsquests/manage.tpl:17
 #: views/html/charactergroupsquests/manage.tpl:85
 #: views/html/charactergroupsquests/quest.tpl:21
-#: views/html/charactergroupsquests/quest.tpl:144
+#: views/html/charactergroupsquests/quest.tpl:161
 #: views/html/characters/character.tpl:81
 #: views/html/characters/character.tpl:83
 #: views/html/characters/character.tpl:95
@@ -960,7 +960,7 @@ msgstr "Spiele weiter, um diesen geheimen Erfolg freizuschalten"
 #: views/html/introduction/index.tpl:22 views/html/questgroups/edit.tpl:60
 #: views/html/questgroups/edittexts.tpl:25
 #: views/html/questgroupshierarchy/edit.tpl:57
-#: views/html/seminaries/edit.tpl:73
+#: views/html/seminaries/edit.tpl:79
 msgid "edit"
 msgstr "bearbeiten"
 
@@ -1339,7 +1339,7 @@ msgid "upload"
 msgstr "hochladen"
 
 #: views/html/charactergroupsquests/manage.tpl:81
-#: views/html/charactergroupsquests/quest.tpl:143
+#: views/html/charactergroupsquests/quest.tpl:159
 #, php-format
 msgid "%d Stations"
 msgstr "%d Stationen"
@@ -1370,11 +1370,21 @@ msgstr "Verlorene Quest"
 msgid "Character Groups Quest Stations"
 msgstr "Stationen"
 
-#: views/html/charactergroupsquests/quest.tpl:77
+#: views/html/charactergroupsquests/quest.tpl:79
 msgid "Create new station"
 msgstr "Neue Station erstellen"
 
+#: views/html/charactergroupsquests/quest.tpl:85
+#, php-format
+msgid "%s-Group to show"
+msgstr "%s-Gruppen anzeigen"
+
 #: views/html/charactergroupsquests/quest.tpl:88
+#, php-format
+msgid "Select %s-Group"
+msgstr "%s-Gruppe auswählen"
+
+#: views/html/charactergroupsquests/quest.tpl:103
 msgid "Station not yet discovered"
 msgstr "Station noch nicht entdeckt"
 
@@ -1384,6 +1394,7 @@ msgstr "Neue Station"
 
 #: views/html/charactergroupsqueststations/create.tpl:76
 #: views/html/charactergroupsqueststations/edit.tpl:76
+#: views/html/seminaries/edit.tpl:74
 msgid "Location"
 msgstr "Standort"
 
@@ -1471,7 +1482,18 @@ msgstr "Aufgabe bearbeiten"
 msgid "Edit Station task"
 msgstr "Stationsaufgabe bearbeiten"
 
+#: views/html/charactergroupsqueststations/station.tpl:100
+#, php-format
+msgid "solved at %s"
+msgstr "gelöst um %s"
+
+#: views/html/charactergroupsqueststations/station.tpl:103
+#, php-format
+msgid "failed at %s"
+msgstr "gescheitert um %s"
+
 #: views/html/charactergroupsqueststations/station.tpl:165
+#: views/html/charactergroupsqueststations/station.tpl:175
 msgid "Back to overview"
 msgstr "Zurück zur Übersicht"
 
