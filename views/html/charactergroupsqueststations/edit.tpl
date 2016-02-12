@@ -209,8 +209,13 @@
         controls: ol.control.defaults(),
         target: 'map',
         view: new ol.View({
+<?php if(!is_null($latitude) && !is_null($longitude)) : ?>
+            center: ol.proj.transform([<?=$longitude?>, <?=$latitude?>], 'EPSG:4326', 'EPSG:3857'),
+            zoom: 17,
+<?php else : ?>
             center: [0, 0],
             zoom: 0,
+<?php endif ?>
             maxZoom: 19
         })
     });
@@ -228,7 +233,7 @@
         drawSource.addFeature(
             new ol.Feature({
                 geometry: new ol.geom.Point(
-                    ol.proj.transform([longitude, latitude], 'EPSG:4326', 'EPSG:3857')
+                    ol.proj.transform([parseFloat(longitude), parseFloat(latitude)], 'EPSG:4326', 'EPSG:3857')
                 )
             })
         );

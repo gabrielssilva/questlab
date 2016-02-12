@@ -173,8 +173,13 @@
         controls: ol.control.defaults(),
         target: 'map',
         view: new ol.View({
+<?php if(!is_null($seminary['latitude']) && !is_null($seminary['longitude'])) : ?>
+            center: ol.proj.transform([<?=$seminary['longitude']?>, <?=$seminary['latitude']?>], 'EPSG:4326', 'EPSG:3857'),
+            zoom: 15,
+<?php else : ?>
             center: [0, 0],
             zoom: 0,
+<?php endif ?>
             maxZoom: 19
         })
     });
