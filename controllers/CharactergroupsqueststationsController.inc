@@ -93,7 +93,7 @@
                 $character = $this->Characters->getCharacterForUserAndSeminary($this->Auth->getUserId(), $seminary['id']);
                 $charactergroups = $this->Charactergroups->getGroupsForCharacter($character['id']);
                 if(!empty($charactergroups)) {
-                    $charactergroup = $stationgroups[0];
+                    $charactergroup = $charactergroups[0];
                 }
             }
             // Select group by parameter
