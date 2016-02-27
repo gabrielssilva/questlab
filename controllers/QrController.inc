@@ -35,12 +35,12 @@
          *
          * Redirect to a Character groups Quest Station.
          *
-         * @param   int $stationId  ID of Character groups Quest Station
+         * @param   string  $stationHash    Hash of Character groups Quest Station
          */
-        public function cgqs($stationId)
+        public function cgqs($stationHash)
         {
             // Get station
-            $station = $this->Charactergroupsqueststations->getStationById($stationId);
+            $station = $this->Charactergroupsqueststations->getStationByHash($stationHash);
 
             // Get Character groups Quests
             $quest = $this->Charactergroupsquests->getQuestById($station['charactergroupsquest_id']);

@@ -72,7 +72,7 @@
             $station = $this->Charactergroupsqueststations->getStationByUrl($quest['id'], $stationUrl);
 
             // Generate QR-code
-            $url = $this->linker->link(array('qr', 'cgqs', $station['id']), 0, true, null, true, null, true);
+            $url = $this->linker->link(array('qr', 'cgqs', $station['url']), 0, true, null, true, null, true);
             $file = $this->generateQRcode($url, $size);
             if(is_null($file)) {
                 return;

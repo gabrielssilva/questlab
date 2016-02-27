@@ -38,6 +38,12 @@
          * @var int;
          */
         const STATUS_SOLVED = 3;
+        /**
+         * String length for Station URLs
+         *
+         * @var int
+         */
+        const URL_LENGTH = 10;
 
         /**
          * Required models
@@ -86,11 +92,12 @@
 
 
         /**
-         * Get a Station by its ID.
+         * Get a Station by its URL.
          *
          * @throws  \nre\exceptions\IdNotFoundException
-         * @param   int $stationId  ID of Station to get
-         * @return  array           Station data
+         * @param   int     $groupsquestId  ID of Character groups Quest
+         * @param   string  $stationUrl     URL-title of Station to get
+         * @return  array                   Station data
          */
         public function getStationByUrl($groupsquestId, $stationUrl)
         {
@@ -104,6 +111,31 @@
             );
             if(empty($data)) {
                 throw new \nre\exceptions\IdNotFoundException($stationUrl);
+            }
+
+
+            return $data[0];
+        }
+
+
+        /**
+         * Get a Station by its Hash.
+         *
+         * @throws  \nre\exceptions\IdNotFoundException
+         * @param   string  $stationUrl Hash of Station to get
+         * @return  array               Station data
+         */
+        public function getStationByHash($stationHash)
+        {
+            $data = $this->db->query(
+                'SELECT id, charactergroupsquest_id, stationtype_id, title, url, stationpicture_id, prolog, task, latitude, longitude, righttext, wrongtext, rightimage_id, rightav_id, wrongimage_id, wrongav_id '.
+                'FROM charactergroupsqueststations '.
+                'WHERE url = ?',
+                's',
+                $stationHash
+            );
+            if(empty($data)) {
+                throw new \nre\exceptions\IdNotFoundException($stationHash);
             }
 
 
@@ -455,7 +487,7 @@
                 '(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
                 'iississddss',
                 $questId, $stationtypeId, $title,
-                \nre\core\Linker::createLinkParam($title), $pos,
+                $this->createStationUrl(), $pos,
                 $prolog, $task, $latitude, $longitude, $righttext, $wrongtext
             );
 
@@ -482,11 +514,10 @@
         {
             $this->db->query(
                 'UPDATE charactergroupsqueststations '.
-                'SET stationtype_id = ?, title = ?, url = ?, prolog = ?, task = ?, latitude = ?, longitude = ?, righttext = ?, wrongtext = ? '.
+                'SET stationtype_id = ?, title = ?, prolog = ?, task = ?, latitude = ?, longitude = ?, righttext = ?, wrongtext = ? '.
                 'WHERE id = ?',
-                'issssddssi',
+                'isssddssi',
                 $stationtypeId, $title,
-                \nre\core\Linker::createLinkParam($title),
                 $prolog, $task, $latitude, $longitude, $righttext, $wrongtext,
                 $stationId
             );
@@ -597,6 +628,22 @@
                 $statusMin,
                 $questId
             );
+        }
+
+
+        /**
+         * Generate a URL for Stations with random characters.
+         *
+         * @return  string  A string with random characters
+         */
+        private function createStationUrl()
+        {
+            // Length of URL
+            $length = max(0, min(32, self::URL_LENGTH));
+
+
+            // Create and return random string
+            return substr(md5(microtime()), rand(0, 32-$length), $length);
         }
 
     }
