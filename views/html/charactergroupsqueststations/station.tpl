@@ -175,9 +175,10 @@
 <?php if(!is_null($task)) : ?>
     <h1 id="task"><?=_('Task')?></h1>
 
-    <?php if($tried) : ?>
-    <?php if($solved): ?>
-    <div class="text">
+    <?php if($solved) : ?>
+    <div class="success">
+        <p class="fwb"><i class="fa fa-check-circle fa-fw"></i><?=_('solved')?></p>
+        <p><small><?=$t->t($station['righttext'])?></small></p>
         <?php if(array_key_exists('rightimage', $station)) : ?>
         <a href="<?=$linker->link(array('media','seminary',$seminary['url'],$station['rightimage']['url']))?>">
             <img src="<?=$linker->link(array('media','seminary',$seminary['url'],$station['rightimage']['url'],'charactergroupsqueststation'))?>" />
@@ -190,10 +191,11 @@
             <video controls="controls" autoplay="autoplay" preload="metadata" src="<?=$linker->link(array('media','seminary',$seminary['url'],$station['rightav']['url']))?>"></video>
             <?php endif ?>
         <?php endif ?>
-        <?=$t->t($station['righttext'])?>
     </div>
-    <?php else : ?>
-    <div class="text">
+    <?php elseif($tried) : ?>
+    <div class="error">
+        <p class="fwb"><i class="fa fa-times-circle fa-fw"></i><?=_('unsolved')?></p>
+        <p><small><?=$t->t($station['wrongtext'])?></small></p>
         <?php if(array_key_exists('wrongimage', $station)) : ?>
         <a href="<?=$linker->link(array('media','seminary',$seminary['url'],$station['wrongimage']['url']))?>">
             <img src="<?=$linker->link(array('media','seminary',$seminary['url'],$station['wrongimage']['url'],'charactergroupsqueststation'))?>" />
@@ -206,21 +208,16 @@
             <video controls="controls" autoplay="autoplay" preload="metadata" src="<?=$linker->link(array('media','seminary',$seminary['url'],$station['wrongav']['url']))?>"></video>
             <?php endif ?>
         <?php endif ?>
-        <?=$t->t($station['wrongtext'])?>
     </div>
     <?php endif ?>
-    <p>
-        <a class="cta orange" href="<?=$linker->link(array('charactergroupsquests','quest',$seminary['url'],$groupsgroup['url'],$quest['url']))?>"><?=_('Back to overview')?></a>
-    </p>
-    <?php else : ?>
     <div>
         <?=$t->t($station['task'])?>
         <?=$task?>
     </div>
-    <?php endif ?>
+<?php if($tried) : ?>
+    <p><a class="cta orange" href="<?=$linker->link(array('charactergroupsquests','quest',$seminary['url'],$groupsgroup['url'],$quest['url']))?>"><?=_('Back to overview')?></a></p>
+<?php endif ?>
 <?php else : ?>
-    <p>
-        <a class="cta orange" href="<?=$linker->link(array('charactergroupsquests','quest',$seminary['url'],$groupsgroup['url'],$quest['url']))?>"><?=_('Back to overview')?></a>
-    </p>
+    <p><a class="cta orange" href="<?=$linker->link(array('charactergroupsquests','quest',$seminary['url'],$groupsgroup['url'],$quest['url']))?>"><?=_('Back to overview')?></a></p>
 <?php endif ?>
 </section>
