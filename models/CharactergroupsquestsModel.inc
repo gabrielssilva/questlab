@@ -104,7 +104,7 @@
                 $questId
             );
             if(empty($data)) {
-                throw new \nre\exceptions\IdNotFoundException($questUrl);
+                throw new \nre\exceptions\IdNotFoundException($questId);
             }
 
 
