@@ -225,7 +225,7 @@
             $task = null;
             $stationtype = $this->Stationtypes->getStationtypeById($station['stationtype_id']);
             if(!is_null($stationtype['classname'])) {
-                $task = $this->renderTask($stationtype['classname'], $seminary, $groupsgroup, $quest, $station, $charactergroup);
+                $task = $this->renderTask($stationtype['classname'], $seminary, $groupsgroup, $quest, $station, $stationgroup);
             }
             else
             {

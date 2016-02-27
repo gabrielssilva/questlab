@@ -115,6 +115,31 @@
             );
         }
 
+
+        /**
+         * Get Character group’s submitted answer for a station.
+         *
+         * @param   int     $stationId          ID of Station
+         * @param   int     $charactergroupId   ID of Character group
+         * @return  string                      Submitted answer
+         */
+        public function getCharactergroupSubmission($stationId, $charactergroupId)
+        {
+            $data = $this->db->query(
+                'SELECT keyword '.
+                'FROM stationtypes_keyword_charactergroups '.
+                'WHERE station_id = ? AND charactergroup_id = ?',
+                'ii',
+                $stationId, $charactergroupId
+            );
+            if(!empty($data)) {
+                return $data[0]['keyword'];
+            }
+
+
+            return null;
+        }
+
     }
 
 ?>

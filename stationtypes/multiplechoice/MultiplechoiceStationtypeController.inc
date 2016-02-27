@@ -19,6 +19,10 @@
      */
     class MultiplechoiceStationtypeController extends \hhu\z\controllers\StationtypeController
     {
+        /**
+         * Required models
+         */
+        public $models = array('charactergroupsqueststations');
 
 
 
@@ -98,10 +102,25 @@
         {
             // Get answers
             $answers = $this->Multiplechoice->getAnswers($station['id']);
+            if(!is_null($charactergroup)) {
+                foreach($answers as &$answer) {
+                    $answer['submission'] = $this->Multiplechoice->getCharactergroupSubmission(
+                        $answer['id'],
+                        $charactergroup['id']
+                    );
+                }
+            }
+
+            // Get status
+            $tried = $this->Charactergroupsqueststations->hasCharactergroupTriedStation(
+                $station['id'],
+                $charactergroup['id']
+            );
 
 
             // Pass data to view
             $this->set('answers', $answers);
+            $this->set('tried', $tried);
         }
 
 

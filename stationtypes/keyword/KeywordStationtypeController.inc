@@ -20,6 +20,10 @@
     class KeywordStationtypeController extends \hhu\z\controllers\StationtypeController
     {
         /**
+         * Required models
+         */
+        public $models = array('charactergroupsqueststations');
+        /**
          * Required components
          *
          * @var array
@@ -79,6 +83,28 @@
          */
         public function quest($seminary, $groupsgroup, $quest, $station, $charactergroup)
         {
+            // Get submission
+            $submission = null;
+            if(!is_null($charactergroup)) {
+                $submission = $this->Keyword->getCharactergroupSubmission(
+                    $station['id'],
+                    $charactergroup['id']
+                );
+            }
+
+            // Get status
+            $tried = false;
+            if(!is_null($charactergroup)) {
+                $tried = $this->Charactergroupsqueststations->hasCharactergroupTriedStation(
+                    $station['id'],
+                    $charactergroup['id']
+                );
+            }
+
+
+            // Pass data to view
+            $this->set('submission', $submission);
+            $this->set('tried', $tried);
         }
 
 

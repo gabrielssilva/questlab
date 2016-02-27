@@ -116,9 +116,9 @@
 
 
         /**
-         * Save Character group’s submitted answer for a station.
+         * Save Character group’s submission for an answer
          *
-         * @param   int     $stationId          ID of Station
+         * @param   int     $answerId           ID of answer
          * @param   int     $charactergroupId   ID of Character group
          * @param   string  $answer             Submitted answer
          */
@@ -134,6 +134,31 @@
                 'iiii',
                 $answerId, $charactergroupId, $answer, $answer
             );
+        }
+
+
+        /**
+         * Get Character group’s submission for an answer.
+         *
+         * @param   int     $answerId           ID of answer
+         * @param   int     $charactergroupId   ID of Character group
+         * @return  boolean                     Submission
+         */
+        public function getCharactergroupSubmission($answerId, $charactergroupId)
+        {
+            $data = $this->db->query(
+                'SELECT ticked '.
+                'FROM stationtypes_multiplechoice_charactergroups '.
+                'WHERE stationtypes_multiplechoice_id = ? AND charactergroup_id = ?',
+                'ii',
+                $answerId, $charactergroupId
+            );
+            if(!empty($data)) {
+                return boolval($data[0]['ticked']);
+            }
+
+
+            return false;
         }
 
     }
