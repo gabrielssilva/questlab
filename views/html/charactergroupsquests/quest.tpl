@@ -136,7 +136,7 @@
                 <i class="fa fa-times-circle"></i>
                 <?php endif ?>
                 <?php else : ?>
-                <i class="fa fa-globe"></i>
+                <img title="<?=$station['title']?>" src="<?=$linker->link(array('media','charactergroupsqueststation',$seminary['url'],$groupsgroup['url'],$quest['url'],$station['url']),0,true,array('stationgroup'=>$stationgroup['id']))?>" />
                 <?php endif ?>
             </a>
             <?php else : ?>
