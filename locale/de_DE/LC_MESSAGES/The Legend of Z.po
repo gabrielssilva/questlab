@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: The Legend of Z\n"
-"POT-Creation-Date: 2016-02-12 11:06+0100\n"
-"PO-Revision-Date: 2016-02-12 11:07+0100\n"
+"POT-Creation-Date: 2016-02-27 17:31+0100\n"
+"PO-Revision-Date: 2016-02-27 17:32+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de_DE\n"
@@ -66,8 +66,9 @@ msgstr "Lösungsvorschlag bewertet"
 #: controllers/QuestsController.inc:1247
 #: questtypes/submit/html/submission.tpl:30
 #: views/html/achievements/conditions.tpl:50
-#: views/html/achievements/conditions.tpl:117 views/html/quests/quest.tpl:68
-#: views/html/quests/submissions.tpl:26
+#: views/html/achievements/conditions.tpl:117
+#: views/html/charactergroupsqueststations/station.tpl:180
+#: views/html/quests/quest.tpl:68 views/html/quests/submissions.tpl:26
 msgid "solved"
 msgstr "Richtig!"
 
@@ -284,10 +285,10 @@ msgstr "Erlaubte Dateiformate"
 #: views/html/charactergroupsquests/edit.tpl:66
 #: views/html/charactergroupsquests/manage.tpl:68
 #: views/html/charactergroupsqueststations/create.tpl:71
-#: views/html/charactergroupsqueststations/create.tpl:110
-#: views/html/charactergroupsqueststations/create.tpl:116
-#: views/html/charactergroupsqueststations/create.tpl:127
-#: views/html/charactergroupsqueststations/create.tpl:133
+#: views/html/charactergroupsqueststations/create.tpl:112
+#: views/html/charactergroupsqueststations/create.tpl:118
+#: views/html/charactergroupsqueststations/create.tpl:129
+#: views/html/charactergroupsqueststations/create.tpl:135
 #: views/html/charactergroupsqueststations/edit.tpl:71
 #: views/html/charactergroupsqueststations/edit.tpl:117
 #: views/html/charactergroupsqueststations/edit.tpl:132
@@ -311,10 +312,10 @@ msgstr "%s-Dateien"
 #: views/html/charactergroupsquests/edit.tpl:66
 #: views/html/charactergroupsquests/manage.tpl:68
 #: views/html/charactergroupsqueststations/create.tpl:71
-#: views/html/charactergroupsqueststations/create.tpl:110
-#: views/html/charactergroupsqueststations/create.tpl:116
-#: views/html/charactergroupsqueststations/create.tpl:127
-#: views/html/charactergroupsqueststations/create.tpl:133
+#: views/html/charactergroupsqueststations/create.tpl:112
+#: views/html/charactergroupsqueststations/create.tpl:118
+#: views/html/charactergroupsqueststations/create.tpl:129
+#: views/html/charactergroupsqueststations/create.tpl:135
 #: views/html/charactergroupsqueststations/edit.tpl:71
 #: views/html/charactergroupsqueststations/edit.tpl:117
 #: views/html/charactergroupsqueststations/edit.tpl:132
@@ -430,8 +431,9 @@ msgstr "Kommentar"
 
 #: questtypes/submit/html/submission.tpl:31
 #: views/html/achievements/conditions.tpl:49
-#: views/html/achievements/conditions.tpl:116 views/html/quests/quest.tpl:73
-#: views/html/quests/submissions.tpl:16
+#: views/html/achievements/conditions.tpl:116
+#: views/html/charactergroupsqueststations/station.tpl:197
+#: views/html/quests/quest.tpl:73 views/html/quests/submissions.tpl:16
 msgid "unsolved"
 msgstr "Leider falsch!"
 
@@ -502,7 +504,7 @@ msgstr "Texteingabe"
 #: views/html/charactergroupsquests/manage.tpl:17
 #: views/html/charactergroupsquests/manage.tpl:85
 #: views/html/charactergroupsquests/quest.tpl:21
-#: views/html/charactergroupsquests/quest.tpl:161
+#: views/html/charactergroupsquests/quest.tpl:167
 #: views/html/characters/character.tpl:81
 #: views/html/characters/character.tpl:83
 #: views/html/characters/character.tpl:95
@@ -622,7 +624,7 @@ msgstr "Achievement"
 #: views/html/charactergroups/deletegroupsgroup.tpl:10
 #: views/html/charactergroupsquests/delete.tpl:11
 #: views/html/charactergroupsqueststations/delete.tpl:12
-#: views/html/charactergroupsqueststations/station.tpl:13
+#: views/html/charactergroupsqueststations/station.tpl:37
 #: views/html/characters/delete.tpl:13 views/html/charactertypes/delete.tpl:10
 #: views/html/charactertypes/index.tpl:21 views/html/library/delete.tpl:10
 #: views/html/library/edit.tpl:79 views/html/pages/delete.tpl:11
@@ -955,7 +957,7 @@ msgstr "Spiele weiter, um diesen geheimen Erfolg freizuschalten"
 #: views/html/charactergroups/editgroup.tpl:79
 #: views/html/charactergroups/editgroupsgroup.tpl:46
 #: views/html/charactergroupsquests/edit.tpl:90
-#: views/html/charactergroupsqueststations/station.tpl:12
+#: views/html/charactergroupsqueststations/station.tpl:36
 #: views/html/characters/edit.tpl:104 views/html/charactertypes/index.tpl:20
 #: views/html/introduction/index.tpl:22 views/html/questgroups/edit.tpl:60
 #: views/html/questgroups/edittexts.tpl:25
@@ -984,7 +986,7 @@ msgstr "bearbeiten"
 #: views/html/charactergroupsqueststations/edit.tpl:4
 #: views/html/charactergroupsqueststations/edittask.tpl:4
 #: views/html/charactergroupsqueststations/station.tpl:4
-#: views/html/charactergroupsqueststations/station.tpl:88
+#: views/html/charactergroupsqueststations/station.tpl:136
 #: views/html/characters/character.tpl:117 views/html/seminaries/copy.tpl:105
 #: views/html/seminarymenu/index.tpl:5
 msgid "Character Groups"
@@ -1124,7 +1126,7 @@ msgstr "Motto"
 #: views/html/charactergroups/creategroup.tpl:73
 #: views/html/charactergroups/creategroupsgroup.tpl:46
 #: views/html/charactergroupsquests/create.tpl:89
-#: views/html/charactergroupsqueststations/create.tpl:139
+#: views/html/charactergroupsqueststations/create.tpl:141
 #: views/html/characters/register.tpl:92
 #: views/html/charactertypes/create.tpl:40 views/html/library/create.tpl:42
 #: views/html/library/edit.tpl:120 views/html/pages/create.tpl:46
@@ -1339,7 +1341,7 @@ msgid "upload"
 msgstr "hochladen"
 
 #: views/html/charactergroupsquests/manage.tpl:81
-#: views/html/charactergroupsquests/quest.tpl:159
+#: views/html/charactergroupsquests/quest.tpl:165
 #, php-format
 msgid "%d Stations"
 msgstr "%d Stationen"
@@ -1380,11 +1382,12 @@ msgid "%s-Group to show"
 msgstr "%s-Gruppen anzeigen"
 
 #: views/html/charactergroupsquests/quest.tpl:88
+#: views/html/charactergroupsqueststations/station.tpl:53
 #, php-format
 msgid "Select %s-Group"
 msgstr "%s-Gruppe auswählen"
 
-#: views/html/charactergroupsquests/quest.tpl:103
+#: views/html/charactergroupsquests/quest.tpl:107
 msgid "Station not yet discovered"
 msgstr "Station noch nicht entdeckt"
 
@@ -1409,50 +1412,54 @@ msgid "Stationttype Empty"
 msgstr "Leere Aufgabe"
 
 #: views/html/charactergroupsqueststations/create.tpl:92
+msgid "Stationtype singlechoice"
+msgstr "Single Choice"
+
+#: views/html/charactergroupsqueststations/create.tpl:94
 #: views/html/charactergroupsqueststations/edit.tpl:92
 msgid "Stationtype multiplechoice"
 msgstr "Multiple Choice"
 
-#: views/html/charactergroupsqueststations/create.tpl:94
+#: views/html/charactergroupsqueststations/create.tpl:96
 #: views/html/charactergroupsqueststations/edit.tpl:94
 msgid "Stationtype keyword"
 msgstr "Schlüsselwort"
 
-#: views/html/charactergroupsqueststations/create.tpl:100
-#: views/html/charactergroupsqueststations/create.tpl:101
+#: views/html/charactergroupsqueststations/create.tpl:102
+#: views/html/charactergroupsqueststations/create.tpl:103
 #: views/html/charactergroupsqueststations/edit.tpl:100
 #: views/html/charactergroupsqueststations/edit.tpl:101
 #: views/html/quests/quest.tpl:16
 msgid "Prolog"
 msgstr "Prolog"
 
-#: views/html/charactergroupsqueststations/create.tpl:102
-#: views/html/charactergroupsqueststations/create.tpl:103
+#: views/html/charactergroupsqueststations/create.tpl:104
+#: views/html/charactergroupsqueststations/create.tpl:105
 #: views/html/charactergroupsqueststations/edit.tpl:102
 #: views/html/charactergroupsqueststations/edit.tpl:103
-#: views/html/charactergroupsqueststations/station.tpl:128
+#: views/html/charactergroupsqueststations/station.tpl:176
 #: views/html/quests/create.tpl:99 views/html/quests/edit.tpl:102
 #: views/html/quests/quest.tpl:64
 msgid "Task"
 msgstr "Aufgabe"
 
-#: views/html/charactergroupsqueststations/create.tpl:106
+#: views/html/charactergroupsqueststations/create.tpl:108
 #: views/html/charactergroupsqueststations/edit.tpl:105
 msgid "Correctly solved"
 msgstr "Richtig gelöst"
 
-#: views/html/charactergroupsqueststations/create.tpl:120
+#: views/html/charactergroupsqueststations/create.tpl:122
 #: views/html/charactergroupsqueststations/edit.tpl:136
 msgid "Right text"
 msgstr "Text für richtig gelöste Aufgabe"
 
-#: views/html/charactergroupsqueststations/create.tpl:123
+#: views/html/charactergroupsqueststations/create.tpl:125
 #: views/html/charactergroupsqueststations/edit.tpl:139
 msgid "Incorreclty solved"
 msgstr "Falsch gelöst"
 
-#: views/html/charactergroupsqueststations/create.tpl:136
-#: views/html/charactergroupsqueststations/create.tpl:137
+#: views/html/charactergroupsqueststations/create.tpl:138
+#: views/html/charactergroupsqueststations/create.tpl:139
 #: views/html/charactergroupsqueststations/edit.tpl:169
 #: views/html/charactergroupsqueststations/edit.tpl:170
 #: views/html/quests/create.tpl:101 views/html/quests/create.tpl:102
@@ -1482,18 +1489,18 @@ msgstr "Aufgabe bearbeiten"
 msgid "Edit Station task"
 msgstr "Stationsaufgabe bearbeiten"
 
-#: views/html/charactergroupsqueststations/station.tpl:100
+#: views/html/charactergroupsqueststations/station.tpl:148
 #, php-format
 msgid "solved at %s"
 msgstr "gelöst um %s"
 
-#: views/html/charactergroupsqueststations/station.tpl:103
+#: views/html/charactergroupsqueststations/station.tpl:151
 #, php-format
 msgid "failed at %s"
 msgstr "gescheitert um %s"
 
-#: views/html/charactergroupsqueststations/station.tpl:165
-#: views/html/charactergroupsqueststations/station.tpl:175
+#: views/html/charactergroupsqueststations/station.tpl:218
+#: views/html/charactergroupsqueststations/station.tpl:221
 msgid "Back to overview"
 msgstr "Zurück zur Übersicht"
 
