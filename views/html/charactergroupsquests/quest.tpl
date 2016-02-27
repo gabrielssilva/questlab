@@ -98,7 +98,11 @@
         <li>
             <span class="group">
                 <?php if(!array_key_exists('entered', $station) || $station['entered']) : ?>
+                <?php if(!is_null($stationgroup)) : ?>
+                <a href="<?=$linker->link(array('charactergroupsqueststations','station',$seminary['url'],$groupsgroup['url'],$quest['url'],$station['url']),0,true,array('stationgroup'=>$stationgroup['id']))?>"><?=$station['title']?></a>
+                <?php else : ?>
                 <a href="<?=$linker->link(array('charactergroupsqueststations','station',$seminary['url'],$groupsgroup['url'],$quest['url'],$station['url']))?>"><?=$station['title']?></a>
+                <?php endif ?>
                 <?php else : ?>
                 <?=_('Station not yet discovered')?>
                 <?php endif ?>

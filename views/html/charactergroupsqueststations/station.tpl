@@ -7,6 +7,7 @@
 </ul>
 
 <div class="grpqsicon">
+<?php if($entered) : ?>
 <?php if($tried) : ?>
 <?php if($solved) : ?>
 <?php if($station['stationpicture_id']) : ?>
@@ -23,6 +24,9 @@
 <?php else : ?>
     <img title="<?=$station['title']?>" src="<?=$linker->link(array('media','charactergroupsqueststation',$seminary['url'],$groupsgroup['url'],$quest['url'],$station['url']),0,true)?>" />
 <?php endif ?>
+<?php endif ?>
+<?php else : ?>
+    <i class="fa fa-question-circle"></i>
 <?php endif ?>
 </div>
 
@@ -41,16 +45,40 @@
             <i class="fa fa-qrcode"></i>
         </a>
     </li>
-    <?php endif ?>
-    <?php if($tried) : ?>
     <li>
-        <?php if($solved) : ?>
-        <i class="fa fa-check-circle fa-fw"></i>
-        <?php else : ?>
-        <i class="fa fa-times-circle fa-fw"></i>
+        <?php if(count($stationgroups) > 1) : ?>
+        <form method="get">
+            <select id="stationgroup" name="stationgroup" onchange="this.form.submit();">
+                <?php if(count(array_intersect(array('admin', 'moderator'), \hhu\z\controllers\SeminaryController::$character['characterroles'])) > 0) : ?>
+                <option><?=sprintf(_('Select %s-Group'), $groupsgroup['name'])?></option>
+                <?php endif ?>
+                <?php foreach($stationgroups as &$group) : ?>
+                <option value="<?=$group['id']?>" <?php if($group['id'] == $stationgroup['id']) : ?>selected="selected"<?php endif ?>><?=$group['name']?></option>
+                <?php endforeach ?>
+            </select>
+        </form>
         <?php endif ?>
     </li>
     <?php endif ?>
+<?php if($entered) : ?>
+    <li>
+<?php if($tried) : ?>
+<?php if($solved) : ?>
+        <i class="fa fa-check-circle fa-fw"></i>
+        <?=$dateFormatter->format(new \DateTime($solved))?>
+        <?=$timeFormatter->format(new \DateTime($solved))?>
+<?php else : ?>
+        <i class="fa fa-times-circle fa-fw"></i>
+        <?=$dateFormatter->format(new \DateTime($tried))?>
+        <?=$timeFormatter->format(new \DateTime($tried))?>
+<?php endif ?>
+<?php else : ?>
+        <i class="fa fa-globe fa-fw"></i>
+        <?=$dateFormatter->format(new \DateTime($entered))?>
+        <?=$timeFormatter->format(new \DateTime($entered))?>
+<?php endif ?>
+    </li>
+<?php endif ?>
 </ul>
 
 <?php if(!empty($station['longitude']) && !empty($station['latitude'])) : ?>

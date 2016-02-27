@@ -166,13 +166,33 @@
                 $station['wrongav'] = $this->Media->getSeminaryMediaById($station['wrongav_id']);
             }
 
-            // Get Character group
+            // Get Character group(s)
+            $stationgroups = null;
+            $stationgroup = null;
             $charactergroup = null;
-            $character = $this->Characters->getCharacterForUserAndSeminary($this->Auth->getUserId(), $seminary['id']);
-            $charactergroups = $this->Charactergroups->getGroupsForCharacter($character['id']);
-            if(!empty($charactergroups)) {
-                // TODO Multiple Character groups
-                $charactergroup = $charactergroups[0];
+            if(count(array_intersect(array('admin', 'moderator'), \hhu\z\controllers\SeminaryController::$character['characterroles'])) > 0) {
+                $stationgroups = $this->Charactergroups->getGroupsForGroupsgroup($groupsgroup['id']);
+            }
+            else
+            {
+                $character = $this->Characters->getCharacterForUserAndSeminary($this->Auth->getUserId(), $seminary['id']);
+                $stationgroups = $this->Charactergroups->getGroupsForCharacter($character['id']);
+                if(!empty($stationgroups)) {
+                    $stationgroup = $stationgroups[0];
+                    $charactergroup = $stationgroup;
+                }
+            }
+            // Select group by parameter
+            $selectedStationGroupId = $this->request->getGetParam('stationgroup');
+            if(!is_null($selectedStationGroupId))
+            {
+                $selectedStationGroupId = intval($selectedStationGroupId);
+                foreach($stationgroups as &$group) {
+                    if($group['id'] == $selectedStationGroupId) {
+                        $stationgroup = $group;
+                        break;
+                    }
+                }
             }
 
             // TODO Check permissions
@@ -219,18 +239,25 @@
             }
 
             // Status
-            $solved = false;
+            $entered = false;
             $tried = false;
-            if(!is_null($charactergroup)) {
-                $tried = $this->Charactergroupsqueststations->hasCharactergroupTriedStation(
+            $solved = false;
+            if(!is_null($stationgroup)) {
+                $entered = $this->Charactergroupsqueststations->hasCharactergroupEnteredStation(
                     $station['id'],
-                    $charactergroup['id']
+                    $stationgroup['id']
                 );
-                if($tried) {
-                    $solved = $this->Charactergroupsqueststations->hasCharactergroupSolvedStation(
+                if($entered) {
+                    $tried = $this->Charactergroupsqueststations->hasCharactergroupTriedStation(
                         $station['id'],
-                        $charactergroup['id']
+                        $stationgroup['id']
                     );
+                    if($tried) {
+                        $solved = $this->Charactergroupsqueststations->hasCharactergroupSolvedStation(
+                            $station['id'],
+                            $stationgroup['id']
+                        );
+                    }
                 }
             }
 
@@ -248,9 +275,11 @@
             $this->set('station', $station);
             $this->set('task', $task);
             $this->set('groups', $groups);
-            $this->set('stationgroup', $charactergroup);
-            $this->set('solved', $solved);
+            $this->set('stationgroups', $stationgroups);
+            $this->set('stationgroup', $stationgroup);
+            $this->set('entered', $entered);
             $this->set('tried', $tried);
+            $this->set('solved', $solved);
         }
 
 
