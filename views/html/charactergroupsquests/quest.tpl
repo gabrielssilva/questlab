@@ -140,7 +140,9 @@
                 <?php endif ?>
             </a>
             <?php else : ?>
-            <i class="fa fa-question-circle"></i>
+            <div>
+                <i class="fa fa-question-circle"></i>
+            </div>
             <?php endif ?>
         </li>
         <?php endforeach ?>
