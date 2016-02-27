@@ -13,11 +13,11 @@
 
 
     /**
-     * Controller of the StationtypeAgent for a multiple choice task.
+     * Controller of the StationtypeAgent for a single choice task.
      *
      * @author  Oliver Hanraths <oliver.hanraths@uni-duesseldorf.de>
      */
-    class MultiplechoiceStationtypeController extends \hhu\z\controllers\StationtypeController
+    class SinglechoiceStationtypeController extends \hhu\z\controllers\StationtypeController
     {
         /**
          * Required models
@@ -39,13 +39,11 @@
          */
         public function saveAnswer($seminary, $groupsgroup, $quest, $station, $charactergroup, $answer)
         {
-            $answers = (!is_array($answer)) ? array() : $answer;
-            $solutions = $this->Multiplechoice->getAnswers($station['id']);
-            foreach($solutions as &$solution)
-            {
-                $answer = (array_key_exists($solution['pos']-1, $answers)) ? true : false;
-                $this->Multiplechoice->setCharactergroupSubmission($solution['id'], $charactergroup['id'], $answer);
-            }
+            $this->Singlechoice->setCharactergroupSubmission(
+                $station['id'],
+                $charactergroup['id'],
+                intval($answer)
+            );
         }
 
 
@@ -62,28 +60,12 @@
          */
         public function matchAnswer($seminary, $groupsgroup, $quest, $station, $charactergroup, $answer)
         {
-            $answers = (!is_array($answer)) ? array() : $answer;
-            $solutions = $this->Multiplechoice->getAnswers($station['id']);
-            foreach($solutions as &$solution)
-            {
-                if(is_null($solution['tick'])) {
-                    continue;
-                }
-                if($solution['tick']) {
-                    if(!array_key_exists($solution['pos']-1, $answers)) {
-                        return false;
-                    }
-                }
-                else {
-                    if(array_key_exists($solution['pos']-1, $answers)) {
-                        return false;
-                    }
-                }
-            }
+            // Get question
+            $question = $this->Singlechoice->getQuestion($station['id']);
 
 
-            // All questions correct answerd
-            return true;
+            // ID of answer maches correct one’s
+            return $question['answer_id'] == intval($answer);
         }
 
 
@@ -100,15 +82,18 @@
          */
         public function quest($seminary, $groupsgroup, $quest, $station, $charactergroup)
         {
+            // Get question
+            $question = $this->Singlechoice->getQuestion($station['id']);
+
             // Get answers
-            $answers = $this->Multiplechoice->getAnswers($station['id']);
+            $answers = $this->Singlechoice->getAnswers($station['id']);
+
+            // Get submission
             if(!is_null($charactergroup)) {
-                foreach($answers as &$answer) {
-                    $answer['submission'] = $this->Multiplechoice->getCharactergroupSubmission(
-                        $answer['id'],
-                        $charactergroup['id']
-                    );
-                }
+                $question['submission'] = $this->Singlechoice->getCharactergroupSubmission(
+                    $station['id'],
+                    $charactergroup['id']
+                );
             }
 
             // Get status
@@ -122,6 +107,7 @@
 
 
             // Pass data to view
+            $this->set('question', $question);
             $this->set('answers', $answers);
             $this->set('tried', $tried);
         }
@@ -139,35 +125,55 @@
          */
         public function edittask($seminary, $groupsgroup, $quest, $station)
         {
-            // Get questions
-            $answers = $this->Multiplechoice->getAnswers($station['id']);
+            // Get question
+            $question = $this->Singlechoice->getQuestion($station['id']);
+
+            // Get answers
+            $answers = $this->Singlechoice->getAnswers($station['id']);
 
             // Save data
             if($this->request->getRequestMethod() == 'POST' && !is_null($this->request->getPostParam('save')))
             {
                 // Get params
+                $corectAnswerIndex = $this->request->getPostParam('answer');
+                $corectAnswerIndex = intval($corectAnswerIndex);
                 $answers = $this->request->getPostParam('answers');
                 if(is_null($answers)) {
                     $answers = array();
                 }
-                $answers = array_values($answers);
+
+                // Save question
+                $this->Singlechoice->setQuestion(
+                    $this->Auth->getUserId(),
+                    $station['id']
+                );
 
                 // Save answers
+                $correctAnswerId = null;
+                $index = 0;
                 foreach($answers as $answerIndex => &$answer)
                 {
-                    $this->Multiplechoice->setAnswer(
+                    $answerId = $this->Singlechoice->setAnswer(
                         $this->Auth->getUserId(),
                         $station['id'],
-                        $answerIndex + 1,
-                        $answer['answer'],
-                        array_key_exists('tick', $answer)
+                        ++$index,
+                        $answer['answer']
                     );
+                    if($answerIndex == $corectAnswerIndex || is_null($correctAnswerId)) {
+                        $correctAnswerId = $answerId;
+                    }
                 }
 
                 // Delete deleted answers
-                $this->Multiplechoice->deleteAnswers(
+                $this->Singlechoice->deleteAnswers(
                     $station['id'],
                     count($answers)
+                );
+
+                // Set correct answer
+                $this->Singlechoice->setCorrectAnswer(
+                    $station['id'],
+                    $correctAnswerId
                 );
 
                 // Redirect
@@ -188,6 +194,7 @@
 
             // Pass data to view
             $this->set('task', $station['task']);
+            $this->set('question', $question);
             $this->set('answers', $answers);
         }
 

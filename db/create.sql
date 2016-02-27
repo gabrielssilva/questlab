@@ -1,8 +1,8 @@
--- MySQL dump 10.16  Distrib 10.1.10-MariaDB, for Linux (x86_64)
+-- MySQL dump 10.16  Distrib 10.1.11-MariaDB, for Linux (x86_64)
 --
 -- Host: localhost    Database: z
 -- ------------------------------------------------------
--- Server version	10.1.10-MariaDB-log
+-- Server version	10.1.11-MariaDB-log
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -2084,6 +2084,67 @@ CREATE TABLE `stationtypes_multiplechoice_charactergroups` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Table structure for table `stationtypes_singlechoice`
+--
+
+DROP TABLE IF EXISTS `stationtypes_singlechoice`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `stationtypes_singlechoice` (
+  `station_id` int(11) NOT NULL,
+  `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `created_user_id` int(11) NOT NULL,
+  `answer_id` int(11) DEFAULT NULL,
+  PRIMARY KEY (`station_id`),
+  KEY `created_user_id` (`created_user_id`),
+  KEY `answer_id` (`answer_id`),
+  CONSTRAINT `stationtypes_singlechoice_ibfk_1` FOREIGN KEY (`station_id`) REFERENCES `charactergroupsqueststations` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `stationtypes_singlechoice_ibfk_2` FOREIGN KEY (`created_user_id`) REFERENCES `users` (`id`),
+  CONSTRAINT `stationtypes_singlechoice_ibfk_3` FOREIGN KEY (`answer_id`) REFERENCES `stationtypes_singlechoice_answers` (`id`) ON DELETE SET NULL ON UPDATE SET NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `stationtypes_singlechoice_answers`
+--
+
+DROP TABLE IF EXISTS `stationtypes_singlechoice_answers`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `stationtypes_singlechoice_answers` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `stationtypes_singlechoice_station_id` int(11) NOT NULL,
+  `pos` int(11) NOT NULL,
+  `answer` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `station_id_2` (`stationtypes_singlechoice_station_id`,`pos`),
+  KEY `station_id` (`stationtypes_singlechoice_station_id`),
+  CONSTRAINT `stationtypes_singlechoice_answers_ibfk_1` FOREIGN KEY (`stationtypes_singlechoice_station_id`) REFERENCES `stationtypes_singlechoice` (`station_id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `stationtypes_singlechoice_charactergroups`
+--
+
+DROP TABLE IF EXISTS `stationtypes_singlechoice_charactergroups`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `stationtypes_singlechoice_charactergroups` (
+  `stationtypes_singlechoice_station_id` int(11) NOT NULL,
+  `charactergroup_id` int(11) NOT NULL,
+  `answer_id` int(11) DEFAULT NULL,
+  `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`stationtypes_singlechoice_station_id`,`charactergroup_id`),
+  KEY `answer_id` (`answer_id`),
+  KEY `charactergroup_id` (`charactergroup_id`),
+  CONSTRAINT `stationtypes_singlechoice_charactergroups_ibfk_1` FOREIGN KEY (`stationtypes_singlechoice_station_id`) REFERENCES `stationtypes_singlechoice` (`station_id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `stationtypes_singlechoice_charactergroups_ibfk_2` FOREIGN KEY (`charactergroup_id`) REFERENCES `charactergroups` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `stationtypes_singlechoice_charactergroups_ibfk_3` FOREIGN KEY (`answer_id`) REFERENCES `stationtypes_singlechoice_answers` (`id`) ON DELETE SET NULL ON UPDATE SET NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
 -- Table structure for table `userroles`
 --
 
@@ -2485,4 +2546,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2016-01-15 13:19:51
+-- Dump completed on 2016-02-27 18:47:43

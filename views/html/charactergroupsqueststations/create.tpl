@@ -89,6 +89,8 @@
                 <?php switch($stationtype['classname']) {
                     case null: echo _('Stationttype Empty');
                     break;
+                    case 'singlechoice': echo _('Stationtype singlechoice');
+                    break;
                     case 'multiplechoice': echo _('Stationtype multiplechoice');
                     break;
                     case 'keyword': echo _('Stationtype keyword');

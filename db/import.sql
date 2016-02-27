@@ -700,7 +700,7 @@ UNLOCK TABLES;
 
 LOCK TABLES `stationtypes` WRITE;
 /*!40000 ALTER TABLE `stationtypes` DISABLE KEYS */;
-INSERT INTO `stationtypes` (`id`, `created`, `title`, `url`, `classname`) VALUES (1,'2015-12-25 15:50:52','Empty','Empty',NULL),(2,'2015-12-25 15:50:52','Keyword','Keyword','keyword'),(3,'2015-12-25 15:51:16','Multiple Choice','Multiple-Choice','multiplechoice');
+INSERT INTO `stationtypes` (`id`, `created`, `title`, `url`, `classname`) VALUES (1,'2015-12-25 15:50:52','Empty','Empty',NULL),(2,'2015-12-25 15:50:52','Keyword','Keyword','keyword'),(3,'2015-12-25 15:51:16','Multiple Choice','Multiple-Choice','multiplechoice'),(4,'2016-02-27 17:22:11','Single Choice','Single-Choice','singlechoice');
 /*!40000 ALTER TABLE `stationtypes` ENABLE KEYS */;
 UNLOCK TABLES;
 
