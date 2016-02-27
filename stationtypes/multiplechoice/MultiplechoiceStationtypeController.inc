@@ -112,10 +112,13 @@
             }
 
             // Get status
-            $tried = $this->Charactergroupsqueststations->hasCharactergroupTriedStation(
-                $station['id'],
-                $charactergroup['id']
-            );
+            $tried = false;
+            if(!is_null($charactergroup)) {
+                $tried = $this->Charactergroupsqueststations->hasCharactergroupTriedStation(
+                    $station['id'],
+                    $charactergroup['id']
+                );
+            }
 
 
             // Pass data to view
