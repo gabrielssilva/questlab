@@ -6,6 +6,26 @@
     <li><i class="fa fa-chevron-right fa-fw"></i><a href="<?=$linker->link(array('charactergroupsquests','quest',$seminary['url'],$groupsgroup['url'],$quest['url']))?>"><?=$quest['title']?></a></li>
 </ul>
 
+<div class="grpqsicon">
+<?php if($tried) : ?>
+<?php if($solved) : ?>
+<?php if($station['stationpicture_id']) : ?>
+    <img title="<?=$station['title']?>" src="<?=$linker->link(array('media','charactergroupsqueststation',$seminary['url'],$groupsgroup['url'],$quest['url'],$station['url']))?>" />
+<?php else : ?>
+    <i class="fa fa-circle"></i>
+<?php endif ?>
+<?php else : ?>
+    <i class="fa fa-times-circle"></i>
+<?php endif ?>
+<?php else : ?>
+<?php if(!is_null($stationgroup)) : ?>
+    <img title="<?=$station['title']?>" src="<?=$linker->link(array('media','charactergroupsqueststation',$seminary['url'],$groupsgroup['url'],$quest['url'],$station['url']),0,true,array('stationgroup'=>$stationgroup['id']))?>" />
+<?php else : ?>
+    <img title="<?=$station['title']?>" src="<?=$linker->link(array('media','charactergroupsqueststation',$seminary['url'],$groupsgroup['url'],$quest['url'],$station['url']),0,true)?>" />
+<?php endif ?>
+<?php endif ?>
+</div>
+
 <h1><?=$station['title']?></h1>
 <?php if(count(array_intersect(array('admin', 'moderator'), \hhu\z\controllers\SeminaryController::$character['characterroles'])) > 0) : ?>
 <nav class="admin">

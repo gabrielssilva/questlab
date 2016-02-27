@@ -211,7 +211,10 @@
             {
                 // Mark Station as solved
                 if(!is_null($charactergroup)) {
-                    $this->Charactergroupsqueststations->setStationSolved($station['id'], $charactergroup['id']);
+                    $this->Charactergroupsqueststations->setStationSolved(
+                        $station['id'],
+                        $charactergroup['id']
+                    );
                 }
             }
 
@@ -219,9 +222,15 @@
             $solved = false;
             $tried = false;
             if(!is_null($charactergroup)) {
-                $tried = $this->Charactergroupsqueststations->hasCharactergroupTriedStation($station['id'], $charactergroup['id']);
+                $tried = $this->Charactergroupsqueststations->hasCharactergroupTriedStation(
+                    $station['id'],
+                    $charactergroup['id']
+                );
                 if($tried) {
-                    $solved = $this->Charactergroupsqueststations->hasCharactergroupSolvedStation($station['id'], $charactergroup['id']);
+                    $solved = $this->Charactergroupsqueststations->hasCharactergroupSolvedStation(
+                        $station['id'],
+                        $charactergroup['id']
+                    );
                 }
             }
 
@@ -239,6 +248,7 @@
             $this->set('station', $station);
             $this->set('task', $task);
             $this->set('groups', $groups);
+            $this->set('stationgroup', $charactergroup);
             $this->set('solved', $solved);
             $this->set('tried', $tried);
         }

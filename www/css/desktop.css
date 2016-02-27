@@ -302,6 +302,7 @@ input[type="submit"][disabled]{text-shadow:1px 2px #d48c4e;background:#f9ac69;bo
 .grpqslist li{float:left;width:100px;height:100px;text-align:center;margin:5px}
 .grpqslist li a{color:#5e5c58}
 .grpqslist li i{font-size:100px;padding:0}
+.grpqsicon{float:right;box-shadow:0 0 5px gray}
 
 
 /** Achievements **/
