@@ -84,11 +84,19 @@
          */
         public function index($mediaUrl, $action=null)
         {
+            // Check action
+            if(!is_null($action) && !array_key_exists($action, \nre\configs\AppConfig::$media)) {
+                throw new \nre\exceptions\ParamsNotValidException($action);
+            }
+
             // Get Media
             $media = $this->Media->getMediaByUrl($mediaUrl);
 
             // Get file
-            $file = $this->getMediaFile($media, $action);
+            $file = $this->getMediaFile(
+                $media, 
+                (!is_null($action)) ? \nre\configs\AppConfig::$media[$action] : false
+            );
             if(is_null($media)) {
                 return;
             }
@@ -112,6 +120,11 @@
          */
         public function seminarymoodpic($seminaryUrl, $category=null, $action=null)
         {
+            // Check action
+            if(!is_null($action) && !array_key_exists($action, \nre\configs\AppConfig::$media)) {
+                throw new \nre\exceptions\ParamsNotValidException($action);
+            }
+
             // Get Seminary
             $seminary = $this->Seminaries->getSeminaryByUrl($seminaryUrl);
 
@@ -139,7 +152,10 @@
             $media = $this->Media->getSeminaryMediaById($seminary[$index]);
 
             // Get file
-            $file = $this->getMediaFile($media, $action);
+            $file = $this->getMediaFile(
+                $media,
+                (!is_null($action)) ? \nre\configs\AppConfig::$media[$action] : false
+            );
             if(is_null($file)) {
                 return;
             }
@@ -196,6 +212,11 @@
          */
         public function seminary($seminaryUrl, $mediaUrl, $action=null)
         {
+            // Check action
+            if(!is_null($action) && !array_key_exists($action, \nre\configs\AppConfig::$media)) {
+                throw new \nre\exceptions\ParamsNotValidException($action);
+            }
+
             // Get Seminary
             $seminary = $this->Seminaries->getSeminaryByUrl($seminaryUrl);
 
@@ -203,7 +224,10 @@
             $media = $this->Media->getSeminaryMediaByUrl($seminary['id'], $mediaUrl);
 
             // Get file
-            $file = $this->getMediaFile($media, $action);
+            $file = $this->getMediaFile(
+                $media,
+                (!is_null($action)) ? \nre\configs\AppConfig::$media[$action] : false
+            );
             if(is_null($file)) {
                 return;
             }
@@ -241,7 +265,10 @@
                 case null:
                 case 'avatar':
                     $media = $this->Media->getSeminaryMediaById($avatar['avatarpicture_id']);
-                    $file = $this->getMediaFile($media, 'avatar');
+                    $file = $this->getMediaFile(
+                        $media,
+                        \nre\configs\AppConfig::$media['avatar']
+                    );
                 break;
                 case 'portrait':
                     $media = $this->Media->getSeminaryMediaById($avatar['small_avatarpicture_id']);
@@ -309,7 +336,7 @@
             $media = $this->Media->getSeminaryMediaById($achievement[$index]);
 
             // Get file
-            $file = $this->getMediaFile($media, null);
+            $file = $this->getMediaFile($media);
             if(is_null($file)) {
                 return;
             }
@@ -351,7 +378,10 @@
             $media = $this->Media->getSeminaryMediaById($group['charactergroupsmedia_id']);
 
             // Get file
-            $file = $this->getMediaFile($media, 'charactergroup');
+            $file = $this->getMediaFile(
+                $media,
+                \nre\configs\AppConfig::$media['charactergroup']
+            );
             if(is_null($file)) {
                 return;
             }
@@ -393,7 +423,10 @@
             $media = $this->Media->getSeminaryMediaById($quest['questsmedia_id']);
 
             // Get file
-            $file = $this->getMediaFile($media, 'charactergroupsquest');
+            $file = $this->getMediaFile(
+                $media,
+                \nre\configs\AppConfig::$media['charactergroupquest']
+            );
             if(is_null($file)) {
                 return;
             }
@@ -430,11 +463,51 @@
             // Get Station
             $station = $this->Charactergroupsqueststations->getStationByUrl($quest['id'], $stationUrl);
 
+            // Get Character group(s)
+            $stationgroups = null;
+            $stationgroup = null;
+            if(count(array_intersect(array('admin', 'moderator'), \hhu\z\controllers\SeminaryController::$character['characterroles'])) > 0) {
+                $stationgroups = $this->Charactergroups->getGroupsForGroupsgroup($groupsgroup['id']);
+            }
+            else
+            {
+                $character = $this->Characters->getCharacterForUserAndSeminary($this->Auth->getUserId(), $seminary['id']);
+                $stationgroups = $this->Charactergroups->getGroupsForCharacter($character['id']);
+                if(!empty($stationgroups)) {
+                    $stationgroup = $stationgroups[0];
+                }
+            }
+            // Select group by parameter
+            $selectedStationGroupId = $this->request->getGetParam('stationgroup');
+            if(!is_null($selectedStationGroupId))
+            {
+                $selectedStationGroupId = intval($selectedStationGroupId);
+                foreach($stationgroups as &$group) {
+                    if($group['id'] == $selectedStationGroupId) {
+                        $stationgroup = $group;
+                        break;
+                    }
+                }
+            }
+
+            // Status
+            $solved = (count(array_intersect(array('admin', 'moderator'), \hhu\z\controllers\SeminaryController::$character['characterroles'])) > 0);
+            if(!is_null($stationgroup)) {
+                $solved = $this->Charactergroupsqueststations->hasCharactergroupSolvedStation(
+                    $station['id'],
+                    $stationgroup['id']
+                );
+            }
+
             // Get media
             $media = $this->Media->getSeminaryMediaById($station['stationpicture_id']);
 
             // Get file
-            $file = $this->getMediaFile($media, 'charactergroupsqueststation');
+            $file = $this->getMediaFile(
+                $media,
+                \nre\configs\AppConfig::$media['charactergroupsqueststation'],
+                !$solved
+            );
             if(is_null($file)) {
                 return;
             }
@@ -490,11 +563,12 @@
          *
          * @throws  \nre\exceptions\IdNotFoundException
          * @throws  \nre\exceptions\ParamsNotValidException
-         * @param   array   $media  Medium to get file for
-         * @param   string  $action Action for processing the media
-         * @return  object      File for the medium (or null if medium is cached)
+         * @param   array   $media      Medium to get file for
+         * @param   mixed   $resize     Size to resize image to
+         * @param   boolean $grayscale  Whether to grayscale image or not
+         * @return  object              File for the medium (or null if medium is cached)
          */
-        private function getMediaFile($media, $action=null)
+        private function getMediaFile($media, $resize=false, $grayscale=false)
         {
             // Get format
             $format = explode('/', $media['mimetype']);
@@ -514,43 +588,48 @@
                 return null;
             }
 
-            // Load and process file
-            $file = null;
-            if(is_null($action) || !in_array(strtoupper($format), self::getImageTypes()))
+            // Determine processing
+            $resize = (is_array($resize)) ? $resize : false;
+            $grayscale = ($grayscale === true);
+
+            // Load image without processing
+            if((!$grayscale && $resize === false) || !in_array(strtoupper($format), self::getImageTypes()))
             {
                 // Do not process the file
-                $file = file_get_contents($media['filename']);
+                return file_get_contents($media['filename']);
             }
-            else
+
+            // Read image from cache
+            $tempFileName = ROOT.DS.\nre\configs\AppConfig::$dirs['temporary'].DS.'media-'.basename($media['filename']).'-'.$resize['width'].'x'.$resize['height'].'-'.(int) $grayscale;
+            if(file_exists($tempFileName))
             {
-                // Process file
-                switch($action)
-                {
-                    case 'questgroup':
-                    case 'quest':
-                    case 'avatar':
-                    case 'charactergroup':
-                    case 'charactergroupsquest':
-                        $file = self::resizeImage(
-                            $media['filename'],
-                            $format,
-                            \nre\configs\AppConfig::$media[$action]['width'],
-                            \nre\configs\AppConfig::$media[$action]['height']
-                        );
-                    break;
-                    case 'charactergroupsqueststation':
-                        $file = self::resizeImage(
-                            $media['filename'],
-                            $format,
-                            \nre\configs\AppConfig::$media[$action]['width'],
-                            \nre\configs\AppConfig::$media[$action]['height']
-                        );
-                    break;
-                    default:
-                        throw new ParamsNotValidException($action);
-                    break;
+                // Check age of file
+                if(filemtime($media['filename']) > filemtime($tempFileName)) {
+                    // Too old, delete
+                    unlink($tempFileName);
+                }
+                else {
+                    // Valid, read and return
+                    return file_get_contents($tempFileName);
                 }
             }
+
+            // Load file with ImageMagick
+            $file = new \Imagick($media['filename']);
+
+            // Apply grayscale
+            if($grayscale) {
+                self::grayscaleImage($file);
+            }
+
+            // Risize image
+            if($resize !== false) {
+                self::resizeImage($file, $resize['width'], $resize['height']);
+            }
+
+            // Save temporary file
+            $file->setImageFormat($format);
+            $file->writeImage($tempFileName);
 
 
             // Return file
@@ -575,33 +654,12 @@
         /**
          * Resize an image.
          *
-         * @param   string  $fileName   Absolute pathname of image to resize
-         * @param   string  $mimeType   Mimetype of target image
-         * @param   int $width      Max. width to resize to
-         * @param   int $height     Max. height to resize to
-         * @return  mixed           Resized image
+         * @param   \Imagick    $im     Image object
+         * @param   int         $width  Max. width to resize to
+         * @param   int         $height Max. height to resize to
          */
-        private static function resizeImage($fileName, $mimeType, $width, $height)
+        private static function resizeImage($im, $width, $height)
         {
-            // Read image from cache
-            $tempFileName = ROOT.DS.\nre\configs\AppConfig::$dirs['temporary'].DS.'media-'.basename($fileName).'-'.$width.'x'.$height;
-            if(file_exists($tempFileName))
-            {
-                // Check age of file
-                if(filemtime($fileName) > filemtime($tempFileName)) {
-                    // Too old, delete
-                    unlink($tempFileName);
-                }
-                else {
-                    // Valid, read and return
-                    return file_get_contents($tempFileName);
-                }
-            }
-
-
-            // ImageMagick
-            $im = new \Imagick($fileName);
-
             // Calculate new size
             $geometry = $im->getImageGeometry();
             if($geometry['width'] < $width) {
@@ -614,14 +672,17 @@
             // Process
             $im->thumbnailImage($width, $height, true);
             $im->contrastImage(1);
-            $im->setImageFormat($mimeType);
-
-            // Save temporary file
-            $im->writeImage($tempFileName);
+        }
 
 
-            // Return resized image
-            return $im;
+        /**
+         * Turn the colors of an image into grayscale.
+         *
+         * @param   \Imagick    $im Image object
+         */
+        private static function grayscaleImage($im)
+        {
+            $im->modulateImage(100, 0, 100);
         }
 
     }
