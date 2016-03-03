@@ -14,6 +14,9 @@ DROP TRIGGER IF EXISTS update_cache_characters_charactergroups_update;
 DROP TRIGGER IF EXISTS update_cache_characters_charactergroups_delete;
 DROP TRIGGER IF EXISTS update_cache_cache_charactergroups_insert;
 DROP TRIGGER IF EXISTS update_cache_cache_charactergroups_update;
+DROP TRIGGER IF EXISTS update_cache_characters_xplevels_insert;
+DROP TRIGGER IF EXISTS update_cache_characters_xplevels_update;
+DROP TRIGGER IF EXISTS update_cache_characters_xplevels_delete;
 
 
 /** Delete all routines **/
