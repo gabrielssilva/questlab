@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: The Legend of Z\n"
-"POT-Creation-Date: 2016-03-12 17:24+0100\n"
-"PO-Revision-Date: 2016-03-12 17:25+0100\n"
+"POT-Creation-Date: 2016-03-12 19:17+0100\n"
+"PO-Revision-Date: 2016-03-12 19:18+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de_DE\n"
@@ -72,7 +72,7 @@ msgstr "Lösungsvorschlag bewertet"
 #: controllers/QuestsController.inc:1247
 #: questtypes/submit/html/submission.tpl:30
 #: views/html/achievements/conditions.tpl:50
-#: views/html/achievements/conditions.tpl:117
+#: views/html/achievements/conditions.tpl:121
 #: views/html/charactergroupsqueststations/station.tpl:180
 #: views/html/quests/quest.tpl:68 views/html/quests/submissions.tpl:26
 msgid "solved"
@@ -111,7 +111,7 @@ msgstr ""
 #: questtypes/dragndrop/html/edittask.tpl:144
 #: questtypes/multiplechoice/html/edittask.tpl:84
 #: questtypes/textinput/html/edittask.tpl:44
-#: views/html/achievements/conditions.tpl:147
+#: views/html/achievements/conditions.tpl:152
 #: views/html/achievements/edit.tpl:114
 #: views/html/charactergroupsachievements/edit.tpl:69
 #: views/html/charactergroupsqueststations/edit.tpl:177
@@ -254,9 +254,9 @@ msgstr "Schritt %d"
 #: views/html/achievements/conditions.tpl:18
 #: views/html/achievements/conditions.tpl:27
 #: views/html/achievements/conditions.tpl:55
-#: views/html/achievements/conditions.tpl:85
-#: views/html/achievements/conditions.tpl:94
-#: views/html/achievements/conditions.tpl:122
+#: views/html/achievements/conditions.tpl:89
+#: views/html/achievements/conditions.tpl:98
+#: views/html/achievements/conditions.tpl:126
 msgid "Field"
 msgstr "Feld"
 
@@ -444,7 +444,7 @@ msgstr "Kommentar"
 
 #: questtypes/submit/html/submission.tpl:31
 #: views/html/achievements/conditions.tpl:49
-#: views/html/achievements/conditions.tpl:116
+#: views/html/achievements/conditions.tpl:120
 #: views/html/charactergroupsqueststations/station.tpl:197
 #: views/html/quests/quest.tpl:73 views/html/quests/submissions.tpl:16
 msgid "unsolved"
@@ -559,7 +559,7 @@ msgid "Conditions"
 msgstr "Bedingungen"
 
 #: views/html/achievements/conditions.tpl:15
-#: views/html/achievements/conditions.tpl:82
+#: views/html/achievements/conditions.tpl:86
 msgid "Date"
 msgstr "Datum"
 
@@ -569,23 +569,23 @@ msgstr "Datum"
 #: views/html/achievements/conditions.tpl:36
 #: views/html/achievements/conditions.tpl:63
 #: views/html/achievements/conditions.tpl:64
-#: views/html/achievements/conditions.tpl:91
-#: views/html/achievements/conditions.tpl:102
-#: views/html/achievements/conditions.tpl:103
-#: views/html/achievements/conditions.tpl:130
-#: views/html/achievements/conditions.tpl:131
+#: views/html/achievements/conditions.tpl:95
+#: views/html/achievements/conditions.tpl:106
+#: views/html/achievements/conditions.tpl:107
+#: views/html/achievements/conditions.tpl:134
+#: views/html/achievements/conditions.tpl:135
 msgid "Value"
 msgstr "Wert"
 
 #: views/html/achievements/conditions.tpl:34
 #: views/html/achievements/conditions.tpl:62
-#: views/html/achievements/conditions.tpl:101
-#: views/html/achievements/conditions.tpl:129
+#: views/html/achievements/conditions.tpl:105
+#: views/html/achievements/conditions.tpl:133
 msgid "Count"
 msgstr "Zählen"
 
 #: views/html/achievements/conditions.tpl:37
-#: views/html/achievements/conditions.tpl:104 views/html/quests/quest.tpl:145
+#: views/html/achievements/conditions.tpl:108 views/html/quests/quest.tpl:145
 #: views/html/quests/quest.tpl:161
 msgid "Quest"
 msgstr "Quest"
@@ -593,24 +593,24 @@ msgstr "Quest"
 #: views/html/achievements/conditions.tpl:39
 #: views/html/achievements/conditions.tpl:46
 #: views/html/achievements/conditions.tpl:67
-#: views/html/achievements/conditions.tpl:106
-#: views/html/achievements/conditions.tpl:113
-#: views/html/achievements/conditions.tpl:134
+#: views/html/achievements/conditions.tpl:110
+#: views/html/achievements/conditions.tpl:117
+#: views/html/achievements/conditions.tpl:138
 msgid "unset"
 msgstr "nicht gesetzt"
 
 #: views/html/achievements/conditions.tpl:44
-#: views/html/achievements/conditions.tpl:111
+#: views/html/achievements/conditions.tpl:115
 msgid "Status"
 msgstr "Status"
 
 #: views/html/achievements/conditions.tpl:47
-#: views/html/achievements/conditions.tpl:114
+#: views/html/achievements/conditions.tpl:118
 msgid "entered"
 msgstr "betreten"
 
 #: views/html/achievements/conditions.tpl:48
-#: views/html/achievements/conditions.tpl:115
+#: views/html/achievements/conditions.tpl:119
 #: views/html/quests/submissions.tpl:6
 msgid "submitted"
 msgstr "eingereicht"
@@ -619,20 +619,20 @@ msgstr "eingereicht"
 #: views/html/achievements/conditions.tpl:53
 #: views/html/achievements/conditions.tpl:72
 #: views/html/achievements/conditions.tpl:73
-#: views/html/achievements/conditions.tpl:119
-#: views/html/achievements/conditions.tpl:120
-#: views/html/achievements/conditions.tpl:139
-#: views/html/achievements/conditions.tpl:140
+#: views/html/achievements/conditions.tpl:123
+#: views/html/achievements/conditions.tpl:124
+#: views/html/achievements/conditions.tpl:143
+#: views/html/achievements/conditions.tpl:144
 msgid "Group by"
 msgstr "Gruppiert über"
 
 #: views/html/achievements/conditions.tpl:65
-#: views/html/achievements/conditions.tpl:132 views/html/html.tpl:82
+#: views/html/achievements/conditions.tpl:136 views/html/html.tpl:82
 #: views/html/html.tpl:94
 msgid "Achievement"
 msgstr "Achievement"
 
-#: views/html/achievements/conditions.tpl:77
+#: views/html/achievements/conditions.tpl:81
 #: views/html/achievements/delete.tpl:10 views/html/achievements/manage.tpl:21
 #: views/html/charactergroups/deletegroup.tpl:11
 #: views/html/charactergroups/deletegroupsgroup.tpl:10
@@ -651,10 +651,14 @@ msgstr "Achievement"
 msgid "delete"
 msgstr "löschen"
 
-#: views/html/achievements/conditions.tpl:83
-#: views/html/achievements/conditions.tpl:92
+#: views/html/achievements/conditions.tpl:87
+#: views/html/achievements/conditions.tpl:96
 msgid "New condition"
 msgstr "Neue Bedingung"
+
+#: views/html/achievements/conditions.tpl:147
+msgid "create new QR-Code"
+msgstr "einen neuen QR-Code erstellen"
 
 #: views/html/achievements/create.tpl:7
 msgid "Create Achievement"
@@ -2626,6 +2630,9 @@ msgstr "Ein neuer Benutzer wurde registriert"
 #, php-format
 msgid "Hello %s"
 msgstr "Hallo %s"
+
+#~ msgid "Create new QR-Code"
+#~ msgstr "Einen neuen QR-Code erstellen"
 
 #~ msgid "Introduction"
 #~ msgstr "Einführung"

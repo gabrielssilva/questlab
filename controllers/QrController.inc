@@ -25,9 +25,82 @@
          *
          * @var array
          */
-        public $models = array('seminaries', 'charactergroups', 'charactergroupsquests', 'charactergroupsqueststations', 'charactergroupsachievements');
+        public $models = array('seminaries', 'achievements', 'charactergroups', 'charactergroupsquests', 'charactergroupsqueststations', 'charactergroupsachievements');
 
 
+
+
+        /**
+         * Action: a.
+         *
+         * Trigger an Achievement by a hash typically provided via a QR-code.
+         *
+         * @param   $achievementConditionHash   Hash value of QR-code condition of an Achievement
+         */
+        public function a($achievementConditionHash)
+        {
+            // Check Achievement condition
+            $condition = $this->Achievements->getAchievementConditionQrcode(
+                $achievementConditionHash
+            );
+            if(empty($condition)) {
+                throw new \nre\exceptions\IdNotFoundException($achievementConditionHash);
+            }
+
+            // Get Achievement
+            $achievement = $this->Achievements->getAchievementById($condition['achievement_id']);
+
+            // Get Seminary
+            $seminary = $this->Seminaries->getSeminaryById($achievement['seminary_id']);
+
+            // Get Character
+            $character = $this->Characters->getCharacterForUserAndSeminary(
+                self::$user['id'],
+                $seminary['id']
+            );
+
+            // Set Achievement achieved
+            $this->Achievements->setAchievementAchieved(
+                $achievement['id'],
+                $character['id']
+            );
+
+            // Add notifications
+            $this->Notification->addNotification(
+                \hhu\z\controllers\components\NotificationComponent::TYPE_ACHIEVEMENT,
+                $achievement['title'],
+                $this->linker->link(
+                    array(
+                        'achievements',
+                        'index',
+                        $seminary['url']
+                    ), 0, true, null, true, $achievement['url']
+                ),
+                (
+                    !is_null($achievement['achieved_achievementsmedia_id'])
+                        ? $this->linker->link(
+                            array(
+                                'media',
+                                'achievement',
+                                $seminary['url'],
+                                $achievement['url']
+                            )
+                        )
+                        : null
+                )
+            );
+
+            // Redirect to Character profile
+            $this->redirect(
+                $this->linker->link(
+                    array(
+                        'achievements',
+                        'index',
+                        $seminary['url']
+                    )
+                )
+            );
+        }
 
 
         /**

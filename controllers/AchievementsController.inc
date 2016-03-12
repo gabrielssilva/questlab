@@ -693,6 +693,10 @@
                 case 'achievement':
                     $conditions = $this->Achievements->getAchievementConditionsAchievement($achievement['id']);
                 break;
+                // QR-Code conditions
+                case 'qrcode':
+                    $conditions = $this->Achievements->getAchievementConditionsQrcode($achievement['id']);
+                break;
             }
 
             // Values
@@ -809,6 +813,12 @@
                                 );
                             }
                         break;
+                        // QR-Code conditions
+                        case 'qrcode':
+                            if(array_key_exists($condition['id'], $deletes)) {
+                                $this->Achievements->deleteAchievementConditionQrcode($condition['id']);
+                            }
+                        break;
                     }
                 }
 
@@ -889,6 +899,16 @@
                                     $condition['value'],
                                     (!is_null($achievementIndex)) ? $achievements[$achievementIndex]['id'] : null,
                                     (!empty($condition['groupby'])) ? $condition['groupby'] : null
+                                );
+                            }
+                        break;
+                        // QR-code conditions
+                        case 'qrcode':
+                            if(array_key_exists('qrcode', $condition))
+                            {
+                                $this->Achievements->addAchievementConditionQrcode(
+                                    $this->Auth->getUserId(),
+                                    $achievement['id']
                                 );
                             }
                         break;

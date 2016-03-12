@@ -24,7 +24,7 @@
          *
          * @var array
          */
-        public $models = array('seminaries', 'charactergroups', 'charactergroupsquests', 'charactergroupsqueststations', 'charactergroupsachievements');
+        public $models = array('seminaries', 'achievements', 'charactergroups', 'charactergroupsquests', 'charactergroupsqueststations', 'charactergroupsachievements');
 
 
 
@@ -43,6 +43,48 @@
             $response->addHeader("Pragma: public");
             $response->addHeader("Cache-control: must-revalidate");
             $response->addHeader("Date: ".gmdate(\DateTime::RFC822));
+        }
+
+
+        /**
+         * Action: achievement
+         *
+         * Display a QR-code for an Achievement.
+         *
+         * @throws  \nre\exceptions\IdNotFoundException
+         * @param   string  $seminaryUrl    URL-Title of a Seminary
+         * @param   string  $groupsgroupUrl URL-Title of a Character groups-group
+         * @param   string  $achievementUrl URL of Achievement
+         */
+        public function achievement($seminaryUrl, $achievementUrl, $size=1)
+        {
+            // Get seminary
+            $seminary = $this->Seminaries->getSeminaryByUrl($seminaryUrl);
+
+            // Get Achievement
+            $achievement = $this->Achievements->getAchievementByUrl(
+                $seminary['id'],
+                $achievementUrl
+            );
+
+            // Get condition
+            $conditions = $this->Achievements->getAchievementConditionsQrcode(
+                $achievement['id']
+            );
+            if(empty($conditions)) {
+                throw new IdNotFoundException($achievementUrl);
+            }
+
+            // Generate QR-code
+            $url = $this->linker->link(array('qr', 'a', $conditions[0]['hash']), 0, true, null, true, null, true);
+            $file = $this->generateQRcode($url, $size);
+            if(is_null($file)) {
+                return;
+            }
+
+
+            // Pass data to view
+            $this->set('file', $file);
         }
 
 

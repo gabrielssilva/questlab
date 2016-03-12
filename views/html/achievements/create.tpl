@@ -96,6 +96,8 @@
                     break;
                     case 'achievement': echo _('Achievement conditions Achievement');
                     break;
+                    case 'qrcode': echo _('QR-Code');
+                    break;
                 } ?>
             </option>
             <?php endforeach ?>

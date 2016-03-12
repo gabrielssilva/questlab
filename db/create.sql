@@ -101,6 +101,27 @@ CREATE TABLE `achievementconditions_date` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Table structure for table `achievementconditions_qrcode`
+--
+
+DROP TABLE IF EXISTS `achievementconditions_qrcode`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `achievementconditions_qrcode` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `created_user_id` int(11) NOT NULL,
+  `achievement_id` int(11) NOT NULL,
+  `hash` varchar(40) COLLATE utf8mb4_unicode_ci NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `created_user_id` (`created_user_id`),
+  KEY `achievement_id` (`achievement_id`),
+  CONSTRAINT `achievementconditions_qrcode_ibfk_1` FOREIGN KEY (`created_user_id`) REFERENCES `users` (`id`),
+  CONSTRAINT `achievementconditions_qrcode_ibfk_2` FOREIGN KEY (`achievement_id`) REFERENCES `achievements` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
 -- Table structure for table `achievementconditions_quest`
 --
 

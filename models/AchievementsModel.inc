@@ -1020,6 +1020,110 @@
 
 
         /**
+         * Get all QR-code conditions for an Achievement.
+         *
+         * @param   int $achievementId  ID of Achievement
+         * @return  array               List of QR-code conditions
+         */
+        public function getAchievementConditionsQrcode($achievementId)
+        {
+            return $this->db->query(
+                'SELECT id, hash '.
+                'FROM achievementconditions_qrcode '.
+                'WHERE achievement_id = ?',
+                'i',
+                $achievementId
+            );
+        }
+
+
+        /**
+         * Get QR-code condition for a hash value.
+         *
+         * @param   string  $hash   Hash value to get condition for
+         * @return  array           QR-code condition or null
+         */
+        public function getAchievementConditionQrcode($hash)
+        {
+            $data = $this->db->query(
+                'SELECT id, achievement_id, hash '.
+                'FROM achievementconditions_qrcode '.
+                'WHERE hash = ?',
+                's',
+                $hash
+            );
+            if(!empty($data)) {
+                return $data[0];
+            }
+
+
+            return null;
+        }
+
+
+        /**
+         * Add a new QR-code condition.
+         *
+         * @param   int $userId         ID of creating user
+         * @param   int $achievementId  ID of Achievement to add condition to
+         */
+        public function addAchievementConditionQrcode($userId, $achievementId)
+        {
+            // Delete all existing QR-codes, we allow only one per Achievement
+            $this->db->query(
+                'DELETE FROM achievementconditions_qrcode WHERE achievement_id = ?',
+                'i',
+                $achievementId
+            );
+
+            // Create new QR-code condition
+            $this->db->query(
+                'INSERT INTO achievementconditions_qrcode '.
+                '(created_user_id, achievement_id, hash) '.
+                'VALUES '.
+                '(?, ?, ?)',
+                'iis',
+                $userId, $achievementId,
+                \hhu\z\Utils::createRandomHash()
+            );
+        }
+
+
+        /**
+         * Copy all QR-code conditions of an Achievement.
+         *
+         * @param   int     $userId                 ID of creating user
+         * @param   int     $sourceAchievementId    ID of Achievement to copy conditions from
+         * @param   int     $targetAchievementId    ID of Achievement to copy conditions to
+         */
+        public function copyAchievementConditionsQrcode($userId, $sourceAchievementId, $targetAchievementId)
+        {
+            $this->db->query(
+                'INSERT INTO achievementconditions_qrcode '.
+                '(created_user_id, achievement_id, hash) '.
+                'SELECT ?, ?, ? '.
+                'FROM achievementconditions_qrcode '.
+                'WHERE achievement_id = ?',
+                'iisi',
+                $userId, $targetAchievementId,
+                \hhu\z\Utils::createRandomHash(),
+                $sourceAchievementId
+            );
+        }
+
+
+        /**
+         * Delete a QR-code condition.
+         *
+         * @param   int $conditionId    ID of condition to delete
+         */
+        public function deleteAchievementConditionQrcode($conditionId)
+        {
+            $this->db->query('DELETE FROM achievementconditions_qrcode WHERE id = ?', 'i', $conditionId);
+        }
+
+
+        /**
          * Set an Achievement as achieved for a Character.
          *
          * @param   int $achievementId  ID of Achievement
@@ -1363,6 +1467,13 @@
                     break;
                     case 'achievement':
                         $this->copyAchievementConditionsAchievement($userId, $achievement['id'], $achievementIds[$achievement['id']], $achievementIds);
+                    break;
+                    case 'qrcode':
+                        $this->copyAchievementConditionsQrcode(
+                            $userId,
+                            $achievement['id'],
+                            $achievementIds[$achievement['id']]
+                        );
                     break;
                 }
             }

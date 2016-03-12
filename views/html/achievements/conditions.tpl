@@ -71,6 +71,10 @@
                     </select><br />
                     <label for="condition-<?=$condition['id']?>-groupby"><?=_('Group by')?>:</label>
                     <input id="condition-<?=$condition['id']?>-groupby" type="text" name="conditions[<?=$condition['id']?>][groupby]" placeholder="<?=_('Group by')?>" value="<?=$condition['groupby']?>" />
+                <?php elseif($achievement['condition'] == 'qrcode') : ?>
+                    <a href="<?=$linker->link(array('qrcodes','achievement',$seminary['url'],$achievement['url'],50))?>">
+                        <img src="<?=$linker->link(array('qrcodes','achievement',$seminary['url'],$achievement['url'],10))?>" />
+                    </a>
                 <?php endif ?>
                 <br />
                 <input id="delete-<?=$condition['id']?>" type="checkbox" name="deletes[<?=$condition['id']?>]" <?php if(array_key_exists($condition['id'], $deletes)) : ?>checked="checked"<?php endif ?> />
@@ -138,8 +142,9 @@
                     </select><br />
                     <label for="condition-new-groupby"><?=_('Group by')?>:</label>
                     <input id="condition-new-groupby" type="text" name="conditions[new][groupby]" placeholder="<?=_('Group by')?>" value="" />
-                <?php else : ?>
-                    hallo
+                <?php elseif($achievement['condition'] == 'qrcode') : ?>
+                    <input id="condition-new-qrcode" type="checkbox" name="conditions[new][qrcode]" />
+                    <label for="condition-new-qrcode"><?=_('create new QR-Code')?></label><br />
                 <?php endif ?>
             </li>
         </ul>
