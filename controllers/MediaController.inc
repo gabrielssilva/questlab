@@ -33,7 +33,8 @@
             'achievement'                   => array('admin', 'moderator', 'user'),
             'charactergroup'                => array('admin', 'moderator', 'user'),
             'charactergroupsquest'          => array('admin', 'moderator', 'user'),
-            'charactergroupsqueststation'   => array('admin', 'moderator', 'user')
+            'charactergroupsqueststation'   => array('admin', 'moderator', 'user'),
+            'charactergroupsachievements'   => array('admin', 'moderator', 'user')
         );
         /**
          * User seminary permissions
@@ -45,14 +46,15 @@
             'achievement'                   => array('admin', 'moderator', 'user', 'guest'),
             'charactergroup'                => array('admin', 'moderator', 'user', 'guest'),
             'charactergroupsquest'          => array('admin', 'moderator', 'user', 'guest'),
-            'charactergroupsqueststation'   => array('admin', 'moderator', 'user', 'guest')
+            'charactergroupsqueststation'   => array('admin', 'moderator', 'user', 'guest'),
+            'charactergroupsachievements'   => array('admin', 'moderator', 'user', 'guest')
         );
         /**
          * Required models
          *
          * @var array
          */
-        public $models = array('seminaries', 'achievements', 'media', 'avatars', 'charactergroups', 'charactergroupsquests', 'charactergroupsqueststations', 'map');
+        public $models = array('seminaries', 'achievements', 'media', 'avatars', 'charactergroups', 'charactergroupsquests', 'charactergroupsqueststations', 'charactergroupsachievements', 'map');
 
 
 
@@ -507,6 +509,51 @@
                 $media,
                 \nre\configs\AppConfig::$media['charactergroupsqueststation'],
                 !$solved
+            );
+            if(is_null($file)) {
+                return;
+            }
+
+
+            // Pass data to view
+            $this->set('media', $media);
+            $this->set('file', $file);
+        }
+
+
+        /**
+         * Action: charactergroupsachievement
+         *
+         * Display the achievement of a Character groups-group.
+         *
+         * @throws  \nre\exceptions\IdNotFoundException
+         * @param   string  $seminaryUrl    URL-title of Seminary
+         * @param   string  $groupsgroupUrl URL-title of Character groups-group
+         * @param   string  $achievementUrl URL-title of the Achievement
+         * @param   string  $action         Action for processing the media
+         */
+        public function charactergroupsachievement($seminaryUrl, $groupsgroupUrl, $achievementUrl, $locked=null)
+        {
+            // Get Seminary
+            $seminary = $this->Seminaries->getSeminaryByUrl($seminaryUrl);
+
+            // Get Character groups-group
+            $groupsgroup = $this->Charactergroups->getGroupsgroupByUrl($seminary['id'], $groupsgroupUrl);
+
+            // Get Character
+            //$character = SeminaryController::$character;
+
+            // Get Achievement
+            $achievement = $this->Charactergroupsachievements->getAchievementByUrl($groupsgroup['id'], $achievementUrl);
+
+            // Get media
+            $media = $this->Media->getSeminaryMediaById($achievement['achievementsmedia_id']);
+
+            // Get file
+            $file = $this->getMediaFile(
+                $media,
+                false,
+                !is_null($locked)
             );
             if(is_null($file)) {
                 return;

@@ -26,6 +26,12 @@
          */
         const TYPE_ACHIEVEMENT = 'achievement';
         /**
+         * Type: Character groups Achievement
+         *
+         * @var string
+         */
+        const TYPE_CHARACTERGROUPSACHIEVEMENT = 'charactergroupsachievement';
+        /**
          * Type: Level-up
          *
          * @var string

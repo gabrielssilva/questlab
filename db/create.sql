@@ -1,8 +1,8 @@
--- MySQL dump 10.16  Distrib 10.1.11-MariaDB, for Linux (x86_64)
+-- MySQL dump 10.16  Distrib 10.1.12-MariaDB, for Linux (x86_64)
 --
 -- Host: localhost    Database: z
 -- ------------------------------------------------------
--- Server version	10.1.11-MariaDB-log
+-- Server version	10.1.12-MariaDB
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -373,6 +373,54 @@ DELIMITER ;
 /*!50003 SET character_set_client  = @saved_cs_client */ ;
 /*!50003 SET character_set_results = @saved_cs_results */ ;
 /*!50003 SET collation_connection  = @saved_col_connection */ ;
+
+--
+-- Table structure for table `charactergroupsachievements`
+--
+
+DROP TABLE IF EXISTS `charactergroupsachievements`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `charactergroupsachievements` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `created_user_id` int(11) NOT NULL,
+  `charactergroupsgroup_id` int(11) NOT NULL,
+  `pos` int(11) unsigned NOT NULL,
+  `title` varchar(64) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `url` varchar(64) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `hash` varchar(40) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `description` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `achievementsmedia_id` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `charactergroupsgroup_id_2` (`charactergroupsgroup_id`,`url`),
+  UNIQUE KEY `hash` (`hash`),
+  KEY `charactergroupsgroup_id` (`charactergroupsgroup_id`),
+  KEY `achievementsmedia_id` (`achievementsmedia_id`),
+  KEY `created_user_id` (`created_user_id`),
+  CONSTRAINT `charactergroupsachievements_ibfk_1` FOREIGN KEY (`created_user_id`) REFERENCES `users` (`id`),
+  CONSTRAINT `charactergroupsachievements_ibfk_2` FOREIGN KEY (`charactergroupsgroup_id`) REFERENCES `charactergroupsgroups` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `charactergroupsachievements_ibfk_3` FOREIGN KEY (`achievementsmedia_id`) REFERENCES `achievementsmedia` (`seminarymedia_id`) ON DELETE SET NULL ON UPDATE SET NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `charactergroupsachievements_charactergroups`
+--
+
+DROP TABLE IF EXISTS `charactergroupsachievements_charactergroups`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `charactergroupsachievements_charactergroups` (
+  `charactergroupsachievement_id` int(11) NOT NULL,
+  `charactergroup_id` int(11) NOT NULL,
+  `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`charactergroupsachievement_id`,`charactergroup_id`),
+  KEY `charactergroup_id` (`charactergroup_id`),
+  CONSTRAINT `charactergroupsachievements_charactergroups_ibfk_1` FOREIGN KEY (`charactergroupsachievement_id`) REFERENCES `charactergroupsachievements` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `charactergroupsachievements_charactergroups_ibfk_2` FOREIGN KEY (`charactergroup_id`) REFERENCES `charactergroups` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
 --
 -- Table structure for table `charactergroupsgroups`
@@ -2546,4 +2594,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2016-02-27 18:47:43
+-- Dump completed on 2016-03-12 15:57:07
