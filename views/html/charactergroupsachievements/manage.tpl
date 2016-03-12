@@ -23,6 +23,9 @@
             <?php if($index > 0) : ?><li><a href="<?=$linker->link(array('moveup',$seminary['url'],$groupsgroup['url'],$achievement['url']),1)?>">↑</a></li><?php endif ?>
             <?php if($index < count($achievements)-1) : ?><li><a href="<?=$linker->link(array('movedown',$seminary['url'],$groupsgroup['url'],$achievement['url']),1)?>">↓</a></li><?php endif ?>
             <li>
+                <a href="<?=$linker->link(array('achievement',$seminary['url'],$groupsgroup['url'],$achievement['hash']),1)?>"><?=_('assign manually')?></a>
+            </li>
+            <li>
                 <a href="<?=$linker->link(array('qrcodes','charactergroupsachievements',$seminary['url'],$groupsgroup['url'],$achievement['url'],'50'))?>">
                     <i class="fa fa-qrcode"></i>
                 </a>

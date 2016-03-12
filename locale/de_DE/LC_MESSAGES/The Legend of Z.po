@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: The Legend of Z\n"
-"POT-Creation-Date: 2016-03-12 15:58+0100\n"
-"PO-Revision-Date: 2016-03-12 15:58+0100\n"
+"POT-Creation-Date: 2016-03-12 17:24+0100\n"
+"PO-Revision-Date: 2016-03-12 17:25+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de_DE\n"
@@ -1351,6 +1351,10 @@ msgstr "Soll das %sachievement „%s“ wirklich gelöscht werden?"
 #, php-format
 msgid "Edit %s-Achievement"
 msgstr "%sachievement bearbeiten"
+
+#: views/html/charactergroupsachievements/manage.tpl:26
+msgid "assign manually"
+msgstr "manuell zuweisen"
 
 #: views/html/charactergroupsquests/create.tpl:8
 #, php-format
