@@ -447,7 +447,7 @@ input[type="submit"][disabled]{text-shadow:1px 2px #d48c4e;background:#f9ac69;bo
 
 .notify{width:500px}
 
-.rare,.hunter{float:left;width:49%}
+.rare,.hunter{float:left;width:49%;clear:none}
 .hunter{float:right}
 .achmnts .desc{padding-top:0}
 .achmnts .unlcked{font-size:.75em;float:right;margin:-6px -4px 0 0;color:#878787}
