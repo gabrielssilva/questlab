@@ -38,12 +38,6 @@
          * @var int;
          */
         const STATUS_SOLVED = 3;
-        /**
-         * String length for Station URLs
-         *
-         * @var int
-         */
-        const URL_LENGTH = 10;
 
         /**
          * Required models
@@ -487,7 +481,7 @@
                 '(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
                 'iississddss',
                 $questId, $stationtypeId, $title,
-                $this->createStationUrl(), $pos,
+                \hhu\z\Utils::createRandomHash(), $pos,
                 $prolog, $task, $latitude, $longitude, $righttext, $wrongtext
             );
 
@@ -628,22 +622,6 @@
                 $statusMin,
                 $questId
             );
-        }
-
-
-        /**
-         * Generate a URL for Stations with random characters.
-         *
-         * @return  string  A string with random characters
-         */
-        private function createStationUrl()
-        {
-            // Length of URL
-            $length = max(0, min(32, self::URL_LENGTH));
-
-
-            // Create and return random string
-            return substr(md5(microtime()), rand(0, 32-$length), $length);
         }
 
     }

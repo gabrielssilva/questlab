@@ -19,6 +19,14 @@
      */
     class Utils
     {
+        /**
+         * String length for hashes
+         *
+         * @var int
+         */
+        const HASH_LENGTH = 10;
+
+
 
 
         /**
@@ -207,6 +215,23 @@
 
 
             return $mimetype;
+        }
+
+
+        /**
+         * Create a random hash string.
+         *
+         * @param   int     Length of string
+         * @return  string  String with random characters
+         */
+        public static function createRandomHash($length=self::HASH_LENGTH)
+        {
+            // Length of URL
+            $length = max(0, min(32, $length));
+
+
+            // Create and return random string
+            return substr(md5(microtime()), rand(0, 32-$length), $length);
         }
 
     }
