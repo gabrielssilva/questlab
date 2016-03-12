@@ -24,7 +24,7 @@
          *
          * @var array
          */
-        public $models = array('seminaries', 'charactergroups', 'charactergroupsquests', 'charactergroupsqueststations');
+        public $models = array('seminaries', 'charactergroups', 'charactergroupsquests', 'charactergroupsqueststations', 'charactergroupsachievements');
 
 
 
@@ -73,6 +73,43 @@
 
             // Generate QR-code
             $url = $this->linker->link(array('qr', 'cgqs', $station['url']), 0, true, null, true, null, true);
+            $file = $this->generateQRcode($url, $size);
+            if(is_null($file)) {
+                return;
+            }
+
+
+            // Pass data to view
+            $this->set('file', $file);
+        }
+
+
+        /**
+         * Action: charactergroupsachievements
+         *
+         * Display a QR-code for a Character groups Achievement
+         *
+         * @throws  \nre\exceptions\IdNotFoundException
+         * @param   string  $seminaryUrl    URL-Title of a Seminary
+         * @param   string  $groupsgroupUrl URL-Title of a Character groups-group
+         * @param   string  $achievementUrl URL of Achievement
+         */
+        public function charactergroupsachievements($seminaryUrl, $groupsgroupUrl, $achievementUrl, $size=1)
+        {
+            // Get seminary
+            $seminary = $this->Seminaries->getSeminaryByUrl($seminaryUrl);
+
+            // Get Character groups-group
+            $groupsgroup = $this->Charactergroups->getGroupsgroupByUrl($seminary['id'], $groupsgroupUrl);
+
+            // Get Achievement
+            $achievement = $this->Charactergroupsachievements->getAchievementByUrl(
+                $groupsgroup['id'],
+                $achievementUrl
+            );
+
+            // Generate QR-code
+            $url = $this->linker->link(array('qr', 'cga', $achievement['hash']), 0, true, null, true, null, true);
             $file = $this->generateQRcode($url, $size);
             if(is_null($file)) {
                 return;

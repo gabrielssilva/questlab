@@ -25,7 +25,7 @@
          *
          * @var array
          */
-        public $models = array('seminaries', 'charactergroups', 'charactergroupsquests', 'charactergroupsqueststations');
+        public $models = array('seminaries', 'charactergroups', 'charactergroupsquests', 'charactergroupsqueststations', 'charactergroupsachievements');
 
 
 
@@ -60,6 +60,39 @@
                 $quest['url'],
                 $station['url']
             )));
+        }
+
+
+        /**
+         * Action: cga.
+         *
+         * Redirect to a Character groups Achievements
+         *
+         * @param   string  $achievementHash    Hash of Character groups Achievement
+         */
+        public function cga($achievementHash)
+        {
+            // Get Achievement
+            $achievement = $this->Charactergroupsachievements->getAchievementByHash($achievementHash);
+
+            // Get Character groups-group
+            $groupsgroup = $this->Charactergroups->getGroupsgroupById($achievement['charactergroupsgroup_id']);
+
+            // Get seminary
+            $seminary = $this->Seminaries->getSeminaryById($groupsgroup['seminary_id']);
+
+            // Redirect
+            $this->redirect(
+                $this->linker->link(
+                    array(
+                        'charactergroupsachievements',
+                        'achievement',
+                        $seminary['url'],
+                        $groupsgroup['url'],
+                        $achievement['hash']
+                    )
+                )
+            );
         }
 
     }
