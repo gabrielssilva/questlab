@@ -86,6 +86,18 @@
                 <p class="fwb"><?=$notification['message']?></p>
                 <?php endif ?>
             </li>
+            <?php elseif($notification['type'] == \hhu\z\controllers\components\NotificationComponent::TYPE_CHARACTERGROUPSACHIEVEMENT) : ?>
+            <li class="cf">
+                <?php if(!is_null($notification['image'])) : ?>
+                <img src="<?=$notification['image']?>" />
+                <?php endif ?>
+                <p class="announce"><i class="fa fa-trophy fa-fw"></i><?=_('Achievement')?>:<i class="fa fa-times fa-fw"></i></p>
+                <?php if(!is_null($notification['link'])) : ?>
+                <p class="fwb"><a href="<?=$notification['link']?>"><?=$notification['message']?></a></p>
+                <?php else : ?>
+                <p class="fwb"><?=$notification['message']?></p>
+                <?php endif ?>
+            </li>
             <?php else : ?>
             <li class="cf">
                 <img src="<?=$linker->link(array('grafics','lvlup.jpg'))?>">
