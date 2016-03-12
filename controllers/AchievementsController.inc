@@ -37,13 +37,14 @@
          * @var array
          */
         public $permissions = array(
-            'index'     => array('admin', 'moderator', 'user'),
-            'create'    => array('admin', 'moderator', 'user'),
-            'moveup'    => array('admin', 'moderator', 'user'),
-            'movedown'  => array('admin', 'moderator', 'user'),
-            'edit'      => array('admin', 'moderator', 'user'),
+            'index'         => array('admin', 'moderator', 'user'),
+            'create'        => array('admin', 'moderator', 'user'),
+            'moveup'        => array('admin', 'moderator', 'user'),
+            'movedown'      => array('admin', 'moderator', 'user'),
+            'edit'          => array('admin', 'moderator', 'user'),
             'conditions'    => array('admin', 'moderator', 'user'),
-            'delete'    => array('admin', 'moderator', 'user')
+            'manage'        => array('admin', 'moderator', 'user'),
+            'delete'        => array('admin', 'moderator', 'user')
         );
         /**
          * User seminary permissions
@@ -51,13 +52,14 @@
          * @var array
          */
         public $seminaryPermissions = array(
-            'index'     => array('admin', 'moderator', 'user'),
-            'create'    => array('admin'),
-            'moveup'    => array('admin', 'moderator'),
-            'movedown'  => array('admin', 'moderator'),
-            'edit'      => array('admin', 'moderator'),
+            'index'         => array('admin', 'moderator', 'user'),
+            'create'        => array('admin'),
+            'moveup'        => array('admin', 'moderator'),
+            'movedown'      => array('admin', 'moderator'),
+            'edit'          => array('admin', 'moderator'),
             'conditions'    => array('admin', 'moderator'),
-            'delete'    => array('admin')
+            'manage'        => array('admin', 'moderator'),
+            'delete'        => array('admin')
         );
 
 

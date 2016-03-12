@@ -37,16 +37,16 @@
          * @var array
          */
         public $permissions = array(
-            'index' => array('admin', 'moderator', 'user'),
-            'groupsgroup' => array('admin', 'moderator', 'user'),
+            'index'             => array('admin', 'moderator', 'user'),
+            'groupsgroup'       => array('admin', 'moderator', 'user'),
             'creategroupsgroup' => array('admin', 'moderator', 'user'),
-            'editgroupsgroup' => array('admin', 'moderator', 'user'),
+            'editgroupsgroup'   => array('admin', 'moderator', 'user'),
             'deletegroupsgroup' => array('admin', 'moderator', 'user'),
-            'group' => array('admin', 'moderator', 'user'),
-            'managegroup' => array('admin', 'moderator', 'user'),
-            'creategroup' => array('admin', 'moderator', 'user'),
-            'editgroup' => array('admin', 'moderator', 'user'),
-            'deletegroup' => array('admin', 'moderator', 'user')
+            'group'             => array('admin', 'moderator', 'user'),
+            'managegroup'       => array('admin', 'moderator', 'user'),
+            'creategroup'       => array('admin', 'moderator', 'user'),
+            'editgroup'         => array('admin', 'moderator', 'user'),
+            'deletegroup'       => array('admin', 'moderator', 'user')
         );
         /**
          * User seminary permissions
@@ -54,16 +54,16 @@
          * @var array
          */
         public $seminaryPermissions = array(
-            'index' => array('admin', 'moderator', 'user'),
-            'groupsgroup' => array('admin', 'moderator', 'user'),
+            'index'             => array('admin', 'moderator', 'user'),
+            'groupsgroup'       => array('admin', 'moderator', 'user'),
             'creategroupsgroup' => array('admin', 'moderator'),
-            'editgroupsgroup' => array('admin', 'moderator'),
+            'editgroupsgroup'   => array('admin', 'moderator'),
             'deletegroupsgroup' => array('admin', 'moderator'),
-            'group' => array('admin', 'moderator', 'user'),
-            'managegroup' => array('admin', 'moderator'),
-            'creategroup' => array('admin', 'moderator'),
-            'editgroup' => array('admin', 'moderator', 'user'),
-            'deletegroup' => array('admin', 'moderator')
+            'group'             => array('admin', 'moderator', 'user'),
+            'managegroup'       => array('admin', 'moderator'),
+            'creategroup'       => array('admin', 'moderator'),
+            'editgroup'         => array('admin', 'moderator', 'user'),
+            'deletegroup'       => array('admin', 'moderator')
         );
 
 
