@@ -24,7 +24,7 @@
          *
          * @var array
          */
-        public $models = array('questgroupshierarchy', 'questgroups', 'quests', 'questtopics', 'media', 'characters', 'charactertypes', 'xplevels', 'avatars', 'achievements', 'charactergroups', 'charactergroupsquests', 'charactergroupsqueststations', 'seminarycharacterfields', 'map', 'uploads');
+        public $models = array('questgroupshierarchy', 'questgroups', 'quests', 'questtopics', 'media', 'characters', 'charactertypes', 'xplevels', 'avatars', 'achievements', 'charactergroups', 'charactergroupsquests', 'charactergroupsqueststations', 'charactergroupsachievements', 'seminarycharacterfields', 'map', 'uploads');
 
 
 
@@ -348,10 +348,11 @@
          * @param   boolean $copyCharactergroupsgroups          Whether to copy Character groups-groups or not
          * @param   boolean $copyCharactergroupsquests          Whether to copy Character groups Quests or not
          * @param   boolean $copyCharactergroupsqueststations   Whether to copy Character groups Quest Stations or not
+         * @param   boolean $copyCharactergroupsachievements    Whether to copy Character groups Achievements or not
          * @param   boolean $copyMap                            Whether to copy Map or not
          * @return                                              ID of newly created Seminary
          */
-        public function copySeminary($userId, $sourceSeminaryId, $title, $course, $description, $copySeminaryfields, $copyMedia, $copyQuestgroupshierarchy, $copyQuestgroups, $copyQuests, $copyQuesttopics, $copyCharactertypes, $copyXPlevels, $copyAvatars, $copyAchievements, $copyCharactergroupsgroups, $copyCharactergroupsquests, $copyCharactergroupsqueststations, $copyMap)
+        public function copySeminary($userId, $sourceSeminaryId, $title, $course, $description, $copySeminaryfields, $copyMedia, $copyQuestgroupshierarchy, $copyQuestgroups, $copyQuests, $copyQuesttopics, $copyCharactertypes, $copyXPlevels, $copyAvatars, $copyAchievements, $copyCharactergroupsgroups, $copyCharactergroupsquests, $copyCharactergroupsqueststations, $copyCharactergroupsachievements, $copyMap)
         {
             // Get Seminary
             $seminary = $this->getSeminaryById($sourceSeminaryId);
@@ -451,6 +452,10 @@
                         if($copyCharactergroupsqueststations && !is_null($charactergroupsquestIds)) {
                             $this->Charactergroupsqueststations->copyStationsOfSeminary($userId, $charactergroupsquestIds, $seminaryMediaIds);
                         }
+                    }
+                    // Copy Charactergroupsachievements
+                    if($copyCharactergroupsachievements) {
+                        $this->Charactergroupsachievements->copyAchievementsOfSeminary($userId, $characterGroupsgroupIds, $seminaryMediaIds);
                     }
                 }
 

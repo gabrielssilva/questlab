@@ -110,6 +110,8 @@
                 <input type="checkbox" id="elements_charactergroupsqueststations" name="elements[charactergroupsqueststations]" <?php if(array_key_exists('charactergroupsqueststations', $elements)) : ?>checked="checked"<?php endif ?> />
                 <label for="elements_charactergroupsqueststations"><?=_('Character Groups Quest Stations')?></label>
             </div>
+            <input type="checkbox" id="elements_charactergroupsachievements" name="elements[charactergroupsachievements]" <?php if(array_key_exists('charactergroupsachievements', $elements)) : ?>checked="checked"<?php endif ?> />
+            <label for="elements_charactergroupsachievements"><?=_('Character Groups Achievements')?></label>
         </div>
         <input type="checkbox" id="elements_map" name="elements[map]" <?php if(array_key_exists('map', $elements)) : ?>checked="checked"<?php endif ?>  />
         <label for="elements_map"><?=_('Map')?></label>
