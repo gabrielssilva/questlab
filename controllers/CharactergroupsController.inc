@@ -24,7 +24,7 @@
          *
          * @var array
          */
-        public $models = array('seminaries', 'charactergroups', 'charactergroupsquests', 'characters', 'avatars', 'media');
+        public $models = array('seminaries', 'charactergroups', 'charactergroupsquests', 'charactergroupsachievements', 'characters', 'avatars', 'media');
         /**
          * Required components
          *
@@ -120,6 +120,14 @@
             // Get Character groups-group Quests
             $quests = $this->Charactergroupsquests->getQuestsForCharactergroupsgroup($groupsgroup['id']);
 
+            // Get Achievements
+            $achievements = array();
+            if(count(array_intersect(array('admin', 'moderator'), \hhu\z\controllers\SeminaryController::$character['characterroles'])) > 0) {
+                $achievements = $this->Charactergroupsachievements->getAchievementsForCharactergroupsgroup(
+                    $groupsgroup['id']
+                );
+            }
+
 
             // Set titile
             $this->addTitle($groupsgroup['name']);
@@ -131,6 +139,7 @@
             $this->set('groupsgroup', $groupsgroup);
             $this->set('groups', $groups);
             $this->set('quests', $quests);
+            $this->set('achievements', $achievements);
         }
 
 
@@ -350,6 +359,11 @@
             // Get Character groups Quests
             $quests = $this->Charactergroupsquests->getQuestsForGroup($group['id']);
 
+            // Get Achievements
+            $achievements = $this->Charactergroupsachievements->getAchievedAchievementsForGroup(
+                $group['id']
+            );
+
 
             // Set titile
             $this->addTitle($group['name']);
@@ -361,6 +375,7 @@
             $this->set('groupsgroup', $groupsgroup);
             $this->set('group', $group);
             $this->set('quests', $quests);
+            $this->set('achievements', $achievements);
         }
 
 

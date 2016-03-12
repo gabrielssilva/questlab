@@ -59,3 +59,28 @@
         <?php endforeach ?>
     </ul>
 </section>
+
+<?php if(!empty($achievements) || count(array_intersect(array('admin', 'moderator'), \hhu\z\controllers\SeminaryController::$character['characterroles'])) > 0) : ?>
+<section>
+    <h1 id="achievements"><i class="fa fa-trophy fa-fw"></i><?=_('Achievements')?></a></h1>
+<?php if(count(array_intersect(array('admin', 'moderator'), \hhu\z\controllers\SeminaryController::$character['characterroles'])) > 0) : ?>
+    <nav class="admin">
+        <li><a href="<?=$linker->link(array('charactergroupsachievements','manage',$seminary['url'],$groupsgroup['url']))?>"><?=sprintf(_('Manage %s-Achievements'), $groupsgroup['name'])?></a></li>
+    </nav>
+<?php endif ?>
+    <ul class="achmnts">
+<?php foreach($achievements as &$achievement) : ?>
+        <li class="cf">
+<?php if(!is_null($achievement['achievementsmedia_id'])) : ?>
+            <img src="<?=$linker->link(array('media','charactergroupsachievement',$seminary['url'],$groupsgroup['url'],$achievement['url']))?>" />
+<?php endif ?>
+            <h3 id="<?=$achievement['url']?>">
+                <?=$achievement['title']?>
+                <span class="unlcked"><?=sprintf(_('achieved at: %s'), $dateFormatter->format(new \DateTime($achievement['created'])))?></span>
+            </h3>
+            <p class="desc"><?=\hhu\z\Utils::t($achievement['description'])?></p>
+        </li>
+<?php endforeach?>
+    </ul>
+</section>
+<?php endif ?>

@@ -44,3 +44,23 @@
     </li>
     <?php endforeach ?>
 </ul>
+
+
+<?php if(count(array_intersect(array('admin', 'moderator'), \hhu\z\controllers\SeminaryController::$character['characterroles'])) > 0 || in_array(\hhu\z\controllers\SeminaryController::$character['id'], array_map(function($c) { return $c['id']; }, $group['characters']))) : ?>
+<h2 id="achievements"><i class="fa fa-trophy fa-fw"></i><?=sprintf(_('%s-Achievements'),$groupsgroup['name'])?></a></h2>
+<nav class="admin">
+    <li><a href="<?=$linker->link(array('charactergroupsachievements','create',$seminary['url'],$groupsgroup['url']))?>"><?=sprintf(_('Create new %s-Achievement'), $groupsgroup['name'])?></a></li>
+    <li><a href="<?=$linker->link(array('charactergroupsachievements','manage',$seminary['url'],$groupsgroup['url']))?>"><?=sprintf(_('Manage %s-Achievements'), $groupsgroup['name'])?></a></li>
+</nav>
+<ul class="achmnts">
+<?php foreach($achievements as &$achievement) : ?>
+    <li class="cf">
+<?php if(!is_null($achievement['achievementsmedia_id'])) : ?>
+        <img src="<?=$linker->link(array('media','charactergroupsachievement',$seminary['url'],$groupsgroup['url'],$achievement['url']))?>" />
+<?php endif ?>
+        <h3 id="<?=$achievement['url']?>"><?=$achievement['title']?></h3>
+        <p class="desc"><?=\hhu\z\Utils::t($achievement['description'])?></p>
+    </li>
+<?php endforeach?>
+</ul>
+<?php endif ?>
