@@ -249,7 +249,7 @@
             $conditions = $this->Achievements->getAchievementsConditions();
 
             // Get allowed mimetypes
-            $mimetypes = \nre\configs\AppConfig::$mimetypes['moodpics'];
+            $mimetypes = \nre\configs\AppConfig::$mimetypes['icons'];
 
             // Values
             $title = '';
@@ -470,7 +470,7 @@
             $conditions = $this->Achievements->getAchievementsConditions();
 
             // Get allowed mimetypes
-            $mimetypes = \nre\configs\AppConfig::$mimetypes['moodpics'];
+            $mimetypes = \nre\configs\AppConfig::$mimetypes['icons'];
 
             // Values
             $title = $achievement['title'];
