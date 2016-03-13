@@ -20,7 +20,7 @@
 
 LOCK TABLES `achievementconditions` WRITE;
 /*!40000 ALTER TABLE `achievementconditions` DISABLE KEYS */;
-INSERT INTO `achievementconditions` (`id`, `created`, `condition`) VALUES (1,'2014-04-16 19:36:54','date'),(2,'2014-04-16 19:36:54','character'),(3,'2014-04-16 19:36:59','quest'),(4,'2014-04-16 19:36:59','achievement');
+INSERT INTO `achievementconditions` (`id`, `created`, `condition`) VALUES (1,'2014-04-16 19:36:54','date'),(2,'2014-04-16 19:36:54','character'),(3,'2014-04-16 19:36:59','quest'),(4,'2014-04-16 19:36:59','achievement'),(5,'2016-03-06 11:47:50','qrcode');
 /*!40000 ALTER TABLE `achievementconditions` ENABLE KEYS */;
 UNLOCK TABLES;
 
