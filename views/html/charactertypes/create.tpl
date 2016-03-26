@@ -34,7 +34,7 @@
 <?php endif ?>
 <form method="post">
     <fieldset>
-        <label for="name"><?=_('Name')?>:</legend>
+        <label for="name"><?=_('Name')?>:</label>
         <input id="name" type="text" name="charactertypename" placeholder="<?=_('Name')?>" title="<?=_('Name')?>" required="required" maxlength="<?=$validationSettings['charactertypename']['maxlength']?>" value="<?=$name?>" <?=($validation !== true && array_key_exists('name', $validation)) ? 'class="invalid"' : null?> />
     </fieldset>
     <input type="submit" name="create" value="<?=_('create')?>" />
