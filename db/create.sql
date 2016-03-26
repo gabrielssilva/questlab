@@ -508,6 +508,7 @@ CREATE TABLE `charactergroupsquests` (
   `won_text` text COLLATE utf8mb4_unicode_ci NOT NULL,
   `lost_text` text COLLATE utf8mb4_unicode_ci NOT NULL,
   `questsmedia_id` int(11) DEFAULT NULL,
+  `public` tinyint(1) NOT NULL DEFAULT '1',
   PRIMARY KEY (`id`),
   UNIQUE KEY `charactergroupsgroup_id_2` (`charactergroupsgroup_id`,`url`),
   KEY `created_user_id` (`created_user_id`),
@@ -2662,4 +2663,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2016-03-26 16:16:45
+-- Dump completed on 2016-03-26 19:13:31

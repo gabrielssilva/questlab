@@ -535,6 +535,7 @@
             $rules = $quest['rules'];
             $wonText = $quest['won_text'];
             $lostText = $quest['lost_text'];
+            $public = $quest['public'];
             $fields = array('title', 'xps');
             $validation = array();
 
@@ -552,6 +553,7 @@
                 $rules = $this->request->getPostParam('rules');
                 $wonText = $this->request->getPostParam('wonText');
                 $lostText = $this->request->getPostParam('lostText');
+                $public = !is_null($this->request->getPostParam('public'));
 
                 // Validate icon
                 $icon = null;
@@ -606,7 +608,8 @@
                         $xps,
                         $rules,
                         $wonText,
-                        $lostText
+                        $lostText,
+                        $public
                     );
                     $quest = $this->Charactergroupsquests->getQuestById($quest['id']);
 
@@ -654,6 +657,7 @@
             $this->set('rules', $rules);
             $this->set('wonText', $wonText);
             $this->set('lostText', $lostText);
+            $this->set('public', $public);
             $this->set('mimetypes', $mimetypes);
             $this->set('validation', $validation);
             $this->set('validationSettings', $validationSettings);

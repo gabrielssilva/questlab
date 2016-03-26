@@ -68,6 +68,8 @@
         </ul>
     </fieldset>
     <fieldset>
+        <input type="checkbox" id="public" name="public" <?php if($public) : ?>checked="checked"<?php endif ?> />
+        <label for="public"><?=_('public')?></label>
         <label for="title"><?=_('Title')?>:</label>
         <input type="text" id="title" name="title" placeholder="<?=_('Title')?>" title="<?=_('Title')?>" maxlength="<?=$validationSettings['title']['maxlength']?>" value="<?=$title?>" <?=(array_key_exists('title', $validation)) ? 'class="invalid"' : null?> />
         <label for="xps"><?=_('XPs')?>:</label>

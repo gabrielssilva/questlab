@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: The Legend of Z\n"
-"POT-Creation-Date: 2016-03-26 17:43+0100\n"
-"PO-Revision-Date: 2016-03-26 17:45+0100\n"
+"POT-Creation-Date: 2016-03-26 19:10+0100\n"
+"PO-Revision-Date: 2016-03-26 19:10+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de_DE\n"
@@ -18,12 +18,12 @@ msgstr ""
 "X-Poedit-SearchPath-2: controllers\n"
 
 #: controllers/CharactergroupsachievementsController.inc:175
-#: views/html/charactergroups/groupsgroup.tpl:50
+#: views/html/charactergroups/groupsgroup.tpl:52
 #, php-format
 msgid "%s-Achievements"
 msgstr "%sachievements"
 
-#: controllers/CharactersController.inc:417 controllers/UsersController.inc:339
+#: controllers/CharactersController.inc:438 controllers/UsersController.inc:339
 #: views/ajax/characters/index.tpl:10 views/ajax/users/index.tpl:10
 #: views/html/characters/index.tpl:45 views/html/characters/manage.tpl:33
 #: views/html/characters/manage.tpl:48 views/html/characters/manage.tpl:56
@@ -33,7 +33,7 @@ msgstr "%sachievements"
 msgid "Admin"
 msgstr "Administrator"
 
-#: controllers/CharactersController.inc:423 controllers/UsersController.inc:345
+#: controllers/CharactersController.inc:444 controllers/UsersController.inc:345
 #: views/ajax/characters/index.tpl:12 views/ajax/users/index.tpl:12
 #: views/html/characters/index.tpl:46 views/html/characters/manage.tpl:34
 #: views/html/characters/manage.tpl:49 views/html/characters/manage.tpl:57
@@ -43,7 +43,7 @@ msgstr "Administrator"
 msgid "Moderator"
 msgstr "Moderator"
 
-#: controllers/CharactersController.inc:429 controllers/UsersController.inc:351
+#: controllers/CharactersController.inc:450 controllers/UsersController.inc:351
 #: views/ajax/characters/index.tpl:14 views/ajax/users/index.tpl:14
 #: views/html/characters/index.tpl:47 views/html/characters/manage.tpl:35
 #: views/html/characters/manage.tpl:51 views/html/characters/manage.tpl:59
@@ -514,20 +514,20 @@ msgid "Questtype textinput"
 msgstr "Texteingabe"
 
 #: views/ajax/quests/index.tpl:29 views/html/charactergroups/group.tpl:29
-#: views/html/charactergroups/group.tpl:42
+#: views/html/charactergroups/group.tpl:49
 #: views/html/charactergroupsquests/manage.tpl:17
 #: views/html/charactergroupsquests/manage.tpl:85
 #: views/html/charactergroupsquests/quest.tpl:21
 #: views/html/charactergroupsquests/quest.tpl:167
-#: views/html/characters/character.tpl:81
-#: views/html/characters/character.tpl:83
-#: views/html/characters/character.tpl:95
-#: views/html/characters/character.tpl:97
-#: views/html/characters/character.tpl:107
-#: views/html/characters/character.tpl:109
-#: views/html/characters/character.tpl:125 views/html/quests/index.tpl:71
-#: views/html/seminaries/index.tpl:27 views/html/seminarybar/index.tpl:11
-#: views/html/seminarybar/index.tpl:49 views/html/seminarybar/index.tpl:51
+#: views/html/characters/character.tpl:90
+#: views/html/characters/character.tpl:92
+#: views/html/characters/character.tpl:110
+#: views/html/characters/character.tpl:112
+#: views/html/characters/character.tpl:128
+#: views/html/characters/character.tpl:130
+#: views/html/characters/character.tpl:146 views/html/quests/index.tpl:71
+#: views/html/seminaries/index.tpl:27 views/html/seminarybar/index.tpl:14
+#: views/html/seminarybar/index.tpl:57 views/html/seminarybar/index.tpl:59
 #, php-format
 msgid "%d XPs"
 msgstr "%d XP"
@@ -545,7 +545,7 @@ msgstr "Fehler"
 #: views/html/achievements/conditions.tpl:4
 #: views/html/achievements/create.tpl:4 views/html/achievements/delete.tpl:4
 #: views/html/achievements/edit.tpl:4 views/html/achievements/index.tpl:12
-#: views/html/achievements/manage.tpl:4 views/html/charactergroups/group.tpl:65
+#: views/html/achievements/manage.tpl:4 views/html/charactergroups/group.tpl:72
 #: views/html/seminaries/copy.tpl:103 views/html/seminarymenu/index.tpl:6
 msgid "Achievements"
 msgstr "Achievements"
@@ -628,8 +628,8 @@ msgid "Group by"
 msgstr "Gruppiert über"
 
 #: views/html/achievements/conditions.tpl:65
-#: views/html/achievements/conditions.tpl:136 views/html/html.tpl:82
-#: views/html/html.tpl:94
+#: views/html/achievements/conditions.tpl:136 views/html/html.tpl:85
+#: views/html/html.tpl:97
 msgid "Achievement"
 msgstr "Achievement"
 
@@ -808,8 +808,8 @@ msgstr "Erhalten"
 #: views/html/charactergroupsachievements/edit.tpl:65
 #: views/html/charactergroupsquests/create.tpl:70
 #: views/html/charactergroupsquests/create.tpl:71
-#: views/html/charactergroupsquests/edit.tpl:71
-#: views/html/charactergroupsquests/edit.tpl:72
+#: views/html/charactergroupsquests/edit.tpl:73
+#: views/html/charactergroupsquests/edit.tpl:74
 #: views/html/charactergroupsqueststations/create.tpl:83
 #: views/html/charactergroupsqueststations/create.tpl:84
 #: views/html/charactergroupsqueststations/edit.tpl:83
@@ -836,8 +836,8 @@ msgstr "Titel"
 #: views/html/charactergroupsachievements/edit.tpl:66
 #: views/html/charactergroupsquests/create.tpl:80
 #: views/html/charactergroupsquests/create.tpl:81
-#: views/html/charactergroupsquests/edit.tpl:81
-#: views/html/charactergroupsquests/edit.tpl:82
+#: views/html/charactergroupsquests/edit.tpl:83
+#: views/html/charactergroupsquests/edit.tpl:84
 #: views/html/charactergroupsquests/quest.tpl:41
 #: views/html/seminaries/copy.tpl:69 views/html/seminaries/copy.tpl:70
 #: views/html/seminaries/create.tpl:70 views/html/seminaries/create.tpl:71
@@ -980,7 +980,7 @@ msgstr "Persönlicher Fortschritt: %d%%"
 
 #: views/html/achievements/index.tpl:61 views/html/charactergroups/group.tpl:28
 #: views/html/charactergroups/managegroup.tpl:16
-#: views/html/characters/character.tpl:44 views/html/seminarybar/index.tpl:12
+#: views/html/characters/character.tpl:47 views/html/seminarybar/index.tpl:15
 msgid "Rank"
 msgstr "Platz"
 
@@ -989,8 +989,8 @@ msgstr "Platz"
 msgid "You achieved %d of %d Achievements so far"
 msgstr "Du hast bislang %d von insgesamt %d Achievements erreicht"
 
-#: views/html/achievements/index.tpl:68 views/html/charactergroups/group.tpl:79
-#: views/html/seminarybar/index.tpl:33
+#: views/html/achievements/index.tpl:68 views/html/charactergroups/group.tpl:86
+#: views/html/seminarybar/index.tpl:36
 #, php-format
 msgid "achieved at: %s"
 msgstr "erhalten am: %s"
@@ -1003,7 +1003,7 @@ msgstr "Spiele weiter, um diesen geheimen Erfolg freizuschalten"
 #: views/html/charactergroups/editgroup.tpl:79
 #: views/html/charactergroups/editgroupsgroup.tpl:46
 #: views/html/charactergroupsachievements/manage.tpl:21
-#: views/html/charactergroupsquests/edit.tpl:90
+#: views/html/charactergroupsquests/edit.tpl:92
 #: views/html/charactergroupsqueststations/station.tpl:36
 #: views/html/characters/edit.tpl:131 views/html/charactertitles/index.tpl:17
 #: views/html/charactertypes/index.tpl:20 views/html/introduction/index.tpl:22
@@ -1039,7 +1039,7 @@ msgstr "bearbeiten"
 #: views/html/charactergroupsqueststations/edittask.tpl:4
 #: views/html/charactergroupsqueststations/station.tpl:4
 #: views/html/charactergroupsqueststations/station.tpl:136
-#: views/html/characters/character.tpl:117 views/html/seminaries/copy.tpl:105
+#: views/html/characters/character.tpl:138 views/html/seminaries/copy.tpl:105
 #: views/html/seminarymenu/index.tpl:5
 msgid "Character Groups"
 msgstr "Gruppen"
@@ -1267,17 +1267,17 @@ msgstr "Mitglied"
 msgid "Characters"
 msgstr "Charaktere"
 
-#: views/html/charactergroups/group.tpl:49
+#: views/html/charactergroups/group.tpl:56
 #: views/html/charactergroups/groupsgroup.tpl:32
 #, php-format
 msgid "%s-Quests"
 msgstr "%squests"
 
-#: views/html/charactergroups/group.tpl:56
+#: views/html/charactergroups/group.tpl:63
 #: views/html/charactergroupsquests/create.tpl:72
 #: views/html/charactergroupsquests/create.tpl:73
-#: views/html/charactergroupsquests/edit.tpl:73
-#: views/html/charactergroupsquests/edit.tpl:74
+#: views/html/charactergroupsquests/edit.tpl:75
+#: views/html/charactergroupsquests/edit.tpl:76
 #: views/html/characters/index.tpl:24 views/html/characters/index.tpl:87
 #: views/html/characters/manage.tpl:13 views/html/questgroups/questgroup.tpl:62
 #: views/html/quests/create.tpl:68 views/html/quests/create.tpl:69
@@ -1286,8 +1286,8 @@ msgstr "%squests"
 msgid "XPs"
 msgstr "XP"
 
-#: views/html/charactergroups/group.tpl:68
-#: views/html/charactergroups/groupsgroup.tpl:53
+#: views/html/charactergroups/group.tpl:75
+#: views/html/charactergroups/groupsgroup.tpl:55
 #: views/html/charactergroupsachievements/manage.tpl:11
 #, php-format
 msgid "Manage %s-Achievements"
@@ -1303,7 +1303,7 @@ msgstr "Neue %s-Gruppe"
 msgid "Create new %s-Quest"
 msgstr "Neue %s-Quest erstellen"
 
-#: views/html/charactergroups/groupsgroup.tpl:52
+#: views/html/charactergroups/groupsgroup.tpl:54
 #: views/html/charactergroupsachievements/manage.tpl:8
 #, php-format
 msgid "Create new %s-Achievement"
@@ -1393,30 +1393,30 @@ msgid "XPs invalid"
 msgstr "Die XP-Angabe ist ungültig"
 
 #: views/html/charactergroupsquests/create.tpl:74
-#: views/html/charactergroupsquests/edit.tpl:75
+#: views/html/charactergroupsquests/edit.tpl:77
 #: views/html/questgroups/create.tpl:54 views/html/quests/index.tpl:10
 msgid "Questgroup"
 msgstr "Questgruppe"
 
 #: views/html/charactergroupsquests/create.tpl:82
 #: views/html/charactergroupsquests/create.tpl:83
-#: views/html/charactergroupsquests/edit.tpl:83
-#: views/html/charactergroupsquests/edit.tpl:84
+#: views/html/charactergroupsquests/edit.tpl:85
+#: views/html/charactergroupsquests/edit.tpl:86
 #: views/html/charactergroupsquests/quest.tpl:46
 msgid "Rules"
 msgstr "Regeln"
 
 #: views/html/charactergroupsquests/create.tpl:84
 #: views/html/charactergroupsquests/create.tpl:85
-#: views/html/charactergroupsquests/edit.tpl:85
-#: views/html/charactergroupsquests/edit.tpl:86
+#: views/html/charactergroupsquests/edit.tpl:87
+#: views/html/charactergroupsquests/edit.tpl:88
 msgid "Won-text"
 msgstr "Gewonnentext"
 
 #: views/html/charactergroupsquests/create.tpl:86
 #: views/html/charactergroupsquests/create.tpl:87
-#: views/html/charactergroupsquests/edit.tpl:87
-#: views/html/charactergroupsquests/edit.tpl:88
+#: views/html/charactergroupsquests/edit.tpl:89
+#: views/html/charactergroupsquests/edit.tpl:90
 msgid "Lost-text"
 msgstr "Verlorentext"
 
@@ -1436,6 +1436,10 @@ msgstr "Soll die %s-Quest „%s“ wirklich gelöscht werden?"
 #, php-format
 msgid "Edit %s-Quest"
 msgstr "%s-Quest bearbeiten"
+
+#: views/html/charactergroupsquests/edit.tpl:72
+msgid "public"
+msgstr "öffentlich"
 
 #: views/html/charactergroupsquests/manage.tpl:22
 #: views/html/charactergroupsquests/quest.tpl:27
@@ -1611,40 +1615,40 @@ msgstr "gescheitert um %s"
 msgid "Back to overview"
 msgstr "Zurück zur Übersicht"
 
-#: views/html/characters/character.tpl:17 views/html/characters/edit.tpl:14
+#: views/html/characters/character.tpl:20 views/html/characters/edit.tpl:14
 msgid "Edit Character"
 msgstr "Charakter bearbeiten"
 
-#: views/html/characters/character.tpl:20 views/html/characters/delete.tpl:10
+#: views/html/characters/character.tpl:23 views/html/characters/delete.tpl:10
 msgid "Delete Character"
 msgstr "Charakter löschen"
 
-#: views/html/characters/character.tpl:30
+#: views/html/characters/character.tpl:33
 msgid "Total progress"
 msgstr "Fortschritt"
 
-#: views/html/characters/character.tpl:35
-#: views/html/characters/character.tpl:81
-#: views/html/characters/character.tpl:95
-#: views/html/characters/character.tpl:107
-#: views/html/charactertypes/edit.tpl:111 views/html/seminarybar/index.tpl:49
+#: views/html/characters/character.tpl:38
+#: views/html/characters/character.tpl:90
+#: views/html/characters/character.tpl:110
+#: views/html/characters/character.tpl:128
+#: views/html/charactertypes/edit.tpl:111 views/html/seminarybar/index.tpl:57
 #: views/html/users/user.tpl:42 views/html/xplevels/manage.tpl:37
 msgid "Level"
 msgstr "Level"
 
-#: views/html/characters/character.tpl:46
+#: views/html/characters/character.tpl:49
 msgid "Milestones"
 msgstr "Meilensteine"
 
-#: views/html/characters/character.tpl:73
+#: views/html/characters/character.tpl:76
 msgid "Ranking"
 msgstr "Ranking"
 
-#: views/html/characters/character.tpl:134 views/html/seminarybar/index.tpl:19
+#: views/html/characters/character.tpl:155 views/html/seminarybar/index.tpl:22
 msgid "Last Quest"
 msgstr "Letzter Speicherpunkt"
 
-#: views/html/characters/character.tpl:140
+#: views/html/characters/character.tpl:161
 msgid "Topic progress"
 msgstr "Thematischer Fortschritt"
 
@@ -1711,7 +1715,7 @@ msgstr "männlich"
 msgid "Display settings"
 msgstr "Anzeigeeinstellungen"
 
-#: views/html/characters/edit.tpl:90
+#: views/html/characters/edit.tpl:90 views/html/html.tpl:106
 msgid "Charactertitle"
 msgstr "Charaktertitel"
 
@@ -1990,11 +1994,11 @@ msgstr "oder"
 msgid "register yourself"
 msgstr "registriere dich"
 
-#: views/html/html.tpl:104
+#: views/html/html.tpl:112
 msgid "Level-up"
 msgstr "Levelaufstieg"
 
-#: views/html/html.tpl:106 views/html/html.tpl:108
+#: views/html/html.tpl:114 views/html/html.tpl:116
 #, php-format
 msgid "You have reached level %d"
 msgstr "Du hast Level %d erreicht"
@@ -2516,11 +2520,11 @@ msgstr "Quests anzeigen"
 msgid "Recalculate XPs"
 msgstr "XP neuberechnen"
 
-#: views/html/seminarybar/index.tpl:26
+#: views/html/seminarybar/index.tpl:29
 msgid "Last Achievement"
 msgstr "Letztes Achievement"
 
-#: views/html/seminarybar/index.tpl:57
+#: views/html/seminarybar/index.tpl:65
 #, php-format
 msgid "Show %s-Profile"
 msgstr "%s-Profil anzeigen"

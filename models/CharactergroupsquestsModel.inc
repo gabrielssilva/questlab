@@ -50,7 +50,7 @@
         public function getQuestsForCharactergroupsgroup($groupsgroupId)
         {
             return $this->db->query(
-                'SELECT id, questgroups_id, title, url, xps, questsmedia_id '.
+                'SELECT id, questgroups_id, title, url, xps, questsmedia_id, public '.
                 'FROM charactergroupsquests '.
                 'WHERE charactergroupsgroup_id = ? '.
                 'ORDER BY created ASC',
@@ -71,7 +71,7 @@
         public function getQuestByUrl($groupsgroupId, $questUrl)
         {
             $data = $this->db->query(
-                'SELECT id, questgroups_id, title, url, description, xps, rules, won_text, lost_text, questsmedia_id '.
+                'SELECT id, questgroups_id, title, url, description, xps, rules, won_text, lost_text, questsmedia_id, public '.
                 'FROM charactergroupsquests '.
                 'WHERE charactergroupsgroup_id = ? AND url = ?',
                 'is',
@@ -97,7 +97,7 @@
         public function getQuestById($questId)
         {
             $data = $this->db->query(
-                'SELECT id, charactergroupsgroup_id, questgroups_id, title, url, description, xps, rules, won_text, lost_text, questsmedia_id '.
+                'SELECT id, charactergroupsgroup_id, questgroups_id, title, url, description, xps, rules, won_text, lost_text, questsmedia_id, public '.
                 'FROM charactergroupsquests '.
                 'WHERE id = ?',
                 'i',
@@ -322,9 +322,9 @@
         {
             $this->db->query(
                 'INSERT INTO charactergroupsquests '.
-                '(created_user_id, charactergroupsgroup_id, questgroups_id, title, url, description, xps, rules, won_text, lost_text) '.
+                '(created_user_id, charactergroupsgroup_id, questgroups_id, title, url, description, xps, rules, won_text, lost_text, public) '.
                 'VALUES '.
-                '(?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
+                '(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 0)',
                 'iiisssdsss',
                 $userId,
                 $groupsgroupId,
@@ -346,23 +346,24 @@
         /**
          * Edit a Character groups Quest.
          *
-         * @param   int $questId    ID of Character groups Quest to edit
-         * @param   int $groupsgroupId  ID of Character groups-group
-         * @param   int $questgroupId   ID of Quest group
-         * @param   string  $title      Title of new Quest
+         * @param   int     $questId        ID of Character groups Quest to edit
+         * @param   int     $groupsgroupId  ID of Character groups-group
+         * @param   int     $questgroupId   ID of Quest group
+         * @param   string  $title          Title of new Quest
          * @param   string  $description    Description of new Quset
-         * @param   int $xps        Amount of XPs for new Quest
-         * @param   string  $rules      Rules of new Quest
-         * @param   string  $wonText    Won-text of new Quset
-         * @param   string  $lostText   Lost-text of new Quest
+         * @param   int     $xps            Amount of XPs for new Quest
+         * @param   string  $rules          Rules of new Quest
+         * @param   string  $wonText        Won-text of new Quset
+         * @param   string  $lostText       Lost-text of new Quest
+         * @param   boolean $public         Whether Quest is public visible or not
          */
-        public function editQuest($questId, $groupsgroupId, $questgroupId, $title, $description, $xps, $rules, $wonText, $lostText)
+        public function editQuest($questId, $groupsgroupId, $questgroupId, $title, $description, $xps, $rules, $wonText, $lostText, $public)
         {
             $this->db->query(
                 'UPDATE charactergroupsquests '.
-                'SET charactergroupsgroup_id = ?, questgroups_id = ?, title = ?, url = ?, description = ?, xps = ?, rules = ?, won_text = ?, lost_text= ? '.
+                'SET charactergroupsgroup_id = ?, questgroups_id = ?, title = ?, url = ?, description = ?, xps = ?, rules = ?, won_text = ?, lost_text= ?, public = ? '.
                 'WHERE id = ?',
-                'iisssdsssi',
+                'iisssdsssii',
                 $groupsgroupId,
                 $questgroupId,
                 $title,
@@ -372,6 +373,7 @@
                 $rules,
                 $wonText,
                 $lostText,
+                $public,
                 $questId
             );
         }
@@ -400,8 +402,8 @@
                     // Copy Quest
                     $this->db->query(
                         'INSERT INTO charactergroupsquests '.
-                        '(created_user_id, charactergroupsgroup_id, questgroups_id, title, url, description, xps, rules, won_text, lost_text) '.
-                        'SELECT ?, ?, ?, title, url, description, xps, rules, won_text, lost_text '.
+                        '(created_user_id, charactergroupsgroup_id, questgroups_id, title, url, description, xps, rules, won_text, lost_text, public) '.
+                        'SELECT ?, ?, ?, title, url, description, xps, rules, won_text, lost_text, public '.
                         'FROM charactergroupsquests '.
                         'WHERE id = ?',
                         'iiii',
