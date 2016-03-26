@@ -44,7 +44,7 @@
         {
             return $this->db->query(
                 'SELECT '.
-                    'characters.id, characters.created, characters.user_id, characters.name, characters.url, cache_characters.xps, cache_characters.quest_xps, cache_characters.avatar_id, '.
+                    'characters.id, characters.created, characters.user_id, characters.name, characters.url, character.gender, characters.charactertitle_id, cache_characters.xps, cache_characters.quest_xps, cache_characters.avatar_id, '.
                     'charactertypes.id AS charactertype_id, charactertypes.name AS charactertype_name, charactertypes.url AS charactertype_url, '.
                     'xplevels.id AS xplevel_id, xplevels.level AS xplevel, '.
                     'seminaries.id AS seminary_id, seminaries.url AS seminary_url, seminaries.title AS seminary_title, seminaries.url AS seminary_url '.
@@ -99,7 +99,7 @@
         {
             return $this->db->query(
                 'SELECT '.
-                    'characters.id, characters.created, characters.user_id, characters.name, characters.url, cache_characters.xps, cache_characters.quest_xps, cache_characters.avatar_id, '.
+                    'characters.id, characters.created, characters.user_id, characters.name, characters.url, characters.gender, characters.charactertitle_id, cache_characters.xps, cache_characters.quest_xps, cache_characters.avatar_id, '.
                     'charactertypes.id AS charactertype_id, charactertypes.name AS charactertype_name, charactertypes.url AS charactertype_url, '.
                     'xplevels.id AS xplevel_id, xplevels.level AS xplevel, '.
                     'seminaries.id AS seminary_id, seminaries.url AS seminary_url, seminaries.title AS seminary_title, seminaries.url AS seminary_url '.
@@ -141,7 +141,7 @@
 
                     return $this->db->query(
                         'SELECT '.
-                            'characters.id, characters.created, characters.user_id, characters.name, characters.url, cache_characters.xps, cache_characters.quest_xps, cache_characters.avatar_id, '.
+                            'characters.id, characters.created, characters.user_id, characters.name, characters.url, characters.gender, characters.charactertitle_id, cache_characters.xps, cache_characters.quest_xps, cache_characters.avatar_id, '.
                             'charactertypes.id AS charactertype_id, charactertypes.name AS charactertype_name, charactertypes.url AS charactertype_url, '.
                             'xplevels.id AS xplevel_id, xplevels.level AS xplevel, '.
                             'seminaries.id AS seminary_id, seminaries.url AS seminary_url, seminaries.title AS seminary_title, seminaries.url AS seminary_url '.
@@ -166,7 +166,7 @@
                 case 'role':
                     return $this->db->query(
                         'SELECT DISTINCT '.
-                            'characters.id, characters.created, characters.user_id, characters.name, characters.url, cache_characters.xps, cache_characters.quest_xps, cache_characters.avatar_id, '.
+                            'characters.id, characters.created, characters.user_id, characters.name, characters.url, characters.gender, characters.charactertitle_id, cache_characters.xps, cache_characters.quest_xps, cache_characters.avatar_id, '.
                             'charactertypes.id AS charactertype_id, charactertypes.name AS charactertype_name, charactertypes.url AS charactertype_url, '.
                             'xplevels.id AS xplevel_id, xplevels.level AS xplevel, '.
                             'seminaries.id AS seminary_id, seminaries.url AS seminary_url, seminaries.title AS seminary_title, seminaries.url AS seminary_url '.
@@ -188,7 +188,7 @@
                 default:
                     return $this->db->query(
                         'SELECT DISTINCT '.
-                            'characters.id, characters.created, characters.user_id, characters.name, characters.url, cache_characters.xps, cache_characters.quest_xps, cache_characters.avatar_id, '.
+                            'characters.id, characters.created, characters.user_id, characters.name, characters.url, characters.gender, characters.charactertitle_id, cache_characters.xps, cache_characters.quest_xps, cache_characters.avatar_id, '.
                             'charactertypes.id AS charactertype_id, charactertypes.name AS charactertype_name, charactertypes.url AS charactertype_url, '.
                             'xplevels.id AS xplevel_id, xplevels.level AS xplevel, '.
                             'seminaries.id AS seminary_id, seminaries.url AS seminary_url, seminaries.title AS seminary_title, seminaries.url AS seminary_url '.
@@ -222,7 +222,7 @@
         {
             return $this->db->query(
                 'SELECT '.
-                    'characters.id, characters.created, characters.user_id, characters.name, characters.url, cache_characters.xps, cache_characters.quest_xps, cache_characters.avatar_id, '.
+                    'characters.id, characters.created, characters.user_id, characters.name, characters.url, characters.gender, characters.charactertitle_id, cache_characters.xps, cache_characters.quest_xps, cache_characters.avatar_id, '.
                     'charactertypes.id AS charactertype_id, charactertypes.name AS charactertype_name, charactertypes.url AS charactertype_url, '.
                     'xplevels.id AS xplevel_id, xplevels.level AS xplevel '.
                 'FROM characters '.
@@ -250,7 +250,7 @@
         {
             $data = $this->db->query(
                 'SELECT '.
-                    'characters.id, characters.created, characters.user_id, characters.name, characters.url, cache_characters.xps, cache_characters.quest_xps, cache_characters.avatar_id, '.
+                    'characters.id, characters.created, characters.user_id, characters.name, characters.url, characters.gender, characters.charactertitle_id, cache_characters.xps, cache_characters.quest_xps, cache_characters.avatar_id, '.
                     'charactertypes.id AS charactertype_id, charactertypes.name AS charactertype_name, charactertypes.url AS charactertype_url, '.
                     'xplevels.id AS xplevel_id, xplevels.level AS xplevel '.
                 'FROM characters '.
@@ -282,7 +282,7 @@
         {
             $data = $this->db->query(
                 'SELECT '.
-                    'characters.id, characters.created, characters.user_id, characters.name, characters.url, cache_characters.xps, cache_characters.quest_xps, cache_characters.avatar_id, '.
+                    'characters.id, characters.created, characters.user_id, characters.name, characters.url, characters.gender, characters.charactertitle_id, cache_characters.xps, cache_characters.quest_xps, cache_characters.avatar_id, '.
                     'charactertypes.id AS charactertype_id, charactertypes.name AS charactertype_name, charactertypes.url AS charactertype_url, '.
                     'xplevels.id AS xplevel_id, xplevels.level AS xplevel '.
                 'FROM characters '.
@@ -313,7 +313,7 @@
         {
             $data = $this->db->query(
                 'SELECT '.
-                    'characters.id, characters.created, characters.user_id, characters.name, characters.url, cache_characters.xps,cache_characters.quest_xps,  cache_characters.avatar_id, '.
+                    'characters.id, characters.created, characters.user_id, characters.name, characters.url, characters.gender, characters.charactertitle_id, cache_characters.xps,cache_characters.quest_xps,  cache_characters.avatar_id, '.
                     'charactertypes.id AS charactertype_id, charactertypes.name AS charactertype_name, charactertypes.url AS charactertype_url, '.
                     'xplevels.id AS xplevel_id, xplevels.level AS xplevel '.
                 'FROM characters '.
@@ -325,7 +325,7 @@
                 $characterId
             );
             if(empty($data)) {
-                throw new \nre\exceptions\IdNotFoundException($characterUrl);
+                throw new \nre\exceptions\IdNotFoundException($characterId);
             }
 
 
@@ -342,7 +342,7 @@
         public function getCharactersWithRole($characterrole)
         {
             return $this->db->query(
-                'SELECT characters.id, characters.created, characters.user_id, characters.name, characters.url '.
+                'SELECT characters.id, characters.created, characters.user_id, characters.name, characters.url, characters.gender, characters.charactertitle_id '.
                 'FROM characters '.
                 'LEFT JOIN characters_characterroles ON characters_characterroles.character_id = characters.id '.
                 'LEFT JOIN characterroles ON characterroles.id = characters_characterroles.characterrole_id '.
@@ -366,7 +366,7 @@
         {
             return $this->db->query(
                 'SELECT '.
-                    'characters.id, characters.created, characters.user_id, characters.name, characters.url, cache_characters.xps, cache_characters.quest_xps, cache_characters.avatar_id, '.
+                    'characters.id, characters.created, characters.user_id, characters.name, characters.url, characters.gender, characters.charactertitle_id, cache_characters.xps, cache_characters.quest_xps, cache_characters.avatar_id, '.
                     'charactertypes.id AS charactertype_id, charactertypes.name AS charactertype_name, charactertypes.url AS charactertype_url, '.
                     'xplevels.id AS xplevel_id, xplevels.level AS xplevel, '.
                     'count(DISTINCT achievement_id) AS c '.
@@ -433,7 +433,7 @@
         {
             $data = $this->db->query(
                 'SELECT '.
-                    'characters.id, characters.created, characters.user_id, characters.name, characters.url, cache_characters.xps,cache_characters.quest_xps,  cache_characters.avatar_id, '.
+                    'characters.id, characters.created, characters.user_id, characters.name, characters.url, characters.gender, characters.charactertitle_id, cache_characters.xps,cache_characters.quest_xps,  cache_characters.avatar_id, '.
                     'charactertypes.id AS charactertype_id, charactertypes.name AS charactertype_name, charactertypes.url AS charactertype_url, '.
                     'xplevels.id AS xplevel_id, xplevels.level AS xplevel '.
                 'FROM characters '.
@@ -469,7 +469,7 @@
         {
             return $this->db->query(
                 'SELECT '.
-                    'characters.id, characters.created, characters.user_id, characters.name, characters.url, cache_characters.xps,cache_characters.quest_xps,  cache_characters.avatar_id, '.
+                    'characters.id, characters.created, characters.user_id, characters.name, characters.url, characters.gender, characters.charactertitle_id, cache_characters.xps,cache_characters.quest_xps,  cache_characters.avatar_id, '.
                     'charactertypes.id AS charactertype_id, charactertypes.name AS charactertype_name, charactertypes.url AS charactertype_url, '.
                     'xplevels.id AS xplevel_id, xplevels.level AS xplevel '.
                 'FROM characters '.
@@ -498,7 +498,7 @@
         {
             return $data = $this->db->query(
                 'SELECT '.
-                    'characters.id, characters.created, characters.user_id, characters.name, characters.url, cache_characters.xps,cache_characters.quest_xps,  cache_characters.avatar_id, '.
+                    'characters.id, characters.created, characters.user_id, characters.name, characters.url, characters.gender, characters.charactertitle_id, cache_characters.xps,cache_characters.quest_xps,  cache_characters.avatar_id, '.
                     'charactertypes.id AS charactertype_id, charactertypes.name AS charactertype_name, charactertypes.url AS charactertype_url, '.
                     'xplevels.id AS xplevel_id, xplevels.level AS xplevel, '.
                     'quests_characters.created AS submission_created '.
@@ -529,7 +529,7 @@
         {
             return $data = $this->db->query(
                 'SELECT '.
-                    'characters.id, characters.created, characters.user_id, characters.name, characters.url, cache_characters.xps,cache_characters.quest_xps,  cache_characters.avatar_id, '.
+                    'characters.id, characters.created, characters.user_id, characters.name, characters.url, characters.gender, characters.charactertitle_id, cache_characters.xps,cache_characters.quest_xps,  cache_characters.avatar_id, '.
                     'charactertypes.id AS charactertype_id, charactertypes.name AS charactertype_name, charactertypes.url AS charactertype_url, '.
                     'xplevels.id AS xplevel_id, xplevels.level AS xplevel, '.
                     'quests_characters.created AS submission_created '.
@@ -560,7 +560,7 @@
         {
             return $data = $this->db->query(
                 'SELECT '.
-                    'characters.id, characters.created, characters.user_id, characters.name, characters.url, cache_characters.xps,cache_characters.quest_xps,  cache_characters.avatar_id, '.
+                    'characters.id, characters.created, characters.user_id, characters.name, characters.url, characters.gender, characters.charactertitle_id, cache_characters.xps,cache_characters.quest_xps,  cache_characters.avatar_id, '.
                     'charactertypes.id AS charactertype_id, charactertypes.name AS charactertype_name, charactertypes.url AS charactertype_url, '.
                     'xplevels.id AS xplevel_id, xplevels.level AS xplevel, '.
                     'quests_characters.created AS submission_created '.
@@ -592,7 +592,7 @@
         {
             return $this->db->query(
                 'SELECT '.
-                    'characters.id, characters.created, characters.user_id, characters.name, characters.url, cache_characters.xps, cache_characters.quest_xps, cache_characters.avatar_id, '.
+                    'characters.id, characters.created, characters.user_id, characters.name, characters.url, characters.gender, characters.charactertitle_id, cache_characters.xps, cache_characters.quest_xps, cache_characters.avatar_id, '.
                     'charactertypes.id AS charactertype_id, charactertypes.name AS charactertype_name, charactertypes.url AS charactertype_url, '.
                     'xplevels.id AS xplevel_id, xplevels.level AS xplevel, '.
                     'seminaries.id AS seminary_id, seminaries.url AS seminary_url, seminaries.title AS seminary_title, seminaries.url AS seminary_url '.
@@ -636,23 +636,25 @@
         /**
          * Create a new Character.
          *
-         * @param   int $userId         User-ID that creates the new character
-         * @param   int $charactertypeId    ID of type of new Character
+         * @param   int     $userId             User-ID that creates the new character
+         * @param   int     $charactertypeId    ID of type of new Character
          * @param   string  $characterName      Name for the new Character
-         * @return  int             ID of Character
+         * @param   int     $gender             Gender of new Character
+         * @return  int                         ID of Character
          */
-        public function createCharacter($userId, $charactertypeId, $characterName)
+        public function createCharacter($userId, $charactertypeId, $characterName, $gender)
         {
             $this->db->query(
                 'INSERT INTO characters '.
-                '(user_id, charactertype_id, name, url) '.
+                '(user_id, charactertype_id, name, url, gender) '.
                 'VALUES '.
-                '(?, ?, ?, ?)',
-                'iiss',
+                '(?, ?, ?, ?, ?)',
+                'iissi',
                 $userId,
                 $charactertypeId,
                 $characterName,
-                \nre\core\Linker::createLinkParam($characterName)
+                \nre\core\Linker::createLinkParam($characterName),
+                $gender
             );
 
 
@@ -663,20 +665,24 @@
         /**
          * Edit a new Character.
          *
-         * @param   int $characterId        ID of the Character to edit
-         * @param   int $charactertypeId    ID of new type of Character
+         * @param   int     $characterId        ID of the Character to edit
+         * @param   int     $charactertypeId    ID of new type of Character
          * @param   string  $characterName      New name for Character
+         * @param   int     $gender             New gender of Character
+         * @param   int     $charactertitleId   ID of new Character title
          */
-        public function  editCharacter($characterId, $charactertypeId, $characterName)
+        public function  editCharacter($characterId, $charactertypeId, $characterName, $gender, $charactertitleId)
         {
             $this->db->query(
                 'UPDATE characters '.
-                'SET charactertype_id = ?, name = ?, url = ? '.
+                'SET charactertype_id = ?, name = ?, url = ?, gender = ?, charactertitle_id = ? '.
                 'WHERE id = ?',
-                'issi',
+                'issiii',
                 $charactertypeId,
                 $characterName,
                 \nre\core\Linker::createLinkParam($characterName),
+                $gender,
+                $charactertitleId,
                 $characterId
             );
         }

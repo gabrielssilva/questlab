@@ -32,6 +32,12 @@
                                 break;
                             }
                         break;
+                        case 'gender':
+                            switch($setting) {
+                                case 'correct': echo _('Please select a gender');
+                                break;
+                            }
+                        break;
                     } ?>
                 </li>
                 <?php endforeach ?>
@@ -57,6 +63,12 @@
             </li>
             <?php endforeach ?>
         </ul>
+        <label for="gender"><?=_('Gender')?>:</label>
+        <select id="gender" name="gender">
+            <option value=""><?=_('Select gender')?></option>
+            <option value="0"><?=_('Female')?></option>
+            <option value="1"><?=_('Male')?></option>
+        </select>
     </fieldset>
     
     <?php if($fieldsValidation !== true) : ?>

@@ -734,12 +734,15 @@ CREATE TABLE `characters` (
   `charactertype_id` int(11) NOT NULL,
   `name` varchar(64) COLLATE utf8mb4_unicode_ci NOT NULL,
   `url` varchar(64) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `gender` bit(1) DEFAULT NULL,
+  `charactertitle_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `name` (`name`),
   KEY `charactertype_id` (`charactertype_id`),
   KEY `user_id` (`user_id`),
   CONSTRAINT `characters_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `characters_ibfk_2` FOREIGN KEY (`charactertype_id`) REFERENCES `charactertypes` (`id`)
+  CONSTRAINT `characters_ibfk_2` FOREIGN KEY (`charactertype_id`) REFERENCES `charactertypes` (`id`),
+  CONSTRAINT `characters_ibfk_3` FOREIGN KEY (`charactertitle_id`) REFERENCES `charactertitles` (`id`) ON DELETE SET NULL ON UPDATE SET NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='Charaktere';
 /*!40101 SET character_set_client = @saved_cs_client */;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
@@ -857,6 +860,24 @@ CREATE TABLE `characters_characterroles` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Table structure for table `characters_charactertitles`
+--
+
+DROP TABLE IF EXISTS `characters_charactertitles`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `characters_charactertitles` (
+  `character_id` int(11) NOT NULL,
+  `charactertitle_id` int(11) NOT NULL,
+  `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`character_id`,`charactertitle_id`),
+  KEY `charactertitle_id` (`charactertitle_id`),
+  CONSTRAINT `characters_charactertitles_ibfk_1` FOREIGN KEY (`character_id`) REFERENCES `characters` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `characters_charactertitles_ibfk_2` FOREIGN KEY (`charactertitle_id`) REFERENCES `charactertitles` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
 -- Table structure for table `characters_seminarycharacterfields`
 --
 
@@ -872,6 +893,30 @@ CREATE TABLE `characters_seminarycharacterfields` (
   KEY `seminarycharacterfield_id` (`seminarycharacterfield_id`),
   CONSTRAINT `characters_seminarycharacterfields_ibfk_1` FOREIGN KEY (`character_id`) REFERENCES `characters` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `characters_seminarycharacterfields_ibfk_2` FOREIGN KEY (`seminarycharacterfield_id`) REFERENCES `seminarycharacterfields` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `charactertitles`
+--
+
+DROP TABLE IF EXISTS `charactertitles`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `charactertitles` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `created_user_id` int(11) NOT NULL,
+  `seminary_id` int(11) NOT NULL,
+  `hash` varchar(40) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `title_male` varchar(64) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `title_female` varchar(64) COLLATE utf8mb4_unicode_ci NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `hash` (`hash`),
+  KEY `created_user_id` (`created_user_id`),
+  KEY `seminary_id` (`seminary_id`),
+  CONSTRAINT `charactertitles_ibfk_1` FOREIGN KEY (`created_user_id`) REFERENCES `users` (`id`),
+  CONSTRAINT `charactertitles_ibfk_2` FOREIGN KEY (`seminary_id`) REFERENCES `seminaries` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 

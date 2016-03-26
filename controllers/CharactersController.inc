@@ -24,7 +24,7 @@
          *
          * @var array
          */
-        public $models = array('seminaries', 'characters', 'users', 'charactergroups', 'charactertypes', 'seminarycharacterfields', 'avatars', 'media', 'quests', 'questgroups', 'questtopics', 'xplevels');
+        public $models = array('seminaries', 'characters', 'users', 'charactergroups', 'charactertypes', 'charactertitles', 'seminarycharacterfields', 'avatars', 'media', 'quests', 'questgroups', 'questtopics', 'xplevels');
         /**
          * Required components
          *
@@ -256,6 +256,7 @@
 
             // Register Character
             $charactername = '';
+            $gender = null;
             $validation = true;
             $fieldsValidation = true;
             if($this->request->getRequestMethod() == 'POST' && !is_null($this->request->getPostParam('create')))
@@ -278,6 +279,11 @@
                 }
                 if(is_null($typeIndex)) {
                     $validation = $this->Validation->addValidationResult($validation, 'type', 'exist', false);
+                }
+
+                // Validate gender
+                if(is_null($gender) || !in_array(intval($gender), array(0, 1))) {
+                    $validation = $this->Validation->addValidationResult($validation, 'gender', 'correct', false);
                 }
 
                 // Validate fields
@@ -304,8 +310,15 @@
                 // Register
                 if($validation === true && $fieldsValidation === true)
                 {
-                    $characterId = $this->Characters->createCharacter($this->Auth->getUserId(), $types[$typeIndex]['id'], $charactername);
-                    $character = $this->Characters->getCharacterById($characterId);
+                    $characterId = $this->Characters->createCharacter(
+                        $this->Auth->getUserId(),
+                        $types[$typeIndex]['id'],
+                        $charactername,
+                        $gender
+                    );
+                    $character = $this->Characters->getCharacterById(
+                        $characterId
+                    );
 
                     // Add Seminary fields
                     foreach($fields as &$field) {
@@ -508,6 +521,11 @@
                 $type['selected'] = ($type['url'] == $character['charactertype_url']);
             }
 
+            // Character titles
+            $titles = $this->Charactertitles->getTitlesForCharacter(
+                $character['id']
+            );
+
             // Character fields
             $fields = $this->Seminarycharacterfields->getFieldsForSeminary($seminary['id']);
             foreach($fields as &$field)
@@ -520,6 +538,15 @@
 
             // Values
             $charactername = $character['name'];
+            $gender = $character['gender'];
+            $charactertitle = null;
+            if(!is_null($character['charactertitle_id'])) {
+                foreach($titles as &$title) {
+                    if($title['id'] == $character['charactertitle_id']) {
+                        $charactertitle = $title;
+                    }
+                }
+            }
             $validation = array();
             $fieldsValidation = true;
 
@@ -532,6 +559,8 @@
                 if($this->Characters->characterNameExists($charactername, $character['id'])) {
                     $validation = $this->Validation->addValidationResult($validation, 'charactername', 'exist', true);
                 }
+                $gender = $this->request->getPostParam('gender');
+                $charactertitleId = $this->request->getPostParam('title');
 
                 // Validate type
                 $typeIndex = null;
@@ -544,6 +573,25 @@
                 }
                 if(is_null($typeIndex)) {
                     $validation = $this->Validation->addValidationResult($validation, 'type', 'exist', false);
+                }
+
+                // Validate gender
+                if(is_null($gender) || !in_array(intval($gender), array(0, 1))) {
+                    $validation = $this->Validation->addValidationResult($validation, 'gender', 'correct', false);
+                }
+
+                // Validate title
+                $charactertitle = null;
+                if(!is_null($charactertitleId))
+                {
+                    $charatcretitle = null;
+                    $charactertitleId = intval($charactertitleId);
+                    foreach($titles as &$title) {
+                        if($title['id'] === $charactertitleId) {
+                            $charactertitle = $title;
+                            break;
+                        }
+                    }
                 }
 
                 // Validate fields
@@ -573,7 +621,9 @@
                     $this->Characters->editCharacter(
                         $character['id'],
                         $types[$typeIndex]['id'],
-                        $charactername
+                        $charactername,
+                        intval($gender),
+                        (!is_null($charactertitle)) ? $charactertitle['id'] : null
                     );
 
                     // Set Seminary fields
@@ -604,8 +654,11 @@
             // Pass data to view
             $this->set('seminary', $seminary);
             $this->set('types', $types);
+            $this->set('titles', $titles);
             $this->set('fields', $fields);
             $this->set('charactername', $charactername);
+            $this->set('gender', $gender);
+            $this->set('charactertitle', $charactertitle);
             $this->set('validation', $validation);
             $this->set('fieldsValidation', $fieldsValidation);
             $this->set('validationSettings', $validationSettings);

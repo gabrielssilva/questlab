@@ -34,6 +34,12 @@
                                 default: echo _('Character name invalid');
                             }
                         break;
+                        case 'gender':
+                            switch($setting) {
+                                case 'correct': echo _('Please select a gender');
+                                break;
+                            }
+                        break;
                     } ?>
                 </li>
                 <?php endforeach ?>
@@ -69,7 +75,28 @@
             </li>
             <?php endforeach ?>
         </ul>
+        <label for="gender"><?=_('Gender')?>:</label>
+        <select id="gender" name="gender">
+            <option value=""><?=_('Select gender')?></option>
+            <option value="0" <?php if($gender === 0) : ?>selected="selected"<?php endif ?>><?=_('Female')?></option>
+            <option value="1" <?php if($gender === 1) : ?>selected="selected"<?php endif ?>><?=_('Male')?></option>
+        </select>
     </fieldset>
+
+<?php if(count($titles) > 0) : ?>
+    <fieldset>
+        <legend><?=_('Display settings')?></legend>
+<?php if(count($titles) > 0) : ?>
+        <label><?=_('Charactertitle')?></label>
+        <select id="title" name="title">
+            <option value="" <?php if(is_null($charactertitle)) : ?>selected="selected"<?php endif ?>><?=_('no title')?></option>
+<?php foreach($titles as &$title) : ?>
+            <option value="<?=$title['id']?>" <?php if(!is_null($charactertitle) && $title['id'] == $charactertitle['id']) : ?>selected="selected"<?php endif ?>><?=($gender) ? $title['title_male'] : $title['title_female']?></option>
+<?php endforeach ?>
+        </select>
+<?php endif ?>
+    </fieldset>
+<?php endif ?>
     
     <?php if($fieldsValidation !== true) : ?>
     <ul>
