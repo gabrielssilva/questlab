@@ -48,7 +48,7 @@
 </ul>
 
 
-<?php if(count(array_intersect(array('admin', 'moderator'), \hhu\z\controllers\SeminaryController::$character['characterroles'])) > 0 || in_array(\hhu\z\controllers\SeminaryController::$character['id'], array_map(function($c) { return $c['id']; }, $group['characters']))) : ?>
+<?php if(count(array_intersect(array('admin', 'moderator'), \hhu\z\controllers\SeminaryController::$character['characterroles'])) > 0) : ?>
 <h2 id="achievements"><i class="fa fa-trophy fa-fw"></i><?=sprintf(_('%s-Achievements'),$groupsgroup['name'])?></a></h2>
 <nav class="admin">
     <li><a href="<?=$linker->link(array('charactergroupsachievements','create',$seminary['url'],$groupsgroup['url']))?>"><?=sprintf(_('Create new %s-Achievement'), $groupsgroup['name'])?></a></li>
