@@ -43,6 +43,17 @@
             'edit'      => array('admin', 'moderator', 'user'),
             'delete'    => array('admin', 'moderator', 'user')
         );
+        /**
+         * User seminary permissions
+         *
+         * @var array
+         */
+        public $seminaryPermissions = array(
+            'index'         => array('admin', 'moderator'),
+            'create'        => array('admin', 'moderator'),
+            'edit'          => array('admin', 'moderator'),
+            'delete'        => array('admin', 'moderator')
+        );
 
 
 
