@@ -98,6 +98,11 @@
                 <p class="fwb"><?=$notification['message']?></p>
                 <?php endif ?>
             </li>
+            <?php elseif($notification['type'] == \hhu\z\controllers\components\NotificationComponent::TYPE_CHARACTERTITLE) : ?>
+            <li class="cf">
+                <p class="announce"><i class="fa fa-trophy fa-fw"></i><?=_('Charactertitle')?>:<i class="fa fa-times fa-fw"></i></p>
+                <p class="fwb"><?=$notification['message']?></p>
+            </li>
             <?php else : ?>
             <li class="cf">
                 <img src="<?=$linker->link(array('grafics','lvlup.jpg'))?>">

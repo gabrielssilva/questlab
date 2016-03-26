@@ -65,7 +65,7 @@
                 $character['id']
             );
 
-            // Add notifications
+            // Add notification
             $this->Notification->addNotification(
                 \hhu\z\controllers\components\NotificationComponent::TYPE_ACHIEVEMENT,
                 $achievement['title'],
@@ -128,6 +128,14 @@
             $this->Charactertitles->assignTitleToCharacter(
                 $title['id'],
                 $character['id']
+            );
+
+            // Add notification
+            $this->Notification->addNotification(
+                \hhu\z\controllers\components\NotificationComponent::TYPE_CHARACTERTITLE,
+                ($character['gender'] === 1)
+                    ? $title['title_male']
+                    : $title['title_female']
             );
 
             // Redirect
