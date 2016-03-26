@@ -597,7 +597,7 @@
                 }
 
                 // Validate gender
-                if(is_null($gender) || !in_array(intval($gender), array(0, 1))) {
+                if(is_null($gender) || ($gender !== "0" && $gender !== "1")) {
                     $validation = $this->Validation->addValidationResult($validation, 'gender', 'correct', false);
                 }
 
