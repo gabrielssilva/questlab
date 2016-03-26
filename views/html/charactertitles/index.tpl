@@ -6,7 +6,7 @@
 <h1><?=_('Charactertitles')?></h1>
 <?php if($seminary['created_user_id'] == \hhu\z\controllers\IntermediateController::$user['id'] || (!is_null(\hhu\z\controllers\SeminaryController::$character) && in_array('admin', \hhu\z\controllers\SeminaryController::$character['characterroles']))) : ?>
 <nav class="admin">
-    <li><a href="<?=$linker->link(array('create',$seminary['url']),1)?>"><?=_('Create new Character titles')?></a></li>
+    <li><a href="<?=$linker->link(array('create',$seminary['url']),1)?>"><?=_('Create new Charactertitle')?></a></li>
 </nav>
 <?php endif ?>
 <ul>

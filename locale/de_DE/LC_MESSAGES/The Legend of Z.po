@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: The Legend of Z\n"
-"POT-Creation-Date: 2016-03-12 19:17+0100\n"
-"PO-Revision-Date: 2016-03-12 19:18+0100\n"
+"POT-Creation-Date: 2016-03-26 17:43+0100\n"
+"PO-Revision-Date: 2016-03-26 17:45+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de_DE\n"
@@ -23,9 +23,9 @@ msgstr ""
 msgid "%s-Achievements"
 msgstr "%sachievements"
 
-#: controllers/CharactersController.inc:404 controllers/UsersController.inc:339
+#: controllers/CharactersController.inc:417 controllers/UsersController.inc:339
 #: views/ajax/characters/index.tpl:10 views/ajax/users/index.tpl:10
-#: views/html/characters/index.tpl:44 views/html/characters/manage.tpl:33
+#: views/html/characters/index.tpl:45 views/html/characters/manage.tpl:33
 #: views/html/characters/manage.tpl:48 views/html/characters/manage.tpl:56
 #: views/html/userroles/user.tpl:5 views/html/users/index.tpl:33
 #: views/html/users/manage.tpl:28 views/html/users/manage.tpl:41
@@ -33,9 +33,9 @@ msgstr "%sachievements"
 msgid "Admin"
 msgstr "Administrator"
 
-#: controllers/CharactersController.inc:410 controllers/UsersController.inc:345
+#: controllers/CharactersController.inc:423 controllers/UsersController.inc:345
 #: views/ajax/characters/index.tpl:12 views/ajax/users/index.tpl:12
-#: views/html/characters/index.tpl:45 views/html/characters/manage.tpl:34
+#: views/html/characters/index.tpl:46 views/html/characters/manage.tpl:34
 #: views/html/characters/manage.tpl:49 views/html/characters/manage.tpl:57
 #: views/html/userroles/user.tpl:7 views/html/users/index.tpl:34
 #: views/html/users/manage.tpl:29 views/html/users/manage.tpl:42
@@ -43,9 +43,9 @@ msgstr "Administrator"
 msgid "Moderator"
 msgstr "Moderator"
 
-#: controllers/CharactersController.inc:416 controllers/UsersController.inc:351
+#: controllers/CharactersController.inc:429 controllers/UsersController.inc:351
 #: views/ajax/characters/index.tpl:14 views/ajax/users/index.tpl:14
-#: views/html/characters/index.tpl:46 views/html/characters/manage.tpl:35
+#: views/html/characters/index.tpl:47 views/html/characters/manage.tpl:35
 #: views/html/characters/manage.tpl:51 views/html/characters/manage.tpl:59
 #: views/html/userroles/user.tpl:9 views/html/users/index.tpl:35
 #: views/html/users/manage.tpl:30 views/html/users/manage.tpl:44
@@ -115,6 +115,7 @@ msgstr ""
 #: views/html/achievements/edit.tpl:114
 #: views/html/charactergroupsachievements/edit.tpl:69
 #: views/html/charactergroupsqueststations/edit.tpl:177
+#: views/html/charactertitles/edit.tpl:54
 #: views/html/charactertypes/edit.tpl:138 views/html/introduction/edit.tpl:11
 #: views/html/library/edit.tpl:42 views/html/library/edit.tpl:82
 #: views/html/map/edit.tpl:46 views/html/pages/edit.tpl:50
@@ -641,7 +642,9 @@ msgstr "Achievement"
 #: views/html/charactergroupsquests/delete.tpl:11
 #: views/html/charactergroupsqueststations/delete.tpl:12
 #: views/html/charactergroupsqueststations/station.tpl:37
-#: views/html/characters/delete.tpl:13 views/html/charactertypes/delete.tpl:10
+#: views/html/characters/delete.tpl:13 views/html/charactertitles/delete.tpl:10
+#: views/html/charactertitles/index.tpl:18
+#: views/html/charactertypes/delete.tpl:10
 #: views/html/charactertypes/index.tpl:21 views/html/library/delete.tpl:10
 #: views/html/library/edit.tpl:79 views/html/pages/delete.tpl:11
 #: views/html/questgroups/delete.tpl:13 views/html/questgroups/edittexts.tpl:12
@@ -902,10 +905,11 @@ msgstr "Soll das Achievement „%s“ wirklich gelöscht werden?"
 #: views/html/charactergroupsachievements/delete.tpl:12
 #: views/html/charactergroupsquests/delete.tpl:12
 #: views/html/charactergroupsqueststations/delete.tpl:13
-#: views/html/characters/delete.tpl:14 views/html/charactertypes/delete.tpl:11
-#: views/html/introduction/edit.tpl:12 views/html/library/delete.tpl:11
-#: views/html/pages/delete.tpl:12 views/html/questgroups/delete.tpl:14
-#: views/html/questgroups/movedown.tpl:14 views/html/questgroups/moveup.tpl:14
+#: views/html/characters/delete.tpl:14 views/html/charactertitles/delete.tpl:11
+#: views/html/charactertypes/delete.tpl:11 views/html/introduction/edit.tpl:12
+#: views/html/library/delete.tpl:11 views/html/pages/delete.tpl:12
+#: views/html/questgroups/delete.tpl:14 views/html/questgroups/movedown.tpl:14
+#: views/html/questgroups/moveup.tpl:14
 #: views/html/questgroupshierarchy/delete.tpl:15 views/html/quests/delete.tpl:8
 #: views/html/seminaries/delete.tpl:10 views/html/users/delete.tpl:12
 msgid "cancel"
@@ -1001,9 +1005,9 @@ msgstr "Spiele weiter, um diesen geheimen Erfolg freizuschalten"
 #: views/html/charactergroupsachievements/manage.tpl:21
 #: views/html/charactergroupsquests/edit.tpl:90
 #: views/html/charactergroupsqueststations/station.tpl:36
-#: views/html/characters/edit.tpl:104 views/html/charactertypes/index.tpl:20
-#: views/html/introduction/index.tpl:22 views/html/questgroups/edit.tpl:60
-#: views/html/questgroups/edittexts.tpl:25
+#: views/html/characters/edit.tpl:131 views/html/charactertitles/index.tpl:17
+#: views/html/charactertypes/index.tpl:20 views/html/introduction/index.tpl:22
+#: views/html/questgroups/edit.tpl:60 views/html/questgroups/edittexts.tpl:25
 #: views/html/questgroupshierarchy/edit.tpl:57
 #: views/html/seminaries/edit.tpl:79
 msgid "edit"
@@ -1186,7 +1190,8 @@ msgstr "Motto"
 #: views/html/charactergroupsachievements/create.tpl:66
 #: views/html/charactergroupsquests/create.tpl:89
 #: views/html/charactergroupsqueststations/create.tpl:141
-#: views/html/characters/register.tpl:92
+#: views/html/characters/register.tpl:104
+#: views/html/charactertitles/create.tpl:54
 #: views/html/charactertypes/create.tpl:40 views/html/library/create.tpl:42
 #: views/html/library/edit.tpl:120 views/html/pages/create.tpl:46
 #: views/html/pages/index.tpl:17 views/html/questgroups/create.tpl:72
@@ -1273,7 +1278,7 @@ msgstr "%squests"
 #: views/html/charactergroupsquests/create.tpl:73
 #: views/html/charactergroupsquests/edit.tpl:73
 #: views/html/charactergroupsquests/edit.tpl:74
-#: views/html/characters/index.tpl:23 views/html/characters/index.tpl:86
+#: views/html/characters/index.tpl:24 views/html/characters/index.tpl:87
 #: views/html/characters/manage.tpl:13 views/html/questgroups/questgroup.tpl:62
 #: views/html/quests/create.tpl:68 views/html/quests/create.tpl:69
 #: views/html/quests/edit.tpl:71 views/html/quests/edit.tpl:72
@@ -1670,24 +1675,56 @@ msgstr "Der Charaktername existiert bereits"
 msgid "Character name invalid"
 msgstr "Der Charaktername ist ungültig"
 
-#: views/html/characters/edit.tpl:46 views/html/characters/register.tpl:44
+#: views/html/characters/edit.tpl:39 views/html/characters/register.tpl:37
+msgid "Please select a gender"
+msgstr "Bitte ein Geschlecht auswählen"
+
+#: views/html/characters/edit.tpl:52 views/html/characters/register.tpl:50
 msgid "Character properties"
 msgstr "Charaktereigenschaften"
 
-#: views/html/characters/edit.tpl:47 views/html/characters/edit.tpl:49
-#: views/html/characters/edit.tpl:51 views/html/characters/index.tpl:22
-#: views/html/characters/index.tpl:30 views/html/characters/index.tpl:31
-#: views/html/characters/manage.tpl:12 views/html/characters/register.tpl:45
-#: views/html/characters/register.tpl:46
+#: views/html/characters/edit.tpl:53 views/html/characters/edit.tpl:55
+#: views/html/characters/edit.tpl:57 views/html/characters/index.tpl:23
+#: views/html/characters/index.tpl:31 views/html/characters/index.tpl:32
+#: views/html/characters/manage.tpl:12 views/html/characters/register.tpl:51
+#: views/html/characters/register.tpl:52
 msgid "Character name"
 msgstr "Charaktername"
 
-#: views/html/characters/edit.tpl:77 views/html/characters/register.tpl:65
+#: views/html/characters/edit.tpl:78 views/html/characters/register.tpl:66
+msgid "Gender"
+msgstr "Geschlecht"
+
+#: views/html/characters/edit.tpl:80 views/html/characters/register.tpl:68
+msgid "Select gender"
+msgstr "Geschlecht auswählen"
+
+#: views/html/characters/edit.tpl:81 views/html/characters/register.tpl:69
+msgid "Female"
+msgstr "weiblich"
+
+#: views/html/characters/edit.tpl:82 views/html/characters/register.tpl:70
+msgid "Male"
+msgstr "männlich"
+
+#: views/html/characters/edit.tpl:88
+msgid "Display settings"
+msgstr "Anzeigeeinstellungen"
+
+#: views/html/characters/edit.tpl:90
+msgid "Charactertitle"
+msgstr "Charaktertitel"
+
+#: views/html/characters/edit.tpl:92
+msgid "no title"
+msgstr "Keinen Titel anzeigen"
+
+#: views/html/characters/edit.tpl:104 views/html/characters/register.tpl:77
 #, php-format
 msgid "The Seminary field “%s” is invalid"
 msgstr "Das Kursfeld „%s“ ist ungültig"
 
-#: views/html/characters/edit.tpl:82 views/html/characters/register.tpl:70
+#: views/html/characters/edit.tpl:109 views/html/characters/register.tpl:82
 #: views/html/seminaries/copy.tpl:75
 msgid "Seminary fields"
 msgstr "Kursfelder"
@@ -1701,40 +1738,44 @@ msgstr "XP-Level verwalten"
 msgid "Manage Charactertypes"
 msgstr "Charakterrassen verwalten"
 
-#: views/html/characters/index.tpl:13 views/html/characters/manage.tpl:6
+#: views/html/characters/index.tpl:11
+msgid "Manage Charactertitles"
+msgstr "Charaktertitel verwalten"
+
+#: views/html/characters/index.tpl:14 views/html/characters/manage.tpl:6
 msgid "Manage Characters"
 msgstr "Charaktere verwalten"
 
-#: views/html/characters/index.tpl:19 views/html/quests/index.tpl:9
+#: views/html/characters/index.tpl:20 views/html/quests/index.tpl:9
 #: views/html/users/index.tpl:12
 msgid "Filters"
 msgstr "Filter"
 
-#: views/html/characters/index.tpl:20 views/html/users/index.tpl:13
+#: views/html/characters/index.tpl:21 views/html/users/index.tpl:13
 msgid "Sortorder"
 msgstr "Sortierung"
 
-#: views/html/characters/index.tpl:24 views/html/characters/manage.tpl:14
+#: views/html/characters/index.tpl:25 views/html/characters/manage.tpl:14
 #: views/html/users/index.tpl:16 views/html/users/manage.tpl:15
 msgid "Role"
 msgstr "Rolle"
 
-#: views/html/characters/index.tpl:25 views/html/characters/manage.tpl:15
+#: views/html/characters/index.tpl:26 views/html/characters/manage.tpl:15
 #: views/html/users/index.tpl:17 views/html/users/manage.tpl:16
 msgid "Date of registration"
 msgstr "Registrierungsdatum"
 
-#: views/html/characters/index.tpl:33 views/html/quests/index.tpl:46
+#: views/html/characters/index.tpl:34 views/html/quests/index.tpl:46
 #: views/html/users/index.tpl:26
 msgid "Apply filters"
 msgstr "Filter anwenden"
 
-#: views/html/characters/index.tpl:57 views/html/quests/index.tpl:78
+#: views/html/characters/index.tpl:58 views/html/quests/index.tpl:78
 #: views/html/users/index.tpl:48
 msgid "Show more"
 msgstr "Weitere anzeigen"
 
-#: views/html/characters/index.tpl:58 views/html/quests/index.tpl:79
+#: views/html/characters/index.tpl:59 views/html/quests/index.tpl:79
 #: views/html/users/index.tpl:49
 msgid "Show all"
 msgstr "Alle anzeigen"
@@ -1759,11 +1800,93 @@ msgstr "Charakter erstellen"
 msgid "Please choose an avatar"
 msgstr "Bitte wähle einen Avatar aus"
 
-#: views/html/charactertypes/create.tpl:4
+#: views/html/charactertitles/create.tpl:4
+#: views/html/charactertitles/delete.tpl:4
+#: views/html/charactertitles/index.tpl:6
+msgid "Charactertitles"
+msgstr "Charaktertitel"
+
+#: views/html/charactertitles/create.tpl:7
+#: views/html/charactertitles/index.tpl:9
+msgid "Create new Charactertitle"
+msgstr "Neuen Charactertitel erstellen"
+
+#: views/html/charactertitles/create.tpl:18
+#: views/html/charactertitles/edit.tpl:18
+#, php-format
+msgid "Male title is too short (min. %d chars)"
+msgstr "Der männliche Titel ist zu kurz (min. %d Zeichen)"
+
+#: views/html/charactertitles/create.tpl:20
+#: views/html/charactertitles/edit.tpl:20
+#, php-format
+msgid "Male title is too long (max. %d chars)"
+msgstr "Der männliche Titel ist zu lang (max. %d Zeichen)"
+
+#: views/html/charactertitles/create.tpl:22
+#: views/html/charactertitles/edit.tpl:22
+msgid "Male title already exists"
+msgstr "Der männliche Titel existiert bereits"
+
+#: views/html/charactertitles/create.tpl:24
+#: views/html/charactertitles/edit.tpl:24
+msgid "Male title invalid"
+msgstr "Der männliche Titel ist ungültig"
+
+#: views/html/charactertitles/create.tpl:29
+#: views/html/charactertitles/edit.tpl:29
+#, php-format
+msgid "Female title is too short (min. %d chars)"
+msgstr "Der weibliche Titel ist zu kurz (min. %d Zeichen)"
+
+#: views/html/charactertitles/create.tpl:31
+#: views/html/charactertitles/edit.tpl:31
+#, php-format
+msgid "Female title is too long (max. %d chars)"
+msgstr "Der weibliche Titel ist zu lang (max. %d Zeichen)"
+
+#: views/html/charactertitles/create.tpl:33
+#: views/html/charactertitles/edit.tpl:33
+msgid "Female title already exists"
+msgstr "Der weibliche Titel existiert bereits"
+
+#: views/html/charactertitles/create.tpl:35
+#: views/html/charactertitles/edit.tpl:35
+msgid "Female title invalid"
+msgstr "Der weibliche Titel ist ungültig"
+
+#: views/html/charactertitles/create.tpl:48
+#: views/html/charactertitles/create.tpl:49
+#: views/html/charactertitles/edit.tpl:48
+#: views/html/charactertitles/edit.tpl:49
+msgid "Male title"
+msgstr "Männlicher Titel"
+
+#: views/html/charactertitles/create.tpl:51
+#: views/html/charactertitles/create.tpl:52
+#: views/html/charactertitles/edit.tpl:51
+#: views/html/charactertitles/edit.tpl:52
+msgid "Female title"
+msgstr "Weiblicher Titel"
+
+#: views/html/charactertitles/delete.tpl:7
+msgid "Delete Charactertitle"
+msgstr "Charaktertitel löschen"
+
+#: views/html/charactertitles/delete.tpl:8
+#, php-format
+msgid "Should the Charactertitle “%s/%s” really be deleted?"
+msgstr "Soll ter Charaktertitel „%s/%s“ wirklich gelöscht werden?"
+
+#: views/html/charactertitles/edit.tpl:4 views/html/charactertypes/create.tpl:4
 #: views/html/charactertypes/delete.tpl:4 views/html/charactertypes/edit.tpl:4
 #: views/html/charactertypes/index.tpl:6 views/html/seminaries/copy.tpl:93
 msgid "Charactertypes"
 msgstr "Charakterrassen"
+
+#: views/html/charactertitles/edit.tpl:7 views/html/charactertypes/edit.tpl:7
+msgid "Edit Charactertype"
+msgstr "Characterrasse bearbeiten"
 
 #: views/html/charactertypes/create.tpl:7
 msgid "Create new Charactertype"
@@ -1777,10 +1900,6 @@ msgstr "Characterrasse löschen"
 #, php-format
 msgid "Should the Characterytpe “%s” really be deleted?"
 msgstr "Soll die Charakterrasse „%s“ wirklich gelöscht werden?"
-
-#: views/html/charactertypes/edit.tpl:7
-msgid "Edit Charactertype"
-msgstr "Characterrasse bearbeiten"
 
 #: views/html/charactertypes/edit.tpl:41 views/html/seminaries/copy.tpl:99
 msgid "Avatars"
