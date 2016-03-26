@@ -31,7 +31,7 @@
          *
          * @var array
          */
-        public $models = array('seminaries', 'characters', 'characterroles', 'xplevels', 'avatars', 'achievements');
+        public $models = array('seminaries', 'characters', 'characterroles', 'xplevels', 'avatars', 'achievements', 'charactertitles');
         /**
          * Current Seminary
          *
@@ -90,6 +90,11 @@
                     }
                     catch(\nre\exceptions\IdNotFoundException $e) {
                         // No Avatar available
+                    }
+                    if(!is_null(self::$character['charactertitle_id']) && !is_null(self::$character['gender']))
+                    {
+                        $title = $this->Charactertitles->getTitleById(self::$character['charactertitle_id']);
+                        self::$character['title'] = $title[(self::$character['gender']) ? 'title_male' : 'title_female'];
                     }
                 }
             }

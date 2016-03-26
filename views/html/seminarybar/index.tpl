@@ -1,5 +1,8 @@
 <?php if($render) : ?>
 <section class="cf">
+<?php if(array_key_exists('title', $character)) : ?>
+    <p class="ctitle"><?=$character['title']?></p>
+<?php endif ?>
     <h1><?=$character['name']?></h1>
     <?php if(array_key_exists('avatar', $character) && !is_null($character['avatar']['avatarpicture_id'])) : ?>
     <img src="<?=$linker->link(array('media','avatar',$seminary['url'],$character['charactertype_url'],$character['xplevel']['level']))?>" class="char">
@@ -43,7 +46,12 @@
         <?php foreach($group['members'] as &$member) : ?>
         <li>
             <a href="#" title="Achievement-Titel"><img src="<?=$linker->link(array('media','avatar',$seminary['url'],$member['charactertype_url'],$member['xplevel'],'portrait'))?>"></a>
-            <p><a href="<?=$linker->link(array('characters','character',$seminary['url'],$member['url']))?>"><?=$member['name']?></a></p>
+            <p>
+<?php if(array_key_exists('title', $member)) : ?>
+                <span class="ctitle"><?=$member['title']?></span>
+<?php endif ?>
+                <a href="<?=$linker->link(array('characters','character',$seminary['url'],$member['url']))?>"><?=$member['name']?></a>
+            </p>
             <p><small>
                 <?php if(array_key_exists('xplevel', $member) && !is_null($member['xplevel'])) : ?>
                 <?=_('Level')?> <?=$member['xplevel']?> (<?=sprintf(_('%d XPs'), $member['xps'])?>)

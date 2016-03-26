@@ -25,7 +25,7 @@
          *
          * @var array
          */
-        public $models = array('characters', 'quests', 'questgroups', 'achievements', 'charactergroups', 'avatars', 'media', 'xplevels');
+        public $models = array('characters', 'quests', 'questgroups', 'achievements', 'charactertitles', 'charactergroups', 'avatars', 'media', 'xplevels');
 
 
 
@@ -50,6 +50,11 @@
                 return;
             }
             $character['rank'] = $this->Characters->getXPRank($seminary['id'], $character['xps']);
+            if(!is_null($character['charactertitle_id']) && !is_null($character['gender']))
+            {
+                $title = $this->Charactertitles->getTitleById($character['charactertitle_id']);
+                $character['title'] = $title[($character['gender']) ? 'title_male' : 'title_female'];
+            }
 
             // Get “last” Quest
             $lastQuest = $this->Quests->getLastQuestForCharacter($character['id']);
@@ -69,6 +74,14 @@
                 if($groupsgroup['preferred'])
                 {
                     $group['members'] = $this->Characters->getCharactersForGroup($group['id']);
+                    foreach($group['members'] as &$member)
+                    {
+                        if(!is_null($member['charactertitle_id']) && !is_null($member['gender']))
+                        {
+                            $title = $this->Charactertitles->getTitleById($member['charactertitle_id']);
+                            $member['title'] = $title[($member['gender']) ? 'title_male' : 'title_female'];
+                        }
+                    }
                     $characterGroups[] = $group;
                 }
             }

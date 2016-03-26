@@ -259,6 +259,9 @@ input[type="submit"][disabled]{text-shadow:1px 2px #d48c4e;background:#f9ac69;bo
 .ctopics .xpbar,.ltopics .xpbar{background:#e4e1dd}
 .ctopics .xpbar span{background:#50a4ab}
 
+p.ctitle{font-size:.875em;padding:0;margin:0 0 -20px}
+span.ctitle{font-size:.75em;padding:0;margin:0}
+
 
 /** Charactergroup List **/
 
@@ -470,7 +473,7 @@ header nav{margin:0}
 header a{margin-left:40px}
 #home{display:block;opacity:1}
 #profile{float:none;height:94px;margin-bottom:28px;background:#0c2e32}
-#profile a{margin-top:15px;margin-left:40px}
+#profile a{margin-top:8px;margin-left:40px}
 #profile img{width:44px;height:44px;border-radius:22px}
 #profile span{display:block}
 #profile .lvlname{margin-top:0}

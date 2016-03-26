@@ -38,6 +38,13 @@
             <?php if(array_key_exists('small_avatar', $character)) : ?>
             <p><img src="<?=$linker->link(array('media','seminary',$seminary['url'],$character['small_avatar']['url']))?>"></p>
             <?php endif ?>
+            <p class="ctitle">
+<?php if(array_key_exists('title', $character)) : ?>
+                <?=$character['title']?>
+<?php else : ?>
+                &nbsp;
+<?php endif ?>
+            </p>
             <p><a href="<?=$linker->link(array('characters','character',$seminary['url'],$character['url']))?>"><?=$character['name']?></a></p>
             <p><small><?=sprintf(_('%d XPs'), $character['xps'])?></small></p>
         </li>

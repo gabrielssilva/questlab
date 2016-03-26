@@ -24,7 +24,7 @@
          *
          * @var array
          */
-        public $models = array('seminaries', 'charactergroups', 'charactergroupsquests', 'charactergroupsachievements', 'characters', 'avatars', 'media');
+        public $models = array('seminaries', 'charactergroups', 'charactergroupsquests', 'charactergroupsachievements', 'characters', 'avatars', 'charactertitles', 'media');
         /**
          * Required components
          *
@@ -347,12 +347,20 @@
             $group['characters'] = $this->Characters->getCharactersForGroup($group['id']);
             $group['rank'] = $this->Charactergroups->getXPRank($groupsgroup['id'], $group['xps']);
 
-            // Get Character avatars
+            // Get Character avatars and titles
             foreach($group['characters'] as &$character)
             {
+                // Avatar
                 $avatar = $this->Avatars->getAvatarById($character['avatar_id']);
                 if(!is_null($avatar['small_avatarpicture_id'])) {
                     $character['small_avatar'] = $this->Media->getSeminaryMediaById($avatar['small_avatarpicture_id']);
+                }
+
+                // Title
+                if(!is_null($character['charactertitle_id']) && !is_null($character['gender']))
+                {
+                    $title = $this->Charactertitles->getTitleById($character['charactertitle_id']);
+                    $character['title'] = $title[($character['gender']) ? 'title_male' : 'title_female'];
                 }
             }
 

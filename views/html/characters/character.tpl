@@ -11,6 +11,9 @@
     </li>
 </ul>
 
+<?php if(array_key_exists('title', $character)) : ?>
+    <p class="ctitle"><?=$character['title']?></p>
+<?php endif ?>
 <h1><i class="fa fa-user fa-fw"></i><?=$character['name']?></h1>
 <nav class="admin">
     <?php if(count(array_intersect(array('admin','moderator'), \hhu\z\controllers\SeminaryController::$character['characterroles'])) > 0 || $character['id'] == \hhu\z\controllers\SeminaryController::$character['id']) : ?>
@@ -75,7 +78,13 @@
             <?php foreach($ranking['superior'] as $index => &$rankCharacter) : ?>
             <li>
                 <a href="<?=$linker->link($rankCharacter['url'],3)?>"><img src="<?=$linker->link(array('media','avatar',$seminary['url'],$rankCharacter['charactertype_url'],$rankCharacter['xplevel'],'portrait'))?>"></a>
-                <p><?=$character['rank']-count($ranking['superior'])+$index?>. <a href="<?=$linker->link($rankCharacter['url'],3)?>"><?=$rankCharacter['name']?></a></p>
+                <p>
+                    <?=$character['rank']-count($ranking['superior'])+$index?>.
+<?php if(array_key_exists('title', $rankCharacter)) : ?>
+                    <span class="ctitle"><?=$rankCharacter['title']?></span>
+<?php endif ?>
+                    <a href="<?=$linker->link($rankCharacter['url'],3)?>"><?=$rankCharacter['name']?></a>
+                </p>
                 <p><small>
                     <?php if(array_key_exists('xplevel', $rankCharacter) && !is_null($rankCharacter['xplevel'])) : ?>
                     <?=_('Level')?> <?=$rankCharacter['xplevel']?> (<?=sprintf(_('%d XPs'), $rankCharacter['xps'])?>)
@@ -89,7 +98,13 @@
                 <?php if(array_key_exists('avatar', $character) && !is_null($character['avatar']['avatarpicture_id'])) : ?>
                 <img src="<?=$linker->link(array('media','avatar',$seminary['url'],$character['charactertype_url'],$character['xplevel']['level'],'portrait'))?>">
                 <?php endif ?>
-                <p class="fwb"><?=$character['rank']?>. <?=$character['name']?></p>
+                <p class="fwb">
+                    <?=$character['rank']?>.
+<?php if(array_key_exists('title', $character)) : ?>
+                    <span class="ctitle"><?=$character['title']?></span>
+<?php endif ?>
+                    <?=$character['name']?>
+                </p>
                 <p><small>
                     <?php if(array_key_exists('xplevel', $character) && !is_null($character['xplevel'])) : ?>
                     <?=_('Level')?> <?=$character['xplevel']['level']?> (<?=sprintf(_('%d XPs'), $character['xps'])?>)
@@ -101,7 +116,13 @@
             <?php foreach($ranking['inferior'] as $index => &$rankCharacter) : ?>
             <li>
                 <a href="<?=$linker->link($rankCharacter['url'],3)?>"><img src="<?=$linker->link(array('media','avatar',$seminary['url'],$rankCharacter['charactertype_url'],$rankCharacter['xplevel'],'portrait'))?>"></a>
-                <p><?=$character['rank']+$index+1?>. <a href="<?=$linker->link($rankCharacter['url'],3)?>"><?=$rankCharacter['name']?></a></p>
+                <p>
+                    <?=$character['rank']+$index+1?>.
+<?php if(array_key_exists('title', $rankCharacter)) : ?>
+                    <span class="ctitle"><?=$rankCharacter['title']?></span>
+<?php endif ?>
+                    <a href="<?=$linker->link($rankCharacter['url'],3)?>"><?=$rankCharacter['name']?></a>
+                </p>
                 <p><small>
                     <?php if(array_key_exists('xplevel', $rankCharacter) && !is_null($rankCharacter['xplevel'])) : ?>
                     <?=_('Level')?> <?=$rankCharacter['xplevel']?> (<?=sprintf(_('%d XPs'), $rankCharacter['xps'])?>)

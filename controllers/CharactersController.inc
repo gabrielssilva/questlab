@@ -162,6 +162,11 @@
             if(!is_null($character['avatar_id'])) {
                 $character['avatar'] = $this->Avatars->getAvatarById($character['avatar_id']);
             }
+            if(!is_null($character['charactertitle_id']) && !is_null($character['gender']))
+            {
+                $title = $this->Charactertitles->getTitleById($character['charactertitle_id']);
+                $character['title'] = $title[($character['gender']) ? 'title_male' : 'title_female'];
+            }
 
             // Get User
             $user = $this->Users->getUserById($character['user_id']);
@@ -186,6 +191,22 @@
                 'superior' => $this->Characters->getSuperiorCharacters($seminary['id'], $character['xps'], \nre\configs\AppConfig::$misc['ranking_range']),
                 'inferior' => $this->Characters->getInferiorCharacters($seminary['id'], $character['id'], $character['xps'], \nre\configs\AppConfig::$misc['ranking_range'])
             );
+            foreach($ranking['superior'] as &$c)
+            {
+                if(!is_null($c['charactertitle_id']) && !is_null($c['gender']))
+                {
+                    $title = $this->Charactertitles->getTitleById($c['charactertitle_id']);
+                    $c['title'] = $title[($c['gender']) ? 'title_male' : 'title_female'];
+                }
+            }
+            foreach($ranking['inferior'] as &$c)
+            {
+                if(!is_null($c['charactertitle_id']) && !is_null($c['gender']))
+                {
+                    $title = $this->Charactertitles->getTitleById($c['charactertitle_id']);
+                    $c['title'] = $title[($c['gender']) ? 'title_male' : 'title_female'];
+                }
+            }
 
             // Get Quest topics
             $questtopics = $this->Questtopics->getQuesttopicsForSeminary($seminary['id']);
