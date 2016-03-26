@@ -37,12 +37,12 @@
          * @var array
          */
         public $permissions = array(
-            'index' => array('admin', 'moderator', 'user'),
+            'index'     => array('admin', 'moderator', 'user'),
             'character' => array('admin', 'moderator', 'user'),
-            'register' => array('admin', 'moderator', 'user'),
-            'manage' => array('admin', 'moderator', 'user'),
-            'edit' => array('admin', 'moderator', 'user'),
-            'delete' => array('admin', 'moderator', 'user')
+            'register'  => array('admin', 'moderator', 'user'),
+            'manage'    => array('admin', 'moderator', 'user'),
+            'edit'      => array('admin', 'moderator', 'user'),
+            'delete'    => array('admin', 'moderator', 'user')
         );
         /**
          * User seminary permissions
@@ -50,11 +50,11 @@
          * @var array
          */
         public $seminaryPermissions = array(
-            'index' => array('admin', 'moderator'),
+            'index'     => array('admin', 'moderator'),
             'character' => array('admin', 'moderator', 'user'),
-            'manage' => array('admin', 'moderator'),
-            'edit' => array('admin', 'moderator', 'user'),
-            'delete' => array('admin', 'moderator')
+            'manage'    => array('admin', 'moderator'),
+            'edit'      => array('admin', 'moderator', 'user'),
+            'delete'    => array('admin', 'moderator')
         );
 
 
@@ -67,7 +67,7 @@
          *
          * @throws  \nre\exceptions\IdNotFoundException
          * @param   string  $seminaryUrl    URL-Title of a Seminary
-         * @param   string  $all        Whether to list all Characters at once or not (optional)
+         * @param   string  $all            Whether to list all Characters at once or not (optional)
          */
         public function index($seminaryUrl, $all=null)
         {
