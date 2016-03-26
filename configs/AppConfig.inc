@@ -295,6 +295,14 @@
             'answer' => array(
                 'minlength' => 1,
                 'maxlength' => 255
+            ),
+            'title_male' => array(
+                'minlength' => 3,
+                'maxlength' => 24
+            ),
+            'title_female' => array(
+                'minlength' => 3,
+                'maxlength' => 24
             )
         );
 

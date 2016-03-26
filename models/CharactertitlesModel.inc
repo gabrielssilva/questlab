@@ -44,7 +44,7 @@
         public function getTitleById($titleId)
         {
             $data = $this->db->query(
-                'SELECT id, title_male, title_female '.
+                'SELECT id, hash, title_male, title_female '.
                 'FROM charactertitles '.
                 'WHERE id = ?',
                 'i',
@@ -56,6 +56,50 @@
 
 
             return $data[0];
+        }
+
+
+        /**
+         * Get a Character title by its hash.
+         *
+         * @throws  \nre\exceptions\IdNotFoundException
+         * @param   int     $titleHash  Hash of title
+         * @return  array               Title data
+         */
+        public function getTitleByHash($titleHash)
+        {
+            $data = $this->db->query(
+                'SELECT id, hash, title_male, title_female '.
+                'FROM charactertitles '.
+                'WHERE hash = ?',
+                's',
+                $titleHash
+            );
+            if(empty($data)) {
+                throw new \nre\exceptions\IdNotFoundException($titleHash);
+            }
+
+
+            return $data[0];
+        }
+
+
+        /**
+         * Get all Character titles of a Seminary.
+         *
+         * @param   int     $seminaryId ID of Seminary to get titles for
+         * @return  array               List of title data
+         */
+        public function getTitlesForSeminary($seminaryId)
+        {
+            return $this->db->query(
+                'SELECT id, hash, title_male, title_female '.
+                'FROM charactertitles '.
+                'WHERE seminary_id = ? '.
+                'ORDER BY title_male, title_female ',
+                'i',
+                $seminaryId
+            );
         }
 
 
@@ -79,17 +123,15 @@
         }
 
 
-        // TODO addTitleToCharacter
-
         /**
-         * TODO Check if a Character title already exists.
+         * Check if a title for a Characters already exists.
          *
-         * @param   string  $title      Character title to check
          * @param   int     $seminaryId ID of Seminary
-         * @param   int     $questId    Do not check this ID (for editing)
+         * @param   string  $title      Character title to check
+         * @param   int     $titleId    Do not check this ID (for editing)
          * @return  boolean             Whether Character title exists or not
          */
-        public function characterTitleExists($titleMale, $titleFemale, $seminaryId, $titleId=null)
+        public function titleExists($seminaryId, $title, $titleId=null)
         {
             $data = $this->db->query(
                 'SELECT id '.
@@ -97,9 +139,8 @@
                 'WHERE seminary_id = ? AND (title_male = ? OR title_female = ?)',
                 'iss',
                 $seminaryId,
-                $titleMale,
-                $titleFemale
-                //\nre\core\Linker::createLinkParam($title)
+                $title,
+                $title
             );
 
             return (!empty($data) && (is_null($titleId) || $titleId != $data[0]['id']));
@@ -107,7 +148,7 @@
 
 
         /**
-         * TODO Create a new Character title.
+         * Create a new Character title.
          *
          * @param   int     $userId         User-ID that creates the new title
          * @param   int     $seminaryId     ID of Questgroup
@@ -119,11 +160,12 @@
         {
             $this->db->query(
                 'INSERT INTO charactertitles '.
-                '(created_user_id, seminary_id, title_male, title_female) '.
+                '(created_user_id, seminary_id, hash, title_male, title_female) '.
                 'VALUES '.
-                '(?, ?, ?, ?)',
-                'iiss',
+                '(?, ?, ?, ?, ?)',
+                'iisss',
                 $userId, $seminaryId,
+                \hhu\z\Utils::createRandomHash(),
                 $titleMale, $titleFemale
                 //\nre\core\Linker::createLinkParam($title),
             );
@@ -134,7 +176,7 @@
 
 
         /**
-         * TODO Edit a Character title.
+         * Edit a Character title.
          *
          * @param   int     $titleId        ID of Character title to edit
          * @param   string  $titleMale      Title for male Characters
@@ -149,14 +191,13 @@
                 'ssi',
                 $titleMale,
                 $titleFemale,
-                //\nre\core\Linker::createLinkParam($title),
                 $titleId
             );
         }
 
 
         /**
-         * TODO Delete a Character title.
+         * Delete a Character title.
          *
          * @param   int $titleId    ID of Character title to delete
          */
