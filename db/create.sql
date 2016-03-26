@@ -1,8 +1,8 @@
--- MySQL dump 10.16  Distrib 10.1.12-MariaDB, for Linux (x86_64)
+-- MySQL dump 10.16  Distrib 10.1.13-MariaDB, for Linux (x86_64)
 --
 -- Host: localhost    Database: z
 -- ------------------------------------------------------
--- Server version	10.1.12-MariaDB
+-- Server version	10.1.13-MariaDB
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -114,6 +114,7 @@ CREATE TABLE `achievementconditions_qrcode` (
   `achievement_id` int(11) NOT NULL,
   `hash` varchar(40) COLLATE utf8mb4_unicode_ci NOT NULL,
   PRIMARY KEY (`id`),
+  UNIQUE KEY `hash` (`hash`),
   KEY `created_user_id` (`created_user_id`),
   KEY `achievement_id` (`achievement_id`),
   CONSTRAINT `achievementconditions_qrcode_ibfk_1` FOREIGN KEY (`created_user_id`) REFERENCES `users` (`id`),
@@ -740,6 +741,7 @@ CREATE TABLE `characters` (
   UNIQUE KEY `name` (`name`),
   KEY `charactertype_id` (`charactertype_id`),
   KEY `user_id` (`user_id`),
+  KEY `charactertitle_id` (`charactertitle_id`),
   CONSTRAINT `characters_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `characters_ibfk_2` FOREIGN KEY (`charactertype_id`) REFERENCES `charactertypes` (`id`),
   CONSTRAINT `characters_ibfk_3` FOREIGN KEY (`charactertitle_id`) REFERENCES `charactertitles` (`id`) ON DELETE SET NULL ON UPDATE SET NULL
@@ -2660,4 +2662,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2016-03-12 15:57:07
+-- Dump completed on 2016-03-26 16:16:45
