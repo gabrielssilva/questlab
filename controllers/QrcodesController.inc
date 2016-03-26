@@ -129,7 +129,7 @@
         /**
          * Action: charactergroupsachievements
          *
-         * Display a QR-code for a Character groups Achievement
+         * Display a QR-code for a Character groups Achievement.
          *
          * @throws  \nre\exceptions\IdNotFoundException
          * @param   string  $seminaryUrl    URL-Title of a Seminary
