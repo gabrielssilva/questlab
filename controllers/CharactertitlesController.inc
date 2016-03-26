@@ -129,8 +129,16 @@
                     );
                     $title = $this->Charactertitles->getTitleById($titleId);
 
-                    // Redirect to editing
-                    $this->redirect($this->linker->link(array('edit', $seminary['url'], $title['hash']), 1));
+                    // Redirect to overview
+                    $this->redirect(
+                        $this->linker->link(
+                            array(
+                                'index',
+                                $seminary['url']
+                            ),
+                            1
+                        )
+                    );
                 }
             }
 
