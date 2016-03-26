@@ -25,7 +25,7 @@
          *
          * @var array
          */
-        public $models = array('seminaries', 'achievements', 'charactergroups', 'charactergroupsquests', 'charactergroupsqueststations', 'charactergroupsachievements');
+        public $models = array('seminaries', 'achievements', 'charactertitles', 'charactergroups', 'charactergroupsquests', 'charactergroupsqueststations', 'charactergroupsachievements');
 
 
 
@@ -97,6 +97,47 @@
                         'achievements',
                         'index',
                         $seminary['url']
+                    )
+                )
+            );
+        }
+
+
+        /**
+         * Action: ct.
+         *
+         * Trigger a Character title by a hash typically provided via a QR-code.
+         *
+         * @param   $titleHash  Hash value of Character title
+         */
+        public function ct($titleHash)
+        {
+            // Get Character title
+            $title = $this->Charactertitles->getTitleByHash($titleHash);
+
+            // Get Seminary
+            $seminary = $this->Seminaries->getSeminaryById($title['seminary_id']);
+
+            // Get Character
+            $character = $this->Characters->getCharacterForUserAndSeminary(
+                self::$user['id'],
+                $seminary['id']
+            );
+
+            // Assign title to Character
+            $this->Charactertitles->assignTitleToCharacter(
+                $title['id'],
+                $character['id']
+            );
+
+            // Redirect
+            $this->redirect(
+                $this->linker->link(
+                    array(
+                        'characters',
+                        'character',
+                        $seminary['url'],
+                        $character['url']
                     )
                 )
             );

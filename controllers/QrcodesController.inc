@@ -24,7 +24,7 @@
          *
          * @var array
          */
-        public $models = array('seminaries', 'achievements', 'charactergroups', 'charactergroupsquests', 'charactergroupsqueststations', 'charactergroupsachievements');
+        public $models = array('seminaries', 'achievements', 'charactertitles', 'charactergroups', 'charactergroupsquests', 'charactergroupsqueststations', 'charactergroupsachievements');
 
 
 
@@ -77,6 +77,37 @@
 
             // Generate QR-code
             $url = $this->linker->link(array('qr', 'a', $conditions[0]['hash']), 0, true, null, true, null, true);
+            $file = $this->generateQRcode($url, $size);
+            if(is_null($file)) {
+                return;
+            }
+
+
+            // Pass data to view
+            $this->set('file', $file);
+        }
+
+
+        /**
+         * Action: charactertitles
+         *
+         * Display a QR-code for a Character title.
+         *
+         * @throws  \nre\exceptions\IdNotFoundException
+         * @param   string  $seminaryUrl    URL-Title of a Seminary
+         * @param   string  $titleHash      Hash of Character title
+         * @param   int     $size           Size of QR-code (default: 1)
+         */
+        public function charactertitle($seminaryUrl, $titleHash, $size=1)
+        {
+            // Get seminary
+            $seminary = $this->Seminaries->getSeminaryByUrl($seminaryUrl);
+
+            // Get Character title
+            $title = $this->Charactertitles->getTitleByHash($titleHash);
+
+            // Generate QR-code
+            $url = $this->linker->link(array('qr', 'ct', $title['hash']), 0, true, null, true, null, true);
             $file = $this->generateQRcode($url, $size);
             if(is_null($file)) {
                 return;

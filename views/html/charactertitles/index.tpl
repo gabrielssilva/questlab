@@ -16,6 +16,11 @@
         <ul class="admin">
             <li><a href="<?=$linker->link(array('edit',$seminary['url'],$title['hash']),1)?>"><?=_('edit')?></a></li>
             <li><a href="<?=$linker->link(array('delete',$seminary['url'],$title['hash']),1)?>"><?=_('delete')?></a></li>
+            <li>
+                <a href="<?=$linker->link(array('qrcodes','charactertitle',$seminary['url'],$title['hash'],'50'))?>">
+                    <i class="fa fa-qrcode"></i>
+                </a>
+            </li>
         </ul>
     </li>
     <?php endforeach ?>

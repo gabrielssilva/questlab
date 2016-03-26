@@ -69,7 +69,7 @@
         public function getTitleByHash($titleHash)
         {
             $data = $this->db->query(
-                'SELECT id, hash, title_male, title_female '.
+                'SELECT id, seminary_id, hash, title_male, title_female '.
                 'FROM charactertitles '.
                 'WHERE hash = ?',
                 's',
@@ -119,6 +119,26 @@
                 'ORDER BY title_male, title_female ',
                 'i',
                 $characterId
+            );
+        }
+
+
+        /**
+         * Add a Character title to the list of titles for a Character.
+         *
+         * @param   int $titleId        ID of title to assign
+         * @param   int $characterId    ID of Character to assign title to
+         */
+        public function assignTitleToCharacter($titleId, $characterId)
+        {
+            $this->db->query(
+                'INSERT IGNORE INTO characters_charactertitles '.
+                '(character_id, charactertitle_id) '.
+                'VALUES '.
+                '(?, ?)',
+                'ii',
+                $characterId,
+                $titleId
             );
         }
 
