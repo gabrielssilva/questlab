@@ -427,7 +427,7 @@
             // Get file
             $file = $this->getMediaFile(
                 $media,
-                \nre\configs\AppConfig::$media['charactergroupquest']
+                \nre\configs\AppConfig::$media['charactergroupsquest']
             );
             if(is_null($file)) {
                 return;

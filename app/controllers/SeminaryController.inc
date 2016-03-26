@@ -174,7 +174,11 @@
             }
 
             // Check Achievements
-            $achievements = $this->Achievement->checkAchievements(self::$seminary['id'], self::$character['id'], $checkConditions);
+            $achievements = $this->Achievement->checkAchievements(
+                self::$seminary['id'],
+                self::$character['id'],
+                $checkConditions
+            );
 
             // Add notifications
             foreach($achievements as &$achievement)
