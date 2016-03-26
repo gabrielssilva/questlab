@@ -44,7 +44,7 @@
         {
             return $this->db->query(
                 'SELECT '.
-                    'characters.id, characters.created, characters.user_id, characters.name, characters.url, character.gender, characters.charactertitle_id, cache_characters.xps, cache_characters.quest_xps, cache_characters.avatar_id, '.
+                    'characters.id, characters.created, characters.user_id, characters.name, characters.url, characters.gender, characters.charactertitle_id, cache_characters.xps, cache_characters.quest_xps, cache_characters.avatar_id, '.
                     'charactertypes.id AS charactertype_id, charactertypes.name AS charactertype_name, charactertypes.url AS charactertype_url, '.
                     'xplevels.id AS xplevel_id, xplevels.level AS xplevel, '.
                     'seminaries.id AS seminary_id, seminaries.url AS seminary_url, seminaries.title AS seminary_title, seminaries.url AS seminary_url '.
