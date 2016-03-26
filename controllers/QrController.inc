@@ -26,6 +26,17 @@
          * @var array
          */
         public $models = array('seminaries', 'achievements', 'charactertitles', 'charactergroups', 'charactergroupsquests', 'charactergroupsqueststations', 'charactergroupsachievements');
+        /**
+         * User permissions
+         *
+         * @var array
+         */
+        public $permissions = array(
+            'a'     => array('admin', 'moderator', 'user'),
+            'ct'    => array('admin', 'moderator', 'user'),
+            'cgqs'  => array('admin', 'moderator', 'user'),
+            'cga'   => array('admin', 'moderator', 'user')
+        );
 
 
 
@@ -135,7 +146,15 @@
                 \hhu\z\controllers\components\NotificationComponent::TYPE_CHARACTERTITLE,
                 ($character['gender'] === 1)
                     ? $title['title_male']
-                    : $title['title_female']
+                    : $title['title_female'],
+                $this->linker->link(
+                    array(
+                        'characters',
+                        'edit',
+                        $seminary['url'],
+                        $character['url']
+                    )
+                )
             );
 
             // Redirect
