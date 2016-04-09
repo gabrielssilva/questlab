@@ -81,6 +81,12 @@
                 $questId, $characterId, $uploadId
             );
 
+            // Index submission for similarity calculation
+            $this->addDocument(
+                $this->db->getInsertId(),
+                ROOT.DS.\nre\configs\AppConfig::$dirs['seminaryuploads'].DS.$filename
+            );
+
 
             return true;
         }
@@ -163,6 +169,245 @@
             );
         }
 
+
+        /**
+         * TODO getSimilarSubmissions()
+         */
+        public function getSimilarSubmissions($seminaryId, $questId, $characterId, $submissionId)
+        {
+            // List of submissions with high similarity
+            $similarSubmissions = array();
+
+            // Get IDFs
+            $idf_N = $this->getIDF_total($seminaryId);
+            $idf_n = $this->getIDF_docs($seminaryId);
+
+            // Get stored TFs of submission
+            $tfsA = $this->getTFs($submissionId);
+
+            // Iterate through submissions of same task
+            $submissions = $this->getSubmissionsForQuest(
+                $questId,
+                $characterId,
+                $submissionId
+            );
+            foreach($submissions as &$submission)
+            {
+                if(is_null($submission['similarity']))
+                {
+                    // Get stored TFs of submissions to compare to
+                    $tfsB = $this->getTFs($submission['id']);
+
+                    // Calculate similarity
+                    $submission['similarity'] = \hhu\z\lib\Similarity::compare(
+                        $tfsA,
+                        $tfsB,
+                        $idf_N,
+                        $idf_n
+                    );
+
+                    // Save similarity
+                    $this->setSimilarity(
+                        $submissionId,
+                        $submission['id'],
+                        $submission['similarity']
+                    );
+                }
+
+                // Add high simnilarities to list
+                if($submission['similarity'] >= 0.7) {
+                    $similarSubmissions[] = $submission;
+                }
+            }
+
+
+            return $similarSubmissions;
+        }
+
+
+
+
+        /**
+         * TODO addDocument()
+         */
+        private function addDocument($submissionId, $filename)
+        {
+            // Read document
+            $document = \hhu\z\lib\Similarity::readDocument($filename);
+            if($document === false) {
+                return false;
+            }
+
+            // Split document into terms
+            $terms = \hhu\z\lib\Similarity::splitNgrams($document);
+
+            // Update global values
+            $this->addTerms($submissionId, $terms);
+        }
+
+
+        /**
+         * TODO addTerms()
+         */
+        private function addTerms($submissionId, $terms)
+        {
+            // Calculate IDF: n (n_term)
+            $uniqueTerms = array();
+            foreach($terms as &$term)
+            {
+                if(!in_array($term, $uniqueTerms))
+                {
+                    // Add term to database
+                    $this->db->query(
+                        'INSERT IGNORE INTO questtypes_submit_terms '.
+                        '(term) '.
+                        'VALUES '.
+                        '(?)',
+                        's',
+                        $term
+                    );
+                    $uniqueTerms[] = $term;
+                }
+
+                // Link term to submission
+                $this->db->query(
+                    'INSERT INTO questtypes_submit_submissions_terms '.
+                    '(submission_id, term_id, tf) '.
+                    'SELECT ?, questtypes_submit_terms.id, 1 '.
+                    'FROM questtypes_submit_terms '.
+                    'WHERE term = ? '.
+                    'ON DUPLICATE KEY UPDATE '.
+                    'tf = tf + 1',
+                    'is',
+                    $submissionId,
+                    $term
+                );
+            }
+        }
+
+
+        private function getSubmissionsForQuest($questId, $characterId, $submissionId)
+        {
+            return $this->db->query(
+                'SELECT questtypes_submit_characters.id, questtypes_submit_characters.created, questtypes_submit_characters.quest_id, character_id, upload_id, questtypes_submit_similarities.similarity '.
+                'FROM questtypes_submit_characters '.
+                'LEFT JOIN questtypes_submit_similarities ON questtypes_submit_similarities.submission_id1 = ? AND questtypes_submit_similarities.submission_id2 = questtypes_submit_characters.id '.
+                'WHERE quest_id = ? AND character_id != ?',
+                'iii',
+                $submissionId,
+                $questId, $characterId
+            );
+        }
+
+
+        /**
+         * TODO getTFs()
+         */
+        private function getTFs($submissionId)
+        {
+            // Read terms
+            $terms = $this->db->query(
+                'SELECT term, tf '.
+                'FROM questtypes_submit_submissions_terms '.
+                'INNER JOIN questtypes_submit_terms ON questtypes_submit_terms.id = questtypes_submit_submissions_terms.term_id '.
+                'WHERE submission_id = ?',
+                'i',
+                $submissionId
+            );
+
+            // Convert to TFs
+            $tfs = array();
+            foreach($terms as &$term) {
+                $tfs[$term['term']] = $term['tf'];
+            }
+
+
+            // Return TFs
+            return $tfs;
+        }
+
+
+        /**
+         * TODO getIDF_N()
+         * Total count of submissions (per Seminary)
+         */
+        private function getIDF_total($seminaryId)
+        {
+            $data = $this->db->query(
+                'SELECT count(questtypes_submit_characters.id) as c '.
+                'FROM charactertypes '.
+                'INNER JOIN characters ON characters.charactertype_id = charactertypes.id '.
+                'INNER JOIN questtypes_submit_characters ON questtypes_submit_characters.character_id = characters.id '.
+                'WHERE charactertypes.seminary_id = ?',
+                'i',
+                $seminaryId
+            );
+            if(!empty($data)) {
+                return $data[0]['c'];
+            }
+
+
+            return 0;
+        }
+
+
+        /**
+         * TODO getIDF_n()
+         * Count of submissions each term is in (per Seminary)
+         */
+        private function getIDF_docs($seminaryId)
+        {
+            $terms = $this->db->query(
+                'SELECT questtypes_submit_terms.term, count(*) AS c '.
+                'FROM charactertypes '.
+                'INNER JOIN characters ON characters.charactertype_id = charactertypes.id '.
+                'INNER JOIN questtypes_submit_characters ON questtypes_submit_characters.character_id = characters.id '.
+                'INNER JOIN questtypes_submit_submissions_terms ON questtypes_submit_submissions_terms.submission_id = questtypes_submit_characters.id '.
+                'INNER JOIN questtypes_submit_terms ON questtypes_submit_terms.id = questtypes_submit_submissions_terms.term_id '.
+                'WHERE charactertypes.seminary_id = ? '.
+                'GROUP BY questtypes_submit_terms.term',
+                'i',
+                $seminaryId
+            );
+
+            $idfs = array();
+            foreach($terms as &$term) {
+                $idfs[$term['term']] = $term['c'];
+            }
+
+
+            return $idfs;
+        }
+
+
+        /**
+         * TODO setSimilarity()
+         */
+        private function setSimilarity($submissionId1, $submissionId2, $similarity)
+        {
+            $this->db->query(
+                'INSERT INTO questtypes_submit_similarities '.
+                '(submission_id1, submission_id2, similarity) '.
+                'VALUES '.
+                '(?, ?, ?) '.
+                'ON DUPLICATE KEY UPDATE '.
+                'similarity = ?',
+                'iidd',
+                $submissionId1, $submissionId2, $similarity,
+                $similarity
+            );
+            $this->db->query(
+                'INSERT INTO questtypes_submit_similarities '.
+                '(submission_id1, submission_id2, similarity) '.
+                'VALUES '.
+                '(?, ?, ?) '.
+                'ON DUPLICATE KEY UPDATE '.
+                'similarity = ?',
+                'iidd',
+                $submissionId2, $submissionId1, $similarity,
+                $similarity
+            );
+        }
     }
 
 ?>

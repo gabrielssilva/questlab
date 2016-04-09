@@ -1889,6 +1889,59 @@ CREATE TABLE `questtypes_submit_mimetypes` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
+-- Table structure for table `questtypes_submit_similarities`
+--
+
+DROP TABLE IF EXISTS `questtypes_submit_similarities`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `questtypes_submit_similarities` (
+  `submission_id1` int(11) NOT NULL,
+  `submission_id2` int(11) NOT NULL,
+  `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `similarity` decimal(10,9) NOT NULL,
+  PRIMARY KEY (`submission_id1`,`submission_id2`),
+  KEY `submission_id2` (`submission_id2`),
+  CONSTRAINT `questtypes_submit_similarities_ibfk_1` FOREIGN KEY (`submission_id1`) REFERENCES `questtypes_submit_characters` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `questtypes_submit_similarities_ibfk_2` FOREIGN KEY (`submission_id2`) REFERENCES `questtypes_submit_characters` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `questtypes_submit_submissions_terms`
+--
+
+DROP TABLE IF EXISTS `questtypes_submit_submissions_terms`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `questtypes_submit_submissions_terms` (
+  `submission_id` int(11) NOT NULL,
+  `term_id` int(11) NOT NULL,
+  `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `tf` mediumint(8) unsigned NOT NULL DEFAULT '1',
+  PRIMARY KEY (`submission_id`,`term_id`),
+  KEY `term_id` (`term_id`),
+  CONSTRAINT `questtypes_submit_submissions_terms_ibfk_1` FOREIGN KEY (`submission_id`) REFERENCES `questtypes_submit_characters` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `questtypes_submit_submissions_terms_ibfk_2` FOREIGN KEY (`term_id`) REFERENCES `questtypes_submit_terms` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Table structure for table `questtypes_submit_terms`
+--
+
+DROP TABLE IF EXISTS `questtypes_submit_terms`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `questtypes_submit_terms` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `term` varchar(9) COLLATE utf8mb4_unicode_ci NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `term` (`term`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci COMMENT='Terms/N-grams';
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
 -- Table structure for table `questtypes_textinput`
 --
 
@@ -2663,4 +2716,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2016-03-26 19:13:31
+-- Dump completed on 2016-04-09 13:18:45
