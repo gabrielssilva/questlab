@@ -54,7 +54,7 @@ DELIMITER ;
 
 DROP PROCEDURE IF EXISTS update_cache_characters_xplevels;
 DELIMITER $$
-CREATE PROCEDURE update_cache_characters_xplevels(
+CREATE DEFINER = 'z'@'%' PROCEDURE update_cache_characters_xplevels(
     IN SEMINARYID INT(11),
     IN XPS_LOWER INT(11),
     IN XPS_UPPER INT(11)
