@@ -1,0 +1,498 @@
+<?php
+
+	/**
+	 * The Legend of Z
+	 *
+	 * @author	Oliver Hanraths <oliver.hanraths@uni-duesseldorf.de>
+	 * @copyright	2014 Heinrich-Heine-Universität Düsseldorf
+	 * @license	http://www.gnu.org/licenses/gpl.html
+	 * @link	https://bitbucket.org/coderkun/the-legend-of-z
+	 */
+	
+	namespace hhu\z\models;
+	
+	
+	/**
+	 * Model to interact with the Media-tables.
+	 * 
+	 * @author	Oliver Hanraths <oliver.hanraths@uni-duesseldorf.de>
+	 */
+	class MediaModel extends \hhu\z\Model
+	{
+		
+		
+		
+		
+		/**
+		 * Construct a new MediaModel.
+		 */
+		public function __construct()
+		{
+			parent::__construct();
+		}
+		
+		
+		
+		
+		/**
+		 * Get a medium by its URL.
+		 * 
+		 * @throws	\nre\exceptions\IdNotFoundException
+		 * @param	string	$mediaURL	URL-name of the Medium
+		 * @return	array			Medium data
+		 */
+		public function getMediaByUrl($mediaUrl)
+		{
+			$data = $this->db->query(
+				'SELECT id, name, url, description, mimetype '.
+				'FROM media '.
+				'WHERE url = ?',
+				's',
+				$mediaUrl
+			);
+			if(empty($data)) {
+				throw new \nre\exceptions\IdNotFoundException($mediaUrl);
+			}
+			
+			
+			return $data[0];
+		}
+		
+		
+		/**
+		 * Get a medium by its ID.
+		 * 
+		 * @throws	\nre\exceptions\IdNotFoundException
+		 * @param	int	$mediaId	ID of the Medium
+		 * @return	array			Medium data
+		 */
+		public function getMediaById($mediaId)
+		{
+			$data = $this->db->query(
+				'SELECT id, name, url, description, mimetype '.
+				'FROM media '.
+				'WHERE id = ?',
+				'i',
+				$mediaId
+			);
+			if(empty($data)) {
+				throw new \nre\exceptions\IdNotFoundException($mediaId);
+			}
+			
+			
+			return $data[0];
+		}
+		
+		
+		/**
+		 * Get a Seminary medium by its URL.
+		 * 
+		 * @throws	\nre\exceptions\IdNotFoundException
+		 * @param	int	$seminaryId		ID of the seminary
+		 * @param	string	$seminaryMediaUrl	URL-name of the Seminary medium
+		 * @return	array				Seminary medium data
+		 */
+		public function getSeminaryMediaByUrl($seminaryId, $seminaryMediaUrl)
+		{
+			$data = $this->db->query(
+				'SELECT id, name, url, description, mimetype '.
+				'FROM seminarymedia '.
+				'WHERE url = ?',
+				's',
+				$seminaryMediaUrl
+			);
+			if(empty($data)) {
+				throw new \nre\exceptions\IdNotFoundException($seminaryMediaUrl);
+			}
+			
+			
+			return $data[0];
+		}
+		
+		
+		/**
+		 * Get a Seminary medium by its ID.
+		 * 
+		 * @throws	\nre\exceptions\IdNotFoundException
+		 * @param	int	$seminaryMediaId	ID of the Seminary medium
+		 * @return	array				Seminary medium data
+		 */
+		public function getSeminaryMediaById($mediaId)
+		{
+			$data = $this->db->query(
+				'SELECT id, name, url, description, mimetype '.
+				'FROM seminarymedia '.
+				'WHERE id = ?',
+				'i',
+				$mediaId
+			);
+			if(empty($data)) {
+				throw new \nre\exceptions\IdNotFoundException($mediaId);
+			}
+			
+			
+			return $data[0];
+		}
+		
+		
+		/**
+		 * Create a new moodpic.
+		 * 
+		 * @param	int	$userId		ID of user that does the upload
+		 * @param	int	$seminaryId	ID of Seminary
+		 * @param	string	$filename	Filename of uploading media
+		 * @param	string	$description	Description for media
+		 * @param	string	$mimetype	Mimetype of media
+		 * @param	string	$tmpFilename	Name of temporary uploaded file
+		 * @return	mixed			ID of media record or false if upload failed
+		 */
+		public function createMoodpic($userId, $seminaryId, $filename, $description, $mimetype, $tmpFilename)
+		{
+			$mediaId = false;
+			$this->db->setAutocommit(false);
+			
+			try {
+				// Create Seminary media record
+				$mediaId = $this->createSeminaryMedia($userId, $seminaryId, $filename, $description, $mimetype);
+				
+				// Upload file
+				$filename = ROOT.DS.\nre\configs\AppConfig::$dirs['seminarymedia'].DS.$mediaId;
+				if(!move_uploaded_file($tmpFilename, $filename))
+				{
+					$this->db->rollback();
+					$mediaId = false;
+				}
+			}
+			catch(\nre\exceptions\DatamodelException $e) {
+				$this->db->rollback();
+				$this->db->setAutocommit(true);
+			}
+			
+			
+			$this->db->setAutocommit(true);
+			return $mediaId;
+		}
+
+
+		/**
+		 * Create a new Avatar picture for a Charactertype by creating a new Seminarymedia and
+		 * adding it to the list of Avatar pictures.
+		 * 
+		 * @param	int	$userId		ID of user that does the upload
+		 * @param	int	$seminaryId	ID of Seminary
+		 * @param	string	$filename	Filename of uploading media
+		 * @param	string	$description	Description for media
+		 * @param	string	$mimetype	Mimetype of media
+		 * @param	string	$tmpFilename	Name of temporary uploaded file
+		 * @return	mixed			ID of media record or false if upload failed
+		 */
+		public function createAvatarpicture($userId, $seminaryId, $filename, $description, $mimetype, $tmpFilename)
+		{
+			$mediaId = false;
+			$this->db->setAutocommit(false);
+			
+			try {
+				// Create Seminary media record
+				$mediaId = $this->createSeminaryMedia($userId, $seminaryId, $filename, $description, $mimetype);
+				
+				// Add media to Achievements media
+				$this->db->query(
+					'INSERT INTO avatarpictures '.
+					'(seminarymedia_id, created_user_id) '.
+					'VALUES '.
+					'(?, ?) '.
+					'ON DUPLICATE KEY UPDATE '.
+					'created_user_id = ?',
+					'iii',
+					$mediaId,
+					$userId,
+					$userId
+				);
+			
+				// Create filename
+				$filename = ROOT.DS.\nre\configs\AppConfig::$dirs['seminarymedia'].DS.$mediaId;
+				if(!move_uploaded_file($tmpFilename, $filename))
+				{
+					$this->db->rollback();
+					$mediaId = false;
+				}
+			}
+			catch(\nre\exceptions\DatamodelException $e) {
+				$this->db->rollback();
+				$this->db->setAutocommit(true);
+			}
+			
+			
+			$this->db->setAutocommit(true);
+			return $mediaId;
+		}
+
+		
+		/**
+		 * Create a new Questgroup picture (Moodpic).
+		 * 
+		 * @param	int	$userId		ID of user that does the upload
+		 * @param	int	$seminaryId	ID of Seminary
+		 * @param	int	$questgroupId	ID of Questgroup to create picture for
+		 * @param	string	$filename	Filename of uploading media
+		 * @param	string	$description	Description for media
+		 * @param	string	$mimetype	Mimetype of media
+		 * @param	string	$tmpFilename	Name of temporary uploaded file
+		 * @return	mixed			ID of media record or false if upload failed
+		 */
+		public function createQuestgrouppicture($userId, $seminaryId, $questgroupId, $filename, $description, $mimetype, $tmpFilename)
+		{
+			$mediaId = false;
+			$this->db->setAutocommit(false);
+			
+			try {
+				// Create Seminary media record
+				$mediaId = $this->createSeminaryMedia($userId, $seminaryId, $filename, $description, $mimetype);
+
+				// Add media to Questgroups pictures
+				$this->db->query(
+					'INSERT INTO questgroupspictures '.
+					'(media_id, created_user_id) '.
+					'VALUES '.
+					'(?, ?) '.
+					'ON DUPLICATE KEY UPDATE '.
+					'created_user_id = ?',
+					'iii',
+					$mediaId,
+					$userId,
+					$userId
+				);
+				
+				// Upload file
+				$filename = ROOT.DS.\nre\configs\AppConfig::$dirs['seminarymedia'].DS.$mediaId;
+				if(!move_uploaded_file($tmpFilename, $filename))
+				{
+					$this->db->rollback();
+					$mediaId = false;
+				}
+			}
+			catch(\nre\exceptions\DatamodelException $e) {
+				$this->db->rollback();
+				$this->db->setAutocommit(true);
+			}
+			
+			
+			$this->db->setAutocommit(true);
+			return $mediaId;
+		}
+		
+		
+		/**
+		 * Create a new Quests media by creating a new Seminarymedia and
+		 * adding it to the list of Quests media.
+		 * 
+		 * @param	int	$userId		ID of user that does the upload
+		 * @param	int	$seminaryId	ID of Seminary
+		 * @param	string	$filename	Filename of uploading media
+		 * @param	string	$description	Description for media
+		 * @param	string	$mimetype	Mimetype of media
+		 * @param	string	$tmpFilename	Name of temporary uploaded file
+		 * @return	mixed			ID of media record or false if upload failed
+		 */
+		public function createQuestMedia($userId, $seminaryId, $filename, $description, $mimetype, $tmpFilename)
+		{
+			$mediaId = false;
+			$this->db->setAutocommit(false);
+			
+			try {
+				// Create Seminary media record
+				$mediaId = $this->createSeminaryMedia($userId, $seminaryId, $filename, $description, $mimetype);
+				
+				// Add media to Quests media
+				$this->db->query(
+					'INSERT INTO questsmedia '.
+					'(media_id, created_user_id) '.
+					'VALUES '.
+					'(?, ?) '.
+					'ON DUPLICATE KEY UPDATE '.
+					'created_user_id = ?',
+					'iii',
+					$mediaId,
+					$userId,
+					$userId
+				);
+			
+				// Create filename
+				$filename = ROOT.DS.\nre\configs\AppConfig::$dirs['seminarymedia'].DS.$mediaId;
+				if(!move_uploaded_file($tmpFilename, $filename))
+				{
+					$this->db->rollback();
+					$mediaId = false;
+				}
+				else {
+					$this->db->commit();
+				}
+			}
+			catch(\nre\exceptions\DatamodelException $e) {
+				$this->db->rollback();
+				$this->db->setAutocommit(true);
+			}
+			
+			
+			$this->db->setAutocommit(true);
+			return $mediaId;
+		}
+		
+		
+		/**
+		 * Create a new Character groups media by creating a new Seminarymedia and
+		 * adding it to the list of media for Character groups.
+		 * 
+		 * @param	int	$userId		ID of user that does the upload
+		 * @param	int	$seminaryId	ID of Seminary
+		 * @param	string	$filename	Filename of uploading media
+		 * @param	string	$description	Description for media
+		 * @param	string	$mimetype	Mimetype of media
+		 * @param	string	$tmpFilename	Name of temporary uploaded file
+		 * @return	mixed			ID of media record or false if upload failed
+		 */
+		public function createCharactergroupMedia($userId, $seminaryId, $filename, $description, $mimetype, $tmpFilename)
+		{
+			$mediaId = false;
+			$this->db->setAutocommit(false);
+			
+			try {
+				// Create Seminary media record
+				$mediaId = $this->createSeminaryMedia($userId, $seminaryId, $filename, $description, $mimetype);
+				
+				// Add media to Character groups media
+				$this->db->query(
+					'INSERT INTO charactergroupsmedia '.
+					'(seminarymedia_id, created_user_id) '.
+					'VALUES '.
+					'(?, ?) '.
+					'ON DUPLICATE KEY UPDATE '.
+					'created_user_id = ?',
+					'iii',
+					$mediaId,
+					$userId,
+					$userId
+				);
+			
+				// Create filename
+				$filename = ROOT.DS.\nre\configs\AppConfig::$dirs['seminarymedia'].DS.$mediaId;
+				if(!move_uploaded_file($tmpFilename, $filename))
+				{
+					$this->db->rollback();
+					$mediaId = false;
+				}
+			}
+			catch(\nre\exceptions\DatamodelException $e) {
+				$this->db->rollback();
+				$this->db->setAutocommit(true);
+			}
+			
+			
+			$this->db->setAutocommit(true);
+			return $mediaId;
+		}
+
+
+		/**
+		 * Create a new Achievement media by creating a new Seminarymedia and
+		 * adding it to the list of media for Achievements.
+		 * 
+		 * @param	int	$userId		ID of user that does the upload
+		 * @param	int	$seminaryId	ID of Seminary
+		 * @param	string	$filename	Filename of uploading media
+		 * @param	string	$description	Description for media
+		 * @param	string	$mimetype	Mimetype of media
+		 * @param	string	$tmpFilename	Name of temporary uploaded file
+		 * @return	mixed			ID of media record or false if upload failed
+		 */
+		public function createAchievementMedia($userId, $seminaryId, $filename, $description, $mimetype, $tmpFilename)
+		{
+			$mediaId = false;
+			$this->db->setAutocommit(false);
+			
+			try {
+				// Create Seminary media record
+				$mediaId = $this->createSeminaryMedia($userId, $seminaryId, $filename, $description, $mimetype);
+				
+				// Add media to Achievements media
+				$this->db->query(
+					'INSERT INTO achievementsmedia '.
+					'(seminarymedia_id, created_user_id) '.
+					'VALUES '.
+					'(?, ?) '.
+					'ON DUPLICATE KEY UPDATE '.
+					'created_user_id = ?',
+					'iii',
+					$mediaId,
+					$userId,
+					$userId
+				);
+			
+				// Create filename
+				$filename = ROOT.DS.\nre\configs\AppConfig::$dirs['seminarymedia'].DS.$mediaId;
+				if(!move_uploaded_file($tmpFilename, $filename))
+				{
+					$this->db->rollback();
+					$mediaId = false;
+				}
+			}
+			catch(\nre\exceptions\DatamodelException $e) {
+				$this->db->rollback();
+				$this->db->setAutocommit(true);
+			}
+			
+			
+			$this->db->setAutocommit(true);
+			return $mediaId;
+		}
+		
+		
+		
+		
+		/**
+		 * Create a new Seminary media.
+		 * 
+		 * @param	int	$userId		ID of user that does the upload
+		 * @param	int	$seminaryId	ID of Seminary
+		 * @param	string	$filename	Filename of uploading media
+		 * @param	string	$description	Description for media
+		 * @param	string	$mimetype	Mimetype of media
+		 * @return	mixed			ID of media record or false if upload failed
+		 */
+		private function createSeminaryMedia($userId, $seminaryId, $filename, $description, $mimetype)
+		{
+			// Check for existing database record
+			$data = $this->db->query(
+				'SELECT id '.
+				'FROM seminarymedia '.
+				'WHERE url = ?',
+				's',
+				\nre\core\Linker::createLinkParam($filename)
+			);
+			if(!empty($data)) {
+				return $data[0]['id'];
+			}
+			
+			// Create database record
+			$this->db->query(
+				'INSERT INTO seminarymedia '.
+				'(created_user_id, seminary_id, name, url, description, mimetype) '.
+				'VALUES '.
+				'(?, ? ,? ,?, ?, ?)',
+				'iissss',
+				$userId,
+				$seminaryId,
+				$filename,
+				\nre\core\Linker::createLinkParam($filename),
+				$description,
+				$mimetype
+			);
+			
+			
+			return $this->db->getInsertId();
+		}
+		
+	}
+
+?>
+
