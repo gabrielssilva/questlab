@@ -113,17 +113,19 @@
         /**
          * Check if a Character groups-group name already exists.
          *
-         * @param   string  $name       Name to check
-         * @param   int $groupsgroupId  Do not check this ID (for editing)
-         * @return  boolean         Whether name exists or not
+         * @param   int     $seminaryId     ID of Seminary
+         * @param   string  $name           Name to check
+         * @param   int     $groupsgroupId  Do not check this ID (for editing)
+         * @return  boolean                 Whether name exists or not
          */
-        public function characterGroupsgroupNameExists($name, $groupsgroupId=null)
+        public function characterGroupsgroupNameExists($seminaryId, $name, $groupsgroupId=null)
         {
             $data = $this->db->query(
                 'SELECT id '.
                 'FROM charactergroupsgroups '.
-                'WHERE name = ? OR url = ?',
-                'ss',
+                'WHERE seminary_id = ? AND (name = ? OR url = ?)',
+                'iss',
+                $seminaryId,
                 $name,
                 \nre\core\Linker::createLinkParam($name)
             );

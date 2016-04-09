@@ -168,7 +168,7 @@
                 // Get params and validate them
                 $validation = $this->Validation->validateParams($this->request->getPostParams(), $fields);
                 $charactergroupsgroupname = $this->request->getPostParam('charactergroupsgroupname');
-                if($this->Charactergroups->characterGroupsgroupNameExists($charactergroupsgroupname)) {
+                if($this->Charactergroups->characterGroupsgroupNameExists($seminary['id'], $charactergroupsgroupname)) {
                     $validation = $this->Validation->addValidationResult($validation, 'charactergroupsgroupname', 'exist', true);
                 }
                 $preferred = !is_null($this->request->getPostParam('preferred'));
