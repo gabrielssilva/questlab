@@ -16,6 +16,24 @@
             <?php endforeach ?>
         </ol>
         <?php endif ?>
+<?php if(!empty($submission['similar'])) : ?>
+        <h4><?=_('Similar submissions')?></h4>
+<?php foreach($submission['similar'] as &$similar) : ?>
+        <ul>
+            <li>
+                <p><small><?=('Similarity')?>: <?=$numberFormatter->format($similar['similarity'])?></small></p>
+                <p><a href="<?=$linker->link(array('uploads','seminary',$seminary['url'], $similar['upload']['url']))?>"><?=$similar['upload']['name']?></a></p>
+                <p><small>
+                    <a href="<?=$linker->link(array('quests','submission',$seminary['url'],$similar['questgroup']['url'],$similar['quest']['url'],$similar['character']['url']))?>">
+                        <?=$similar['character']['name']?>,
+                        <?=$similar['quest']['title']?>
+                    </a>,
+                    <?=$dateFormatter->format(new \DateTime($similar['created']))?> <?=$timeFormatter->format(new \DateTime($similar['created']))?>
+                </small></p>
+            </li>
+        </ul>
+<?php endforeach ?>
+<?php endif ?>
     </li>
     <?php endforeach ?>
 </ol>
@@ -24,10 +42,17 @@
 <form method="post" class="logreg">
     <?php $submission = array_pop($submissions); ?>
     <?php if(!$solved) : ?>
-    <?=_('Comment')?><br />
-    <textarea name="characterdata[comment]"></textarea><br />
-    <input type="hidden" name="characterdata[submission_id]" value="<?=$submission['id']?>" />
+    <fieldset>
+        <legend><?=_('Comment')?></legend>
+        <textarea id="characterdata-comment" name="characterdata[comment]"></textarea><br />
+        <input type="hidden" name="characterdata[submission_id]" value="<?=$submission['id']?>" />
+    </fieldset>
     <input type="submit" name="submit" value="<?=_('solved')?>" />
     <input type="submit" name="submit" value="<?=_('unsolved')?>" />
     <?php endif ?>
 </form>
+<script>
+    $(function() {
+        $("#characterdata-comment").markItUp(mySettings);
+    });
+</script>

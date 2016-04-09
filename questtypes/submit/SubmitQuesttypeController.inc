@@ -24,7 +24,7 @@
          *
          * @var array
          */
-        public $models = array('quests', 'uploads', 'users');
+        public $models = array('quests', 'uploads', 'users', 'characters', 'questgroups');
 
 
 
@@ -209,6 +209,27 @@
                     }
                     catch(\nre\exceptions\IdNotFoundException $e) {
                     }
+                }
+                $submission['similar'] = $this->Submit->getSimilarSubmissions(
+                    $seminary['id'],
+                    $quest['id'],
+                    $character['id'],
+                    $submission['id']
+                );
+                foreach($submission['similar'] as &$similarSubmission)
+                {
+                    $similarSubmission['quest'] = $this->Quests->getQuestById(
+                        $similarSubmission['quest_id']
+                    );
+                    $similarSubmission['questgroup'] = $this->Questgroups->getQuestgroupById(
+                        $similarSubmission['quest']['questgroup_id']
+                    );
+                    $similarSubmission['character'] = $this->Characters->getCharacterById(
+                        $similarSubmission['character_id']
+                    );
+                    $similarSubmission['upload'] = $this->Uploads->getSeminaryuploadById(
+                        $similarSubmission['upload_id']
+                    );
                 }
             }
 
