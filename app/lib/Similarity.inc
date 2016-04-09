@@ -22,8 +22,13 @@
 
 
         /**
-         * TODO readDocument()
-         * used
+         * Read a file and return its text.
+         *
+         * Currently only PDF-files are supported and “pdftotext” needs to be
+         * installed. If reading fails, false is returned.
+         *
+         * @param   string  $filename   Name of file to read
+         * @return  mixed               Text of document (string) or false (boolean)
          */
         public static function readDocument($filename)
         {
@@ -46,12 +51,16 @@
 
 
         /**
-         * TODO splitNgrams()
-         * used
+         * Split a text into N-grams.
+         *
+         * The default N is 3.
+         *
+         * @param   string  $document   Text to be splitted
+         * @param   int     $n          Size of grams to split into (N)
+         * @return  array               List of n-grams
          */
-        public static function splitNgrams($document)
+        public static function splitNgrams($document, $n=3)
         {
-            $n = 3;
             $affix = implode(' ', array_fill(0, $n-1, ' '));
             $document = $affix.$document.$affix;
             $ngrams = array();
@@ -65,8 +74,17 @@
 
 
         /**
-         * TODO compare()
-         * used
+         * Compare to documents, represented by there Term Frequencies (TFs)
+         * values.
+         *
+         * $tfsA, $tfsB and $idf_n are expected to be associative arrays with
+         * the term as key and the corresponding frequency as value.
+         *
+         * @param   array   $tfsA   Term Frequencies of document A
+         * @param   array   $tfsB   Term Frequencies of document B
+         * @param   int     $idf_N  Total count of documents in corpus
+         * @param   array   $idf_n  Inverse Document Frequencies of all terms
+         * @return  float           Similarity value (between 0.0 and 1.0)
          */
         public static function compare($tfsA, $tfsB, $idf_N, $idf_n)
         {
@@ -88,8 +106,17 @@
 
 
         /**
-         * TODO getVector()
-         * used
+         * Calculate the vector for a document based on TF and IDF.
+         *
+         * $tfs and $idf_n are expected to be associative arrays with the term
+         * as key and the corresponding frequency as value. The resulting
+         * vector is an associative array with the terms as keys and their
+         * corresponding values as value.
+         *
+         * @param   array   $tfs    Term Frequencies of document
+         * @param   int     $idf_N  Total count of documents in corpus
+         * @param   array   $idf_n  Inverse Document Frequencies of all terms
+         * @return  array           Document vector
          */
         protected static function getVector($tfs, $idf_N, $idf_n)
         {
@@ -101,9 +128,18 @@
         }
 
 
-        /**
-         * TODO getTFIDFs()
-         * used
+        /*
+         * Calculate TF*IDF values for a document.
+         *
+         * $tfs and $idf_n are expected to be associative arrays with the term
+         * as key and the corresponding frequency as value. The resulting
+         * value is an associative array with the terms as keys and their
+         * corresponding TF*IDF as values.
+         *
+         * @param   array   $tfs    Term Frequencies of document
+         * @param   int     $idf_N  Total count of documents in corpus
+         * @param   array   $idf_n  Inverse Document Frequencies of all terms
+         * @return  array           TF*IDF values
          */
         protected static function getTFIDFs($tfs, $idf_N, $idf_n)
         {
@@ -128,9 +164,13 @@
 
 
         /**
-         * TODO cosinus()
+         * Calculate cosinus similarity between two vectors.
+         *
          * sim(a, b) = (a・b) / (||a|| * ||b||)
-         * used
+         *
+         * @param   array   $a  Vector A
+         * @param   array   $b  Vector B
+         * @return  float       Similarity value (between 0.0 and 1.0)
          */
         protected static function cosinus(array $a, array $b)
         {
@@ -146,9 +186,13 @@
 
 
         /**
-         * TODO Dot product
+         * Calculate the dot-product for two vectors.
+         * 
          * a・b = summation{i=1,n}(a[i] * b[i])
-         * used
+         *
+         * @param   array   $a  Vector A
+         * @param   array   $b  Vector B
+         * @return  float       Dot-product
          */
         protected static function dotProduct(array $a, array $b)
         {
@@ -156,10 +200,8 @@
             $keysA = array_keys(array_filter($a));
             $keysB = array_keys(array_filter($b));
             $uniqueKeys = array_unique(array_merge($keysA, $keysB));
-            foreach($uniqueKeys as $key)
-            {
-                if(!empty($a[$key]) && !empty($b[$key]))
-                {
+            foreach($uniqueKeys as $key) {
+                if(!empty($a[$key]) && !empty($b[$key])) {
                     $dotProduct += ($a[$key] * $b[$key]);
                 }
             }
@@ -169,9 +211,12 @@
 
 
         /**
-         * TODO Euclidean norm
+         * Caculate the Euclidean norm for a vector.
+         *
          * ||x|| = sqrt(x・x) // ・ is a dot product
-         * used 
+         *
+         * @param   array   $vector Vector
+         * @return  float           Euclidean norm
          */
         protected static function norm(array $vector)
         {

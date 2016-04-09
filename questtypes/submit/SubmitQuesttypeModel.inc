@@ -20,6 +20,13 @@
     class SubmitQuesttypeModel extends \hhu\z\models\QuesttypeModel
     {
         /**
+         * Minimum similarity value for two submissions
+         *
+         * @var float
+         */
+        const SIMILARITY_MIN = 0.8;
+
+        /**
          * Required models
          *
          * @var array
@@ -171,7 +178,13 @@
 
 
         /**
-         * TODO getSimilarSubmissions()
+         * Get similar submissions for a Character submission.
+         *
+         * @param   int     $seminaryId     ID of Seminary
+         * @param   int     $questId        ID of Quest
+         * @param   int     $characterId    ID of Character
+         * @param   int     $submissionId   ID of submission
+         * @return  array                   List of submissions
          */
         public function getSimilarSubmissions($seminaryId, $questId, $characterId, $submissionId)
         {
@@ -185,14 +198,17 @@
             // Get stored TFs of submission
             $tfsA = $this->getTFs($submissionId);
 
-            // Iterate through submissions of same task
+            // Get submissions of same task
             $submissions = $this->getSubmissionsForQuest(
                 $questId,
                 $characterId,
                 $submissionId
             );
+
+            // Iterate through submissions of same task
             foreach($submissions as &$submission)
             {
+                // Check if similarity has already be calculated
                 if(is_null($submission['similarity']))
                 {
                     // Get stored TFs of submissions to compare to
@@ -215,7 +231,7 @@
                 }
 
                 // Add high simnilarities to list
-                if($submission['similarity'] >= 0.7) {
+                if($submission['similarity'] >= self::SIMILARITY_MIN) {
                     $similarSubmissions[] = $submission;
                 }
             }
@@ -228,7 +244,10 @@
 
 
         /**
-         * TODO addDocument()
+         * Index a submission as document.
+         *
+         * @param   int     $submissionId   ID of submission
+         * @param   string  $filename       Full file path of document to read
          */
         private function addDocument($submissionId, $filename)
         {
@@ -247,7 +266,10 @@
 
 
         /**
-         * TODO addTerms()
+         * Add terms to the corpus, stored in database.
+         *
+         * @param   int     $submissionId   ID of submission
+         * @param   array   $terms          List of (non-unique) terms
          */
         private function addTerms($submissionId, $terms)
         {
@@ -286,6 +308,15 @@
         }
 
 
+        /**
+         * Get all submissions for a Quest including similarity values to the
+         * given submission, excluding the submissions of the given Character.
+         *
+         * @param   int     $questId        ID of Quest
+         * @param   int     $characterId    ID of Character to exclude submissions of
+         * @param   int     $submissionId   ID of submission to get similarity values for
+         * @return  array                   List of submissions
+         */
         private function getSubmissionsForQuest($questId, $characterId, $submissionId)
         {
             return $this->db->query(
@@ -301,7 +332,10 @@
 
 
         /**
-         * TODO getTFs()
+         * Get Term Frequency (TF) values for a submission.
+         *
+         * @param   int     $submissionId   ID of submission
+         * @return  array                   Associative array with term as key and frequency as value
          */
         private function getTFs($submissionId)
         {
@@ -328,8 +362,10 @@
 
 
         /**
-         * TODO getIDF_N()
-         * Total count of submissions (per Seminary)
+         * Get total count of submissions for a Seminary.
+         *
+         * @param   int $seminaryId ID of Seminary
+         * @return  int             Total count of submissions
          */
         private function getIDF_total($seminaryId)
         {
@@ -352,8 +388,10 @@
 
 
         /**
-         * TODO getIDF_n()
-         * Count of submissions each term is in (per Seminary)
+         * Get count of submissions each term is in for a Seminary.
+         *
+         * @param   int     $seminaryId ID of Seminary
+         * @return  array   Associatve array wtih terms as keys and counts as values
          */
         private function getIDF_docs($seminaryId)
         {
@@ -381,7 +419,11 @@
 
 
         /**
-         * TODO setSimilarity()
+         * Save the similarity of two submissions.
+         *
+         * @param   int     $submissionId1  ID of submission
+         * @param   int     $submissionId2  ID of submission
+         * @param   float   $similarity     Similarity of both submissions
          */
         private function setSimilarity($submissionId1, $submissionId2, $similarity)
         {
