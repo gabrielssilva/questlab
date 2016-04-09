@@ -23,5 +23,6 @@ DROP TRIGGER IF EXISTS update_cache_characters_xplevels_delete;
 DROP PROCEDURE IF EXISTS update_cache_characters_quest;
 DROP PROCEDURE IF EXISTS update_cache_characters_charactergroup;
 DROP PROCEDURE IF EXISTS update_cache_characters;
+DROP PROCEDURE IF EXISTS update_cache_characters_xplevels;
 DROP PROCEDURE IF EXISTS update_cache_charactergroups_charactergroupsquest;
 DROP PROCEDURE IF EXISTS update_cache_charactergroups;
