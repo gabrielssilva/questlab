@@ -153,6 +153,10 @@
                 array(
                     'mimetype'  => 'image/png',
                     'size'      =>  1048576
+                ),
+                array(
+                    'mimetype'  => 'application/pdf',
+                    'size'      => 1048576
                 )
             ),
             'map' => array(

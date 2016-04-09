@@ -1866,29 +1866,6 @@ CREATE TABLE `questtypes_submit_characters_comments` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Table structure for table `questtypes_submit_mimetypes`
---
-
-DROP TABLE IF EXISTS `questtypes_submit_mimetypes`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `questtypes_submit_mimetypes` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `created_user_id` int(11) NOT NULL,
-  `seminary_id` int(11) NOT NULL,
-  `mimetype` varchar(32) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `size` int(10) unsigned NOT NULL DEFAULT '0',
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `mimetype` (`mimetype`,`seminary_id`),
-  KEY `created_user_id` (`created_user_id`),
-  KEY `seminary_id` (`seminary_id`),
-  CONSTRAINT `questtypes_submit_mimetypes_ibfk_1` FOREIGN KEY (`created_user_id`) REFERENCES `users` (`id`),
-  CONSTRAINT `questtypes_submit_mimetypes_ibfk_2` FOREIGN KEY (`seminary_id`) REFERENCES `seminaries` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
 -- Table structure for table `questtypes_submit_similarities`
 --
 

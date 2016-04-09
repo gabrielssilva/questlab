@@ -25,6 +25,12 @@
          * @var float
          */
         const SIMILARITY_MIN = 0.8;
+        /**
+         * Supported mimetypes
+         *
+         * @var array
+         */
+        const mimetypes = array('application/pdf');
 
         /**
          * Required models
@@ -144,18 +150,20 @@
         /**
          * Get allowed mimetypes for uploading a file.
          *
-         * @param   int $seminaryId ID of Seminary
-         * @return  array           Allowed mimetypes
+         * @param   int     $seminaryId ID of Seminary
+         * @return  array               Allowed mimetypes
          */
         public function getAllowedMimetypes($seminaryId)
         {
-            return $this->db->query(
-                'SELECT id, mimetype, size '.
-                'FROM questtypes_submit_mimetypes '.
-                'WHERE seminary_id = ?',
-                'i',
-                $seminaryId
-            );
+            $mimetypes = array();
+            foreach(\nre\configs\AppConfig::$mimetypes['questtypes'] as $mimetype) {
+                if(in_array($mimetype['mimetype'], self::mimetypes)) {
+                    $mimetypes[] = $mimetype;
+                }
+            }
+
+
+            return $mimetypes;
         }
 
 
