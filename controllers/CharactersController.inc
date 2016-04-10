@@ -288,6 +288,7 @@
                 if($this->Characters->characterNameExists($charactername)) {
                     $validation = $this->Validation->addValidationResult($validation, 'charactername', 'exist', true);
                 }
+                $gender = $this->request->getPostParam('gender');
 
                 // Validate type
                 $typeIndex = null;
@@ -303,7 +304,7 @@
                 }
 
                 // Validate gender
-                if(is_null($gender) || !in_array(intval($gender), array(0, 1))) {
+                if(is_null($gender) || ($gender !== "0" && $gender !== "1")) {
                     $validation = $this->Validation->addValidationResult($validation, 'gender', 'correct', false);
                 }
 
@@ -335,7 +336,7 @@
                         $this->Auth->getUserId(),
                         $types[$typeIndex]['id'],
                         $charactername,
-                        $gender
+                        intval($gender)
                     );
                     $character = $this->Characters->getCharacterById(
                         $characterId
