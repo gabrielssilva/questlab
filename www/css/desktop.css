@@ -276,6 +276,7 @@ span.ctitle{font-size:.75em;padding:0;margin:0}
 .cgqlist li{background:#fff;margin-bottom:5px;padding:3px}
 .cgqlist img{float:left;width:40px;height:40px;border-radius:3px;margin-right:10px}
 .cgqlist p{margin:5px 0 0}
+.cgqlist p small{float:right}
 
 
 /** Charactergroup Profile **/

@@ -50,10 +50,10 @@
         public function getQuestsForCharactergroupsgroup($groupsgroupId)
         {
             return $this->db->query(
-                'SELECT id, questgroups_id, title, url, xps, questsmedia_id, public '.
+                'SELECT id, questgroups_id, title, url, pos, xps, questsmedia_id, public '.
                 'FROM charactergroupsquests '.
                 'WHERE charactergroupsgroup_id = ? '.
-                'ORDER BY created ASC',
+                'ORDER BY pos ASC',
                 'i',
                 $groupsgroupId
             );
@@ -71,7 +71,7 @@
         public function getQuestByUrl($groupsgroupId, $questUrl)
         {
             $data = $this->db->query(
-                'SELECT id, questgroups_id, title, url, description, xps, rules, won_text, lost_text, questsmedia_id, public '.
+                'SELECT id, questgroups_id, charactergroupsgroup_id, title, url, pos, description, xps, rules, won_text, lost_text, questsmedia_id, public '.
                 'FROM charactergroupsquests '.
                 'WHERE charactergroupsgroup_id = ? AND url = ?',
                 'is',
@@ -97,7 +97,7 @@
         public function getQuestById($questId)
         {
             $data = $this->db->query(
-                'SELECT id, charactergroupsgroup_id, questgroups_id, title, url, description, xps, rules, won_text, lost_text, questsmedia_id, public '.
+                'SELECT id, charactergroupsgroup_id, questgroups_id, title, url, pos, description, xps, rules, won_text, lost_text, questsmedia_id, public '.
                 'FROM charactergroupsquests '.
                 'WHERE id = ?',
                 'i',
@@ -320,17 +320,29 @@
          */
         public function createQuest($userId, $groupsgroupId, $questgroupId, $title, $description, $xps, $rules, $wonText, $lostText)
         {
+            // Get last position
+            $pos = $this->db->query(
+                'SELECT COALESCE(MAX(pos),0) AS pos '.
+                'FROM charactergroupsquests '.
+                'WHERE charactergroupsgroup_id = ?',
+                'i',
+                $groupsgroupId
+            );
+            $pos = intval($pos[0]['pos']);
+
+            // Add new Quest
             $this->db->query(
                 'INSERT INTO charactergroupsquests '.
-                '(created_user_id, charactergroupsgroup_id, questgroups_id, title, url, description, xps, rules, won_text, lost_text, public) '.
+                '(created_user_id, charactergroupsgroup_id, questgroups_id, title, url, pos, description, xps, rules, won_text, lost_text, public) '.
                 'VALUES '.
-                '(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 0)',
+                '(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 0)',
                 'iiisssdsss',
                 $userId,
                 $groupsgroupId,
                 $questgroupId,
                 $title,
                 \nre\core\Linker::createLinkParam($title),
+                $pos + 1,
                 $description,
                 $xps,
                 $rules,
@@ -339,6 +351,7 @@
             );
 
 
+            // Return ID
             return $this->db->getInsertId();
         }
 
@@ -380,6 +393,58 @@
 
 
         /**
+         * Move a Character groups Quest up (decrement position) or down
+         * (increment position).
+         *
+         * @param   array   $quest  Character groups Quest to move
+         * @param   boolean $up     True for moving up, false for down
+         */
+        public function moveQuest($quest, $up)
+        {
+            $this->db->setAutocommit(false);
+            try {
+                // Set temporary position
+                $this->db->query(
+                    'UPDATE charactergroupsquests '.
+                    'SET pos = 0 '.
+                    'WHERE id = ?',
+                    'i',
+                    $quest['id']
+                );
+
+                // Switch entry
+                $this->db->query(
+                    'UPDATE charactergroupsquests '.
+                    'SET pos = ? '.
+                    'WHERE charactergroupsgroup_id = ? AND pos = ?',
+                    'iii',
+                    $quest['pos'],
+                    $quest['charactergroupsgroup_id'],
+                    $quest['pos'] + ($up ? -1 : 1)
+                );
+
+                // Set new position
+                $this->db->query(
+                    'UPDATE charactergroupsquests '.
+                    'SET pos = ? '.
+                    'WHERE id = ?',
+                    'ii',
+                    $quest['pos'] + ($up ? -1 : 1),
+                    $quest['id']
+                );
+
+                $this->db->commit();
+            }
+            catch(\nre\exceptions\DatamodelException $e) {
+                $this->db->rollback();
+                $this->db->setAutocommit(true);
+                throw $e;
+            }
+            $this->db->setAutocommit(true);
+        }
+
+
+        /**
          * Copy all Character groups Quests from a Seminary.
          *
          * @param   int     $userId             ID of copying user
@@ -402,8 +467,8 @@
                     // Copy Quest
                     $this->db->query(
                         'INSERT INTO charactergroupsquests '.
-                        '(created_user_id, charactergroupsgroup_id, questgroups_id, title, url, description, xps, rules, won_text, lost_text, public) '.
-                        'SELECT ?, ?, ?, title, url, description, xps, rules, won_text, lost_text, public '.
+                        '(created_user_id, charactergroupsgroup_id, questgroups_id, title, url, pos, description, xps, rules, won_text, lost_text, public) '.
+                        'SELECT ?, ?, ?, title, url, pos, description, xps, rules, won_text, lost_text, public '.
                         'FROM charactergroupsquests '.
                         'WHERE id = ?',
                         'iiii',

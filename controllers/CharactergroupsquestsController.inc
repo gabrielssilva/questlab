@@ -42,6 +42,8 @@
             'manage'    => array('admin', 'moderator', 'user'),
             'create'    => array('admin', 'moderator', 'user'),
             'edit'      => array('admin', 'moderator', 'user'),
+            'moveup'    => array('admin', 'moderator', 'user'),
+            'movedown'  => array('admin', 'moderator', 'user'),
             'delete'    => array('admin', 'moderator', 'user')
         );
         /**
@@ -54,6 +56,8 @@
             'manage'    => array('admin', 'moderator'),
             'create'    => array('admin', 'moderator'),
             'edit'      => array('admin', 'moderator'),
+            'moveup'    => array('admin', 'moderator'),
+            'movedown'  => array('admin', 'moderator'),
             'delete'    => array('admin', 'moderator')
         );
 
@@ -669,6 +673,80 @@
             $this->set('mimetypes', $mimetypes);
             $this->set('validation', $validation);
             $this->set('validationSettings', $validationSettings);
+        }
+
+
+        /**
+         * Action: moveup.
+         *
+         * Move a Character groups Quest up (decrement position).
+         *
+         * @throws  \nre\exceptions\IdNotFoundException
+         * @param   string  $seminaryUrl    URL-Title of a Seminary
+         * @param   string  $groupsgroupUrl URL-Title of a Character groups-group
+         * @param   string  $questUrl       URL-Title of a Character groups Quest
+         */
+        public function moveup($seminaryUrl, $groupsgroupUrl, $questUrl)
+        {
+            // Get seminary
+            $seminary = $this->Seminaries->getSeminaryByUrl($seminaryUrl);
+
+            // Get Character groups-group
+            $groupsgroup = $this->Charactergroups->getGroupsgroupByUrl($seminary['id'], $groupsgroupUrl);
+
+            // Get Character groups-group Quests
+            $quest = $this->Charactergroupsquests->getQuestByUrl($groupsgroup['id'], $questUrl);
+
+            // Set position
+            $this->Charactergroupsquests->moveQuest($quest, true);
+
+            $this->redirect(
+                $this->linker->link(
+                    array(
+                        'charactergroups',
+                        'groupsgroup',
+                        $seminary['url'],
+                        $groupsgroup['url']
+                    )
+                )
+            );
+        }
+
+
+        /**
+         * Action: movedown.
+         *
+         * Move a Character groups Quest down (increment position).
+         *
+         * @throws  \nre\exceptions\IdNotFoundException
+         * @param   string  $seminaryUrl    URL-Title of a Seminary
+         * @param   string  $groupsgroupUrl URL-Title of a Character groups-group
+         * @param   string  $questUrl       URL-Title of a Character groups Quest
+         */
+        public function movedown($seminaryUrl, $groupsgroupUrl, $questUrl)
+        {
+            // Get seminary
+            $seminary = $this->Seminaries->getSeminaryByUrl($seminaryUrl);
+
+            // Get Character groups-group
+            $groupsgroup = $this->Charactergroups->getGroupsgroupByUrl($seminary['id'], $groupsgroupUrl);
+
+            // Get Character groups-group Quests
+            $quest = $this->Charactergroupsquests->getQuestByUrl($groupsgroup['id'], $questUrl);
+
+            // Set position
+            $this->Charactergroupsquests->moveQuest($quest, false);
+
+            $this->redirect(
+                $this->linker->link(
+                    array(
+                        'charactergroups',
+                        'groupsgroup',
+                        $seminary['url'],
+                        $groupsgroup['url']
+                    )
+                )
+            );
         }
 
 

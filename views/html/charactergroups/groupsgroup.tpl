@@ -42,6 +42,16 @@
     <li class="cf">
         <img src="<?=$linker->link(array('media','charactergroupsquest',$seminary['url'],$groupsgroup['url'],$quest['url']))?>" />
         <p><a href="<?=$linker->link(array('charactergroupsquests','quest',$seminary['url'],$groupsgroup['url'],$quest['url']))?>"><?=$quest['title']?></a></p>
+<?php if(count(array_intersect(array('admin', 'moderator'), \hhu\z\controllers\SeminaryController::$character['characterroles'])) > 0) : ?>
+        <p><small>
+<?php if($quest['pos'] > 1) : ?>
+            <a href="<?=$linker->link(array('charactergroupsquests','moveup',$seminary['url'],$groupsgroup['url'],$quest['url']))?>">↑</a>
+<?php endif ?>
+<?php if($quest['pos'] < count($quests)) : ?>
+            <a href="<?=$linker->link(array('charactergroupsquests','movedown',$seminary['url'],$groupsgroup['url'],$quest['url']))?>">↓</a>
+<?php endif ?>
+        </small></p>
+<?php endif ?>
     </li>
 <?php endif ?>
     <?php endforeach ?>
