@@ -1,6 +1,6 @@
 <?php
 /**
- * Piwik - Open source web analytics
+ * Piwik - free/libre analytics platform
  *
  * @link http://piwik.org
  * @license http://www.gnu.org/licenses/gpl-3.0.html GPL v3 or later
@@ -14,7 +14,7 @@ use Piwik\ProxyHttp;
 /**
  *
  */
-class Chart 
+class Chart
 {
     // the data kept here conforms to the jqplot data layout
     // @see http://www.jqplot.com/docs/files/jqPlotOptions-txt.html
@@ -59,7 +59,7 @@ class Chart
             );
 
             array_walk($data, function (&$v) {
-                $v = (float)$v;
+                $v = (float) Common::forceDotAsSeparatorForDecimalPoint($v);
             });
             $this->data[] = & $data;
         }

@@ -1,6 +1,6 @@
 <?php
 /**
- * Piwik - Open source web analytics
+ * Piwik - free/libre analytics platform
  *
  * @link http://piwik.org
  * @license http://www.gnu.org/licenses/gpl-3.0.html GPL v3 or later
@@ -8,7 +8,6 @@
  */
 namespace Piwik\Plugins\ScheduledReports;
 
-use Piwik\Common;
 use Piwik\Piwik;
 use Piwik\Plugins\LanguagesManager\LanguagesManager;
 use Piwik\Plugins\SegmentEditor\API as APISegmentEditor;
@@ -66,7 +65,7 @@ class Controller extends \Piwik\Plugin\Controller
             }
         }
         $view->reports = $reports;
-        $view->reportsJSON = Common::json_encode($reportsById);
+        $view->reportsJSON = json_encode($reportsById);
 
         $view->downloadOutputType = API::OUTPUT_INLINE;
 

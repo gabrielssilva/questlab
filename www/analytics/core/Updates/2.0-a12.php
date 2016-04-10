@@ -1,6 +1,6 @@
 <?php
 /**
- * Piwik - Open source web analytics
+ * Piwik - free/libre analytics platform
  *
  * @link http://piwik.org
  * @license http://www.gnu.org/licenses/gpl-3.0.html GPL v3 or later
@@ -17,7 +17,7 @@ use Piwik\Updates;
  */
 class Updates_2_0_a12 extends Updates
 {
-    public static function getSql()
+    public function getMigrationQueries(Updater $updater)
     {
         $result = array(
             'ALTER TABLE ' . Common::prefixTable('logger_message') . ' MODIFY level VARCHAR(16) NULL' => false
@@ -40,9 +40,9 @@ class Updates_2_0_a12 extends Updates
         return $result;
     }
 
-    public static function update()
+    public function doUpdate(Updater $updater)
     {
         // change level column in logger_message table to string & remove other logging tables if empty
-        Updater::updateDatabase(__FILE__, self::getSql());
+        $updater->executeMigrationQueries(__FILE__, $this->getMigrationQueries($updater));
     }
 }

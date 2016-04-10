@@ -1,6 +1,6 @@
 <?php
 /**
- * Piwik - Open source web analytics
+ * Piwik - free/libre analytics platform
  *
  * @link http://piwik.org
  * @license http://www.gnu.org/licenses/gpl-3.0.html GPL v3 or later
@@ -26,7 +26,6 @@ class RequestConfig extends VisualizationRequestConfig
     public function __construct()
     {
         $this->disable_generic_filters = true;
-        $this->disable_queued_filters  = true;
 
         $properties = array(
             'min_growth_percent',

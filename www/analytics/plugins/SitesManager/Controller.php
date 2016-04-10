@@ -1,6 +1,6 @@
 <?php
 /**
- * Piwik - Open source web analytics
+ * Piwik - free/libre analytics platform
  *
  * @link http://piwik.org
  * @license http://www.gnu.org/licenses/gpl-3.0.html GPL v3 or later
@@ -11,15 +11,13 @@ namespace Piwik\Plugins\SitesManager;
 use Exception;
 use Piwik\API\ResponseBuilder;
 use Piwik\Common;
-use Piwik\DataTable\Renderer\Json;
-use Piwik\Date;
-use Piwik\IP;
+use Piwik\Exception\UnexpectedWebsiteFoundException;
 use Piwik\Piwik;
+use Piwik\Measurable\MeasurableSettings;
 use Piwik\SettingsPiwik;
-use Piwik\SettingsServer;
 use Piwik\Site;
+use Piwik\Tracker\TrackerCodeGenerator;
 use Piwik\Url;
-use Piwik\UrlHelper;
 use Piwik\View;
 
 /**
@@ -32,60 +30,51 @@ class Controller extends \Piwik\Plugin\ControllerAdmin
      */
     public function index()
     {
-        $view = new View('@SitesManager/index');
+        Piwik::checkUserHasSomeAdminAccess();
 
-        Site::clearCache();
-        if (Piwik::hasUserSuperUserAccess()) {
-            $sitesRaw = API::getInstance()->getAllSites();
+        return $this->renderTemplate('index');
+    }
+
+    public function getMeasurableTypeSettings()
+    {
+        $idSite = Common::getRequestVar('idSite', 0, 'int');
+        $idType = Common::getRequestVar('idType', '', 'string');
+
+        if ($idSite >= 1) {
+            Piwik::checkUserHasAdminAccess($idSite);
+        } else if ($idSite === 0) {
+            Piwik::checkUserHasSomeAdminAccess();
         } else {
-            $sitesRaw = API::getInstance()->getSitesWithAdminAccess();
-        }
-        // Gets sites after Site.setSite hook was called
-        $sites = array_values( Site::getSites() );
-        if(count($sites) != count($sitesRaw)) {
-            throw new Exception("One or more website are missing or invalid.");
+            throw new Exception('Invalid idSite parameter. IdSite has to be zero or higher');
         }
 
-        foreach ($sites as &$site) {
-            $site['alias_urls'] = API::getInstance()->getSiteUrlsFromId($site['idsite']);
-            $site['excluded_ips'] = explode(',', $site['excluded_ips']);
-            $site['excluded_parameters'] = explode(',', $site['excluded_parameters']);
-            $site['excluded_user_agents'] = explode(',', $site['excluded_user_agents']);
-        }
-        $view->adminSites = $sites;
-        $view->adminSitesCount = count($sites);
+        $view = new View('@SitesManager/measurable_type_settings');
 
-        $timezones = API::getInstance()->getTimezonesList();
-        $view->timezoneSupported = SettingsServer::isTimezoneSupportEnabled();
-        $view->timezones = Common::json_encode($timezones);
-        $view->defaultTimezone = API::getInstance()->getDefaultTimezone();
+        $propSettings   = new MeasurableSettings($idSite, $idType);
+        $view->settings = $propSettings->getSettingsForCurrentUser();
 
-        $view->currencies = Common::json_encode(API::getInstance()->getCurrencyList());
-        $view->defaultCurrency = API::getInstance()->getDefaultCurrency();
-
-        $view->utcTime = Date::now()->getDatetime();
-        $excludedIpsGlobal = API::getInstance()->getExcludedIpsGlobal();
-        $view->globalExcludedIps = str_replace(',', "\n", $excludedIpsGlobal);
-        $excludedQueryParametersGlobal = API::getInstance()->getExcludedQueryParametersGlobal();
-        $view->globalExcludedQueryParameters = str_replace(',', "\n", $excludedQueryParametersGlobal);
-
-        $globalExcludedUserAgents = API::getInstance()->getExcludedUserAgentsGlobal();
-        $view->globalExcludedUserAgents = str_replace(',', "\n", $globalExcludedUserAgents);
-
-        $view->globalSearchKeywordParameters = API::getInstance()->getSearchKeywordParametersGlobal();
-        $view->globalSearchCategoryParameters = API::getInstance()->getSearchCategoryParametersGlobal();
-        $view->isSearchCategoryTrackingEnabled = \Piwik\Plugin\Manager::getInstance()->isPluginActivated('CustomVariables');
-        $view->allowSiteSpecificUserAgentExclude =
-            API::getInstance()->isSiteSpecificUserAgentExcludeEnabled();
-
-        $view->globalKeepURLFragments = API::getInstance()->getKeepURLFragmentsGlobal();
-
-        $view->currentIpAddress = IP::getIpFromHeader();
-
-        $view->showAddSite = (boolean)Common::getRequestVar('showaddsite', false);
-
-        $this->setBasicVariablesView($view);
         return $view->render();
+    }
+
+    public function getGlobalSettings()
+    {
+        Piwik::checkUserHasSomeViewAccess();
+
+        $response = new ResponseBuilder(Common::getRequestVar('format'));
+
+        $globalSettings = array();
+
+        $globalSettings['keepURLFragmentsGlobal'] = API::getInstance()->getKeepURLFragmentsGlobal();
+        $globalSettings['siteSpecificUserAgentExcludeEnabled'] = API::getInstance()->isSiteSpecificUserAgentExcludeEnabled();
+        $globalSettings['defaultCurrency'] = API::getInstance()->getDefaultCurrency();
+        $globalSettings['searchKeywordParametersGlobal'] = API::getInstance()->getSearchKeywordParametersGlobal();
+        $globalSettings['searchCategoryParametersGlobal'] = API::getInstance()->getSearchCategoryParametersGlobal();
+        $globalSettings['defaultTimezone'] = API::getInstance()->getDefaultTimezone();
+        $globalSettings['excludedIpsGlobal'] = API::getInstance()->getExcludedIpsGlobal();
+        $globalSettings['excludedQueryParametersGlobal'] = API::getInstance()->getExcludedQueryParametersGlobal();
+        $globalSettings['excludedUserAgentsGlobal'] = API::getInstance()->getExcludedUserAgentsGlobal();
+
+        return $response->getResponse($globalSettings);
     }
 
     /**
@@ -133,15 +122,15 @@ class Controller extends \Piwik\Plugin\ControllerAdmin
     {
         $idSite = Common::getRequestVar('idSite');
         Piwik::checkUserHasViewAccess($idSite);
-        $jsTag = Piwik::getJavascriptCode($idSite, SettingsPiwik::getPiwikUrl());
-        $view = new View('@SitesManager/displayJavascriptCode');
-        $this->setBasicVariablesView($view);
-        $view->idSite = $idSite;
-        $site = new Site($idSite);
-        $view->displaySiteName = $site->getName();
-        $view->jsTag = $jsTag;
+        $javascriptGenerator = new TrackerCodeGenerator();
+        $jsTag = $javascriptGenerator->generate($idSite, SettingsPiwik::getPiwikUrl());
+        $site  = new Site($idSite);
 
-        return $view->render();
+        return $this->renderTemplate('displayJavascriptCode', array(
+            'idSite' => $idSite,
+            'displaySiteName' => $site->getName(),
+            'jsTag' => $jsTag
+        ));
     }
 
     /**
@@ -154,5 +143,25 @@ class Controller extends \Piwik\Plugin\ControllerAdmin
         header('Content-type: text/php');
         header('Content-Disposition: attachment; filename="' . $filename . '"');
         return file_get_contents($path . $filename);
+    }
+
+    public function siteWithoutData()
+    {
+        $javascriptGenerator = new TrackerCodeGenerator();
+        $piwikUrl = Url::getCurrentUrlWithoutFileName();
+
+        if (!$this->site) {
+            throw new UnexpectedWebsiteFoundException('Invalid site ' . $this->idSite);
+        }
+
+        return $this->renderTemplate('siteWithoutData', array(
+            'siteName'     => $this->site->getName(),
+            'trackingHelp' => $this->renderTemplate('_displayJavascriptCode', array(
+                'displaySiteName' => Common::unsanitizeInputValue($this->site->getName()),
+                'jsTag'           => $javascriptGenerator->generate($this->idSite, $piwikUrl),
+                'idSite'          => $this->idSite,
+                'piwikUrl'        => $piwikUrl,
+            )),
+        ));
     }
 }

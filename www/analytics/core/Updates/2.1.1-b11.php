@@ -1,27 +1,27 @@
 <?php
 /**
- * Piwik - Open source web analytics
+ * Piwik - free/libre analytics platform
  *
  * @link http://piwik.org
  * @license http://www.gnu.org/licenses/gpl-3.0.html GPL v3 or later
  */
 namespace Piwik\Updates;
 
-use Piwik\Db;
-use Piwik\Updates;
-use Piwik\Updater;
-use Piwik\Date;
-use Piwik\Segment;
 use Piwik\ArchiveProcessor\Rules;
-use Piwik\Db\BatchInsert;
 use Piwik\DataAccess\ArchiveWriter;
+use Piwik\Date;
+use Piwik\Db\BatchInsert;
+use Piwik\Db;
 use Piwik\Plugins\VisitFrequency\API as VisitFrequencyApi;
+use Piwik\Segment;
+use Piwik\Updater;
+use Piwik\Updates;
 
 /**
  */
 class Updates_2_1_1_b11 extends Updates
 {
-    static function update()
+    public function doUpdate(Updater $updater)
     {
         $returningMetrics = array(
             'nb_visits_returning',
@@ -41,17 +41,14 @@ class Updates_2_1_1_b11 extends Updates
         // returning visit segment
         foreach ($archiveNumericTables as $table) {
             // get archives w/ *._returning
-            $sql = "SELECT idarchive, idsite, period, date1, date2
-                      FROM $table
-                     WHERE name IN ('" . implode("','", $returningMetrics) . "')
-                  GROUP BY idarchive";
+            $sql = "SELECT idarchive, idsite, period, date1, date2 FROM $table
+                    WHERE name IN ('" . implode("','", $returningMetrics) . "')
+                    GROUP BY idarchive";
             $idArchivesWithReturning = Db::fetchAll($sql);
 
             // get archives for visitssummary returning visitor segment
-            $sql = "SELECT idarchive, idsite, period, date1, date2
-                      FROM $table
-                     WHERE name = ?
-                  GROUP BY idarchive";
+            $sql = "SELECT idarchive, idsite, period, date1, date2 FROM $table
+                    WHERE name = ?  GROUP BY idarchive";
             $visitSummaryReturningSegmentDone = Rules::getDoneFlagArchiveContainsOnePlugin(
                 new Segment(VisitFrequencyApi::RETURNING_VISITOR_SEGMENT, $idSites = array()), 'VisitsSummary');
             $idArchivesWithVisitReturningSegment = Db::fetchAll($sql, array($visitSummaryReturningSegmentDone));
@@ -97,7 +94,7 @@ class Updates_2_1_1_b11 extends Updates
                     foreach ($missingIdArchives as $missingIdArchive) {
                         $params[] = array_values($missingIdArchive);
                     }
-                    BatchInsert::tableInsertBatch($table, array_keys(reset($missingIdArchives)), $params, $throwException = false);
+                    BatchInsert::tableInsertBatch($table, array_keys(reset($missingIdArchives)), $params, $throwException = false, $charset = 'latin1');
                 } catch (\Exception $ex) {
                     Updater::handleQueryError($ex, "<batch insert>", false, __FILE__);
                 }

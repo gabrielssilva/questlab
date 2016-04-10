@@ -1,6 +1,6 @@
 <?php
 /**
- * Piwik - Open source web analytics
+ * Piwik - free/libre analytics platform
  *
  * @link http://piwik.org
  * @license http://www.gnu.org/licenses/gpl-3.0.html GPL v3 or later
@@ -10,11 +10,10 @@
 namespace Piwik\Plugins\CustomVariables\Commands;
 
 use Piwik\Plugin\ConsoleCommand;
-use Piwik\Tracker\Cache;
 use Piwik\Plugins\CustomVariables\Model;
+use Piwik\Tracker\Cache;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 
 /**
@@ -49,31 +48,26 @@ class SetNumberOfCustomVariables extends ConsoleCommand
             return;
         }
 
-
         $output->writeln('');
         $output->writeln(sprintf('Configuring Piwik for %d custom variables', $numVarsToSet));
-
 
         foreach (Model::getScopes() as $scope) {
             $this->printChanges($scope, $numVarsToSet, $output);
         }
 
-        if (!$this->confirmChange($output)) {
+        if ($input->isInteractive() && !$this->confirmChange($output)) {
             return;
         }
-
 
         $output->writeln('');
         $output->writeln('Starting to apply changes');
         $output->writeln('');
-
 
         $this->progress = $this->initProgress($numChangesToPerform, $output);
 
         foreach (Model::getScopes() as $scope) {
             $this->performChange($scope, $numVarsToSet, $output);
         }
-
 
         Cache::clearCacheGeneral();
         $this->progress->finish();
@@ -204,7 +198,7 @@ class SetNumberOfCustomVariables extends ConsoleCommand
             $numCurrentCustomVars = $model->getCurrentNumCustomVars();
             $numChangesToPerform += $this->getAbsoluteDifference($numCurrentCustomVars, $numVarsToSet);
         }
-        
+
         return $numChangesToPerform;
     }
 }

@@ -6,5 +6,5 @@ syntax: regexp
 ^seminarymedia/*
 ^seminaryuploads/*
 ^www/analytics/config/config.ini.php*
-^www/analytics/temp/*
+^www/analytics/tmp/*
 ^app/lib/phpqrcode/cache/*

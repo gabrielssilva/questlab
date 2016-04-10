@@ -1,6 +1,6 @@
 <?php
 /**
- * Piwik - Open source web analytics
+ * Piwik - free/libre analytics platform
  *
  * @link http://piwik.org
  * @license http://www.gnu.org/licenses/gpl-3.0.html GPL v3 or later
@@ -90,7 +90,7 @@ class Pecl extends GeoIp
         // get isp data if the isp database is available
         if (self::isISPDatabaseAvailable()) {
             $isp = @geoip_isp_by_name($ip);
-            if ($ip !== false) {
+            if ($isp !== false) {
                 $result[self::ISP_KEY] = utf8_encode($isp);
             }
         }
@@ -218,7 +218,7 @@ class Pecl extends GeoIp
         $desc = Piwik::translate('UserCountry_GeoIpLocationProviderDesc_Pecl1') . '<br/><br/>'
             . Piwik::translate('UserCountry_GeoIpLocationProviderDesc_Pecl2');
         $installDocs = '<em>'
-            . '<a target="_blank" href="http://piwik.org/faq/how-to/#faq_164">'
+            . '<a rel="noreferrer"  target="_blank" href="http://piwik.org/faq/how-to/#faq_164">'
             . Piwik::translate('UserCountry_HowToInstallGeoIpPecl')
             . '</a>'
             . '</em>';

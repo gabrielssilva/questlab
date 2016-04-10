@@ -1,6 +1,6 @@
 <?php
 /**
- * Piwik - Open source web analytics
+ * Piwik - free/libre analytics platform
  *
  * @link http://piwik.org
  * @license http://www.gnu.org/licenses/gpl-3.0.html GPL v3 or later
@@ -9,13 +9,40 @@
 namespace Piwik\Plugins\Events;
 
 use Piwik\Archive;
-use Piwik\DataTable;
 use Piwik\DataTable\Row;
+use Piwik\DataTable;
 use Piwik\Metrics;
 use Piwik\Piwik;
 
 /**
- * Custom Events API
+ * The Events API lets you request reports about your users' Custom Events.
+ *
+ * Events are tracked using the Javascript Tracker trackEvent() function, or using the [Tracking HTTP API](http://developer.piwik.org/api-reference/tracking-api).
+ *
+ * <br/>An event is defined by an event category (Videos, Music, Games...),
+ * an event action (Play, Pause, Duration, Add Playlist, Downloaded, Clicked...),
+ * and an optional event name (a movie name, a song title, etc.) and an optional numeric value.
+ *
+ * <br/>This API exposes the following Custom Events reports: `getCategory` lists the top Event Categories,
+ * `getAction` lists the top Event Actions, `getName` lists the top Event Names.
+ *
+ * <br/>These Events report define the following metrics: nb_uniq_visitors, nb_visits, nb_events.
+ * If you define values for your events, you can expect to see the following metrics: nb_events_with_value,
+ * sum_event_value, min_event_value, max_event_value, avg_event_value
+ *
+ * <br/>The Events.get* reports can be used with an optional `&secondaryDimension` parameter.
+ * Secondary dimension is the dimension used in the sub-table of the Event report you are requesting.
+ *
+ * <br/>Here are the possible values of `secondaryDimension`: <ul>
+ * <li>For `Events.getCategory` you can set `secondaryDimension` to `eventAction` or `eventName`.</li>
+ * <li>For `Events.getAction` you can set `secondaryDimension` to `eventName` or `eventCategory`.</li>
+ * <li>For `Events.getName` you can set `secondaryDimension` to `eventAction` or `eventCategory`.</li>
+ * </ul>
+ *
+ * <br/>For example, to request all Custom Events Categories, and for each, the top Event actions,
+ * you would request: `method=Events.getCategory&secondaryDimension=eventAction&flat=1`.
+ * You may also omit `&flat=1` in which case, to get top Event actions for one Event category,
+ * use `method=Events.getActionFromCategoryId` passing it the `&idSubtable=` of this Event category.
  *
  * @package Events
  * @method static \Piwik\Plugins\Events\API getInstance()
@@ -67,12 +94,11 @@ class API extends \Piwik\Plugin\API
      */
     public function getDefaultSecondaryDimension($apiMethod)
     {
-        if(isset($this->defaultMappingApiToSecondaryDimension[$apiMethod])) {
+        if (isset($this->defaultMappingApiToSecondaryDimension[$apiMethod])) {
             return $this->defaultMappingApiToSecondaryDimension[$apiMethod];
         }
         return false;
     }
-
 
     protected function getRecordNameForAction($apiMethod, $secondaryDimension = false)
     {
@@ -80,11 +106,11 @@ class API extends \Piwik\Plugin\API
             $secondaryDimension = $this->getDefaultSecondaryDimension($apiMethod);
         }
         $record = $this->mappingApiToRecord[$apiMethod];
-        if(!is_array($record)) {
+        if (!is_array($record)) {
             return $record;
         }
         // when secondaryDimension is incorrectly set
-        if(empty($record[$secondaryDimension])) {
+        if (empty($record[$secondaryDimension])) {
             return key($record);
         }
         return $record[$secondaryDimension];
@@ -98,7 +124,7 @@ class API extends \Piwik\Plugin\API
     public function getSecondaryDimensions($apiMethod)
     {
         $records = $this->mappingApiToRecord[$apiMethod];
-        if(!is_array($records)) {
+        if (!is_array($records)) {
             return false;
         }
         return array_keys($records);
@@ -122,29 +148,44 @@ class API extends \Piwik\Plugin\API
         }
     }
 
-    protected function getDataTable($name, $idSite, $period, $date, $segment, $expanded = false, $idSubtable = null, $secondaryDimension = false)
+    protected function getDataTable($name, $idSite, $period, $date, $segment, $expanded = false, $idSubtable = null, $secondaryDimension = false, $flat = false)
     {
         Piwik::checkUserHasViewAccess($idSite);
         $this->checkSecondaryDimension($name, $secondaryDimension);
         $recordName = $this->getRecordNameForAction($name, $secondaryDimension);
-        $dataTable = Archive::getDataTableFromArchive($recordName, $idSite, $period, $date, $segment, $expanded, $idSubtable);
-        $this->filterDataTable($dataTable);
+
+        $dataTable = Archive::createDataTableFromArchive($recordName, $idSite, $period, $date, $segment, $expanded, $flat, $idSubtable);
+
+        if ($flat) {
+            $dataTable->filterSubtables('Piwik\Plugins\Events\DataTable\Filter\ReplaceEventNameNotSet');
+        } else {
+            $dataTable->filter('AddSegmentValue', array(function ($label) {
+                if ($label === Archiver::EVENT_NAME_NOT_SET) {
+                    return false;
+                }
+
+                return $label;
+            }));
+        }
+
+        $dataTable->filter('Piwik\Plugins\Events\DataTable\Filter\ReplaceEventNameNotSet');
+
         return $dataTable;
     }
 
-    public function getCategory($idSite, $period, $date, $segment = false, $expanded = false, $secondaryDimension = false)
+    public function getCategory($idSite, $period, $date, $segment = false, $expanded = false, $secondaryDimension = false, $flat = false)
     {
-        return $this->getDataTable(__FUNCTION__, $idSite, $period, $date, $segment, $expanded, $idSubtable = false, $secondaryDimension);
+        return $this->getDataTable(__FUNCTION__, $idSite, $period, $date, $segment, $expanded, $idSubtable = false, $secondaryDimension, $flat);
     }
 
-    public function getAction($idSite, $period, $date, $segment = false, $expanded = false, $secondaryDimension = false)
+    public function getAction($idSite, $period, $date, $segment = false, $expanded = false, $secondaryDimension = false, $flat = false)
     {
-        return $this->getDataTable(__FUNCTION__, $idSite, $period, $date, $segment, $expanded, $idSubtable = false, $secondaryDimension);
+        return $this->getDataTable(__FUNCTION__, $idSite, $period, $date, $segment, $expanded, $idSubtable = false, $secondaryDimension, $flat);
     }
 
-    public function getName($idSite, $period, $date, $segment = false, $expanded = false, $secondaryDimension = false)
+    public function getName($idSite, $period, $date, $segment = false, $expanded = false, $secondaryDimension = false, $flat = false)
     {
-        return $this->getDataTable(__FUNCTION__, $idSite, $period, $date, $segment, $expanded, $idSubtable = false, $secondaryDimension);
+        return $this->getDataTable(__FUNCTION__, $idSite, $period, $date, $segment, $expanded, $idSubtable = false, $secondaryDimension, $flat);
     }
 
     public function getActionFromCategoryId($idSite, $period, $date, $idSubtable, $segment = false)
@@ -175,30 +216,5 @@ class API extends \Piwik\Plugin\API
     public function getCategoryFromNameId($idSite, $period, $date, $idSubtable, $segment = false)
     {
         return $this->getDataTable(__FUNCTION__, $idSite, $period, $date, $segment, $expanded = false, $idSubtable);
-    }
-
-    /**
-     * @param DataTable $dataTable
-     */
-    protected function filterDataTable($dataTable)
-    {
-        $dataTable->filter('Sort', array(Metrics::INDEX_NB_VISITS));
-        $dataTable->queueFilter('ReplaceColumnNames');
-        $dataTable->queueFilter('ReplaceSummaryRowLabel');
-        $dataTable->filter(function (DataTable $table) {
-            $row = $table->getRowFromLabel(Archiver::EVENT_NAME_NOT_SET);
-            if ($row) {
-                $row->setColumn('label', Piwik::translate('General_NotDefined', Piwik::translate('Events_EventName')));
-            }
-        });
-
-        // add processed metric avg_event_value
-        $dataTable->queueFilter('ColumnCallbackAddColumnQuotient',
-            array('avg_event_value',
-                  'sum_event_value',
-                  'nb_events_with_value',
-                  $precision = 2,
-                  $shouldSkipRows = true)
-        );
     }
 }

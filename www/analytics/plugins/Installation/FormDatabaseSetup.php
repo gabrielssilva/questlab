@@ -1,6 +1,6 @@
 <?php
 /**
- * Piwik - Open source web analytics
+ * Piwik - free/libre analytics platform
  *
  * @link http://piwik.org
  * @license http://www.gnu.org/licenses/gpl-3.0.html GPL v3 or later
@@ -13,8 +13,8 @@ use HTML_QuickForm2_DataSource_Array;
 use HTML_QuickForm2_Factory;
 use HTML_QuickForm2_Rule;
 use Piwik\Config;
-use Piwik\Db\Adapter;
 use Piwik\Db;
+use Piwik\Db\Adapter;
 use Piwik\DbHelper;
 use Piwik\Filesystem;
 use Piwik\Piwik;
@@ -34,9 +34,7 @@ class FormDatabaseSetup extends QuickForm2
     function init()
     {
         HTML_QuickForm2_Factory::registerRule('checkValidFilename', 'Piwik\Plugins\Installation\FormDatabaseSetup_Rule_checkValidFilename');
-
-        $checkUserPrivilegesClass = 'Piwik\Plugins\Installation\Rule_checkUserPrivileges';
-        HTML_QuickForm2_Factory::registerRule('checkUserPrivileges', $checkUserPrivilegesClass);
+        HTML_QuickForm2_Factory::registerRule('checkUserPrivileges', 'Piwik\Plugins\Installation\Rule_checkUserPrivileges');
 
         $availableAdapters = Adapter::getAdapters();
         $adapters = array();
@@ -73,11 +71,15 @@ class FormDatabaseSetup extends QuickForm2
             ->loadOptions($adapters)
             ->addRule('required', Piwik::translate('General_Required', Piwik::translate('Installation_DatabaseSetupAdapter')));
 
-        $this->addElement('submit', 'submit', array('value' => Piwik::translate('General_Next') . ' »', 'class' => 'submit'));
+        $this->addElement('submit', 'submit', array('value' => Piwik::translate('General_Next') . ' »', 'class' => 'btn btn-lg'));
+
+        $defaultDatabaseType = Config::getInstance()->database['type'];
+        $this->addElement( 'hidden', 'type')->setLabel('Database engine');
 
         // default values
         $this->addDataSource(new HTML_QuickForm2_DataSource_Array(array(
                                                                        'host'          => '127.0.0.1',
+                                                                       'type'          => $defaultDatabaseType,
                                                                        'tables_prefix' => 'piwik_',
                                                                   )));
     }
@@ -108,7 +110,7 @@ class FormDatabaseSetup extends QuickForm2
             'adapter'       => $adapter,
             'port'          => $port,
             'schema'        => Config::getInstance()->database['schema'],
-            'type'          => Config::getInstance()->database['type']
+            'type'          => $this->getSubmitValue('type')
         );
 
         if (($portIndex = strpos($dbInfos['host'], '/')) !== false) {

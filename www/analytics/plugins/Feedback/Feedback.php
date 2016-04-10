@@ -1,15 +1,12 @@
 <?php
 /**
- * Piwik - Open source web analytics
+ * Piwik - free/libre analytics platform
  *
  * @link http://piwik.org
  * @license http://www.gnu.org/licenses/gpl-3.0.html GPL v3 or later
  *
  */
 namespace Piwik\Plugins\Feedback;
-use Piwik\Menu\MenuTop;
-use Piwik\Piwik;
-
 
 /**
  *
@@ -18,42 +15,28 @@ class Feedback extends \Piwik\Plugin
 {
 
     /**
-     * @see Piwik\Plugin::getListHooksRegistered
+     * @see Piwik\Plugin::registerEvents
      */
-    public function getListHooksRegistered()
+    public function registerEvents()
     {
         return array(
             'AssetManager.getStylesheetFiles'        => 'getStylesheetFiles',
             'AssetManager.getJavaScriptFiles'        => 'getJsFiles',
-            'Menu.Top.addItems'                      => 'addTopMenu',
             'Translate.getClientSideTranslationKeys' => 'getClientSideTranslationKeys'
-        );
-    }
-
-    public function addTopMenu()
-    {
-        MenuTop::addEntry(
-            'General_Help',
-            array('module' => 'Feedback', 'action' => 'index', 'segment' => false),
-            true,
-            $order = 20,
-            $isHTML = false,
-            $tooltip = Piwik::translate('Feedback_TopLinkTooltip')
         );
     }
 
     public function getStylesheetFiles(&$stylesheets)
     {
         $stylesheets[] = "plugins/Feedback/stylesheets/feedback.less";
-
-        $stylesheets[] = "plugins/Feedback/angularjs/ratefeature/ratefeature.less";
+        $stylesheets[] = "plugins/Feedback/angularjs/ratefeature/ratefeature.directive.less";
     }
 
     public function getJsFiles(&$jsFiles)
     {
-        $jsFiles[] = "plugins/Feedback/angularjs/ratefeature/ratefeature-model.js";
-        $jsFiles[] = "plugins/Feedback/angularjs/ratefeature/ratefeature-controller.js";
-        $jsFiles[] = "plugins/Feedback/angularjs/ratefeature/ratefeature-directive.js";
+        $jsFiles[] = "plugins/Feedback/angularjs/ratefeature/ratefeature-model.service.js";
+        $jsFiles[] = "plugins/Feedback/angularjs/ratefeature/ratefeature.controller.js";
+        $jsFiles[] = "plugins/Feedback/angularjs/ratefeature/ratefeature.directive.js";
     }
 
     public function getClientSideTranslationKeys(&$translationKeys)
@@ -66,5 +49,6 @@ class Feedback extends \Piwik\Plugin
         $translationKeys[] = 'Feedback_SendFeedback';
         $translationKeys[] = 'Feedback_RateFeatureSendFeedbackInformation';
         $translationKeys[] = 'General_Ok';
+        $translationKeys[] = 'General_Cancel';
     }
 }

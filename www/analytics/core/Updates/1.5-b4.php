@@ -1,6 +1,6 @@
 <?php
 /**
- * Piwik - Open source web analytics
+ * Piwik - free/libre analytics platform
  *
  * @link http://piwik.org
  * @license http://www.gnu.org/licenses/gpl-3.0.html GPL v3 or later
@@ -17,16 +17,16 @@ use Piwik\Updates;
  */
 class Updates_1_5_b4 extends Updates
 {
-    static function getSql()
+    public function getMigrationQueries(Updater $updater)
     {
         return array(
             'ALTER TABLE `' . Common::prefixTable('site') . '`
-				 ADD ecommerce TINYINT DEFAULT 0' => false,
+				 ADD ecommerce TINYINT DEFAULT 0' => 1060,
         );
     }
 
-    static function update()
+    public function doUpdate(Updater $updater)
     {
-        Updater::updateDatabase(__FILE__, self::getSql());
+        $updater->executeMigrationQueries(__FILE__, $this->getMigrationQueries($updater));
     }
 }

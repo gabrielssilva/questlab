@@ -1,6 +1,6 @@
 <?php
 /**
- * Piwik - Open source web analytics
+ * Piwik - free/libre analytics platform
  *
  * @link http://piwik.org
  * @license http://www.gnu.org/licenses/gpl-3.0.html GPL v3 or later
@@ -9,17 +9,14 @@
 namespace Piwik\Plugins\CoreUpdater;
 
 use Exception;
+use Piwik\API\ResponseBuilder;
 use Piwik\Common;
 use Piwik\Filesystem;
 use Piwik\FrontController;
 use Piwik\Piwik;
-use Piwik\ScheduledTask;
-use Piwik\ScheduledTime;
 use Piwik\UpdateCheck;
-use Piwik\Updater;
-use Piwik\UpdaterErrorException;
+use Piwik\Updater as PiwikCoreUpdater;
 use Piwik\Version;
-use Piwik\Access;
 
 /**
  *
@@ -27,101 +24,30 @@ use Piwik\Access;
 class CoreUpdater extends \Piwik\Plugin
 {
     /**
-     * @see Piwik\Plugin::getListHooksRegistered
+     * @see Piwik\Plugin::registerEvents
      */
-    public function getListHooksRegistered()
+    public function registerEvents()
     {
-        $hooks = array(
+        return array(
             'Request.dispatchCoreAndPluginUpdatesScreen' => 'dispatch',
             'Platform.initialized'                       => 'updateCheck',
-            'TaskScheduler.getScheduledTasks'            => 'getScheduledTasks',
         );
-        return $hooks;
     }
 
-    public function getScheduledTasks(&$tasks)
+    /**
+     * @deprecated
+     */
+    public static function updateComponents(PiwikCoreUpdater $updater, $componentsWithUpdateFile)
     {
-        $sendUpdateNotification = new ScheduledTask($this,
-            'sendNotificationIfUpdateAvailable',
-            null,
-            ScheduledTime::factory('daily'),
-            ScheduledTask::LOWEST_PRIORITY);
-        $tasks[] = $sendUpdateNotification;
+        return $updater->updateComponents($componentsWithUpdateFile);
     }
 
-    public function sendNotificationIfUpdateAvailable()
+    /**
+     * @deprecated
+     */
+    public static function getComponentUpdates(PiwikCoreUpdater $updater)
     {
-        $coreUpdateCommunication = new UpdateCommunication();
-        if ($coreUpdateCommunication->isEnabled()) {
-            $coreUpdateCommunication->sendNotificationIfUpdateAvailable();
-        }
-    }
-
-    public static function updateComponents(Updater $updater, $componentsWithUpdateFile)
-    {
-        $warnings = array();
-        $errors   = array();
-        $deactivatedPlugins = array();
-        $coreError = false;
-        
-        if (!empty($componentsWithUpdateFile)) {
-            $currentAccess      = Access::getInstance();
-            $hasSuperUserAccess = $currentAccess->hasSuperUserAccess();
-    
-            if (!$hasSuperUserAccess) {
-                $currentAccess->setSuperUserAccess(true);
-            }
-            
-            // if error in any core update, show message + help message + EXIT
-            // if errors in any plugins updates, show them on screen, disable plugins that errored + CONTINUE
-            // if warning in any core update or in any plugins update, show message + CONTINUE
-            // if no error or warning, success message + CONTINUE
-            foreach ($componentsWithUpdateFile as $name => $filenames) {
-                try {
-                    $warnings = array_merge($warnings, $updater->update($name));
-                } catch (UpdaterErrorException $e) {
-                    $errors[] = $e->getMessage();
-                    if ($name == 'core') {
-                        $coreError = true;
-                        break;
-                    } else {
-                        \Piwik\Plugin\Manager::getInstance()->deactivatePlugin($name);
-                        $deactivatedPlugins[] = $name;
-                    }
-                }
-            }
-            
-            if (!$hasSuperUserAccess) {
-                $currentAccess->setSuperUserAccess(false);
-            }
-        }
-
-        Filesystem::deleteAllCacheOnUpdate();
-
-        $result = array(
-            'warnings'  => $warnings,
-            'errors'    => $errors,
-            'coreError' => $coreError,
-            'deactivatedPlugins' => $deactivatedPlugins
-        );
-
-        return $result;
-    }
-
-    public static function getComponentUpdates(Updater $updater)
-    {
-        $updater->addComponentToCheck('core', Version::VERSION);
-        $plugins = \Piwik\Plugin\Manager::getInstance()->getLoadedPlugins();
-        foreach ($plugins as $pluginName => $plugin) {
-            $updater->addComponentToCheck($pluginName, $plugin->getVersion());
-        }
-
-        $componentsWithUpdateFile = $updater->getComponentsWithUpdateFile();
-        if (count($componentsWithUpdateFile) == 0 && !$updater->hasNewVersion('core')) {
-            return null;
-        }
-
-        return $componentsWithUpdateFile;
+        return $updater->getComponentUpdates();
     }
 
     public function dispatch()
@@ -129,13 +55,12 @@ class CoreUpdater extends \Piwik\Plugin
         $module = Common::getRequestVar('module', '', 'string');
         $action = Common::getRequestVar('action', '', 'string');
 
-        $updater = new Updater();
-        $updater->addComponentToCheck('core', Version::VERSION);
-        $updates = $updater->getComponentsWithNewVersion();
+        $updater = new PiwikCoreUpdater();
+        $updates = $updater->getComponentsWithNewVersion(array('core' => Version::VERSION));
         if (!empty($updates)) {
             Filesystem::deleteAllCacheOnUpdate();
         }
-        if (self::getComponentUpdates($updater) !== null
+        if ($updater->getComponentUpdates() !== null
             && $module != 'CoreUpdater'
             // Proxy module is used to redirect users to piwik.org, should still work when Piwik must be updated
             && $module != 'Proxy'
@@ -147,6 +72,15 @@ class CoreUpdater extends \Piwik\Plugin
             if (FrontController::shouldRethrowException()) {
                 throw new Exception("Piwik and/or some plugins have been upgraded to a new version. \n" .
                     "--> Please run the update process first. See documentation: http://piwik.org/docs/update/ \n");
+            } elseif ($module === 'API')  {
+
+                $outputFormat = strtolower(Common::getRequestVar('format', 'xml', 'string', $_GET + $_POST));
+                $response = new ResponseBuilder($outputFormat);
+                $e = new Exception('Database Upgrade Required. Your Piwik database is out-of-date, and must be upgraded before you can continue.');
+                echo $response->getResponseException($e);
+                Common::sendResponseCode(503);
+                exit;
+
             } else {
                 Piwik::redirectToModule('CoreUpdater');
             }

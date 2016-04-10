@@ -1,6 +1,6 @@
 <?php
 /**
- * Piwik - Open source web analytics
+ * Piwik - free/libre analytics platform
  *
  * @link http://piwik.org
  * @license http://www.gnu.org/licenses/gpl-3.0.html GPL v3 or later
@@ -10,7 +10,6 @@ namespace Piwik\Plugins\UsersManager;
 
 use Exception;
 use Piwik\Db;
-use Piwik\Menu\MenuAdmin;
 use Piwik\Option;
 use Piwik\Piwik;
 use Piwik\SettingsPiwik;
@@ -22,21 +21,21 @@ use Piwik\SettingsPiwik;
 class UsersManager extends \Piwik\Plugin
 {
     const PASSWORD_MIN_LENGTH = 6;
-    const PASSWORD_MAX_LENGTH = 26;
+    const PASSWORD_MAX_LENGTH = 80;
 
     /**
-     * @see Piwik\Plugin::getListHooksRegistered
+     * @see Piwik\Plugin::registerEvents
      */
-    public function getListHooksRegistered()
+    public function registerEvents()
     {
         return array(
-            'Menu.Admin.addItems'                    => 'addMenu',
             'AssetManager.getJavaScriptFiles'        => 'getJsFiles',
             'AssetManager.getStylesheetFiles'        => 'getStylesheetFiles',
             'SitesManager.deleteSite.end'            => 'deleteSite',
             'Tracker.Cache.getSiteAttributes'        => 'recordAdminUsersInCache',
             'Translate.getClientSideTranslationKeys' => 'getClientSideTranslationKeys',
-            'Platform.initialized'                   => 'onPlatformInitialized'
+            'Platform.initialized'                   => 'onPlatformInitialized',
+            'CronArchive.getTokenAuth'               => 'getCronArchiveTokenAuth'
         );
     }
 
@@ -64,7 +63,18 @@ class UsersManager extends \Piwik\Plugin
         foreach ($users as $user) {
             $tokens[] = $user['token_auth'];
         }
+
         $attributes['admin_token_auth'] = $tokens;
+    }
+
+    public function getCronArchiveTokenAuth(&$tokens)
+    {
+        $model      = new Model();
+        $superUsers = $model->getUsersHavingSuperUserAccess();
+
+        foreach($superUsers as $superUser) {
+            $tokens[] = $superUser['token_auth'];
+        }
     }
 
     /**
@@ -84,29 +94,15 @@ class UsersManager extends \Piwik\Plugin
     {
         $jsFiles[] = "plugins/UsersManager/javascripts/usersManager.js";
         $jsFiles[] = "plugins/UsersManager/javascripts/usersSettings.js";
+        $jsFiles[] = "plugins/UsersManager/javascripts/giveViewAccess.js";
     }
 
     /**
      * Get CSS files
      */
-    function getStylesheetFiles(&$stylesheets)
+    public function getStylesheetFiles(&$stylesheets)
     {
         $stylesheets[] = "plugins/UsersManager/stylesheets/usersManager.less";
-    }
-
-    /**
-     * Add admin menu items
-     */
-    function addMenu()
-    {
-        MenuAdmin::getInstance()->add('CoreAdminHome_MenuManage', 'UsersManager_MenuUsers',
-            array('module' => 'UsersManager', 'action' => 'index'),
-            Piwik::isUserHasSomeAdminAccess(),
-            $order = 2);
-        MenuAdmin::getInstance()->add('CoreAdminHome_MenuManage', 'UsersManager_MenuUserSettings',
-            array('module' => 'UsersManager', 'action' => 'userSettings'),
-            Piwik::isUserHasSomeViewAccess(),
-            $order = 3);
     }
 
     /**
@@ -122,15 +118,35 @@ class UsersManager extends \Piwik\Plugin
         ) {
             return true;
         }
+
         $l = strlen($input);
+
         return $l >= self::PASSWORD_MIN_LENGTH && $l <= self::PASSWORD_MAX_LENGTH;
     }
 
     public static function checkPassword($password)
     {
+        /**
+         * Triggered before core password validator check password.
+         *
+         * This event exists for enable option to create custom password validation rules.
+         * It can be used to validate password (length, used chars etc) and to notify about checking password.
+         *
+         * **Example**
+         *
+         *     Piwik::addAction('UsersManager.checkPassword', function ($password) {
+         *         if (strlen($password) < 10) {
+         *             throw new Exception('Password is too short.');
+         *         }
+         *     });
+         *
+         * @param string $password Checking password in plain text.
+         */
+        Piwik::postEvent('UsersManager.checkPassword', array($password));
+
         if (!self::isValidPasswordString($password)) {
             throw new Exception(Piwik::translate('UsersManager_ExceptionInvalidPassword', array(self::PASSWORD_MIN_LENGTH,
-                                                                                                        self::PASSWORD_MAX_LENGTH)));
+                self::PASSWORD_MAX_LENGTH)));
         }
     }
 
@@ -139,6 +155,20 @@ class UsersManager extends \Piwik\Plugin
         // if change here, should also edit the installation process
         // to change how the root pwd is saved in the config file
         return md5($password);
+    }
+
+    /**
+     * Checks the password hash length. Used as a sanity check.
+     *
+     * @param string $passwordHash The password hash to check.
+     * @param string $exceptionMessage Message of the exception thrown.
+     * @throws Exception if the password hash length is incorrect.
+     */
+    public static function checkPasswordHash($passwordHash, $exceptionMessage)
+    {
+        if (strlen($passwordHash) != 32) {  // MD5 hash length
+            throw new Exception($exceptionMessage);
+        }
     }
 
     public function getClientSideTranslationKeys(&$translationKeys)
@@ -150,5 +180,7 @@ class UsersManager extends \Piwik\Plugin
         $translationKeys[] = "UsersManager_ConfirmGrantSuperUserAccess";
         $translationKeys[] = "UsersManager_ConfirmProhibitOtherUsersSuperUserAccess";
         $translationKeys[] = "UsersManager_ConfirmProhibitMySuperUserAccess";
+        $translationKeys[] = "UsersManager_ExceptionUserHasViewAccessAlready";
+        $translationKeys[] = "UsersManager_ExceptionNoValueForUsernameOrEmail";
     }
 }

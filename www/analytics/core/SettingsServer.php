@@ -1,6 +1,6 @@
 <?php
 /**
- * Piwik - Open source web analytics
+ * Piwik - free/libre analytics platform
  *
  * @link http://piwik.org
  * @license http://www.gnu.org/licenses/gpl-3.0.html GPL v3 or later
@@ -16,11 +16,10 @@ namespace Piwik;
 class SettingsServer
 {
     /**
-     * Returns true if the current script execution was triggered by the cron archiving
-     * script (**misc/cron/archive.php**).
+     * Returns true if the current script execution was triggered by the cron archiving script.
      *
      * Helpful for error handling: directly throw error without HTML (eg. when DB is down).
-     * 
+     *
      * @return bool
      * @api
      */
@@ -41,6 +40,21 @@ class SettingsServer
         return !empty($GLOBALS['PIWIK_TRACKER_MODE']);
     }
 
+    /**
+     * Mark the current request as a Tracker API request
+     */
+    public static function setIsTrackerApiRequest()
+    {
+        $GLOBALS['PIWIK_TRACKER_MODE'] = true;
+    }
+
+    /**
+     * Set the current request is not a tracker API request
+     */
+    public static function setIsNotTrackerApiRequest()
+    {
+        $GLOBALS['PIWIK_TRACKER_MODE'] = false;
+    }
 
     /**
      * Returns `true` if running on Microsoft IIS 7 (or above), `false` if otherwise.
@@ -103,7 +117,7 @@ class SettingsServer
 
     /**
      * Returns `true` if the GD PHP extension is available, `false` if otherwise.
-     * 
+     *
      * _Note: ImageGraph and the sparkline report visualization depend on the GD extension._
      *
      * @return bool
@@ -113,9 +127,14 @@ class SettingsServer
     {
         static $gd = null;
         if (is_null($gd)) {
+            $gd = false;
+
             $extensions = @get_loaded_extensions();
-            $gd = in_array('gd', $extensions) && function_exists('imageftbbox');
+            if (is_array($extensions)) {
+                $gd = in_array('gd', $extensions) && function_exists('imageftbbox');
+            }
         }
+
         return $gd;
     }
 
@@ -133,7 +152,7 @@ class SettingsServer
         $minimumMemoryLimit = Config::getInstance()->General['minimum_memory_limit'];
 
         if (self::isArchivePhpTriggered()) {
-            // archive.php: no time limit, high memory limit
+            // core:archive command: no time limit, high memory limit
             self::setMaxExecutionTime(0);
             $minimumMemoryLimitWhenArchiving = Config::getInstance()->General['minimum_memory_limit_when_archiving'];
             if ($memoryLimit < $minimumMemoryLimitWhenArchiving) {

@@ -1,6 +1,6 @@
 <?php
 /**
- * Piwik - Open source web analytics
+ * Piwik - free/libre analytics platform
  *
  * @link http://piwik.org
  * @license http://www.gnu.org/licenses/gpl-3.0.html GPL v3 or later
@@ -9,6 +9,8 @@
 
 namespace Piwik\Plugins\CoreVisualizations\Visualizations\HtmlTable;
 
+use Piwik\DataTable;
+use Piwik\Metrics;
 use Piwik\Plugins\CoreVisualizations\Visualizations\HtmlTable;
 use Piwik\View;
 
@@ -18,7 +20,7 @@ use Piwik\View;
 class AllColumns extends HtmlTable
 {
     const ID = 'tableAllColumns';
-    const FOOTER_ICON       = 'plugins/Zeitgeist/images/table_more.png';
+    const FOOTER_ICON       = 'plugins/Morpheus/images/table_more.png';
     const FOOTER_ICON_TITLE = 'General_DisplayTableWithMoreMetrics';
 
     public function beforeRender()
@@ -36,11 +38,17 @@ class AllColumns extends HtmlTable
 
         $properties = $this->config;
 
-        $this->dataTable->filter(function ($dataTable) use ($properties) {
+        $this->dataTable->filter(function (DataTable $dataTable) use ($properties) {
             $columnsToDisplay = array('label', 'nb_visits');
 
-            if (in_array('nb_uniq_visitors', $dataTable->getColumns())) {
+            $columns = $dataTable->getColumns();
+
+            if (in_array('nb_uniq_visitors', $columns)) {
                 $columnsToDisplay[] = 'nb_uniq_visitors';
+            }
+
+            if (in_array('nb_users', $columns)) {
+                $columnsToDisplay[] = 'nb_users';
             }
 
             $columnsToDisplay = array_merge(
@@ -55,12 +63,5 @@ class AllColumns extends HtmlTable
 
             $properties->columns_to_display = $columnsToDisplay;
         });
-    }
-
-    public function afterGenericFiltersAreAppliedToLoadedDataTable()
-    {
-        $prettifyTime = array('\Piwik\MetricsFormatter', 'getPrettyTimeFromSeconds');
-
-        $this->dataTable->filter('ColumnCallbackReplace', array('avg_time_on_site', $prettifyTime));
     }
 }

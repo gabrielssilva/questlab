@@ -1,6 +1,6 @@
 <?php
 /**
- * Piwik - Open source web analytics
+ * Piwik - free/libre analytics platform
  *
  * @link http://piwik.org
  * @license http://www.gnu.org/licenses/gpl-3.0.html GPL v3 or later
@@ -9,7 +9,6 @@
 
 namespace Piwik\Archive;
 
-use Exception;
 use Piwik\Period;
 use Piwik\Segment;
 
@@ -36,22 +35,16 @@ class Parameters
      */
     private $segment;
 
-    /**
-     * @var bool
-     */
-    private $skipAggregationOfSubTables;
-
     public function getSegment()
     {
         return $this->segment;
     }
 
-    public function __construct($idSites, $periods, Segment $segment, $skipAggregationOfSubTables)
+    public function __construct($idSites, $periods, Segment $segment)
     {
         $this->idSites = $idSites;
         $this->periods = $periods;
         $this->segment = $segment;
-        $this->skipAggregationOfSubTables = $skipAggregationOfSubTables;
     }
 
     public function getPeriods()
@@ -63,11 +56,4 @@ class Parameters
     {
         return $this->idSites;
     }
-
-    public function isSkipAggregationOfSubTables()
-    {
-        return $this->skipAggregationOfSubTables;
-    }
-
 }
-

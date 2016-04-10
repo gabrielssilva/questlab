@@ -1,6 +1,6 @@
 <?php
 /**
- * Piwik - Open source web analytics
+ * Piwik - free/libre analytics platform
  *
  * @link http://piwik.org
  * @license http://www.gnu.org/licenses/gpl-3.0.html GPL v3 or later
@@ -17,18 +17,17 @@ use Piwik\Updates;
  */
 class Updates_1_9_b16 extends Updates
 {
-    static function isMajorUpdate()
+    public static function isMajorUpdate()
     {
         return true;
     }
 
-    static function getSql()
+    public function getMigrationQueries(Updater $updater)
     {
         return array(
             'ALTER TABLE  `' . Common::prefixTable('log_link_visit_action') . '`
 			CHANGE `idaction_url` `idaction_url` INT( 10 ) UNSIGNED NULL DEFAULT NULL'
             => false,
-
 
             'ALTER TABLE  `' . Common::prefixTable('log_visit') . '`
 			ADD visit_total_searches SMALLINT(5) UNSIGNED NOT NULL AFTER `visit_total_actions`'
@@ -46,9 +45,8 @@ class Updates_1_9_b16 extends Updates
         );
     }
 
-    static function update()
+    public function doUpdate(Updater $updater)
     {
-        Updater::updateDatabase(__FILE__, self::getSql());
+        $updater->executeMigrationQueries(__FILE__, $this->getMigrationQueries($updater));
     }
 }
-

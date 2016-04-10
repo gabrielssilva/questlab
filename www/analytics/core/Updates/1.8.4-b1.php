@@ -1,6 +1,6 @@
 <?php
 /**
- * Piwik - Open source web analytics
+ * Piwik - free/libre analytics platform
  *
  * @link http://piwik.org
  * @license http://www.gnu.org/licenses/gpl-3.0.html GPL v3 or later
@@ -18,12 +18,12 @@ use Piwik\Updates;
 class Updates_1_8_4_b1 extends Updates
 {
 
-    static function isMajorUpdate()
+    public static function isMajorUpdate()
     {
         return true;
     }
 
-    static function getSql()
+    public function getMigrationQueries(Updater $updater)
     {
         $action = Common::prefixTable('log_action');
         $duplicates = Common::prefixTable('log_action_duplicates');
@@ -78,7 +78,7 @@ class Updates_1_8_4_b1 extends Updates
             // grouping by name only would be case-insensitive, so we GROUP BY name,hash
             // ON (action.type = 1 AND canonical.hash = action.hash) will use index (type, hash)
             "   INSERT INTO `$duplicates` (
-				  SELECT 
+				  SELECT
 					action.idaction AS `before`,
 					canonical.idaction AS `after`
 				  FROM
@@ -176,11 +176,11 @@ class Updates_1_8_4_b1 extends Updates
         );
     }
 
-    static function update()
+    public function doUpdate(Updater $updater)
     {
         try {
             self::enableMaintenanceMode();
-            Updater::updateDatabase(__FILE__, self::getSql());
+            $updater->executeMigrationQueries(__FILE__, $this->getMigrationQueries($updater));
             self::disableMaintenanceMode();
         } catch (\Exception $e) {
             self::disableMaintenanceMode();

@@ -1,6 +1,6 @@
 <?php
 /**
- * Piwik - Open source web analytics
+ * Piwik - free/libre analytics platform
  *
  * @link http://piwik.org
  * @license http://www.gnu.org/licenses/gpl-3.0.html GPL v3 or later
@@ -8,12 +8,13 @@
  */
 namespace Piwik\Plugins\Installation;
 
+use Piwik\API\Request;
 use Piwik\Common;
 use Piwik\Config;
 use Piwik\FrontController;
-use Piwik\Menu\MenuAdmin;
 use Piwik\Piwik;
-use Piwik\Translate;
+use Piwik\Plugins\Installation\Exception\DatabaseConnectionFailedException;
+use Piwik\View as PiwikView;
 
 /**
  *
@@ -23,18 +24,38 @@ class Installation extends \Piwik\Plugin
     protected $installationControllerName = '\\Piwik\\Plugins\\Installation\\Controller';
 
     /**
-     * @see Piwik\Plugin::getListHooksRegistered
+     * @see Piwik\Plugin::registerEvents
      */
-    public function getListHooksRegistered()
+    public function registerEvents()
     {
         $hooks = array(
             'Config.NoConfigurationFile'      => 'dispatch',
             'Config.badConfigurationFile'     => 'dispatch',
+            'Db.cannotConnectToDb'            => 'displayDbConnectionMessage',
             'Request.dispatch'                => 'dispatchIfNotInstalledYet',
-            'Menu.Admin.addItems'             => 'addMenu',
             'AssetManager.getStylesheetFiles' => 'getStylesheetFiles',
         );
         return $hooks;
+    }
+
+    public function displayDbConnectionMessage($exception = null)
+    {
+        Common::sendResponseCode(500);
+
+        $errorMessage = $exception->getMessage();
+
+        if (Request::isApiRequest($_GET)) {
+            $ex = new DatabaseConnectionFailedException($errorMessage);
+            throw $ex;
+        }
+
+        $view = new PiwikView("@Installation/cannotConnectToDb");
+        $view->exceptionMessage = $errorMessage;
+
+        $ex = new DatabaseConnectionFailedException($view->render());
+        $ex->setIsHtmlMessage();
+
+        throw $ex;
     }
 
     public function dispatchIfNotInstalledYet(&$module, &$action, &$parameters)
@@ -79,8 +100,6 @@ class Installation extends \Piwik\Plugin
             $message = '';
         }
 
-        Translate::loadCoreTranslation();
-
         $action = Common::getRequestVar('action', 'welcome', 'string');
 
         if ($this->isAllowedAction($action)) {
@@ -90,17 +109,6 @@ class Installation extends \Piwik\Plugin
         }
 
         exit;
-    }
-
-    /**
-     * Adds the 'System Check' admin page if the user is the Super User.
-     */
-    public function addMenu()
-    {
-        MenuAdmin::addEntry('Installation_SystemCheck',
-            array('module' => 'Installation', 'action' => 'systemCheckPage'),
-            Piwik::hasUserSuperUserAccess(),
-            $order = 15);
     }
 
     /**

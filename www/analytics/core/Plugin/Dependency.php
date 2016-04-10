@@ -1,6 +1,6 @@
 <?php
 /**
- * Piwik - Open source web analytics
+ * Piwik - free/libre analytics platform
  *
  * @link http://piwik.org
  * @license http://www.gnu.org/licenses/gpl-3.0.html GPL v3 or later
@@ -8,8 +8,9 @@
  */
 namespace Piwik\Plugin;
 
-use Piwik\Version;
 use Piwik\Plugin\Manager as PluginManager;
+use Piwik\Version;
+
 /**
  *
  */
@@ -50,12 +51,11 @@ class Dependency
     public function getMissingVersions($currentVersion, $requiredVersion)
     {
         $currentVersion   = trim($currentVersion);
-        $requiredVersions = explode(',' , (string) $requiredVersion);
+        $requiredVersions = explode(',', (string) $requiredVersion);
 
         $missingVersions = array();
 
         foreach ($requiredVersions as $required) {
-
             $comparison = '>=';
             $required   = trim($required);
 
@@ -97,7 +97,8 @@ class Dependency
                     if (!empty($plugin)) {
                         return $plugin->getVersion();
                     }
-                } catch (\Exception $e) {}
+                } catch (\Exception $e) {
+                }
         }
 
         return '';
