@@ -38,7 +38,11 @@
          * @var array
          */
         public $permissions = array(
-            'quest' => array('admin', 'moderator', 'user')
+            'quest'     => array('admin', 'moderator', 'user'),
+            'manage'    => array('admin', 'moderator', 'user'),
+            'create'    => array('admin', 'moderator', 'user'),
+            'edit'      => array('admin', 'moderator', 'user'),
+            'delete'    => array('admin', 'moderator', 'user')
         );
         /**
          * User seminary permissions
@@ -46,7 +50,11 @@
          * @var array
          */
         public $seminaryPermissions = array(
-            'quest' => array('admin', 'moderator', 'user')
+            'quest'     => array('admin', 'moderator', 'user'),
+            'manage'    => array('admin', 'moderator'),
+            'create'    => array('admin', 'moderator'),
+            'edit'      => array('admin', 'moderator'),
+            'delete'    => array('admin', 'moderator')
         );
 
 
