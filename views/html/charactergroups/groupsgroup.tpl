@@ -29,7 +29,7 @@
 </ol>
 
 
-<h2><?=sprintf(_('%s-Quests'),$groupsgroup['name'])?></h2>
+<h2 id="quests"><?=sprintf(_('%s-Quests'),$groupsgroup['name'])?></h2>
 <?php if(count(array_intersect(array('admin', 'moderator'), \hhu\z\controllers\SeminaryController::$character['characterroles'])) > 0) : ?>
 <nav class="admin">
     <li><a href="<?=$linker->link(array('charactergroupsquests','create',$seminary['url'],$groupsgroup['url']))?>"><?=sprintf(_('Create new %s-Quest'), $groupsgroup['name'])?></a></li>

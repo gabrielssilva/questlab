@@ -707,7 +707,12 @@
                         'groupsgroup',
                         $seminary['url'],
                         $groupsgroup['url']
-                    )
+                    ),
+                    0,
+                    true,
+                    null,
+                    true,
+                    'quests'
                 )
             );
         }
@@ -744,7 +749,12 @@
                         'groupsgroup',
                         $seminary['url'],
                         $groupsgroup['url']
-                    )
+                    ),
+                    0,
+                    true,
+                    null,
+                    true,
+                    'quests'
                 )
             );
         }
