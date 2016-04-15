@@ -25,12 +25,6 @@
          * @var float
          */
         const SIMILARITY_MIN = 0.8;
-        /**
-         * Supported mimetypes
-         *
-         * @var array
-         */
-        const mimetypes = array('application/pdf');
 
         /**
          * Required models
@@ -38,6 +32,12 @@
          * @var array
          */
         public $models = array('uploads');
+        /**
+         * Supported mimetypes
+         *
+         * @var array
+         */
+        private $mimetypes = array('application/pdf');
 
 
 
@@ -157,7 +157,7 @@
         {
             $mimetypes = array();
             foreach(\nre\configs\AppConfig::$mimetypes['questtypes'] as $mimetype) {
-                if(in_array($mimetype['mimetype'], self::mimetypes)) {
+                if(in_array($mimetype['mimetype'], $this->mimetypes)) {
                     $mimetypes[] = $mimetype;
                 }
             }
