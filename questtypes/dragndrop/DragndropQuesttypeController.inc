@@ -256,10 +256,10 @@
             if(!is_null($dndField))
             {
                 $drags = $this->Dragndrop->getDrags($dndField['quest_id']);
-                foreach($drags as &$drag)
+                foreach($drags as &$d)
                 {
-                    $drag['media'] = $this->Media->getSeminaryMediaById($drag['questmedia_id']);
-                    $drag['drops'] = array_map(function($d) { return $d['id']; }, $this->Dragndrop->getDropsForDrag($drag['id']));
+                    $d['media'] = $this->Media->getSeminaryMediaById($d['questmedia_id']);
+                    $d['drops'] = array_map(function($d) { return $d['id']; }, $this->Dragndrop->getDropsForDrag($d['id']));
                 }
             }
 
