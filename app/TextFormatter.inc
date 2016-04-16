@@ -60,7 +60,7 @@
             // Use Textile
             \hhu\z\lib\Textile::load();
             $textileParser = new \Netcarver\Textile\Parser('html5');
-            $string = $textileParser->textileRestricted($string, false, false);
+            $string = $textileParser->textileThis($string);
 
             // Add link targets
             $string = $this->tLinks($string);
