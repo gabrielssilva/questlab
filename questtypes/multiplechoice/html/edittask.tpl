@@ -64,7 +64,7 @@
                     <li>
                         <input id="question-<?=$questionIndex?>-answer-<?=$answerIndex?>-tick" type="checkbox" name="questions[<?=$questionIndex?>][answers][<?=$answerIndex?>][tick]" <?php if(array_key_exists('tick', $answer) && $answer['tick']) : ?>checked="checked"<?php endif ?> />
                         <label for="questions[<?=$questionIndex?>][answers][<?=$answerIndex?>][tick]">
-                            <input id="question-<?=$questionIndex?>-answer-<?=$answerIndex?>" type="text" name="questions[<?=$questionIndex?>][answers][<?=$answerIndex?>][answer]" value="<?=$answer['answer']?>" <?php if(!empty($validations) && array_key_exists($questionIndex, $validations) && !empty($validations[$questionIndex]) && array_key_exists($answerIndex, $validations[$questionIndex]['answers']) && $validations[$questionIndex]['answers'][$answerIndex] !== true) : ?>class="invalid"<?php endif ?> />
+                            <input id="question-<?=$questionIndex?>-answer-<?=$answerIndex?>" type="text" name="questions[<?=$questionIndex?>][answers][<?=$answerIndex?>][answer]" value="<?=\hhu\z\Utils::t($answer['answer'])?>" <?php if(!empty($validations) && array_key_exists($questionIndex, $validations) && !empty($validations[$questionIndex]) && array_key_exists($answerIndex, $validations[$questionIndex]['answers']) && $validations[$questionIndex]['answers'][$answerIndex] !== true) : ?>class="invalid"<?php endif ?> />
                         </label>
                         <button class="remove-answer" type="button">−</button>
                     </li>
