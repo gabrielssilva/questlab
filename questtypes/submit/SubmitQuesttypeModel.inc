@@ -281,38 +281,48 @@
          */
         private function addTerms($submissionId, $terms)
         {
-            // Calculate IDF: n (n_term)
-            $uniqueTerms = array();
-            foreach($terms as &$term)
-            {
-                if(!in_array($term, $uniqueTerms))
+            $this->db->setAutocommit(false);
+            try {
+                // Calculate IDF: n (n_term)
+                $uniqueTerms = array();
+                foreach($terms as &$term)
                 {
-                    // Add term to database
+                    if(!in_array($term, $uniqueTerms))
+                    {
+                        // Add term to database
+                        $this->db->query(
+                            'INSERT IGNORE INTO questtypes_submit_terms '.
+                            '(term) '.
+                            'VALUES '.
+                            '(?)',
+                            's',
+                            $term
+                        );
+                        $uniqueTerms[] = $term;
+                    }
+
+                    // Link term to submission
                     $this->db->query(
-                        'INSERT IGNORE INTO questtypes_submit_terms '.
-                        '(term) '.
-                        'VALUES '.
-                        '(?)',
-                        's',
+                        'INSERT INTO questtypes_submit_submissions_terms '.
+                        '(submission_id, term_id, tf) '.
+                        'SELECT ?, questtypes_submit_terms.id, 1 '.
+                        'FROM questtypes_submit_terms '.
+                        'WHERE term = ? '.
+                        'ON DUPLICATE KEY UPDATE '.
+                        'tf = tf + 1',
+                        'is',
+                        $submissionId,
                         $term
                     );
-                    $uniqueTerms[] = $term;
                 }
-
-                // Link term to submission
-                $this->db->query(
-                    'INSERT INTO questtypes_submit_submissions_terms '.
-                    '(submission_id, term_id, tf) '.
-                    'SELECT ?, questtypes_submit_terms.id, 1 '.
-                    'FROM questtypes_submit_terms '.
-                    'WHERE term = ? '.
-                    'ON DUPLICATE KEY UPDATE '.
-                    'tf = tf + 1',
-                    'is',
-                    $submissionId,
-                    $term
-                );
             }
+            catch(\Exception $e) {
+                $this->db->rollback();
+                $this->db->setAutocommit(true);
+                throw $e;
+            }
+
+            $this->db->setAutocommit(true);
         }
 
 
