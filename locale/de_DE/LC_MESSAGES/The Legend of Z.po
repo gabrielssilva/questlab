@@ -1,15 +1,15 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: The Legend of Z\n"
-"POT-Creation-Date: 2016-03-26 19:10+0100\n"
-"PO-Revision-Date: 2016-03-26 19:10+0100\n"
+"POT-Creation-Date: 2016-04-17 14:40+0200\n"
+"PO-Revision-Date: 2016-04-17 14:40+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: de_DE\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.8.7\n"
+"X-Generator: Poedit 1.8.7.1\n"
 "X-Poedit-Basepath: ../../..\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Poedit-SourceCharset: UTF-8\n"
@@ -18,12 +18,12 @@ msgstr ""
 "X-Poedit-SearchPath-2: controllers\n"
 
 #: controllers/CharactergroupsachievementsController.inc:175
-#: views/html/charactergroups/groupsgroup.tpl:52
+#: views/html/charactergroups/groupsgroup.tpl:62
 #, php-format
 msgid "%s-Achievements"
 msgstr "%sachievements"
 
-#: controllers/CharactersController.inc:438 controllers/UsersController.inc:339
+#: controllers/CharactersController.inc:439 controllers/UsersController.inc:339
 #: views/ajax/characters/index.tpl:10 views/ajax/users/index.tpl:10
 #: views/html/characters/index.tpl:45 views/html/characters/manage.tpl:33
 #: views/html/characters/manage.tpl:48 views/html/characters/manage.tpl:56
@@ -33,7 +33,7 @@ msgstr "%sachievements"
 msgid "Admin"
 msgstr "Administrator"
 
-#: controllers/CharactersController.inc:444 controllers/UsersController.inc:345
+#: controllers/CharactersController.inc:445 controllers/UsersController.inc:345
 #: views/ajax/characters/index.tpl:12 views/ajax/users/index.tpl:12
 #: views/html/characters/index.tpl:46 views/html/characters/manage.tpl:34
 #: views/html/characters/manage.tpl:49 views/html/characters/manage.tpl:57
@@ -43,7 +43,7 @@ msgstr "Administrator"
 msgid "Moderator"
 msgstr "Moderator"
 
-#: controllers/CharactersController.inc:450 controllers/UsersController.inc:351
+#: controllers/CharactersController.inc:451 controllers/UsersController.inc:351
 #: views/ajax/characters/index.tpl:14 views/ajax/users/index.tpl:14
 #: views/html/characters/index.tpl:47 views/html/characters/manage.tpl:35
 #: views/html/characters/manage.tpl:51 views/html/characters/manage.tpl:59
@@ -70,7 +70,7 @@ msgid "Character submission approved"
 msgstr "Lösungsvorschlag bewertet"
 
 #: controllers/QuestsController.inc:1247
-#: questtypes/submit/html/submission.tpl:30
+#: questtypes/submit/html/submission.tpl:50
 #: views/html/achievements/conditions.tpl:50
 #: views/html/achievements/conditions.tpl:121
 #: views/html/charactergroupsqueststations/station.tpl:180
@@ -439,11 +439,19 @@ msgstr "Bewertet am %s um %s Uhr"
 msgid "Approved by %s on %s at %s"
 msgstr "Bewertet von %s am %s um %s Uhr"
 
-#: questtypes/submit/html/submission.tpl:27
+#: questtypes/submit/html/submission.tpl:20
+msgid "Similar submissions"
+msgstr "Ähnliche Abgaben"
+
+#: questtypes/submit/html/submission.tpl:24
+msgid "Similarity"
+msgstr "Ähnlichkeit"
+
+#: questtypes/submit/html/submission.tpl:46
 msgid "Comment"
 msgstr "Kommentar"
 
-#: questtypes/submit/html/submission.tpl:31
+#: questtypes/submit/html/submission.tpl:51
 #: views/html/achievements/conditions.tpl:49
 #: views/html/achievements/conditions.tpl:120
 #: views/html/charactergroupsqueststations/station.tpl:197
@@ -518,7 +526,7 @@ msgstr "Texteingabe"
 #: views/html/charactergroupsquests/manage.tpl:17
 #: views/html/charactergroupsquests/manage.tpl:85
 #: views/html/charactergroupsquests/quest.tpl:21
-#: views/html/charactergroupsquests/quest.tpl:167
+#: views/html/charactergroupsquests/quest.tpl:169
 #: views/html/characters/character.tpl:90
 #: views/html/characters/character.tpl:92
 #: views/html/characters/character.tpl:110
@@ -1287,7 +1295,7 @@ msgid "XPs"
 msgstr "XP"
 
 #: views/html/charactergroups/group.tpl:75
-#: views/html/charactergroups/groupsgroup.tpl:55
+#: views/html/charactergroups/groupsgroup.tpl:65
 #: views/html/charactergroupsachievements/manage.tpl:11
 #, php-format
 msgid "Manage %s-Achievements"
@@ -1303,7 +1311,7 @@ msgstr "Neue %s-Gruppe"
 msgid "Create new %s-Quest"
 msgstr "Neue %s-Quest erstellen"
 
-#: views/html/charactergroups/groupsgroup.tpl:54
+#: views/html/charactergroups/groupsgroup.tpl:64
 #: views/html/charactergroupsachievements/manage.tpl:8
 #, php-format
 msgid "Create new %s-Achievement"
@@ -1332,7 +1340,7 @@ msgid "Quests"
 msgstr "Quests"
 
 #: views/html/charactergroupsachievements/achievement.tpl:20
-#: views/html/charactergroupsquests/quest.tpl:85
+#: views/html/charactergroupsquests/quest.tpl:87
 #, php-format
 msgid "%s-Group to show"
 msgstr "%s-Gruppen anzeigen"
@@ -1456,7 +1464,7 @@ msgid "upload"
 msgstr "hochladen"
 
 #: views/html/charactergroupsquests/manage.tpl:81
-#: views/html/charactergroupsquests/quest.tpl:165
+#: views/html/charactergroupsquests/quest.tpl:167
 #, php-format
 msgid "%d Stations"
 msgstr "%d Stationen"
@@ -1487,17 +1495,17 @@ msgstr "Verlorene Quest"
 msgid "Character Groups Quest Stations"
 msgstr "Stationen"
 
-#: views/html/charactergroupsquests/quest.tpl:79
+#: views/html/charactergroupsquests/quest.tpl:81
 msgid "Create new station"
 msgstr "Neue Station erstellen"
 
-#: views/html/charactergroupsquests/quest.tpl:88
+#: views/html/charactergroupsquests/quest.tpl:90
 #: views/html/charactergroupsqueststations/station.tpl:53
 #, php-format
 msgid "Select %s-Group"
 msgstr "%s-Gruppe auswählen"
 
-#: views/html/charactergroupsquests/quest.tpl:107
+#: views/html/charactergroupsquests/quest.tpl:109
 msgid "Station not yet discovered"
 msgstr "Station noch nicht entdeckt"
 

@@ -21,7 +21,7 @@
 <?php foreach($submission['similar'] as &$similar) : ?>
         <ul>
             <li>
-                <p><small><?=('Similarity')?>: <?=$similar['similarity']?></small></p>
+                <p><small><?=_('Similarity')?>: <?=$similar['similarity']?></small></p>
                 <p><a href="<?=$linker->link(array('uploads','seminary',$seminary['url'], $similar['upload']['url']))?>"><?=$similar['upload']['name']?></a></p>
                 <p><small>
                     <a href="<?=$linker->link(array('quests','submission',$seminary['url'],$similar['questgroup']['url'],$similar['quest']['url'],$similar['character']['url']))?>">
