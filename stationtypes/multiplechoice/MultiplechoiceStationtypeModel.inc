@@ -154,7 +154,7 @@
                 $answerId, $charactergroupId
             );
             if(!empty($data)) {
-                return boolval($data[0]['ticked']);
+                return ($data[0]['ticked'] == 1);
             }
 
 
