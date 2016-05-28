@@ -203,7 +203,7 @@
          * @param   array   $groupsgroup    Current Groups group data
          * @param   array   $quest          Current Quest data
          * @param   array   $station        Current Station data
-         * @param   array   $charactergroup Current Character group data
+         * @param   array   $group          Current Character group data
          * @param   array   $answer         Character group answer for the Station
          */
         public function saveAnswer($seminary, $groupsgroup, $quest, $station, $group, $answer)
@@ -227,7 +227,7 @@
          * @param   array   $groupsgroup    Current Groups group data
          * @param   array   $quest          Current Quest data
          * @param   array   $station        Current Station data
-         * @param   array   $charactergroup Current Character group data
+         * @param   array   $group          Current Character group data
          * @param   array   $answer         Character group answer for the Station
          */
         public function matchAnswer($seminary, $groupsgroup, $quest, $station, $group, $answer)
