@@ -52,7 +52,7 @@
          *
          * @param   int $hierarchyId        ID of the Questgroup hierarchy to get Questgroups for
          * @param   int $parentQuestgroupId ID of the parent Questgroup hierarchy
-         * @return  array               Questgroups for the given hierarchy
+         * @return  array                   Questgroups for the given hierarchy
          */
         public function getQuestgroupsForHierarchy($hierarchyId, $parentQuestgroupId=null)
         {
@@ -112,8 +112,8 @@
          * Get a Questgroup by its ID.
          *
          * @throws  \nre\exceptions\IdNotFoundException
-         * @param   int $questgroupId   ID of a Questgroup
-         * @return  array           Questgroup data
+         * @param   int     $questgroupId   ID of a Questgroup
+         * @return  array                   Questgroup data
          */
         public function getQuestgroupById($questgroupId)
         {
@@ -137,9 +137,9 @@
          * Get a Questgroup by its URL.
          *
          * @throws  \nre\exceptions\IdNotFoundException
-         * @param   int $seminaryId ID of the corresponding seminary
-         * @param   string  $questgroupURL  URL-title of a Questgroup
-         * @return  array           Questgroup data
+         * @param   int     $seminaryId     ID of the corresponding seminary
+         * @param   string  $questgroupUrl  URL-title of a Questgroup
+         * @return  array                   Questgroup data
          */
         public function getQuestgroupByUrl($seminaryId, $questgroupUrl)
         {
@@ -166,9 +166,9 @@
          * on the same level as the given Quest then the followed-up
          * Questgroup from a higher hierarchy level is returned.
          *
-         * @param   int     $seminaryId ID of Seminary
-         * @param   int $questgroupId   ID of Questgroup to get next Questgroup of
-         * @return  array           Questgroup data
+         * @param   int     $seminaryId     ID of Seminary
+         * @param   int     $questgroupId   ID of Questgroup to get next Questgroup of
+         * @return  array                   Questgroup data
          */
         public function getNextQuestgroup($seminaryId, $questgroupId)
         {
@@ -196,9 +196,9 @@
          * followed-up Questgroup from a higher hierarchy level is
          * returned.
          *
-         * @param   int     $seminaryId ID of Seminary
-         * @param   int $questgroupId   ID of Questgroup to get previous Questgroup of
-         * @return  array           Questgroup data
+         * @param   int     $seminaryId     ID of Seminary
+         * @param   int     $questgroupId   ID of Questgroup to get previous Questgroup of
+         * @return  array                   Questgroup data
          */
         public function getPreviousQuestgroup($seminaryId, $questgroupId)
         {
@@ -221,7 +221,7 @@
         /**
          * Mark a Questgroup as entered for a Character.
          *
-         * @param   int $questId    ID of Quest to mark as entered
+         * @param   int $questgroupId   ID of Questgroup to mark as entered
          * @param   int $characterId    ID of Character that entered the Quest
          */
         public function setQuestgroupEntered($questgroupId, $characterId)
@@ -235,7 +235,7 @@
          *
          * @param   int $questgroupId   ID of Questgroup to check
          * @param   int $characterId    ID of Character to check
-         * @result  boolean         Whether Character has entered the Questgroup or not
+         * @result  boolean             Whether Character has entered the Questgroup or not
          */
         public function hasCharacterEnteredQuestgroup($questgroupId, $characterId)
         {
@@ -259,7 +259,7 @@
          *
          * @param   int $questgroupId   ID of Questgroup to check
          * @param   int $characterId    ID of Character to check
-         * @result  boolean         Whether Character has solved the Questgroup or not
+         * @result  boolean             Whether Character has solved the Questgroup or not
          */
         public function hasCharacterSolvedQuestgroup($questgroupId, $characterId)
         {
@@ -321,8 +321,8 @@
         /**
          * Get all related Questgroups of a Questtext.
          *
-         * @param   int $questtextId    ID of the Questtext
-         * @return  array           Related Questgroups for the Questtext
+         * @param   int     $questtextId    ID of the Questtext
+         * @return  array                   Related Questgroups for the Questtext
          */
         public function getRelatedQuestsgroupsOfQuesttext($questtextId)
         {
@@ -340,8 +340,8 @@
         /**
          * Get all related Questgroups of a Quest.
          *
-         * @param   int $questId    ID of the Quest
-         * @return  array           Related Quests for the Quest
+         * @param   int     $questId    ID of the Quest
+         * @return  array               Related Quests for the Quest
          */
         public function getRelatedQuestsgroupsOfQuest($questId)
         {
@@ -361,8 +361,8 @@
         /**
          * Get all related Questgroups of a Questgroup.
          *
-         * @param   int $questgroupId   ID of the Questgroup
-         * @return  array           Related Questgroups for the Questgroup
+         * @param   int     $questgroupId   ID of the Questgroup
+         * @return  array                   Related Questgroups for the Questgroup
          */
         public function getRelatedQuestsgroupsOfQuestgroup($questgroupId)
         {
@@ -385,7 +385,7 @@
          *
          * @param   int $questgroupId   ID of Questgroup
          * @param   int $characterId    ID of Character
-         * @return  int         Sum of XPs
+         * @return  int                 Sum of XPs
          */
         public function getAchievedXPsForQuestgroup($questgroupId, $characterId)
         {
@@ -419,10 +419,10 @@
         /**
          * Check if a Questgroups title already exists for a Seminary.
          *
-         * @param   int $seminaryId ID of Seminary
-         * @param   string  $title      Questgroup title to check
-         * @param   int $questgroupId   Do not check this ID (for editing)
-         * @return  boolean         Whether Questgroup title exists or not
+         * @param   int     $seminaryId     ID of Seminary
+         * @param   string  $title          Questgroup title to check
+         * @param   int     $questgroupId   Do not check this ID (for editing)
+         * @return  boolean                 Whether Questgroup title exists or not
          */
         public function questgroupTitleExists($seminaryId, $title, $questgroupId=null)
         {
@@ -443,10 +443,10 @@
         /**
          * Create a new Questgroup.
          *
-         * @param   int $userId     User-ID that creates the new character
-         * @param   int $seminaryId ID of Seminary
+         * @param   int     $userId     User-ID that creates the new character
+         * @param   int     $seminaryId ID of Seminary
          * @param   string  $title      Title for new Questgroup
-         * @return  int         ID of new Questgroup
+         * @return  int                 ID of new Questgroup
          */
         public function createQuestgroup($userId, $seminaryId, $title)
         {
@@ -471,7 +471,7 @@
          * Set the moodpic for a Questgroup.
          *
          * @param   int $questgroupId   ID of Questgroup to set moodpic for
-         * @param   int $mediaId    ID of moodpic media
+         * @param   int $mediaId        ID of moodpic media
          */
         public function setMoodpicForQuestgroup($questgroupId, $mediaId)
         {
@@ -599,7 +599,7 @@
          * position).
          *
          * @param   array   $questgroup Questgroup to move
-         * @param   boolean $up     True for moving up, false for down
+         * @param   boolean $up         True for moving up, false for down
          */
         public function moveQuestgroup($questgroup, $up)
         {
@@ -662,8 +662,8 @@
          * Edit a Questgroup.
          *
          * @throws  \nre\exceptions\DatamodelException
-         * @param   int $questgroupId   ID of Questgroup to edit
-         * @param   string  $title      New title of Questgroup
+         * @param   int     $questgroupId   ID of Questgroup to edit
+         * @param   string  $title          New title of Questgroup
          */
         public function editQuestgroup($questgroupId, $title)
         {
@@ -800,10 +800,10 @@
         /**
          * Get the next (direct) Questgroup.
          *
-         * @param   int     $seminaryId ID of Seminary
-         * @param   int $parentQuestgroupId ID of parent Questgroup to get next Questgroup of
-         * @param   int $questgroupPos      Position of Questgroup to get next Questgroup of
-         * @return  array               Data of next Questgroup or NULL
+         * @param   int     $seminaryId         ID of Seminary
+         * @param   int     $parentQuestgroupId ID of parent Questgroup to get next Questgroup of
+         * @param   int     $questgroupPos      Position of Questgroup to get next Questgroup of
+         * @return  array                       Data of next Questgroup or NULL
          */
         private function _getNextQuestgroup($seminaryId, $parentQuestgroupId, $questgroupPos)
         {
@@ -841,10 +841,10 @@
         /**
          * Get the previous (direct) Questgroup.
          *
-         * @param   int     $seminaryId ID of Seminary
-         * @param   int $parentQuestgroupId ID of parent Questgroup to get previous Questgroup of
-         * @param   int $questgroupPos      Position of Questgroup to get previous Questgroup of
-         * @return  array               Data of previous Questgroup or NULL
+         * @param   int     $seminaryId         ID of Seminary
+         * @param   int     $parentQuestgroupId ID of parent Questgroup to get previous Questgroup of
+         * @param   int     $questgroupPos      Position of Questgroup to get previous Questgroup of
+         * @return  array                       Data of previous Questgroup or NULL
          */
         private function _getPreviousQuestgroup($seminaryId, $parentQuestgroupId, $questgroupPos)
         {
@@ -882,10 +882,10 @@
         /**
          * Mark a Questgroup for a Character.
          *
-         * @param   int $questgroupId   ID of Questgroup to mark
-         * @param   int $characterId    ID of Character to mark the Questgroup for
-         * @param   int $status     Questgroup status to mark
-         * @param   boolean $repeated   Insert although status is already set for this Questgroup and Character
+         * @param   int     $questgroupId   ID of Questgroup to mark
+         * @param   int     $characterId    ID of Character to mark the Questgroup for
+         * @param   int     $status         Questgroup status to mark
+         * @param   boolean $repeated       Insert although status is already set for this Questgroup and Character
          */
         private function setQuestgroupStatus($questgroupId, $characterId, $status, $repeated=true)
         {
@@ -925,9 +925,9 @@
          * Questgroup, its sub-Questgroups, related Questgroups etc. and
          * store this value in the database.
          *
-         * @param   int $questgroupId       ID of Questgroup
+         * @param   int     $questgroupId       ID of Questgroup
          * @param   array   $calculatedQuests   Already calculated Quests
-         * @return  int             Sum of calculated XPs
+         * @return  int                         Sum of calculated XPs
          */
         public function calculateXPsForQuestgroup($questgroupId, &$calculatedQuests=array())
         {
@@ -969,7 +969,7 @@
          *
          * @param   int $questgroupId   ID of Questgroup
          * @param   int $characterId    ID of Character
-         * @return  int         Sum of XPs of Quests
+         * @return  int                 Sum of XPs of Quests
          */
         private function _getAchievedXPsForQuestgroup($questgroupId, $characterId)
         {
@@ -994,9 +994,9 @@
          * its following Quests by choosing the path with the highest
          * amount of XPs.
          *
-         * @param   int $quest          Quest data
+         * @param   int     $quest              Quest data
          * @param   array   $calculatedQuests   Already calculated Quests
-         * @return  int             Sum of calculated XPs
+         * @return  int                         Sum of calculated XPs
          */
         private function _calculateXPsForQuestgroup($quest, &$calculatedQuests=array())
         {
@@ -1029,7 +1029,7 @@
          * Set achievable XPs for a Questgroup.
          *
          * @param   int $questgroupId   ID of Questgroup
-         * @param   int $xps        XPs to set
+         * @param   int $xps            XPs to set
          */
         private function setXPsForQuestgroup($questgroupId, $xps)
         {

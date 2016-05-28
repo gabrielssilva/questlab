@@ -32,6 +32,11 @@
          */
         const KEY_QUESTTYPEDATA_N_CORRECT_ANSWRES = 'nCorrectAnswers';
 
+        /**
+         * Number of correct answers
+         *
+         * @var int
+         */
         private $nCorrectAnswers = null;
 
 

@@ -45,7 +45,7 @@
          * Generate a mail message to notify of a new user registration.
          *
          * @param   array   $receiver   User that the message will be send to
-         * @param   array   $neUser     Newly registered user
+         * @param   array   $newUser    Newly registered user
          */
         public function userregistration($receiver, $newUser)
         {

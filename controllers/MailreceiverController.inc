@@ -27,7 +27,7 @@
         /**
          * Action: index.
          *
-         * @param   $array  $user   User receiving mail
+         * @param   array   $user   User receiving mail
          */
         public function index($user)
         {

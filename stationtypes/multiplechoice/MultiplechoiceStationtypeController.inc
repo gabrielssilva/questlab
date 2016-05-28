@@ -31,7 +31,7 @@
          * Save the answer of a Character group for a Station.
          *
          * @param   array   $seminary       Current Seminary data
-         * @param   array   $questgroup     Current Questgroup data
+         * @param   array   $groupsgroup    Current Groups group data
          * @param   array   $quest          Current Quest data
          * @param   array   $station        Current Station data
          * @param   array   $charactergroup Current Character group data
@@ -53,7 +53,7 @@
          * Check if answer of a Character group for a Station matches the correct one.
          *
          * @param   array   $seminary       Current Seminary data
-         * @param   array   $questgroup     Current Questgroup data
+         * @param   array   $groupsgroup    Current Groups group data
          * @param   array   $quest          Current Quest data
          * @param   array   $station        Current Station data
          * @param   array   $charactergroup Current Character group data
@@ -92,11 +92,11 @@
          *
          * Show the task of a Station.
          *
-         * @param   array       $seminary       Current Seminary data
-         * @param   array       $questgroup     Current Questgroup data
-         * @param   array       $quest          Current Quest data
-         * @param   array       $station        Current Station data
-         * @param   array       $charactergroup Current Character group data
+         * @param   array   $seminary       Current Seminary data
+         * @param   array   $groupsgroup    Current Groups group data
+         * @param   array   $quest          Current Quest data
+         * @param   array   $station        Current Station data
+         * @param   array   $charactergroup Current Character group data
          */
         public function quest($seminary, $groupsgroup, $quest, $station, $charactergroup)
         {

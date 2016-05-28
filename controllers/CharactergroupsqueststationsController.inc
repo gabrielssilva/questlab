@@ -996,7 +996,7 @@
          *
          * @param   string  $stationtypeClassname   Name of the class for the Stationtype of a Station
          * @param   array   $seminary               Seminary data
-         * @param   array   $questgroup             Questgroup data
+         * @param   array   $groupsgroup            Groups-group data
          * @param   array   $quest                  Quest data
          * @param   array   $station                Station data
          * @param   array   $charactergroup         Charactergroup data
@@ -1164,7 +1164,7 @@
          * Create a response for the Stationtype rendering.
          *
          * @param   string  $action     Action to run
-         * @param   mixed   $param      Additional parameters to add to the response
+         * @param   mixed   $param1     Additional parameters to add to the response
          * @return  \nre\core\Response  Generated response
          */
         private function createStationtypeResponse($action, $param1)

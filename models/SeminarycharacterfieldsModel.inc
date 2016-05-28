@@ -57,9 +57,9 @@
         /**
          * Set the value of a Seminary field for a Character.
          *
-         * @param   int $characterId            ID of Character
-         * @param   int $seminarycharacterfieldId   ID of seminarycharacterfield to set value of
-         * @param   string  $value              Value to set
+         * @param   int     $seminarycharacterfieldId   ID of seminarycharacterfield to set value of
+         * @param   int     $characterId                ID of Character
+         * @param   string  $value                      Value to set
          */
         public function setSeminaryFieldOfCharacter($seminarycharacterfieldId, $characterId, $value)
         {

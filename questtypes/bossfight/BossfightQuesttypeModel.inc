@@ -82,8 +82,8 @@
         /**
          * Get a Boss-Fight.
          *
-         * @param   int $questId    ID of Quest
-         * @return  array           Boss-Fight data
+         * @param   int     $questId    ID of Quest
+         * @return  array               Boss-Fight data
          */
         public function getBossFight($questId)
         {
@@ -105,8 +105,8 @@
         /**
          * Get the first Stage to begin the Boss-Fight with.
          *
-         * @param   int $questId    ID of Quest
-         * @return  array           Data of first Stage
+         * @param   int     $questId    ID of Quest
+         * @return  array               Data of first Stage
          */
         public function getFirstStage($questId)
         {
@@ -129,8 +129,8 @@
         /**
          * Get a Stage by its ID.
          *
-         * @param   int $stageId    ID of Stage
-         * @return  array           Stage data or null
+         * @param   int     $stageId    ID of Stage
+         * @return  array               Stage data or null
          */
         public function getStageById($stageId)
         {
@@ -153,8 +153,8 @@
         /**
          * Get the follow-up Stages for a Stage.
          *
-         * @param   int $parentStageId  ID of Stage to get follow-up Stages for
-         * @return  array           List of follow-up Stages
+         * @param   int     $parentStageId  ID of Stage to get follow-up Stages for
+         * @return  array                   List of follow-up Stages
          */
         public function getChildStages($parentStageId)
         {
@@ -171,7 +171,7 @@
         /**
          * Reset all Character submissions of a Boss-Fight.
          *
-         * @param   int $questId    ID of Quest
+         * @param   int $questId        ID of Quest
          * @param   int $characterId    ID of Character
          */
         public function clearCharacterSubmissions($questId, $characterId)
@@ -193,7 +193,7 @@
         /**
          * Save Character’s submitted answer for one Boss-Fight-Stage.
          *
-         * @param   int $regexId    ID of list
+         * @param   int $stageId        ID of list
          * @param   int $characterId    ID of Character
          */
         public function setCharacterSubmission($stageId, $characterId)
@@ -214,9 +214,9 @@
         /**
          * Get answer of one Boss-Fight-Stage submitted by Character.
          *
-         * @param   int $regexId    ID of list
-         * @param   int $characterId    ID of Character
-         * @return  boolean         Stage taken
+         * @param   int     $stageId        ID of list
+         * @param   int     $characterId    ID of Character
+         * @return  boolean                 Stage taken
          */
         public function getCharacterSubmission($stageId, $characterId)
         {

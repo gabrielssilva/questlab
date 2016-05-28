@@ -116,8 +116,8 @@
          * Get a Station by its Hash.
          *
          * @throws  \nre\exceptions\IdNotFoundException
-         * @param   string  $stationUrl Hash of Station to get
-         * @return  array               Station data
+         * @param   string  $stationHash    Hash of Station to get
+         * @return  array                   Station data
          */
         public function getStationByHash($stationHash)
         {
@@ -332,7 +332,7 @@
         /**
          * Check if a Character group has solved a Station.
          *
-         * @param   int $questId    ID of Quest to check
+         * @param   int $stationId  ID of Quest to check
          * @param   int $groupId    ID of Character to check
          * @result  boolean         Whether Character has solved the Quest or not
          */

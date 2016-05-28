@@ -43,8 +43,8 @@
         /**
          * Get the first text of a Quest.
          *
-         * @param   int $questId    ID of a Quest
-         * @return  string          First text of this Quest or NULL
+         * @param   int     $questId    ID of a Quest
+         * @return  string              First text of this Quest or NULL
          */
         public function getFirstQuestText($questId)
         {
@@ -61,9 +61,9 @@
         /**
          * Get all Questtexts for a Quest.
          *
-         * @param   int $questId        ID of the Quest
+         * @param   int     $questId            ID of the Quest
          * @param   string  $questtexttypeUrl   URL of the Questtexttype
-         * @return  array               All Questtexts for a Quest
+         * @return  array                       All Questtexts for a Quest
          */
         public function getQuesttextsOfQuest($questId, $questtexttypeUrl=null)
         {
@@ -96,9 +96,9 @@
         /**
          * Get count of Questtexts for a Quest.
          *
-         * @param   int $questId        ID of the Quest
+         * @param   int     $questId            ID of the Quest
          * @param   string  $questtexttypeUrl   URL of the Questtexttype
-         * @return  int             Amount of Questtexts for a Quest
+         * @return  int                         Amount of Questtexts for a Quest
          */
         public function getQuesttextCountOfQuest($questId, $questtexttypeUrl=null)
         {
@@ -138,8 +138,8 @@
          * Get corresponding Questtexts for a Questgroup.
          *
          * @throws  \nre\exceptions\IdNotFoundException
-         * @param   int $questgroupId   ID of Questgroup to get the Questtexst for
-         * @param   array           List of Questtexts
+         * @param   int     $questgroupId   ID of Questgroup to get the Questtexst for
+         * @param   array                   List of Questtexts
          */
         public function getRelatedQuesttextsForQuestgroup($questgroupId)
         {
@@ -158,9 +158,9 @@
         /**
          * Get the Questtext that was last entered by a Character.
          *
-         * @param   int $characterId    ID of Character
-         * @param   array   $questtexts List of Questtexts to look into
-         * @return  array           Questtext data
+         * @param   int     $characterId    ID of Character
+         * @param   array   $questtexts     List of Questtexts to look into
+         * @return  array                   Questtext data
          */
         public function pickQuesttextLastEnteredByCharacter($characterId, $questtexts)
         {
@@ -212,7 +212,7 @@
          * Get a Questtexttype by its URL.
          *
          * @param   string  $questtexttypeUrl   URL-type of Questtexttype
-         * @return  array               Questtexttype data
+         * @return  array                       Questtexttype data
          */
         public function getQuesttexttypeByUrl($questtexttypeUrl)
         {
@@ -235,10 +235,10 @@
         /**
          * Add a Questtexts to a Quest.
          *
-         * @param   int $userId         ID of user
-         * @param   int $questId        ID of Quest to add texts to
+         * @param   int     $userId             ID of user
+         * @param   int     $questId            ID of Quest to add texts to
          * @param   string  $questtexttypeUrl   URL-type of Questtexttype of texts
-         * @param   string  $text           Text to add.
+         * @param   string  $text               Text to add.
          */
         public function addQuesttextToQuest($userId, $questId, $questtexttypeUrl, $text)
         {
@@ -278,7 +278,7 @@
          * Set the media for a Quest text.
          *
          * @param   int $questtextId    ID of Quest text to set media for
-         * @param   int $questmediaId   ID of Questsmedia to set
+         * @param   int $questsmediaId  ID of Questsmedia to set
          */
         public function setQuestmedia($questtextId, $questsmediaId)
         {

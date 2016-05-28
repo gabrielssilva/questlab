@@ -46,7 +46,7 @@
          *
          * @param   mixed   $input      User input to validate
          * @param   array   $settings   Validation setting
-         * @return  mixed           True or the settings the validation fails on
+         * @return  mixed               True or the settings the validation fails on
          */
         public function validate($input, $settings)
         {
@@ -80,7 +80,7 @@
          *
          * @param   array   $params User input parameters
          * @param   array   $index  Names of parameter to validate and to validate against
-         * @return  mixed       True or the parameter with settings the validation failed on
+         * @return  mixed           True or the parameter with settings the validation failed on
          */
         public function validateParam($params, $index)
         {
@@ -104,7 +104,7 @@
          *
          * @param   array   $params     User input parameters
          * @param   array   $indices    Names of parameters to validate and to validate against
-         * @return  mixed           True or the parameters with settings the validation failed on
+         * @return  mixed               True or the parameters with settings the validation failed on
          */
         public function validateParams($params, $indices)
         {
@@ -128,7 +128,7 @@
          * @param   string  $index      Name of parameter of the custom validation result
          * @param   string  $setting    Name of setting of the custom validation result
          * @param   mixed   $result     Validation result
-         * @return  mixed           The altered validation array
+         * @return  mixed               The altered validation array
          */
         public function addValidationResult($validation, $index, $setting, $result)
         {
@@ -155,8 +155,8 @@
          *
          * @param   mixed   $validation Validation array to add result to
          * @param   string  $index      Name of parameter of the custom validation result
-         * @param   mixed   $result     Validation result
-         * @return  mixed           The altered validation array
+         * @param   mixed   $results    Validation result
+         * @return  mixed               The altered validation array
          */
         public function addValidationResults($validation, $index, $results)
         {

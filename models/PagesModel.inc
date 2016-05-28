@@ -68,7 +68,7 @@
         /**
          * Get a page by its ID.
          *
-         * @param   string  $pageid ID of page to get
+         * @param   string  $pageId ID of page to get
          * @return  array           Page data
          */
         public function getPageById($pageId)
@@ -216,10 +216,10 @@
 
 
 
-        /*
+        /**
          * Mask parameters to be used in an URL.
          * 
-         * @param   string  $param1 First parameter
+         * @param   string  $param  First parameter
          * @return  string          Masked parameters as string
          */
         private static function createLinkParam($param)

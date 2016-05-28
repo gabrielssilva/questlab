@@ -37,8 +37,8 @@
         /**
          * Get all Character types of a Seminary.
          *
-         * @param   int $seminaryId ID of Seminary to get types of
-         * @return  array           Character types
+         * @param   int     $seminaryId ID of Seminary to get types of
+         * @return  array               Character types
          */
         public function getCharacterTypesForSeminary($seminaryId)
         {
@@ -56,9 +56,9 @@
         /**
          * Get Character type by its URL.
          *
-         * @param   int $seminaryId     ID of Seminary
-         * @param   string  $charactretypeUrl   URL-title of Character type
-         * @return  array               Character type data
+         * @param   int     $seminaryId         ID of Seminary
+         * @param   string  $charactertypeUrl   URL-title of Character type
+         * @return  array                       Character type data
          */
         public function getCharactertypeByUrl($seminaryId, $charactertypeUrl)
         {
@@ -83,7 +83,7 @@
          * Get Character type by its ID.
          *
          * @param   string  $charactertypeId    ID of Character type
-         * @return  array               Character type data
+         * @return  array                       Character type data
          */
         public function getCharactertypeById($charactertypeId)
         {
@@ -106,10 +106,10 @@
         /**
          * Check if a Charactertype name already exists.
          *
-         * @param   int $seminaryId     ID of Seminary
-         * @param   string  $name           Charactertype name to check
-         * @param   int $charactertypeId    Do not check this ID (for editing)
-         * @return  boolean             Whether Charactertype name exists or not
+         * @param   int     $seminaryId         ID of Seminary
+         * @param   string  $name               Charactertype name to check
+         * @param   int     $charactertypeId    Do not check this ID (for editing)
+         * @return  boolean                     Whether Charactertype name exists or not
          */
         public function charactertypeNameExists($seminaryId, $name, $charactertypeId=null)
         {
@@ -130,10 +130,10 @@
         /**
          * Create a new Charactertype for a Seminary.
          *
-         * @param   int $userId     ID of creating user
-         * @param   int $seminaryId ID of Seminary
+         * @param   int     $userId     ID of creating user
+         * @param   int     $seminaryId ID of Seminary
          * @param   string  $name       Name for new Charactertype
-         * @return  int         ID of newly created Charactertype
+         * @return  int                 ID of newly created Charactertype
          */
         public function createCharactertype($userId, $seminaryId, $name)
         {
@@ -184,8 +184,8 @@
         /**
          * Edit a Charactertype.
          *
-         * @param   int $charactertypeId    ID of Charactertype to edit
-         * @param   string  $name           New name of Charactertype
+         * @param   int     $charactertypeId    ID of Charactertype to edit
+         * @param   string  $name               New name of Charactertype
          */
         public function editCharactertype($charactertypeId, $name)
         {

@@ -69,10 +69,10 @@
          * Get a Quest and its data by its URL.
          *
          * @throws  \nre\exceptions\IdNotFoundException
-         * @param   int $seminaryId ID of the corresponding Seminary
-         * @param   int $questgroupId   ID of the corresponding Questgroup
-         * @param   string  $questURL   URL-title of a Quest
-         * @return  array           Quest data
+         * @param   int     $seminaryId     ID of the corresponding Seminary
+         * @param   int     $questgroupId   ID of the corresponding Questgroup
+         * @param   string  $questUrl       URL-title of a Quest
+         * @return  array                   Quest data
          */
         public function getQuestByUrl($seminaryId, $questgroupId, $questUrl)
         {
@@ -98,7 +98,7 @@
          *
          * @throws  \nre\exceptions\IdNotFoundException
          * @param   string  $questId    ID of a Quest
-         * @return  array           Quest data
+         * @return  array               Quest data
          */
         public function getQuestById($questId)
         {
@@ -122,8 +122,8 @@
         /**
          * Get the first Quest of a Qusetgroup.
          *
-         * @param   int $questId    ID of Questgroup
-         * @return  array           Data of first Quest
+         * @param   int     $questgroupId   ID of Questgroup
+         * @return  array                   Data of first Quest
          */
         public function getFirstQuestOfQuestgroup($questgroupId)
         {
@@ -148,8 +148,8 @@
          * Get all Quests a Qusetgroup that do not have a following
          * Quest.
          *
-         * @param   int $questId    ID of Questgroup
-         * @return  array           List of last Quests
+         * @param   int     $questgroupId   ID of Questgroup
+         * @return  array                   List of last Quests
          */
         public function getLastQuestsOfQuestgroup($questgroupId)
         {
@@ -170,8 +170,8 @@
         /**
          * Get Quests that follow-up a Quest.
          *
-         * @param   int $questId    ID of Quest to get next Quests of
-         * @return  array           Quests data
+         * @param   int     $questId    ID of Quest to get next Quests of
+         * @return  array               Quests data
          */
         public function getNextQuests($questId)
         {
@@ -190,8 +190,8 @@
         /**
          * Get Quests that the given Quests follows-up to.
          *
-         * @param   int $questId    ID of Quest to get previous Quests of
-         * @return  array           Quests data
+         * @param   int     $questId    ID of Quest to get previous Quests of
+         * @return  array               Quests data
          */
         public function getPreviousQuests($questId)
         {
@@ -210,7 +210,7 @@
         /**
          * Set the previous Quest for a Quest.
          *
-         * @param   int $questId        ID of Quest to set previous Quest for
+         * @param   int $questId            ID of Quest to set previous Quest for
          * @param   int $previousQuestId    Id of previous Quest
          */
         public function setPreviousQuest($questId, $previousQuestId)
@@ -230,7 +230,7 @@
         /**
          * Mark a Quest as entered for a Character.
          *
-         * @param   int $questId    ID of Quest to mark as entered
+         * @param   int $questId        ID of Quest to mark as entered
          * @param   int $characterId    ID of Character that entered the Quest
          */
         public function setQuestEntered($questId, $characterId)
@@ -242,7 +242,7 @@
         /**
          * Mark a Quest as submitted for a Character.
          *
-         * @param   int $questId    ID of Quest to mark as unsolved
+         * @param   int $questId        ID of Quest to mark as unsolved
          * @param   int $characterId    ID of Character that unsolved the Quest
          */
         public function setQuestSubmitted($questId, $characterId)
@@ -254,7 +254,7 @@
         /**
          * Mark a Quest as unsolved for a Character.
          *
-         * @param   int $questId    ID of Quest to mark as unsolved
+         * @param   int $questId        ID of Quest to mark as unsolved
          * @param   int $characterId    ID of Character that unsolved the Quest
          */
         public function setQuestUnsolved($questId, $characterId)
@@ -266,7 +266,7 @@
         /**
          * Mark a Quest as solved for a Character.
          *
-         * @param   int $questId    ID of Quest to mark as solved
+         * @param   int $questId        ID of Quest to mark as solved
          * @param   int $characterId    ID of Character that solved the Quest
          */
         public function setQuestSolved($questId, $characterId)
@@ -278,9 +278,9 @@
         /**
          * Determine if the given Character has entered a Quest.
          *
-         * @param   int $questId    ID of Quest to check
-         * @param   int $characterId    ID of Character to check
-         * @result  boolean         Whether Character has entered the Quest or not
+         * @param   int     $questId        ID of Quest to check
+         * @param   int     $characterId    ID of Character to check
+         * @result  boolean                 Whether Character has entered the Quest or not
          */
         public function hasCharacterEnteredQuest($questId, $characterId)
         {
@@ -302,9 +302,9 @@
         /**
          * Determine if the given Character has tried to solve a Quest.
          *
-         * @param   int $questId    ID of Quest to check
-         * @param   int $characterId    ID of Character to check
-         * @result  boolean         Whether Character has tried to solved the Quest or not
+         * @param   int     $questId        ID of Quest to check
+         * @param   int     $characterId    ID of Character to check
+         * @result  boolean                 Whether Character has tried to solved the Quest or not
          */
         public function hasCharacterTriedQuest($questId, $characterId)
         {
@@ -326,9 +326,9 @@
         /**
          * Determine if the given Character has solved the given Quest.
          *
-         * @param   int $questId    ID of Quest to check
-         * @param   int $characterId    ID of Character to check
-         * @result  boolean         Whether Character has solved the Quest or not
+         * @param   int     $questId        ID of Quest to check
+         * @param   int     $characterId    ID of Character to check
+         * @result  boolean                 Whether Character has solved the Quest or not
          */
         public function hasCharacterSolvedQuest($questId, $characterId)
         {
@@ -350,8 +350,8 @@
         /**
          * Get the last Quests for a Character.
          *
-         * @param   int $characterId    ID of Character
-         * @retrun  array           Quest data
+         * @param   int     $characterId    ID of Character
+         * @retrun  array                   Quest data
          */
         public function getLastQuestForCharacter($characterId)
         {
@@ -378,8 +378,8 @@
         /**
          * Get all Quests for a Seminary.
          *
-         * @param   int $seminaryId ID of Seminary
-         * @return  array           Quests for this Seminary
+         * @param   int     $seminaryId ID of Seminary
+         * @return  array               Quests for this Seminary
          */
         public function getQuestsForSeminary($seminaryId)
         {
@@ -398,11 +398,11 @@
         /**
          * Get count of all Quests for a Seminary.
          *
-         * @param   int $seminaryId ID of Seminary
-         * @param   int $questgroupId   ID of Questgroup (optional)
-         * @param   int $questtypeId    ID of Questtype (optional)
-         * @param   string  $title      Part of the title to filter for (optional)
-         * @return  int         Count of Quests for this Seminary
+         * @param   int     $seminaryId     ID of Seminary
+         * @param   int     $questgroupId   ID of Questgroup (optional)
+         * @param   int     $questtypeId    ID of Questtype (optional)
+         * @param   string  $title          Part of the title to filter for (optional)
+         * @return  int                     Count of Quests for this Seminary
          */
         public function getCountForQuestsForSeminaryByOpenSubmissions($seminaryId, $questgroupId=null, $questtypeId=null, $title=null)
         {
@@ -430,13 +430,13 @@
          * Get all Quests for a Seminary order by their count of open
          * submissions.
          *
-         * @param   int $seminaryId ID of Seminary
-         * @param   int $questgroupId   ID of Questgroup (optional)
-         * @param   int $questtypeId    ID of Questtype (optional)
-         * @param   string  $title      Part of title to filter for (optional)
-         * @param   int $limit      Limit amount of Quests (optional)
-         * @param   int $offset     Offset (optional)
-         * @return  array           Quests for this Seminary
+         * @param   int     $seminaryId     ID of Seminary
+         * @param   int     $questgroupId   ID of Questgroup (optional)
+         * @param   int     $questtypeId    ID of Questtype (optional)
+         * @param   string  $title          Part of title to filter for (optional)
+         * @param   int     $limit          Limit amount of Quests (optional)
+         * @param   int     $offset         Offset (optional)
+         * @return  array                   Quests for this Seminary
          */
         public function getQuestsForSeminaryByOpenSubmissions($seminaryId, $questgroupId=null, $questtypeId=null, $title=null, $limit=null, $offset=0)
         {
@@ -468,8 +468,8 @@
         /**
          * Get all Quests that are linked to a Questtopic.
          *
-         * @param   int $questtopicId   ID of Questtopic
-         * @return  array           Quests for this Questtopic
+         * @param   int     $questtopicId   ID of Questtopic
+         * @return  array                   Quests for this Questtopic
          */
         public function getQuestsForQuesttopic($questtopicId)
         {
@@ -491,10 +491,10 @@
         /**
          * Mark a Quest for a Character.
          *
-         * @param   int $questId    ID of Quest to mark
-         * @param   int $characterId    ID of Character to mark the Quest for
-         * @param   int $status     Quest status to mark
-         * @param   boolean $repeated   Insert although status is already set for this Quest and Character
+         * @param   int     $questId        ID of Quest to mark
+         * @param   int     $characterId    ID of Character to mark the Quest for
+         * @param   int     $status         Quest status to mark
+         * @param   boolean $repeated       Insert although status is already set for this Quest and Character
          */
         private function setQuestStatus($questId, $characterId, $status, $repeated=true)
         {
@@ -532,9 +532,9 @@
         /**
          * Get the last status of a Quest for a Character.
          *
-         * @param   int $questId    ID of Quest
+         * @param   int $questId        ID of Quest
          * @param   int $characterId    ID of Character to get status for
-         * @return  int         Last status
+         * @return  int                 Last status
          */
         public function getLastQuestStatus($questId, $characterId)
         {
@@ -560,9 +560,9 @@
          * Check if a Quest title already exists.
          *
          * @param   string  $title      Quest title to check
-         * @param   int $seminaryId ID of Seminary
-         * @param   int $questId    Do not check this ID (for editing)
-         * @return  boolean         Whether Quest title exists or not
+         * @param   int     $seminaryId ID of Seminary
+         * @param   int     $questId    Do not check this ID (for editing)
+         * @return  boolean             Whether Quest title exists or not
          */
         public function questTitleExists($title, $seminaryId, $questId=null)
         {
@@ -584,15 +584,15 @@
         /**
          * Create a new Quest.
          *
-         * @param   int $userId     User-ID that creates the new character
-         * @param   int $questgroupId   ID of Questgroup
-         * @param   int $questtypeId    ID of Questtype
-         * @param   string  $title      Title for new Quest
-         * @param   int $xps        XPs for new Quest
-         * @param   string  $task       Task for new Quest
-         * @param   string  $entrytext  Entrytext for new Quest
-         * @param   string  $wrongtext  Wrongtext for new Quest
-         * @return  int         ID of new Quest
+         * @param   int     $userId         User-ID that creates the new character
+         * @param   int     $questgroupId   ID of Questgroup
+         * @param   int     $questtypeId    ID of Questtype
+         * @param   string  $title          Title for new Quest
+         * @param   int     $xps            XPs for new Quest
+         * @param   string  $task           Task for new Quest
+         * @param   string  $entrytext      Entrytext for new Quest
+         * @param   string  $wrongtext      Wrongtext for new Quest
+         * @return  int                     ID of new Quest
          */
         public function createQuest($userId, $questgroupId, $questtypeId, $title, $xps, $task, $entrytext, $wrongtext)
         {
@@ -636,8 +636,8 @@
         /**
          * Set the media for a Quest.
          *
-         * @param   int $questId    ID of Quest to set media for
-         * @param   int $questmediaId   ID of Questsmedia to set
+         * @param   int $questId        ID of Quest to set media for
+         * @param   int $questsmediaId  ID of Questsmedia to set
          */
         public function setQuestmedia($questId, $questsmediaId)
         {
@@ -655,13 +655,13 @@
         /**
          * Edit a new Quest.
          *
-         * @param   int $questId    ID of Quest to edit
-         * @param   int $questtypeId    ID of Questtype
-         * @param   string  $title      New title for Quest
-         * @param   int $xps        XPs for Quest
-         * @param   string  $task       New task for Quest
-         * @param   string  $entrytext  New entrytext for Quest
-         * @param   string  $wrongtext  New wrongtext for Quest
+         * @param   int     $questId        ID of Quest to edit
+         * @param   int     $questtypeId    ID of Questtype
+         * @param   string  $title          New title for Quest
+         * @param   int     $xps            XPs for Quest
+         * @param   string  $task           New task for Quest
+         * @param   string  $entrytext      New entrytext for Quest
+         * @param   string  $wrongtext      New wrongtext for Quest
          */
         public function editQuest($questId, $questtypeId, $title, $xps, $task, $entrytext, $wrongtext)
         {
@@ -686,7 +686,7 @@
          * Copy all Quests from a Seminary.
          *
          * @param   int     $userId             ID of creating user
-         * @param   int     $seminaryId         ID of Seminary to copy from
+         * @param   int     $sourceSeminaryId   ID of Seminary to copy from
          * @param   array   $questgroupIds      Mapping of Questgroup-IDs from source Seminary to target Seminary
          * @param   array   $seminaryMediaIds   Mapping of Seminary-media-IDs from source Seminary to target Seminary (optional)
          * @return  array                       Mapping of Quest-IDs from source Seminary to target Seminary

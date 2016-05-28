@@ -53,8 +53,8 @@
          *
          * @throws  \nre\exceptions\IdNotFoundException
          * @param   string  $seminaryUrl    URL-Title of a Seminary
-         * @param   string  $groupsgroupUrl URL-Title of a Character groups-group
          * @param   string  $achievementUrl URL of Achievement
+         * @param   int     $size           QR-code size
          */
         public function achievement($seminaryUrl, $achievementUrl, $size=1)
         {
@@ -129,6 +129,7 @@
          * @param   string  $groupsgroupUrl URL-Title of a Character groups-group
          * @param   string  $questUrl       URL-Title of a Character groups Quest
          * @param   string  $stationUrl     URL of Character groups Quest station
+         * @param   int     $size           QR-code size
          */
         public function charactergroupsqueststation($seminaryUrl, $groupsgroupUrl, $questUrl, $stationUrl, $size=1)
         {
@@ -166,6 +167,7 @@
          * @param   string  $seminaryUrl    URL-Title of a Seminary
          * @param   string  $groupsgroupUrl URL-Title of a Character groups-group
          * @param   string  $achievementUrl URL of Achievement
+         * @param   int     $size           QR-code size
          */
         public function charactergroupsachievements($seminaryUrl, $groupsgroupUrl, $achievementUrl, $size=1)
         {
@@ -201,7 +203,7 @@
          * caching accordingly.
          *
          * @param   string  $fileName   Filename
-         * @return  boolean         HTTP-status 304 was set (in cache)
+         * @return  boolean             HTTP-status 304 was set (in cache)
          */
         private function setCacheHeaders($fileName)
         {
@@ -233,6 +235,13 @@
         }
 
 
+        /**
+         * Generate QR-code with given text and in given size.
+         * 
+         * @param   string  $text   QR-code content
+         * @param   int     $size   QR-code size
+         * @return  mixed           Null
+         */
         private function generateQRcode($text, $size)
         {
             \hhu\z\lib\Phpqrcode::load();
@@ -250,7 +259,7 @@
          * @throws  \nre\exceptions\ParamsNotValidException
          * @param   array   $media  Medium to get file for
          * @param   string  $action Action for processing the media
-         * @return  object      File for the medium (or null if medium is cached)
+         * @return  object          File for the medium (or null if medium is cached)
          */
         private function getMediaFile($media, $action=null)
         {
@@ -327,9 +336,9 @@
          *
          * @param   string  $fileName   Absolute pathname of image to resize
          * @param   string  $mimeType   Mimetype of target image
-         * @param   int $width      Max. width to resize to
-         * @param   int $height     Max. height to resize to
-         * @return  mixed           Resized image
+         * @param   int     $width      Max. width to resize to
+         * @param   int     $height     Max. height to resize to
+         * @return  mixed               Resized image
          */
         private static function resizeImage($fileName, $mimeType, $width, $height)
         {

@@ -38,7 +38,7 @@
          * Get a medium by its URL.
          *
          * @throws  \nre\exceptions\IdNotFoundException
-         * @param   string  $mediaURL   URL-name of the Medium
+         * @param   string  $mediaUrl   URL-name of the Medium
          * @return  array               Medium data
          */
         public function getMediaByUrl($mediaUrl)
@@ -63,8 +63,8 @@
          * Get a medium by its ID.
          *
          * @throws  \nre\exceptions\IdNotFoundException
-         * @param   int $mediaId    ID of the Medium
-         * @return  array           Medium data
+         * @param   int     $mediaId    ID of the Medium
+         * @return  array               Medium data
          */
         public function getMediaById($mediaId)
         {
@@ -115,8 +115,8 @@
          * Get a Seminary medium by its ID.
          *
          * @throws  \nre\exceptions\IdNotFoundException
-         * @param   int     $seminaryMediaId    ID of the Seminary medium
-         * @return  array                       Seminary medium data
+         * @param   int     $mediaId    ID of the Seminary medium
+         * @return  array               Seminary medium data
          */
         public function getSeminaryMediaById($mediaId)
         {
@@ -326,7 +326,7 @@
          * Copy an Avatar picture.
          *
          * @param   int $userId             ID of creating user
-         * @param   int $seminaryMediaId    ID of Seminary media to copy
+         * @param   int $avatarpictureId    ID of Avatar picture
          */
         public function copyAvatarpicture($userId, $avatarpictureId)
         {
@@ -402,8 +402,8 @@
         /**
          * Copy a Questgroup picture.
          *
-         * @param   int $userId             ID of creating user
-         * @param   int $seminaryMediaId    ID of Seminary media to copy
+         * @param   int $userId                 ID of creating user
+         * @param   int $questgroupspictureId   ID of Questgroup picture
          */
         public function copyQuestgroupspicture($userId, $questgroupspictureId)
         {

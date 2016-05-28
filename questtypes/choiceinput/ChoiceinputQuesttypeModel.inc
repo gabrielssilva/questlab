@@ -111,8 +111,8 @@
         /**
          * Get choiceinput-text for a Quest.
          *
-         * @param   int $questId    ID of Quest
-         * @return  array           Choiceinput-text
+         * @param   int     $questId    ID of Quest
+         * @return  array               Choiceinput-text
          */
         public function getChoiceinputQuest($questId)
         {
@@ -135,8 +135,8 @@
         /**
          * Get all lists of input values for a choiceinput-text.
          *
-         * @param   int $questId    ID of Quest
-         * @return  array           List
+         * @param   int     $questId    ID of Quest
+         * @return  array               List
          */
         public function getChoiceinputLists($questId)
         {
@@ -154,8 +154,8 @@
         /**
          * Get the list of values for a choiceinput-list.
          *
-         * @param   int $listId ID of list
-         * @return  array       Input values
+         * @param   int     $listId ID of list
+         * @return  array           Input values
          */
         public function getChoiceinputChoices($listId)
         {
@@ -173,9 +173,9 @@
         /**
          * Save Character’s submitted answer for one choiceinput-list.
          *
-         * @param   int $regexId    ID of list
-         * @param   int $characterId    ID of Character
-         * @param   string  $answer     Submitted answer for this list
+         * @param   int     $listId         ID of list
+         * @param   int     $characterId    ID of Character
+         * @param   string  $answer         Submitted answer for this list
          */
         public function setCharacterSubmission($listId, $characterId, $answer)
         {
@@ -211,9 +211,9 @@
         /**
          * Get answer of one choiceinput-list submitted by Character.
          *
-         * @param   int $regexId    ID of list
-         * @param   int $characterId    ID of Character
-         * @return  int         Submitted answer for this list or null
+         * @param   int     $listId         ID of list
+         * @param   int     $characterId    ID of Character
+         * @return  int                     Submitted answer for this list or null
          */
         public function getCharacterSubmission($listId, $characterId)
         {
@@ -236,8 +236,8 @@
         /**
          * Set the text for a Quest and correct choice input lists count.
          *
-         * @param   int $userId     ID of user setting text
-         * @param   int $questId    ID of Quest to set text for
+         * @param   int     $userId     ID of user setting text
+         * @param   int     $questId    ID of Quest to set text for
          * @param   string  $text       Text for Quest
          */
         public function setTextForQuest($userId, $questId, $text)
@@ -300,10 +300,10 @@
         /**
          * Set list of choices for a text.
          *
-         * @param   int $questId    ID of Quest to set choices for
-         * @param   int $number     List number
+         * @param   int     $questId    ID of Quest to set choices for
+         * @param   int     $number     List number
          * @param   array   $choices    List of choices
-         * @param   int $correctPos Position of correct answer
+         * @param   int     $correctPos Position of correct answer
          */
         public function setListForText($questId, $number, $choices, $correctPos)
         {

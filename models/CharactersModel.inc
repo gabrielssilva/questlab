@@ -37,8 +37,8 @@
         /**
          * Get all characters for an user.
          *
-         * @param   int $userId ID of the user
-         * @return  array       Characters
+         * @param   int     $userId ID of the user
+         * @return  array           Characters
          */
         public function getCharactersForUser($userId)
         {
@@ -63,9 +63,9 @@
         /**
          * Get count of Characters for a Seminary.
          *
-         * @param   int $seminaryId ID of the Seminary
+         * @param   int     $seminaryId     ID of the Seminary
          * @param   string  $charactername  Only get Characters with the given name (optional)
-         * @return  int         Count of Characters
+         * @return  int                     Count of Characters
          */
         public function getCharactersForSeminaryCount($seminaryId, $charactername=null)
         {
@@ -91,9 +91,9 @@
         /**
          * Get Characters for a Seminary.
          *
-         * @param   int $seminaryId ID of the Seminary
+         * @param   int     $seminaryId     ID of the Seminary
          * @param   bool    $onlyWithRole   Only Characters that have at least one role assigned (optional)
-         * @return  array           Characters
+         * @return  array                   Characters
          */
         public function getCharactersForSeminary($seminaryId, $onlyWithRole=false)
         {
@@ -119,12 +119,12 @@
         /**
          * Get Characters for a Seminary sorted and optionally limited.
          *
-         * @param   int $seminaryId ID of the Seminary
-         * @param   string  $sort       Field to sort by
+         * @param   int     $seminaryId     ID of the Seminary
+         * @param   string  $sort           Field to sort by
          * @param   string  $charactername  Only get Characters with the given name (optional)
-         * @param   int $limit      Limit amount of Characters (optional)
-         * @param   int $offset     Offset (optional)
-         * @return  array           Characters
+         * @param   int     $limit          Limit amount of Characters (optional)
+         * @param   int     $offset         Offset (optional)
+         * @return  array                   Characters
          */
         public function getCharactersForSeminarySorted($seminaryId, $sort, $charactername='', $limit=null, $offset=0)
         {
@@ -215,8 +215,8 @@
         /**
          * Get Characters for a Character group.
          *
-         * @param   int $groupId    ID of the Character group
-         * @return  array           Characters
+         * @param   int     $groupId    ID of the Character group
+         * @return  array               Characters
          */
         public function getCharactersForGroup($groupId)
         {
@@ -242,9 +242,9 @@
          * Get the character of a user for a Seminary.
          *
          * @throws  \nre\exceptions\IdNotFoundException
-         * @param   int $userId     ID of the user
-         * @param   int $seminaryId ID of the Seminary
-         * @return  array           Character data
+         * @param   int     $userId     ID of the user
+         * @param   int     $seminaryId ID of the Seminary
+         * @return  array               Character data
          */
         public function getCharacterForUserAndSeminary($userId, $seminaryId)
         {
@@ -274,9 +274,9 @@
          * Get a Character by its Url.
          *
          * @throws  \nre\exceptions\IdNotFoundException
-         * @param   int $seminaryId ID of the Seminary
+         * @param   int     $seminaryId     ID of the Seminary
          * @param   string  $characterUrl   URL-name of the Character
-         * @return  array           Character data
+         * @return  array                   Character data
          */
         public function getCharacterByUrl($seminaryId, $characterUrl)
         {
@@ -307,7 +307,7 @@
          *
          * @throws  \nre\exceptions\IdNotFoundException
          * @param   string  $characterId    ID of the Character
-         * @return  array           Character data
+         * @return  array                   Character data
          */
         public function getCharacterById($characterId)
         {
@@ -357,10 +357,10 @@
         /**
          * Get Characters with the most amount of Achievements.
          *
-         * @param   int $seminaryId     ID of Seminary
-         * @param   int $conut          Amount of Characters to retrieve
+         * @param   int     $seminaryId         ID of Seminary
+         * @param   int     $count              Amount of Characters to retrieve
          * @param   bool    $alsoWithDeadline   Include Achievements with deadline (optional)
-         * @return  array               List of Characters
+         * @return  array                       List of Characters
          */
         public function getCharactersWithMostAchievements($seminaryId, $count, $alsoWithDeadline=true)
         {
@@ -396,7 +396,7 @@
          *
          * @param   int $seminaryId ID of Seminary
          * @param   int $xps        XP-value to get rank for
-         * @return  int         Rank of XP-value
+         * @return  int             Rank of XP-value
          */
         public function getXPRank($seminaryId, $xps)
         {
@@ -424,10 +424,10 @@
         /**
          * Get the superior $count Characters in the ranking.
          *
-         * @param   int $seminaryId ID of Seminary
-         * @param   int $xps        XP-value of Character
-         * @param   int $count      Count of Characters to determine
-         * @return  array           List of superior Characters
+         * @param   int     $seminaryId ID of Seminary
+         * @param   int     $xps        XP-value of Character
+         * @param   int     $count      Count of Characters to determine
+         * @return  array               List of superior Characters
          */
         public function getSuperiorCharacters($seminaryId, $xps, $count)
         {
@@ -459,11 +459,11 @@
         /**
          * Get the inferior $count Characters in the ranking.
          *
-         * @param   int $seminaryId ID of Seminary
-         * @param   int characterId ID of Character
-         * @param   int $xps        XP-value of Character
-         * @param   int $count      Count of Characters to determine
-         * @return  array           List of inferior Characters
+         * @param   int     $seminaryId ID of Seminary
+         * @param   int     characterId ID of Character
+         * @param   int     $xps        XP-value of Character
+         * @param   int     $count      Count of Characters to determine
+         * @return  array               List of inferior Characters
          */
         public function getInferiorCharacters($seminaryId, $characterId, $xps, $count)
         {
@@ -491,8 +491,8 @@
         /**
          * Get Characters that solved a Quest.
          *
-         * @param   int $questId    ID of Quest to get Characters for
-         * @return  array           Characters data
+         * @param   int     $questId    ID of Quest to get Characters for
+         * @return  array               Characters data
          */
         public function getCharactersSolvedQuest($questId)
         {
@@ -522,8 +522,8 @@
         /**
          * Get Characters that did not solv a Quest.
          *
-         * @param   int $questId    ID of Quest to get Characters for
-         * @return  array           Characters data
+         * @param   int     $questId    ID of Quest to get Characters for
+         * @return  array               Characters data
          */
         public function getCharactersUnsolvedQuest($questId)
         {
@@ -553,8 +553,8 @@
         /**
          * Get Characters that sent a submission for a Quest.
          *
-         * @param   int $questId    ID of Quest to get Characters for
-         * @return  array           Characters data
+         * @param   int     $questId    ID of Quest to get Characters for
+         * @return  array               Characters data
          */
         public function getCharactersSubmittedQuest($questId)
         {
@@ -584,9 +584,9 @@
         /**
          * Get Characters with the given Character role.
          *
-         * @param   int $seminaryId     ID of Seminary
-         * @param   string  $characterrole      Character role
-         * @return  array               List of users
+         * @param   int     $seminaryId     ID of Seminary
+         * @param   string  $characterrole  Character role
+         * @return  array                   List of users
          */
         public function getCharactersWithCharacterRole($seminaryId, $characterrole)
         {
@@ -613,9 +613,9 @@
         /**
          * Check if a Character name already exists.
          *
-         * @param   string  $name       Character name to check
-         * @param   int $characterId    Do not check this ID (for editing)
-         * @return  boolean         Whether Character name exists or not
+         * @param   string  $name           Character name to check
+         * @param   int     $characterId    Do not check this ID (for editing)
+         * @return  boolean                 Whether Character name exists or not
          */
         public function characterNameExists($name, $characterId=null)
         {

@@ -38,8 +38,8 @@
          * Get a Questgroup hierarchy by its ID.
          *
          * throws   \nre\exceptions\IdNotFoundException
-         * @param   int $questgroupshierarchyId ID of a Questgroup hierarchy
-         * @return  array               Questgroup hierarchy
+         * @param   int     $questgroupshierarchyId ID of a Questgroup hierarchy
+         * @return  array                           Questgroup hierarchy
          */
         public function getHierarchyById($questgroupshierarchyId)
         {
@@ -63,9 +63,9 @@
          * Get a Questgroup hierarchy by its URL.
          *
          * @throws  \nre\exceptions\IdNotFoundException
-         * @param   int $seminaryId         ID of Seminary
-         * @param   int $questgroupshierarchyURL    URL of a Questgroup hierarchy
-         * @return  array                   Questgroup hierarchy
+         * @param   int     $seminaryId                 ID of Seminary
+         * @param   int     $questgroupshierarchyUrl    URL of a Questgroup hierarchy
+         * @return  array                               Questgroup hierarchy
          */
         public function getHierarchyByUrl($seminaryId, $questgroupshierarchyUrl)
         {
@@ -89,8 +89,8 @@
         /**
          * Get the toplevel hierarchy entries of a Seminary.
          *
-         * @param   int $seminaryId ID of the seminary to get hierarchy for
-         * @return  array           Toplevel hierarchy
+         * @param   int     $seminaryId ID of the seminary to get hierarchy for
+         * @return  array               Toplevel hierarchy
          */
         public function getHierarchyOfSeminary($seminaryId)
         {
@@ -110,8 +110,8 @@
         /**
          * Get the Questgroup-Hierarchy for a Questgroup.
          *
-         * @param   int $questgroupId   ID of Questgroup
-         * @return  array           Hierarchy for Questgroup
+         * @param   int     $questgroupId   ID of Questgroup
+         * @return  array                   Hierarchy for Questgroup
          */
         public function getHierarchyForQuestgroup($questgroupId)
         {
@@ -135,8 +135,8 @@
         /**
          * Get the child hierarchy entries of a Questgroup hierarchy.
          *
-         * @param   int $questgroupshierarchyId ID of a Questgroup hierarchy
-         * @return  array               Child Questgroup hierarchy entries
+         * @param   int     $questgroupshierarchyId ID of a Questgroup hierarchy
+         * @return  array                           Child Questgroup hierarchy entries
          */
         public function getChildQuestgroupshierarchy($questgroupshierarchyId)
         {
@@ -155,10 +155,10 @@
          * Check if a title for a Questgroupshierarchy already exists
          * for a Seminary.
          *
-         * @param   string  $title
-         * @param   int $seminaryId
-         * @param   int $questgroupshierarchyId Do not check this Questgroupshierarchy (for editing)
-         * @return                  Whether title already exists or not
+         * @param   string  $title                  Title to check
+         * @param   int     $seminaryId             ID of Seminary
+         * @param   int     $questgroupshierarchyId Do not check this Questgroupshierarchy (for editing)
+         * @return                                  Whether title already exists or not
          */
         public function questgroupshierarchyTitleSingularExists($title, $seminaryId, $questgroupshierarchyId=null)
         {
@@ -180,11 +180,11 @@
         /**
          * Create a new Questgroupshierarchy for a Seminary
          *
-         * @param   int $userId             ID of creating user
-         * @param   int $seminaryId         ID of Seminary
-         * @param   int $parentQuestgroupsierarchyId    ID of parent Questgroupshierarchy
-         * @param   string  $title              Title (singular)
-         * @param   string  $course             Title (plural)
+         * @param   int     $userId                         ID of creating user
+         * @param   int     $seminaryId                     ID of Seminary
+         * @param   int     $parentQuestgroupsierarchyId    ID of parent Questgroupshierarchy
+         * @param   string  $titleSingular                  Title (singular)
+         * @param   string  $titlePlural                    Title (plural)
          */
         public function createQuestgroupshierarchy($userId, $seminaryId, $parentQuestgroupsierarchyId, $titleSingular, $titlePlural)
         {
@@ -223,9 +223,9 @@
         /**
          * Edit a Questgroupshierarchy.
          *
-         * @param   int $questgroupshierarchyId ID of Questgroupshierarchy to edit
-         * @param   string  $title          New title (singular)
-         * @param   string  $course         New title (plural)
+         * @param   int     $questgroupshierarchyId ID of Questgroupshierarchy to edit
+         * @param   string  $titleSingular          New title (singular)
+         * @param   string  $titlePlural            New title (plural)
          */
         public function editQuestgroupshierarchy($questgroupshierarchyId, $titleSingular, $titlePlural)
         {
@@ -247,7 +247,7 @@
          * (increment position).
          *
          * @param   array   $questgroupshierarchy   Questgroupshierarchy to move
-         * @param   boolean $up         True for moving up, false for down
+         * @param   boolean $up                     True for moving up, false for down
          */
         public function moveQuestgroupshierarchy($questgroupshierarchy, $up)
         {
@@ -331,7 +331,7 @@
         /**
          * Delete a Questgroupshierarchy.
          *
-         * @param   int $seminaryId ID of the seminary to delete
+         * @param   int $questgroupshierarchyId     ID of Questgroups hierarchy to delete
          */
         public function deleteQuestgroupshierarchy($questgroupshierarchyId)
         {
@@ -359,7 +359,7 @@
          * @param   int     $sourceSeminaryId   ID of Seminary to copy hierarchy from
          * @param   int     $targetSeminaryId   ID of Seminary to copy hierarchy to
          * @param   array   $hierarchy          Hierarchy to copy
-         * @return  array   $hierarchyIds       Mapping of hierarchy IDs from source Seminary to target Seminary
+         * @param   array   $hierarchyIds       Mapping of hierarchy IDs from source Seminary to target Seminary
          */
         private function copyHierarchy($userId, $sourceSeminaryId, $targetSeminaryId, $hierarchy, &$hierarchyIds)
         {

@@ -38,7 +38,9 @@
          * Get count of registered users.
          *
          * @param   string  $username   Only get users with the given username (optional)
-         * @return  int         Count of users
+         * @param   string  $name       Only get users with the given name (optional)
+         * @param   string  $email      Only get users with the given email address (optional)
+         * @return  int                 Count of users
          */
         public function getUsersCount($username=null, $name=null, $email=null)
         {
@@ -75,9 +77,11 @@
          * @throws  \nre\exceptions\ParamsNotValidException
          * @param   string  $sort       Field to sort by
          * @param   string  $username   Only get users with the given username (optional)
-         * @param   int $limit      Limit amount of Characters (optional)
-         * @param   int $offset     Offset (optional)
-         * @return  array           Users
+         * @param   string  $name       Only get users with the given name (optional)
+         * @param   string  $email      Only get users with the given email address (optional)
+         * @param   int     $limit      Limit amount of Characters (optional)
+         * @param   int     $offset     Offset (optional)
+         * @return  array               Users
          */
         public function getUsers($sort, $username=null, $name=null, $email=null, $limit=null, $offset=0)
         {
@@ -133,7 +137,7 @@
          * Get users with the given user role.
          *
          * @param   string  $userrole   User role
-         * @return  array           List of users
+         * @return  array               List of users
          */
         public function getUsersWithRole($userrole)
         {
@@ -154,8 +158,8 @@
          * Get a user and its data by its ID.
          *
          * @throws  \nre\exceptions\IdNotFoundException
-         * @param   int $userId ID of an user
-         * @return  array       Userdata
+         * @param   int     $userId ID of an user
+         * @return  array           Userdata
          */
         public function getUserById($userId)
         {
@@ -181,7 +185,7 @@
          *
          * @throws  \nre\exceptions\IdNotFoundException
          * @param   string  $userUrl    URL-Username of an user
-         * @return  array           Userdata
+         * @return  array               Userdata
          */
         public function getUserByUrl($userUrl)
         {
@@ -229,8 +233,8 @@
          * Check if an username already exists.
          *
          * @param   string  $username   Username to check
-         * @param   int $userId     Do not check this ID (for editing)
-         * @return  boolean         Whether username exists or not
+         * @param   int     $userId     Do not check this ID (for editing)
+         * @return  boolean             Whether username exists or not
          */
         public function usernameExists($username, $userId=null)
         {
@@ -252,8 +256,8 @@
          * Check if an e‑mail address already exists.
          *
          * @param   string  $email  E‑mail address to check
-         * @param   int $userId Do not check this ID (for editing)
-         * @return  boolean     Whether e‑mail address exists or not
+         * @param   int     $userId Do not check this ID (for editing)
+         * @return  boolean         Whether e‑mail address exists or not
          */
         public function emailExists($email, $userId=null)
         {
@@ -278,7 +282,7 @@
          * @param   string  $surname    Surname of the user to create
          * @param   string  $email      E‑Mail-Address of the user to create
          * @param   string  $password   Password of the user to create
-         * @return  int         ID of the newly created user
+         * @return  int                 ID of the newly created user
          */
         public function createUser($username, $prename, $surname, $email, $password)
         {
@@ -329,7 +333,7 @@
          * Edit a user.
          *
          * @throws  \nre\exceptions\DatamodelException
-         * @param   int $userId     ID of the user to delete
+         * @param   int     $userId     ID of the user to delete
          * @param   string  $username   New name of user
          * @param   string  $prename    Prename of the user to create
          * @param   string  $surname    Surname of the user to create
@@ -395,7 +399,7 @@
          * Hash a password.
          *
          * @param   string  $password   Plaintext password
-         * @return  string          Hashed password
+         * @return  string              Hashed password
          */
         public function hash($password)
         {
@@ -413,7 +417,7 @@
          *
          * @param   string  $password   Plaintext password to verify
          * @param   string  $hash       Hashed password to match with
-         * @return  boolean         Verified
+         * @return  boolean             Verified
          */
         private function verify($password, $hash)
         {

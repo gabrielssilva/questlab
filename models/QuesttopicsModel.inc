@@ -37,9 +37,9 @@
         /**
          * Get a Questtopic by its URL.
          *
-         * @param   int $seminaryId ID of Seminary
+         * @param   int     $seminaryId     ID of Seminary
          * @param   string  $questtopicUrl  URL-Title of Questtopic
-         * @return  array           Questtopic data
+         * @return  array                   Questtopic data
          */
         public function getQuesttopicByUrl($seminaryId, $questtopicUrl)
         {
@@ -62,8 +62,8 @@
         /**
          * Get a Questtopic by its ID.
          *
-         * @param   int $questtopicId   ID of Questtopic
-         * @return  array           Questtopic data
+         * @param   int     $questtopicId   ID of Questtopic
+         * @return  array                   Questtopic data
          */
         public function getQuesttopicById($questtopicId)
         {
@@ -86,8 +86,8 @@
         /**
          * Get all Questtopics for a Seminary.
          *
-         * @param   int $seminaryId ID of Seminary
-         * @return  array           List of Questtopics
+         * @param   int     $seminaryId ID of Seminary
+         * @return  array               List of Questtopics
          */
         public function getQuesttopicsForSeminary($seminaryId)
         {
@@ -181,7 +181,7 @@
          * Get count of Quests that are linked to a Questtopic.
          *
          * @param   int $questtopicId   ID of Questtopic
-         * @return  int         Count of Quests
+         * @return  int                 Count of Quests
          */
         public function getQuestCountForQuesttopic($questtopicId)
         {
@@ -208,7 +208,7 @@
          *
          * @param   int $questtopicId   ID of Questtopic
          * @param   int $characterId    ID of Character
-         * @return  int         Count of Quests
+         * @return  int                 Count of Quests
          */
         public function getCharacterQuestCountForQuesttopic($questtopicId, $characterId)
         {
@@ -234,8 +234,8 @@
         /**
          * Get alle Questsubtopics for a Questtopic.
          *
-         * @param   int $questtopicId   ID of Questtopic
-         * @return  array           List of Questsubtopics for this Questtopic
+         * @param   int     $questtopicId   ID of Questtopic
+         * @return  array                   List of Questsubtopics for this Questtopic
          */
         public function getSubtopicsForQuesttopic($questtopicId)
         {
@@ -253,8 +253,8 @@
         /**
          * Get all Questsubtopics for a Quest.
          *
-         * @param   int $questId    ID of Quest
-         * @return  array           List of Questsubtopics
+         * @param   int     $questId    ID of Quest
+         * @return  array               List of Questsubtopics
          */
         public function getQuestsubtopicsForQuest($questId)
         {
@@ -273,7 +273,7 @@
         /**
          * Set Questsubtopics for a Quest.
          *
-         * @param   int $questId        ID of Quest to set subtopics for
+         * @param   int     $questId            ID of Quest to set subtopics for
          * @param   array   $questsubtopicIds   List of IDs of subtopics to set
          */
         public function setQuestsubtopicsForQuest($questId, $questsubtopicIds)
@@ -314,9 +314,9 @@
         /**
          * Check if a Questtopic title already exists.
          *
-         * @param   string  $title      Questtopic title to check
-         * @param   int $questtopicId   Do not check this ID (for editing)
-         * @return  boolean         Whether Questtopic title exists or not
+         * @param   string  $title          Questtopic title to check
+         * @param   int     $questtopicId   Do not check this ID (for editing)
+         * @return  boolean                 Whether Questtopic title exists or not
          */
         public function questtopicTitleExists($title, $questtopicId=null)
         {
@@ -336,10 +336,10 @@
         /**
          * Create a new Questtopic for a Seminary.
          *
-         * @param   int $userId     ID of creating user
-         * @param   int $seminaryId ID of Seminary
+         * @param   int     $userId     ID of creating user
+         * @param   int     $seminaryId ID of Seminary
          * @param   string  $title      Title for new Questtopic
-         * @return  int         ID of newly created Questtopic
+         * @return  int                 ID of newly created Questtopic
          */
         public function createQuesttopic($userId, $seminaryId, $title)
         {
@@ -362,8 +362,8 @@
         /**
          * Edit a Questtopic.
          *
-         * @param   int $questtopicId   ID of Questtopic to edit
-         * @param   string  $title      New title of Questtopic
+         * @param   int     $questtopicId   ID of Questtopic to edit
+         * @param   string  $title          New title of Questtopic
          */
         public function editQuesttopic($questtopicId, $title)
         {
@@ -393,10 +393,10 @@
         /**
          * Check if a Questsubtopic title already exists.
          *
-         * @param   int $questtopicId       ID of Questtopic
-         * @param   string  $title          Questsubtopic title to check
-         * @param   int $questsubtopicId    Do not check this ID (for editing)
-         * @return  boolean             Whether Questsubtopic title exists or not
+         * @param   int     $questtopicId       ID of Questtopic
+         * @param   string  $title              Questsubtopic title to check
+         * @param   int     $questsubtopicId    Do not check this ID (for editing)
+         * @return  boolean                     Whether Questsubtopic title exists or not
          */
         public function questsubtopicTitleExists($questtopicId, $title, $questsubtopicId=null)
         {
@@ -417,10 +417,10 @@
         /**
          * Create a new Questsubtopic for a Questtopic.
          *
-         * @param   int $userId     ID of creating user
-         * @param   int $questtopicId   ID of Qusttopic
-         * @param   string  $title      Title for new Questtopic
-         * @return  int         ID of newly created Questsubtopic
+         * @param   int     $userId         ID of creating user
+         * @param   int     $questtopicId   ID of Qusttopic
+         * @param   string  $title          Title for new Questtopic
+         * @return  int                     ID of newly created Questsubtopic
          */
         public function createQuestsubtopic($userId, $questtopicId, $title)
         {
@@ -443,8 +443,8 @@
         /**
          * Edit a Questsubtopic.
          *
-         * @param   int $questsubtopicId    ID of Questsubtopic to edit
-         * @param   string  $title          New title of Questsubtopic
+         * @param   int     $questsubtopicId    ID of Questsubtopic to edit
+         * @param   string  $title              New title of Questsubtopic
          */
         public function editQuestsubtopic($questsubtopicId, $title)
         {
@@ -463,7 +463,7 @@
         /**
          * Delete a Questsubtopic.
          *
-         * @param   int $questsubtopicId    ID of Questsubtopic to delete
+         * @param   int $questtopicId   ID of Questsubtopic to delete
          */
         public function deleteQuestsubtopic($questtopicId)
         {

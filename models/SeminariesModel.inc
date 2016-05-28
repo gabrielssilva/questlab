@@ -61,7 +61,7 @@
          *
          * @throws  \nre\exceptions\IdNotFoundException
          * @param   string  $seminaryId ID of a seminary
-         * @return  array           Seminary
+         * @return  array               Seminary
          */
         public function getSeminaryById($seminaryId)
         {
@@ -86,7 +86,7 @@
          *
          * @throws  \nre\exceptions\IdNotFoundException
          * @param   string  $seminaryUrl    URL-Title of a seminary
-         * @return  array           Seminary
+         * @return  array                   Seminary
          */
         public function getSeminaryByUrl($seminaryUrl)
         {
@@ -110,7 +110,7 @@
          * Calculate sum of XPs for a Seminary.
          *
          * @param   int $seminaryId ID of Seminary
-         * @return  int         Total sum of XPs
+         * @return  int             Total sum of XPs
          */
         public function getTotalXPs($seminaryId)
         {
@@ -136,8 +136,8 @@
          * Check if a Seminary title already exists.
          *
          * @param   string  $title      Seminary title to check
-         * @param   int $seminaryId Do not check this ID (for editing)
-         * @return  boolean         Whether Seminary title exists or not
+         * @param   int     $seminaryId Do not check this ID (for editing)
+         * @return  boolean             Whether Seminary title exists or not
          */
         public function seminaryTitleExists($title, $seminaryId=null)
         {
@@ -157,11 +157,11 @@
         /**
          * Create a new Seminary.
          *
-         * @param   int $userId     ID of creating user
-         * @param   string  $title      Title of Seminary to create
-         * @param   string  $course     Course of Seminary
+         * @param   int     $userId         ID of creating user
+         * @param   string  $title          Title of Seminary to create
+         * @param   string  $course         Course of Seminary
          * @param   string  $description    Description of new Seminary
-         * @return  int         ID of the newly created Seminary
+         * @return  int                     ID of the newly created Seminary
          */
         public function createSeminary($userId, $title, $course, $description)
         {
@@ -304,10 +304,12 @@
          * Edit a seminary.
          *
          * @throws  \nre\exceptions\DatamodelException
-         * @param   int $seminaryId ID of Seminary to edit
-         * @param   string  $title      New title of Seminary
-         * @param   string  $course     New course of Seminary
+         * @param   int     $seminaryId     ID of Seminary to edit
+         * @param   string  $title          New title of Seminary
+         * @param   string  $course         New course of Seminary
          * @param   string  $description    New description of Seminary
+         * @param   float   $latitude       GPS-latitude of point to zoom map to
+         * @param   float   $longitude      GPS-longitude of point to zoom map to
          */
         public function editSeminary($seminaryId, $title, $course, $description, $latitude, $longitude)
         {

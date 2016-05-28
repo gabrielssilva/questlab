@@ -37,13 +37,13 @@
         /**
          * Upload a file and create a database record.
          *
-         * @param   int $userId     ID of user that uploads the file
-         * @param   int $seminaryId ID of Seminary
-         * @param   string  $name       Name of file to upload
-         * @param   string  $filename   Filename of file to upload
+         * @param   int     $userId         ID of user that uploads the file
+         * @param   int     $seminaryId     ID of Seminary
+         * @param   string  $name           Name of file to upload
+         * @param   string  $filename       Filename of file to upload
          * @param   string  $tmpFilename    Name of temporary uploaded file
-         * @param   string  $mimetype   Mimetype of file to upload
-         * @return  mixed           ID of database record or false
+         * @param   string  $mimetype       Mimetype of file to upload
+         * @return  mixed                   ID of database record or false
          */
         public function uploadSeminaryFile($userId, $seminaryId, $name, $filename, $tmpFilename, $mimetype)
         {
@@ -89,8 +89,8 @@
          * Get an upload by its ID.
          *
          * @throws  \nre\exceptions\IdNotFoundException
-         * @param   int $uploadId   ID of the uploaded file
-         * @return  array           Upload data
+         * @param   int $seminaryuploadId   ID of the uploaded file
+         * @return  array                   Upload data
          */
         public function getSeminaryuploadById($seminaryuploadId)
         {
@@ -114,9 +114,9 @@
          * Get an upload by its URL.
          *
          * @throws  \nre\exceptions\IdNotFoundException
-         * @param   int $seminaryId ID of Seminary
-         * @param   int $uploadId   ID of the uploaded file
-         * @return  array           Upload data
+         * @param   int     $seminaryId         ID of Seminary
+         * @param   int     $seminaryuploadUrl  ID of the uploaded file
+         * @return  array                       Upload data
          */
         public function getSeminaryuploadByUrl($seminaryId, $seminaryuploadUrl)
         {

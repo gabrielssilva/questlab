@@ -37,8 +37,8 @@
         /**
          * Get all characterroles for a Character referenced by its ID.
          *
-         * @param   int $userId ID of an user
-         * @return  array       Characterroles for a Character
+         * @param   int     $characterId    ID of Character
+         * @return  array                   Characterroles for a Character
          */
         public function getCharacterrolesForCharacterById($characterId)
         {
@@ -56,7 +56,7 @@
         /**
          * Add a role to a Character.
          *
-         * @param   int $characterId    ID of Character to add role to
+         * @param   int     $characterId    ID of Character to add role to
          * @param   string  $characterrole  Role to add
          */
         public function addCharacterroleToCharacter($characterId, $characterrole)
@@ -77,7 +77,7 @@
         /**
          * Remove a role from a Character.
          *
-         * @param   int $characterId    ID of Character to remove role from
+         * @param   int     $characterId    ID of Character to remove role from
          * @param   string  $characterrole  Role to remove
          */
         public function removeCharacterroleFromCharacter($characterId, $characterrole)

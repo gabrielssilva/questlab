@@ -67,7 +67,7 @@
          * List Questtopics of a Seminary.
          *
          * @throws  \nre\exceptions\IdNotFoundException
-         * @param   string  $seminaryUrl        URL-Title of Seminary
+         * @param   string  $seminaryUrl    URL-Title of Seminary
          */
         public function index($seminaryUrl)
         {
@@ -111,7 +111,7 @@
          * Show a Questtopic and its Quests with Questsubtopics.
          *
          * @throws  \nre\exceptions\IdNotFoundException
-         * @param   string  $eminaryUrl URL-Title of Seminary
+         * @param   string  $seminaryUrl    URL-Title of Seminary
          * @param   string  $questtopicUrl  URL-Title of Questtopic
          */
         public function topic($seminaryUrl, $questtopicUrl)
@@ -159,7 +159,7 @@
          * Manage a Questtopic and its Quests with Questsubtopics.
          *
          * @throws  \nre\exceptions\IdNotFoundException
-         * @param   string  $eminaryUrl URL-Title of Seminary
+         * @param   string  $seminaryUrl    URL-Title of Seminary
          * @param   string  $questtopicUrl  URL-Title of Questtopic
          */
         public function manage($seminaryUrl, $questtopicUrl)
@@ -233,7 +233,7 @@
          * Create a new Questtopic for a Seminary.
          *
          * @throws  \nre\exceptions\IdNotFoundException
-         * @param   string  $seminaryUrl        URL-Title of Seminary
+         * @param   string  $seminaryUrl    URL-Title of Seminary
          */
         public function create($seminaryUrl)
         {
@@ -296,7 +296,7 @@
          * Edit a Questtopic of a Seminary and its Questsubtopics.
          *
          * @throws  \nre\exceptions\IdNotFoundException
-         * @param   string  $eminaryUrl URL-Title of Seminary
+         * @param   string  $seminaryUrl    URL-Title of Seminary
          * @param   string  $questtopicUrl  URL-Title of Questtopic
          */
         public function edit($seminaryUrl, $questtopicUrl)
@@ -472,7 +472,7 @@
          * Delete a Questtopic of a Seminary.
          *
          * @throws  \nre\exceptions\IdNotFoundException
-         * @param   string  $eminaryUrl URL-Title of Seminary
+         * @param   string  $seminaryUrl    URL-Title of Seminary
          * @param   string  $questtopicUrl  URL-Title of Questtopic
          */
         public function delete($seminaryUrl, $questtopicUrl)

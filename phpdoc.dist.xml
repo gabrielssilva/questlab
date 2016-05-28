@@ -22,6 +22,7 @@
     </logging>
     <files>
         <directory>.</directory>
+        <ignore>app/lib/*</ignore>
         <ignore>doc/*</ignore>
         <ignore>logs/*</ignore>
         <ignore>media/*</ignore>

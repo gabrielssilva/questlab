@@ -61,8 +61,8 @@
         /**
          * Get all words for a crossword-Quest.
          *
-         * @param   int $questId    ID of Quest
-         * @return  array           Words
+         * @param   int     $questId    ID of Quest
+         * @return  array               Words
          */
         public function getWordsForQuest($questId)
         {
@@ -79,9 +79,9 @@
         /**
          * Save Character’s submitted answer for one crossword-word.
          *
-         * @param   int $regexId    ID of word
-         * @param   int $characterId    ID of Character
-         * @param   string  $answer     Submitted answer for this word
+         * @param   int     $wordId         ID of word
+         * @param   int     $characterId    ID of Character
+         * @param   string  $answer         Submitted answer for this word
          */
         public function setCharacterSubmission($wordId, $characterId, $answer)
         {
@@ -102,9 +102,9 @@
         /**
          * Get answer of one crossword-word submitted by Character.
          *
-         * @param   int $regexId    ID of lisword
-         * @param   int $characterId    ID of Character
-         * @return  int         Submitted answer for this word or null
+         * @param   int     $wordId         ID of word
+         * @param   int     $characterId    ID of Character
+         * @return  int                     Submitted answer for this word or null
          */
         public function getCharacterSubmission($wordId, $characterId)
         {

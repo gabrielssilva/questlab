@@ -44,8 +44,8 @@
         /**
          * Get Character groups Quests of a Character groups-groups.
          *
-         * @param   int $groupsgroupId  ID of the Character groups-group
-         * @return  array           Character groups Quest data
+         * @param   int     $groupsgroupId  ID of the Character groups-group
+         * @return  array                   Character groups Quest data
          */
         public function getQuestsForCharactergroupsgroup($groupsgroupId)
         {
@@ -64,9 +64,9 @@
          * Get a Character groups Quest by its URL.
          *
          * @throws  \nre\exceptions\IdNotFoundException
-         * @param   int $groupsgroupId  ID of the Character groups-group
-         * @param   string  $questUrl   URL-title of the Character groups Quest
-         * @return  array           Character groups Quest data
+         * @param   int     $groupsgroupId  ID of the Character groups-group
+         * @param   string  $questUrl       URL-title of the Character groups Quest
+         * @return  array                   Character groups Quest data
          */
         public function getQuestByUrl($groupsgroupId, $questUrl)
         {
@@ -91,8 +91,8 @@
          * Get a Character groups Quest by its ID.
          *
          * @throws  \nre\exceptions\IdNotFoundException
-         * @param   int $questId    ID of the Character groups Quest
-         * @return  array           Character groups Quest data
+         * @param   int     $questId    ID of the Character groups Quest
+         * @return  array               Character groups Quest data
          */
         public function getQuestById($questId)
         {
@@ -115,8 +115,8 @@
         /**
          * Get Character groups Quests for a Character group.
          *
-         * @param   int $groupId    ID of the Character group
-         * @return  array           Character groups Quests
+         * @param   int     $groupId    ID of the Character group
+         * @return  array               Character groups Quests
          */
         public function getQuestsForGroup($groupId)
         {
@@ -141,9 +141,9 @@
         /**
          * Get XPs of a Character group for a Character groups Quest.
          *
-         * @param   int $questId    ID of Character groups Quest
-         * @param   int $groupId    ID of Character group to get XPs of
-         * @return  array           XP-record
+         * @param   int     $questId    ID of Character groups Quest
+         * @param   int     $groupId    ID of Character group to get XPs of
+         * @return  array               XP-record
          */
         public function getXPsOfGroupForQuest($questId, $groupId)
         {
@@ -171,8 +171,8 @@
         /**
          * Set XPs of a Character group for a Character groups Quest.
          *
-         * @param   int $questId    ID of Character groups Quest
-         * @param   int $groupId    ID of Character group to set XPs of
+         * @param   int     $questId    ID of Character groups Quest
+         * @param   int     $groupId    ID of Character group to set XPs of
          * @param   float   $xpsFactor  XPs-factor
          */
         public function setXPsOfGroupForQuest($questId, $groupId, $xpsFactor)
@@ -214,7 +214,7 @@
          * Check if a Character groups Quest title already exists.
          *
          * @param   int     $groupsgroupId  ID of Character groups-group
-         * @param   string  $name           Character groups Quest title to check
+         * @param   string  $title          Character groups Quest title to check
          * @param   int     $questId        Do not check this ID (for editing)
          * @return  boolean                 Whether Character groups Quest title exists or not
          */
@@ -256,12 +256,12 @@
         /**
          * Upload a media for a Character groups Quest.
          *
-         * @param   int $userId     ID of user that does the upload
-         * @param   int $seminaryId ID of Seminary
-         * @param   int $questId    ID of Quest to upload media for
+         * @param   int     $userId     ID of user that does the upload
+         * @param   int     $seminaryId ID of Seminary
+         * @param   int     $questId    ID of Quest to upload media for
          * @param   array   $file       File-array of file to upload
          * @param   string  $filename   Filename for media
-         * @return  boolean         Whether upload succeeded or not
+         * @return  boolean             Whether upload succeeded or not
          */
         public function uploadMediaForQuest($userId, $seminaryId, $questId, $file, $filename)
         {
@@ -289,8 +289,8 @@
         /**
          * Get uploaded Medai for a Character groups Quest.
          *
-         * @param   int $questId    ID of Quest to get media for
-         * @return  array           Seminary uploads
+         * @param   int     $questId    ID of Quest to get media for
+         * @return  array               Seminary uploads
          */
         public function getMediaForQuest($questId)
         {
@@ -307,16 +307,16 @@
         /**
          * Create a new Character groups Quest.
          *
-         * @param   int $userId     ID of user
-         * @param   int $groupsgroupId  ID of Character groups-group
-         * @param   int $questgroupId   ID of Quest group
-         * @param   string  $title      Title of new Quest
+         * @param   int     $userId         ID of user
+         * @param   int     $groupsgroupId  ID of Character groups-group
+         * @param   int     $questgroupId   ID of Quest group
+         * @param   string  $title          Title of new Quest
          * @param   string  $description    Description of new Quset
-         * @param   int $xps        Amount of XPs for new Quest
-         * @param   string  $rules      Rules of new Quest
-         * @param   string  $wonText    Won-text of new Quset
-         * @param   string  $lostText   Lost-text of new Quest
-         * @return  int         ID of newly created Quest
+         * @param   int     $xps            Amount of XPs for new Quest
+         * @param   string  $rules          Rules of new Quest
+         * @param   string  $wonText        Won-text of new Quset
+         * @param   string  $lostText       Lost-text of new Quest
+         * @return  int                     ID of newly created Quest
          */
         public function createQuest($userId, $groupsgroupId, $questgroupId, $title, $description, $xps, $rules, $wonText, $lostText)
         {

@@ -43,9 +43,9 @@
         /**
          * Get an Achievement by its URL.
          *
-         * @param   int $seminaryId ID of Seminary
+         * @param   int     $seminaryId     ID of Seminary
          * @param   string  $achievementUrl URL-title of Achievement
-         * @return  array           Achievement data
+         * @return  array                   Achievement data
          */
         public function getAchievementByUrl($seminaryId, $achievementUrl)
         {
@@ -69,8 +69,8 @@
         /**
          * Get an Achievement by its ID.
          *
-         * @param   int $achievementId  ID of Achievement
-         * @return  array           Achievement data
+         * @param   int     $achievementId  ID of Achievement
+         * @return  array                   Achievement data
          */
         public function getAchievementById($achievementId)
         {
@@ -95,8 +95,8 @@
          * Get all not yet achieved Achievements for a Seminary that can
          * only be achieved once (only by one Character).
          *
-         * @param   int $seminaryId ID of Seminary
-         * @return  array           Achievements data
+         * @param   int     $seminaryId ID of Seminary
+         * @return  array               Achievements data
          */
         public function getUnachievedOnlyOnceAchievementsForSeminary($seminaryId)
         {
@@ -118,8 +118,8 @@
         /**
          * Get all Achievements that have a deadline.
          *
-         * @param   int $seminaryId ID of Seminary
-         * @return  array           Achievements data
+         * @param   int     $seminaryId ID of Seminary
+         * @return  array               Achievements data
          */
         public function getDeadlineAchievements($seminaryId)
         {
@@ -138,10 +138,10 @@
         /**
          * Get seldom Achievements.
          *
-         * @param   int $seminaryId     ID of Seminary
-         * @param   int $count          Number of Achievements to retrieve
+         * @param   int     $seminaryId         ID of Seminary
+         * @param   int     $count              Number of Achievements to retrieve
          * @param   bool    $alsoWithDeadline   Include Achievements with deadline (optional)
-         * @return  array               List of seldom Achievements
+         * @return  array                       List of seldom Achievements
          */
         public function getSeldomAchievements($seminaryId, $count, $alsoWithDeadline=true)
         {
@@ -167,9 +167,9 @@
         /**
          * Get all achieved Achievements for a Character.
          *
-         * @param   int $characterId    ID of Character
+         * @param   int     $characterId        ID of Character
          * @param   bool    $alsoWithDeadline   Include Achievements with deadline (optional)
-         * @return  array           Achievements data
+         * @return  array                       Achievements data
          */
         public function getAchievedAchievementsForCharacter($characterId, $alsoWithDeadline=true)
         {
@@ -189,11 +189,11 @@
         /**
          * Get all not yet achieved Achievements for a Character.
          *
-         * @param   int $seminaryId     ID of Seminary
-         * @param   int $characterId        ID of Character
+         * @param   int     $seminaryId         ID of Seminary
+         * @param   int     $characterId        ID of Character
          * @param   boolean $includeOnlyOnce    Include Achievements that can only be achieved by one Character
          * @param   boolean $alsoWithDeadline   Include milestone Achievements
-         * @return  array               Achievements data
+         * @return  array                       Achievements data
          */
         public function getUnachhievedAchievementsForCharacter($seminaryId, $characterId, $includeOnlyOnce=false, $alsoWithDeadline=true)
         {
@@ -221,10 +221,10 @@
         /**
          * Get the amount of Achievement for a Seminary.
          *
-         * @param   int $seminaryId     ID of Seminary
+         * @param   int     $seminaryId         ID of Seminary
          * @param   boolean $includeOnlyOnce    Include Achievements that can only be achieved by one Character
          * @param   boolean $alsoWithDeadline   Include milestone Achievements
-         * @return  int             Count of Achievements
+         * @return  int                         Count of Achievements
          */
         public function getAchievementsCountForSeminary($seminaryId, $includeOnlyOnce=false, $alsoWithDeadline=true)
         {
@@ -249,8 +249,8 @@
         /**
          * Get all Achievements for a Seminary.
          *
-         * @param   int $seminaryId ID of Seminary
-         * @return  array           List of Achievements
+         * @param   int     $seminaryId ID of Seminary
+         * @return  array               List of Achievements
          */
         public function getAchievementsForSeminary($seminaryId)
         {
@@ -270,8 +270,8 @@
          * Get the rank for the number of achieved Achievements.
          *
          * @param   int $seminaryId ID of Seminary
-         * @param   int $xps        Amount of achieved Achievements
-         * @return  int         Rank of Achievements count
+         * @param   int $count      Amount of achieved Achievements
+         * @return  int             Rank of Achievements count
          */
         public function getCountRank($seminaryId, $count)
         {
@@ -301,8 +301,8 @@
         /**
          * Get all date conditions for an Achievement.
          *
-         * @param   int $achievementId  ID of Achievement
-         * @return  array           Date conditions
+         * @param   int     $achievementId  ID of Achievement
+         * @return  array                   Date conditions
          */
         public function getAchievementConditionsDate($achievementId)
         {
@@ -319,7 +319,7 @@
         /**
          * Check a date condition.
          *
-         * @param   string  $select SELECT-string with date-functions
+         * @param   string      $select SELECT-string with date-functions
          * @return  boolean     Result
          */
         public function checkAchievementConditionDate($select)
@@ -339,9 +339,9 @@
         /**
          * Add a new date condition.
          *
-         * @param   int $userId     ID of creating user
-         * @param   int $achievementId  ID of Achievement to add condition to
-         * @param   string  $select     SELECT-string for condition
+         * @param   int     $userId         ID of creating user
+         * @param   int     $achievementId  ID of Achievement to add condition to
+         * @param   string  $select         SELECT-string for condition
          */
         public function addAchievementConditionDate($userId, $achievementId, $select)
         {
@@ -362,8 +362,8 @@
         /**
          * Edit a date condition.
          *
-         * @param   int $conditionId    ID of condition to edit
-         * @param   string  $select     New SELECT-string for condition
+         * @param   int     $conditionId    ID of condition to edit
+         * @param   string  $select         New SELECT-string for condition
          */
         public function editAchievementConditionDate($conditionId, $select)
         {
@@ -414,8 +414,8 @@
         /**
          * Get all Character conditions for an Achievement.
          *
-         * @param   int $achievementId  ID of Achievement
-         * @return  array           Character conditions
+         * @param   int     $achievementId  ID of Achievement
+         * @return  array                   Character conditions
          */
         public function getAchievementConditionsCharacter($achievementId)
         {
@@ -432,10 +432,10 @@
         /**
          * Check a Character condition.
          *
-         * @param   string  $field      Field to check
-         * @param   int $value      The value the field has to match
-         * @param   int $characterId    ID of Character
-         * @return  boolean         Result
+         * @param   string  $field          Field to check
+         * @param   int     $value          The value the field has to match
+         * @param   int     $characterId    ID of Character
+         * @return  boolean                 Result
          */
         public function checkAchievementConditionCharacter($field, $value, $characterId)
         {
@@ -470,10 +470,10 @@
         /**
          * Get the progress for a Character condition.
          *
-         * @param   string  $field      Field to check
-         * @param   int $value      The value the field has to match
-         * @param   int $characterId    ID of Character
-         * @return  float           Percentage progress
+         * @param   string  $field          Field to check
+         * @param   int     $value          The value the field has to match
+         * @param   int     $characterId    ID of Character
+         * @return  float                   Percentage progress
          */
         public function getAchievementConditionCharacterProgress($field, $value, $characterId)
         {
@@ -505,10 +505,10 @@
         /**
          * Add a new Character condition.
          *
-         * @param   int $userId     ID of creating user
-         * @param   int $achievementId  ID of Achievement to add condition to
-         * @param   string  $field      Field to match
-         * @param   string  $value      Value to match
+         * @param   int     $userId         ID of creating user
+         * @param   int     $achievementId  ID of Achievement to add condition to
+         * @param   string  $field          Field to match
+         * @param   string  $value          Value to match
          */
         public function addAchievementConditionCharacter($userId, $achievementId, $field, $value)
         {
@@ -530,9 +530,9 @@
         /**
          * Edit a Character condition.
          *
-         * @param   int $conditionId    ID of condition to edit
-         * @param   string  $field      Field to match
-         * @param   string  $value      Value to match
+         * @param   int     $conditionId    ID of condition to edit
+         * @param   string  $field          Field to match
+         * @param   string  $value          Value to match
          */
         public function editAchievementConditionCharacter($conditionId, $field, $value)
         {
@@ -584,8 +584,8 @@
         /**
          * Get all Quest conditions for an Achievement.
          *
-         * @param   int $achievementId  ID of Achievement
-         * @return  array           Quest conditions
+         * @param   int     $achievementId  ID of Achievement
+         * @return  array                   Quest conditions
          */
         public function getAchievementConditionsQuest($achievementId)
         {
@@ -602,14 +602,14 @@
         /**
          * Check a Quest condition.
          *
-         * @param   string  $field      Field to check
-         * @param   boolean $count      Conut field-value
-         * @param   int $value      The value the field has to match
-         * @param   int $status     Status of Quest or NULL
-         * @param   string  $groupby    Field to group or NULL
-         * @param   int $questId    ID of related Quest or NULL
-         * @param   int $characterId    ID of Character
-         * @return  boolean         Result
+         * @param   string  $field          Field to check
+         * @param   boolean $count          Conut field-value
+         * @param   int     $value          The value the field has to match
+         * @param   int     $status         Status of Quest or NULL
+         * @param   string  $groupby        Field to group or NULL
+         * @param   int     $questId        ID of related Quest or NULL
+         * @param   int     $characterId    ID of Character
+         * @return  boolean                 Result
          */
         public function checkAchievementConditionQuest($field, $count, $value, $status, $groupby, $questId, $characterId)
         {
@@ -644,14 +644,14 @@
         /**
          * Get the progress for a Quest condition.
          *
-         * @param   string  $field      Field to check
-         * @param   boolean $count      Conut field-value
-         * @param   int $value      The value the field has to match
-         * @param   int $status     Status of Quest or NULL
-         * @param   string  $groupby    Field to group or NULL
-         * @param   int $questId    ID of related Quest or NULL
-         * @param   int $characterId    ID of Character
-         * @return  float           Percentage progress
+         * @param   string  $field          Field to check
+         * @param   boolean $count          Conut field-value
+         * @param   int     $value          The value the field has to match
+         * @param   int     $status         Status of Quest or NULL
+         * @param   string  $groupby        Field to group or NULL
+         * @param   int     $questId        ID of related Quest or NULL
+         * @param   int     $characterId    ID of Character
+         * @return  float                   Percentage progress
          */
         public function getAchievementConditionQuestProgress($field, $count, $value, $status, $groupby, $questId, $characterId)
         {
@@ -688,14 +688,14 @@
         /**
          * Add a new Quest condition.
          *
-         * @param   int $userId     ID of creating user
-         * @param   int $achievementId  ID of Achievement to add condition to
-         * @param   string  $field      Field to match
-         * @param   boolean $count      Count the value
-         * @param   string  $value      Value to match
-         * @param   int $questId    ID of Quest (optional)
-         * @param   int $status     Quest status (optional)
-         * @param   string  $groupby    Field to group by (optional)
+         * @param   int     $userId         ID of creating user
+         * @param   int     $achievementId  ID of Achievement to add condition to
+         * @param   string  $field          Field to match
+         * @param   boolean $count          Count the value
+         * @param   string  $value          Value to match
+         * @param   int     $questId        ID of Quest (optional)
+         * @param   int     $status         Quest status (optional)
+         * @param   string  $groupby        Field to group by (optional)
          */
         public function addAchievementConditionQuest($userId, $achievementId, $field, $count, $value, $questId=null, $status=null, $groupby=null)
         {
@@ -721,13 +721,13 @@
         /**
          * Edit a Quest condition.
          *
-         * @param   int $conditionId    ID of condition to edit
-         * @param   string  $field      Field to match
-         * @param   boolean $count      Count the value
-         * @param   string  $value      Value to match
-         * @param   int $questId    ID of Quest (optional)
-         * @param   int $status     Quest status (optional)
-         * @param   string  $groupby    Field to group by (optional)
+         * @param   int     $conditionId    ID of condition to edit
+         * @param   string  $field          Field to match
+         * @param   boolean $count          Count the value
+         * @param   string  $value          Value to match
+         * @param   int     $questId        ID of Quest (optional)
+         * @param   int     $status         Quest status (optional)
+         * @param   string  $groupby        Field to group by (optional)
          */
         public function editAchievementConditionQuest($conditionId, $field, $count, $value, $questId=null, $status=null, $groupby=null)
         {
@@ -807,8 +807,8 @@
         /**
          * Get all Metaachievement conditions for an Achievement.
          *
-         * @param   int $achievementId  ID of Achievement
-         * @return  array           Metaachievement conditions
+         * @param   int     $achievementId  ID of Achievement
+         * @return  array                   Metaachievement conditions
          */
         public function getAchievementConditionsAchievement($achievementId)
         {
@@ -825,13 +825,13 @@
         /**
          * Check a Metaachievement condition.
          *
-         * @param   string  $field          Field to check
-         * @param   boolean $count          Conut field-value
-         * @param   int $value          The value the field has to match
-         * @param   string  $groupby        Field to group or NULL
-         * @param   int $metaAchievementId  ID of related Achievement or NULL
-         * @param   int $characterId        ID of Character
-         * @return  boolean             Result
+         * @param   string  $field              Field to check
+         * @param   boolean $count              Conut field-value
+         * @param   int     $value              The value the field has to match
+         * @param   string  $groupby            Field to group or NULL
+         * @param   int     $metaAchievementId  ID of related Achievement or NULL
+         * @param   int     $characterId        ID of Character
+         * @return  boolean                     Result
          */
         public function checkAchievementConditionAchievement($field, $count, $value, $groupby, $metaAchievementId, $characterId)
         {
@@ -865,13 +865,13 @@
         /**
          * Get the progress for a Metaachievement condition.
          *
-         * @param   string  $field          Field to check
-         * @param   boolean $count          Conut field-value
-         * @param   int $value          The value the field has to match
-         * @param   string  $groupby        Field to group or NULL
-         * @param   int $metaAchievementId  ID of related Achievement or NULL
-         * @param   int $characterId        ID of Character
-         * @return  float               Percentage progress
+         * @param   string  $field              Field to check
+         * @param   boolean $count              Conut field-value
+         * @param   int     $value              The value the field has to match
+         * @param   string  $groupby            Field to group or NULL
+         * @param   int     $metaAchievementId  ID of related Achievement or NULL
+         * @param   int     $characterId        ID of Character
+         * @return  float                       Percentage progress
          */
         public function getAchievementConditionAchievementProgress($field, $count, $value, $groupby, $metaAchievementId, $characterId)
         {
@@ -907,13 +907,13 @@
         /**
          * Add a new Achievement condition.
          *
-         * @param   int $userId         ID of creating user
-         * @param   int $achievementId      ID of Achievement to add condition to
-         * @param   string  $field          Field to match
-         * @param   boolean $count          Count the value
-         * @param   string  $value          Value to match
-         * @param   int $metaAchievementId  ID of Meta-Achievement (optional)
-         * @param   string  $groupby        Field to group by (optional)
+         * @param   int     $userId             ID of creating user
+         * @param   int     $achievementId      ID of Achievement to add condition to
+         * @param   string  $field              Field to match
+         * @param   boolean $count              Count the value
+         * @param   string  $value              Value to match
+         * @param   int     $metaAchievementId  ID of Meta-Achievement (optional)
+         * @param   string  $groupby            Field to group by (optional)
          */
         public function addAchievementConditionAchievement($userId, $achievementId, $field, $count, $value, $metaAchievementId=null, $groupby=null)
         {
@@ -938,12 +938,12 @@
         /**
          * Edit a Achievement condition.
          *
-         * @param   int $conditionId        ID of condition to edit
-         * @param   string  $field          Field to match
-         * @param   boolean $count          Count the value
-         * @param   string  $value          Value to match
-         * @param   int $metaAchievementId  ID of Achievement (optional)
-         * @param   string  $groupby        Field to group by (optional)
+         * @param   int     $conditionId        ID of condition to edit
+         * @param   string  $field              Field to match
+         * @param   boolean $count              Count the value
+         * @param   string  $value              Value to match
+         * @param   int     $metaAchievementId  ID of Achievement (optional)
+         * @param   string  $groupby            Field to group by (optional)
          */
         public function editAchievementConditionAchievement($conditionId, $field, $count, $value, $metaAchievementId=null, $groupby=null)
         {
@@ -1022,8 +1022,8 @@
         /**
          * Get all QR-code conditions for an Achievement.
          *
-         * @param   int $achievementId  ID of Achievement
-         * @return  array               List of QR-code conditions
+         * @param   int     $achievementId  ID of Achievement
+         * @return  array                   List of QR-code conditions
          */
         public function getAchievementConditionsQrcode($achievementId)
         {
@@ -1145,9 +1145,9 @@
         /**
          * Check if a Character has achieved an Achievement.
          *
-         * @param   int $achievementId  ID of Achievement
-         * @param   int $characterId    ID of Character
-         * @return  boolean         Whether Character has achieved the Achievement or not
+         * @param   int     $achievementId  ID of Achievement
+         * @param   int     $characterId    ID of Character
+         * @return  boolean                 Whether Character has achieved the Achievement or not
          */
         public function hasCharacterAchievedAchievement($achievementId, $characterId)
         {
@@ -1184,10 +1184,10 @@
         /**
          * Check if an Achievement title already exists.
          *
-         * @param   int $seminaryId ID of Seminary
-         * @param   string  $title      Achievement title to check
-         * @param   int $characterId    Do not check this ID (for editing)
-         * @return  boolean         Whether Achievement title exists or not
+         * @param   int     $seminaryId     ID of Seminary
+         * @param   string  $title          Achievement title to check
+         * @param   int     $achievementId  Do not check this ID (for editing)
+         * @return  boolean                 Whether Achievement title exists or not
          */
         public function achievementTitleExists($seminaryId, $title, $achievementId=null)
         {
@@ -1209,17 +1209,17 @@
         /**
          * Create a new Achievement for a Seminary.
          *
-         * @param   int $userId     ID of creating user
-         * @param   int $seminaryId ID of Seminary
-         * @param   int $conditionId    ID of Achievement condition
-         * @param   string  $title      Title of new Achievement
+         * @param   int     $userId         ID of creating user
+         * @param   int     $seminaryId     ID of Seminary
+         * @param   int     $conditionId    ID of Achievement condition
+         * @param   string  $title          Title of new Achievement
          * @param   string  $description    Description of new Achievement
-         * @param   boolean $progress   Show progress
-         * @param   boolean $hidden     Secret Achievement
-         * @param   boolean $onlyOnce   Only achieveable by one user
+         * @param   boolean $progress       Show progress
+         * @param   boolean $hidden         Secret Achievement
+         * @param   boolean $onlyOnce       Only achieveable by one user
          * @param   boolean $allConditions  Achievement must match all conditions
-         * @param   string  $deadline   Deadline for Achievement
-         * @return  int         ID of newly created Achievement
+         * @param   string  $deadline       Deadline for Achievement
+         * @return  int                     ID of newly created Achievement
          */
         public function createAchievement($userId, $seminaryId, $conditionId, $title, $description, $progress, $hidden, $onlyOnce, $allConditions, $deadline)
         {
@@ -1265,7 +1265,7 @@
          * (increment position).
          *
          * @param   array   $achievement    Achievement to move
-         * @param   boolean $up     True for moving up, false for down
+         * @param   boolean $up             True for moving up, false for down
          */
         public function moveAchievement($achievement, $up)
         {
@@ -1313,15 +1313,15 @@
         /**
          * Edit an Achievement of a Seminary.
          *
-         * @param   int $achievementId  ID of Achievement to edit
-         * @param   int $conditionId    ID of Achievement condition
-         * @param   string  $title      New title of Achievement
+         * @param   int     $achievementId  ID of Achievement to edit
+         * @param   int     $conditionId    ID of Achievement condition
+         * @param   string  $title          New title of Achievement
          * @param   string  $description    New description of Achievement
-         * @param   boolean $progress   Show progress
-         * @param   boolean $hidden     Secret Achievement
-         * @param   boolean $onlyOnce   Only achieveable by one user
+         * @param   boolean $progress       Show progress
+         * @param   boolean $hidden         Secret Achievement
+         * @param   boolean $onlyOnce       Only achieveable by one user
          * @param   boolean $allConditions  Achievement must match all conditions
-         * @param   string  $deadline   Deadline for Achievement
+         * @param   string  $deadline       Deadline for Achievement
          */
         public function editAchievement($achievementId, $conditionId, $title, $description, $progress, $hidden, $onlyOnce, $allConditions, $deadline)
         {
@@ -1347,7 +1347,7 @@
         /**
          * Set unachieved media for an Achievement.
          *
-         * @param   int $achievementId      ID of Achievement to set media for
+         * @param   int $achievementId          ID of Achievement to set media for
          * @param   int $achievementsmediaId    ID of achievementsmedia to set
          */
         public function setUnachievedMediaForAchievement($achievementId, $achievementsmediaId)
@@ -1366,7 +1366,7 @@
         /**
          * Set achieved media for an Achievement.
          *
-         * @param   int $achievementId      ID of Achievement to set media for
+         * @param   int $achievementId          ID of Achievement to set media for
          * @param   int $achievementsmediaId    ID of achievementsmedia to set
          */
         public function setAchievedMediaForAchievement($achievementId, $achievementsmediaId)

@@ -199,12 +199,12 @@
         /**
          * Save the answer of a Character group for a Station.
          *
-         * @param   array   $seminary   Current Seminary data
-         * @param   array   $questgroup Current Questgroup data
-         * @param   array   $quest      Current Quest data
-         * @param   array   $station    Current Station data
-         * @param   array   $group      Current Character data
-         * @param   array   $answers    Character answers for the Quest
+         * @param   array   $seminary       Current Seminary data
+         * @param   array   $groupsgroup    Current Groups group data
+         * @param   array   $quest          Current Quest data
+         * @param   array   $station        Current Station data
+         * @param   array   $charactergroup Current Character group data
+         * @param   array   $answer         Character group answer for the Station
          */
         public function saveAnswer($seminary, $groupsgroup, $quest, $station, $group, $answer)
         {
@@ -223,12 +223,12 @@
          * Check if the answer of a Character group for a Station matches the
          * correct one.
          *
-         * @param   array   $seminary   Current Seminary data
-         * @param   array   $questgroup Current Questgroup data
-         * @param   array   $quest      Current Quest data
-         * @param   array   $station    Current Station data
-         * @param   array   $group      Current Character group data
-         * @param   array   $answers    Character answers for the Quest
+         * @param   array   $seminary       Current Seminary data
+         * @param   array   $groupsgroup    Current Groups group data
+         * @param   array   $quest          Current Quest data
+         * @param   array   $station        Current Station data
+         * @param   array   $charactergroup Current Character group data
+         * @param   array   $answer         Character group answer for the Station
          */
         public function matchAnswer($seminary, $groupsgroup, $quest, $station, $group, $answer)
         {

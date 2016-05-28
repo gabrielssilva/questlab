@@ -47,6 +47,7 @@
          * Show moodpic of a Seminary.
          *
          * @param   string  $seminaryUrl    URL of Seminary to show moodpic of
+         * @param   string  $agentName      Name of Agent to show moodpic for
          */
         public function seminary($seminaryUrl, $agentName=null)
         {
@@ -86,7 +87,7 @@
          * Show moodpic of a Questgroup.
          *
          * @param   string  $seminaryUrl    URL of Seminary
-         * @param   string  $quesgroupUrl   URL of Questgroup to show moodpic of
+         * @param   string  $questgroupUrl  URL of Questgroup to show moodpic of
          */
         public function questgroup($seminaryUrl, $questgroupUrl)
         {

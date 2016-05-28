@@ -44,8 +44,8 @@
         /**
          * Get Character groups-groups of a Seminary.
          *
-         * @param   int $seminaryId ID of the corresponding Seminary
-         * @return  array           Character groups-groups data
+         * @param   int     $seminaryId ID of the corresponding Seminary
+         * @return  array               Character groups-groups data
          */
         public function getGroupsroupsForSeminary($seminaryId)
         {
@@ -63,9 +63,9 @@
          * Get a Character groups-group by its URL.
          *
          * @throws  \nre\exceptions\IdNotFoundException
-         * @param   int $seminaryId ID of the corresponding Seminary
+         * @param   int     $seminaryId     ID of the corresponding Seminary
          * @param   string  $groupsgroupUrl URL-name of the Character groups-group
-         * @return  array           Character groups-group data
+         * @return  array                   Character groups-group data
          */
         public function getGroupsgroupByUrl($seminaryId, $groupsgroupUrl)
         {
@@ -90,7 +90,7 @@
          *
          * @throws  \nre\exceptions\IdNotFoundException
          * @param   string  $groupsgroupId  ID of the Character groups-group
-         * @return  array           Character groups-group data
+         * @return  array                   Character groups-group data
          */
         public function getGroupsgroupById($groupsgroupId)
         {
@@ -138,11 +138,11 @@
         /**
          * Create a new Character groups-group.
          *
-         * @param   int $userId     ID of user
-         * @param   int $seminaryId ID of Seminary
+         * @param   int     $userId     ID of user
+         * @param   int     $seminaryId ID of Seminary
          * @param   string  $name       Name of new groups-group
          * @param   boolean $preferred  Whether groups-group is preferred or not
-         * @return  int         ID of newly created groups-group
+         * @return  int                 ID of newly created groups-group
          */
         public function createGroupsgroup($userId, $seminaryId, $name, $preferred)
         {
@@ -167,9 +167,9 @@
         /**
          * Edit a Character groups-group.
          *
-         * @param   int $groupsgroupId  ID of groups-group to edit
-         * @param   string  $name       New name of groups-group
-         * @param   boolean $preferred  Whether groups-group is preferred or not
+         * @param   int     $groupsgroupId  ID of groups-group to edit
+         * @param   string  $name           New name of groups-group
+         * @param   boolean $preferred      Whether groups-group is preferred or not
          */
         public function editGroupsgroup($groupsgroupId, $name, $preferred)
         {
@@ -261,9 +261,9 @@
         /**
          * Get Character groups for a Character groups-group.
          *
-         * @param   int $groupsgroupId  ID of the Character groups-group
-         * @param   string  $sortorder  Field to sort by (optional)
-         * @return  array           Character groups
+         * @param   int     $groupsgroupId  ID of the Character groups-group
+         * @param   string  $sortorder      Field to sort by (optional)
+         * @return  array                   Character groups
          */
         public function getGroupsForGroupsgroup($groupsgroupId, $sortorder='name')
         {
@@ -297,8 +297,8 @@
         /**
          * Get Character groups for a Character.
          *
-         * @param   int $characterId    ID of the Character
-         * @return  array           Character groups
+         * @param   int     $characterId    ID of the Character
+         * @return  array                   Character groups
          */
         public function getGroupsForCharacter($characterId)
         {
@@ -322,9 +322,9 @@
          * Get a Character group by its URL.
          *
          * @throws  \nre\exceptions\IdNotFoundException
-         * @param   int $groupsgroupId  ID of the Character groups-group
-         * @param   string  $groupUrl   URL-name of the Character group
-         * @return  array           Character group data
+         * @param   int     $groupsgroupId  ID of the Character groups-group
+         * @param   string  $groupUrl       URL-name of the Character group
+         * @return  array                   Character group data
          */
         public function getGroupByUrl($groupsgroupId, $groupUrl)
         {
@@ -351,8 +351,8 @@
          * Get a Character group by its ID.
          *
          * @throws  \nre\exceptions\IdNotFoundException
-         * @param   int $groupsgroupId  ID of the Character group
-         * @return  array           Character group data
+         * @param   int     $groupId    ID of the Character group
+         * @return  array               Character group data
          */
         public function getGroupById($groupId)
         {
@@ -378,8 +378,8 @@
         /**
          * Get the Character groups for a Quest.
          *
-         * @param   int $questId    ID of the Character groups Quest
-         * @return  array           Character groups
+         * @param   int     $questId    ID of the Character groups Quest
+         * @return  array               Character groups
          */
         public function getGroupsForQuest($questId)
         {
@@ -452,11 +452,11 @@
         /**
          * Create a new Character group.
          *
-         * @param   int $userId     ID of user
-         * @param   int $groupsgroupId  ID of Character groups-group
-         * @param   string  $name       Name of new group
-         * @param   string  $motto      Motto of new group
-         * @return  int         ID of newly created group
+         * @param   int     $userId         ID of user
+         * @param   int     $groupsgroupId  ID of Character groups-group
+         * @param   string  $name           Name of new group
+         * @param   string  $motto          Motto of new group
+         * @return  int                     ID of newly created group
          */
         public function createGroup($userId, $groupsgroupId, $name, $motto)
         {
@@ -500,7 +500,7 @@
         /**
          * Edit a Character group.
          *
-         * @param   int $groupId    ID of Character group to edit
+         * @param   int     $groupId    ID of Character group to edit
          * @param   string  $name       New name of group
          * @param   string  $motto      New motto of group
          */
@@ -544,9 +544,9 @@
         /**
          * Get the rank of a XP-value of a Character.
          *
-         * @param   int $seminaryId ID of Seminary
-         * @param   int $xps        XP-value to get rank for
-         * @return  int         Rank of XP-value
+         * @param   int $groupsgroupId  ID of Seminary
+         * @param   int $xps            XP-value to get rank for
+         * @return  int                 Rank of XP-value
          */
         public function getXPRank($groupsgroupId, $xps)
         {
@@ -570,7 +570,7 @@
         /**
          * Add a Character to a Character group.
          *
-         * @param   int $groupId    ID of Character group
+         * @param   int $groupId        ID of Character group
          * @param   int $characterId    ID of Character to add
          */
         public function addCharacterToCharactergroup($groupId, $characterId)
@@ -590,7 +590,7 @@
         /**
          * Remove a Character from a Character group.
          *
-         * @param   int $groupId    ID of Character group
+         * @param   int $groupId        ID of Character group
          * @param   int $characterId    ID of Character to remove
          */
         public function removeCharacterFromCharactergroup($groupId, $characterId)

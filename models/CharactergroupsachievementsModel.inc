@@ -269,7 +269,7 @@
          * position).
          *
          * @param   array   $achievement    Achievement to move
-         * @param   boolean $up     True for moving up, false for down
+         * @param   boolean $up             True for moving up, false for down
          */
         public function moveAchievement($achievement, $up)
         {
@@ -358,11 +358,9 @@
         /**
          * Copy all Achievements of a Seminary.
          *
-         * @param   int     $userId             ID of creating user
-         * @param   int     $sourceSeminaryId   Seminary to copy from
-         * @param   int     $targetSeminaryId   Seminary to copy to
-         * @param   array   $seminaryMediaIds   Mapping of Seminarymedia-IDs from source Seminary to target Seminary
-         * @param   array   $questIds           Mapping of Quest-IDs from source Seminary to target Seminary (optional)
+         * @param   int     $userId                     ID of creating user
+         * @param   array   $characterGroupsgroupIds    Mapping of Character groups-group IDs from source Seminary to target Seminary
+         * @param   array   $seminaryMediaIds           Mapping of Seminarymedia-IDs from source Seminary to target Seminary
          */
         public function copyAchievementsOfSeminary($userId, $characterGroupsgroupIds, $seminaryMediaIds=null)
         {

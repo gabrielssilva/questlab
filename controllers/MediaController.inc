@@ -117,8 +117,8 @@
          *
          * @throws  \nre\exceptions\IdNotFoundException
          * @param   string  $seminaryUrl    URL-title of the Seminary
-         * @param   string  $category   Category to show moodpic of
-         * @param   string  $action     Action for processing the media
+         * @param   string  $category       Category to show moodpic of
+         * @param   string  $action         Action for processing the media
          */
         public function seminarymoodpic($seminaryUrl, $category=null, $action=null)
         {
@@ -209,8 +209,8 @@
          *
          * @throws  \nre\exceptions\IdNotFoundException
          * @param   string  $seminaryUrl    URL-title of the Seminary
-         * @param   string  $mediaUrl   URL-name of the medium
-         * @param   string  $action     Action for processing the media
+         * @param   string  $mediaUrl       URL-name of the medium
+         * @param   string  $action         Action for processing the media
          */
         public function seminary($seminaryUrl, $mediaUrl, $action=null)
         {
@@ -250,8 +250,8 @@
          * @throws  \nre\exceptions\IdNotFoundException
          * @param   string  $seminaryUrl        URL-title of the Seminary
          * @param   string  $charactertypeUrl   URL-title of Character type
-         * @param   int $xplevel        XP-level
-         * @param   string  $action         Size to show (avatar or portrait)
+         * @param   int     $xplevel            XP-level
+         * @param   string  $action             Size to show (avatar or portrait)
          */
         public function avatar($seminaryUrl, $charactertypeUrl, $xplevel, $action='avatar')
         {
@@ -301,7 +301,7 @@
          * @throws  \nre\exceptions\IdNotFoundException
          * @param   string  $seminaryUrl    URL-title of the Seminary
          * @param   string  $achievementUrl URL-title of the Achievement
-         * @param   string  $action     Action for processing the media
+         * @param   string  $locked         Whether to display the locked version or not
          */
         public function achievement($seminaryUrl, $achievementUrl, $locked=null)
         {
@@ -358,7 +358,7 @@
          * @throws  \nre\exceptions\IdNotFoundException
          * @param   string  $seminaryUrl    URL-Title of a Seminary
          * @param   string  $groupsgroupUrl URL-Title of a Character groups-group
-         * @param   string  $groupUrl   URL-Title of a Character group
+         * @param   string  $groupUrl       URL-Title of a Character group
          */
         public function charactergroup($seminaryUrl, $groupsgroupUrl, $groupUrl)
         {
@@ -403,7 +403,7 @@
          * @throws  \nre\exceptions\IdNotFoundException
          * @param   string  $seminaryUrl    URL-Title of a Seminary
          * @param   string  $groupsgroupUrl URL-Title of a Character groups-group
-         * @param   string  $questUrl   URL-Title of a Character groups Quest
+         * @param   string  $questUrl       URL-Title of a Character groups Quest
          */
         public function charactergroupsquest($seminaryUrl, $groupsgroupUrl, $questUrl)
         {
@@ -530,7 +530,7 @@
          * @param   string  $seminaryUrl    URL-title of Seminary
          * @param   string  $groupsgroupUrl URL-title of Character groups-group
          * @param   string  $achievementUrl URL-title of the Achievement
-         * @param   string  $action         Action for processing the media
+         * @param   string  $locked         Whether to show the locked version or not
          */
         public function charactergroupsachievement($seminaryUrl, $groupsgroupUrl, $achievementUrl, $locked=null)
         {
@@ -573,7 +573,7 @@
          * caching accordingly.
          *
          * @param   string  $fileName   Filename
-         * @return  boolean         HTTP-status 304 was set (in cache)
+         * @return  boolean             HTTP-status 304 was set (in cache)
          */
         private function setCacheHeaders($fileName)
         {
