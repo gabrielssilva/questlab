@@ -275,21 +275,21 @@
          */
         private function detectRequest()
         {
-            // URL ermitteln
+            // Get URL
             $url = isset($_GET) && array_key_exists('url', $_GET) ? $_GET['url'] : '';
             $url = trim($url, '/');
 
-            // Routes anwenden
+            // Apply routes
             $url = $this->applyRoutes($url, $this->routes);
 
-            // URL splitten
+            // Split URL
             $params = explode('/', $url);
             if(empty($params[0])) {
                 $params = array();
             }
 
 
-            // Parameter speichern
+            // Save parameters
             $this->params = $params;
         }
 

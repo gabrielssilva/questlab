@@ -4,6 +4,8 @@ ErrorDocument 403 /www/error403.html
 ErrorDocument 404 /www/error404.html
 ErrorDocument 500 /www/error500.html
 
+AddOutputFilterByType DEFLATE text/html text/plain text/xml text/css application/javascript text/javascript
+
 
 
 <IfModule mod_authz_core.c>
