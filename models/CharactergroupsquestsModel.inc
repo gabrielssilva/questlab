@@ -125,7 +125,7 @@
                 'FROM charactergroupsquests_groups '.
                 'LEFT JOIN charactergroupsquests ON charactergroupsquests.id = charactergroupsquests_groups.charactergroupsquest_id '.
                 'WHERE charactergroupsquests_groups.charactergroup_id = ? '.
-                'ORDER BY charactergroupsquests.created ASC',
+                'ORDER BY charactergroupsquests_groups.created DESC',
                 'i',
                 $groupId
             );
