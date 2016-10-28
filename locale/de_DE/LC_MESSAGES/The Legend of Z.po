@@ -1,21 +1,22 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: The Legend of Z\n"
-"POT-Creation-Date: 2016-04-17 14:40+0200\n"
-"PO-Revision-Date: 2016-04-17 14:40+0200\n"
+"Project-Id-Version: Questlab\n"
+"POT-Creation-Date: 2016-10-28 21:49+0200\n"
+"PO-Revision-Date: 2016-10-28 21:51+0200\n"
 "Last-Translator: \n"
-"Language-Team: \n"
+"Language-Team: oliver.hanraths@uni-duesseldorf.de\n"
 "Language: de_DE\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.8.7.1\n"
+"X-Generator: Poedit 1.8.9\n"
 "X-Poedit-Basepath: ../../..\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 "X-Poedit-SearchPath-0: views\n"
 "X-Poedit-SearchPath-1: questtypes\n"
 "X-Poedit-SearchPath-2: controllers\n"
+"X-Poedit-SearchPath-3: stationtypes\n"
 
 #: controllers/CharactergroupsachievementsController.inc:175
 #: views/html/charactergroups/groupsgroup.tpl:62
@@ -104,13 +105,16 @@ msgstr "Leben des Charakters"
 
 #: questtypes/bossfight/html/edittask.tpl:14
 msgid "Stages"
-msgstr ""
+msgstr "Stages"
 
 #: questtypes/bossfight/html/edittask.tpl:17
 #: questtypes/choiceinput/html/edittask.tpl:83
 #: questtypes/dragndrop/html/edittask.tpl:144
 #: questtypes/multiplechoice/html/edittask.tpl:84
 #: questtypes/textinput/html/edittask.tpl:44
+#: stationtypes/keyword/html/edittask.tpl:28
+#: stationtypes/multiplechoice/html/edittask.tpl:28
+#: stationtypes/singlechoice/html/edittask.tpl:28
 #: views/html/achievements/conditions.tpl:152
 #: views/html/achievements/edit.tpl:114
 #: views/html/charactergroupsachievements/edit.tpl:69
@@ -149,6 +153,9 @@ msgstr "Wählen"
 #: questtypes/dragndrop/html/quest.tpl:16
 #: questtypes/multiplechoice/html/quest.tpl:21
 #: questtypes/submit/html/quest.tpl:23 questtypes/textinput/html/quest.tpl:15
+#: stationtypes/keyword/html/quest.tpl:4
+#: stationtypes/multiplechoice/html/quest.tpl:11
+#: stationtypes/singlechoice/html/quest.tpl:11
 msgid "solve"
 msgstr "lösen"
 
@@ -393,6 +400,8 @@ msgstr "Fragen"
 
 #: questtypes/multiplechoice/html/edittask.tpl:34
 #: questtypes/multiplechoice/html/edittask.tpl:93
+#: stationtypes/multiplechoice/html/edittask.tpl:3
+#: stationtypes/singlechoice/html/edittask.tpl:3
 msgid "Question"
 msgstr "Frage"
 
@@ -461,6 +470,8 @@ msgstr "Leider falsch!"
 
 #: questtypes/textinput/html/edittask.tpl:10
 #: questtypes/textinput/html/edittask.tpl:12
+#: stationtypes/keyword/html/edittask.tpl:10
+#: stationtypes/keyword/html/edittask.tpl:12
 msgid "Regex invalid"
 msgstr "Der reguläre Ausdruck ist ungültig"
 
@@ -472,6 +483,30 @@ msgstr "Felder"
 #, php-format
 msgid "You filled %d of %d fields correctly"
 msgstr "Du hast %d von %d Felder korrekt ausgefüllt"
+
+#: stationtypes/keyword/html/edittask.tpl:25
+msgid "Keyword"
+msgstr "Schlagwort"
+
+#: stationtypes/multiplechoice/html/edittask.tpl:7
+#: stationtypes/singlechoice/html/edittask.tpl:7
+msgid "Answers"
+msgstr "Antworten"
+
+#: stationtypes/multiplechoice/html/edittask.tpl:11
+#: stationtypes/singlechoice/html/edittask.tpl:11
+msgid "Answer"
+msgstr "Antwort"
+
+#: stationtypes/multiplechoice/html/edittask.tpl:14
+#: stationtypes/singlechoice/html/edittask.tpl:14
+msgid "correct"
+msgstr "richtig"
+
+#: stationtypes/multiplechoice/html/edittask.tpl:37
+#: stationtypes/singlechoice/html/edittask.tpl:37
+msgid "correct answer"
+msgstr "richtige Antwort"
 
 #: views/ajax/quests/index.tpl:9 views/html/quests/create.tpl:75
 #: views/html/quests/edit.tpl:78 views/html/quests/index.tpl:23
@@ -2022,7 +2057,7 @@ msgstr "Bitte Einführungstext eingeben"
 #: views/html/introduction/index.tpl:35
 #, php-format
 msgid "This application is powered by %s and is licensed under the %s"
-msgstr ""
+msgstr "Diese Anwendung wird unterstützt von %s und steht under der %s-Lizenz"
 
 #: views/html/library/create.tpl:4 views/html/library/delete.tpl:4
 #: views/html/library/edit.tpl:4 views/html/library/index.tpl:5
