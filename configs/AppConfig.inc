@@ -38,7 +38,9 @@
             'mailcontact'       => '',
             'registration_host' => '',
             'languages'         => array(
-                'de'    => 'de_DE.utf8'
+                'de'    => 'de_DE.utf8',
+                'en'    => 'en_EN.utf8',
+                'pt'    => 'pt_BR.utf8'
             )
         );
 
