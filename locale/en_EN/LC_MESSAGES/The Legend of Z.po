@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Questlab\n"
 "POT-Creation-Date: 2016-10-31 21:52+0100\n"
-"PO-Revision-Date: 2016-10-31 21:56+0100\n"
+"PO-Revision-Date: 2016-10-31 22:05+0100\n"
 "Last-Translator: \n"
 "Language-Team: oliver.hanraths@uni-duesseldorf.de\n"
 "Language: en\n"
@@ -2095,7 +2095,10 @@ msgstr "Create new Questtopic"
 #: views/html/library/index.tpl:11
 #, php-format
 msgid "Library description, %s, %s"
-msgstr "Library description, %s, %s"
+msgstr ""
+"On this page you will find all topics from the seminar “%s” and all Quests "
+"to look up and retry. Your progress in “%s” affects the library. So play "
+"regularely and unlock all content Quest by Quest."
 
 #: views/html/library/index.tpl:13
 #, php-format
