@@ -2099,8 +2099,10 @@ msgstr "Criar novo Tema"
 #, php-format
 msgid "Library description, %s, %s"
 msgstr ""
-"Aqui você encontrará todos os Temas da Biblioteca “%s” e as missões "
-"correspondentes. Seu progresso em “%s” afeta o tamanho da biblioteca."
+"Nesta página você encontrará todos os Temas do Seminário “%s” e todas"
+"as missões para verificar e tentar de novo. Seu progresso em “%s” afeta"
+"a Biblioteca. Então, jogue regularmente e destrave todo o conteúdo,"
+"Missão por Missão."
 
 #: views/html/library/index.tpl:13
 #, php-format
